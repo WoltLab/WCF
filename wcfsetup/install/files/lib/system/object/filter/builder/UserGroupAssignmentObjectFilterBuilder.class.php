@@ -11,13 +11,19 @@ use wcf\system\object\filter\user\UserAvatarObjectFilter;
 use wcf\system\object\filter\user\UserLanguageObjectFilter;
 use wcf\system\WCF;
 
+/**
+ * @implements IObjectFilterBuilder<User>
+ */
 final class UserGroupAssignmentObjectFilterBuilder implements IObjectFilterBuilder
 {
     /**
-     * @var list<IObjectFilter<mixed>>
+     * @var list<IObjectFilter<User, mixed>>
      */
     private readonly array $filters;
 
+    /**
+     * @var ObjectFilterHandler<User>
+     */
     private ObjectFilterHandler $handler;
 
     public function __construct()
@@ -50,12 +56,15 @@ final class UserGroupAssignmentObjectFilterBuilder implements IObjectFilterBuild
 
     public function testUser(UserGroupAssignment $assignment, User $user): bool
     {
-        return $this->getHandler()->testUser(
+        return $this->getHandler()->testObject(
             $user,
             $assignment->conditions,
         );
     }
 
+    /**
+     * @return ObjectFilterHandler<User>
+     */
     private function getHandler(): ObjectFilterHandler
     {
         if (!isset($this->handler)) {

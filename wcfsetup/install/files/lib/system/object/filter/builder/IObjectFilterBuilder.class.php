@@ -2,12 +2,16 @@
 
 namespace wcf\system\object\filter\builder;
 
+use wcf\data\DatabaseObject;
 use wcf\system\object\filter\IObjectFilter;
 
+/**
+ * @template TDatabaseObject of DatabaseObject
+ */
 interface IObjectFilterBuilder
 {
     /**
-     * @return list<IObjectFilter<mixed>>
+     * @return list<IObjectFilter<TDatabaseObject, mixed>>
      */
     public function getFilters(): array;
 

@@ -2,10 +2,12 @@
 
 namespace wcf\system\object\filter;
 
+use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\AbstractFormField;
 
 /**
+ * @template TDatabaseObject of DatabaseObject
  * @template TValueType of mixed
  */
 interface IObjectFilter
@@ -40,4 +42,10 @@ interface IObjectFilter
      * @param TValueType $value
      */
     public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void;
+
+    /**
+     * @param TDatabaseObject $object
+     * @param TValueType $configuredValue
+     */
+    public function testObject(DatabaseObject $object, mixed $configuredValue): bool;
 }

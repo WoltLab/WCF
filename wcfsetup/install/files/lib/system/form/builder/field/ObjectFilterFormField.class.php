@@ -14,10 +14,15 @@ final class ObjectFilterFormField extends AbstractFormField
 {
     protected $templateName = 'shared_objectFilterFormField';
 
+    /**
+     * @var IObjectFilterBuilder<*>
+     */
     private IObjectFilterBuilder $builder;
 
     /**
      * Sets the builder that provides the available filters.
+     *
+     * @param IObjectFilterBuilder<*> $builder
      */
     public function builder(IObjectFilterBuilder $builder): static
     {
@@ -27,6 +32,7 @@ final class ObjectFilterFormField extends AbstractFormField
     }
 
     /**
+     * @return IObjectFilterBuilder<*>
      * @throws \BadMethodCallException if no builder has been set
      */
     public function getBuilder(): IObjectFilterBuilder

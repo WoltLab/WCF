@@ -16,12 +16,14 @@ use wcf\system\object\filter\builder\IObjectFilterBuilder;
 final class ObjectFilterBuilderCollecting implements IPsr14Event
 {
     /**
-     * @var array<string, IObjectFilterBuilder>
+     * @var array<string, IObjectFilterBuilder<*>>
      */
     private array $builders = [];
 
     /**
      * Registers a new object filter builder.
+     *
+     * @param IObjectFilterBuilder<*> $builder
      */
     public function register(IObjectFilterBuilder $builder): void
     {
@@ -29,7 +31,7 @@ final class ObjectFilterBuilderCollecting implements IPsr14Event
     }
 
     /**
-     * @return array<string, IObjectFilterBuilder>
+     * @return array<string, IObjectFilterBuilder<*>>
      */
     public function getBuilders(): array
     {

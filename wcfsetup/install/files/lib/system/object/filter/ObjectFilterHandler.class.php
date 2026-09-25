@@ -5,16 +5,18 @@ namespace wcf\system\object\filter;
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
-use wcf\data\user\User;
+use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\SelectFormField;
-use wcf\system\object\filter\user\IUserObjectFilter;
 use wcf\system\WCF;
 
+/**
+ * @template TDatabaseObject of DatabaseObject
+ */
 final class ObjectFilterHandler
 {
     /**
-     * @param list<IUserObjectFilter<mixed>> $filters
+     * @param list<IObjectFilter<TDatabaseObject, mixed>> $filters
      */
     public function __construct(
         private readonly array $filters,
@@ -75,9 +77,10 @@ final class ObjectFilterHandler
     }
 
     /**
+     * @param TDatabaseObject $object
      * @throws MappingError
      */
-    public function testUser(User $user, ?string $json): bool
+    public function testObject(DatabaseObject $object, ?string $json): bool
     {
         $values = $this->unserializeValues($json);
         if ($values === []) {
@@ -94,7 +97,7 @@ final class ObjectFilterHandler
             }
 
             $hasActiveFilters = true;
-            if (!$filter->testUser($user, $filter->unserializeValue($serializedValue))) {
+            if (!$filter->testObject($object, $filter->unserializeValue($serializedValue))) {
                 return false;
             }
         }
@@ -105,7 +108,7 @@ final class ObjectFilterHandler
     }
 
     /**
-     * @return array<string, IUserObjectFilter<mixed>>
+     * @return array<string, IObjectFilter<TDatabaseObject, mixed>>
      */
     private function getFiltersByIdentifier(): array
     {

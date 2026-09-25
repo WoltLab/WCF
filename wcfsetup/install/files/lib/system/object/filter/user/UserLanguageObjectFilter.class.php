@@ -2,15 +2,17 @@
 
 namespace wcf\system\object\filter\user;
 
+use wcf\data\DatabaseObject;
 use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\language\LanguageFactory;
+use wcf\system\object\filter\IObjectFilter;
 
 /**
- * @implements IUserObjectFilter<int>
+ * @implements IObjectFilter<User, int>
  */
-final class UserLanguageObjectFilter implements IUserObjectFilter
+final class UserLanguageObjectFilter implements IObjectFilter
 {
     #[\Override]
     public function getIdentifier(): string
@@ -61,8 +63,8 @@ final class UserLanguageObjectFilter implements IUserObjectFilter
     }
 
     #[\Override]
-    public function testUser(User $user, mixed $configuredValue): bool
+    public function testObject(DatabaseObject $object, mixed $configuredValue): bool
     {
-        return $user->languageID === $configuredValue;
+        return $object->languageID === $configuredValue;
     }
 }

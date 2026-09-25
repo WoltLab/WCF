@@ -10,13 +10,19 @@ use wcf\system\object\filter\user\UserAvatarObjectFilter;
 use wcf\system\object\filter\user\UserLanguageObjectFilter;
 use wcf\system\WCF;
 
+/**
+ * @implements IObjectFilterBuilder<User>
+ */
 final class NoticeObjectFilterBuilder implements IObjectFilterBuilder
 {
     /**
-     * @var list<IObjectFilter<mixed>>
+     * @var list<IObjectFilter<User, mixed>>
      */
     private readonly array $filters;
 
+    /**
+     * @var ObjectFilterHandler<User>
+     */
     private ObjectFilterHandler $handler;
 
     public function __construct()
@@ -56,9 +62,12 @@ final class NoticeObjectFilterBuilder implements IObjectFilterBuilder
             return true;
         }
 
-        return $this->getHandler()->testUser($user, $notice->conditions);
+        return $this->getHandler()->testObject($user, $notice->conditions);
     }
 
+    /**
+     * @return ObjectFilterHandler<User>
+     */
     private function getHandler(): ObjectFilterHandler
     {
         if (!isset($this->handler)) {

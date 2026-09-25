@@ -80,6 +80,9 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
         }
     }
 
+    /**
+     * @param IObjectFilterBuilder<*> $builder
+     */
     private function getForm(IObjectFilterBuilder $builder): Psr15DialogForm
     {
         $form = new Psr15DialogForm(

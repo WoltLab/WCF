@@ -2,14 +2,16 @@
 
 namespace wcf\system\object\filter\user;
 
+use wcf\data\DatabaseObject;
 use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\object\filter\IObjectFilter;
 
 /**
- * @implements IUserObjectFilter<bool>
+ * @implements IObjectFilter<User, bool>
  */
-final class UserAvatarObjectFilter implements IUserObjectFilter
+final class UserAvatarObjectFilter implements IObjectFilter
 {
     #[\Override]
     public function getIdentifier(): string
@@ -63,11 +65,11 @@ final class UserAvatarObjectFilter implements IUserObjectFilter
     }
 
     #[\Override]
-    public function testUser(User $user, mixed $unserializedValue): bool
+    public function testObject(DatabaseObject $object, mixed $configuredValue): bool
     {
-        return match ($unserializedValue) {
-            true => $user->avatarFileID !== null,
-            false => $user->avatarFileID === null,
+        return match ($configuredValue) {
+            true => $object->avatarFileID !== null,
+            false => $object->avatarFileID === null,
         };
     }
 }
