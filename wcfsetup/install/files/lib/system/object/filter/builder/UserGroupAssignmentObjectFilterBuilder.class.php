@@ -4,7 +4,9 @@ namespace wcf\system\object\filter\builder;
 
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\User;
+use wcf\event\user\group\assignment\UserGroupAssignmentObjectFilterCollecting;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\object\filter\IObjectListFilter;
 use wcf\system\object\filter\ObjectFilterHandler;
 use wcf\system\object\filter\ObjectListFilterHandler;
@@ -30,10 +32,13 @@ final class UserGroupAssignmentObjectFilterBuilder extends AbstractObjectFilterB
     #[\Override]
     protected function createFilters(): array
     {
-        return [
-            new UserAvatarObjectFilter(),
-            new UserLanguageObjectFilter(),
-        ];
+        $event = new UserGroupAssignmentObjectFilterCollecting();
+        $event->register(new UserAvatarObjectFilter());
+        $event->register(new UserLanguageObjectFilter());
+
+        EventHandler::getInstance()->fire($event);
+
+        return $event->getFilters();
     }
 
     #[\Override]

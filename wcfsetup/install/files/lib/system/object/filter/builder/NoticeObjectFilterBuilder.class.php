@@ -4,6 +4,8 @@ namespace wcf\system\object\filter\builder;
 
 use wcf\data\notice\Notice;
 use wcf\data\user\User;
+use wcf\event\notice\NoticeObjectFilterCollecting;
+use wcf\system\event\EventHandler;
 use wcf\system\object\filter\IObjectFilter;
 use wcf\system\object\filter\ObjectFilterHandler;
 use wcf\system\object\filter\user\UserAvatarObjectFilter;
@@ -26,10 +28,13 @@ final class NoticeObjectFilterBuilder extends AbstractObjectFilterBuilder
     #[\Override]
     protected function createFilters(): array
     {
-        return [
-            new UserAvatarObjectFilter(),
-            new UserLanguageObjectFilter(),
-        ];
+        $event = new NoticeObjectFilterCollecting();
+        $event->register(new UserAvatarObjectFilter());
+        $event->register(new UserLanguageObjectFilter());
+
+        EventHandler::getInstance()->fire($event);
+
+        return $event->getFilters();
     }
 
     #[\Override]
