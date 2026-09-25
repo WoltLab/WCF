@@ -61,12 +61,6 @@ final class UserLanguageObjectFilter implements IUserObjectFilter
     }
 
     #[\Override]
-    public function testValue(mixed $configuredValue, mixed $value): bool
-    {
-        return $configuredValue === $value;
-    }
-
-    #[\Override]
     public function testUser(User $user, mixed $configuredValue): bool
     {
         return $user->languageID === $configuredValue;

@@ -63,12 +63,6 @@ final class UserAvatarObjectFilter implements IUserObjectFilter
     }
 
     #[\Override]
-    public function testValue(mixed $configuredValue, mixed $value): bool
-    {
-        return (bool)$value;
-    }
-
-    #[\Override]
     public function testUser(User $user, mixed $unserializedValue): bool
     {
         return match ($unserializedValue) {

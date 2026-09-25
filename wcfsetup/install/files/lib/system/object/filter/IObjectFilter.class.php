@@ -40,10 +40,4 @@ interface IObjectFilter
      * @param TValueType $value
      */
     public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void;
-
-    /**
-     * @param TValueType $configuredValue
-     * @param mixed $value
-     */
-    public function testValue(mixed $configuredValue, mixed $value): bool;
 }
