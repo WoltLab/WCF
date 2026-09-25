@@ -6,14 +6,13 @@ use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
 use wcf\data\DatabaseObject;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\WCF;
 
 /**
  * @template TDatabaseObject of DatabaseObject
  */
-final class ObjectFilterHandler
+class ObjectFilterHandler
 {
     /**
      * @param list<IObjectFilter<TDatabaseObject, mixed>> $filters
@@ -41,39 +40,6 @@ final class ObjectFilterHandler
         $selection = SelectFormField::create('filter')
             ->options($filters)
             ->required();
-    }
-
-    /**
-     * @throws MappingError
-     */
-    public function applyFilters(PreparedStatementConditionBuilder $conditions, ?string $json): void
-    {
-        $values = $this->unserializeValues($json);
-        if ($values === []) {
-            $conditions->add('1=0');
-
-            return;
-        }
-
-        $filters = $this->getFiltersByIdentifier();
-
-        $hasActiveFilters = false;
-        foreach ($values as [$identifier, $serializedValue]) {
-            $filter = $filters[$identifier] ?? null;
-            if ($filter === null) {
-                continue;
-            }
-
-            $filter->applyFilter(
-                $conditions,
-                $filter->unserializeValue($serializedValue),
-            );
-            $hasActiveFilters = true;
-        }
-
-        if (!$hasActiveFilters) {
-            $conditions->add('1=0');
-        }
     }
 
     /**
@@ -110,7 +76,7 @@ final class ObjectFilterHandler
     /**
      * @return array<string, IObjectFilter<TDatabaseObject, mixed>>
      */
-    private function getFiltersByIdentifier(): array
+    protected function getFiltersByIdentifier(): array
     {
         $filters = [];
         foreach ($this->filters as $filter) {
@@ -124,7 +90,7 @@ final class ObjectFilterHandler
      * @return list<array{0: string, 1: string}>
      * @throws MappingError
      */
-    private function unserializeValues(?string $json): array
+    protected function unserializeValues(?string $json): array
     {
         if ($json === null) {
             return [];

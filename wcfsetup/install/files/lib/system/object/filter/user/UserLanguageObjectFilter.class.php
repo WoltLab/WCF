@@ -7,12 +7,12 @@ use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\language\LanguageFactory;
-use wcf\system\object\filter\IObjectFilter;
+use wcf\system\object\filter\IObjectListFilter;
 
 /**
- * @implements IObjectFilter<User, int>
+ * @implements IObjectListFilter<User, int>
  */
-final class UserLanguageObjectFilter implements IObjectFilter
+final class UserLanguageObjectFilter implements IObjectListFilter
 {
     #[\Override]
     public function getIdentifier(): string

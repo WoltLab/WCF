@@ -3,7 +3,6 @@
 namespace wcf\system\object\filter;
 
 use wcf\data\DatabaseObject;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\AbstractFormField;
 
 /**
@@ -37,11 +36,6 @@ interface IObjectFilter
      * @param TValueType $value
      */
     public function summarizeValue(mixed $value): string;
-
-    /**
-     * @param TValueType $value
-     */
-    public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void;
 
     /**
      * @param TDatabaseObject $object

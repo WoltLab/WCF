@@ -6,12 +6,12 @@ use wcf\data\DatabaseObject;
 use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\BooleanFormField;
-use wcf\system\object\filter\IObjectFilter;
+use wcf\system\object\filter\IObjectListFilter;
 
 /**
- * @implements IObjectFilter<User, bool>
+ * @implements IObjectListFilter<User, bool>
  */
-final class UserAvatarObjectFilter implements IObjectFilter
+final class UserAvatarObjectFilter implements IObjectListFilter
 {
     #[\Override]
     public function getIdentifier(): string

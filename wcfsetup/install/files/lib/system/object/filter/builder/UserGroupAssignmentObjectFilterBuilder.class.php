@@ -5,8 +5,8 @@ namespace wcf\system\object\filter\builder;
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\object\filter\IObjectFilter;
-use wcf\system\object\filter\ObjectFilterHandler;
+use wcf\system\object\filter\IObjectListFilter;
+use wcf\system\object\filter\ObjectListFilterHandler;
 use wcf\system\object\filter\user\UserAvatarObjectFilter;
 use wcf\system\object\filter\user\UserLanguageObjectFilter;
 use wcf\system\WCF;
@@ -17,14 +17,14 @@ use wcf\system\WCF;
 final class UserGroupAssignmentObjectFilterBuilder implements IObjectFilterBuilder
 {
     /**
-     * @var list<IObjectFilter<User, mixed>>
+     * @var list<IObjectListFilter<User, mixed>>
      */
     private readonly array $filters;
 
     /**
-     * @var ObjectFilterHandler<User>
+     * @var ObjectListFilterHandler<User>
      */
-    private ObjectFilterHandler $handler;
+    private ObjectListFilterHandler $handler;
 
     public function __construct()
     {
@@ -34,6 +34,9 @@ final class UserGroupAssignmentObjectFilterBuilder implements IObjectFilterBuild
         ];
     }
 
+    /**
+     * @return list<IObjectListFilter<User, mixed>>
+     */
     #[\Override]
     public function getFilters(): array
     {
@@ -63,12 +66,12 @@ final class UserGroupAssignmentObjectFilterBuilder implements IObjectFilterBuild
     }
 
     /**
-     * @return ObjectFilterHandler<User>
+     * @return ObjectListFilterHandler<User>
      */
-    private function getHandler(): ObjectFilterHandler
+    private function getHandler(): ObjectListFilterHandler
     {
         if (!isset($this->handler)) {
-            $this->handler = new ObjectFilterHandler($this->getFilters());
+            $this->handler = new ObjectListFilterHandler($this->getFilters());
         }
 
         return $this->handler;
