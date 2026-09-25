@@ -11,6 +11,14 @@ use wcf\system\object\filter\user\UserLanguageObjectFilter;
 use wcf\system\WCF;
 
 /**
+ * Provides the filters for the conditions of notices, controlling which users
+ * a notice is shown to.
+ *
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.3
+ *
  * @extends AbstractObjectFilterBuilder<User, IObjectFilter<User, mixed>, ObjectFilterHandler<User>>
  */
 final class NoticeObjectFilterBuilder extends AbstractObjectFilterBuilder

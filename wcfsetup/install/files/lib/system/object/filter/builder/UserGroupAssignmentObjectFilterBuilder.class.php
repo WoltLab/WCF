@@ -13,6 +13,16 @@ use wcf\system\object\filter\user\UserLanguageObjectFilter;
 use wcf\system\WCF;
 
 /**
+ * Provides the filters for the conditions of automatic user group assignments.
+ *
+ * The filters can be evaluated against a single user or applied to the
+ * conditions of a user list to find all matching users at once.
+ *
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.3
+ *
  * @extends AbstractObjectFilterBuilder<User, IObjectListFilter<User, mixed>, ObjectListFilterHandler<User>>
  */
 final class UserGroupAssignmentObjectFilterBuilder extends AbstractObjectFilterBuilder
@@ -44,6 +54,11 @@ final class UserGroupAssignmentObjectFilterBuilder extends AbstractObjectFilterB
         return WCF::getSession()->hasPermission('admin.user.canManageGroupAssignment');
     }
 
+    /**
+     * Adds the filters of the assignment to the given conditions of a user list.
+     *
+     * An assignment without any active filters matches no users.
+     */
     public function applyFilters(UserGroupAssignment $assignment, PreparedStatementConditionBuilder $conditions): void
     {
         $this->getHandler()->applyFilters(
@@ -52,6 +67,11 @@ final class UserGroupAssignmentObjectFilterBuilder extends AbstractObjectFilterB
         );
     }
 
+    /**
+     * Returns whether the given user matches the filters of the assignment.
+     *
+     * An assignment without any active filters matches no users.
+     */
     public function testUser(UserGroupAssignment $assignment, User $user): bool
     {
         return $this->getHandler()->testObject(
