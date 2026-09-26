@@ -16,6 +16,7 @@ use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\object\filter\builder\IObjectFilterBuilder;
+use wcf\system\WCF;
 
 /**
  * Provides the dialog to configure a single filter of an object filter builder.
@@ -130,6 +131,12 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
 
             $selectValues[$filter->getIdentifier()] = $filter->getTitle();
         }
+
+        $collator = new \Collator(WCF::getLanguage()->getLocale());
+        \uasort(
+            $selectValues,
+            static fn(string $a, string $b) => $collator->compare($a, $b)
+        );
 
         $select->options($selectValues);
 
