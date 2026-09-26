@@ -8,7 +8,6 @@ use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\event\session\PreserveVariablesCollecting;
-use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -91,12 +90,6 @@ final class SessionHandler extends SingletonFactory
 
     private bool $firstVisit = false;
 
-    /**
-     * list of names of permissions only available for users
-     * @var string[]
-     */
-    private array $usersOnlyPermissions = [];
-
     private string $xsrfToken;
 
     private const GUEST_SESSION_LIFETIME = 2 * 3600;
@@ -166,7 +159,6 @@ final class SessionHandler extends SingletonFactory
     protected function init(): void
     {
         $this->isACP = (\class_exists(WCFACP::class, false) || \PACKAGE_ID === 0);
-        $this->usersOnlyPermissions = UserGroupOptionCacheBuilder::getInstance()->getData([], 'usersOnlyOptions');
     }
 
     /**
@@ -719,12 +711,6 @@ final class SessionHandler extends SingletonFactory
      */
     public function getPermission(string $permission): mixed
     {
-        // check if a users only permission is checked for a guest and return
-        // false if that is the case
-        if ($this->user->isGuest() && \in_array($permission, $this->usersOnlyPermissions, true)) {
-            return false;
-        }
-
         $this->loadGroupData();
 
         if (!isset($this->groupData[$permission])) {

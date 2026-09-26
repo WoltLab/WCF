@@ -32,21 +32,23 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
     {
         $data = $excludedInTinyBuild = [];
 
-        if (\VISITOR_USE_TINY_BUILD !== 0) {
-            foreach ($parameters as $groupID) {
-                if (UserGroup::getGroupByID($groupID)->groupType === UserGroup::GUESTS) {
-                    $sql = "SELECT  optionName, additionalData
-                            FROM    wcf1_user_group_option
-                            WHERE   optionType = 'boolean'";
-                    $statement = WCF::getDB()->prepare($sql);
-                    $statement->execute();
-                    while ($option = $statement->fetchObject(UserGroupOption::class)) {
-                        if (!empty($option->excludedInTinyBuild)) {
-                            $excludedInTinyBuild[] = $option->optionName;
-                        }
-                    }
+        $includesGuestsGroup = false;
+        foreach ($parameters as $groupID) {
+            if (UserGroup::getGroupByID($groupID)?->groupType === UserGroup::GUESTS) {
+                $includesGuestsGroup = true;
+                break;
+            }
+        }
 
-                    break;
+        if (\VISITOR_USE_TINY_BUILD !== 0 && $includesGuestsGroup) {
+            $sql = "SELECT  optionName, additionalData
+                    FROM    wcf1_user_group_option
+                    WHERE   optionType = 'boolean'";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute();
+            while ($option = $statement->fetchObject(UserGroupOption::class)) {
+                if (!empty($option->excludedInTinyBuild)) {
+                    $excludedInTinyBuild[] = $option->optionName;
                 }
             }
         }
@@ -70,7 +72,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
             if (
-                $row['usersOnly'] !== 0
+                $row['usersOnly'] === 1
                 && UserGroup::getGroupByID($row['groupID'])->groupType === UserGroup::GUESTS
             ) {
                 continue;
@@ -101,7 +103,11 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
 
             foreach ($options as $option) {
                 if (!isset($data[$option['optionName']])) {
-                    $data[$option['optionName']] = ['type' => $option['optionType'], 'values' => []];
+                    $data[$option['optionName']] = [
+                        'type' => $option['optionType'],
+                        'usersOnly' => $option['usersOnly'] === 1,
+                        'values' => [],
+                    ];
                 }
 
                 $data[$option['optionName']]['values'][] = $option['optionValue'];
@@ -158,8 +164,10 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
                 $result = 0;
             }
 
-            // unset false values
-            if ($result === false) {
+            // Unset false values. Users-only options are only removed for guests at this
+            // point, because they must still be able to disable other options or to be
+            // reported as 'Never'.
+            if ($result === false || ($includesGuestsGroup && $option['usersOnly'])) {
                 unset($data[$optionName]);
             } else {
                 $data[$optionName] = $result;
