@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\object\filter\date;
+namespace wcf\system\object\filter\user;
 
 use wcf\data\DatabaseObject;
 use wcf\data\user\User;
