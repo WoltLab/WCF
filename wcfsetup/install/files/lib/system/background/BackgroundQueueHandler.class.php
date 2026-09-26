@@ -6,6 +6,7 @@ use wcf\data\user\User;
 use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\background\job\AbstractUniqueBackgroundJob;
 use wcf\system\database\exception\DatabaseQueryExecutionException;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\ParentClassException;
 use wcf\system\session\SessionHandler;
 use wcf\system\SingletonFactory;
@@ -78,6 +79,11 @@ final class BackgroundQueueHandler extends SingletonFactory
             }
         }
 
+        $jobs = $this->removeQueuedUniqueJobs($jobs);
+        if ($jobs === []) {
+            return;
+        }
+
         $sql = "INSERT IGNORE INTO wcf1_background_job
                                    (job, time, identifier)
                 VALUES             (?, ?, ?)";
@@ -104,6 +110,55 @@ final class BackgroundQueueHandler extends SingletonFactory
                 }
             }
         }
+    }
+
+    /**
+     * Removes the unique jobs that are already queued, the insert would be ignored anyway.
+     *
+     * A plain read takes no locks, unlike `INSERT IGNORE`, which matters when many requests
+     * enqueue the same job, for example while a tolerant cache waits for its rebuild.
+     *
+     * @param AbstractBackgroundJob[] $jobs
+     * @return AbstractBackgroundJob[]
+     */
+    private function removeQueuedUniqueJobs(array $jobs): array
+    {
+        // Inside a transaction the consistent read may still see a job row that was
+        // deleted since, only the current read of `INSERT IGNORE` is reliable there.
+        if (WCF::getDB()->isInsideTransaction()) {
+            return $jobs;
+        }
+
+        $identifiers = [];
+        foreach ($jobs as $job) {
+            if ($job instanceof AbstractUniqueBackgroundJob) {
+                $identifiers[] = $job->identifier();
+            }
+        }
+
+        if ($identifiers === []) {
+            return $jobs;
+        }
+
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add('identifier IN (?)', [$identifiers]);
+
+        $sql = "SELECT  identifier
+                FROM    wcf1_background_job
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+        $queuedIdentifiers = $statement->fetchAll(\PDO::FETCH_COLUMN);
+
+        if ($queuedIdentifiers === []) {
+            return $jobs;
+        }
+
+        return \array_filter(
+            $jobs,
+            static fn(AbstractBackgroundJob $job) => !($job instanceof AbstractUniqueBackgroundJob)
+                || !\in_array($job->identifier(), $queuedIdentifiers, true)
+        );
     }
 
     /**
