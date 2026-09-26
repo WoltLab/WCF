@@ -1219,10 +1219,38 @@ final class SessionHandler extends SingletonFactory
             }
         }
 
-        if ($this->legacySession !== null) {
+        if ($this->legacySession !== null && $this->legacySessionNeedsUpdate($data)) {
             $sessionEditor = new SessionEditor($this->legacySession);
             $sessionEditor->update($data);
         }
+    }
+
+    /**
+     * Returns whether the legacy session must be written to reflect the given data.
+     *
+     * Columns other than the session id and the page location are only informational
+     * and may lag behind by up to one minute, reducing the write traffic in the same
+     * way as for `wcf1_user_session`.
+     *
+     * @param array<string, mixed> $data
+     */
+    private function legacySessionNeedsUpdate(array $data): bool
+    {
+        \assert($this->legacySession !== null);
+
+        if ($this->legacySession->lastActivityTime < (\TIME_NOW - 60)) {
+            return true;
+        }
+
+        // The session id must be kept in sync for spiders sharing a single legacy session,
+        // otherwise every request of theirs has to look it up by the spider identifier.
+        foreach (['sessionID', 'pageID', 'pageObjectID', 'parentPageID', 'parentPageObjectID'] as $column) {
+            if (\array_key_exists($column, $data) && $data[$column] !== $this->legacySession->{$column}) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
