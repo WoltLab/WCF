@@ -3401,12 +3401,16 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.objectFilter.addFilter"><![CDATA[Add Condition]]></item>
 		<item name="wcf.objectFilter.daysOfWeek"><![CDATA[Day of the Week]]></item>
 		<item name="wcf.objectFilter.daysOfWeek.summary"><![CDATA[Day of the week: {$values}]]></item>
+		<item name="wcf.objectFilter.endDate"><![CDATA[End Date]]></item>
+		<item name="wcf.objectFilter.endDate.summary"><![CDATA[Until {$value|plainTime}]]></item>
 		<item name="wcf.objectFilter.joiner"><![CDATA[AND]]></item>
 		<item name="wcf.objectFilter.notRequestedPage"><![CDATA[Requested Page Excluded]]></item>
 		<item name="wcf.objectFilter.notRequestedPage.summary"><![CDATA[Requested page is none of: {$values}]]></item>
 		<item name="wcf.objectFilter.range.error.endBeforeStart"><![CDATA[The end value is less than the start value.]]></item>
 		<item name="wcf.objectFilter.requestedPage"><![CDATA[Requested Page]]></item>
 		<item name="wcf.objectFilter.requestedPage.summary"><![CDATA[Requested page is one of: {$values}]]></item>
+		<item name="wcf.objectFilter.startDate"><![CDATA[Start Date]]></item>
+		<item name="wcf.objectFilter.startDate.summary"><![CDATA[From {$value|plainTime}]]></item>
 		<item name="wcf.objectFilter.user.activated"><![CDATA[Account Activated]]></item>
 		<item name="wcf.objectFilter.user.activated.summary.no"><![CDATA[Account is not activated]]></item>
 		<item name="wcf.objectFilter.user.activated.summary.yes"><![CDATA[Account is activated]]></item>
