@@ -181,7 +181,11 @@ final class PackageUpdateDispatcher extends SingletonFactory
             ];
         }
         $client = HttpFactory::makeClient($options);
-        $headers = [];
+        $headers = [
+            // Guzzle suppresses `Accept-Encoding` unless set explicitly, but the
+            // lists compress about 16:1 and dominate the duration of the refresh.
+            'accept-encoding' => 'gzip',
+        ];
 
         $requestedVersion = \wcf\getMinorVersion();
         if (PackageUpdateServer::isUpgradeOverrideEnabled()) {
