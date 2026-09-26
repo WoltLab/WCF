@@ -260,7 +260,17 @@ final class PackageUpdateDispatcher extends SingletonFactory
             $allNewPackages = $this->parsePackageUpdateXML($updateServer, $response->getBody(), $apiVersion);
         }
 
-        $metaData = [];
+        // Rewriting the stored list is the most expensive step of the refresh, but
+        // yields identical rows whenever the parsed list has not changed.
+        $storedContentHash = $updateServer->getMetaData()['contentHash'] ?? '';
+        $contentHash = $storedContentHash;
+        if ($allNewPackages !== false) {
+            $contentHash = \hash('xxh128', \serialize($allNewPackages));
+        }
+
+        $metaData = [
+            'contentHash' => $contentHash,
+        ];
         if (\in_array($apiVersion, ['2.1', '3.1'], true)) {
             if ($response->getHeader('etag') === [] && $response->getHeader('last-modified') === []) {
                 throw new SystemException("Missing required HTTP headers 'etag' and 'last-modified'.");
@@ -278,7 +288,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
         unset($request, $response);
 
-        if ($allNewPackages !== false) {
+        if ($allNewPackages !== false && $contentHash !== $storedContentHash) {
             // purge package list
             $sql = "DELETE FROM wcf1_package_update
                     WHERE       packageUpdateServerID = ?";
