@@ -714,7 +714,7 @@ final class SessionHandler extends SingletonFactory
         // save session
         $sessionData = [
             'sessionID' => $this->sessionID,
-            'userID' => $this->user->userID,
+            'userID' => $this->user->isGuest() ? null : $this->user->userID,
             'ipAddress' => UserUtil::getIpAddress(),
             'userAgent' => UserUtil::getUserAgent(),
             'lastActivityTime' => \TIME_NOW,
@@ -723,7 +723,11 @@ final class SessionHandler extends SingletonFactory
             'spiderIdentifier' => $spiderIdentifier,
         ];
 
-        return SessionEditor::create($sessionData);
+        // The values are already truncated to fit their columns; reading the row
+        // back would only yield the same data at the cost of another query.
+        SessionEditor::fastCreate($sessionData);
+
+        return new LegacySession(null, $sessionData);
     }
 
     /**
