@@ -4,9 +4,7 @@ namespace wcf\system\object\filter\user;
 
 use wcf\data\DatabaseObject;
 use wcf\data\user\User;
-use wcf\system\form\builder\field\BooleanFormField;
-use wcf\system\object\filter\IObjectFilter;
-use wcf\system\WCF;
+use wcf\system\object\filter\AbstractBooleanObjectFilter;
 use wcf\util\UserUtil;
 
 /**
@@ -20,9 +18,9 @@ use wcf\util\UserUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
- * @implements IObjectFilter<User, bool>
+ * @extends AbstractBooleanObjectFilter<User>
  */
-final class UserMobileBrowserObjectFilter implements IObjectFilter
+final class UserMobileBrowserObjectFilter extends AbstractBooleanObjectFilter
 {
     #[\Override]
     public function getIdentifier(): string
@@ -31,44 +29,9 @@ final class UserMobileBrowserObjectFilter implements IObjectFilter
     }
 
     #[\Override]
-    public function getTitle(): string
+    protected function getLanguageItem(): string
     {
-        return WCF::getLanguage()->get('wcf.objectFilter.user.mobileBrowser');
-    }
-
-    #[\Override]
-    public function getFormField(): BooleanFormField
-    {
-        return BooleanFormField::create('userMobileBrowser')
-            ->label('wcf.objectFilter.user.mobileBrowser');
-    }
-
-    #[\Override]
-    public function serializeValue(mixed $value): string
-    {
-        return $value ? '1' : '0';
-    }
-
-    #[\Override]
-    public function unserializeValue(string $serializedValue): bool
-    {
-        return (bool)$serializedValue;
-    }
-
-    #[\Override]
-    public function toFormFieldValue(mixed $value): bool
-    {
-        return $value;
-    }
-
-    #[\Override]
-    public function summarizeValue(mixed $value): string
-    {
-        if ($value) {
-            return WCF::getLanguage()->get('wcf.objectFilter.user.mobileBrowser.summary.yes');
-        }
-
-        return WCF::getLanguage()->get('wcf.objectFilter.user.mobileBrowser.summary.no');
+        return 'wcf.objectFilter.user.mobileBrowser';
     }
 
     #[\Override]

@@ -6,9 +6,8 @@ use wcf\data\DatabaseObject;
 use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\NumericRangeFormField;
+use wcf\system\object\filter\AbstractRangeObjectFilter;
 use wcf\system\object\filter\IObjectListFilter;
-use wcf\system\object\filter\TRangeObjectFilter;
-use wcf\system\WCF;
 
 /**
  * Filters users by the number of days since their registration. The value
@@ -20,12 +19,11 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
+ * @extends AbstractRangeObjectFilter<User, int>
  * @implements IObjectListFilter<User, array{0: ?int, 1: ?int}>
  */
-final class UserRegistrationDaysObjectFilter implements IObjectListFilter
+final class UserRegistrationDaysObjectFilter extends AbstractRangeObjectFilter implements IObjectListFilter
 {
-    use TRangeObjectFilter;
-
     #[\Override]
     public function getIdentifier(): string
     {
@@ -33,58 +31,24 @@ final class UserRegistrationDaysObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
-    public function getTitle(): string
+    protected function getLanguageItem(): string
     {
-        return WCF::getLanguage()->get('wcf.objectFilter.user.registrationDays');
+        return 'wcf.objectFilter.user.registrationDays';
     }
 
     #[\Override]
-    public function getFormField(): NumericRangeFormField
+    protected function createFormField(): NumericRangeFormField
     {
         return NumericRangeFormField::create('userRegistrationDays')
             ->label('wcf.user.condition.registrationDateInterval')
             ->integerValues()
-            ->minimum(0)
-            ->addValidator($this->getRangeValidator());
-    }
-
-    /**
-     * @param string|array{0: ?int, 1: ?int} $value
-     */
-    #[\Override]
-    public function serializeValue(mixed $value): string
-    {
-        [$from, $to] = \is_string($value) ? $this->unserializeValue($value) : $value;
-
-        return $from . ';' . $to;
+            ->minimum(0);
     }
 
     #[\Override]
-    public function unserializeValue(string $serializedValue): array
+    protected function unserializeBound(string $bound): int
     {
-        [$from, $to] = $this->splitRange($serializedValue);
-
-        return [
-            $from === null ? null : (int)$from,
-            $to === null ? null : (int)$to,
-        ];
-    }
-
-    #[\Override]
-    public function toFormFieldValue(mixed $value): string
-    {
-        return $this->serializeValue($value);
-    }
-
-    #[\Override]
-    public function summarizeValue(mixed $value): string
-    {
-        [$from, $to] = $value;
-
-        return WCF::getLanguage()->getDynamicVariable('wcf.objectFilter.user.registrationDays.summary', [
-            'from' => $from,
-            'to' => $to,
-        ]);
+        return (int)$bound;
     }
 
     #[\Override]

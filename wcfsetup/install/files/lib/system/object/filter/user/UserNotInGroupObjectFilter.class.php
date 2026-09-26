@@ -3,12 +3,10 @@
 namespace wcf\system\object\filter\user;
 
 use wcf\data\DatabaseObject;
-use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\object\filter\AbstractSelectionObjectFilter;
 use wcf\system\object\filter\IObjectListFilter;
-use wcf\system\WCF;
 
 /**
  * Filters users that are not a member of the user group with the given id.
@@ -18,9 +16,10 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
+ * @extends AbstractSelectionObjectFilter<User>
  * @implements IObjectListFilter<User, int>
  */
-final class UserNotInGroupObjectFilter implements IObjectListFilter
+final class UserNotInGroupObjectFilter extends AbstractSelectionObjectFilter implements IObjectListFilter
 {
     /**
      * @param bool $includeGuests offers the guest group for selection, only useful if guests are tested
@@ -36,44 +35,15 @@ final class UserNotInGroupObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
-    public function getTitle(): string
+    protected function getLanguageItem(): string
     {
-        return WCF::getLanguage()->get('wcf.objectFilter.user.notInGroup');
+        return 'wcf.objectFilter.user.notInGroup';
     }
 
     #[\Override]
-    public function getFormField(): SelectFormField
+    protected function createOptions(): array
     {
-        return SelectFormField::create('userNotInGroup')
-            ->label('wcf.objectFilter.user.group.group')
-            ->options(UserGroupObjectFilter::getSelectableGroups($this->includeGuests), labelLanguageItems: false)
-            ->required();
-    }
-
-    #[\Override]
-    public function serializeValue(mixed $value): string
-    {
-        return (string)$value;
-    }
-
-    #[\Override]
-    public function unserializeValue(string $serializedValue): int
-    {
-        return (int)$serializedValue;
-    }
-
-    #[\Override]
-    public function toFormFieldValue(mixed $value): int
-    {
-        return $value;
-    }
-
-    #[\Override]
-    public function summarizeValue(mixed $value): string
-    {
-        return WCF::getLanguage()->getDynamicVariable('wcf.objectFilter.user.notInGroup.summary', [
-            'group' => UserGroup::getGroupByID($value)?->getName() ?? $value,
-        ]);
+        return UserGroupObjectFilter::getSelectableGroups($this->includeGuests);
     }
 
     #[\Override]

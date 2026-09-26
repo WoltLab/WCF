@@ -3,12 +3,10 @@
 namespace wcf\system\object\filter\user;
 
 use wcf\data\DatabaseObject;
-use wcf\data\trophy\TrophyCache;
 use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\object\filter\AbstractSelectionObjectFilter;
 use wcf\system\object\filter\IObjectListFilter;
-use wcf\system\WCF;
 
 /**
  * Filters users that have not received the trophy with the given id.
@@ -18,9 +16,10 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
+ * @extends AbstractSelectionObjectFilter<User>
  * @implements IObjectListFilter<User, int>
  */
-final class UserNoTrophyObjectFilter implements IObjectListFilter
+final class UserNoTrophyObjectFilter extends AbstractSelectionObjectFilter implements IObjectListFilter
 {
     #[\Override]
     public function getIdentifier(): string
@@ -29,44 +28,15 @@ final class UserNoTrophyObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
-    public function getTitle(): string
+    protected function getLanguageItem(): string
     {
-        return WCF::getLanguage()->get('wcf.objectFilter.user.noTrophy');
+        return 'wcf.objectFilter.user.noTrophy';
     }
 
     #[\Override]
-    public function getFormField(): SelectFormField
+    protected function createOptions(): array
     {
-        return SelectFormField::create('userNoTrophy')
-            ->label('wcf.objectFilter.user.trophy.trophy')
-            ->options(UserTrophyObjectFilter::getSelectableTrophies(), labelLanguageItems: false)
-            ->required();
-    }
-
-    #[\Override]
-    public function serializeValue(mixed $value): string
-    {
-        return (string)$value;
-    }
-
-    #[\Override]
-    public function unserializeValue(string $serializedValue): int
-    {
-        return (int)$serializedValue;
-    }
-
-    #[\Override]
-    public function toFormFieldValue(mixed $value): int
-    {
-        return $value;
-    }
-
-    #[\Override]
-    public function summarizeValue(mixed $value): string
-    {
-        return WCF::getLanguage()->getDynamicVariable('wcf.objectFilter.user.noTrophy.summary', [
-            'trophy' => TrophyCache::getInstance()->getTrophyByID($value)?->getTitle() ?? $value,
-        ]);
+        return UserTrophyObjectFilter::getSelectableTrophies();
     }
 
     #[\Override]

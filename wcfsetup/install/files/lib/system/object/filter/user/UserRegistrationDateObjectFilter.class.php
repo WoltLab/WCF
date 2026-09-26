@@ -6,8 +6,8 @@ use wcf\data\DatabaseObject;
 use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\DateRangeFormField;
+use wcf\system\object\filter\AbstractRangeObjectFilter;
 use wcf\system\object\filter\IObjectListFilter;
-use wcf\system\object\filter\TRangeObjectFilter;
 use wcf\system\WCF;
 
 /**
@@ -20,12 +20,11 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
+ * @extends AbstractRangeObjectFilter<User, string>
  * @implements IObjectListFilter<User, array{0: ?string, 1: ?string}>
  */
-final class UserRegistrationDateObjectFilter implements IObjectListFilter
+final class UserRegistrationDateObjectFilter extends AbstractRangeObjectFilter implements IObjectListFilter
 {
-    use TRangeObjectFilter;
-
     #[\Override]
     public function getIdentifier(): string
     {
@@ -33,40 +32,22 @@ final class UserRegistrationDateObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
-    public function getTitle(): string
+    protected function getLanguageItem(): string
     {
-        return WCF::getLanguage()->get('wcf.objectFilter.user.registrationDate');
+        return 'wcf.objectFilter.user.registrationDate';
     }
 
     #[\Override]
-    public function getFormField(): DateRangeFormField
+    protected function createFormField(): DateRangeFormField
     {
         return DateRangeFormField::create('userRegistrationDate')
-            ->label('wcf.user.condition.registrationDate')
-            ->addValidator($this->getRangeValidator());
-    }
-
-    /**
-     * @param string|array{0: ?string, 1: ?string} $value
-     */
-    #[\Override]
-    public function serializeValue(mixed $value): string
-    {
-        [$from, $to] = \is_string($value) ? $this->splitRange($value) : $value;
-
-        return $from . ';' . $to;
+            ->label('wcf.user.condition.registrationDate');
     }
 
     #[\Override]
-    public function unserializeValue(string $serializedValue): array
+    protected function unserializeBound(string $bound): string
     {
-        return $this->splitRange($serializedValue);
-    }
-
-    #[\Override]
-    public function toFormFieldValue(mixed $value): string
-    {
-        return $this->serializeValue($value);
+        return $bound;
     }
 
     #[\Override]

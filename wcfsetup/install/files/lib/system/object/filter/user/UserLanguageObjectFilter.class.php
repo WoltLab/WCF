@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\language\LanguageFactory;
+use wcf\system\object\filter\AbstractMultipleSelectionObjectFilter;
 use wcf\system\object\filter\IObjectListFilter;
 use wcf\system\WCF;
 
@@ -21,9 +22,10 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
+ * @extends AbstractMultipleSelectionObjectFilter<User>
  * @implements IObjectListFilter<User, list<int>>
  */
-final class UserLanguageObjectFilter implements IObjectListFilter
+final class UserLanguageObjectFilter extends AbstractMultipleSelectionObjectFilter implements IObjectListFilter
 {
     #[\Override]
     public function getIdentifier(): string
@@ -32,9 +34,23 @@ final class UserLanguageObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
-    public function getTitle(): string
+    protected function getLanguageItem(): string
     {
-        return WCF::getLanguage()->get('wcf.objectFilter.user.language');
+        return 'wcf.objectFilter.user.language';
+    }
+
+    #[\Override]
+    protected function getLabels(array $objectIDs): array
+    {
+        $labels = [];
+        foreach ($objectIDs as $languageID) {
+            $language = LanguageFactory::getInstance()->getLanguage($languageID);
+            if ($language !== null) {
+                $labels[] = $language->__toString();
+            }
+        }
+
+        return $labels;
     }
 
     #[\Override]
@@ -44,46 +60,6 @@ final class UserLanguageObjectFilter implements IObjectListFilter
             ->label('wcf.user.condition.languages')
             ->options(LanguageFactory::getInstance()->getLanguages())
             ->required();
-    }
-
-    /**
-     * @param list<int|string> $value
-     */
-    #[\Override]
-    public function serializeValue(mixed $value): string
-    {
-        return \implode(',', \array_map(static fn($languageID) => (int)$languageID, $value));
-    }
-
-    #[\Override]
-    public function unserializeValue(string $serializedValue): array
-    {
-        return \array_map(static fn($languageID) => (int)$languageID, \explode(',', $serializedValue));
-    }
-
-    /**
-     * @return list<int>
-     */
-    #[\Override]
-    public function toFormFieldValue(mixed $value): array
-    {
-        return $value;
-    }
-
-    #[\Override]
-    public function summarizeValue(mixed $value): string
-    {
-        $languages = [];
-        foreach ($value as $languageID) {
-            $language = LanguageFactory::getInstance()->getLanguage($languageID);
-            if ($language !== null) {
-                $languages[] = $language->__toString();
-            }
-        }
-
-        return WCF::getLanguage()->getDynamicVariable('wcf.objectFilter.user.language.summary', [
-            'languages' => \implode(', ', $languages),
-        ]);
     }
 
     #[\Override]

@@ -5,7 +5,7 @@ namespace wcf\system\object\filter\date;
 use wcf\data\DatabaseObject;
 use wcf\data\user\User;
 use wcf\system\form\builder\field\MultipleSelectionFormField;
-use wcf\system\object\filter\IObjectFilter;
+use wcf\system\object\filter\AbstractMultipleSelectionObjectFilter;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 
@@ -19,9 +19,9 @@ use wcf\util\DateUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
- * @implements IObjectFilter<User, list<int>>
+ * @extends AbstractMultipleSelectionObjectFilter<User>
  */
-final class DaysOfWeekObjectFilter implements IObjectFilter
+final class DaysOfWeekObjectFilter extends AbstractMultipleSelectionObjectFilter
 {
     #[\Override]
     public function getIdentifier(): string
@@ -30,9 +30,18 @@ final class DaysOfWeekObjectFilter implements IObjectFilter
     }
 
     #[\Override]
-    public function getTitle(): string
+    protected function getLanguageItem(): string
     {
-        return WCF::getLanguage()->get('wcf.objectFilter.daysOfWeek');
+        return 'wcf.objectFilter.daysOfWeek';
+    }
+
+    #[\Override]
+    protected function getLabels(array $objectIDs): array
+    {
+        return \array_values(\array_map(
+            static fn(string $day) => WCF::getLanguage()->get($day),
+            \array_intersect_key($this->getDays(), \array_flip($objectIDs)),
+        ));
     }
 
     #[\Override]
@@ -42,43 +51,6 @@ final class DaysOfWeekObjectFilter implements IObjectFilter
             ->label('wcf.date.daysOfWeek')
             ->options($this->getDays())
             ->required();
-    }
-
-    /**
-     * @param list<int|string> $value
-     */
-    #[\Override]
-    public function serializeValue(mixed $value): string
-    {
-        return \implode(',', \array_map(static fn($day) => (int)$day, $value));
-    }
-
-    #[\Override]
-    public function unserializeValue(string $serializedValue): array
-    {
-        return \array_map(static fn($day) => (int)$day, \explode(',', $serializedValue));
-    }
-
-    /**
-     * @return list<int>
-     */
-    #[\Override]
-    public function toFormFieldValue(mixed $value): array
-    {
-        return $value;
-    }
-
-    #[\Override]
-    public function summarizeValue(mixed $value): string
-    {
-        $days = \array_intersect_key($this->getDays(), \array_flip($value));
-
-        return WCF::getLanguage()->getDynamicVariable('wcf.objectFilter.daysOfWeek.summary', [
-            'days' => \implode(', ', \array_map(
-                static fn(string $day) => WCF::getLanguage()->get($day),
-                $days,
-            )),
-        ]);
     }
 
     #[\Override]

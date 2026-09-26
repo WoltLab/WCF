@@ -6,8 +6,8 @@ use wcf\data\DatabaseObject;
 use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\NumericRangeFormField;
+use wcf\system\object\filter\AbstractRangeObjectFilter;
 use wcf\system\object\filter\IObjectListFilter;
-use wcf\system\object\filter\TRangeObjectFilter;
 use wcf\system\WCF;
 
 /**
@@ -20,12 +20,11 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
+ * @extends AbstractRangeObjectFilter<User, int>
  * @implements IObjectListFilter<User, array{0: ?int, 1: ?int}>
  */
-final class UserIntegerPropertyObjectFilter implements IObjectListFilter
+final class UserIntegerPropertyObjectFilter extends AbstractRangeObjectFilter implements IObjectListFilter
 {
-    use TRangeObjectFilter;
-
     /**
      * @param string $propertyName name of the integer column in `wcf1_user`
      * @param string $languageItem language item of the title of the property
@@ -42,47 +41,24 @@ final class UserIntegerPropertyObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
-    public function getTitle(): string
+    protected function getLanguageItem(): string
     {
-        return WCF::getLanguage()->get($this->languageItem);
+        return $this->languageItem;
     }
 
     #[\Override]
-    public function getFormField(): NumericRangeFormField
+    protected function createFormField(): NumericRangeFormField
     {
         return NumericRangeFormField::create('user' . \ucfirst($this->propertyName))
             ->label($this->languageItem)
             ->integerValues()
-            ->minimum(0)
-            ->addValidator($this->getRangeValidator());
-    }
-
-    /**
-     * @param string|array{0: ?int, 1: ?int} $value
-     */
-    #[\Override]
-    public function serializeValue(mixed $value): string
-    {
-        [$from, $to] = \is_string($value) ? $this->unserializeValue($value) : $value;
-
-        return $from . ';' . $to;
+            ->minimum(0);
     }
 
     #[\Override]
-    public function unserializeValue(string $serializedValue): array
+    protected function unserializeBound(string $bound): int
     {
-        [$from, $to] = $this->splitRange($serializedValue);
-
-        return [
-            $from === null ? null : (int)$from,
-            $to === null ? null : (int)$to,
-        ];
-    }
-
-    #[\Override]
-    public function toFormFieldValue(mixed $value): string
-    {
-        return $this->serializeValue($value);
+        return (int)$bound;
     }
 
     #[\Override]

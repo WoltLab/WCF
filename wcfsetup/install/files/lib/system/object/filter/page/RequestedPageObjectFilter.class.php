@@ -6,9 +6,8 @@ use wcf\data\DatabaseObject;
 use wcf\data\page\PageCache;
 use wcf\data\user\User;
 use wcf\system\form\builder\field\PagesFormField;
-use wcf\system\object\filter\IObjectFilter;
+use wcf\system\object\filter\AbstractMultipleSelectionObjectFilter;
 use wcf\system\request\RequestHandler;
-use wcf\system\WCF;
 
 /**
  * Filters by whether the requested page is one of the pages with the given ids.
@@ -22,9 +21,9 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
- * @implements IObjectFilter<User, list<int>>
+ * @extends AbstractMultipleSelectionObjectFilter<User>
  */
-final class RequestedPageObjectFilter implements IObjectFilter
+final class RequestedPageObjectFilter extends AbstractMultipleSelectionObjectFilter
 {
     #[\Override]
     public function getIdentifier(): string
@@ -33,9 +32,15 @@ final class RequestedPageObjectFilter implements IObjectFilter
     }
 
     #[\Override]
-    public function getTitle(): string
+    protected function getLanguageItem(): string
     {
-        return WCF::getLanguage()->get('wcf.objectFilter.requestedPage');
+        return 'wcf.objectFilter.requestedPage';
+    }
+
+    #[\Override]
+    protected function getLabels(array $objectIDs): array
+    {
+        return RequestedPageObjectFilter::getPageTitles($objectIDs);
     }
 
     #[\Override]
@@ -44,38 +49,6 @@ final class RequestedPageObjectFilter implements IObjectFilter
         return PagesFormField::create('requestedPage')
             ->label('wcf.page.requestedPage')
             ->required();
-    }
-
-    /**
-     * @param list<int|string> $value
-     */
-    #[\Override]
-    public function serializeValue(mixed $value): string
-    {
-        return \implode(',', \array_map(static fn($pageID) => (int)$pageID, $value));
-    }
-
-    #[\Override]
-    public function unserializeValue(string $serializedValue): array
-    {
-        return \array_map(static fn($pageID) => (int)$pageID, \explode(',', $serializedValue));
-    }
-
-    /**
-     * @return list<int>
-     */
-    #[\Override]
-    public function toFormFieldValue(mixed $value): array
-    {
-        return $value;
-    }
-
-    #[\Override]
-    public function summarizeValue(mixed $value): string
-    {
-        return WCF::getLanguage()->getDynamicVariable('wcf.objectFilter.requestedPage.summary', [
-            'pages' => RequestedPageObjectFilter::getPageTitles($value),
-        ]);
     }
 
     #[\Override]
@@ -90,12 +63,13 @@ final class RequestedPageObjectFilter implements IObjectFilter
     }
 
     /**
-     * Returns the comma-separated titles of the pages with the given ids.
+     * Returns the titles of the pages with the given ids, unknown pages are skipped.
      *
      * @param list<int> $pageIDs
+     * @return list<string>
      * @internal
      */
-    public static function getPageTitles(array $pageIDs): string
+    public static function getPageTitles(array $pageIDs): array
     {
         $titles = [];
         foreach ($pageIDs as $pageID) {
@@ -105,6 +79,6 @@ final class RequestedPageObjectFilter implements IObjectFilter
             }
         }
 
-        return \implode(', ', $titles);
+        return $titles;
     }
 }
