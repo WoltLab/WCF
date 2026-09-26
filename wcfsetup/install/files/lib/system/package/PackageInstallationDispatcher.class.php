@@ -2,7 +2,6 @@
 
 namespace wcf\system\package;
 
-use ParagonIE\ConstantTime\Hex;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationBuilder;
 use wcf\data\devtools\project\DevtoolsProjectAction;
@@ -257,9 +256,9 @@ class PackageInstallationDispatcher
             'user_session',
             CryptoUtil::createSignedString(
                 \pack(
-                    'CA20C',
-                    1,
-                    Hex::decode(WCF::getSession()->sessionID),
+                    'Ca40C',
+                    2,
+                    WCF::getSession()->sessionID,
                     0
                 )
             )
