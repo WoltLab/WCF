@@ -1,39 +1,35 @@
 <?php
 
-namespace wcf\system\object\filter\page;
+namespace wcf\system\object\filter;
 
 use wcf\data\DatabaseObject;
-use wcf\data\user\User;
+use wcf\data\page\PageCache;
 use wcf\system\form\builder\field\PagesFormField;
-use wcf\system\object\filter\AbstractMultipleSelectionObjectFilter;
 use wcf\system\request\RequestHandler;
 
 /**
- * Filters by whether the requested page is none of the pages with the given ids.
+ * Filters by whether the requested page is one of the pages with the given ids.
  * Requests without an active page never match.
- *
- * The given user is ignored, therefore this filter is only meaningful when
- * testing the active user.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
- * @extends AbstractMultipleSelectionObjectFilter<User>
+ * @extends AbstractMultipleSelectionObjectFilter<DatabaseObject>
  */
-final class NotRequestedPageObjectFilter extends AbstractMultipleSelectionObjectFilter
+final class RequestedPageObjectFilter extends AbstractMultipleSelectionObjectFilter
 {
     #[\Override]
     public function getIdentifier(): string
     {
-        return 'com.woltlab.wcf.notRequestedPage';
+        return 'com.woltlab.wcf.requestedPage';
     }
 
     #[\Override]
     protected function getLanguageItem(): string
     {
-        return 'wcf.objectFilter.notRequestedPage';
+        return 'wcf.objectFilter.requestedPage';
     }
 
     #[\Override]
@@ -45,7 +41,7 @@ final class NotRequestedPageObjectFilter extends AbstractMultipleSelectionObject
     #[\Override]
     public function getFormField(): PagesFormField
     {
-        return PagesFormField::create('notRequestedPage')
+        return PagesFormField::create('requestedPage')
             ->label('wcf.page.requestedPage')
             ->required();
     }
@@ -58,6 +54,26 @@ final class NotRequestedPageObjectFilter extends AbstractMultipleSelectionObject
             return false;
         }
 
-        return !\in_array($pageID, $configuredValue, true);
+        return \in_array($pageID, $configuredValue, true);
+    }
+
+    /**
+     * Returns the titles of the pages with the given ids, unknown pages are skipped.
+     *
+     * @param list<int> $pageIDs
+     * @return list<string>
+     * @internal
+     */
+    public static function getPageTitles(array $pageIDs): array
+    {
+        $titles = [];
+        foreach ($pageIDs as $pageID) {
+            $page = PageCache::getInstance()->getPage($pageID);
+            if ($page !== null) {
+                $titles[] = $page->getTitle();
+            }
+        }
+
+        return $titles;
     }
 }
