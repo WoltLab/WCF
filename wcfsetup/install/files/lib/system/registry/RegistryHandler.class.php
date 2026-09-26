@@ -145,6 +145,12 @@ final class RegistryHandler extends SingletonFactory
                 $toReset[$field][] = $packageID;
             }
         }
+
+        // Updated fields are also collected in `$toReset`, so an empty list means there is nothing to delete or insert.
+        if ($toReset === []) {
+            return;
+        }
+
         \ksort($toReset);
 
         // exclude values which should be reset
