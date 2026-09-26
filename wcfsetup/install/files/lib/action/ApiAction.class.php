@@ -65,7 +65,21 @@ final class ApiAction implements RequestHandlerInterface
 
                     $apiController = $attribute->newInstance();
 
-                    $r->addRoute($apiController->method->toString(), $apiController->uri, $controller);
+                    // Storing the class name avoids loading every controller class when the
+                    // routes are read from the cache. Controllers that take constructor
+                    // arguments may carry state and are therefore kept as an instance, as
+                    // are those with a non-public constructor that cannot be called later.
+                    $constructor = $reflectionClass->getConstructor();
+                    if (
+                        $constructor !== null
+                        && (!$constructor->isPublic() || $constructor->getNumberOfParameters() > 0)
+                    ) {
+                        $handler = $controller;
+                    } else {
+                        $handler = $controller::class;
+                    }
+
+                    $r->addRoute($apiController->method->toString(), $apiController->uri, $handler);
                 }
             },
             [
@@ -84,8 +98,13 @@ final class ApiAction implements RequestHandlerInterface
             return $this->toErrorResponse(RequestFailure::MethodNotAllowed, 'endpoint_does_not_allow_method');
         }
 
-        /** @var IController */
-        $controller = $result->handler;
+        if (\is_string($result->handler)) {
+            $className = $result->handler;
+            $controller = new $className();
+        } else {
+            $controller = $result->handler;
+        }
+        \assert($controller instanceof IController);
 
         try {
             return $controller($request, $result->variables);
