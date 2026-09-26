@@ -634,42 +634,52 @@ final class SessionHandler extends SingletonFactory
             'acp' => [],
         ];
 
-        // Create new session.
-        $sql = "INSERT INTO wcf1_user_session
-                            (sessionID, ipAddress, userAgent, creationTime, lastActivityTime, sessionVariables)
-                VALUES      (?, ?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $this->sessionID,
-            UserUtil::getIpAddress(),
-            UserUtil::getUserAgent(),
-            \TIME_NOW,
-            \TIME_NOW,
-            \serialize($variables),
-        ]);
-
         $this->variables = $variables;
         $this->user = User::getGuestUser();
         $this->firstVisit = true;
 
-        HeaderUtil::setCookie(
-            "user_session",
-            $this->getCookieValue()
-        );
-
         // Maintain legacy session table for users online list.
         $this->legacySession = null;
 
+        $spiderIdentifier = null;
         if (!$this->isACP) {
             $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
             if ($spiderIdentifier !== null) {
                 $this->legacySession = $this->getSpiderLegacySession($spiderIdentifier);
             }
+        }
 
-            if ($this->legacySession === null) {
+        // Committing both sessions at once saves a log flush for every new visitor.
+        WCF::getDB()->beginTransaction();
+        try {
+            $sql = "INSERT INTO wcf1_user_session
+                                (sessionID, ipAddress, userAgent, creationTime, lastActivityTime, sessionVariables)
+                    VALUES      (?, ?, ?, ?, ?, ?)";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([
+                $this->sessionID,
+                UserUtil::getIpAddress(),
+                UserUtil::getUserAgent(),
+                \TIME_NOW,
+                \TIME_NOW,
+                \serialize($variables),
+            ]);
+
+            if (!$this->isACP && $this->legacySession === null) {
                 $this->legacySession = $this->createLegacySession($spiderIdentifier);
             }
+
+            WCF::getDB()->commitTransaction();
+        } catch (\Throwable $e) {
+            WCF::getDB()->rollBackTransaction();
+
+            throw $e;
         }
+
+        HeaderUtil::setCookie(
+            "user_session",
+            $this->getCookieValue()
+        );
     }
 
     /**
@@ -1407,16 +1417,25 @@ final class SessionHandler extends SingletonFactory
      */
     public function deleteUserSession(string $sessionID): void
     {
-        $sql = "DELETE FROM wcf1_user_session
-                WHERE       sessionID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$sessionID]);
+        WCF::getDB()->beginTransaction();
+        try {
+            $sql = "DELETE FROM wcf1_user_session
+                    WHERE       sessionID = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([$sessionID]);
 
-        // Delete legacy session.
-        $sql = "DELETE FROM wcf1_session
-                WHERE       sessionID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$sessionID]);
+            // Delete legacy session.
+            $sql = "DELETE FROM wcf1_session
+                    WHERE       sessionID = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([$sessionID]);
+
+            WCF::getDB()->commitTransaction();
+        } catch (\Throwable $e) {
+            WCF::getDB()->rollBackTransaction();
+
+            throw $e;
+        }
     }
 
     /**
