@@ -616,6 +616,16 @@ final class PackageUpdateDispatcher extends SingletonFactory
                     }
                 }
 
+                // The API compatibility versions are deprecated, any package that exposes them must
+                // exclude at most `com.woltlab.wcf` in version `6.0.0 Alpha 1`.
+                if (isset($versionData['compatibility']) && $versionData['compatibility'] !== []) {
+                    $excludeCore60 = '6.0.0 Alpha 1';
+                    $coreExclude = $versionData['excludedPackages']['com.woltlab.wcf']['version'] ?? null;
+                    if ($coreExclude === null || Package::compareVersion($coreExclude, $excludeCore60, '>')) {
+                        $versionData['excludedPackages']['com.woltlab.wcf'] = ['version' => $excludeCore60];
+                    }
+                }
+
                 if (isset($versionData['excludedPackages'])) {
                     foreach ($versionData['excludedPackages'] as $excludedIdentifier => $exclusion) {
                         $excludedPackagesParameters[] = [
@@ -631,38 +641,6 @@ final class PackageUpdateDispatcher extends SingletonFactory
                         $fromversionInserts[] = [
                             $packageUpdateVersionID,
                             $fromversion,
-                        ];
-                    }
-                }
-
-                // The API compatibility versions are deprecated, any package that exposes them must
-                // exclude at most `com.woltlab.wcf` in version `6.0.0 Alpha 1`.
-                if (!empty($versionData['compatibility'])) {
-                    if (!isset($versionData['excludedPackages'])) {
-                        $versionData['excludedPackages'] = [];
-                    }
-                    $excludeCore60 = '6.0.0 Alpha 1';
-
-                    $coreExclude = null;
-                    $versionData['excludedPackages'] = \array_filter(
-                        $versionData['excludedPackages'],
-                        static function ($excludedVersion, $excludedPackage) use (&$coreExclude) {
-                            if ($excludedPackage === 'com.woltlab.wcf') {
-                                $coreExclude = $excludedVersion['version'];
-
-                                return false;
-                            }
-
-                            return true;
-                        },
-                        \ARRAY_FILTER_USE_BOTH
-                    );
-
-                    if ($coreExclude === null || Package::compareVersion($coreExclude, $excludeCore60, '>')) {
-                        $versionData['excludedPackages'][] = [
-                            'packageUpdateVersionID' => $packageUpdateVersionID,
-                            'excludedPackage' => 'com.woltlab.wcf',
-                            'excludedPackageVersion' => $excludeCore60,
                         ];
                     }
                 }
