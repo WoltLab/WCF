@@ -585,26 +585,7 @@ final class SessionHandler extends SingletonFactory
                 $condition->add('userID = ?', [$row['userID']]);
             } else {
                 $condition->add('userID IS NULL');
-
-                $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
-                if ($spiderIdentifier === null) {
-                    // MySQL 8.4 does not like `OR spiderIdentifier = ?` with the
-                    // placeholder being supplied with `NULL`. Instead of raising
-                    // a warning or something, it will cause the query planer to
-                    // pick some odd indices to work with instead of focusing on
-                    // the session id.
-                    //
-                    // Technically we don’t care for the spider identifier at
-                    // this point which means that we can optimize the query
-                    // right away. This query also lives in the hot path of a
-                    // request which makes it even more reasonable.
-                    $condition->add('sessionID = ?', [$row['sessionID']]);
-                } else {
-                    $condition->add('(sessionID = ? OR spiderIdentifier = ?)', [
-                        $row['sessionID'],
-                        $spiderIdentifier,
-                    ]);
-                }
+                $condition->add('sessionID = ?', [$row['sessionID']]);
             }
 
             $sql = "SELECT  *
@@ -614,9 +595,20 @@ final class SessionHandler extends SingletonFactory
             $legacySessionStatement->execute($condition->getParameters());
             $this->legacySession = $legacySessionStatement->fetchSingleObject(LegacySession::class);
 
+            // The legacy session already stores the spider identifier, the detection is only
+            // required without one. Spiders share a single legacy session that can belong to
+            // a different session id.
+            $spiderIdentifier = null;
+            if ($this->legacySession === null && $row['userID'] === null) {
+                $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
+                if ($spiderIdentifier !== null) {
+                    $this->legacySession = $this->getSpiderLegacySession($spiderIdentifier);
+                }
+            }
+
             if ($this->legacySession === null) {
                 try {
-                    $this->legacySession = $this->createLegacySession();
+                    $this->legacySession = $this->createLegacySession($spiderIdentifier);
                 } catch (DatabaseQueryExecutionException $e) {
                     // Creation of the legacy session might fail due to duplicate key errors for
                     // concurrent requests.
@@ -677,33 +669,36 @@ final class SessionHandler extends SingletonFactory
         $this->legacySession = null;
 
         if (!$this->isACP) {
-            // Try to find an existing spider session. Order by lastActivityTime to maintain a
-            // stable selection in case duplicates exist for some reason.
             $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
             if ($spiderIdentifier !== null) {
-                $sql = "SELECT      *
-                        FROM        wcf1_session
-                        WHERE       spiderIdentifier = ?
-                                AND userID IS NULL
-                        ORDER BY    lastActivityTime DESC";
-                $statement = WCF::getDB()->prepare($sql);
-                $statement->execute([$spiderIdentifier]);
-                $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
+                $this->legacySession = $this->getSpiderLegacySession($spiderIdentifier);
             }
 
             if ($this->legacySession === null) {
-                $this->legacySession = $this->createLegacySession();
+                $this->legacySession = $this->createLegacySession($spiderIdentifier);
             }
         }
     }
 
-    private function createLegacySession(): LegacySession
+    /**
+     * Returns the existing legacy session that is shared by all guest sessions of the given spider.
+     */
+    private function getSpiderLegacySession(string $spiderIdentifier): ?LegacySession
     {
-        $spiderIdentifier = null;
-        if ($this->user->isGuest()) {
-            $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
-        }
+        // Order by lastActivityTime to maintain a stable selection in case duplicates exist for some reason.
+        $sql = "SELECT      *
+                FROM        wcf1_session
+                WHERE       spiderIdentifier = ?
+                        AND userID IS NULL
+                ORDER BY    lastActivityTime DESC";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$spiderIdentifier]);
 
+        return $statement->fetchSingleObject(LegacySession::class);
+    }
+
+    private function createLegacySession(?string $spiderIdentifier): LegacySession
+    {
         // save session
         $sessionData = [
             'sessionID' => $this->sessionID,
