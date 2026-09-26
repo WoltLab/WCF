@@ -80,7 +80,55 @@ class NumericRangeFormField extends AbstractFormField implements
     {
         if ($this->isRequired() && ($this->getFromValue() === '' || $this->getToValue() === '')) {
             $this->addValidationError(new FormFieldValidationError('empty'));
+
+            return;
         }
+
+        foreach ([$this->getFromValue(), $this->getToValue()] as $value) {
+            if ($value === '') {
+                continue;
+            }
+
+            $error = $this->validateBound($value);
+            if ($error !== null) {
+                $this->addValidationError($error);
+
+                return;
+            }
+        }
+    }
+
+    /**
+     * Returns the validation error for the given lower or upper bound or `null`
+     * if the bound is a valid number within the minimum and maximum.
+     */
+    private function validateBound(string $value): ?FormFieldValidationError
+    {
+        $isValid = $this->integerValues ? \preg_match('~^-?\d+$~', $value) === 1 : \is_numeric($value);
+        if (!$isValid) {
+            return new FormFieldValidationError(
+                'invalid',
+                'wcf.form.field.numeric.error.invalid'
+            );
+        }
+
+        if ($this->getMinimum() !== null && $value < $this->getMinimum()) {
+            return new FormFieldValidationError(
+                'minimum',
+                'wcf.form.field.numeric.error.minimum',
+                ['minimum' => $this->getMinimum()]
+            );
+        }
+
+        if ($this->getMaximum() !== null && $value > $this->getMaximum()) {
+            return new FormFieldValidationError(
+                'maximum',
+                'wcf.form.field.numeric.error.maximum',
+                ['maximum' => $this->getMaximum()]
+            );
+        }
+
+        return null;
     }
 
     #[\Override]
