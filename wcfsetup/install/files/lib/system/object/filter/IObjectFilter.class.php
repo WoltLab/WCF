@@ -55,6 +55,14 @@ interface IObjectFilter
     public function unserializeValue(string $serializedValue): mixed;
 
     /**
+     * Converts the given value into the value of the form field returned by
+     * `getFormField()`, used to prefill the form field when editing the filter.
+     *
+     * @param TValueType $value
+     */
+    public function toFormFieldValue(mixed $value): mixed;
+
+    /**
      * Returns a human-readable summary of the configured value,
      * e.g. "In user group <strong>%s</strong>".
      *

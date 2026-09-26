@@ -142,11 +142,23 @@ class NumericRangeFormField extends AbstractFormField implements
         }
 
         $this->value = [
-            'from' => $this->integerValues ? \intval($values[0]) : \floatval($values[0]),
-            'to' => $this->integerValues ? \intval($values[1]) : \floatval($values[1]),
+            'from' => $this->castValue($values[0]),
+            'to' => $this->castValue($values[1]),
         ];
 
         return $this;
+    }
+
+    /**
+     * Casts a bound of the range to its numeric type, empty bounds are preserved.
+     */
+    private function castValue(string $value): int|float|string
+    {
+        if ($value === '') {
+            return '';
+        }
+
+        return $this->integerValues ? (int)$value : (float)$value;
     }
 
     public function getFromValue(): string

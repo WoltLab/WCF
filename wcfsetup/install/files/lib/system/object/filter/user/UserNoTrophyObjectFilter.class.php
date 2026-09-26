@@ -56,6 +56,12 @@ final class UserNoTrophyObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
+    public function toFormFieldValue(mixed $value): int
+    {
+        return $value;
+    }
+
+    #[\Override]
     public function summarizeValue(mixed $value): string
     {
         return WCF::getLanguage()->getDynamicVariable('wcf.objectFilter.user.noTrophy.summary', [

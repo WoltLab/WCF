@@ -53,6 +53,12 @@ final class UserActivatedObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
+    public function toFormFieldValue(mixed $value): bool
+    {
+        return $value;
+    }
+
+    #[\Override]
     public function summarizeValue(mixed $value): string
     {
         if ($value) {

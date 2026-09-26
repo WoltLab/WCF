@@ -61,6 +61,15 @@ final class UserLanguageObjectFilter implements IObjectListFilter
         return \array_map(static fn($languageID) => (int)$languageID, \explode(',', $serializedValue));
     }
 
+    /**
+     * @return list<int>
+     */
+    #[\Override]
+    public function toFormFieldValue(mixed $value): array
+    {
+        return $value;
+    }
+
     #[\Override]
     public function summarizeValue(mixed $value): string
     {

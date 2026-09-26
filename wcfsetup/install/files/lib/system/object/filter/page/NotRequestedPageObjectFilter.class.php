@@ -60,6 +60,15 @@ final class NotRequestedPageObjectFilter implements IObjectFilter
         return \array_map(static fn($pageID) => (int)$pageID, \explode(',', $serializedValue));
     }
 
+    /**
+     * @return list<int>
+     */
+    #[\Override]
+    public function toFormFieldValue(mixed $value): array
+    {
+        return $value;
+    }
+
     #[\Override]
     public function summarizeValue(mixed $value): string
     {

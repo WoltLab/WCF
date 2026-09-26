@@ -91,13 +91,41 @@ class ObjectFilterBuilder {
   }
 
   /**
-   * Adds the given filter to the list, showing its summary and a button to remove it
-   * after a confirmation.
+   * Opens the dialog prefilled with the given filter and replaces it with the result.
+   */
+  async #editFilter(item: HTMLElement, summary: HTMLElement): Promise<void> {
+    const data = this.#conditions.get(item)!;
+
+    const url = new URL(this.#endpoint, window.location.href);
+    url.searchParams.set("filter", data.identifier);
+    url.searchParams.set("value", data.value);
+
+    const response = await dialogFactory().usingFormBuilder().fromEndpoint<Response>(url.toString());
+    if (response.ok) {
+      summary.innerHTML = response.result.summary;
+      this.#conditions.set(item, response.result);
+    }
+  }
+
+  /**
+   * Adds the given filter to the list, showing its summary, a button to edit it
+   * and a button to remove it after a confirmation.
    */
   #createCondition(data: Response): void {
     const item = document.createElement("div");
-    item.innerHTML = data.summary;
-    const title = item.textContent;
+
+    const summary = document.createElement("span");
+    summary.innerHTML = data.summary;
+
+    const editButton = document.createElement("button");
+    editButton.type = "button";
+    editButton.classList.add("button", "small", "jsTooltip");
+    editButton.title = getPhrase("wcf.global.button.edit");
+    editButton.innerHTML = '<fa-icon name="pencil"></fa-icon>';
+    editButton.addEventListener(
+      "click",
+      promiseMutex(() => this.#editFilter(item, summary)),
+    );
 
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
@@ -107,13 +135,14 @@ class ObjectFilterBuilder {
     deleteButton.addEventListener(
       "click",
       promiseMutex(async () => {
-        if (await confirmationFactory().delete(title)) {
+        // Read the title when clicked, the summary changes when the filter is edited.
+        if (await confirmationFactory().delete(summary.textContent)) {
           this.#deleteCondition(item);
         }
       }),
     );
 
-    item.append(deleteButton);
+    item.append(summary, editButton, deleteButton);
 
     this.#container.append(item);
 

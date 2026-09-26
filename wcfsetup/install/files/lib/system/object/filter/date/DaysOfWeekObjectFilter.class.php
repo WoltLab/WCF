@@ -59,6 +59,15 @@ final class DaysOfWeekObjectFilter implements IObjectFilter
         return \array_map(static fn($day) => (int)$day, \explode(',', $serializedValue));
     }
 
+    /**
+     * @return list<int>
+     */
+    #[\Override]
+    public function toFormFieldValue(mixed $value): array
+    {
+        return $value;
+    }
+
     #[\Override]
     public function summarizeValue(mixed $value): string
     {

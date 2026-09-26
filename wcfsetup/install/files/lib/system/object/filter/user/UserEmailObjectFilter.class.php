@@ -56,6 +56,12 @@ final class UserEmailObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
+    public function toFormFieldValue(mixed $value): string
+    {
+        return $value;
+    }
+
+    #[\Override]
     public function summarizeValue(mixed $value): string
     {
         return WCF::getLanguage()->getDynamicVariable('wcf.objectFilter.user.email.summary', [

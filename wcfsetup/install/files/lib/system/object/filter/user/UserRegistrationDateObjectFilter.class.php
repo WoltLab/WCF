@@ -64,6 +64,12 @@ final class UserRegistrationDateObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
+    public function toFormFieldValue(mixed $value): string
+    {
+        return $this->serializeValue($value);
+    }
+
+    #[\Override]
     public function summarizeValue(mixed $value): string
     {
         [$from, $to] = $value;
