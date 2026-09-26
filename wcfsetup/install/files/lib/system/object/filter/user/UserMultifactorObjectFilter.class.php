@@ -10,44 +10,34 @@ use wcf\system\object\filter\IObjectListFilter;
 use wcf\system\WCF;
 
 /**
- * Filters users by whether they have an avatar. Guests never match.
+ * Filters users by whether they have enabled multi-factor authentication. Guests never match.
  *
- * @author      Alexander Ebert, Marcel Werk
+ * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
  * @implements IObjectListFilter<User, bool>
  */
-final class UserAvatarObjectFilter implements IObjectListFilter
+final class UserMultifactorObjectFilter implements IObjectListFilter
 {
     #[\Override]
     public function getIdentifier(): string
     {
-        return 'com.woltlab.wcf.userAvatar';
+        return 'com.woltlab.wcf.userMultifactor';
     }
 
     #[\Override]
     public function getTitle(): string
     {
-        return WCF::getLanguage()->get('wcf.objectFilter.user.avatar');
+        return WCF::getLanguage()->get('wcf.objectFilter.user.multifactor');
     }
 
     #[\Override]
     public function getFormField(): BooleanFormField
     {
-        return BooleanFormField::create('userAvatar')
-            ->label('wcf.user.avatar');
-    }
-
-    #[\Override]
-    public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void
-    {
-        if ($value) {
-            $conditions->add("avatarFileID IS NOT NULL");
-        } else {
-            $conditions->add("avatarFileID IS NULL");
-        }
+        return BooleanFormField::create('userMultifactor')
+            ->label('wcf.objectFilter.user.multifactor');
     }
 
     #[\Override]
@@ -66,10 +56,20 @@ final class UserAvatarObjectFilter implements IObjectListFilter
     public function summarizeValue(mixed $value): string
     {
         if ($value) {
-            return WCF::getLanguage()->get('wcf.objectFilter.user.avatar.summary.avatar');
+            return WCF::getLanguage()->get('wcf.objectFilter.user.multifactor.summary.yes');
         }
 
-        return WCF::getLanguage()->get('wcf.objectFilter.user.avatar.summary.noAvatar');
+        return WCF::getLanguage()->get('wcf.objectFilter.user.multifactor.summary.no');
+    }
+
+    #[\Override]
+    public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void
+    {
+        if ($value) {
+            $conditions->add('multifactorActive = 1');
+        } else {
+            $conditions->add('multifactorActive = 0');
+        }
     }
 
     #[\Override]
@@ -79,9 +79,6 @@ final class UserAvatarObjectFilter implements IObjectListFilter
             return false;
         }
 
-        return match ($configuredValue) {
-            true => $object->avatarFileID !== null,
-            false => $object->avatarFileID === null,
-        };
+        return $configuredValue === ($object->multifactorActive !== 0);
     }
 }

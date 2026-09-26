@@ -40,6 +40,9 @@ interface IObjectFilter
     /**
      * Converts the given value into its string representation for storage.
      *
+     * When a filter is configured, the given value is the value of the form
+     * field returned by `getFormField()`, which may differ from `TValueType`.
+     *
      * @param TValueType $value
      */
     public function serializeValue(mixed $value): string;

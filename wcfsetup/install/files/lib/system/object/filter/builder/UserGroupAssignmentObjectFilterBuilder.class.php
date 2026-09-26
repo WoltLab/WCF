@@ -10,8 +10,20 @@ use wcf\system\event\EventHandler;
 use wcf\system\object\filter\IObjectListFilter;
 use wcf\system\object\filter\ObjectFilterHandler;
 use wcf\system\object\filter\ObjectListFilterHandler;
+use wcf\system\object\filter\user\UserActivatedObjectFilter;
 use wcf\system\object\filter\user\UserAvatarObjectFilter;
+use wcf\system\object\filter\user\UserBannedObjectFilter;
+use wcf\system\object\filter\user\UserEmailConfirmedObjectFilter;
+use wcf\system\object\filter\user\UserEmailObjectFilter;
+use wcf\system\object\filter\user\UserGroupObjectFilter;
+use wcf\system\object\filter\user\UserIntegerPropertyObjectFilter;
 use wcf\system\object\filter\user\UserLanguageObjectFilter;
+use wcf\system\object\filter\user\UserNotInGroupObjectFilter;
+use wcf\system\object\filter\user\UserNoTrophyObjectFilter;
+use wcf\system\object\filter\user\UserRegistrationDateObjectFilter;
+use wcf\system\object\filter\user\UserRegistrationDaysObjectFilter;
+use wcf\system\object\filter\user\UserTrophyObjectFilter;
+use wcf\system\object\filter\user\UserUsernameObjectFilter;
 use wcf\system\WCF;
 
 /**
@@ -33,8 +45,22 @@ final class UserGroupAssignmentObjectFilterBuilder extends AbstractObjectFilterB
     protected function createFilters(): array
     {
         $event = new UserGroupAssignmentObjectFilterCollecting();
-        $event->register(new UserAvatarObjectFilter());
+        $event->register(new UserUsernameObjectFilter());
+        $event->register(new UserEmailObjectFilter());
+        $event->register(new UserGroupObjectFilter());
+        $event->register(new UserNotInGroupObjectFilter());
         $event->register(new UserLanguageObjectFilter());
+        $event->register(new UserRegistrationDateObjectFilter());
+        $event->register(new UserRegistrationDaysObjectFilter());
+        $event->register(new UserAvatarObjectFilter());
+        $event->register(new UserBannedObjectFilter());
+        $event->register(new UserActivatedObjectFilter());
+        $event->register(new UserEmailConfirmedObjectFilter());
+        $event->register(new UserIntegerPropertyObjectFilter('activityPoints', 'wcf.user.condition.activityPoints'));
+        $event->register(new UserIntegerPropertyObjectFilter('likesReceived', 'wcf.user.condition.likesReceived'));
+        $event->register(new UserIntegerPropertyObjectFilter('trophyPoints', 'wcf.user.condition.trophyPoints'));
+        $event->register(new UserTrophyObjectFilter());
+        $event->register(new UserNoTrophyObjectFilter());
 
         EventHandler::getInstance()->fire($event);
 

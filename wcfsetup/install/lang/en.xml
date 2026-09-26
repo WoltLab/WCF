@@ -3397,6 +3397,57 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.condition.timestamp.error.invalidEnd"><![CDATA[The end date is invalid.]]></item>
 		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[The start date is invalid.]]></item>
 	</category>
+	<category name="wcf.objectFilter">
+		<item name="wcf.objectFilter.daysOfWeek"><![CDATA[Day of the Week]]></item>
+		<item name="wcf.objectFilter.daysOfWeek.summary"><![CDATA[Day of the week: {$days}]]></item>
+		<item name="wcf.objectFilter.notRequestedPage"><![CDATA[Requested Page Excluded]]></item>
+		<item name="wcf.objectFilter.notRequestedPage.summary"><![CDATA[Requested page is none of: {$pages}]]></item>
+		<item name="wcf.objectFilter.range.error.endBeforeStart"><![CDATA[The end value is less than the start value.]]></item>
+		<item name="wcf.objectFilter.requestedPage"><![CDATA[Requested Page]]></item>
+		<item name="wcf.objectFilter.requestedPage.summary"><![CDATA[Requested page is one of: {$pages}]]></item>
+		<item name="wcf.objectFilter.user.activated"><![CDATA[Account Activated]]></item>
+		<item name="wcf.objectFilter.user.activated.summary.no"><![CDATA[Account is not activated]]></item>
+		<item name="wcf.objectFilter.user.activated.summary.yes"><![CDATA[Account is activated]]></item>
+		<item name="wcf.objectFilter.user.avatar"><![CDATA[Avatar]]></item>
+		<item name="wcf.objectFilter.user.avatar.summary.avatar"><![CDATA[Has an avatar]]></item>
+		<item name="wcf.objectFilter.user.avatar.summary.noAvatar"><![CDATA[Has no avatar]]></item>
+		<item name="wcf.objectFilter.user.banned"><![CDATA[Banned]]></item>
+		<item name="wcf.objectFilter.user.banned.summary.no"><![CDATA[Is not banned]]></item>
+		<item name="wcf.objectFilter.user.banned.summary.yes"><![CDATA[Is banned]]></item>
+		<item name="wcf.objectFilter.user.birthday"><![CDATA[Birthday Today]]></item>
+		<item name="wcf.objectFilter.user.birthday.summary.no"><![CDATA[It is not their birthday today]]></item>
+		<item name="wcf.objectFilter.user.birthday.summary.yes"><![CDATA[It is their birthday today]]></item>
+		<item name="wcf.objectFilter.user.email"><![CDATA[Email Address]]></item>
+		<item name="wcf.objectFilter.user.email.summary"><![CDATA[Email address contains “{$value}”]]></item>
+		<item name="wcf.objectFilter.user.emailConfirmed"><![CDATA[Email Address Confirmed]]></item>
+		<item name="wcf.objectFilter.user.emailConfirmed.summary.no"><![CDATA[Does not have a confirmed email address]]></item>
+		<item name="wcf.objectFilter.user.emailConfirmed.summary.yes"><![CDATA[Has a confirmed email address]]></item>
+		<item name="wcf.objectFilter.user.group"><![CDATA[Member of User Group]]></item>
+		<item name="wcf.objectFilter.user.group.group"><![CDATA[User Group]]></item>
+		<item name="wcf.objectFilter.user.group.summary"><![CDATA[Is a member of the user group “{$group}”]]></item>
+		<item name="wcf.objectFilter.user.integerProperty.summary"><![CDATA[{$title}: {if $from !== null && $to !== null}between {#$from} and {#$to}{elseif $from !== null}at least {#$from}{else}at most {#$to}{/if}]]></item>
+		<item name="wcf.objectFilter.user.language"><![CDATA[Language]]></item>
+		<item name="wcf.objectFilter.user.language.summary"><![CDATA[Uses one of the languages: {$languages}]]></item>
+		<item name="wcf.objectFilter.user.mobileBrowser"><![CDATA[Mobile Browser]]></item>
+		<item name="wcf.objectFilter.user.mobileBrowser.summary.no"><![CDATA[Does not use a mobile browser]]></item>
+		<item name="wcf.objectFilter.user.mobileBrowser.summary.yes"><![CDATA[Uses a mobile browser]]></item>
+		<item name="wcf.objectFilter.user.multifactor"><![CDATA[Multi-factor Authentication]]></item>
+		<item name="wcf.objectFilter.user.multifactor.summary.no"><![CDATA[Multi-factor authentication is not enabled]]></item>
+		<item name="wcf.objectFilter.user.multifactor.summary.yes"><![CDATA[Multi-factor authentication is enabled]]></item>
+		<item name="wcf.objectFilter.user.noTrophy"><![CDATA[Has Not Received Trophy]]></item>
+		<item name="wcf.objectFilter.user.noTrophy.summary"><![CDATA[Has not received the trophy “{$trophy}”]]></item>
+		<item name="wcf.objectFilter.user.notInGroup"><![CDATA[Not a Member of User Group]]></item>
+		<item name="wcf.objectFilter.user.notInGroup.summary"><![CDATA[Is not a member of the user group “{$group}”]]></item>
+		<item name="wcf.objectFilter.user.registrationDate"><![CDATA[Registration Date]]></item>
+		<item name="wcf.objectFilter.user.registrationDate.summary"><![CDATA[Registered {if $from !== null && $to !== null}between {$from} and {$to}{elseif $from !== null}on or after {$from}{else}on or before {$to}{/if}]]></item>
+		<item name="wcf.objectFilter.user.registrationDays"><![CDATA[Days since Registration]]></item>
+		<item name="wcf.objectFilter.user.registrationDays.summary"><![CDATA[Registered {if $from !== null && $to !== null}{#$from} to {#$to} days ago{elseif $from !== null}at least {#$from} days ago{else}at most {#$to} days ago{/if}]]></item>
+		<item name="wcf.objectFilter.user.trophy"><![CDATA[Has Received Trophy]]></item>
+		<item name="wcf.objectFilter.user.trophy.summary"><![CDATA[Has received the trophy “{$trophy}”]]></item>
+		<item name="wcf.objectFilter.user.trophy.trophy"><![CDATA[Trophy]]></item>
+		<item name="wcf.objectFilter.user.username"><![CDATA[Username]]></item>
+		<item name="wcf.objectFilter.user.username.summary"><![CDATA[Username contains “{$value}”]]></item>
+	</category>
 	<category name="wcf.contact">
 		<item name="wcf.contact.mail.subject"><![CDATA[New message via the contact form]]></item>
 		<item name="wcf.contact.mail.plaintext"><![CDATA[Hello,
@@ -3916,6 +3967,7 @@ Attachments:
 		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not exist.]]></item>
 		<item name="wcf.form.field.className.error.parentClass"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not extend <kbd>{$parentClass}</kbd>.]]></item>
 		<item name="wcf.form.field.itemList.error.separator"><![CDATA[The following items may contain no {if $separator === ','}comma{else if $separator === "\n"}newline{else}space{/if}: {implode from=$invalidItems item=item}“{$item}”{/implode}.]]></item>
+		<item name="wcf.form.field.numeric.error.invalid"><![CDATA[The entered value is not a valid number.]]></item>
 		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[The entered value may not be greater than {#$maximum}.]]></item>
 		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[The entered value may not be less than {#$minimum}.]]></item>
 		<item name="wcf.form.field.option"><![CDATA[Options]]></item>

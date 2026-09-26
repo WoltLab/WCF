@@ -94,7 +94,7 @@ class ObjectFilterBuilder {
    */
   #createCondition(data: Response): void {
     const item = document.createElement("div");
-    item.textContent = data.summary;
+    item.innerHTML = data.summary;
 
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";

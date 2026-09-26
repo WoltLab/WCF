@@ -76,12 +76,13 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
                 }
 
                 $id = $filter->getFormField()->getId();
-                $value = $data[$id] ?? $rawData[$id];
+                $serializedValue = $filter->serializeValue($data[$id] ?? $rawData[$id]);
 
                 $result = [
                     'identifier' => $filter->getIdentifier(),
-                    'summary' => $filter->summarizeValue($value),
-                    'value' => $filter->serializeValue($value),
+                    // Summarize the restored value to match the summaries of the stored filters.
+                    'summary' => $filter->summarizeValue($filter->unserializeValue($serializedValue)),
+                    'value' => $serializedValue,
                 ];
             }
 
