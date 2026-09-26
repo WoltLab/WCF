@@ -1,4 +1,4 @@
-<div id="{$field->getPrefixedId()}"></div>
+<div id="{$field->getPrefixedId()}" class="objectFilter__container"></div>
 
 <script data-relocate="true">
 	require(["WoltLabSuite/Core/Component/Object/Filter/Builder"], ({ setup }) => {

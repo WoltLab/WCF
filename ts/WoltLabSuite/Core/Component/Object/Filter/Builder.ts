@@ -60,7 +60,7 @@ class ObjectFilterBuilder {
       promiseMutex(() => this.#addFilter()),
     );
 
-    this.#container.insertAdjacentElement("beforebegin", button);
+    this.#container.insertAdjacentElement("afterend", button);
 
     const form = this.#container.closest("form");
     let shadow: HTMLInputElement | undefined = undefined;
@@ -121,9 +121,13 @@ class ObjectFilterBuilder {
    */
   #createCondition(data: Response): void {
     const item = document.createElement("div");
+    item.classList.add("objectFilter__item");
 
     const summary = document.createElement("span");
     summary.innerHTML = data.summary;
+
+    const buttons = document.createElement("div");
+    buttons.classList.add("objectFilter__item__buttons");
 
     const editButton = document.createElement("button");
     editButton.type = "button";
@@ -150,7 +154,8 @@ class ObjectFilterBuilder {
       }),
     );
 
-    item.append(summary, editButton, deleteButton);
+    buttons.append(editButton, deleteButton);
+    item.append(summary, buttons);
 
     this.#container.append(item);
 
