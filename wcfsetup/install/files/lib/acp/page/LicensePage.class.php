@@ -267,8 +267,9 @@ final class LicensePage extends AbstractPage
      */
     private function getInstallablePackages(array $identifiers): array
     {
+        $activeUpdateServers = PackageUpdateServer::getActiveUpdateServers();
         $availableUpdateServers = \array_filter(
-            PackageUpdateServer::getActiveUpdateServers(),
+            $activeUpdateServers,
             static function (PackageUpdateServer $packageUpdateServer) {
                 return $packageUpdateServer->isWoltLabUpdateServer() || $packageUpdateServer->isWoltLabStoreServer();
             }
@@ -321,11 +322,17 @@ final class LicensePage extends AbstractPage
             }
         }
 
+        $woltlabUpdateServerID = \array_find(
+            $availableUpdateServers,
+            static fn(PackageUpdateServer $packageUpdateServer) => $packageUpdateServer->isWoltLabUpdateServer()
+        )->packageUpdateServerID;
+
         $packageUpdates = [];
         foreach ($packageUpdateIDs as $packageUpdateID) {
             $result = $this->canInstall(
                 $packageUpdateID,
                 null,
+                $woltlabUpdateServerID,
                 $installedPackages,
                 $excludedPackagesOfInstalledPackages
             );
@@ -353,7 +360,7 @@ final class LicensePage extends AbstractPage
         }
 
         $trustedServerIDs = [];
-        foreach (PackageUpdateServer::getActiveUpdateServers() as $packageUpdateServer) {
+        foreach ($activeUpdateServers as $packageUpdateServer) {
             if ($packageUpdateServer->isTrustedServer() || $packageUpdateServer->isWoltLabStoreServer()) {
                 $trustedServerIDs[] = $packageUpdateServer->packageUpdateServerID;
             }
@@ -462,6 +469,7 @@ final class LicensePage extends AbstractPage
     protected function canInstall(
         int $packageUpdateID,
         ?string $minVersion,
+        int $woltlabUpdateServerID,
         array &$installedPackages,
         array &$excludedPackagesOfInstalledPackages
     ): array {
@@ -497,10 +505,6 @@ final class LicensePage extends AbstractPage
                 $excludedPackages[$packageUpdateVersionID][$package] = $packageVersion;
             }
         }
-
-        // Mark WoltLab packages to be always accessible in order to include
-        // them in the dynamically generated list.
-        $woltlabUpdateServerID = PackageUpdateServer::getWoltLabUpdateServer()->packageUpdateServerID;
 
         // filter by version
         $conditions = new PreparedStatementConditionBuilder();
@@ -571,6 +575,8 @@ final class LicensePage extends AbstractPage
                 ];
             }
 
+            // Mark WoltLab packages to be always accessible in order to include
+            // them in the dynamically generated list.
             if ($row['packageUpdateServerID'] === $woltlabUpdateServerID || $row['isAccessible'] !== 0) {
                 $packageVersions[$package][$packageUpdateID]['accessible'][$row['packageUpdateVersionID']] = $packageVersion;
             }
@@ -670,6 +676,7 @@ final class LicensePage extends AbstractPage
                 $result = $this->canInstall(
                     $row['packageUpdateID'],
                     $requirements[$row['package']],
+                    $woltlabUpdateServerID,
                     $installedPackages,
                     $excludedPackagesOfInstalledPackages
                 );
