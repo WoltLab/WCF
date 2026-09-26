@@ -3476,6 +3476,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.objectFilter.addFilter"><![CDATA[Bedingung hinzufügen]]></item>
 		<item name="wcf.objectFilter.daysOfWeek"><![CDATA[Wochentag]]></item>
 		<item name="wcf.objectFilter.daysOfWeek.summary"><![CDATA[Wochentag: {$values}]]></item>
+		<item name="wcf.objectFilter.joiner"><![CDATA[UND]]></item>
 		<item name="wcf.objectFilter.notRequestedPage"><![CDATA[Aufgerufene Seite ausgeschlossen]]></item>
 		<item name="wcf.objectFilter.notRequestedPage.summary"><![CDATA[Aufgerufene Seite ist keine von: {$values}]]></item>
 		<item name="wcf.objectFilter.range.error.endBeforeStart"><![CDATA[Der Endwert ist kleiner als der Startwert.]]></item>

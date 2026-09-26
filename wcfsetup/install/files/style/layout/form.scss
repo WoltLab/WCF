@@ -436,3 +436,21 @@ html[data-color-scheme="dark"] .passwordStrengthScore {
 	flex-direction: row;
 	gap: 5px;
 }
+
+.objectFilter__joiner {
+	align-items: center;
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	gap: 10px;
+	padding-left: 20px;
+
+	@include wcfFontSmall;
+}
+
+.objectFilter__joiner::before {
+	background: var(--wcfContentBorderInner);
+	content: "";
+	height: 16px;
+	margin-left: -8px;
+	width: 1px;
+}

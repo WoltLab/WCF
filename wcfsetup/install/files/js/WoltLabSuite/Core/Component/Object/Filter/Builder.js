@@ -104,13 +104,31 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "../../Co
             }));
             buttons.append(editButton, deleteButton);
             item.append(summary, buttons);
+            if (this.#conditions.size > 0) {
+                this.#container.append(this.#createJoiner());
+            }
             this.#container.append(item);
             this.#conditions.set(item, data);
         }
         /**
-         * Removes the given filter from the list.
+         * Creates the element that is shown between two filters, all filters must be satisfied.
+         */
+        #createJoiner() {
+            const joiner = document.createElement("div");
+            joiner.classList.add("objectFilter__joiner");
+            joiner.textContent = (0, Language_1.getPhrase)("wcf.objectFilter.joiner");
+            return joiner;
+        }
+        /**
+         * Removes the given filter from the list together with the joiner that
+         * separates it from the previous filter, or from the next filter if it is
+         * the first one.
          */
         #deleteCondition(element) {
+            const joiner = element.previousElementSibling ?? element.nextElementSibling;
+            if (joiner?.classList.contains("objectFilter__joiner")) {
+                joiner.remove();
+            }
             element.remove();
             this.#conditions.delete(element);
         }
