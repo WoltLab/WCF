@@ -22,7 +22,12 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "../../Co
             const button = document.createElement("button");
             button.type = "button";
             button.classList.add("button");
-            button.textContent = "TODO: add object filter";
+            const icon = document.createElement("fa-icon");
+            icon.setIcon("plus");
+            button.appendChild(icon);
+            const span = document.createElement("span");
+            span.textContent = (0, Language_1.getPhrase)("wcf.objectFilter.addFilter");
+            button.appendChild(span);
             button.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(() => this.#addFilter()));
             this.#container.insertAdjacentElement("beforebegin", button);
             const form = this.#container.closest("form");

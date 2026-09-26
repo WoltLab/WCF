@@ -3473,6 +3473,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[Das Startdatum ist ungültig.]]></item>
 	</category>
 	<category name="wcf.objectFilter">
+		<item name="wcf.objectFilter.addFilter"><![CDATA[Bedingung hinzufügen]]></item>
 		<item name="wcf.objectFilter.daysOfWeek"><![CDATA[Wochentag]]></item>
 		<item name="wcf.objectFilter.daysOfWeek.summary"><![CDATA[Wochentag: {$values}]]></item>
 		<item name="wcf.objectFilter.notRequestedPage"><![CDATA[Aufgerufene Seite ausgeschlossen]]></item>

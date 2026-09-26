@@ -3398,6 +3398,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[The start date is invalid.]]></item>
 	</category>
 	<category name="wcf.objectFilter">
+		<item name="wcf.objectFilter.addFilter"><![CDATA[Add Condition]]></item>
 		<item name="wcf.objectFilter.daysOfWeek"><![CDATA[Day of the Week]]></item>
 		<item name="wcf.objectFilter.daysOfWeek.summary"><![CDATA[Day of the week: {$values}]]></item>
 		<item name="wcf.objectFilter.notRequestedPage"><![CDATA[Requested Page Excluded]]></item>

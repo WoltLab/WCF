@@ -46,7 +46,15 @@ class ObjectFilterBuilder {
     const button = document.createElement("button");
     button.type = "button";
     button.classList.add("button");
-    button.textContent = "TODO: add object filter";
+
+    const icon = document.createElement("fa-icon");
+    icon.setIcon("plus");
+    button.appendChild(icon);
+
+    const span = document.createElement("span");
+    span.textContent = getPhrase("wcf.objectFilter.addFilter");
+    button.appendChild(span);
+
     button.addEventListener(
       "click",
       promiseMutex(() => this.#addFilter()),
