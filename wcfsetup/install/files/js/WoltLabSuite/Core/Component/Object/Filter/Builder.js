@@ -8,7 +8,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "../../Dialog", "WoltLabSuite/Core/Language"], function (require, exports, PromiseMutex_1, Dialog_1, Language_1) {
+define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "../../Confirmation", "../../Dialog", "WoltLabSuite/Core/Language"], function (require, exports, PromiseMutex_1, Confirmation_1, Dialog_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -56,19 +56,23 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "../../Di
             }
         }
         /**
-         * Adds the given filter to the list, showing its summary and a button to remove it.
+         * Adds the given filter to the list, showing its summary and a button to remove it
+         * after a confirmation.
          */
         #createCondition(data) {
             const item = document.createElement("div");
             item.innerHTML = data.summary;
+            const title = item.textContent;
             const deleteButton = document.createElement("button");
             deleteButton.type = "button";
             deleteButton.classList.add("button", "small", "jsTooltip");
             deleteButton.title = (0, Language_1.getPhrase)("wcf.global.button.delete");
             deleteButton.innerHTML = '<fa-icon name="times"></fa-icon>';
-            deleteButton.addEventListener("click", () => {
-                this.#deleteCondition(item);
-            });
+            deleteButton.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(async () => {
+                if (await (0, Confirmation_1.confirmationFactory)().delete(title)) {
+                    this.#deleteCondition(item);
+                }
+            }));
             item.append(deleteButton);
             this.#container.append(item);
             this.#conditions.set(item, data);

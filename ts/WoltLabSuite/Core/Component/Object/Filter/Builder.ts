@@ -10,6 +10,7 @@
  */
 
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
+import { confirmationFactory } from "../../Confirmation";
 import { dialogFactory } from "../../Dialog";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 
@@ -90,20 +91,27 @@ class ObjectFilterBuilder {
   }
 
   /**
-   * Adds the given filter to the list, showing its summary and a button to remove it.
+   * Adds the given filter to the list, showing its summary and a button to remove it
+   * after a confirmation.
    */
   #createCondition(data: Response): void {
     const item = document.createElement("div");
     item.innerHTML = data.summary;
+    const title = item.textContent;
 
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
     deleteButton.classList.add("button", "small", "jsTooltip");
     deleteButton.title = getPhrase("wcf.global.button.delete");
     deleteButton.innerHTML = '<fa-icon name="times"></fa-icon>';
-    deleteButton.addEventListener("click", () => {
-      this.#deleteCondition(item);
-    });
+    deleteButton.addEventListener(
+      "click",
+      promiseMutex(async () => {
+        if (await confirmationFactory().delete(title)) {
+          this.#deleteCondition(item);
+        }
+      }),
+    );
 
     item.append(deleteButton);
 
