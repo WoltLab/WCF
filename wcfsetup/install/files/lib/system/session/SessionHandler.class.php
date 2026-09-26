@@ -472,6 +472,16 @@ final class SessionHandler extends SingletonFactory
     {
         $scope = $this->isACP ? 'acp' : 'frontend';
 
+        // Only scalars can be skipped safely: objects, also inside arrays, are compared
+        // by identity and an instance that was modified in place must still be written.
+        if (
+            (\is_scalar($value) || $value === null)
+            && \array_key_exists($key, $this->variables[$scope] ?? [])
+            && $this->variables[$scope][$key] === $value
+        ) {
+            return;
+        }
+
         $this->variables[$scope][$key] = $value;
         $this->variablesChanged = true;
     }
