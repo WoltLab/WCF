@@ -3401,8 +3401,10 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.objectFilter.addFilter"><![CDATA[Add Condition]]></item>
 		<item name="wcf.objectFilter.daysOfWeek"><![CDATA[Day of the Week]]></item>
 		<item name="wcf.objectFilter.daysOfWeek.summary"><![CDATA[Day of the week: {$values}]]></item>
+		<item name="wcf.objectFilter.editFilter"><![CDATA[Edit Condition]]></item>
 		<item name="wcf.objectFilter.endDate"><![CDATA[End Date]]></item>
 		<item name="wcf.objectFilter.endDate.summary"><![CDATA[Until {$value|plainTime}]]></item>
+		<item name="wcf.objectFilter.filter"><![CDATA[Condition]]></item>
 		<item name="wcf.objectFilter.joiner"><![CDATA[AND]]></item>
 		<item name="wcf.objectFilter.notRequestedPage"><![CDATA[Requested Page Excluded]]></item>
 		<item name="wcf.objectFilter.notRequestedPage.summary"><![CDATA[Requested page is none of: {$values}]]></item>

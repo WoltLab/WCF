@@ -121,7 +121,9 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
     ): Psr15DialogForm {
         $form = new Psr15DialogForm(
             static::class,
-            'TODO: title',
+            WCF::getLanguage()->get(
+                $filterIdentifier === null ? 'wcf.objectFilter.addFilter' : 'wcf.objectFilter.editFilter'
+            ),
         );
 
         $container = FormContainer::create('container');
@@ -129,7 +131,7 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
         $form->appendChild($container);
 
         $select = SelectFormField::create('filter')
-            ->label('TODO: type')
+            ->label('wcf.objectFilter.filter')
             ->required();
         $container->appendChild($select);
 
