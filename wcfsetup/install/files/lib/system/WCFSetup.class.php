@@ -1117,7 +1117,7 @@ final class WCFSetup extends WCF
         $factory->load();
 
         SessionHandler::getInstance()->changeUser($admin);
-        SessionHandler::getInstance()->register('__wcfSetup_developerMode', self::$developerMode);
+        SessionHandler::getInstance()->register('__wcfSetup_developerMode', self::$developerMode !== 0);
         SessionHandler::getInstance()->registerReauthentication();
         SessionHandler::getInstance()->update();
 
