@@ -6,8 +6,6 @@ use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
 use wcf\data\DatabaseObject;
-use wcf\system\form\builder\field\SelectFormField;
-use wcf\system\WCF;
 
 /**
  * Evaluates the stored filter values against individual objects.
@@ -31,27 +29,6 @@ class ObjectFilterHandler
     public function __construct(
         private readonly array $filters,
     ) {}
-
-    /**
-     * This method is intended to eventually take over the generation of the form in `ObjectFilterBuilderAction`.
-     */
-    public function getFormFields(): void
-    {
-        $filters = [];
-        foreach ($this->filters as $filter) {
-            $filters[$filter->getIdentifier()] = $filter->getTitle();
-        }
-
-        $collator = new \Collator(WCF::getLanguage()->getLocale());
-        \uasort(
-            $filters,
-            static fn($a, $b) => $collator->compare($a, $b)
-        );
-
-        $selection = SelectFormField::create('filter')
-            ->options($filters)
-            ->required();
-    }
 
     /**
      * Returns whether the given object satisfies all stored filter values.
