@@ -9,6 +9,7 @@ use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\group\assignment\UserGroupAssignmentBuilder;
 use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractDatabaseObjectBuilderForm;
+use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\ObjectFilterFormField;
@@ -66,31 +67,39 @@ class UserGroupAssignmentAddForm extends AbstractDatabaseObjectBuilderForm
     protected function createForm(): void
     {
         $this->form->appendChildren([
-            TitleFormField::create('title')
-                ->label('wcf.global.name')
-                ->maximumLength(255)
-                ->required()
-                ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {
-                    $builder->setTitle($field->getSaveValue());
-                }),
-            SelectFormField::create('groupID')
-                ->label('wcf.user.group')
-                ->options($this->getAvailableUserGroups())
-                ->required()
-                ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {
-                    $builder->setGroupID((int)$field->getSaveValue());
-                }),
-            BooleanFormField::create('isDisabled')
-                ->label('wcf.acp.group.assignment.isDisabled')
-                ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {
-                    $builder->setIsDisabled((bool)$field->getSaveValue());
-                }),
-            ObjectFilterFormField::create('conditions')
-                ->builder(new UserGroupAssignmentObjectFilterBuilder())
-                ->required()
-                ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {
-                    $builder->setConditions($field->getSaveValue());
-                }),
+            FormContainer::create('data')
+                ->appendChildren([
+                    TitleFormField::create('title')
+                        ->label('wcf.global.name')
+                        ->maximumLength(255)
+                        ->required()
+                        ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {
+                            $builder->setTitle($field->getSaveValue());
+                        }),
+                    SelectFormField::create('groupID')
+                        ->label('wcf.user.group')
+                        ->options($this->getAvailableUserGroups())
+                        ->required()
+                        ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {
+                            $builder->setGroupID((int)$field->getSaveValue());
+                        }),
+                    BooleanFormField::create('isDisabled')
+                        ->label('wcf.acp.group.assignment.isDisabled')
+                        ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {
+                            $builder->setIsDisabled((bool)$field->getSaveValue());
+                        }),
+                ]),
+            FormContainer::create('conditionsContainer')
+                ->label('wcf.acp.group.assignment.conditions')
+                ->description('wcf.acp.group.assignment.conditions.description')
+                ->appendChild(
+                    ObjectFilterFormField::create('conditions')
+                        ->builder(new UserGroupAssignmentObjectFilterBuilder())
+                        ->required()
+                        ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {
+                            $builder->setConditions($field->getSaveValue());
+                        }),
+                ),
         ]);
     }
 

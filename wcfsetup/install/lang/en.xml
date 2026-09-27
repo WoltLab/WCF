@@ -843,15 +843,11 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.admin.user.canManageGroupAssignment"><![CDATA[Can manage automatic user group assignments]]></item>
 		<item name="wcf.acp.group.assignment.add"><![CDATA[Add User Group Automatic Assignment]]></item>
 		<item name="wcf.acp.group.assignment.button.add"><![CDATA[Add Automatic Assignment]]></item>
-		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatic Assignments]]></item>
 		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[The users need to fulfill the following conditions to automatically be added to the user group.]]></item>
 		<item name="wcf.acp.group.assignment.edit"><![CDATA[Edit User Group Automatic Assignment]]></item>
-		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[You have not provided any conditions yet.]]></item>
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatic User Group Assignments]]></item>
-		<item name="wcf.acp.group.assignment.userGroup"><![CDATA[User Group]]></item>
 		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Disable automatic assignment]]></item>
-		<item name="wcf.acp.group.assignment.title.error.tooLong"><![CDATA[The entered title is too long. The maximum length is 255 characters.]]></item>
 		<item name="wcf.acp.group.option.admin.notice.canManageNotice"><![CDATA[Can manage notices]]></item>
 		<item name="wcf.acp.group.option.admin.ad.canManageAd"><![CDATA[Can manage ads]]></item>
 		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximum About Me Length]]></item>
@@ -1249,7 +1245,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.notice.cssClassName.success"><![CDATA[Success]]></item>
 		<item name="wcf.acp.notice.cssClassName.warning"><![CDATA[Warning]]></item>
 		<item name="wcf.acp.notice.conditions"><![CDATA[Conditions]]></item>
-		<item name="wcf.acp.notice.conditions.description"><![CDATA[If no conditions are specified, the notice will display for every user.]]></item>
+		<item name="wcf.acp.notice.conditions.description"><![CDATA[The notice is displayed if ALL of the following conditions are met. If no conditions are selected, the notice is displayed to every user on all pages.]]></item>
 		<item name="wcf.acp.notice.conditions.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.notice.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the notice to be displayed.]]></item>
 		<item name="wcf.acp.notice.conditions.pointInTime"><![CDATA[Time]]></item>
