@@ -2,8 +2,6 @@
 
 namespace wcf\system\email;
 
-use GuzzleHttp\Psr7\Uri;
-use GuzzleHttp\Utils;
 use wcf\data\language\Language;
 use wcf\system\language\LanguageFactory;
 use wcf\util\StringUtil;
@@ -93,16 +91,23 @@ class Mailbox implements \Stringable
             }
         }
 
-        // punycode the domain ...
-        try {
-            $uri = (new Uri())->withHost($domain);
-            $domain = Utils::idnUriConvert(
-                $uri,
-                \IDNA_DEFAULT | \IDNA_USE_STD3_RULES | \IDNA_CHECK_BIDI | \IDNA_CHECK_CONTEXTJ | \IDNA_NONTRANSITIONAL_TO_ASCII
-            )->getHost();
-        } catch (\InvalidArgumentException $e) {
-            throw new \DomainException($e->getMessage(), 0, $e);
+        if ($domain === '') {
+            throw new \DomainException("The given email address '" . $address . "' has an empty domain.");
         }
+
+        // punycode the domain ...
+        $asciiDomain = \idn_to_ascii(
+            $domain,
+            \IDNA_DEFAULT | \IDNA_USE_STD3_RULES | \IDNA_CHECK_BIDI | \IDNA_CHECK_CONTEXTJ | \IDNA_NONTRANSITIONAL_TO_ASCII,
+            \INTL_IDNA_VARIANT_UTS46,
+            $info
+        );
+        if ($asciiDomain === false) {
+            throw new \DomainException(
+                "IDN conversion of the domain '" . $domain . "' failed (errors: " . ($info['errors'] ?? 0) . ")."
+            );
+        }
+        $domain = $asciiDomain;
 
         // ... and rebuild address.
         $address = $localpart . '@' . $domain;

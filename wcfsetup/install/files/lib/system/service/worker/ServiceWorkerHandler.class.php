@@ -2,13 +2,12 @@
 
 namespace wcf\system\service\worker;
 
-use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Psr7\HttpFactory as Psr17Factory;
 use Minishlink\WebPush\MessageSentReport;
 use Minishlink\WebPush\VAPID;
 use Minishlink\WebPush\WebPush;
 use wcf\data\option\OptionEditor;
 use wcf\data\service\worker\ServiceWorker;
-use wcf\system\io\http\RedirectGuard;
 use wcf\system\io\HttpFactory;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\SingletonFactory;
@@ -84,6 +83,7 @@ final class ServiceWorkerHandler extends SingletonFactory
     private function getClient(): WebPush
     {
         if (!isset($this->pushClient)) {
+            $psr17Factory = new Psr17Factory();
             $this->pushClient = new WebPush(
                 [
                     'VAPID' => [
@@ -93,18 +93,9 @@ final class ServiceWorkerHandler extends SingletonFactory
                     ],
                 ],
                 ['TTL' => self::TTL],
-                null,
-                [
-                    /** @see HttpFactory::makeClient() */
-                    RequestOptions::PROXY => \PROXY_SERVER_HTTP,
-                    RequestOptions::HEADERS => [
-                        'user-agent' => HttpFactory::getDefaultUserAgent(),
-                    ],
-                    RequestOptions::TIMEOUT => 60,
-                    RequestOptions::ALLOW_REDIRECTS => [
-                        'on_redirect' => new RedirectGuard(),
-                    ],
-                ]
+                HttpFactory::makeClient(),
+                $psr17Factory,
+                $psr17Factory
             );
             $this->pushClient->setAutomaticPadding(self::MAX_PAYLOAD_LENGTH);
             $this->pushClient->setReuseVAPIDHeaders(true);

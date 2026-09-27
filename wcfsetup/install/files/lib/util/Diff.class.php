@@ -3,7 +3,7 @@
 namespace wcf\util;
 
 use SebastianBergmann\Diff\Differ;
-use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
+use SebastianBergmann\Diff\Output\StrictUnifiedDiffOutputBuilder;
 
 /**
  * Diff calculates the longest common subsequence of two given
@@ -361,7 +361,7 @@ class Diff implements \Stringable
      */
     public static function getDefaultDiffer(): Differ
     {
-        return new Differ(new UnifiedDiffOutputBuilder());
+        return new Differ(new StrictUnifiedDiffOutputBuilder(['header' => '']));
     }
 
     /**
