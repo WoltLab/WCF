@@ -7,9 +7,7 @@ $baseDir = $vendorDir;
 
 return array(
     '6e3fae29631ef280660b3cdad06f25a8' => $vendorDir . '/symfony/deprecation-contracts/function.php',
-    '7b11c4dc42b3b3023073cb14e519683c' => $vendorDir . '/ralouphie/getallheaders/src/getallheaders.php',
     '320cde22f66dd4f5d3fd621d3e88b98f' => $vendorDir . '/symfony/polyfill-ctype/bootstrap.php',
-    '37a3dc5111fe8f707ab4c132ef1dbc62' => $vendorDir . '/guzzlehttp/guzzle/src/functions_include.php',
     '0174385c3be07e86008907d06ee66531' => $vendorDir . '/sabberworm/php-css-parser/src/Rule/Rule.php',
     '98aea6e41b9cb79b379b10f37ba1f0b7' => $vendorDir . '/sabberworm/php-css-parser/src/RuleSet/RuleContainer.php',
     '9d2b9fc6db0f153a0a149fefb182415e' => $vendorDir . '/symfony/polyfill-php84/bootstrap.php',

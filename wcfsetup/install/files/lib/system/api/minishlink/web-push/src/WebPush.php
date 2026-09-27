@@ -1,7 +1,4 @@
-<?php
-
-declare(strict_types=1);
-
+<?php declare(strict_types=1);
 /*
  * This file is part of the WebPush library.
  *
@@ -14,18 +11,27 @@ declare(strict_types=1);
 namespace Minishlink\WebPush;
 
 use Base64Url\Base64Url;
-use GuzzleHttp\Client;
-use GuzzleHttp\Pool;
-use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Request;
+use Http\Client\Exception\HttpException;
+use Http\Client\HttpAsyncClient;
+use Http\Discovery\HttpAsyncClientDiscovery;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
+use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Log\LoggerInterface;
 
 class WebPush
 {
-    protected Client $client;
+    protected ClientInterface $client;
+    protected RequestFactoryInterface $requestFactory;
+    protected StreamFactoryInterface $streamFactory;
+    protected ?HttpAsyncClient $asyncClient;
     protected array $auth;
+    protected ?LoggerInterface $logger;
 
     /**
      * @var null|array Array of array of Notifications
@@ -55,15 +61,28 @@ class WebPush
     /**
      * WebPush constructor.
      *
-     * @param array    $auth           Some servers need authentication
-     * @param array    $defaultOptions TTL, urgency, topic, batchSize, requestConcurrency
-     * @param int|null $timeout        Timeout of POST request
+     * @param array           $auth           Some servers need authentication
+     * @param array           $defaultOptions TTL, urgency, topic, batchSize, requestConcurrency
+     * @param ClientInterface|null $client    PSR-18 HTTP client. Defaults to an auto-discovered client (e.g. Guzzle, if installed). Configure timeouts/proxies/redirects directly on this client instance.
+     * @param RequestFactoryInterface|null $requestFactory PSR-17 request factory. Defaults to an auto-discovered factory.
+     * @param StreamFactoryInterface|null $streamFactory PSR-17 stream factory. Defaults to an auto-discovered factory.
+     * @param HttpAsyncClient|null $asyncClient Optional HTTPlug async client, required for concurrent sending via flushPooled(). Defaults to an auto-discovered async client, if any is installed.
+     * @param LoggerInterface|null $logger    Optional PSR-3 logger; if provided, replaces trigger_error() calls
      *
      * @throws \ErrorException
      */
-    public function __construct(array $auth = [], array $defaultOptions = [], ?int $timeout = 30, array $clientOptions = [])
-    {
-        Utils::checkRequirement();
+    public function __construct(
+        array $auth = [],
+        array $defaultOptions = [],
+        ?ClientInterface $client = null,
+        ?RequestFactoryInterface $requestFactory = null,
+        ?StreamFactoryInterface $streamFactory = null,
+        ?HttpAsyncClient $asyncClient = null,
+        ?LoggerInterface $logger = null
+    ) {
+        $this->logger = $logger;
+
+        Utils::checkRequirement($this->logger);
 
         if (isset($auth['VAPID'])) {
             $auth['VAPID'] = VAPID::validate($auth['VAPID']);
@@ -73,10 +92,19 @@ class WebPush
 
         $this->setDefaultOptions($defaultOptions);
 
-        if (!array_key_exists('timeout', $clientOptions) && isset($timeout)) {
-            $clientOptions['timeout'] = $timeout;
+        $this->client = $client ?? Psr18ClientDiscovery::find();
+        $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
+        $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
+
+        if ($asyncClient) {
+            $this->asyncClient = $asyncClient;
+        } else {
+            try {
+                $this->asyncClient = HttpAsyncClientDiscovery::find();
+            } catch (\Throwable) {
+                $this->asyncClient = null;
+            }
         }
-        $this->client = new Client($clientOptions);
     }
 
     /**
@@ -99,7 +127,7 @@ class WebPush
                 throw new \ErrorException('Subscription should have a content encoding');
             }
 
-            $payload = Encryption::padPayload($payload, $this->automaticPadding, $contentEncoding);
+            $payload = Encryption::padPayload($payload, $this->automaticPadding, ContentEncoding::from($contentEncoding));
         }
 
         if (array_key_exists('VAPID', $auth)) {
@@ -128,6 +156,7 @@ class WebPush
      *
      * @return \Generator
      * @throws \ErrorException
+     * @throws \Random\RandomException
      */
     public function flush(?int $batchSize = null): \Generator
     {
@@ -149,21 +178,13 @@ class WebPush
             // for each endpoint server type
             $requests = $this->prepare($batch);
 
-            $promises = [];
-
             foreach ($requests as $request) {
-                $promises[] = $this->client->sendAsync($request)
-                    ->then(function ($response) use ($request) {
-                        /** @var ResponseInterface $response **/
-                        return new MessageSentReport($request, $response);
-                    })
-                    ->otherwise(function ($reason) {
-                        return $this->createRejectedReport($reason);
-                    });
-            }
-
-            foreach ($promises as $promise) {
-                yield $promise->wait();
+                try {
+                    $response = $this->client->sendRequest($request);
+                    yield $this->createReport($request, $response);
+                } catch (ClientExceptionInterface $reason) {
+                    yield $this->createRejectedReport($request, $reason);
+                }
             }
         }
 
@@ -175,43 +196,51 @@ class WebPush
     /**
      * Flush notifications. Triggers concurrent requests.
      *
+     * Requires an HTTPlug async client (e.g. via `php-http/guzzle7-adapter`), injected in the
+     * constructor or auto-discovered. See the "Customizing the HTTP client" section of the README.
+     *
      * @param callable(MessageSentReport): void $callback Callback for each notification
      * @param null|int $batchSize Defaults the value defined in defaultOptions during instantiation (which defaults to 1000).
-     * @param null|int $requestConcurrency Defaults the value defined in defaultOptions during instantiation (which defaults to 100).
+     * @param null|int $requestConcurrency Unused. Concurrency is now controlled by the underlying async client's own configuration.
+     *
+     * @throws \LogicException If no HTTPlug async client is available
      */
-    public function flushPooled($callback, ?int $batchSize = null, ?int $requestConcurrency = null): void
+    public function flushPooled(callable $callback, ?int $batchSize = null, ?int $requestConcurrency = null): void
     {
         if (empty($this->notifications)) {
             return;
+        }
+
+        if (!$this->asyncClient) {
+            throw new \LogicException('flushPooled() requires an HTTPlug async client for concurrent sending. Install one, e.g. "composer require php-http/guzzle7-adapter", or use flush() for sequential sending.');
         }
 
         if (null === $batchSize) {
             $batchSize = $this->defaultOptions['batchSize'];
         }
 
-        if (null === $requestConcurrency) {
-            $requestConcurrency = $this->defaultOptions['requestConcurrency'];
-        }
-
         $batches = array_chunk($this->notifications, $batchSize);
         $this->notifications = [];
 
         foreach ($batches as $batch) {
-            $batch = $this->prepare($batch);
-            $pool = new Pool($this->client, $batch, [
-                'concurrency' => $requestConcurrency,
-                'fulfilled' => function (ResponseInterface $response, int $index) use ($callback, $batch) {
-                    /** @var RequestInterface $request **/
-                    $request = $batch[$index];
-                    $callback(new MessageSentReport($request, $response));
-                },
-                'rejected' => function ($reason) use ($callback) {
-                    $callback($this->createRejectedReport($reason));
-                },
-            ]);
+            $requests = $this->prepare($batch);
 
-            $promise = $pool->promise();
-            $promise->wait();
+            $promises = [];
+            foreach ($requests as $request) {
+                $promises[] = $this->asyncClient->sendAsyncRequest($request)
+                    ->then(
+                        function (ResponseInterface $response) use ($callback, $request): void {
+                            $callback($this->createReport($request, $response));
+                        },
+                        function (\Throwable $reason) use ($callback, $request): void {
+                            $callback($this->createRejectedReport($request, $reason));
+                        }
+                    );
+            }
+
+            foreach ($promises as $promise) {
+                $promise->wait();
+            }
         }
 
         if ($this->reuseVAPIDHeaders) {
@@ -220,18 +249,28 @@ class WebPush
     }
 
     /**
-     * @param RequestException|ConnectException $reason
-     * @return MessageSentReport
+     * PSR-18 clients only throw for transport-level failures (DNS, connection refused, ...);
+     * HTTP error status codes (4xx, 5xx) are returned as a normal response and must be
+     * classified here.
      */
-    protected function createRejectedReport($reason): MessageSentReport
+    protected function createReport(RequestInterface $request, ResponseInterface $response): MessageSentReport
     {
-        if ($reason instanceof RequestException) {
-            $response = $reason->getResponse();
-        } else {
-            $response = null;
+        $statusCode = $response->getStatusCode();
+        if ($statusCode >= 400) {
+            $reasonPhrase = $response->getReasonPhrase();
+            $reason = '' !== $reasonPhrase ? $reasonPhrase : 'Push service responded with status code '.$statusCode;
+
+            return new MessageSentReport($request, $response, false, $reason);
         }
 
-        return new MessageSentReport($reason->getRequest(), $response, false, $reason->getMessage());
+        return new MessageSentReport($request, $response);
+    }
+
+    protected function createRejectedReport(RequestInterface $request, \Throwable $reason): MessageSentReport
+    {
+        $response = $reason instanceof HttpException ? $reason->getResponse() : null;
+
+        return new MessageSentReport($request, $response, false, $reason->getMessage());
     }
 
     /**
@@ -257,7 +296,7 @@ class WebPush
                     throw new \ErrorException('Subscription should have a content encoding');
                 }
 
-                $encrypted = Encryption::encrypt($payload, $userPublicKey, $userAuthToken, $contentEncoding);
+                $encrypted = Encryption::encrypt($payload, $userPublicKey, $userAuthToken, ContentEncoding::from($contentEncoding));
                 $cipherText = $encrypted['cipherText'];
                 $salt = $encrypted['salt'];
                 $localPublicKey = $encrypted['localPublicKey'];
@@ -267,12 +306,12 @@ class WebPush
                     'Content-Encoding' => $contentEncoding,
                 ];
 
-                if ($contentEncoding === "aesgcm") {
+                if ($contentEncoding === ContentEncoding::aesgcm->value) {
                     $headers['Encryption'] = 'salt='.Base64Url::encode($salt);
                     $headers['Crypto-Key'] = 'dh='.Base64Url::encode($localPublicKey);
                 }
 
-                $encryptionContentCodingHeader = Encryption::getContentCodingHeader($salt, $localPublicKey, $contentEncoding);
+                $encryptionContentCodingHeader = Encryption::getContentCodingHeader($salt, $localPublicKey, ContentEncoding::from($contentEncoding));
                 $content = $encryptionContentCodingHeader.$cipherText;
 
                 $headers['Content-Length'] = (string) Utils::safeStrlen($content);
@@ -284,7 +323,7 @@ class WebPush
                 $content = '';
             }
 
-            $headers['TTL'] = $options['TTL'];
+            $headers['TTL'] = (string) $options['TTL'];
 
             if (isset($options['urgency'])) {
                 $headers['Urgency'] = $options['urgency'];
@@ -300,11 +339,11 @@ class WebPush
                     throw new \ErrorException('Audience "'.$audience.'"" could not be generated.');
                 }
 
-                $vapidHeaders = $this->getVAPIDHeaders($audience, $contentEncoding, $auth['VAPID']);
+                $vapidHeaders = $this->getVAPIDHeaders($audience, ContentEncoding::from($contentEncoding), $auth['VAPID']);
 
                 $headers['Authorization'] = $vapidHeaders['Authorization'];
 
-                if ($contentEncoding === 'aesgcm') {
+                if ($contentEncoding === ContentEncoding::aesgcm->value) {
                     if (array_key_exists('Crypto-Key', $headers)) {
                         $headers['Crypto-Key'] .= ';'.$vapidHeaders['Crypto-Key'];
                     } else {
@@ -313,7 +352,11 @@ class WebPush
                 }
             }
 
-            $requests[] = new Request('POST', $endpoint, $headers, $content);
+            $request = $this->requestFactory->createRequest('POST', $endpoint);
+            foreach ($headers as $name => $value) {
+                $request = $request->withHeader($name, $value);
+            }
+            $requests[] = $request->withBody($this->streamFactory->createStream($content));
         }
 
         return $requests;
@@ -398,13 +441,13 @@ class WebPush
     /**
      * @throws \ErrorException
      */
-    protected function getVAPIDHeaders(string $audience, string $contentEncoding, array $vapid): ?array
+    protected function getVAPIDHeaders(string $audience, ContentEncoding $contentEncoding, array $vapid): ?array
     {
         $vapidHeaders = null;
 
         $cache_key = null;
         if ($this->reuseVAPIDHeaders) {
-            $cache_key = implode('#', [$audience, $contentEncoding, crc32(serialize($vapid))]);
+            $cache_key = implode('#', [$audience, $contentEncoding->value, crc32(serialize($vapid))]);
             if (array_key_exists($cache_key, $this->vapidHeaders)) {
                 $vapidHeaders = $this->vapidHeaders[$cache_key];
             }

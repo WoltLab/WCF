@@ -9,9 +9,11 @@
  */
 namespace SebastianBergmann\Diff\Output;
 
+use function assert;
 use function fclose;
 use function fopen;
 use function fwrite;
+use function is_resource;
 use function str_ends_with;
 use function stream_get_contents;
 use function substr;
@@ -30,9 +32,14 @@ final class DiffOnlyOutputBuilder implements DiffOutputBuilderInterface
         $this->header = $header;
     }
 
+    /**
+     * @param list<array{0: mixed, 1: int}> $diff
+     */
     public function getDiff(array $diff): string
     {
         $buffer = fopen('php://memory', 'r+b');
+
+        assert(is_resource($buffer));
 
         if ('' !== $this->header) {
             fwrite($buffer, $this->header);
@@ -44,10 +51,13 @@ final class DiffOnlyOutputBuilder implements DiffOutputBuilderInterface
 
         foreach ($diff as $diffEntry) {
             if ($diffEntry[1] === Differ::ADDED) {
+                /** @phpstan-ignore binaryOp.invalid */
                 fwrite($buffer, '+' . $diffEntry[0]);
             } elseif ($diffEntry[1] === Differ::REMOVED) {
+                /** @phpstan-ignore binaryOp.invalid */
                 fwrite($buffer, '-' . $diffEntry[0]);
             } elseif ($diffEntry[1] === Differ::DIFF_LINE_END_WARNING) {
+                /** @phpstan-ignore binaryOp.invalid */
                 fwrite($buffer, ' ' . $diffEntry[0]);
 
                 continue; // Warnings should not be tested for line break, it will always be there
@@ -55,6 +65,7 @@ final class DiffOnlyOutputBuilder implements DiffOutputBuilderInterface
                 continue; // we didn't write the not-changed line, so do not add a line break either
             }
 
+            /** @phpstan-ignore argument.type */
             $lc = substr($diffEntry[0], -1);
 
             if ($lc !== "\n" && $lc !== "\r") {
