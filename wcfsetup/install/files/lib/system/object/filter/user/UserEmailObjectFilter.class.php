@@ -44,6 +44,12 @@ final class UserEmailObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
+    public function isAvailable(): bool
+    {
+        return true;
+    }
+
+    #[\Override]
     public function serializeValue(mixed $value): string
     {
         return $value;

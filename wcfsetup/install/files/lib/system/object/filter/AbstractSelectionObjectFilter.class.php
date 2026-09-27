@@ -59,6 +59,15 @@ abstract class AbstractSelectionObjectFilter implements IObjectFilter
     }
 
     /**
+     * Returns false if there are no objects to choose from.
+     */
+    #[\Override]
+    public function isAvailable(): bool
+    {
+        return $this->getOptions() !== [];
+    }
+
+    /**
      * @param int|string $value
      */
     #[\Override]

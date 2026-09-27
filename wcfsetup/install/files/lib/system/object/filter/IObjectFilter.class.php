@@ -39,6 +39,13 @@ interface IObjectFilter
     public function getFormField(): AbstractFormField;
 
     /**
+     * Returns true if this filter can be selected when configuring a filter,
+     * e.g. false if there are no objects to choose from. Stored values of an
+     * unavailable filter are still evaluated.
+     */
+    public function isAvailable(): bool;
+
+    /**
      * Converts the given value into its string representation for storage.
      *
      * When a filter is configured, the given value is the value of the form

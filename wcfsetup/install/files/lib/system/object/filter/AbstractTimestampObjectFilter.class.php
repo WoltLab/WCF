@@ -44,6 +44,12 @@ abstract class AbstractTimestampObjectFilter implements IObjectFilter
             ->required();
     }
 
+    #[\Override]
+    public function isAvailable(): bool
+    {
+        return true;
+    }
+
     /**
      * @param int|string $value
      */

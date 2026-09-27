@@ -41,6 +41,12 @@ abstract class AbstractBooleanObjectFilter implements IObjectFilter
             ->label($this->getLanguageItem());
     }
 
+    #[\Override]
+    public function isAvailable(): bool
+    {
+        return true;
+    }
+
     /**
      * @param bool|int $value
      */

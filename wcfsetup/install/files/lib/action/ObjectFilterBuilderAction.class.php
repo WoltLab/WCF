@@ -135,6 +135,10 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
 
         $selectValues = [];
         foreach ($builder->getFilters() as $filter) {
+            if (!$filter->isAvailable()) {
+                continue;
+            }
+
             $formField = $filter->getFormField();
             $formField->addDependency(
                 ValueFormFieldDependency::create($formField->getId() . 'Dependency')

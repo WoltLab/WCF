@@ -43,6 +43,12 @@ abstract class AbstractMultipleSelectionObjectFilter implements IObjectFilter
         return WCF::getLanguage()->get($this->getLanguageItem());
     }
 
+    #[\Override]
+    public function isAvailable(): bool
+    {
+        return true;
+    }
+
     /**
      * @param list<int|string> $value
      */

@@ -81,6 +81,12 @@ abstract class AbstractRangeObjectFilter implements IObjectFilter
             ));
     }
 
+    #[\Override]
+    public function isAvailable(): bool
+    {
+        return true;
+    }
+
     /**
      * @param string|array{0: ?TBound, 1: ?TBound} $value
      */
