@@ -3500,6 +3500,9 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.objectFilter.user.birthday"><![CDATA[Geburtstag heute]]></item>
 		<item name="wcf.objectFilter.user.birthday.summary.no"><![CDATA[Hat heute nicht Geburtstag]]></item>
 		<item name="wcf.objectFilter.user.birthday.summary.yes"><![CDATA[Hat heute Geburtstag]]></item>
+		<item name="wcf.objectFilter.user.coverPhoto"><![CDATA[Titelbild]]></item>
+		<item name="wcf.objectFilter.user.coverPhoto.summary.no"><![CDATA[Hat kein Titelbild]]></item>
+		<item name="wcf.objectFilter.user.coverPhoto.summary.yes"><![CDATA[Hat ein Titelbild]]></item>
 		<item name="wcf.objectFilter.user.email"><![CDATA[E-Mail-Adresse]]></item>
 		<item name="wcf.objectFilter.user.email.summary"><![CDATA[E-Mail-Adresse enthält „{$value}“]]></item>
 		<item name="wcf.objectFilter.user.emailConfirmed"><![CDATA[E-Mail-Adresse bestätigt]]></item>
@@ -3524,6 +3527,9 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.objectFilter.user.registrationDate.summary"><![CDATA[Registriert {if $from !== null && $to !== null}zwischen dem {$from} und dem {$to}{elseif $from !== null}am oder nach dem {$from}{else}am oder vor dem {$to}{/if}]]></item>
 		<item name="wcf.objectFilter.user.registrationDays"><![CDATA[Tage seit Registrierung]]></item>
 		<item name="wcf.objectFilter.user.registrationDays.summary"><![CDATA[Registriert vor {if $from !== null && $to !== null}{#$from} bis {#$to} Tagen{elseif $from !== null}mindestens {#$from} Tagen{else}höchstens {#$to} Tagen{/if}]]></item>
+		<item name="wcf.objectFilter.user.signature"><![CDATA[Signatur]]></item>
+		<item name="wcf.objectFilter.user.signature.summary.no"><![CDATA[Hat keine Signatur]]></item>
+		<item name="wcf.objectFilter.user.signature.summary.yes"><![CDATA[Hat eine Signatur]]></item>
 		<item name="wcf.objectFilter.user.trophy"><![CDATA[Hat Trophäe erhalten]]></item>
 		<item name="wcf.objectFilter.user.trophy.summary"><![CDATA[Hat die Trophäe „{$value}“ erhalten]]></item>
 		<item name="wcf.objectFilter.user.username"><![CDATA[Benutzername]]></item>

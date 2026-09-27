@@ -3425,6 +3425,9 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.objectFilter.user.birthday"><![CDATA[Birthday Today]]></item>
 		<item name="wcf.objectFilter.user.birthday.summary.no"><![CDATA[It is not their birthday today]]></item>
 		<item name="wcf.objectFilter.user.birthday.summary.yes"><![CDATA[It is their birthday today]]></item>
+		<item name="wcf.objectFilter.user.coverPhoto"><![CDATA[Cover Photo]]></item>
+		<item name="wcf.objectFilter.user.coverPhoto.summary.no"><![CDATA[Has no cover photo]]></item>
+		<item name="wcf.objectFilter.user.coverPhoto.summary.yes"><![CDATA[Has a cover photo]]></item>
 		<item name="wcf.objectFilter.user.email"><![CDATA[Email Address]]></item>
 		<item name="wcf.objectFilter.user.email.summary"><![CDATA[Email address contains “{$value}”]]></item>
 		<item name="wcf.objectFilter.user.emailConfirmed"><![CDATA[Email Address Confirmed]]></item>
@@ -3449,6 +3452,9 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.objectFilter.user.registrationDate.summary"><![CDATA[Registered {if $from !== null && $to !== null}between {$from} and {$to}{elseif $from !== null}on or after {$from}{else}on or before {$to}{/if}]]></item>
 		<item name="wcf.objectFilter.user.registrationDays"><![CDATA[Days since Registration]]></item>
 		<item name="wcf.objectFilter.user.registrationDays.summary"><![CDATA[Registered {if $from !== null && $to !== null}{#$from} to {#$to} days ago{elseif $from !== null}at least {#$from} days ago{else}at most {#$to} days ago{/if}]]></item>
+		<item name="wcf.objectFilter.user.signature"><![CDATA[Signature]]></item>
+		<item name="wcf.objectFilter.user.signature.summary.no"><![CDATA[Has no signature]]></item>
+		<item name="wcf.objectFilter.user.signature.summary.yes"><![CDATA[Has a signature]]></item>
 		<item name="wcf.objectFilter.user.trophy"><![CDATA[Has Received Trophy]]></item>
 		<item name="wcf.objectFilter.user.trophy.summary"><![CDATA[Has received the trophy “{$value}”]]></item>
 		<item name="wcf.objectFilter.user.username"><![CDATA[Username]]></item>
