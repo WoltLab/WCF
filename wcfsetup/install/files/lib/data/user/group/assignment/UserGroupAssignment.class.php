@@ -27,6 +27,7 @@ class UserGroupAssignment extends DatabaseObject implements IRouteController
      * Returns the conditions of the automatic assignment to a user group.
      *
      * @return  Condition[]
+     * @deprecated 6.3 Use object filter API instead.
      */
     public function getConditions()
     {

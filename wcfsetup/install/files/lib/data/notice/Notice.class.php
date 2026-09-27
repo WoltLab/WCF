@@ -67,6 +67,7 @@ class Notice extends DatabaseObject implements IRouteController, \Stringable
      * Returns the conditions of the notice.
      *
      * @return  Condition[]
+     * @deprecated 6.3 Use object filter API instead.
      */
     public function getConditions()
     {
