@@ -9,11 +9,16 @@
 		{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
 			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
 		{/if}
-		
-		{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
-			new WCF.ACP.Package.Update.Search(true);
-		{/if}
 	});
+
+	{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
+		{jsphrase name='wcf.acp.package.searchForUpdates'}
+		{jsphrase name='wcf.acp.package.searchForUpdates.noResults'}
+
+		require(['WoltLabSuite/Core/Acp/Component/Package/SearchForUpdates'], ({ setup }) => {
+			setup(document.getElementById('searchForUpdatesButton'));
+		});
+	{/if}
 </script>
 
 <header class="contentHeader">
@@ -35,7 +40,7 @@
 					{/if}
 
 					{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
-						<li><button type="button" class="button jsButtonSearchForUpdates">{icon name='arrows-rotate'} <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></button></li>
+						<li><button type="button" class="button" id="searchForUpdatesButton">{icon name='arrows-rotate'} <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></button></li>
 					{/if}
 
 					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}

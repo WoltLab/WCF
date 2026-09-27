@@ -2,7 +2,6 @@
 
 namespace wcf\data\package\update;
 
-use wcf\acp\page\PackageUpdatePage;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
@@ -17,7 +16,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageInstallationScheduler;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\package\PackageUpdateUnauthorizedException;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HtmlString;
 
@@ -50,7 +48,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
     /**
      * @inheritDoc
      */
-    protected $requireACP = ['getResultList', 'prepareInstallation', 'prepareUpdate', 'search', 'searchForUpdates'];
+    protected $requireACP = ['getResultList', 'prepareInstallation', 'prepareUpdate', 'search'];
 
     /**
      * search object
@@ -583,44 +581,6 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                 'thirdPartySources' => $thirdPartySources,
                 'trustedSources' => $trustedSources,
             ]),
-        ];
-    }
-
-    /**
-     * Validates permissions to search for updates.
-     *
-     * @return void
-     */
-    public function validateSearchForUpdates()
-    {
-        WCF::getSession()->checkPermissions(['admin.configuration.package.canUpdatePackage']);
-
-        $this->readBoolean('ignoreCache', true);
-
-        if (\ENABLE_BENCHMARK !== 0) {
-            throw new NamedUserException(HtmlString::fromSafeHtml(
-                WCF::getLanguage()->getDynamicVariable('wcf.acp.package.searchForUpdates.benchmark')
-            ));
-        }
-    }
-
-    /**
-     * Searches for updates.
-     *
-     * @return array{url: string}
-     */
-    public function searchForUpdates()
-    {
-        PackageUpdateDispatcher::getInstance()->refreshPackageDatabase([], $this->parameters['ignoreCache']);
-
-        $updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
-        $url = '';
-        if ($updates !== []) {
-            $url = LinkHandler::getInstance()->getControllerLink(PackageUpdatePage::class);
-        }
-
-        return [
-            'url' => $url,
         ];
     }
 
