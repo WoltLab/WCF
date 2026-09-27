@@ -2,6 +2,7 @@
 
 namespace wcf\system\session;
 
+use ParagonIE\ConstantTime\Base32;
 use ParagonIE\ConstantTime\Hex;
 use wcf\data\session\Session as LegacySession;
 use wcf\data\session\SessionEditor;
@@ -194,6 +195,19 @@ final class SessionHandler extends SingletonFactory
 
                 return $data;
 
+            case 2:
+                if ($length !== 42) {
+                    throw new \InvalidArgumentException(\sprintf(
+                        'Expected exactly 42 Bytes, %d given.',
+                        $length
+                    ));
+                }
+                $data = \unpack('Cversion/a40sessionId/Ctimestep', $value);
+                \assert($data['version'] === 2);
+                \assert(\strlen($data['sessionId']) === 40);
+
+                return $data;
+
             default:
                 throw new \InvalidArgumentException(\sprintf(
                     'Unknown version %d',
@@ -275,9 +289,9 @@ final class SessionHandler extends SingletonFactory
         }
 
         return CryptoUtil::createSignedString(\pack(
-            'CA20C',
-            1,
-            Hex::decode($this->sessionID),
+            'Ca40C',
+            2,
+            $this->sessionID,
             $this->getCookieTimestep()
         ));
     }
@@ -637,7 +651,7 @@ final class SessionHandler extends SingletonFactory
      */
     private function create(): void
     {
-        $this->sessionID = Hex::encode(\random_bytes(20));
+        $this->sessionID = $this->generateSessionID();
 
         $variables = [
             'frontend' => [],
@@ -690,6 +704,25 @@ final class SessionHandler extends SingletonFactory
             "user_session",
             $this->getCookieValue()
         );
+    }
+
+    /**
+     * Generates a session ID that starts with its creation time, keeping inserts into
+     * the primary key of `wcf1_user_session` close to sequential.
+     *
+     * Format: 4 bytes of seconds and 1 byte of 1/256 second steps as Base16, followed by
+     * 17 random bytes (136 bits) as Base32 and the format version `V2`.
+     */
+    private function generateSessionID(): string
+    {
+        // Both parts must come from the same clock reading, `TIME_NOW` is fixed at
+        // the start of the request and would break the ordering within a second.
+        $now = \microtime(true);
+        $seconds = (int)$now;
+
+        return Hex::encode(\pack('NC', $seconds, (int)(($now - $seconds) * 256)))
+            . \substr(Base32::encode(\random_bytes(17)), 0, 28)
+            . 'V2';
     }
 
     /**

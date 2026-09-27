@@ -8,6 +8,7 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
+use wcf\system\database\table\column\BinaryDatabaseTableColumn;
 use wcf\system\database\table\column\CharDatabaseTableColumn;
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\IntDatabaseTableColumn;
@@ -75,8 +76,23 @@ return [
         ]),
     PartialDatabaseTable::create('wcf1_acp_session_log')
         ->columns([
+            BinaryDatabaseTableColumn::create('sessionID')
+                ->notNull()
+                ->length(40),
             NotNullVarchar255DatabaseTableColumn::create('hostname')
                 ->defaultValue('')
                 ->drop(),
+        ]),
+    PartialDatabaseTable::create('wcf1_session')
+        ->columns([
+            BinaryDatabaseTableColumn::create('sessionID')
+                ->notNull()
+                ->length(40),
+        ]),
+    PartialDatabaseTable::create('wcf1_user_session')
+        ->columns([
+            BinaryDatabaseTableColumn::create('sessionID')
+                ->notNull()
+                ->length(40),
         ]),
 ];

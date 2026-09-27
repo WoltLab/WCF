@@ -307,10 +307,9 @@ return [
     DatabaseTable::create('wcf1_acp_session_log')
         ->columns([
             ObjectIdDatabaseTableColumn::create('sessionLogID'),
-            CharDatabaseTableColumn::create('sessionID')
+            BinaryDatabaseTableColumn::create('sessionID')
                 ->notNull()
-                ->length(40)
-                ->defaultValue(''),
+                ->length(40),
             IntDatabaseTableColumn::create('userID'),
             VarcharDatabaseTableColumn::create('ipAddress')
                 ->notNull()
@@ -3216,7 +3215,7 @@ return [
         ]),
     DatabaseTable::create('wcf1_session')
         ->columns([
-            CharDatabaseTableColumn::create('sessionID')
+            BinaryDatabaseTableColumn::create('sessionID')
                 ->notNull()
                 ->length(40),
             IntDatabaseTableColumn::create('userID'),
@@ -4777,7 +4776,7 @@ return [
         ]),
     DatabaseTable::create('wcf1_user_session')
         ->columns([
-            CharDatabaseTableColumn::create('sessionID')
+            BinaryDatabaseTableColumn::create('sessionID')
                 ->notNull()
                 ->length(40),
             IntDatabaseTableColumn::create('userID'),
