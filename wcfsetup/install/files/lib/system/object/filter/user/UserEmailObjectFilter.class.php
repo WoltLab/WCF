@@ -50,6 +50,12 @@ final class UserEmailObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
+    public function isRepeatable(): bool
+    {
+        return true;
+    }
+
+    #[\Override]
     public function serializeValue(mixed $value): string
     {
         return $value;

@@ -85,6 +85,25 @@ final class ObjectFilterFormField extends AbstractFormField
                 new FormFieldValidationError('empty')
             );
         }
+
+        $filters = [];
+        foreach ($this->getBuilder()->getFilters() as $filter) {
+            $filters[$filter->getIdentifier()] = $filter;
+        }
+
+        $counts = \array_count_values(\array_column($values, 'identifier'));
+        foreach ($counts as $identifier => $count) {
+            $filter = $filters[$identifier];
+            if ($count > 1 && !$filter->isRepeatable()) {
+                $this->addValidationError(
+                    new FormFieldValidationError(
+                        'notRepeatable',
+                        'wcf.objectFilter.error.notRepeatable',
+                        ['title' => $filter->getTitle()]
+                    )
+                );
+            }
+        }
     }
 
     /**

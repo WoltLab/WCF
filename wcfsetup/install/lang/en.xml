@@ -3404,6 +3404,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.objectFilter.editFilter"><![CDATA[Edit Condition]]></item>
 		<item name="wcf.objectFilter.endDate"><![CDATA[End Date]]></item>
 		<item name="wcf.objectFilter.endDate.summary"><![CDATA[Until {$value|plainTime}]]></item>
+		<item name="wcf.objectFilter.error.notRepeatable"><![CDATA[The condition “{$title}” can only be added once.]]></item>
 		<item name="wcf.objectFilter.filter"><![CDATA[Condition]]></item>
 		<item name="wcf.objectFilter.joiner"><![CDATA[AND]]></item>
 		<item name="wcf.objectFilter.notRequestedPage"><![CDATA[Requested Page Excluded]]></item>

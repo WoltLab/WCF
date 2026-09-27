@@ -50,6 +50,12 @@ abstract class AbstractTimestampObjectFilter implements IObjectFilter
         return true;
     }
 
+    #[\Override]
+    public function isRepeatable(): bool
+    {
+        return false;
+    }
+
     /**
      * @param int|string $value
      */

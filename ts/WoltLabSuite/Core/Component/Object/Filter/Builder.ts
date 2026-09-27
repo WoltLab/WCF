@@ -89,10 +89,28 @@ class ObjectFilterBuilder {
   }
 
   /**
+   * Returns the URL of the dialog, passing the identifiers of the configured
+   * filters except for the given one that is being edited. Filters that are
+   * not repeatable are no longer offered once they have been configured.
+   */
+  #getEndpoint(editedItem?: HTMLElement): URL {
+    const url = new URL(this.#endpoint, window.location.href);
+    this.#conditions.forEach((condition, item) => {
+      if (item !== editedItem) {
+        url.searchParams.append("used[]", condition.identifier);
+      }
+    });
+
+    return url;
+  }
+
+  /**
    * Opens the dialog to configure a new filter and adds it to the list.
    */
   async #addFilter(): Promise<void> {
-    const response = await dialogFactory().usingFormBuilder().fromEndpoint<Response>(this.#endpoint);
+    const url = this.#getEndpoint();
+
+    const response = await dialogFactory().usingFormBuilder().fromEndpoint<Response>(url.toString());
     if (response.ok) {
       this.#createCondition(response.result);
     }
@@ -104,7 +122,7 @@ class ObjectFilterBuilder {
   async #editFilter(item: HTMLElement, summary: HTMLElement): Promise<void> {
     const data = this.#conditions.get(item)!;
 
-    const url = new URL(this.#endpoint, window.location.href);
+    const url = this.#getEndpoint(item);
     url.searchParams.set("filter", data.identifier);
     url.searchParams.set("value", data.value);
 

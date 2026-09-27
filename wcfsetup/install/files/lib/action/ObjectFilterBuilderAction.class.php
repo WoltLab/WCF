@@ -29,6 +29,8 @@ use wcf\system\WCF;
  *
  * An existing filter is edited by passing its identifier and its serialized
  * value through the `filter` and `value` query parameters, which prefill the dialog.
+ * The identifiers of the other configured filters are passed through `used`,
+ * filters that are not repeatable are not offered again.
  *
  * @author      Alexander Ebert, Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
@@ -47,6 +49,7 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
                     identifier: string,
                     filter?: string,
                     value?: string,
+                    used?: list<string>,
                 }
                 EOT
         );
@@ -67,6 +70,7 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
             $builder,
             $parameters['filter'] ?? null,
             $parameters['value'] ?? null,
+            $parameters['used'] ?? [],
         );
 
         if ($request->getMethod() === 'GET') {
@@ -110,14 +114,17 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
      * The form field of each filter is only shown while it is selected.
      *
      * If a filter identifier and its serialized value are given, the dialog is
-     * prefilled with them.
+     * prefilled with them. Filters that are not repeatable are only offered if
+     * they are not part of the given identifiers of the other configured filters.
      *
      * @param IObjectFilterBuilder<*> $builder
+     * @param list<string> $usedIdentifiers
      */
     private function getForm(
         IObjectFilterBuilder $builder,
         ?string $filterIdentifier,
         ?string $serializedValue,
+        array $usedIdentifiers,
     ): Psr15DialogForm {
         $form = new Psr15DialogForm(
             static::class,
@@ -138,6 +145,9 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
         $selectValues = [];
         foreach ($builder->getFilters() as $filter) {
             if (!$filter->isAvailable()) {
+                continue;
+            }
+            if (!$filter->isRepeatable() && \in_array($filter->getIdentifier(), $usedIdentifiers, true)) {
                 continue;
             }
 

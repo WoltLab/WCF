@@ -46,6 +46,13 @@ interface IObjectFilter
     public function isAvailable(): bool;
 
     /**
+     * Returns true if this filter can be configured more than once for the
+     * same object. Filters whose repeated use is redundant or contradictory,
+     * e.g. a yes/no choice, return false.
+     */
+    public function isRepeatable(): bool;
+
+    /**
      * Converts the given value into its string representation for storage.
      *
      * When a filter is configured, the given value is the value of the form

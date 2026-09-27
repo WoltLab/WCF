@@ -87,6 +87,12 @@ abstract class AbstractRangeObjectFilter implements IObjectFilter
         return true;
     }
 
+    #[\Override]
+    public function isRepeatable(): bool
+    {
+        return false;
+    }
+
     /**
      * @param string|array{0: ?TBound, 1: ?TBound} $value
      */

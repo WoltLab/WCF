@@ -47,6 +47,12 @@ abstract class AbstractBooleanObjectFilter implements IObjectFilter
         return true;
     }
 
+    #[\Override]
+    public function isRepeatable(): bool
+    {
+        return false;
+    }
+
     /**
      * @param bool|int $value
      */

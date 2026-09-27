@@ -50,6 +50,15 @@ abstract class AbstractMultipleSelectionObjectFilter implements IObjectFilter
     }
 
     /**
+     * Multiple values are selected in a single filter instead.
+     */
+    #[\Override]
+    public function isRepeatable(): bool
+    {
+        return false;
+    }
+
+    /**
      * @param list<int|string> $value
      */
     #[\Override]

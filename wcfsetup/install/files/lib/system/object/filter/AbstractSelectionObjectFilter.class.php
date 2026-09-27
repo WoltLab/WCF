@@ -68,6 +68,15 @@ abstract class AbstractSelectionObjectFilter implements IObjectFilter
     }
 
     /**
+     * Selecting multiple objects requires the filter to be repeated.
+     */
+    #[\Override]
+    public function isRepeatable(): bool
+    {
+        return true;
+    }
+
+    /**
      * @param int|string $value
      */
     #[\Override]
