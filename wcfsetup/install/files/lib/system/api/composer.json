@@ -34,6 +34,7 @@
     "scssphp/scssphp": "^2.1.0",
     "sebastian/diff": "^9.0.1",
     "symfony/polyfill-php85": "^1.41.0",
+    "symfony/polyfill-php86": "^1.41",
     "willdurand/negotiation": "^3.1",
     "woltlab/laminas-progressbar": "^2.99.2",
     "woltlab/webp-exif": "^0.1.5"
@@ -45,6 +46,7 @@
     "symfony/polyfill-php81": "*",
     "symfony/polyfill-php82": "*",
     "symfony/polyfill-php83": "*",
+    "symfony/polyfill-php84": "*",
     "symfony/console": "*",
     "symfony/http-client": "*",
     "web-token/jwt-key-mgmt": "*",
