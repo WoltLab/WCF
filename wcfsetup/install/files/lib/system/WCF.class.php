@@ -406,11 +406,6 @@ class WCF
         if (!defined('PACKAGE_ID') || \PACKAGE_ID !== 0) {
             if (!\is_writable($filename)) {
                 FileUtil::makeWritable($filename);
-
-                // @phpstan-ignore booleanNot.alwaysTrue
-                if (!\is_writable($filename)) {
-                    throw new SystemException("The option file '" . $filename . "' is not writable.");
-                }
             }
 
             // check if a previous write operation was incomplete and force rebuilding

@@ -108,7 +108,7 @@ class TagAddForm extends AbstractDatabaseObjectBuilderForm
                                     ?? $field->getDocument()->getFormField('languageID')->getValue()
                                     ?? LanguageFactory::getInstance()->getDefaultLanguageID();
 
-                                $tag = Tag::getTag($field->getValue(), $languageID ?? 0);
+                                $tag = Tag::getTag($field->getValue(), $languageID);
                                 if ($tag !== null && $tag->tagID !== $this->formObject?->tagID) {
                                     $field->addValidationError(
                                         new FormFieldValidationError(

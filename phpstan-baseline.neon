@@ -361,6 +361,12 @@ parameters:
 			path: wcfsetup/install/files/lib/data/I18nDatabaseObjectList.class.php
 
 		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: wcfsetup/install/files/lib/data/TCollectionUserProfiles.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 1
@@ -425,6 +431,12 @@ parameters:
 			identifier: booleanAnd.alwaysFalse
 			count: 1
 			path: wcfsetup/install/files/lib/data/category/CategoryNode.class.php
+
+		-
+			message: '#^Return type \(RecursiveIteratorIterator\<wcf\\data\\category\\CategoryNode\>\) of method wcf\\data\\category\\CategoryNodeTree\:\:getIterator\(\) should be covariant with return type \(Traversable\<int, wcf\\data\\category\\CategoryNode\>\) of method IteratorAggregate\<int,wcf\\data\\category\\CategoryNode\>\:\:getIterator\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: wcfsetup/install/files/lib/data/category/CategoryNodeTree.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -643,6 +655,12 @@ parameters:
 			path: wcfsetup/install/files/lib/data/tag/TagAction.class.php
 
 		-
+			message: '#^Return type \(RecursiveIteratorIterator\<wcf\\data\\template\\group\\TemplateGroupNode\>\) of method wcf\\data\\template\\group\\TemplateGroupNodeTree\:\:getIterator\(\) should be covariant with return type \(Traversable\<int, wcf\\data\\template\\group\\TemplateGroupNode\>\) of method IteratorAggregate\<int,wcf\\data\\template\\group\\TemplateGroupNode\>\:\:getIterator\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: wcfsetup/install/files/lib/data/template/group/TemplateGroupNodeTree.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 1
@@ -737,12 +755,6 @@ parameters:
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/data/user/profile/menu/item/UserProfileMenuItemEditor.class.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: wcfsetup/install/files/lib/data/user/profile/visitor/UserProfileVisitorCollection.class.php
 
 		-
 			message: '#^Instanceof between wcf\\data\\user\\profile\\visitor\\UserProfileVisitor and wcf\\data\\DatabaseObject will always evaluate to true\.$#'

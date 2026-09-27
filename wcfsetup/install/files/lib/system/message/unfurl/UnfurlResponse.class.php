@@ -3,16 +3,13 @@
 namespace wcf\system\message\unfurl;
 
 use BadMethodCallException;
-use Exception;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
-use ValueError;
 use wcf\system\io\http\RedirectGuard;
 use wcf\system\io\HttpFactory;
 use wcf\system\language\LanguageFactory;
@@ -142,7 +139,7 @@ final class UnfurlResponse
         if ($this->responseCharset !== 'UTF-8') {
             try {
                 $this->body = \mb_convert_encoding($this->body, 'UTF-8', $this->responseCharset);
-            } catch (Exception | ValueError $e) {
+            } catch (\ValueError $e) {
                 throw new ParsingFailed(
                     "Could not parse body, due an invalid charset.",
                     0,

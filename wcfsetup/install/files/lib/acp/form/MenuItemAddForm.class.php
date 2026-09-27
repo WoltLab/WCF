@@ -111,7 +111,7 @@ class MenuItemAddForm extends AbstractFormBuilderForm
             $isSelectable = true;
             if ($page->getHandler() instanceof ILookupPageHandler) {
                 $pageHandlers[$page->pageID] = $page->requireObjectID;
-            } elseif ($page->requireObjectID) {
+            } elseif ($page->requireObjectID === 1) {
                 // there is no way to supply the required object id for this page
                 $isSelectable = false;
             }
