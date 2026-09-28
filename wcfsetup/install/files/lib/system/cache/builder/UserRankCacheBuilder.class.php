@@ -2,6 +2,7 @@
 
 namespace wcf\system\cache\builder;
 
+use wcf\data\file\FileList;
 use wcf\data\user\rank\UserRank;
 use wcf\data\user\rank\UserRankList;
 
@@ -20,8 +21,33 @@ final class UserRankCacheBuilder extends AbstractCacheBuilder
     {
         $list = new UserRankList();
         $list->readObjects();
+        $ranks = $list->getObjects();
 
-        return $list->getObjects();
+        $fileIDs = [];
+        foreach ($ranks as $rank) {
+            if ($rank->rankImageFileID !== null) {
+                $fileIDs[] = $rank->rankImageFileID;
+            }
+        }
+
+        if ($fileIDs !== []) {
+            $fileList = new FileList();
+            $fileList->setObjectIDs($fileIDs);
+            $fileList->readObjects();
+
+            foreach ($ranks as $rank) {
+                if ($rank->rankImageFileID === null) {
+                    continue;
+                }
+
+                $file = $fileList->search($rank->rankImageFileID);
+                if ($file !== null) {
+                    $rank->setImageFile($file);
+                }
+            }
+        }
+
+        return $ranks;
     }
 
     public function getRank(int $rankID): ?UserRank

@@ -2,10 +2,10 @@
 
 namespace wcf\data\user\rank;
 
+use wcf\command\file\DeleteFiles;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\file\FileList;
 use wcf\data\TI18nDatabaseObjectAction;
-use wcf\system\exception\InvalidObjectArgument;
-use wcf\system\file\upload\UploadFile;
 
 /**
  * Executes user rank-related actions.
@@ -38,85 +38,22 @@ class UserRankAction extends AbstractDatabaseObjectAction
 
         $this->saveI18nValue($rank);
 
-        if (isset($this->parameters['rankImageFile']) && !empty($this->parameters['rankImageFile'])) {
-            $rankImageFile = \reset($this->parameters['rankImageFile']);
-
-            if (!($rankImageFile instanceof UploadFile)) {
-                throw new InvalidObjectArgument(
-                    $rankImageFile,
-                    UploadFile::class,
-                    "The parameter 'rankImageFile'"
-                );
-            }
-
-            if (!$rankImageFile->isProcessed()) {
-                $fileName = $rank->rankID . '-' . $rankImageFile->getFilename();
-
-                \rename(
-                    $rankImageFile->getLocation(),
-                    \WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName
-                );
-                $rankImageFile->setProcessed(\WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
-
-                $updateData = [
-                    'rankImage' => $fileName,
-                ];
-
-                $rankEditor = new UserRankEditor($rank);
-                $rankEditor->update($updateData);
-            }
-        }
-
         return $rank;
     }
 
     #[\Override]
     public function update()
     {
-        $removedFiles = $this->parameters['rankImageFile_removedFiles'] ?? [];
-        if (\is_array($removedFiles)) {
-            foreach ($removedFiles as $file) {
-                if (!($file instanceof UploadFile)) {
-                    throw new InvalidObjectArgument(
-                        $file,
-                        UploadFile::class,
-                        "An array values of 'rankImageFile_removedFiles'"
-                    );
-                }
-
-                @\unlink($file->getLocation());
-            }
-        }
-
-        if (isset($this->parameters['rankImageFile'])) {
-            if (\count($this->objects) > 1) {
-                throw new \BadMethodCallException("The parameter 'rankImageFile' can only be processed, if there is only one object to update.");
+        $replacedFileIDs = [];
+        if (\array_key_exists('rankImageFileID', $this->parameters['data'] ?? [])) {
+            if ($this->objects === []) {
+                $this->readObjects();
             }
 
-            $object = \reset($this->objects);
-            $rankImageFile = \reset($this->parameters['rankImageFile']);
-
-            if ($rankImageFile === false) {
-                $this->parameters['data']['rankImage'] = "";
-            } else {
-                if (!($rankImageFile instanceof UploadFile)) {
-                    throw new InvalidObjectArgument(
-                        $rankImageFile,
-                        UploadFile::class,
-                        "The parameter 'rankImageFile'"
-                    );
-                }
-
-                if (!$rankImageFile->isProcessed()) {
-                    $fileName = $object->rankID . '-' . $rankImageFile->getFilename();
-
-                    \rename(
-                        $rankImageFile->getLocation(),
-                        \WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName
-                    );
-                    $rankImageFile->setProcessed(\WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
-
-                    $this->parameters['data']['rankImage'] = $fileName;
+            foreach ($this->objects as $object) {
+                $fileID = $object->rankImageFileID;
+                if ($fileID !== null && $fileID !== $this->parameters['data']['rankImageFileID']) {
+                    $replacedFileIDs[] = $fileID;
                 }
             }
         }
@@ -126,16 +63,49 @@ class UserRankAction extends AbstractDatabaseObjectAction
         foreach ($this->objects as $object) {
             $this->saveI18nValue($object->getDecoratedObject());
         }
+
+        $this->deleteFiles($replacedFileIDs);
     }
 
     #[\Override]
     public function delete()
     {
+        if ($this->objects === []) {
+            $this->readObjects();
+        }
+
+        $fileIDs = [];
+        foreach ($this->objects as $object) {
+            if ($object->rankImageFileID !== null) {
+                $fileIDs[] = $object->rankImageFileID;
+            }
+        }
+
         $count = parent::delete();
 
         $this->deleteI18nValues();
+        $this->deleteFiles($fileIDs);
 
         return $count;
+    }
+
+    /**
+     * @param list<int> $fileIDs
+     */
+    private function deleteFiles(array $fileIDs): void
+    {
+        if ($fileIDs === []) {
+            return;
+        }
+
+        $fileList = new FileList();
+        $fileList->setObjectIDs($fileIDs);
+        $fileList->readObjects();
+        $files = \array_values($fileList->getObjects());
+
+        if ($files !== []) {
+            new DeleteFiles($files)();
+        }
     }
 
     /**

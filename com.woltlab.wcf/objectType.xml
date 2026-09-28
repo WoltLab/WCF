@@ -1740,6 +1740,11 @@
 			<definitionname>com.woltlab.wcf.file</definitionname>
 			<classname>wcf\system\file\processor\UnfurlUrlImageFileProcessor</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.user.rank.image</name>
+			<definitionname>com.woltlab.wcf.file</definitionname>
+			<classname>wcf\system\file\processor\UserRankImageFileProcessor</classname>
+		</type>
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>

@@ -17,6 +17,7 @@ use wcf\system\database\table\column\MediumintDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\SmallintDatabaseTableColumn;
 use wcf\system\database\table\column\TextDatabaseTableColumn;
+use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
@@ -94,5 +95,17 @@ return [
             BinaryDatabaseTableColumn::create('sessionID')
                 ->notNull()
                 ->length(40),
+        ]),
+    PartialDatabaseTable::create('wcf1_user_rank')
+        ->columns([
+            IntDatabaseTableColumn::create('rankImageFileID'),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['rankImageFileID'])
+                ->referencedTable('wcf1_file')
+                ->referencedColumns(['fileID'])
+                ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
         ]),
 ];

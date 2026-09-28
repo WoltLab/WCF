@@ -11,11 +11,11 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BadgeColorFormField;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\FileProcessorFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
-use wcf\system\form\builder\field\UploadFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
 
@@ -78,11 +78,11 @@ class UserRankAddForm extends AbstractFormBuilderForm
             FormContainer::create('imageContainer')
                 ->label('wcf.acp.user.rank.image')
                 ->appendChildren([
-                    UploadFormField::create('rankImageFile')
+                    FileProcessorFormField::create('rankImageFileID')
+                        ->objectType('com.woltlab.wcf.user.rank.image')
                         ->label('wcf.acp.user.rank.image')
-                        ->imageOnly()
-                        ->maximum(1)
-                        ->allowSvgImage(),
+                        ->singleFileUpload()
+                        ->bigPreview(),
                     IntegerFormField::create('repeatImage')
                         ->label('wcf.acp.user.rank.repeatImage')
                         ->description('wcf.acp.user.rank.repeatImage.description')

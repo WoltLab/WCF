@@ -4752,8 +4752,7 @@ return [
                 ->defaultValue(''),
             NotNullVarchar255DatabaseTableColumn::create('cssClassName')
                 ->defaultValue(''),
-            NotNullVarchar255DatabaseTableColumn::create('rankImage')
-                ->defaultValue(''),
+            IntDatabaseTableColumn::create('rankImageFileID'),
             TinyintDatabaseTableColumn::create('repeatImage')
                 ->notNull()
                 ->defaultValue(1),
@@ -4772,6 +4771,12 @@ return [
                 ->referencedTable('wcf1_user_group')
                 ->referencedColumns(['groupID'])
                 ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['rankImageFileID'])
+                ->referencedTable('wcf1_file')
+                ->referencedColumns(['fileID'])
+                ->onDelete('SET NULL')
                 ->onUpdate('NO ACTION'),
         ]),
     DatabaseTable::create('wcf1_user_session')

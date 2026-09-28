@@ -8,6 +8,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\rank\I18nUserRankList;
 use wcf\data\user\rank\UserRank;
 use wcf\event\gridView\admin\UserRankGridViewInitialized;
+use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
@@ -63,7 +64,6 @@ final class UserRankGridView extends AbstractGridView
                 ]),
             GridViewColumn::for('rankImage')
                 ->label('wcf.acp.user.rank.image')
-                ->sortable()
                 ->renderer([
                     new class extends DefaultColumnRenderer {
                         #[\Override]
@@ -71,7 +71,17 @@ final class UserRankGridView extends AbstractGridView
                         {
                             \assert($row instanceof UserRank);
 
-                            return $row->rankImage !== '' ? $row->getImage() : '';
+                            return $row->getImage();
+                        }
+
+                        #[\Override]
+                        public function prepare(mixed $value, DatabaseObject $row): void
+                        {
+                            \assert($row instanceof UserRank);
+
+                            if ($row->rankImageFileID !== null) {
+                                FileRuntimeCache::getInstance()->cacheObjectID($row->rankImageFileID);
+                            }
                         }
                     },
                 ]),
