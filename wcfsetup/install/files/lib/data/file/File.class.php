@@ -248,7 +248,9 @@ class File extends DatabaseObject implements ITitledLinkObject, IImageDataProvid
             return $fileExtension;
         }
 
-        if (\str_contains($filename, '.')) {
+        // The filename is only a hint for content that fileinfo failed to
+        // identify, it must not override a detected type.
+        if ($mimeType === 'application/octet-stream' && \str_contains($filename, '.')) {
             $fileExtension = \pathinfo($filename, \PATHINFO_EXTENSION);
             if (isset(self::SAFE_FILE_EXTENSIONS[$fileExtension])) {
                 return $fileExtension;
