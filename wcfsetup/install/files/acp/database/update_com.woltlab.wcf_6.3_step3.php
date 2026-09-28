@@ -29,4 +29,10 @@ return [
                 ->defaultValue('')
                 ->drop(),
         ]),
+    PartialDatabaseTable::create('wcf1_cronjob')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('description')
+                ->defaultValue('')
+                ->drop(),
+        ]),
 ];

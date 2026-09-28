@@ -4,8 +4,11 @@ namespace wcf\system\package\plugin;
 
 use Cron\CronExpression;
 use wcf\acp\form\CronjobAddForm;
+use wcf\data\cronjob\Cronjob;
+use wcf\data\cronjob\CronjobBuilder;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\data\cronjob\CronjobList;
+use wcf\data\language\LanguageList;
 use wcf\system\cronjob\ICronjob;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
@@ -19,6 +22,7 @@ use wcf\system\form\builder\field\option\OptionFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -29,6 +33,8 @@ use wcf\util\StringUtil;
  * @author  Alexander Ebert, Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @phpstan-import-type L10nValue from L10nStorage
  */
 class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
     IGuiPackageInstallationPlugin,
@@ -67,8 +73,6 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     #[\Override]
     protected function handleDelete(array $items)
     {
-        // read cronjobs from database because deleting the language items requires the
-        // cronjob id
         $cronjobs = $legacyCronjobs = [];
         foreach ($items as $item) {
             if (!isset($item['attributes']['name'])) {
@@ -99,8 +103,96 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
         $cronjobList->readObjectIDs();
 
         if ($cronjobList->getObjectIDs() !== []) {
-            CronjobEditor::deleteAll($cronjobList->getObjectIDs());
+            CronjobBuilder::deleteAll($cronjobList->getObjectIDs());
         }
+    }
+
+    /**
+     * @param array<string, mixed> $row
+     * @param array<string, mixed> $data
+     */
+    #[\Override]
+    protected function import(array $row, array $data): Cronjob
+    {
+        if ($row === []) {
+            $this->prepareCreate($data);
+
+            $builder = CronjobBuilder::forCreate()
+                ->setPackageID($data['packageID'])
+                ->setNextExec($data['nextExec']);
+        } else {
+            $builder = CronjobBuilder::forUpdate(new Cronjob(null, $row));
+        }
+
+        $builder
+            ->setCronjobName($data['cronjobName'])
+            ->setClassName($data['className'])
+            ->setDescription($this->getDescriptionValues($data['description'] ?? ''))
+            ->setStartMinute($data['startMinute'])
+            ->setStartHour($data['startHour'])
+            ->setStartDom($data['startDom'])
+            ->setStartMonth($data['startMonth'])
+            ->setStartDow($data['startDow'])
+            ->setIsDisabled((bool)(int)$data['isDisabled'])
+            ->setCanBeEdited((bool)(int)$data['canBeEdited'])
+            ->setCanBeDisabled((bool)(int)$data['canBeDisabled'])
+            ->setOptions($data['options']);
+
+        if ($builder->isUpdate()) {
+            return $builder->update();
+        }
+
+        return $builder->create();
+    }
+
+    /**
+     * Maps the descriptions of a cronjob, indexed by language code (`''` for
+     * the element without a `language` attribute), to localized values. A
+     * single description is monolingual, otherwise every installed language
+     * receives its own value, falling back to the default description.
+     *
+     * @param string|array<string, string> $descriptions
+     * @return L10nValue
+     */
+    private function getDescriptionValues(string|array $descriptions): array
+    {
+        if (\is_string($descriptions)) {
+            return [L10nStorage::MONOLINGUAL => $descriptions];
+        }
+
+        if ($descriptions === []) {
+            return [L10nStorage::MONOLINGUAL => ''];
+        }
+
+        if (\count($descriptions) === 1) {
+            return [L10nStorage::MONOLINGUAL => \reset($descriptions)];
+        }
+
+        if (isset($descriptions[''])) {
+            $defaultValue = $descriptions[''];
+        } elseif (isset($descriptions['en'])) {
+            $defaultValue = $descriptions['en'];
+        } elseif (isset($descriptions[WCF::getLanguage()->getFixedLanguageCode()])) {
+            $defaultValue = $descriptions[WCF::getLanguage()->getFixedLanguageCode()];
+        } else {
+            $defaultValue = \reset($descriptions);
+        }
+
+        // The language cache may predate the languages created during the
+        // framework installation.
+        if (\PACKAGE_ID === 0) {
+            $languages = new LanguageList();
+            $languages->readObjects();
+        } else {
+            $languages = LanguageFactory::getInstance()->getLanguages();
+        }
+
+        $values = [];
+        foreach ($languages as $language) {
+            $values[$language->languageID] = $descriptions[$language->languageCode] ?? $defaultValue;
+        }
+
+        return $values;
     }
 
     private function getRandomExpression(string $name, string $expression): CronExpression

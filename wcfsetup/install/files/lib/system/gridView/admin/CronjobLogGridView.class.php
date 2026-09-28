@@ -3,7 +3,7 @@
 namespace wcf\system\gridView\admin;
 
 use wcf\data\cronjob\Cronjob;
-use wcf\data\cronjob\I18nCronjobList;
+use wcf\data\cronjob\L10nCronjobList;
 use wcf\data\cronjob\log\CronjobLog;
 use wcf\data\cronjob\log\CronjobLogList;
 use wcf\data\DatabaseObject;
@@ -48,7 +48,8 @@ final class CronjobLogGridView extends AbstractGridView
                 ->filter(new SelectFilter(
                     $availableCronjobs,
                     'cronjobID',
-                    'wcf.acp.cronjob'
+                    'wcf.acp.cronjob',
+                    labelLanguageItems: false
                 ))
                 ->renderer([
                     new class($availableCronjobs) extends DefaultColumnRenderer {
@@ -128,8 +129,8 @@ final class CronjobLogGridView extends AbstractGridView
      */
     private function getAvailableCronjobs(): array
     {
-        $list = new I18nCronjobList();
-        $list->sqlOrderBy = 'descriptionI18n';
+        $list = new L10nCronjobList();
+        $list->sqlOrderBy = 'description';
         $list->readObjects();
 
         return \array_map(fn(Cronjob $cronjob) => $cronjob->getDescription(), $list->getObjects());

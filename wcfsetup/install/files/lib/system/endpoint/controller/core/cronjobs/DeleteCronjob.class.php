@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\cronjobs;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\cronjob\DeleteCronjob as DeleteCronjobCommand;
 use wcf\data\cronjob\Cronjob;
-use wcf\data\cronjob\CronjobAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -31,7 +31,7 @@ final class DeleteCronjob implements IController
 
         $this->assertCronjobCanBeDeleted($cronjob);
 
-        (new CronjobAction([$cronjob], 'delete'))->executeAction();
+        new DeleteCronjobCommand($cronjob)();
 
         return new JsonResponse([]);
     }

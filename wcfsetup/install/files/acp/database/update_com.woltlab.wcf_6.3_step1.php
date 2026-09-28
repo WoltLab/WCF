@@ -224,4 +224,29 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    DatabaseTable::create('wcf1_cronjob_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('cronjobID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('description')
+                ->length(255),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('cronjobID')
+                ->columns(['cronjobID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['cronjobID'])
+                ->referencedTable('wcf1_cronjob')
+                ->referencedColumns(['cronjobID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
 ];

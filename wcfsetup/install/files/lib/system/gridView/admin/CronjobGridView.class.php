@@ -4,7 +4,7 @@ namespace wcf\system\gridView\admin;
 
 use wcf\acp\form\CronjobEditForm;
 use wcf\data\cronjob\Cronjob;
-use wcf\data\cronjob\I18nCronjobList;
+use wcf\data\cronjob\L10nCronjobList;
 use wcf\data\DatabaseObject;
 use wcf\data\package\PackageCache;
 use wcf\event\gridView\admin\CronjobGridViewInitialized;
@@ -13,14 +13,13 @@ use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
-use wcf\system\gridView\renderer\PhraseColumnRenderer;
 use wcf\system\gridView\renderer\TimeColumnRenderer;
 use wcf\system\interaction\admin\CronjobInteractions;
 use wcf\system\interaction\bulk\admin\CronjobBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
-use wcf\system\view\filter\I18nTextFilter;
+use wcf\system\view\filter\L10nTextFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
@@ -34,7 +33,7 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  *
- * @extends AbstractGridView<Cronjob, I18nCronjobList>
+ * @extends AbstractGridView<Cronjob, L10nCronjobList>
  */
 final class CronjobGridView extends AbstractGridView
 {
@@ -60,9 +59,13 @@ final class CronjobGridView extends AbstractGridView
                 ),
             GridViewColumn::for('description')
                 ->label('wcf.acp.cronjob.description')
-                ->sortable(sortByDatabaseColumn: 'descriptionI18n')
-                ->filter(I18nTextFilter::class)
-                ->renderer(new PhraseColumnRenderer())
+                ->sortable(sortByDatabaseColumn: 'description')
+                ->filter(new L10nTextFilter(
+                    Cronjob::getL10nDefinition(),
+                    'description',
+                    'description',
+                    'wcf.acp.cronjob.description',
+                ))
                 ->titleColumn(),
             GridViewColumn::for('packageID')
                 ->label('wcf.acp.package.name')
@@ -126,7 +129,10 @@ final class CronjobGridView extends AbstractGridView
         $this->setInteractionProvider($interaction);
         $this->setBulkInteractionProvider(new CronjobBulkInteractions());
 
-        $this->addRowLink(new GridViewRowLink(CronjobEditForm::class));
+        $this->addRowLink(new GridViewRowLink(
+            CronjobEditForm::class,
+            isAvailableCallback: static fn(Cronjob $cronjob) => $cronjob->isEditable()
+        ));
         $this->setDefaultSortField('description');
     }
 
@@ -137,9 +143,9 @@ final class CronjobGridView extends AbstractGridView
     }
 
     #[\Override]
-    protected function createObjectList(): I18nCronjobList
+    protected function createObjectList(): L10nCronjobList
     {
-        return new I18nCronjobList();
+        return new L10nCronjobList();
     }
 
     #[\Override]
