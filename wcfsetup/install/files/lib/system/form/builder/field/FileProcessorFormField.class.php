@@ -314,11 +314,13 @@ final class FileProcessorFormField extends AbstractFormField
      */
     public function bigPreview(bool $bigPreview = true): self
     {
+        // The big preview displays the file itself through an `<img>`, which
+        // also works for SVG images that have no thumbnails.
         if (
             $bigPreview
             && \array_diff(
                 $this->getFileProcessor()->getAllowedFileExtensions($this->context),
-                ImageUtil::IMAGE_EXTENSIONS
+                [...ImageUtil::IMAGE_EXTENSIONS, 'svg']
             ) !== []
         ) {
             throw new \InvalidArgumentException(
