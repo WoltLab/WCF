@@ -12,12 +12,12 @@ use wcf\system\cache\builder\ApiEndpointCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\devtools\pip\DevtoolsPackageInstallationDispatcher;
 use wcf\system\devtools\pip\DevtoolsPip;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\plugin\DatabasePackageInstallationPlugin;
+use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\package\plugin\OptionPackageInstallationPlugin;
 use wcf\system\package\SplitNodeException;
 use wcf\system\search\SearchIndexManager;
@@ -89,6 +89,13 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
         }
 
         $this->devtoolsPip = new DevtoolsPip($this->packageInstallationPlugin);
+        if ($this->devtoolsPip->isUnsafe()) {
+            $this->readBoolean('allowUnsafe', true);
+            if ($this->parameters['allowUnsafe'] !== true) {
+                throw new UserInputException('allowUnsafe');
+            }
+        }
+
         $targets = $this->devtoolsPip->getTargets($this->project);
         if (!\in_array($this->parameters['target'], $targets)) {
             throw new UserInputException('target');
@@ -111,7 +118,7 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
                 $this->project,
             );
         } else {
-            /** @var IIdempotentPackageInstallationPlugin $pip */
+            /** @var IPackageInstallationPlugin $pip */
             $pip = new $this->packageInstallationPlugin->className(
                 $dispatcher,
                 $this->devtoolsPip->getInstructions($this->project, $this->parameters['target'])
@@ -131,7 +138,7 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
         try {
             $pip->update();
         } catch (SplitNodeException $e) {
-            if ($this->parameters['pluginName'] !== 'database') {
+            if (!\in_array($this->parameters['pluginName'], ['database', 'script'], true)) {
                 throw new \RuntimeException("PIP '{$this->packageInstallationPlugin->pluginName}' is not allowed to throw a 'SplitNodeException'.");
             }
 

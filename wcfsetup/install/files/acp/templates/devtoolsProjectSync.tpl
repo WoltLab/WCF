@@ -38,8 +38,15 @@
 				<small>{lang}wcf.acp.devtools.pip.showOnlyMatches.description{/lang}</small>
 			</dd>
 		</dl>
+		<dl>
+			<dt></dt>
+			<dd>
+				<label><input type="checkbox" id="syncShowUnsafePips"> {lang}wcf.acp.devtools.pip.showUnsafe{/lang}</label>
+				<small>{lang}wcf.acp.devtools.pip.showUnsafe.description{/lang}</small>
+			</dd>
+		</dl>
 	</div>
-	<div class="section tabularBox jsShowOnlyMatches" id="syncPipMatches">
+	<div class="section tabularBox jsShowOnlyMatches jsHideUnsafePips" id="syncPipMatches">
 		<table class="table">
 			<thead>
 				<tr>
@@ -51,16 +58,20 @@
 			<tbody>
 				{foreach from=$object->getPips() item=pip}
 					{assign var=_isSupported value=$pip->isSupported()}
+					{assign var=_isUnsafe value=$pip->isUnsafe()}
 					{assign var=_targets value=$pip->getTargets($object)}
 					{assign var=_targetCount value=$_targets|count}
 					
 					<tr
 						data-plugin-name="{$pip->pluginName}"
 						data-is-supported="{if $_isSupported}true{else}false{/if}"
+						data-is-unsafe="{if $_isUnsafe}true{else}false{/if}"
 						data-is-important="{if $pip->isImportant()}true{else}false{/if}"
 						{if $_targetCount}
 							class="jsHasPipTargets"
-							data-sync-dependencies="{$pip->getSyncDependencies(true)}"
+							{if !$_isUnsafe}
+								data-sync-dependencies="{$pip->getSyncDependencies(true)}"
+							{/if}
 						{/if}
 					>
 						<td class="columnText"{if $_targetCount > 0} rowspan="{$_targetCount}"{/if}>
@@ -69,7 +80,7 @@
 								<small class="pipDefaultFilename" title="{lang}wcf.acp.devtools.pip.defaultFilename{/lang}">{$pip->getEffectiveDefaultFilename()}</small>
 							{/if}
 						</td>
-						{if $_isSupported}
+						{if $_isSupported || $_isUnsafe}
 							{if $_targetCount}
 								<td class="columnIcon"><button type="button" class="button small jsInvokePip" data-target="{$_targets[0]}">{$_targets[0]}</button></td>
 								<td class="columnText"><small class="jsInvokePipResult" data-target="{$_targets[0]}">{lang}wcf.acp.devtools.sync.status.idle{/lang}</small></td>
@@ -86,6 +97,7 @@
 						{section name=i loop=$_targets start=1}
 							<tr
 								data-plugin-name="{$pip->pluginName}"
+								data-is-unsafe="{if $_isUnsafe}true{else}false{/if}"
 								data-is-important="{if $pip->isImportant()}true{else}false{/if}"
 								{if $_targetCount}
 									class="jsHasPipTargets jsSkipTargetDetection"
@@ -112,6 +124,10 @@
 	
 	<style>
 		#syncPipMatches.jsShowOnlyMatches tbody > tr:not(.jsHasPipTargets) {
+			display: none;
+		}
+		
+		#syncPipMatches.jsHideUnsafePips tbody > tr[data-is-unsafe="true"] {
 			display: none;
 		}
 		

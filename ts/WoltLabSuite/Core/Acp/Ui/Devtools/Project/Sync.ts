@@ -25,6 +25,7 @@ interface AjaxResponse {
 
 interface RequestData {
   parameters: {
+    allowUnsafe: boolean;
     pluginName: string;
     target: string;
   };
@@ -38,6 +39,7 @@ class AcpUiDevtoolsProjectSync {
   private readonly pips: PipData[] = [];
   private readonly projectId: number;
   private queue: PendingPip[] = [];
+  #allowUnsafe = false;
   #syncVersionAfterCompletion = false;
 
   constructor(projectId: number) {
@@ -47,6 +49,15 @@ class AcpUiDevtoolsProjectSync {
     restrictedSync.addEventListener("change", () => {
       this.container.classList.toggle("jsShowOnlyMatches");
     });
+
+    const showUnsafePips = document.getElementById("syncShowUnsafePips") as HTMLInputElement;
+    const updateUnsafePips = () => {
+      this.#allowUnsafe = showUnsafePips.checked;
+      this.container.classList.toggle("jsHideUnsafePips", !showUnsafePips.checked);
+    };
+    showUnsafePips.addEventListener("change", () => updateUnsafePips());
+    // Browsers may restore the checked state on reload.
+    updateUnsafePips();
 
     const existingPips: string[] = [];
     const knownPips: string[] = [];
@@ -82,6 +93,11 @@ class AcpUiDevtoolsProjectSync {
               ) as HTMLElement,
             );
           });
+
+        // Unsafe PIPs must never be part of a full sync.
+        if (pip.dataset.isUnsafe === "true") {
+          return;
+        }
 
         const data: PipData = {
           dependencies: JSON.parse(pip.dataset.syncDependencies!),
@@ -152,6 +168,7 @@ class AcpUiDevtoolsProjectSync {
 
     Ajax.api(this, {
       parameters: {
+        allowUnsafe: this.#allowUnsafe,
         pluginName,
         target,
       },

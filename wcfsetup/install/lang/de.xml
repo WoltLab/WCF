@@ -433,6 +433,8 @@
 		<item name="wcf.acp.devtools.pip.pluginName"><![CDATA[PIP-Bezeichner]]></item>
 		<item name="wcf.acp.devtools.pip.showOnlyMatches"><![CDATA[Zeige nur übereinstimmende PIPs an]]></item>
 		<item name="wcf.acp.devtools.pip.showOnlyMatches.description"><![CDATA[Es werden nur PIPs angeboten, die für den wiederholten Import geeignet sind und für die es eine Entsprechung auf Basis des Standard-Dateinamens existiert.]]></item>
+		<item name="wcf.acp.devtools.pip.showUnsafe"><![CDATA[Zeige unsichere PIPs an]]></item>
+		<item name="wcf.acp.devtools.pip.showUnsafe.description"><![CDATA[Bietet PIPs an, die keinen wiederholten Import unterstützen, wie z. B. Installations- und Update-Skripte. Eine erneute Ausführung kann irreversible Änderungen verursachen oder an bereits vorhandenen Daten scheitern. Skripte werden aus der Installation geladen, daher muss zuvor das <kbd>file</kbd>-PIP abgeglichen werden. Diese PIPs werden niemals durch „Alles abgleichen“ verarbeitet.]]></item>
 		<item name="wcf.acp.devtools.pip.target"><![CDATA[Übereinstimmungen]]></item>
 		<item name="wcf.acp.devtools.pip.target.noMatches"><![CDATA[(Keine Treffer)]]></item>
 		<item name="wcf.acp.devtools.sync.status.failure"><![CDATA[Es ist ein Fehler aufgetreten.]]></item>

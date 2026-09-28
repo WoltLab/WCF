@@ -49,7 +49,7 @@
 			<tbody>
 				{foreach from=$project->getPips() item=pip}
 					{if !$pip->supportsGui() || $pip->getPip()->getEntryTypes()|empty}
-						<tr data-plugin-name="{$pip->pluginName}" data-is-supported="{if $pip->supportsGui()}true{else}false{/if}" data-is-used="{if !$pip->getTargets($project)|empty}true{else}false{/if}">
+						<tr data-plugin-name="{$pip->pluginName}" data-is-supported="{if $pip->supportsGui()}true{else}false{/if}" data-is-used="{if !$pip->isUnsafe() && !$pip->getTargets($project)|empty}true{else}false{/if}">
 							<td class="columnIcon">
 								{if $pip->supportsGui()}
 									<a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip->pluginName}{/link}" title="{lang}wcf.global.button.add{/lang}" class="jsTooltip">{icon name='plus'}</a>

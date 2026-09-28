@@ -411,6 +411,8 @@
 		<item name="wcf.acp.devtools.pip.pluginName"><![CDATA[PIP identifier]]></item>
 		<item name="wcf.acp.devtools.pip.showOnlyMatches"><![CDATA[Show valid PIPs only]]></item>
 		<item name="wcf.acp.devtools.pip.showOnlyMatches.description"><![CDATA[Shows only PIPs that match the default paths and are qualified for repeated imports.]]></item>
+		<item name="wcf.acp.devtools.pip.showUnsafe"><![CDATA[Show unsafe PIPs]]></item>
+		<item name="wcf.acp.devtools.pip.showUnsafe.description"><![CDATA[Offers PIPs that do not support repeated imports, such as install and update scripts. Running them again may cause irreversible changes or fail on existing data. Scripts are included from the installation, thus the <kbd>file</kbd> PIP must be synced first. These PIPs are never processed by “Sync All”.]]></item>
 		<item name="wcf.acp.devtools.pip.target"><![CDATA[Matches]]></item>
 		<item name="wcf.acp.devtools.pip.target.noMatches"><![CDATA[(No matches)]]></item>
 		<item name="wcf.acp.devtools.sync.status.failure"><![CDATA[An error has occurred.]]></item>

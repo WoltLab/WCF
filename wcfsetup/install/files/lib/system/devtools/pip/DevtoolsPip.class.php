@@ -24,6 +24,12 @@ use wcf\util\FileUtil;
 class DevtoolsPip extends DatabaseObjectDecorator
 {
     /**
+     * PIPs that are not idempotent but may still be invoked on explicit request.
+     * @since 6.3
+     */
+    private const UNSAFE_PIPS = ['script'];
+
+    /**
      * project the pip object belongs to
      * @var ?DevtoolsProject
      * @since 5.2
@@ -88,6 +94,19 @@ class DevtoolsPip extends DatabaseObjectDecorator
     public function isSupported()
     {
         return $this->classExists() && $this->getDefaultFilename() !== '' && $this->isIdempotent();
+    }
+
+    /**
+     * Returns true if the PIP is not idempotent, but may be invoked on explicit
+     * request. These PIPs are never part of a full sync.
+     *
+     * @since 6.3
+     */
+    public function isUnsafe(): bool
+    {
+        return $this->classExists()
+            && !$this->isIdempotent()
+            && \in_array($this->getDecoratedObject()->pluginName, self::UNSAFE_PIPS, true);
     }
 
     /**
@@ -188,6 +207,12 @@ class DevtoolsPip extends DatabaseObjectDecorator
      */
     public function getTargets(DevtoolsProject $project)
     {
+        if ($this->isUnsafe()) {
+            return match ($this->getDecoratedObject()->pluginName) {
+                'script' => $this->getScriptTargets($project),
+            };
+        }
+
         if (!$this->isSupported()) {
             return [];
         }
@@ -276,6 +301,44 @@ class DevtoolsPip extends DatabaseObjectDecorator
                 }
             }
         }
+
+        return $targets;
+    }
+
+    /**
+     * Returns the install and update scripts of the project, relative to the
+     * project's `files*` directory for regular packages. The Core only offers
+     * its update scripts.
+     *
+     * @return string[]
+     * @since 6.3
+     */
+    private function getScriptTargets(DevtoolsProject $project): array
+    {
+        if ($project->isCore()) {
+            // The install scripts of the Core set up the installation itself
+            // and must never run against an existing one.
+            $types = ['update'];
+            $directories = ['' => "{$project->path}wcfsetup/install/files/"];
+        } else {
+            $types = ['install', 'update'];
+            $directories = ['files/' => "{$project->path}files/"];
+            foreach (ApplicationHandler::getInstance()->getAbbreviations() as $abbreviation) {
+                $directories["files_{$abbreviation}/"] = "{$project->path}files_{$abbreviation}/";
+            }
+        }
+
+        $targets = [];
+        foreach ($directories as $prefix => $directory) {
+            foreach ($types as $type) {
+                foreach (\glob("{$directory}acp/{$type}_*.php") as $file) {
+                    $targets[] = "{$prefix}acp/" . \basename($file);
+                }
+            }
+        }
+
+        // `glob()` returns files in an arbitrary order
+        \sort($targets, \SORT_NATURAL);
 
         return $targets;
     }
@@ -380,6 +443,11 @@ class DevtoolsPip extends DatabaseObjectDecorator
 
                     break;
 
+                case 'script':
+                    // The script is included from the application directory,
+                    // it must have been synced through the `file` PIP before.
+                    break;
+
                 default:
                     $tar->registerFile($target, $project->path . 'com.woltlab.wcf/' . $target);
 
@@ -460,6 +528,16 @@ class DevtoolsPip extends DatabaseObjectDecorator
                     }
 
                     $tar->registerFile($instructions['value'], $path);
+
+                    break;
+
+                case 'script':
+                    [$directory, $instructions['value']] = \explode('/', $target, 2);
+                    if (\str_starts_with($directory, 'files_')) {
+                        $instructions['attributes'] = [
+                            'application' => \substr($directory, \strlen('files_')),
+                        ];
+                    }
 
                     break;
 

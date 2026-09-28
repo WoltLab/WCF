@@ -11,6 +11,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
         pips = [];
         projectId;
         queue = [];
+        #allowUnsafe = false;
         #syncVersionAfterCompletion = false;
         constructor(projectId) {
             this.projectId = projectId;
@@ -18,6 +19,14 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
             restrictedSync.addEventListener("change", () => {
                 this.container.classList.toggle("jsShowOnlyMatches");
             });
+            const showUnsafePips = document.getElementById("syncShowUnsafePips");
+            const updateUnsafePips = () => {
+                this.#allowUnsafe = showUnsafePips.checked;
+                this.container.classList.toggle("jsHideUnsafePips", !showUnsafePips.checked);
+            };
+            showUnsafePips.addEventListener("change", () => updateUnsafePips());
+            // Browsers may restore the checked state on reload.
+            updateUnsafePips();
             const existingPips = [];
             const knownPips = [];
             const tmpPips = [];
@@ -42,6 +51,10 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
                     this.buttons.set(identifier, button);
                     this.buttonStatus.set(identifier, this.container.querySelector(`.jsHasPipTargets[data-plugin-name="${pluginName}"] .jsInvokePipResult[data-target="${target}"]`));
                 });
+                // Unsafe PIPs must never be part of a full sync.
+                if (pip.dataset.isUnsafe === "true") {
+                    return;
+                }
                 const data = {
                     dependencies: JSON.parse(pip.dataset.syncDependencies),
                     pluginName,
@@ -98,6 +111,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
             this.buttonStatus.get(identifier).innerHTML = '<fa-icon name="spinner" solid></fa-icon>';
             Ajax.api(this, {
                 parameters: {
+                    allowUnsafe: this.#allowUnsafe,
                     pluginName,
                     target,
                 },
