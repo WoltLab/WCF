@@ -936,7 +936,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             return $this->userTitle;
         }
         if ($this->getRank() !== null && $this->getRank()->showTitle()) {
-            return WCF::getLanguage()->get($this->getRank()->rankTitle);
+            return $this->getRank()->getTitle();
         }
 
         return '';

@@ -81,6 +81,7 @@
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_userRankImage.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_reactionTypeIcon.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_reactionTypeL10n.php</instruction>
+	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_userRankL10n.php</instruction>
 	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.3_step3.php</instruction>
 	-->
 </package>

@@ -4842,8 +4842,6 @@ return [
             NotNullInt10DatabaseTableColumn::create('groupID'),
             NotNullInt10DatabaseTableColumn::create('requiredPoints')
                 ->defaultValue(0),
-            NotNullVarchar255DatabaseTableColumn::create('rankTitle')
-                ->defaultValue(''),
             NotNullVarchar255DatabaseTableColumn::create('cssClassName')
                 ->defaultValue(''),
             IntDatabaseTableColumn::create('rankImageFileID'),
@@ -4854,6 +4852,8 @@ return [
                 ->notNull()
                 ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('hideTitle'),
+            VarcharDatabaseTableColumn::create('l10nIdentifier')
+                ->length(255),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -4871,6 +4871,34 @@ return [
                 ->referencedTable('wcf1_file')
                 ->referencedColumns(['fileID'])
                 ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_user_rank_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('rankID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('rankTitle')
+                ->length(255),
+            TinyintDatabaseTableColumn::create('isPristine')
+                ->notNull()
+                ->defaultValue(1),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('rankID')
+                ->columns(['rankID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['rankID'])
+                ->referencedTable('wcf1_user_rank')
+                ->referencedColumns(['rankID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
     DatabaseTable::create('wcf1_user_session')

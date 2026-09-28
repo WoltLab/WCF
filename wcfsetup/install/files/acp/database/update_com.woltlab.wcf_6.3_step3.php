@@ -25,5 +25,8 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('rankImage')
                 ->defaultValue('')
                 ->drop(),
+            NotNullVarchar255DatabaseTableColumn::create('rankTitle')
+                ->defaultValue('')
+                ->drop(),
         ]),
 ];

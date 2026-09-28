@@ -173,6 +173,8 @@ return [
     PartialDatabaseTable::create('wcf1_user_rank')
         ->columns([
             IntDatabaseTableColumn::create('rankImageFileID'),
+            VarcharDatabaseTableColumn::create('l10nIdentifier')
+                ->length(255),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()
@@ -193,5 +195,33 @@ return [
     PartialDatabaseTable::create('wcf1_ad')
         ->columns([
             JsonDatabaseTableColumn::create('conditions'),
+        ]),
+    DatabaseTable::create('wcf1_user_rank_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('rankID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('rankTitle')
+                ->length(255),
+            TinyintDatabaseTableColumn::create('isPristine')
+                ->notNull()
+                ->defaultValue(1),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('rankID')
+                ->columns(['rankID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['rankID'])
+                ->referencedTable('wcf1_user_rank')
+                ->referencedColumns(['rankID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
         ]),
 ];

@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\users\ranks;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\user\rank\DeleteUserRank as DeleteUserRankCommand;
 use wcf\data\user\rank\UserRank;
-use wcf\data\user\rank\UserRankAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -30,8 +30,7 @@ final class DeleteUserRank implements IController
 
         $rank = Helper::fetchObjectFromRequestParameter($variables['id'], UserRank::class);
 
-        $action = new UserRankAction([$rank], 'delete');
-        $action->executeAction();
+        new DeleteUserRankCommand($rank)();
 
         return new JsonResponse([]);
     }

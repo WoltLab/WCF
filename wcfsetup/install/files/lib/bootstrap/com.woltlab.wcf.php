@@ -75,6 +75,7 @@ return new class {
             static function (\wcf\event\l10n\L10nDefinitionCollecting $event) {
                 $event->register(\wcf\data\user\option\UserOption::getL10nDefinition());
                 $event->register(\wcf\data\reaction\type\ReactionType::getL10nDefinition());
+                $event->register(\wcf\data\user\rank\UserRank::getL10nDefinition());
             }
         );
         $eventHandler->register(
