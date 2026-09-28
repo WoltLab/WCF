@@ -7,6 +7,7 @@ use wcf\data\file\FileBuilder;
 use wcf\data\file\temporary\FileTemporary;
 use wcf\event\file\UploadCompleted;
 use wcf\system\event\EventHandler;
+use wcf\system\file\processor\FileProcessor;
 use wcf\util\ExifUtil;
 use wcf\util\FileUtil;
 use wcf\util\ImageUtil;
@@ -71,7 +72,11 @@ final class CreateFileFromTemporary
             ->setFilename($this->fileTemporary->filename)
             ->setFileSize($fileSize)
             ->setFileHash($fileHash)
-            ->setFileExtension(File::getSafeFileExtension($mimeType, $this->fileTemporary->filename))
+            ->setFileExtension(File::getSafeFileExtension(
+                $mimeType,
+                $this->fileTemporary->filename,
+                FileProcessor::getInstance()->getProcessorById($this->fileTemporary->objectTypeID),
+            ))
             ->setObjectTypeID($this->fileTemporary->objectTypeID)
             ->setMimeType($mimeType)
             ->setDimensions($width, $height)

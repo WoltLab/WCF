@@ -47,6 +47,7 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
         parent::execute();
 
         $this->fixMimeType();
+        $this->fixSvgLocation();
 
         $damagedFileIDs = [];
         foreach ($this->objectList->getObjects() as $file) {
@@ -94,11 +95,12 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
             // The location is determined by the safe file extension, anything
             // that ends in `.bin` is piped through PHP instead of being served
             // through the web server directly.
-            $previousFileExtension = File::getSafeFileExtension($file->mimeType, $file->filename);
-            $detectedFileExtension = File::getSafeFileExtension($mimeType, $file->filename);
+            $previousFileExtension = $file->fileExtension;
+            $detectedFileExtension = File::getSafeFileExtension($mimeType, $file->filename, $file->getProcessor());
 
             $width = $height = null;
-            if (\str_starts_with($mimeType, 'image/')) {
+            // `getimagesize()` does not support SVG images.
+            if (\str_starts_with($mimeType, 'image/') && $mimeType !== 'image/svg+xml') {
                 $data = @\getimagesize($file->getPathname());
                 if ($data === false) {
                     // Treat broken images as binary files.
@@ -116,18 +118,7 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
 
             $pathnameChanged = $previousFileExtension !== $detectedFileExtension;
             if ($pathnameChanged) {
-                $path = $this->getPath($file->fileHash, $detectedFileExtension);
-                FileUtil::makePath($path);
-
-                \rename(
-                    $file->getPathname(),
-                    $path . \sprintf(
-                        '%d-%s.%s',
-                        $file->fileID,
-                        $file->fileHash,
-                        $detectedFileExtension,
-                    ),
-                );
+                $this->moveFile($file, $detectedFileExtension);
 
                 $renamedFileIDs[] = $file->fileID;
             }
@@ -151,6 +142,58 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
                 $file->getProcessor()?->sourceFilenameChanged($file);
             }
         }
+    }
+
+    private function fixSvgLocation(): void
+    {
+        $renamedFileIDs = [];
+        foreach ($this->objectList as $file) {
+            if ($file->mimeType !== 'image/svg+xml') {
+                continue;
+            }
+
+            // Processors can opt in or out of the static delivery of SVG
+            // images at any time, the location of existing files must follow.
+            $fileExtension = File::getSafeFileExtension($file->mimeType, $file->filename, $file->getProcessor());
+            if ($file->fileExtension === $fileExtension) {
+                continue;
+            }
+
+            $this->moveFile($file, $fileExtension);
+
+            FileBuilder::forUpdate($file)
+                ->setFileExtension($fileExtension)
+                ->update();
+
+            $renamedFileIDs[] = $file->fileID;
+        }
+
+        if ($renamedFileIDs !== []) {
+            $this->objectList->readObjects();
+
+            foreach ($renamedFileIDs as $fileID) {
+                $file = $this->objectList->search($fileID);
+                \assert($file !== null);
+
+                $file->getProcessor()?->sourceFilenameChanged($file);
+            }
+        }
+    }
+
+    private function moveFile(File $file, string $fileExtension): void
+    {
+        $path = $this->getPath($file->fileHash, $fileExtension);
+        FileUtil::makePath($path);
+
+        \rename(
+            $file->getPathname(),
+            $path . \sprintf(
+                '%d-%s.%s',
+                $file->fileID,
+                $file->fileHash,
+                $fileExtension,
+            ),
+        );
     }
 
     #[\NoDiscard("as the file itself could change")]

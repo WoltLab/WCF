@@ -81,7 +81,7 @@ final class ReplaceFileSource
             : \basename($this->pathname);
         $fileSize = \filesize($this->pathname);
         $fileHash = \hash_file('sha256', $this->pathname);
-        $fileExtension = File::getSafeFileExtension($mimeType, $filename);
+        $fileExtension = File::getSafeFileExtension($mimeType, $filename, $this->file->getProcessor());
 
         // The following code uses a transaction and a write lock on the file in
         // order to guarantee this operation to atomic. The replacement is most

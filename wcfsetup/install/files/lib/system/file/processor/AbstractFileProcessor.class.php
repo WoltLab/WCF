@@ -123,4 +123,17 @@ abstract class AbstractFileProcessor implements IFileProcessor
     {
         return false;
     }
+
+    #[\Override]
+    public function serveSvgStatically(): bool
+    {
+        // SVG images are piped through PHP and are safe for direct access.
+        //
+        // There is a significant risk when allowing SVG uploads since these can
+        // contain malicious code that is executed when a privileged user
+        // accesses them directly, e.g. a user sent them a link.
+        //
+        // You MUST NOT enable this for unprivileged uploads.
+        return false;
+    }
 }

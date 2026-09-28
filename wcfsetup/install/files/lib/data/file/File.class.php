@@ -132,7 +132,8 @@ class File extends DatabaseObject implements ITitledLinkObject, IImageDataProvid
 
     public function getFullSizeImageSource(): ?string
     {
-        if (!$this->isImage() || !$this->isStaticFile()) {
+        $isImage = $this->isImage() || $this->mimeType === 'image/svg+xml';
+        if (!$isImage || !$this->isStaticFile()) {
             return null;
         }
 
@@ -229,9 +230,19 @@ class File extends DatabaseObject implements ITitledLinkObject, IImageDataProvid
      * Returns the file extension that is always safe for the delivery by the
      * webserver. If the file extension cannot be detected or is not among the
      * list of allowed file extension then 'bin' is returned.
+     *
+     * SVG images are only considered safe for processors that opt in through
+     * `IFileProcessor::serveSvgStatically()`.
      */
-    public static function getSafeFileExtension(string $mimeType, string $filename): string
-    {
+    public static function getSafeFileExtension(
+        string $mimeType,
+        string $filename,
+        ?IFileProcessor $processor = null,
+    ): string {
+        if ($mimeType === 'image/svg+xml' && $processor?->serveSvgStatically() === true) {
+            return 'svg';
+        }
+
         $fileExtension = \array_search($mimeType, self::SAFE_FILE_EXTENSIONS, true);
         if (\is_string($fileExtension)) {
             return $fileExtension;

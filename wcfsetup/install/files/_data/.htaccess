@@ -1,1 +1,8 @@
 Options -Indexes
+
+# Mirrors the headers of `FileDownloadAction` to prevent the execution of
+# scripts embedded in files that are served directly, such as SVG images.
+<IfModule mod_headers.c>
+	Header set Content-Security-Policy "default-src 'none'; style-src 'unsafe-inline';"
+	Header set X-Content-Type-Options "nosniff"
+</IfModule>

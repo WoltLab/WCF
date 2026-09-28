@@ -96,7 +96,11 @@ final class CreateFileFromExistingFile
             ->setFilename($this->originalFilename)
             ->setFileSize(\filesize($this->pathname))
             ->setFileHash(\hash_file('sha256', $this->pathname))
-            ->setFileExtension(File::getSafeFileExtension($mimeType, $this->originalFilename))
+            ->setFileExtension(File::getSafeFileExtension(
+                $mimeType,
+                $this->originalFilename,
+                $objectType->getProcessor(),
+            ))
             ->setObjectType($objectType)
             ->setMimeType($mimeType)
             ->setDimensions($width, $height)

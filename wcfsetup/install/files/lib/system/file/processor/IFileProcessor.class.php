@@ -203,4 +203,23 @@ interface IFileProcessor
      * @since 6.2
      */
     public function isSingleFile(): bool;
+
+    /**
+     * Opts into the delivery of SVG images directly through the webserver.
+     *
+     * **Warning:** SVG images can contain scripts that are executed in the
+     * context of the community whenever the file is opened directly. Files
+     * served by the webserver bypass the content security policy that is
+     * otherwise applied by `FileDownloadAction`, allowing the uploader to act
+     * with the privileges of anyone who opens the file.
+     *
+     * Only return `true` if `acceptUpload()` restricts every upload to trusted
+     * users through an administrative permission. The permission must be
+     * checked for the active user, the `$context` is supplied by the client and
+     * cannot be trusted. Never enable this for user generated content such as
+     * attachments, avatars or cover photos.
+     *
+     * @since 6.3
+     */
+    public function serveSvgStatically(): bool;
 }
