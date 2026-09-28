@@ -10,7 +10,6 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-use wcf\data\object\type\ObjectType;
 use wcf\system\condition\DaysOfWeekCondition;
 use wcf\system\condition\page\MultiPageCondition;
 use wcf\system\condition\UserAvatarCondition;
@@ -181,22 +180,12 @@ $converters = [
     UserMultifactorCondition::class => static function (array $data) use ($boolean): ?array {
         return $boolean('com.woltlab.wcf.userMultifactor', $data['multifactorActive'] ?? null);
     },
-    UserIntegerPropertyCondition::class => static function (array $data, ObjectType $objectType): ?array {
-        // Properties of apps are migrated by the apps, which provide the matching filters.
-        $propertyName = $objectType->propertyname;
-        if (!\in_array($propertyName, ['activityPoints', 'likesReceived', 'trophyPoints'], true)) {
-            return null;
-        }
-
-        // The legacy bounds are exclusive, the bounds of the filter are inclusive.
-        $from = isset($data['greaterThan']) ? (string)((int)$data['greaterThan'] + 1) : '';
-        $to = isset($data['lessThan']) ? (string)((int)$data['lessThan'] - 1) : '';
-        if ($from === '' && $to === '') {
-            return null;
-        }
-
-        return [['com.woltlab.wcf.user' . \ucfirst($propertyName), $from . ';' . $to]];
-    },
+    // Properties of apps are migrated by the apps, which provide the matching filters.
+    UserIntegerPropertyCondition::class => LegacyConditionMigration::getUserIntegerPropertyConverter([
+        'activityPoints',
+        'likesReceived',
+        'trophyPoints',
+    ]),
     UserTrophyCondition::class => static function (array $data) use ($filterPerID): array {
         return [
             ...$filterPerID('com.woltlab.wcf.userTrophy', $data['userTrophyIDs'] ?? null),

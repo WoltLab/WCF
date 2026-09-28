@@ -4,6 +4,7 @@ namespace wcf\system\object\filter\migration;
 
 use wcf\data\object\type\ObjectType;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\WCF;
 
 /**
@@ -16,6 +17,10 @@ use wcf\system\WCF;
  * allowing other packages to migrate them later. Objects with remaining legacy
  * conditions are disabled, as evaluating only a part of their conditions would
  * match more users than intended.
+ *
+ * Objects disabled by the migration are remembered and enabled again once a
+ * later run, e.g. by the update of another package, has converted all their
+ * remaining conditions. Objects that were already disabled are never enabled.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
@@ -53,7 +58,11 @@ final class LegacyConditionMigration
             return;
         }
 
-        foreach ($this->getConditionsByObject(\array_keys($objectTypes)) as $objectID => $conditions) {
+        $disabledObjectIDs = $this->getDisabledObjectIDs();
+
+        foreach ($this->getConditionsByObject(\array_keys($objectTypes)) as $objectID => $object) {
+            ['isDisabled' => $isDisabled, 'conditions' => $conditions] = $object;
+
             $filters = [];
             $convertedConditionIDs = [];
             $hasUnconvertedConditions = false;
@@ -82,8 +91,96 @@ final class LegacyConditionMigration
                 }
             }
 
-            $this->updateObject($objectID, $filters, $convertedConditionIDs, $hasUnconvertedConditions);
+            $newIsDisabled = null;
+            if ($hasUnconvertedConditions) {
+                if (!$isDisabled) {
+                    $newIsDisabled = true;
+                }
+            } elseif (\in_array($objectID, $disabledObjectIDs, true)) {
+                // All remaining conditions have been converted by this run.
+                $newIsDisabled = false;
+            }
+
+            $this->updateObject($objectID, $filters, $convertedConditionIDs, $newIsDisabled);
+
+            // Remembered after each object to keep the list in sync with the
+            // committed changes if a later object fails.
+            if ($newIsDisabled === true) {
+                $disabledObjectIDs[] = $objectID;
+                $this->setDisabledObjectIDs($disabledObjectIDs);
+            } elseif ($newIsDisabled === false) {
+                $disabledObjectIDs = \array_values(\array_diff($disabledObjectIDs, [$objectID]));
+                $this->setDisabledObjectIDs($disabledObjectIDs);
+            }
         }
+    }
+
+    /**
+     * Returns a converter for conditions of `UserIntegerPropertyCondition`
+     * that handles the given properties. Conditions of other properties are
+     * left for the packages that provide them.
+     *
+     * The matching filter is `UserIntegerPropertyObjectFilter`, its bounds are
+     * inclusive while the legacy bounds are exclusive.
+     *
+     * @param list<string> $propertyNames
+     * @return \Closure(array<string, mixed>, ObjectType): ?list<array{0: string, 1: string}>
+     */
+    public static function getUserIntegerPropertyConverter(array $propertyNames): \Closure
+    {
+        return static function (array $data, ObjectType $objectType) use ($propertyNames): ?array {
+            $propertyName = $objectType->propertyname;
+            if (!\in_array($propertyName, $propertyNames, true)) {
+                return null;
+            }
+
+            $from = isset($data['greaterThan']) ? (string)((int)$data['greaterThan'] + 1) : '';
+            $to = isset($data['lessThan']) ? (string)((int)$data['lessThan'] - 1) : '';
+            if ($from === '' && $to === '') {
+                return null;
+            }
+
+            return [['com.woltlab.wcf.user' . \ucfirst($propertyName), $from . ';' . $to]];
+        };
+    }
+
+    /**
+     * Returns the ids of the objects that have been disabled by the migration.
+     *
+     * @return list<int>
+     */
+    private function getDisabledObjectIDs(): array
+    {
+        $value = RegistryHandler::getInstance()->get('com.woltlab.wcf', $this->getRegistryField());
+        if ($value === null) {
+            return [];
+        }
+
+        $objectIDs = \json_decode($value, true);
+        if (!\is_array($objectIDs)) {
+            return [];
+        }
+
+        return \array_values(\array_map(static fn($objectID) => (int)$objectID, $objectIDs));
+    }
+
+    /**
+     * Stores the ids of the objects that have been disabled by the migration.
+     *
+     * @param list<int> $objectIDs
+     */
+    private function setDisabledObjectIDs(array $objectIDs): void
+    {
+        RegistryHandler::getInstance()->set(
+            'com.woltlab.wcf',
+            $this->getRegistryField(),
+            \json_encode(\array_values(\array_unique($objectIDs)), \JSON_THROW_ON_ERROR)
+        );
+    }
+
+    private function getRegistryField(): string
+    {
+        return 'legacyConditionMigration.' . $this->definitionName;
     }
 
     /**
@@ -110,10 +207,14 @@ final class LegacyConditionMigration
     }
 
     /**
-     * Returns the conditions of existing objects, grouped by the id of the object.
+     * Returns the conditions of existing objects and whether the objects are
+     * disabled, grouped by the id of the object.
      *
      * @param list<int> $objectTypeIDs
-     * @return array<int, list<array{conditionID: int, objectTypeID: int, conditionData: string}>>
+     * @return array<int, array{
+     *  isDisabled: bool,
+     *  conditions: list<array{conditionID: int, objectTypeID: int, conditionData: string}>,
+     * }>
      */
     private function getConditionsByObject(array $objectTypeIDs): array
     {
@@ -122,7 +223,8 @@ final class LegacyConditionMigration
 
         // Conditions of deleted objects are skipped.
         $sql = "SELECT      condition_table.conditionID, condition_table.objectTypeID,
-                            condition_table.objectID, condition_table.conditionData
+                            condition_table.objectID, condition_table.conditionData,
+                            object_table.isDisabled
                 FROM        wcf1_condition condition_table
                 INNER JOIN  {$this->tableName} object_table
                 ON          object_table.{$this->idColumn} = condition_table.objectID
@@ -131,21 +233,25 @@ final class LegacyConditionMigration
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
-        $conditions = [];
+        $objects = [];
         while ($row = $statement->fetchArray()) {
-            $conditions[$row['objectID']][] = [
+            $objects[$row['objectID']] ??= [
+                'isDisabled' => (bool)$row['isDisabled'],
+                'conditions' => [],
+            ];
+            $objects[$row['objectID']]['conditions'][] = [
                 'conditionID' => $row['conditionID'],
                 'objectTypeID' => $row['objectTypeID'],
                 'conditionData' => $row['conditionData'],
             ];
         }
 
-        return $conditions;
+        return $objects;
     }
 
     /**
      * Appends the given filters to the object, deletes the converted legacy
-     * conditions and disables the object if some conditions are left.
+     * conditions and updates the disabled state unless it is `null`.
      *
      * @param list<array{0: string, 1: string}> $filters
      * @param list<int> $convertedConditionIDs
@@ -154,7 +260,7 @@ final class LegacyConditionMigration
         int $objectID,
         array $filters,
         array $convertedConditionIDs,
-        bool $hasUnconvertedConditions
+        ?bool $isDisabled
     ): void {
         WCF::getDB()->beginTransaction();
         try {
@@ -192,12 +298,12 @@ final class LegacyConditionMigration
                 $statement->execute($conditionBuilder->getParameters());
             }
 
-            if ($hasUnconvertedConditions) {
+            if ($isDisabled !== null) {
                 $sql = "UPDATE  {$this->tableName}
                         SET     isDisabled = ?
                         WHERE   {$this->idColumn} = ?";
                 $statement = WCF::getDB()->prepare($sql);
-                $statement->execute([1, $objectID]);
+                $statement->execute([(int)$isDisabled, $objectID]);
             }
 
             WCF::getDB()->commitTransaction();
