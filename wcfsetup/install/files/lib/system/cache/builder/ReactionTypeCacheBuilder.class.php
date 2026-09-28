@@ -2,6 +2,7 @@
 
 namespace wcf\system\cache\builder;
 
+use wcf\data\file\FileList;
 use wcf\data\reaction\type\ReactionTypeList;
 
 /**
@@ -20,7 +21,32 @@ class ReactionTypeCacheBuilder extends AbstractCacheBuilder
         $reactionTypeList = new ReactionTypeList();
         $reactionTypeList->sqlOrderBy = 'showOrder ASC';
         $reactionTypeList->readObjects();
+        $reactionTypes = $reactionTypeList->getObjects();
 
-        return $reactionTypeList->getObjects();
+        $fileIDs = [];
+        foreach ($reactionTypes as $reactionType) {
+            if ($reactionType->iconFileID !== null) {
+                $fileIDs[] = $reactionType->iconFileID;
+            }
+        }
+
+        if ($fileIDs !== []) {
+            $fileList = new FileList();
+            $fileList->setObjectIDs($fileIDs);
+            $fileList->readObjects();
+
+            foreach ($reactionTypes as $reactionType) {
+                if ($reactionType->iconFileID === null) {
+                    continue;
+                }
+
+                $file = $fileList->search($reactionType->iconFileID);
+                if ($file !== null) {
+                    $reactionType->setIconFile($file);
+                }
+            }
+        }
+
+        return $reactionTypes;
     }
 }

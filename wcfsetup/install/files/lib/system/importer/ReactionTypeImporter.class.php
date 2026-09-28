@@ -2,6 +2,7 @@
 
 namespace wcf\system\importer;
 
+use wcf\command\file\CreateFileFromExistingFile;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeEditor;
 
@@ -23,11 +24,18 @@ class ReactionTypeImporter extends AbstractImporter
     #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
-        // copy reaction type image
-        $data['iconFile'] = \basename($additionalData['fileLocation']);
-        if (!@\copy($additionalData['fileLocation'], \WCF_DIR . 'images/reaction/' . $data['iconFile'])) {
+        $file = new CreateFileFromExistingFile(
+            $additionalData['fileLocation'],
+            \basename($additionalData['fileLocation']),
+            'com.woltlab.wcf.reactionType.icon',
+            copy: true,
+        )();
+        if ($file === null) {
             return 0;
         }
+
+        unset($data['iconFile']);
+        $data['iconFileID'] = $file->fileID;
 
         /** @var ReactionType $reactionType */
         $reactionType = ReactionTypeEditor::create($data);

@@ -1,5 +1,6 @@
 <?php
 
+use wcf\command\file\CreateFileFromExistingFile;
 use wcf\data\category\CategoryEditor;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\type\ReactionTypeEditor;
@@ -57,11 +58,19 @@ foreach ([
     [4, 4, 'confused.svg'],
     [5, 5, 'sad.svg'],
 ] as [$reactionTypeID, $showOrder, $iconFile]) {
+    // The bundled images are owned by the package and must stay in place.
+    $file = new CreateFileFromExistingFile(
+        \WCF_DIR . 'images/reaction/' . $iconFile,
+        $iconFile,
+        'com.woltlab.wcf.reactionType.icon',
+        copy: true,
+    )();
+
     ReactionTypeEditor::create([
         'reactionTypeID' => $reactionTypeID,
         'title' => "wcf.reactionType.title{$reactionTypeID}",
         'showOrder' => $showOrder,
-        'iconFile' => $iconFile,
+        'iconFileID' => $file?->fileID,
     ]);
 }
 

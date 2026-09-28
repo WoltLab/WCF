@@ -1745,6 +1745,11 @@
 			<definitionname>com.woltlab.wcf.file</definitionname>
 			<classname>wcf\system\file\processor\UserRankImageFileProcessor</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.reactionType.icon</name>
+			<definitionname>com.woltlab.wcf.file</definitionname>
+			<classname>wcf\system\file\processor\ReactionTypeIconFileProcessor</classname>
+		</type>
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>

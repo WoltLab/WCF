@@ -7,6 +7,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\reaction\type\I18nReactionTypeList;
 use wcf\data\reaction\type\ReactionType;
 use wcf\event\gridView\admin\ReactionTypeGridViewInitialized;
+use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
@@ -52,6 +53,16 @@ final class ReactionTypeGridView extends AbstractGridView
                             \assert($row instanceof ReactionType);
 
                             return $row->renderIcon();
+                        }
+
+                        #[\Override]
+                        public function prepare(mixed $value, DatabaseObject $row): void
+                        {
+                            \assert($row instanceof ReactionType);
+
+                            if ($row->iconFileID !== null) {
+                                FileRuntimeCache::getInstance()->cacheObjectID($row->iconFileID);
+                            }
                         }
 
                         #[\Override]

@@ -2,11 +2,12 @@
 
 namespace wcf\data\reaction\type;
 
+use wcf\command\file\DeleteFiles;
 use wcf\command\reaction\type\DisableReactionType;
 use wcf\command\reaction\type\EnableReactionType;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\file\FileList;
 use wcf\data\IToggleAction;
-use wcf\system\file\upload\UploadFile;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
@@ -61,7 +62,6 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
         $reactionTypeEditor = new ReactionTypeEditor($reactionType);
 
         // i18n
-        $updateData = [];
         if (isset($this->parameters['title_i18n'])) {
             I18nHandler::getInstance()->save(
                 $this->parameters['title_i18n'],
@@ -70,29 +70,9 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
                 1
             );
 
-            $updateData['title'] = 'wcf.reactionType.title' . $reactionType->reactionTypeID;
-        }
-
-        // image
-        if (isset($this->parameters['iconFile']) && \is_array($this->parameters['iconFile'])) {
-            $iconFile = \reset($this->parameters['iconFile']);
-            if (!($iconFile instanceof UploadFile)) {
-                throw new \InvalidArgumentException("The parameter 'image' is no instance of '" . UploadFile::class . "', instance of '" . \get_class($iconFile) . "' given.");
-            }
-
-            // save new image
-            if (!$iconFile->isProcessed()) {
-                $fileName = $reactionType->reactionTypeID . '-' . $iconFile->getFilename();
-
-                \rename($iconFile->getLocation(), \WCF_DIR . 'images/reaction/' . $fileName);
-                $iconFile->setProcessed(\WCF_DIR . 'images/reaction/' . $fileName);
-
-                $updateData['iconFile'] = $fileName;
-            }
-        }
-
-        if ($updateData !== []) {
-            $reactionTypeEditor->update($updateData);
+            $reactionTypeEditor->update([
+                'title' => 'wcf.reactionType.title' . $reactionType->reactionTypeID,
+            ]);
         }
 
         return $reactionType;
@@ -101,6 +81,20 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
     #[\Override]
     public function update()
     {
+        $replacedFileIDs = [];
+        if (\array_key_exists('iconFileID', $this->parameters['data'] ?? [])) {
+            if ($this->objects === []) {
+                $this->readObjects();
+            }
+
+            foreach ($this->objects as $object) {
+                $fileID = $object->iconFileID;
+                if ($fileID !== null && $fileID !== $this->parameters['data']['iconFileID']) {
+                    $replacedFileIDs[] = $fileID;
+                }
+            }
+        }
+
         parent::update();
 
         foreach ($this->getObjects() as $object) {
@@ -116,32 +110,6 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
                 );
 
                 $updateData['title'] = 'wcf.reactionType.title' . $object->reactionTypeID;
-            }
-
-            // delete orphaned images
-            if (isset($this->parameters['iconFile_removedFiles']) && \is_array($this->parameters['iconFile_removedFiles'])) {
-                /** @var UploadFile $file */
-                foreach ($this->parameters['iconFile_removedFiles'] as $file) {
-                    @\unlink($file->getLocation());
-                }
-            }
-
-            // image
-            if (isset($this->parameters['iconFile']) && \is_array($this->parameters['iconFile'])) {
-                $iconFile = \reset($this->parameters['iconFile']);
-                if (!($iconFile instanceof UploadFile)) {
-                    throw new \InvalidArgumentException("The parameter 'image' is no instance of '" . UploadFile::class . "', instance of '" . \get_class($iconFile) . "' given.");
-                }
-
-                // save new image
-                if (!$iconFile->isProcessed()) {
-                    $fileName = $object->reactionTypeID . '-' . $iconFile->getFilename();
-
-                    \rename($iconFile->getLocation(), \WCF_DIR . 'images/reaction/' . $fileName);
-                    $iconFile->setProcessed(\WCF_DIR . 'images/reaction/' . $fileName);
-
-                    $updateData['iconFile'] = $fileName;
-                }
             }
 
             // update show order
@@ -169,11 +137,24 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
                 $object->update($updateData);
             }
         }
+
+        $this->deleteFiles($replacedFileIDs);
     }
 
     #[\Override]
     public function delete()
     {
+        if ($this->objects === []) {
+            $this->readObjects();
+        }
+
+        $fileIDs = [];
+        foreach ($this->objects as $object) {
+            if ($object->iconFileID !== null) {
+                $fileIDs[] = $object->iconFileID;
+            }
+        }
+
         $returnValues = parent::delete();
 
         $sql = "UPDATE  wcf1_reaction_type
@@ -184,14 +165,30 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
             $statement->execute([
                 $object->showOrder,
             ]);
-
-            // Delete outdated reaction type icon.
-            if (isset($object->iconFile) && \file_exists(\WCF_DIR . 'images/reaction/' . $object->iconFile)) {
-                @\unlink(\WCF_DIR . 'images/reaction/' . $object->iconFile);
-            }
         }
 
+        $this->deleteFiles($fileIDs);
+
         return $returnValues;
+    }
+
+    /**
+     * @param list<int> $fileIDs
+     */
+    private function deleteFiles(array $fileIDs): void
+    {
+        if ($fileIDs === []) {
+            return;
+        }
+
+        $fileList = new FileList();
+        $fileList->setObjectIDs($fileIDs);
+        $fileList->readObjects();
+        $files = \array_values($fileList->getObjects());
+
+        if ($files !== []) {
+            new DeleteFiles($files)();
+        }
     }
 
     /**

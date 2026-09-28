@@ -96,6 +96,18 @@ return [
                 ->notNull()
                 ->length(40),
         ]),
+    PartialDatabaseTable::create('wcf1_reaction_type')
+        ->columns([
+            IntDatabaseTableColumn::create('iconFileID'),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['iconFileID'])
+                ->referencedTable('wcf1_file')
+                ->referencedColumns(['fileID'])
+                ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
+        ]),
     PartialDatabaseTable::create('wcf1_user_rank')
         ->columns([
             IntDatabaseTableColumn::create('rankImageFileID'),

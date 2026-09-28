@@ -8,9 +8,9 @@ use wcf\data\reaction\type\ReactionTypeList;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\FileProcessorFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
 use wcf\system\form\builder\field\TitleFormField;
-use wcf\system\form\builder\field\UploadFormField;
 
 /**
  * Represents the reaction type add form.
@@ -79,12 +79,12 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm
         $iconContainer = FormContainer::create('imageSection')
             ->label('wcf.acp.reactionType.image')
             ->appendChildren([
-                UploadFormField::create('iconFile')
+                FileProcessorFormField::create('iconFileID')
+                    ->objectType('com.woltlab.wcf.reactionType.icon')
                     ->label('wcf.acp.reactionType.image')
                     ->required()
-                    ->maximum(1)
-                    ->imageOnly(true)
-                    ->allowSvgImage(true),
+                    ->singleFileUpload()
+                    ->bigPreview(),
             ]);
 
         $this->form->appendChildren([

@@ -3082,13 +3082,20 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('title'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
-            NotNullVarchar255DatabaseTableColumn::create('iconFile')
-                ->defaultValue(''),
+            IntDatabaseTableColumn::create('iconFileID'),
             DefaultTrueBooleanDatabaseTableColumn::create('isAssignable'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['reactionTypeID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['iconFileID'])
+                ->referencedTable('wcf1_file')
+                ->referencedColumns(['fileID'])
+                ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
         ]),
     DatabaseTable::create('wcf1_registry')
         ->columns([

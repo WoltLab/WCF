@@ -2,6 +2,7 @@
 
 namespace wcf\system\importer;
 
+use wcf\command\file\CreateFileFromExistingFile;
 use wcf\data\language\item\LanguageItemEditor;
 use wcf\data\like\Like;
 use wcf\data\reaction\type\ReactionType;
@@ -88,7 +89,11 @@ class AbstractLikeImporter extends AbstractImporter
     protected static function getDislikeReactionTypeID()
     {
         if (self::$dislikeReactionTypeID === null) {
-            $sql = "SELECT reactionTypeID FROM wcf1_reaction_type WHERE iconFile = ?";
+            $sql = "SELECT      reaction_type.*
+                    FROM        wcf1_reaction_type reaction_type
+                    INNER JOIN  wcf1_file file
+                    ON          file.fileID = reaction_type.iconFileID
+                    WHERE       file.filename = ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute(['thumbsDown.svg']);
             $reaction = $statement->fetchObject(ReactionType::class);
@@ -98,7 +103,18 @@ class AbstractLikeImporter extends AbstractImporter
                 $statement->execute();
                 $showOrder = $statement->fetchColumn();
 
-                $reaction = ReactionTypeEditor::create(['iconFile' => 'thumbsDown.svg', 'showOrder' => $showOrder + 1]);
+                // The bundled image must remain available for later imports.
+                $file = new CreateFileFromExistingFile(
+                    \WCF_DIR . 'images/reaction/thumbsDown.svg',
+                    'thumbsDown.svg',
+                    'com.woltlab.wcf.reactionType.icon',
+                    copy: true,
+                )();
+
+                $reaction = ReactionTypeEditor::create([
+                    'iconFileID' => $file?->fileID,
+                    'showOrder' => $showOrder + 1,
+                ]);
 
                 $sql = "SELECT  languageCategoryID
                         FROM    wcf1_language_category

@@ -12,6 +12,12 @@ use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
+    PartialDatabaseTable::create('wcf1_reaction_type')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('iconFile')
+                ->defaultValue('')
+                ->drop(),
+        ]),
     PartialDatabaseTable::create('wcf1_user_rank')
         ->columns([
             NotNullVarchar255DatabaseTableColumn::create('rankImage')
