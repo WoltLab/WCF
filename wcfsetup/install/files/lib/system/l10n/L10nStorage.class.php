@@ -199,6 +199,11 @@ final class L10nStorage
      * administrator modified (`isPristine = 0`) are preserved. All written rows
      * are marked pristine.
      *
+     * A monolingual value is never combined with per-language values: a modified
+     * monolingual value applies to all languages and suppresses the synchronized
+     * values, modified per-language values suppress a synchronized monolingual
+     * value.
+     *
      * Only valid for definitions that support the synchronization with language
      * variables.
      *
@@ -241,13 +246,20 @@ final class L10nStorage
                         AND isPristine = ?";
         $deleteStatement = WCF::getDB()->prepare($sql);
 
+        $modifiedAllLanguages = \in_array(self::MONOLINGUAL, $modifiedLanguageIDs, true);
+
         WCF::getDB()->beginTransaction();
         $committed = false;
         try {
+            // Also removes pristine rows that were previously written next to a
+            // modified monolingual value.
             $deleteStatement->execute([$objectID, 1]);
 
             foreach ($languageIDs as $languageID) {
-                if (\in_array($languageID, $modifiedLanguageIDs, true)) {
+                if ($modifiedAllLanguages || \in_array($languageID, $modifiedLanguageIDs, true)) {
+                    continue;
+                }
+                if ($languageID === self::MONOLINGUAL && $modifiedLanguageIDs !== []) {
                     continue;
                 }
 
