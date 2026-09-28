@@ -127,5 +127,9 @@ return [
     PartialDatabaseTable::create('wcf1_notice')
         ->columns([
             JsonDatabaseTableColumn::create('conditions'),
-        ])
+        ]),
+    PartialDatabaseTable::create('wcf1_ad')
+        ->columns([
+            JsonDatabaseTableColumn::create('conditions'),
+        ]),
 ];

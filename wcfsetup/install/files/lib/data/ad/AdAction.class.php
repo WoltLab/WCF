@@ -16,6 +16,7 @@ use wcf\system\condition\ConditionHandler;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<Ad, AdEditor>
+ * @deprecated 6.3 use `AdBuilder` instead.
  */
 class AdAction extends AbstractDatabaseObjectAction implements IToggleAction
 {

@@ -7,6 +7,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\AdCacheBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\object\filter\builder\AdObjectFilterBuilder;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -30,6 +31,11 @@ class AdHandler extends SingletonFactory
      * @var ObjectType[]
      */
     protected $objectTypes = [];
+
+    /**
+     * filter builder shared by all ad locations
+     */
+    private ?AdObjectFilterBuilder $filterBuilder = null;
 
     /**
      * Returns the ad output for the given ad location.
@@ -57,13 +63,12 @@ class AdHandler extends SingletonFactory
             \shuffle($ads);
         }
 
+        $this->filterBuilder ??= new AdObjectFilterBuilder();
+
         $output = '';
         foreach ($ads as $ad) {
-            $conditions = $ad->getConditions();
-            foreach ($conditions as $condition) {
-                if (!$condition->getObjectType()->getProcessor()->showContent($condition)) {
-                    continue 2;
-                }
+            if (!$this->filterBuilder->testUser($ad, WCF::getUser())) {
+                continue;
             }
 
             $output .= '<div>' . $ad->getHtmlCode() . '</div>';

@@ -42,11 +42,6 @@ parameters:
 			count: 2
 			path: wcfsetup/install/files/lib/acp/form/AbstractCustomOptionForm.class.php
 
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 2
-			path: wcfsetup/install/files/lib/acp/form/AdAddForm.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'

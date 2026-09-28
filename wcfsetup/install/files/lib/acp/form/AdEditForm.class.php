@@ -4,21 +4,18 @@ namespace wcf\acp\form;
 
 use wcf\acp\page\AdListPage;
 use wcf\data\ad\Ad;
-use wcf\data\ad\AdAction;
-use wcf\form\AbstractForm;
 use wcf\http\Helper;
-use wcf\system\condition\ConditionHandler;
 use wcf\system\interaction\admin\AdInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
- * Shows the form to edit an ad notice.
+ * Shows the form to edit an existing ad.
  *
- * @author  Matthias Schmidt
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Matthias Schmidt, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class AdEditForm extends AdAddForm
 {
@@ -28,10 +25,17 @@ class AdEditForm extends AdAddForm
     public $activeMenuItem = 'wcf.acp.menu.link.ad.list';
 
     /**
-     * edited ad object
-     * @var ?Ad
+     * @inheritDoc
      */
-    public $adObject;
+    public string $formAction = 'edit';
+
+    #[\Override]
+    public function readParameters()
+    {
+        parent::readParameters();
+
+        $this->formObject = Helper::fetchObjectFromQueryParameter(Ad::class);
+    }
 
     #[\Override]
     public function assignVariables()
@@ -39,100 +43,11 @@ class AdEditForm extends AdAddForm
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'action' => 'edit',
-            'adObject' => $this->adObject,
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new AdInteractions(),
-                $this->adObject,
+                $this->formObject,
                 LinkHandler::getInstance()->getControllerLink(AdListPage::class)
             ),
         ]);
-    }
-
-    #[\Override]
-    public function readData()
-    {
-        parent::readData();
-
-        if ($_POST === []) {
-            $this->ad = $this->adObject->ad;
-            $this->adName = $this->adObject->adName;
-            $this->isDisabled = $this->adObject->isDisabled;
-            $this->objectTypeID = $this->adObject->objectTypeID;
-            $this->showOrder = $this->adObject->showOrder;
-
-            $conditions = $this->adObject->getConditions();
-            $conditionsByObjectTypeID = [];
-            foreach ($conditions as $condition) {
-                $conditionsByObjectTypeID[$condition->objectTypeID] = $condition;
-            }
-
-            foreach ($this->groupedConditionObjectTypes as $objectTypes1) {
-                foreach ($objectTypes1 as $objectTypes2) {
-                    if (\is_array($objectTypes2)) {
-                        foreach ($objectTypes2 as $objectType) {
-                            if (isset($conditionsByObjectTypeID[$objectType->objectTypeID])) {
-                                $conditionsByObjectTypeID[$objectType->objectTypeID]
-                                    ->getObjectType()
-                                    ->getProcessor()
-                                    ->setData($conditionsByObjectTypeID[$objectType->objectTypeID]);
-                            }
-                        }
-                    } elseif (isset($conditionsByObjectTypeID[$objectTypes2->objectTypeID])) {
-                        $conditionsByObjectTypeID[$objectTypes2->objectTypeID]
-                            ->getObjectType()
-                            ->getProcessor()
-                            ->setData($conditionsByObjectTypeID[$objectTypes2->objectTypeID]);
-                    }
-                }
-            }
-        }
-    }
-
-    #[\Override]
-    public function readParameters()
-    {
-        parent::readParameters();
-
-        $this->adObject = Helper::fetchObjectFromQueryParameter(Ad::class);
-    }
-
-    #[\Override]
-    public function save()
-    {
-        AbstractForm::save();
-
-        $this->objectAction = new AdAction([$this->adObject], 'update', [
-            'data' => \array_merge($this->additionalFields, [
-                'ad' => $this->ad,
-                'adName' => $this->adName,
-                'isDisabled' => $this->isDisabled,
-                'objectTypeID' => $this->objectTypeID,
-                'showOrder' => $this->showOrder,
-            ]),
-        ]);
-        $this->objectAction->executeAction();
-
-        // transform conditions array into one-dimensional array
-        $conditions = [];
-        foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
-            foreach ($groupedObjectTypes as $objectTypes) {
-                if (\is_array($objectTypes)) {
-                    $conditions = \array_merge($conditions, $objectTypes);
-                } else {
-                    $conditions[] = $objectTypes;
-                }
-            }
-        }
-
-        ConditionHandler::getInstance()->updateConditions(
-            $this->adObject->adID,
-            $this->adObject->getConditions(),
-            $conditions
-        );
-
-        $this->saved();
-
-        WCF::getTPL()->assign('success', true);
     }
 }

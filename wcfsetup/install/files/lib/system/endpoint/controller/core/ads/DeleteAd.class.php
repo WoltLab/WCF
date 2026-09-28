@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\ads;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\ad\DeleteAd as DeleteAdCommand;
 use wcf\data\ad\Ad;
-use wcf\data\ad\AdAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -31,7 +31,7 @@ final class DeleteAd implements IController
 
         $this->assertAdCanBeDeleted();
 
-        (new AdAction([$ad], 'delete'))->executeAction();
+        new DeleteAdCommand($ad)();
 
         return new JsonResponse([]);
     }

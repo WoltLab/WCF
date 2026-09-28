@@ -24,6 +24,7 @@ use wcf\util\StringUtil;
  * @property-read   ?string $ad             ad text
  * @property-read   0|1     $isDisabled     is `1` if the ad is disabled and thus not shown, otherwise `0`
  * @property-read   int     $showOrder      position of the ad in relation to the other ads at the same location
+ * @property-read   ?string $conditions     serialized object filters the active user must match or `null` if the ad has no filters
  */
 class Ad extends DatabaseObject implements IRouteController
 {
@@ -31,6 +32,7 @@ class Ad extends DatabaseObject implements IRouteController
      * Returns the conditions of the ad.
      *
      * @return  Condition[]
+     * @deprecated 6.3 Use object filter API instead.
      */
     public function getConditions()
     {

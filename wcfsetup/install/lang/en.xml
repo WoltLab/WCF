@@ -28,17 +28,11 @@
 		<item name="wcf.acp.ad.ad"><![CDATA[Ad]]></item>
 		<item name="wcf.acp.ad.ad.description"><![CDATA[Enter the ad’s HTML code here. The following expressions will be automatically replace within the HTML code:
 <ul class="nativeList">
-	<li class="jsDefaultItem"><kbd>{literal}{$username}{/literal}</kbd> with the name of the active user or “Guest”</li>
+	<li><kbd>{literal}{$username}{/literal}</kbd> with the name of the active user or “Guest”</li>
 </ul>]]></item>
 		<item name="wcf.acp.ad.add"><![CDATA[Add Ad]]></item>
 		<item name="wcf.acp.ad.conditions"><![CDATA[Conditions]]></item>
-		<item name="wcf.acp.ad.conditions.description"><![CDATA[If no conditions are specified, the ad will display for every user.]]></item>
-		<item name="wcf.acp.ad.conditions.page"><![CDATA[Page]]></item>
-		<item name="wcf.acp.ad.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the ad to be displayed.]]></item>
-		<item name="wcf.acp.ad.conditions.pointInTime"><![CDATA[Time]]></item>
-		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the ad is displayed.]]></item>
-		<item name="wcf.acp.ad.conditions.user"><![CDATA[Active user]]></item>
-		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the ad.]]></item>
+		<item name="wcf.acp.ad.conditions.description"><![CDATA[The ad is displayed if ALL of the following conditions are met. If no conditions are selected, the ad is displayed to every user.]]></item>
 		<item name="wcf.acp.ad.edit"><![CDATA[Edit Ad]]></item>
 		<item name="wcf.acp.ad.isDisabled"><![CDATA[Disable ad]]></item>
 		<item name="wcf.acp.ad.list"><![CDATA[Ads]]></item>
@@ -1246,12 +1240,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.notice.cssClassName.warning"><![CDATA[Warning]]></item>
 		<item name="wcf.acp.notice.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.notice.conditions.description"><![CDATA[The notice is displayed if ALL of the following conditions are met. If no conditions are selected, the notice is displayed to every user on all pages.]]></item>
-		<item name="wcf.acp.notice.conditions.page"><![CDATA[Page]]></item>
-		<item name="wcf.acp.notice.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the notice to be displayed.]]></item>
-		<item name="wcf.acp.notice.conditions.pointInTime"><![CDATA[Time]]></item>
-		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the notice is displayed.]]></item>
-		<item name="wcf.acp.notice.conditions.user"><![CDATA[Active user]]></item>
-		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to view the notice.]]></item>
 		<item name="wcf.acp.notice.customCssClassName"><![CDATA[CSS class]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Edit Notice]]></item>
 		<item name="wcf.acp.notice.example"><![CDATA[Example text of a notice]]></item>

@@ -28,17 +28,11 @@
 		<item name="wcf.acp.ad.ad"><![CDATA[Werbung]]></item>
 		<item name="wcf.acp.ad.ad.description"><![CDATA[HTML-Code der Werbung. Die folgende Ausdrücke werden automatisch im HTML-Code ersetzt:
 <ul class="nativeList">
-	<li class="jsDefaultItem"><kbd>{literal}{$username}{/literal}</kbd> durch den Namen des aktiven Benutzers oder durch „Gast“</li>
+	<li><kbd>{literal}{$username}{/literal}</kbd> durch den Namen des aktiven Benutzers oder durch „Gast“</li>
 </ul>]]></item>
 		<item name="wcf.acp.ad.add"><![CDATA[Werbung hinzufügen]]></item>
 		<item name="wcf.acp.ad.conditions"><![CDATA[Bedingungen]]></item>
-		<item name="wcf.acp.ad.conditions.description"><![CDATA[Werden keine Bedingungen ausgewählt, wird die Werbung für jeden Benutzer angezeigt.]]></item>
-		<item name="wcf.acp.ad.conditions.page"><![CDATA[Seite]]></item>
-		<item name="wcf.acp.ad.conditions.page.description"><![CDATA[Die vom Benutzer aufgerufene Seite muss folgende Bedingungen erfüllen, damit die Werbung angezeigt wird.]]></item>
-		<item name="wcf.acp.ad.conditions.pointInTime"><![CDATA[Zeitpunkt]]></item>
-		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Leg{else}Legen Sie{/if} den Zeitpunkt fest, zu dem die Werbung angezeigt werden soll.]]></item>
-		<item name="wcf.acp.ad.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
-		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit die Werbung angezeigt wird.]]></item>
+		<item name="wcf.acp.ad.conditions.description"><![CDATA[Die Werbung wird angezeigt, wenn ALLE nachfolgenden Bedingungen erfüllt sind. Werden keine Bedingungen ausgewählt, wird die Werbung für jeden Benutzer angezeigt.]]></item>
 		<item name="wcf.acp.ad.edit"><![CDATA[Werbung bearbeiten]]></item>
 		<item name="wcf.acp.ad.isDisabled"><![CDATA[Werbung deaktivieren]]></item>
 		<item name="wcf.acp.ad.list"><![CDATA[Werbung]]></item>
@@ -1268,12 +1262,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.notice.cssClassName.warning"><![CDATA[Warnung]]></item>
 		<item name="wcf.acp.notice.conditions"><![CDATA[Bedingungen]]></item>
 		<item name="wcf.acp.notice.conditions.description"><![CDATA[Der Hinweis wird angezeigt, wenn ALLE nachfolgenden Bedingungen erfüllt sind. Werden keine Bedingungen ausgewählt, wird der Hinweis für jeden Benutzer auf allen Seiten angezeigt.]]></item>
-		<item name="wcf.acp.notice.conditions.page"><![CDATA[Seite]]></item>
-		<item name="wcf.acp.notice.conditions.page.description"><![CDATA[Die vom Benutzer aufgerufene Seite muss folgende Bedingungen erfüllen, damit der Hinweis angezeigt wird.]]></item>
-		<item name="wcf.acp.notice.conditions.pointInTime"><![CDATA[Zeitpunkt]]></item>
-		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Leg{else}Legen Sie{/if} den Zeitpunkt fest, zu dem der Hinweis angezeigt werden soll.]]></item>
-		<item name="wcf.acp.notice.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
-		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit der Hinweis angezeigt wird.]]></item>
 		<item name="wcf.acp.notice.customCssClassName"><![CDATA[CSS-Klasse]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Hinweis bearbeiten]]></item>
 		<item name="wcf.acp.notice.example"><![CDATA[Beispieltext für einen Hinweis]]></item>

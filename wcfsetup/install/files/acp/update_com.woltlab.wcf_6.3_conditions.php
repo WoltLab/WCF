@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Migrates the legacy conditions of notices and user group assignments into
- * object filters. Conditions that cannot be converted, e.g. those of apps, are
- * kept and the affected notices and assignments are disabled.
+ * Migrates the legacy conditions of notices, ads and user group assignments
+ * into object filters. Conditions that cannot be converted, e.g. those of apps,
+ * are kept and the affected notices, ads and assignments are disabled.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
@@ -206,6 +206,8 @@ $converters = [
 ];
 
 (new LegacyConditionMigration('com.woltlab.wcf.condition.notice', 'wcf1_notice', 'noticeID'))
+    ->migrate($converters);
+(new LegacyConditionMigration('com.woltlab.wcf.condition.ad', 'wcf1_ad', 'adID'))
     ->migrate($converters);
 (new LegacyConditionMigration('com.woltlab.wcf.condition.userGroupAssignment', 'wcf1_user_group_assignment', 'assignmentID'))
     ->migrate($converters);

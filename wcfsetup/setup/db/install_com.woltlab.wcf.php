@@ -369,6 +369,7 @@ return [
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
+            JsonDatabaseTableColumn::create('conditions'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
