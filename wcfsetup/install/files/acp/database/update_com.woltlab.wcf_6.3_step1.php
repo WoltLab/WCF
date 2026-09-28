@@ -19,6 +19,7 @@ use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\SmallintDatabaseTableColumn;
 use wcf\system\database\table\column\TextDatabaseTableColumn;
+use wcf\system\database\table\column\TinyintDatabaseTableColumn;
 use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
@@ -130,6 +131,8 @@ return [
     PartialDatabaseTable::create('wcf1_reaction_type')
         ->columns([
             IntDatabaseTableColumn::create('iconFileID'),
+            VarcharDatabaseTableColumn::create('l10nIdentifier')
+                ->length(255),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()
@@ -137,6 +140,34 @@ return [
                 ->referencedTable('wcf1_file')
                 ->referencedColumns(['fileID'])
                 ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_reaction_type_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('reactionTypeID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            TinyintDatabaseTableColumn::create('isPristine')
+                ->notNull()
+                ->defaultValue(1),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('reactionTypeID')
+                ->columns(['reactionTypeID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['reactionTypeID'])
+                ->referencedTable('wcf1_reaction_type')
+                ->referencedColumns(['reactionTypeID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
     PartialDatabaseTable::create('wcf1_user_rank')

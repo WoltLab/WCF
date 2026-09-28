@@ -74,6 +74,7 @@ return new class {
             \wcf\event\l10n\L10nDefinitionCollecting::class,
             static function (\wcf\event\l10n\L10nDefinitionCollecting $event) {
                 $event->register(\wcf\data\user\option\UserOption::getL10nDefinition());
+                $event->register(\wcf\data\reaction\type\ReactionType::getL10nDefinition());
             }
         );
         $eventHandler->register(

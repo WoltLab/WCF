@@ -4,7 +4,7 @@ namespace wcf\system\gridView\admin;
 
 use wcf\acp\form\ReactionTypeEditForm;
 use wcf\data\DatabaseObject;
-use wcf\data\reaction\type\I18nReactionTypeList;
+use wcf\data\reaction\type\L10nReactionTypeList;
 use wcf\data\reaction\type\ReactionType;
 use wcf\event\gridView\admin\ReactionTypeGridViewInitialized;
 use wcf\system\cache\runtime\FileRuntimeCache;
@@ -14,14 +14,13 @@ use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
-use wcf\system\gridView\renderer\PhraseColumnRenderer;
 use wcf\system\interaction\admin\ReactionTypeInteractions;
 use wcf\system\interaction\bulk\admin\ReactionTypeBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
-use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\L10nTextFilter;
 use wcf\system\WCF;
 
 /**
@@ -32,7 +31,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  *
- * @extends AbstractGridView<ReactionType, I18nReactionTypeList>
+ * @extends AbstractGridView<ReactionType, L10nReactionTypeList>
  */
 final class ReactionTypeGridView extends AbstractGridView
 {
@@ -75,9 +74,13 @@ final class ReactionTypeGridView extends AbstractGridView
             GridViewColumn::for("title")
                 ->titleColumn()
                 ->label("wcf.global.title")
-                ->renderer(new PhraseColumnRenderer())
-                ->filter(I18nTextFilter::class)
-                ->sortable(sortByDatabaseColumn: "titleI18n"),
+                ->filter(new L10nTextFilter(
+                    ReactionType::getL10nDefinition(),
+                    "title",
+                    "title",
+                    "wcf.global.title",
+                ))
+                ->sortable(sortByDatabaseColumn: "title"),
             GridViewColumn::for("showOrder")
                 ->label("wcf.global.showOrder")
                 ->renderer(new NumberColumnRenderer())
@@ -115,9 +118,9 @@ final class ReactionTypeGridView extends AbstractGridView
     }
 
     #[\Override]
-    protected function createObjectList(): I18nReactionTypeList
+    protected function createObjectList(): L10nReactionTypeList
     {
-        return new I18nReactionTypeList();
+        return new L10nReactionTypeList();
     }
 
     #[\Override]

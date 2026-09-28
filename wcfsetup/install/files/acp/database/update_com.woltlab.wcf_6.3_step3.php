@@ -17,6 +17,8 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('iconFile')
                 ->defaultValue('')
                 ->drop(),
+            NotNullVarchar255DatabaseTableColumn::create('title')
+                ->drop(),
         ]),
     PartialDatabaseTable::create('wcf1_user_rank')
         ->columns([

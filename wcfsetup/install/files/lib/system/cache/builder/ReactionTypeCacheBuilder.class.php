@@ -47,6 +47,12 @@ class ReactionTypeCacheBuilder extends AbstractCacheBuilder
             }
         }
 
+        // The reaction types share one collection, loading the titles once
+        // stores them in the cache instead of querying them on every request.
+        if ($reactionTypes !== []) {
+            \reset($reactionTypes)->getL10nValues('title');
+        }
+
         return $reactionTypes;
     }
 }

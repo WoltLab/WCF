@@ -3,7 +3,7 @@
 use wcf\command\file\CreateFileFromExistingFile;
 use wcf\data\category\CategoryEditor;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\reaction\type\ReactionTypeEditor;
+use wcf\data\reaction\type\ReactionTypeBuilder;
 use wcf\data\user\rank\UserRankEditor;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfileAction;
@@ -66,12 +66,14 @@ foreach ([
         copy: true,
     )();
 
-    ReactionTypeEditor::create([
-        'reactionTypeID' => $reactionTypeID,
-        'title' => "wcf.reactionType.title{$reactionTypeID}",
-        'showOrder' => $showOrder,
-        'iconFileID' => $file?->fileID,
-    ]);
+    // The title is copied from the language variable by `SyncL10nLanguageItems`
+    // at the end of the installation.
+    ReactionTypeBuilder::forCreate()
+        ->setID($reactionTypeID)
+        ->setL10nIdentifier("wcf.reactionType.title{$reactionTypeID}")
+        ->setShowOrder($showOrder)
+        ->setIconFileID($file?->fileID)
+        ->create();
 }
 
 // add default article category

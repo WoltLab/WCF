@@ -28,7 +28,7 @@ class ReactionTypeEditForm extends ReactionTypeAddForm
     /**
      * @inheritDoc
      */
-    public $formAction = 'edit';
+    public string $formAction = 'edit';
 
     #[\Override]
     public function readParameters()
