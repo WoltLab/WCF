@@ -1184,17 +1184,47 @@ return [
     DatabaseTable::create('wcf1_contact_recipient')
         ->columns([
             ObjectIdDatabaseTableColumn::create('recipientID'),
-            NotNullVarchar255DatabaseTableColumn::create('name'),
-            NotNullVarchar255DatabaseTableColumn::create('email'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('isAdministrator'),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             DefaultFalseBooleanDatabaseTableColumn::create('originIsSystem'),
+            VarcharDatabaseTableColumn::create('l10nIdentifier')
+                ->length(255),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['recipientID']),
+        ]),
+    DatabaseTable::create('wcf1_contact_recipient_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('recipientID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('name')
+                ->length(255),
+            VarcharDatabaseTableColumn::create('email')
+                ->length(255),
+            TinyintDatabaseTableColumn::create('isPristine')
+                ->notNull()
+                ->defaultValue(1),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('recipientID')
+                ->columns(['recipientID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['recipientID'])
+                ->referencedTable('wcf1_contact_recipient')
+                ->referencedColumns(['recipientID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
         ]),
     DatabaseTable::create('wcf1_core_object')
         ->columns([

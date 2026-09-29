@@ -37,7 +37,7 @@ class ContactRecipientEditForm extends ContactRecipientAddForm
     /**
      * @inheritDoc
      */
-    public $formAction = 'edit';
+    public string $formAction = 'edit';
 
     #[\Override]
     public function readParameters()

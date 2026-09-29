@@ -3,7 +3,7 @@
 namespace wcf\command\contact\recipient;
 
 use wcf\data\contact\recipient\ContactRecipient;
-use wcf\data\contact\recipient\ContactRecipientEditor;
+use wcf\data\contact\recipient\ContactRecipientBuilder;
 use wcf\event\contact\recipient\ContactRecipientEnabled;
 use wcf\system\event\EventHandler;
 
@@ -20,9 +20,9 @@ final class EnableContactRecipient {
 
     public function __invoke(): void
     {
-        (new ContactRecipientEditor($this->recipient))->update([
-            'isDisabled' => 0,
-        ]);
+        ContactRecipientBuilder::forUpdate($this->recipient)
+            ->setIsDisabled(false)
+            ->update();
 
         $event = new ContactRecipientEnabled($this->recipient);
         EventHandler::getInstance()->fire($event);

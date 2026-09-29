@@ -43,4 +43,11 @@ return [
                 ->length(80)
                 ->drop(),
         ]),
+    PartialDatabaseTable::create('wcf1_contact_recipient')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('name')
+                ->drop(),
+            NotNullVarchar255DatabaseTableColumn::create('email')
+                ->drop(),
+        ]),
 ];

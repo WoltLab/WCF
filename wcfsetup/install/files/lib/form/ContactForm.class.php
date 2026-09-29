@@ -25,6 +25,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\HtmlString;
+use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 
 /**
@@ -212,10 +213,16 @@ class ContactForm extends AbstractFormBuilderForm
             throw new \BadMethodCallException('Contact form has no available recipients.');
         }
 
+        // The labels of selection options are printed as HTML.
+        $options = \array_map(
+            static fn(ContactRecipient $recipient) => StringUtil::encodeHTML($recipient->getName()),
+            $recipients
+        );
+
         return SelectFormField::create('recipientID')
             ->label('wcf.contact.recipientID')
             ->required()
-            ->options($recipients)
+            ->options($options, labelLanguageItems: false)
             ->available(\count($recipients) > 1);
     }
 
