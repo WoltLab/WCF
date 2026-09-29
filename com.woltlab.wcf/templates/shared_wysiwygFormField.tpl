@@ -11,6 +11,10 @@
 		*}{/if}{*
 	*}{/if}{*
 	*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
-*}>{$field->getValue()}</textarea>
+*}>{if !$field->isL10n() || !$field->hasI18nValues() || $availableLanguages|count === 1}{$field->getValue()}{/if}</textarea>
 
 {include file='shared_wysiwyg' wysiwygSelector=$field->getPrefixedId()}
+
+{if $field->isL10n()}
+	{include file='shared_multipleLanguageInputJavascript'}
+{/if}
