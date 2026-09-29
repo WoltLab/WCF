@@ -37,6 +37,7 @@ trait TL10nFormField
     use TI18nFormField {
         TI18nFormField::i18n as private i18nFieldI18n;
         TI18nFormField::languageItemPattern as private i18nFieldLanguageItemPattern;
+        TI18nFormField::populate as private i18nFieldPopulate;
         TI18nFormField::value as private i18nFieldValue;
         TI18nFormField::validate as private i18nFieldValidate;
         TI18nFormField::getHtmlVariables as private i18nFieldGetHtmlVariables;
@@ -121,6 +122,26 @@ trait TL10nFormField
         }
 
         return $this->i18nFieldLanguageItemPattern($pattern);
+    }
+
+    /**
+     * @return static this node
+     */
+    public function populate()
+    {
+        if (!$this->l10n) {
+            return $this->i18nFieldPopulate();
+        }
+
+        parent::populate();
+
+        // Unlike the i18n mode, no `_i18n` parameter is added to the form data,
+        // because the values are persisted via `getL10nValues()` and would
+        // otherwise bypass any processing the field applies to them.
+        I18nHandler::getInstance()->unregister($this->getPrefixedId());
+        I18nHandler::getInstance()->register($this->getPrefixedId());
+
+        return $this;
     }
 
     /**
