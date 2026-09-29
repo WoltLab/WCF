@@ -249,4 +249,29 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    DatabaseTable::create('wcf1_label_group_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('groupID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('groupName')
+                ->length(80),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('groupID')
+                ->columns(['groupID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['groupID'])
+                ->referencedTable('wcf1_label_group')
+                ->referencedColumns(['groupID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
 ];

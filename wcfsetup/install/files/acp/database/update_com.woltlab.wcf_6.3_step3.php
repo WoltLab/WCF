@@ -9,6 +9,7 @@
  */
 
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
+use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
@@ -33,6 +34,13 @@ return [
         ->columns([
             NotNullVarchar255DatabaseTableColumn::create('description')
                 ->defaultValue('')
+                ->drop(),
+        ]),
+    PartialDatabaseTable::create('wcf1_label_group')
+        ->columns([
+            VarcharDatabaseTableColumn::create('groupName')
+                ->notNull()
+                ->length(80)
                 ->drop(),
         ]),
 ];

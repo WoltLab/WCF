@@ -4,8 +4,8 @@ namespace wcf\data\label\group;
 
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\acl\ACLHandler;
 use wcf\system\cache\builder\LabelCacheBuilder;
+use wcf\system\WCF;
 
 /**
  * Provides functions to edit label groups.
@@ -17,6 +17,7 @@ use wcf\system\cache\builder\LabelCacheBuilder;
  * @mixin       LabelGroup
  * @extends DatabaseObjectEditor<LabelGroup>
  * @implements IEditableCachedObject<LabelGroup>
+ * @deprecated 6.3 use `LabelGroupBuilder` instead.
  */
 class LabelGroupEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {
@@ -28,13 +29,25 @@ class LabelGroupEditor extends DatabaseObjectEditor implements IEditableCachedOb
     #[\Override]
     public static function deleteAll(array $objectIDs = [])
     {
-        $count = parent::deleteAll($objectIDs);
+        if ($objectIDs === []) {
+            return 0;
+        }
 
-        // remove ACL values
-        $objectTypeID = ACLHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.label');
-        ACLHandler::getInstance()->removeValues($objectTypeID, $objectIDs);
+        // See `DeleteLabelGroup` for the transaction.
+        WCF::getDB()->beginTransaction();
+        $committed = false;
+        try {
+            LabelGroupBuilder::deleteAll(\array_values($objectIDs));
 
-        return $count;
+            WCF::getDB()->commitTransaction();
+            $committed = true;
+        } finally {
+            if (!$committed) {
+                WCF::getDB()->rollBackTransaction();
+            }
+        }
+
+        return \count($objectIDs);
     }
 
     #[\Override]

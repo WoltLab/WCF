@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\labels\groups;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\label\group\DeleteLabelGroup;
 use wcf\data\label\group\LabelGroup;
-use wcf\data\label\group\LabelGroupAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -30,7 +30,7 @@ final class DeleteGroup implements IController
 
         $this->assertGroupCanBeDeleted();
 
-        (new LabelGroupAction([$labelGroup], 'delete'))->executeAction();
+        (new DeleteLabelGroup($labelGroup))();
 
         return new JsonResponse([]);
     }

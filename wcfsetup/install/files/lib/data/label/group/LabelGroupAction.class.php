@@ -2,15 +2,15 @@
 
 namespace wcf\data\label\group;
 
+use wcf\command\label\group\DeleteLabelGroup;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\label\LabelAction;
-use wcf\data\language\item\LanguageItemAction;
-use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\WCF;
 
 /**
  * Executes label group-related actions.
+ *
+ * Label groups should be created, updated and deleted through the
+ * `CreateLabelGroup`, `UpdateLabelGroup` and `DeleteLabelGroup` commands, the
+ * `create`, `update` and `delete` actions are `@deprecated 6.3`.
  *
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
@@ -45,59 +45,20 @@ class LabelGroupAction extends AbstractDatabaseObjectAction
      */
     protected $requireACP = ['create', 'delete', 'update'];
 
+    /**
+     * @deprecated 6.3 use the `DeleteLabelGroup` command instead.
+     */
     #[\Override]
     public function delete()
     {
-        // remove labels and their potential language variables
-        if ($this->objectIDs !== []) {
-            $conditions = new PreparedStatementConditionBuilder();
-            $conditions->add('groupID IN (?)', [$this->objectIDs]);
-
-            $sql = "SELECT  labelID
-                    FROM    wcf1_label
-                    " . $conditions;
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditions->getParameters());
-            $labelIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-
-            if ($labelIDs !== []) {
-                $objectAction = new LabelAction($labelIDs, 'delete');
-                $objectAction->executeAction();
-            }
+        if ($this->objects === []) {
+            $this->readObjects();
         }
 
-        $count = parent::delete();
-
-        if ($this->objects !== []) {
-            // identify i18n labels
-            $languageVariables = [];
-            foreach ($this->objects as $labelGroup) {
-                if ($labelGroup->groupName === 'wcf.acp.label.group' . $labelGroup->groupID) {
-                    $languageVariables[] = $labelGroup->groupName;
-                }
-            }
-
-            // remove language variables
-            if ($languageVariables !== []) {
-                $conditions = new PreparedStatementConditionBuilder();
-                $conditions->add('languageItem IN (?)', [$languageVariables]);
-
-                $sql = "SELECT  languageItemID
-                        FROM    wcf1_language_item
-                        " . $conditions;
-                $statement = WCF::getDB()->prepare($sql);
-                $statement->execute($conditions->getParameters());
-                $languageItemIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-
-                $objectAction = new LanguageItemAction($languageItemIDs, 'delete');
-                $objectAction->executeAction();
-            }
+        foreach ($this->objects as $object) {
+            new DeleteLabelGroup($object->getDecoratedObject())();
         }
 
-        foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType') as $objectType) {
-            $objectType->getProcessor()->save();
-        }
-
-        return $count;
+        return \count($this->objects);
     }
 }
