@@ -28,10 +28,12 @@ final class UserIntegerPropertyObjectFilter extends AbstractRangeObjectFilter im
     /**
      * @param string $propertyName name of the integer column in `wcf1_user`
      * @param string $languageItem language item of the title of the property
+     * @param array<string, mixed> $languageItemVariables variables of the language item of the title
      */
     public function __construct(
         private readonly string $propertyName,
         private readonly string $languageItem,
+        private readonly array $languageItemVariables = [],
     ) {}
 
     #[\Override]
@@ -47,10 +49,16 @@ final class UserIntegerPropertyObjectFilter extends AbstractRangeObjectFilter im
     }
 
     #[\Override]
+    public function getTitle(): string
+    {
+        return WCF::getLanguage()->getDynamicVariable($this->languageItem, $this->languageItemVariables);
+    }
+
+    #[\Override]
     protected function createFormField(): NumericRangeFormField
     {
         return NumericRangeFormField::create('user' . \ucfirst($this->propertyName))
-            ->label($this->languageItem)
+            ->label($this->languageItem, $this->languageItemVariables)
             ->integerValues()
             ->minimum(0);
     }
