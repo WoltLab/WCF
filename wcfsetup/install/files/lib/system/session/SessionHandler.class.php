@@ -163,6 +163,17 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
+     * Returns true if guests receive a session only once something needs to be stored.
+     *
+     * @since 6.3
+     */
+    public static function hasOnDemandGuestSessions(): bool
+    {
+        // The option does not exist yet while the update to 6.3 is running.
+        return \defined('VISITOR_ON_DEMAND_SESSION') && \VISITOR_ON_DEMAND_SESSION !== 0;
+    }
+
+    /**
      * Parses the session cookie value, returning an array with the stored fields.
      *
      * The return array is guaranteed to have a `sessionId` key.
@@ -372,6 +383,12 @@ final class SessionHandler extends SingletonFactory
         // assign language
         $languageID = $this->getVar('languageID') ?: $this->user->languageID;
         $this->languageID = $languageID ?: 0;
+
+        // https://github.com/WoltLab/WCF/issues/2568
+        if ($this->getVar('__wcfIsFirstVisit') === true) {
+            $this->firstVisit = true;
+            $this->unregister('__wcfIsFirstVisit');
+        }
     }
 
     /**

@@ -23,6 +23,7 @@ use wcf\system\database\table\column\TinyintDatabaseTableColumn;
 use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
+use wcf\system\database\table\index\DatabaseTablePrimaryIndex;
 use wcf\system\database\table\DatabaseTable;
 use wcf\system\database\table\PartialDatabaseTable;
 
@@ -226,6 +227,19 @@ return [
     PartialDatabaseTable::create('wcf1_ad')
         ->columns([
             JsonDatabaseTableColumn::create('conditions'),
+        ]),
+    DatabaseTable::create('wcf1_captcha_question_token')
+        ->columns([
+            BinaryDatabaseTableColumn::create('nonce')
+                ->notNull()
+                ->length(16),
+            NotNullInt10DatabaseTableColumn::create('expires'),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['nonce']),
+            DatabaseTableIndex::create('expires')
+                ->columns(['expires']),
         ]),
     DatabaseTable::create('wcf1_user_rank_l10n')
         ->columns([

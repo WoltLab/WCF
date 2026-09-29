@@ -940,6 +940,19 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    DatabaseTable::create('wcf1_captcha_question_token')
+        ->columns([
+            BinaryDatabaseTableColumn::create('nonce')
+                ->notNull()
+                ->length(16),
+            NotNullInt10DatabaseTableColumn::create('expires'),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['nonce']),
+            DatabaseTableIndex::create('expires')
+                ->columns(['expires']),
+        ]),
     DatabaseTable::create('wcf1_category')
         ->columns([
             ObjectIdDatabaseTableColumn::create('categoryID'),
