@@ -20,6 +20,7 @@ use wcf\system\request\RouteHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\spider\SpiderHandler;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\CLIWCF;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\CryptoUtil;
@@ -91,6 +92,16 @@ final class SessionHandler extends SingletonFactory
 
     private bool $firstVisit = false;
 
+    /**
+     * true if guests receive a session only once something needs to be stored
+     */
+    private bool $onDemand = false;
+
+    /**
+     * false while the session only exists within this request
+     */
+    private bool $isPersisted = true;
+
     private string $xsrfToken;
 
     private const GUEST_SESSION_LIFETIME = 2 * 3600;
@@ -120,6 +131,8 @@ final class SessionHandler extends SingletonFactory
     {
         switch ($key) {
             case 'sessionID':
+                $this->persist();
+
                 return $this->sessionID;
             case 'userID':
                 return $this->user->userID;
@@ -132,7 +145,7 @@ final class SessionHandler extends SingletonFactory
                     return null;
                 }
 
-                return $this->legacySession->spiderIdentifier;
+                return $this->legacySession?->spiderIdentifier;
             case 'pageID':
             case 'pageObjectID':
             case 'parentPageID':
@@ -160,6 +173,12 @@ final class SessionHandler extends SingletonFactory
     protected function init(): void
     {
         $this->isACP = (\class_exists(WCFACP::class, false) || \PACKAGE_ID === 0);
+
+        // The CLI authenticates after it already printed output, a session can no
+        // longer be started on demand at that point.
+        $this->onDemand = !$this->isACP
+            && !\class_exists(CLIWCF::class, false)
+            && self::hasOnDemandGuestSessions();
     }
 
     /**
@@ -312,7 +331,22 @@ final class SessionHandler extends SingletonFactory
      */
     public function hasValidCookie(): bool
     {
+        if (!$this->isPersisted) {
+            return false;
+        }
+
         return $this->getSessionIdFromCookie($this->getParsedCookieData()) === $this->sessionID;
+    }
+
+    /**
+     * Returns false if the session was not stored yet, because guests receive a session
+     * only once something needs to be stored.
+     *
+     * @since 6.3
+     */
+    public function isPersisted(): bool
+    {
+        return $this->isPersisted;
     }
 
     /**
@@ -345,6 +379,8 @@ final class SessionHandler extends SingletonFactory
 
         if ($hasSession) {
             $this->maybeRefreshCookie($cookieData);
+        } elseif ($this->onDemand) {
+            $this->initGuest();
         } else {
             $this->create();
         }
@@ -509,6 +545,8 @@ final class SessionHandler extends SingletonFactory
 
         $this->variables[$scope][$key] = $value;
         $this->variablesChanged = true;
+
+        $this->persist();
     }
 
     /**
@@ -584,6 +622,7 @@ final class SessionHandler extends SingletonFactory
         $this->sessionID = $sessionID;
         $this->user = $row['userID'] === null ? User::getGuestUser() : new User($row['userID']);
         $this->variables = $variables;
+        $this->isPersisted = true;
 
         // Update ipAddress, userAgent and lastActivityTime only once per minute to
         // reduce write traffic to the hot 'user_session' table.
@@ -605,7 +644,8 @@ final class SessionHandler extends SingletonFactory
             ]);
         }
 
-        if (!$this->isACP) {
+        // Guests with on-demand sessions are not tracked in the users online list.
+        if (!$this->isACP && ($row['userID'] !== null || !$this->onDemand)) {
             // Fetch legacy session.
             $condition = new PreparedStatementConditionBuilder();
 
@@ -666,22 +706,51 @@ final class SessionHandler extends SingletonFactory
      */
     private function create(): void
     {
-        $this->sessionID = $this->generateSessionID();
+        $this->initGuest();
+        $this->persist();
+    }
 
-        $variables = [
+    /**
+     * Initializes a guest session that only exists within this request.
+     */
+    private function initGuest(): void
+    {
+        $this->variables = [
             'frontend' => [],
             'acp' => [],
         ];
-
-        $this->variables = $variables;
         $this->user = User::getGuestUser();
         $this->firstVisit = true;
+        $this->legacySession = null;
+        $this->isPersisted = false;
+    }
+
+    /**
+     * Stores the session and sends the session cookie, unless this already happened.
+     *
+     * @throws \LogicException if the headers were already sent
+     */
+    private function persist(): void
+    {
+        if ($this->isPersisted) {
+            return;
+        }
+
+        if ($this->onDemand && \headers_sent($file, $line)) {
+            throw new \LogicException(\sprintf(
+                "Unable to start the session, output was already sent at %s:%d.",
+                $file,
+                $line
+            ));
+        }
+
+        $this->sessionID = $this->generateSessionID();
 
         // Maintain legacy session table for users online list.
-        $this->legacySession = null;
+        $trackGuest = !$this->isACP && !$this->onDemand;
 
         $spiderIdentifier = null;
-        if (!$this->isACP) {
+        if ($trackGuest) {
             $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
             if ($spiderIdentifier !== null) {
                 $this->legacySession = $this->getSpiderLegacySession($spiderIdentifier);
@@ -701,10 +770,10 @@ final class SessionHandler extends SingletonFactory
                 UserUtil::getUserAgent(),
                 \TIME_NOW,
                 \TIME_NOW,
-                \serialize($variables),
+                \serialize($this->variables),
             ]);
 
-            if (!$this->isACP && $this->legacySession === null) {
+            if ($trackGuest && $this->legacySession === null) {
                 $this->legacySession = $this->createLegacySession($spiderIdentifier);
             }
 
@@ -719,6 +788,32 @@ final class SessionHandler extends SingletonFactory
             "user_session",
             $this->getCookieValue()
         );
+
+        $this->isPersisted = true;
+
+        // The variables were written by the insert above.
+        $this->variablesChanged = false;
+
+        if ($this->onDemand && \ENABLE_DEBUG_MODE !== 0) {
+            \header('x-session-started-by: ' . $this->getSessionStarter(), false);
+        }
+    }
+
+    /**
+     * Returns the method that caused the session to be started on demand.
+     */
+    private function getSessionStarter(): string
+    {
+        $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
+        for ($i = 0, $length = \count($trace) - 1; $i < $length; $i++) {
+            if (($trace[$i]['class'] ?? '') === self::class && ($trace[$i + 1]['class'] ?? '') !== self::class) {
+                $caller = $trace[$i + 1];
+
+                return isset($caller['class']) ? $caller['class'] . '::' . $caller['function'] : $caller['function'];
+            }
+        }
+
+        return 'unknown';
     }
 
     /**
@@ -1233,7 +1328,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function update(): void
     {
-        if ($this->doNotUpdate) {
+        if ($this->doNotUpdate || !$this->isPersisted) {
             return;
         }
 
@@ -1325,7 +1420,13 @@ final class SessionHandler extends SingletonFactory
             $editor->update(['lastActivityTime' => \TIME_NOW]);
         }
 
-        $this->deleteUserSession($this->sessionID);
+        if ($this->isPersisted) {
+            $this->deleteUserSession($this->sessionID);
+        }
+
+        if ($this->onDemand) {
+            $this->isPersisted = false;
+        }
     }
 
     /**
@@ -1384,6 +1485,12 @@ final class SessionHandler extends SingletonFactory
     public function setLanguageID(int $languageID): void
     {
         $this->languageID = $languageID;
+
+        // Spiders follow the links of the language chooser, each of them would start a session.
+        if (!$this->isPersisted && SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent()) !== null) {
+            return;
+        }
+
         $this->register('languageID', $this->languageID);
     }
 

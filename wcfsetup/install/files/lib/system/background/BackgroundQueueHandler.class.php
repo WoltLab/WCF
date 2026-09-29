@@ -33,7 +33,11 @@ final class BackgroundQueueHandler extends SingletonFactory
      */
     public function forceCheck(): void
     {
-        WCF::getSession()->register('forceBackgroundQueuePerform', true);
+        // The session variable only carries the check across a redirect, the current page is
+        // covered by `hasPendingCheck()`. It must not start an on-demand session on its own.
+        if (WCF::getSession()->isPersisted()) {
+            WCF::getSession()->register('forceBackgroundQueuePerform', true);
+        }
 
         WCF::getTPL()->assign([
             'forceBackgroundQueuePerform' => true,
