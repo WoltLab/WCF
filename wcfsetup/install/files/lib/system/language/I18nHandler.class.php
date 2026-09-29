@@ -106,7 +106,7 @@ final class I18nHandler extends SingletonFactory
         }
 
         foreach ($this->elementIDs as $elementID) {
-            if (isset($requestData[$elementID])) {
+            if (isset($requestData[$elementID]) && \is_string($requestData[$elementID])) {
                 // you should trim the string before using it; prevents unwanted newlines
                 $this->plainValues[$elementID] = StringUtil::unifyNewlines(StringUtil::trim($requestData[$elementID]));
                 continue;
@@ -117,6 +117,10 @@ final class I18nHandler extends SingletonFactory
                 $this->i18nValues[$elementID] = [];
 
                 foreach ($requestData[$i18nElementID] as $languageID => $value) {
+                    if (!isset($this->availableLanguages[$languageID]) || !\is_string($value)) {
+                        continue;
+                    }
+
                     $this->i18nValues[$elementID][$languageID] = StringUtil::unifyNewlines(StringUtil::trim($value));
                 }
 
