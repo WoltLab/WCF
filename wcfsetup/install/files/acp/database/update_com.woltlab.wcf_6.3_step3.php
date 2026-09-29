@@ -9,6 +9,7 @@
  */
 
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
+use wcf\system\database\table\column\TextDatabaseTableColumn;
 use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\database\table\PartialDatabaseTable;
 
@@ -48,6 +49,14 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('name')
                 ->drop(),
             NotNullVarchar255DatabaseTableColumn::create('email')
+                ->drop(),
+        ]),
+    PartialDatabaseTable::create('wcf1_paid_subscription')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('title')
+                ->defaultValue('')
+                ->drop(),
+            TextDatabaseTableColumn::create('description')
                 ->drop(),
         ]),
 ];

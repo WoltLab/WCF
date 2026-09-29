@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\paidSubscriptions;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\paid\subscription\DeletePaidSubscription;
 use wcf\data\paid\subscription\PaidSubscription;
-use wcf\data\paid\subscription\PaidSubscriptionAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -30,7 +30,7 @@ final class DeleteSubscription implements IController
 
         $this->assertSubscriptionCanBeDeleted();
 
-        (new PaidSubscriptionAction([$subscription], 'delete'))->executeAction();
+        (new DeletePaidSubscription($subscription))();
 
         return new JsonResponse([]);
     }

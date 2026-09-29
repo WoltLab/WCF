@@ -12,12 +12,12 @@ use wcf\system\cache\builder\PaidSubscriptionCacheBuilder;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
-use wcf\system\gridView\renderer\PhraseColumnRenderer;
 use wcf\system\gridView\renderer\TimeColumnRenderer;
 use wcf\system\gridView\renderer\UserLinkColumnRenderer;
 use wcf\system\interaction\admin\PaidSubscriptionUserInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TimeFilter;
 use wcf\system\view\filter\UserFilter;
@@ -56,8 +56,7 @@ final class PaidSubscriptionUserGridView extends AbstractGridView
                     'wcf.acp.paidSubscription.subscription',
                     'paid_subscription_user.subscriptionID'
                 ))
-                ->renderer(new PhraseColumnRenderer())
-                ->sortable(sortByDatabaseColumn: "paid_subscription.title"),
+                ->sortable(sortByDatabaseColumn: 'title'),
             GridViewColumn::for('endDate')
                 ->label('wcf.acp.paidSubscription.user.endDate')
                 ->renderer(new TimeColumnRenderer())
@@ -102,7 +101,8 @@ final class PaidSubscriptionUserGridView extends AbstractGridView
     protected function createObjectList(): PaidSubscriptionUserList
     {
         $list = new PaidSubscriptionUserList();
-        $list->sqlSelects = "paid_subscription.title";
+        $list->sqlSelects = (new L10nStorage(PaidSubscription::getL10nDefinition()))
+            ->getSubSelect('title', 'paid_subscription') . ' AS title';
         $list->sqlJoins = "
             LEFT JOIN   wcf1_user user_table
             ON          user_table.userID = paid_subscription_user.userID

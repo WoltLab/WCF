@@ -3,8 +3,9 @@
 namespace wcf\command\paid\subscription;
 
 use wcf\data\paid\subscription\PaidSubscription;
-use wcf\data\paid\subscription\PaidSubscriptionEditor;
+use wcf\data\paid\subscription\PaidSubscriptionBuilder;
 use wcf\event\paid\subscription\PaidSubscriptionDisabled;
+use wcf\system\cache\builder\PaidSubscriptionCacheBuilder;
 use wcf\system\event\EventHandler;
 
 /**
@@ -21,11 +22,11 @@ final class DisablePaidSubscription
 
     public function __invoke(): void
     {
-        (new PaidSubscriptionEditor($this->subscription))->update([
-            'isDisabled' => 1,
-        ]);
+        PaidSubscriptionBuilder::forUpdate($this->subscription)
+            ->setIsDisabled(true)
+            ->update();
 
-        PaidSubscriptionEditor::resetCache();
+        PaidSubscriptionCacheBuilder::getInstance()->reset();
 
         $event = new PaidSubscriptionDisabled($this->subscription);
         EventHandler::getInstance()->fire($event);

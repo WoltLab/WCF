@@ -84,6 +84,7 @@
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_userRankL10n.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_labelGroupL10n.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_contactRecipientL10n.php</instruction>
+	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_paidSubscriptionL10n.php</instruction>
 	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.3_step3.php</instruction>
 
 	The following step requires the new files and must run before the `cronjob` PIP, which precedes the `objectType` PIP:

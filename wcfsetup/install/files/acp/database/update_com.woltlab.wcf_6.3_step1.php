@@ -309,4 +309,30 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    DatabaseTable::create('wcf1_paid_subscription_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('subscriptionID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            TextDatabaseTableColumn::create('description'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('subscriptionID')
+                ->columns(['subscriptionID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['subscriptionID'])
+                ->referencedTable('wcf1_paid_subscription')
+                ->referencedColumns(['subscriptionID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
 ];

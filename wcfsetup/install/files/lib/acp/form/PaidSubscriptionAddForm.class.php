@@ -2,29 +2,45 @@
 
 namespace wcf\acp\form;
 
+use wcf\command\paid\subscription\CreatePaidSubscription;
+use wcf\command\paid\subscription\UpdatePaidSubscription;
+use wcf\data\DatabaseObjectBuilder;
+use wcf\data\paid\subscription\L10nPaidSubscriptionList;
 use wcf\data\paid\subscription\PaidSubscription;
-use wcf\data\paid\subscription\PaidSubscriptionAction;
-use wcf\data\paid\subscription\PaidSubscriptionEditor;
-use wcf\data\paid\subscription\PaidSubscriptionList;
+use wcf\data\paid\subscription\PaidSubscriptionBuilder;
 use wcf\data\user\group\UserGroup;
-use wcf\form\AbstractForm;
+use wcf\form\AbstractDatabaseObjectBuilderForm;
 use wcf\system\exception\NamedUserException;
-use wcf\system\exception\UserInputException;
-use wcf\system\language\I18nHandler;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\container\SuffixFormFieldContainer;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\dependency\EmptyFormFieldDependency;
+use wcf\system\form\builder\field\FloatFormField;
+use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\MultipleSelectionFormField;
+use wcf\system\form\builder\field\ShowOrderFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TitleFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\field\wysiwyg\WysiwygFormField;
 use wcf\system\payment\method\PaymentMethodHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\HtmlString;
+use wcf\util\StringUtil;
 
 /**
  * Shows the paid subscription add form.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Marcel Werk, Alexander Ebert
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @extends AbstractDatabaseObjectBuilderForm<PaidSubscription, PaidSubscriptionBuilder>
  */
-class PaidSubscriptionAddForm extends AbstractForm
+class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
 {
     /**
      * @inheritDoc
@@ -44,340 +60,350 @@ class PaidSubscriptionAddForm extends AbstractForm
     /**
      * @inheritDoc
      */
-    public $templateName = 'paidSubscriptionAdd';
+    public string $objectEditLinkController = PaidSubscriptionEditForm::class;
 
     /**
-     * subscription title
-     * @var string
+     * Maximum subscription length per unit.
      */
-    public $title = '';
-
-    /**
-     * subscription description
-     * @var string
-     */
-    public $description = '';
-
-    /**
-     * indicates if the subscription is disabled
-     * @var int
-     */
-    public $isDisabled = 0;
-
-    /**
-     * subscription show order
-     * @var int
-     */
-    public $showOrder = 0;
-
-    /**
-     * subscription cost
-     * @var double
-     */
-    public $cost = 0.0;
-
-    /**
-     * subscription currency
-     * @var string
-     */
-    public $currency = 'USD';
-
-    /**
-     * indicates if the subscription is permanent
-     * @var int
-     */
-    public $subscriptionLengthPermanent = 0;
-
-    /**
-     * subscription length
-     * @var int
-     */
-    public $subscriptionLength = 0;
-
-    /**
-     * subscription length unit
-     * @var string
-     */
-    public $subscriptionLengthUnit = '';
-
-    /**
-     * indicates if the subscription is a recurring payment
-     * @var int
-     */
-    public $isRecurring = 0;
-
-    /**
-     * list of group ids
-     * @var int[]
-     */
-    public $groupIDs = [];
-
-    /**
-     * list of excluded subscriptions
-     * @var int[]
-     */
-    public $excludedSubscriptionIDs = [];
-
-    /**
-     * available user groups
-     * @var UserGroup[]
-     */
-    public $availableUserGroups = [];
-
-    /**
-     * list of available currencies
-     * @var string[]
-     */
-    public $availableCurrencies = [];
-
-    /**
-     * list of available subscriptions
-     * @var array<int, PaidSubscription>
-     */
-    public $availableSubscriptions = [];
+    private const MAXIMUM_LENGTH = [
+        'D' => 90,
+        'M' => 24,
+        'Y' => 5,
+    ];
 
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        I18nHandler::getInstance()->register('description');
-        I18nHandler::getInstance()->register('title');
-
-        // get available user groups
-        $this->availableUserGroups = UserGroup::getSortedAccessibleGroups(
-            [],
-            [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]
-        );
-
-        if (\count(PaymentMethodHandler::getInstance()->getPaymentMethods()) === 0) {
+        if (PaymentMethodHandler::getInstance()->getPaymentMethods() === []) {
             throw new NamedUserException(HtmlString::fromSafeHtml(
                 WCF::getLanguage()->get('wcf.acp.paidSubscription.error.noPaymentMethods')
             ));
         }
+    }
 
-        // get available currencies
-        foreach (PaymentMethodHandler::getInstance()->getPaymentMethods() as $paymentMethod) {
-            $this->availableCurrencies = \array_merge(
-                $this->availableCurrencies,
-                $paymentMethod->getSupportedCurrencies()
-            );
+    #[\Override]
+    protected function getDatabaseObjectBuilder(): PaidSubscriptionBuilder
+    {
+        if ($this->formObject !== null) {
+            return PaidSubscriptionBuilder::forUpdate($this->formObject);
         }
-        $this->availableCurrencies = \array_unique($this->availableCurrencies);
-        \sort($this->availableCurrencies);
 
-        // get available subscriptions
-        $this->getAvailableSubscriptions();
+        return PaidSubscriptionBuilder::forCreate();
+    }
+
+    #[\Override]
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
+    {
+        if ($this->formObject !== null) {
+            return new UpdatePaidSubscription($builder);
+        }
+
+        return new CreatePaidSubscription($builder);
+    }
+
+    #[\Override]
+    protected function createForm(): void
+    {
+        parent::createForm();
+
+        $canChangePaymentOptions = $this->formObject === null || !$this->formObject->hasActiveSubscriptions();
+        $availableSubscriptions = $this->getAvailableSubscriptions();
+        $availableUserGroups = $this->getAvailableUserGroups();
+        $availableCurrencies = $this->getAvailableCurrencies();
+
+        $this->form->appendChildren([
+            FormContainer::create('general')
+                ->appendChildren([
+                    TitleFormField::create()
+                        ->l10n()
+                        ->required()
+                        ->autoFocus()
+                        ->maximumLength(255)
+                        ->saveValueCallback(static function (PaidSubscriptionBuilder $builder, TitleFormField $field): void {
+                            $builder->setTitle($field->getL10nValues());
+                        })
+                        ->loadValueCallback(static function (PaidSubscription $object, IFormField $field): void {
+                            $field->value($object->getL10nValues('title'));
+                        }),
+                    WysiwygFormField::create('description')
+                        ->label('wcf.global.description')
+                        ->objectType('com.woltlab.wcf.paidSubscription')
+                        ->l10n()
+                        ->saveValueCallback(static function (PaidSubscriptionBuilder $builder, WysiwygFormField $field): void {
+                            $builder->setDescription($field->getL10nValues());
+                        })
+                        ->loadValueCallback(static function (PaidSubscription $object, IFormField $field): void {
+                            $field->value($object->getL10nValues('description'));
+                        }),
+                    ShowOrderFormField::create()
+                        ->description('wcf.acp.paidSubscription.showOrder.description')
+                        ->options($this->getSubscriptionsByShowOrder(), labelLanguageItems: false)
+                        ->saveValueCallback(static function (PaidSubscriptionBuilder $builder, ShowOrderFormField $field): void {
+                            $showOrder = $field->getSaveValue();
+                            if ($showOrder !== null) {
+                                $builder->setShowOrder($showOrder);
+                            }
+                        })
+                        ->loadValueCallback(static function (PaidSubscription $object, IFormField $field): void {
+                            $field->value($object->showOrder);
+                        }),
+                    BooleanFormField::create('isDisabled')
+                        ->label('wcf.acp.paidSubscription.isDisabled')
+                        ->description('wcf.acp.paidSubscription.isDisabled.description')
+                        ->saveValueCallback(static function (PaidSubscriptionBuilder $builder, BooleanFormField $field): void {
+                            $builder->setIsDisabled((bool)$field->getSaveValue());
+                        })
+                        ->loadValueCallback(static function (PaidSubscription $object, IFormField $field): void {
+                            $field->value($object->isDisabled);
+                        }),
+                    MultipleSelectionFormField::create('excludedSubscriptionIDs')
+                        ->label('wcf.acp.paidSubscription.excludedSubscriptions')
+                        ->description('wcf.acp.paidSubscription.excludedSubscriptions.description')
+                        ->available($availableSubscriptions !== [])
+                        ->options($availableSubscriptions, labelLanguageItems: false)
+                        ->saveValueCallback(static function (PaidSubscriptionBuilder $builder, MultipleSelectionFormField $field): void {
+                            $builder->setExcludedSubscriptionIDs(\array_values(ArrayUtil::toIntegerArray($field->getValue() ?? [])));
+                        })
+                        ->loadValueCallback(static function (PaidSubscription $object, IFormField $field) use ($availableSubscriptions): void {
+                            // Deleted subscriptions were never removed from the list.
+                            $field->value(\array_values(\array_intersect(
+                                self::explodeIDs($object->excludedSubscriptionIDs),
+                                \array_keys($availableSubscriptions)
+                            )));
+                        }),
+                ]),
+            FormContainer::create('paymentOptions')
+                ->label('wcf.acp.paidSubscription.paymentOptions')
+                ->appendChildren([
+                    SuffixFormFieldContainer::create('costContainer')
+                        ->label('wcf.acp.paidSubscription.cost')
+                        ->field(
+                            FloatFormField::create('cost')
+                                ->required()
+                                ->minimum(0.01)
+                                ->step(0.01)
+                                ->immutable(!$canChangePaymentOptions)
+                                ->saveValueCallback(static function (PaidSubscriptionBuilder $builder, FloatFormField $field): void {
+                                    // The payment options of subscriptions with active
+                                    // subscribers cannot be changed.
+                                    if ($field->isImmutable()) {
+                                        return;
+                                    }
+
+                                    $currency = $field->getDocument()->getNodeById('currency');
+                                    \assert($currency instanceof SingleSelectionFormField);
+
+                                    $builder->setPrice((float)$field->getSaveValue(), $currency->getSaveValue());
+                                })
+                                ->loadValueCallback(static function (PaidSubscription $object, IFormField $field): void {
+                                    $field->value((float)$object->cost);
+                                })
+                        )
+                        ->suffixField(
+                            SingleSelectionFormField::create('currency')
+                                ->required()
+                                ->options(\array_combine($availableCurrencies, $availableCurrencies), labelLanguageItems: false)
+                                ->value(\in_array('USD', $availableCurrencies, true) ? 'USD' : \reset($availableCurrencies))
+                                ->immutable(!$canChangePaymentOptions)
+                                ->loadValueCallback(static function (PaidSubscription $object, IFormField $field) use ($availableCurrencies): void {
+                                    // The payment methods may no longer offer the stored currency.
+                                    if (\in_array($object->currency, $availableCurrencies, true)) {
+                                        $field->value($object->currency);
+                                    }
+                                })
+                        ),
+                    BooleanFormField::create('subscriptionLengthPermanent')
+                        ->label('wcf.acp.paidSubscription.subscriptionLength.permanent')
+                        ->immutable(!$canChangePaymentOptions)
+                        ->saveValueCallback(static function (PaidSubscriptionBuilder $builder, BooleanFormField $field): void {
+                            if ($field->isImmutable()) {
+                                return;
+                            }
+
+                            if ($field->getSaveValue() === 1) {
+                                $builder->setPermanent();
+                            } else {
+                                $document = $field->getDocument();
+                                $length = $document->getNodeById('subscriptionLength');
+                                \assert($length instanceof IntegerFormField);
+                                $unit = $document->getNodeById('subscriptionLengthUnit');
+                                \assert($unit instanceof SingleSelectionFormField);
+                                $isRecurring = $document->getNodeById('isRecurring');
+                                \assert($isRecurring instanceof BooleanFormField);
+
+                                $builder->setLength(
+                                    $length->getSaveValue(),
+                                    $unit->getSaveValue(),
+                                    (bool)$isRecurring->getSaveValue()
+                                );
+                            }
+                        })
+                        ->loadValueCallback(static function (PaidSubscription $object, IFormField $field): void {
+                            $field->value($object->subscriptionLength === 0);
+                        }),
+                    SuffixFormFieldContainer::create('subscriptionLengthContainer')
+                        ->label('wcf.acp.paidSubscription.subscriptionLength')
+                        ->addDependency(
+                            EmptyFormFieldDependency::create('subscriptionLengthPermanent')
+                                ->fieldId('subscriptionLengthPermanent')
+                        )
+                        ->field(
+                            IntegerFormField::create('subscriptionLength')
+                                ->required()
+                                ->minimum(1)
+                                ->value(1)
+                                ->immutable(!$canChangePaymentOptions)
+                                ->addValidator(new FormFieldValidator(
+                                    'maximumLength',
+                                    static function (IntegerFormField $field): void {
+                                        $unit = $field->getDocument()->getNodeById('subscriptionLengthUnit');
+                                        \assert($unit instanceof SingleSelectionFormField);
+
+                                        $maximumLength = self::MAXIMUM_LENGTH[(string)$unit->getValue()] ?? null;
+                                        if ($maximumLength !== null && $field->getValue() > $maximumLength) {
+                                            $field->addValidationError(new FormFieldValidationError(
+                                                'invalid',
+                                                'wcf.acp.paidSubscription.subscriptionLength.error.invalid'
+                                            ));
+                                        }
+                                    }
+                                ))
+                                ->loadValueCallback(static function (PaidSubscription $object, IFormField $field): void {
+                                    if ($object->subscriptionLength !== 0) {
+                                        $field->value($object->subscriptionLength);
+                                    }
+                                })
+                        )
+                        ->suffixField(
+                            SingleSelectionFormField::create('subscriptionLengthUnit')
+                                ->required()
+                                ->options([
+                                    'D' => 'wcf.acp.paidSubscription.subscriptionLengthUnit.D',
+                                    'M' => 'wcf.acp.paidSubscription.subscriptionLengthUnit.M',
+                                    'Y' => 'wcf.acp.paidSubscription.subscriptionLengthUnit.Y',
+                                ])
+                                ->value('D')
+                                ->immutable(!$canChangePaymentOptions)
+                                ->loadValueCallback(static function (PaidSubscription $object, IFormField $field): void {
+                                    if ($object->subscriptionLengthUnit !== '') {
+                                        $field->value($object->subscriptionLengthUnit);
+                                    }
+                                })
+                        ),
+                    BooleanFormField::create('isRecurring')
+                        ->label('wcf.acp.paidSubscription.isRecurring')
+                        ->description('wcf.acp.paidSubscription.isRecurring.description')
+                        ->immutable(!$canChangePaymentOptions)
+                        ->addDependency(
+                            EmptyFormFieldDependency::create('subscriptionLengthPermanent')
+                                ->fieldId('subscriptionLengthPermanent')
+                        )
+                        ->loadValueCallback(static function (PaidSubscription $object, IFormField $field): void {
+                            $field->value($object->isRecurring);
+                        }),
+                    MultipleSelectionFormField::create('groupIDs')
+                        ->label('wcf.acp.paidSubscription.userGroups')
+                        ->description('wcf.acp.paidSubscription.userGroups.description')
+                        ->required()
+                        ->options($availableUserGroups, labelLanguageItems: false)
+                        ->saveValueCallback(static function (PaidSubscriptionBuilder $builder, MultipleSelectionFormField $field): void {
+                            $builder->setGroupIDs(\array_values(ArrayUtil::toIntegerArray($field->getValue() ?? [])));
+                        })
+                        ->loadValueCallback(static function (PaidSubscription $object, IFormField $field) use ($availableUserGroups): void {
+                            $field->value(\array_values(\array_intersect(
+                                self::explodeIDs($object->groupIDs),
+                                \array_keys($availableUserGroups)
+                            )));
+                        }),
+                ]),
+        ]);
+
+        if ($this->formObject === null) {
+            // New subscriptions are appended by default.
+            $showOrder = $this->form->getNodeById('showOrder');
+            \assert($showOrder instanceof ShowOrderFormField);
+            $showOrder->value(\count($showOrder->getOptions()) - 1);
+        }
     }
 
     /**
-     * @return void
+     * Returns the titles of the subscriptions that can be excluded, sorted by
+     * their title.
+     *
+     * @return array<int, string>
      */
-    protected function getAvailableSubscriptions()
+    protected function getAvailableSubscriptions(): array
     {
-        $subscriptionList = new PaidSubscriptionList();
+        $subscriptionList = new L10nPaidSubscriptionList();
         $subscriptionList->sqlOrderBy = 'title';
         $subscriptionList->readObjects();
-        $this->availableSubscriptions = $subscriptionList->getObjects();
-    }
 
-    #[\Override]
-    public function readFormParameters()
-    {
-        parent::readFormParameters();
-
-        // read i18n values
-        I18nHandler::getInstance()->readValues();
-
-        // handle i18n plain input
-        if (I18nHandler::getInstance()->isPlainValue('description')) {
-            $this->description = I18nHandler::getInstance()->getValue('description');
-        }
-        if (I18nHandler::getInstance()->isPlainValue('title')) {
-            $this->title = I18nHandler::getInstance()->getValue('title');
-        }
-
-        if (!empty($_POST['isDisabled'])) {
-            $this->isDisabled = 1;
-        }
-        if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
-        }
-        if (isset($_POST['cost'])) {
-            $this->cost = \floatval($_POST['cost']);
-        }
-        if (isset($_POST['currency'])) {
-            $this->currency = $_POST['currency'];
-        }
-        if (!empty($_POST['subscriptionLengthPermanent'])) {
-            $this->subscriptionLengthPermanent = 1;
-        }
-        if ($this->subscriptionLengthPermanent === 0) {
-            if (isset($_POST['subscriptionLength'])) {
-                $this->subscriptionLength = \intval($_POST['subscriptionLength']);
-            }
-            if (isset($_POST['subscriptionLengthUnit'])) {
-                $this->subscriptionLengthUnit = $_POST['subscriptionLengthUnit'];
-            }
-            if (!empty($_POST['isRecurring'])) {
-                $this->isRecurring = 1;
-            }
-        }
-        if (isset($_POST['groupIDs']) && \is_array($_POST['groupIDs'])) {
-            $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
-        }
-        if (isset($_POST['excludedSubscriptionIDs']) && \is_array($_POST['excludedSubscriptionIDs'])) {
-            $this->excludedSubscriptionIDs = ArrayUtil::toIntegerArray($_POST['excludedSubscriptionIDs']);
-        }
-    }
-
-    #[\Override]
-    public function validate()
-    {
-        parent::validate();
-
-        // validate title
-        if (!I18nHandler::getInstance()->validateValue('title')) {
-            if (I18nHandler::getInstance()->isPlainValue('title')) {
-                throw new UserInputException('title');
-            } else {
-                throw new UserInputException('title', 'multilingual');
-            }
-        }
-
-        // validate description
-        if (!I18nHandler::getInstance()->validateValue('description', false, true)) {
-            throw new UserInputException('description');
-        }
-
-        // validate cost
-        if ($this->cost < 0.01) {
-            throw new UserInputException('cost');
-        }
-        // validate currency
-        if (!\in_array($this->currency, $this->availableCurrencies, true)) {
-            throw new UserInputException('cost');
-        }
-
-        if ($this->subscriptionLengthPermanent === 0) {
-            if ($this->subscriptionLength < 1) {
-                throw new UserInputException('subscriptionLength');
-            }
-            if ($this->subscriptionLengthUnit !== 'D' && $this->subscriptionLengthUnit !== 'M' && $this->subscriptionLengthUnit !== 'Y') {
-                throw new UserInputException('subscriptionLength');
-            }
-            if (($this->subscriptionLengthUnit === 'D' && $this->subscriptionLength > 90) || ($this->subscriptionLengthUnit === 'M' && $this->subscriptionLength > 24) || ($this->subscriptionLengthUnit === 'Y' && $this->subscriptionLength > 5)) {
-                throw new UserInputException('subscriptionLength', 'invalid');
-            }
-        }
-
-        // validate group ids
-        if ($this->groupIDs === []) {
-            throw new UserInputException('groupIDs');
-        }
-        foreach ($this->groupIDs as $groupID) {
-            if (!isset($this->availableUserGroups[$groupID])) {
-                throw new UserInputException('groupIDs');
-            }
-        }
-        // validate excluded subscriptions
-        foreach ($this->excludedSubscriptionIDs as $key => $subscriptionID) {
-            if (!isset($this->availableSubscriptions[$subscriptionID])) {
-                unset($this->excludedSubscriptionIDs[$key]);
-            }
-        }
-    }
-
-    #[\Override]
-    public function save()
-    {
-        parent::save();
-
-        // save subscription
-        $this->objectAction = new PaidSubscriptionAction([], 'create', [
-            'data' => \array_merge($this->additionalFields, [
-                'title' => $this->title,
-                'description' => $this->description,
-                'isDisabled' => $this->isDisabled,
-                'showOrder' => $this->showOrder,
-                'cost' => $this->cost,
-                'currency' => $this->currency,
-                'subscriptionLength' => $this->subscriptionLength,
-                'subscriptionLengthUnit' => $this->subscriptionLengthUnit,
-                'isRecurring' => $this->isRecurring,
-                'groupIDs' => \implode(',', $this->groupIDs),
-                'excludedSubscriptionIDs' => \implode(',', $this->excludedSubscriptionIDs),
-            ]),
-        ]);
-        $returnValues = $this->objectAction->executeAction();
-
-        // save i18n values
-        $this->saveI18nValue($returnValues['returnValues'], 'description');
-        $this->saveI18nValue($returnValues['returnValues'], 'title');
-        $this->saved();
-
-        // reset values
-        $this->title = $this->description = $this->subscriptionLengthUnit = '';
-        $this->isDisabled = $this->showOrder = $this->cost = $this->subscriptionLength = $this->isRecurring = 0;
-        $this->currency = 'EUR';
-        $this->groupIDs = [];
-        I18nHandler::getInstance()->reset();
-
-        // show success message
-        WCF::getTPL()->assign([
-            'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                PaidSubscriptionEditForm::class,
-                ['id' => $returnValues['returnValues']->subscriptionID]
-            ),
-        ]);
+        // The labels of selection options are printed as HTML.
+        return \array_map(
+            static fn(PaidSubscription $subscription) => StringUtil::encodeHTML($subscription->getTitle()),
+            $subscriptionList->getObjects()
+        );
     }
 
     /**
-     * Saves i18n values.
+     * Returns the titles of the other subscriptions, sorted by their position.
      *
-     * @return void
+     * @return array<int, string>
      */
-    public function saveI18nValue(PaidSubscription $subscription, string $columnName)
+    protected function getSubscriptionsByShowOrder(): array
     {
-        if (!I18nHandler::getInstance()->isPlainValue($columnName)) {
-            I18nHandler::getInstance()->save(
-                $columnName,
-                'wcf.paidSubscription.subscription' . $subscription->subscriptionID . ($columnName === 'description' ? '.description' : ''),
-                'wcf.paidSubscription',
-                1
-            );
+        $subscriptionList = new L10nPaidSubscriptionList();
+        $subscriptionList->sqlOrderBy = 'showOrder, subscriptionID';
+        $subscriptionList->readObjects();
 
-            // update database
-            $editor = new PaidSubscriptionEditor($subscription);
-            $editor->update([
-                $columnName => 'wcf.paidSubscription.subscription' . $subscription->subscriptionID . ($columnName === 'description' ? '.description' : ''),
-            ]);
-        }
+        return \array_map(
+            static fn(PaidSubscription $subscription) => StringUtil::encodeHTML($subscription->getTitle()),
+            $subscriptionList->getObjects()
+        );
     }
 
-    #[\Override]
-    public function assignVariables()
+    /**
+     * @return array<int, string>
+     */
+    private function getAvailableUserGroups(): array
     {
-        parent::assignVariables();
+        $userGroups = UserGroup::getSortedAccessibleGroups(
+            [],
+            [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]
+        );
 
-        I18nHandler::getInstance()->assignVariables();
+        return \array_map(
+            static fn(UserGroup $userGroup) => StringUtil::encodeHTML($userGroup->getTitle()),
+            $userGroups
+        );
+    }
 
-        WCF::getTPL()->assign([
-            'action' => 'add',
-            'isDisabled' => $this->isDisabled,
-            'showOrder' => $this->showOrder,
-            'cost' => $this->cost,
-            'currency' => $this->currency,
-            'subscriptionLength' => $this->subscriptionLength,
-            'subscriptionLengthUnit' => $this->subscriptionLengthUnit,
-            'isRecurring' => $this->isRecurring,
-            'groupIDs' => $this->groupIDs,
-            'excludedSubscriptionIDs' => $this->excludedSubscriptionIDs,
-            'availableCurrencies' => $this->availableCurrencies,
-            'availableUserGroups' => $this->availableUserGroups,
-            'availableSubscriptions' => $this->availableSubscriptions,
-            'canChangePaymentOptions' => true,
-        ]);
+    /**
+     * @return list<string>
+     */
+    private function getAvailableCurrencies(): array
+    {
+        $availableCurrencies = [];
+        foreach (PaymentMethodHandler::getInstance()->getPaymentMethods() as $paymentMethod) {
+            $availableCurrencies = [...$availableCurrencies, ...$paymentMethod->getSupportedCurrencies()];
+        }
+        $availableCurrencies = \array_values(\array_unique($availableCurrencies));
+        \sort($availableCurrencies);
+
+        return $availableCurrencies;
+    }
+
+    /**
+     * @return list<int>
+     */
+    private static function explodeIDs(?string $ids): array
+    {
+        if ($ids === null || $ids === '') {
+            return [];
+        }
+
+        return \array_values(ArrayUtil::toIntegerArray(\explode(',', $ids)));
     }
 }
