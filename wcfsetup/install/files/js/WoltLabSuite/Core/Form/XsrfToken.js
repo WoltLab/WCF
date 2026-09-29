@@ -14,13 +14,21 @@ define(["require", "exports", "../Core", "../Helper/Selector"], function (requir
         return node.nodeName === "INPUT";
     }
     function setup() {
-        const token = (0, Core_1.getXsrfToken)();
         (0, Selector_1.wheneverFirstSeen)(".xsrfTokenInput", (node) => {
             if (!isInput(node)) {
                 return;
             }
-            node.value = token;
+            node.value = (0, Core_1.getXsrfToken)();
             node.classList.add("xsrfTokenInputHandled");
         });
+        // A guest's session, and with it the token, can be started by a request made
+        // after the page was loaded, leaving the inputs with an outdated value.
+        document.addEventListener("submit", (event) => {
+            const form = event.target;
+            const token = (0, Core_1.getXsrfToken)();
+            form.querySelectorAll("input.xsrfTokenInput").forEach((input) => {
+                input.value = token;
+            });
+        }, { capture: true });
     }
 });

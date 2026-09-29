@@ -15,14 +15,26 @@ function isInput(node: Node): node is HTMLInputElement {
 }
 
 export function setup(): void {
-  const token = getXsrfToken();
-
   wheneverFirstSeen(".xsrfTokenInput", (node) => {
     if (!isInput(node)) {
       return;
     }
 
-    node.value = token;
+    node.value = getXsrfToken();
     node.classList.add("xsrfTokenInputHandled");
   });
+
+  // A guest's session, and with it the token, can be started by a request made
+  // after the page was loaded, leaving the inputs with an outdated value.
+  document.addEventListener(
+    "submit",
+    (event) => {
+      const form = event.target as HTMLFormElement;
+      const token = getXsrfToken();
+      form.querySelectorAll<HTMLInputElement>("input.xsrfTokenInput").forEach((input) => {
+        input.value = token;
+      });
+    },
+    { capture: true },
+  );
 }

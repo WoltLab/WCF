@@ -104,6 +104,16 @@ final class SessionHandler extends SingletonFactory
 
     private string $xsrfToken;
 
+    /**
+     * true if the request carried a valid `XSRF-TOKEN` cookie
+     */
+    private bool $receivedXsrfCookie = false;
+
+    /**
+     * true if the request carried no session, even if one is started during the request
+     */
+    private bool $startedWithoutSession = false;
+
     private const GUEST_SESSION_LIFETIME = 2 * 3600;
 
     private const USER_SESSION_LIFETIME = 60 * 86400;
@@ -381,6 +391,7 @@ final class SessionHandler extends SingletonFactory
             $this->maybeRefreshCookie($cookieData);
         } elseif ($this->onDemand) {
             $this->initGuest();
+            $this->startedWithoutSession = true;
         } else {
             $this->create();
         }
@@ -469,6 +480,7 @@ final class SessionHandler extends SingletonFactory
                 || CryptoUtil::getValueFromSignedString($_COOKIE['XSRF-TOKEN']) !== null
             ) {
                 $xsrfToken = $_COOKIE['XSRF-TOKEN'];
+                $this->receivedXsrfCookie = true;
             }
         }
 
@@ -479,25 +491,34 @@ final class SessionHandler extends SingletonFactory
                 $xsrfToken = Hex::encode(\random_bytes(16));
             }
 
-            // We construct the cookie manually instead of using HeaderUtil::setCookie(), because:
-            // 1) We don't want the prefix. The `XSRF-TOKEN` cookie name is a standard name across applications
-            //    and it is supported by default in common JavaScript frameworks.
-            // 2) We want to set the SameSite=lax parameter.
-            // 3) We don't want the HttpOnly parameter.
-
-            $sameSite = '; SameSite=lax';
-
-            // Workaround for WebKit Bug #255524.
-            // https://bugs.webkit.org/show_bug.cgi?id=255524
-            $sameSite = '';
-
-            \header(
-                'set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
-                false
-            );
+            // Guests without a session are protected by `isSameOriginRequest()` instead,
+            // the cookie is sent once the session is persisted.
+            if ($this->isPersisted) {
+                $this->sendXsrfCookie($xsrfToken);
+            }
         }
 
         $this->xsrfToken = $xsrfToken;
+    }
+
+    private function sendXsrfCookie(string $xsrfToken): void
+    {
+        // We construct the cookie manually instead of using HeaderUtil::setCookie(), because:
+        // 1) We don't want the prefix. The `XSRF-TOKEN` cookie name is a standard name across applications
+        //    and it is supported by default in common JavaScript frameworks.
+        // 2) We want to set the SameSite=lax parameter.
+        // 3) We don't want the HttpOnly parameter.
+
+        $sameSite = '; SameSite=lax';
+
+        // Workaround for WebKit Bug #255524.
+        // https://bugs.webkit.org/show_bug.cgi?id=255524
+        $sameSite = '';
+
+        \header(
+            'set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
+            false
+        );
     }
 
     /**
@@ -523,7 +544,37 @@ final class SessionHandler extends SingletonFactory
         // Convert it back before comparing.
         $token = \str_replace(' ', '+', $token);
 
-        return \hash_equals($this->getSecurityToken(), $token);
+        if (\hash_equals($this->getSecurityToken(), $token)) {
+            return true;
+        }
+
+        if ($this->startedWithoutSession && !$this->receivedXsrfCookie) {
+            return $this->isSameOriginRequest();
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns true if the browser reports that the request was issued by this site.
+     *
+     * Requests lacking both `Sec-Fetch-Site` and `Origin` are rejected, the check must
+     * fail closed. `same-site` is not sufficient, it includes other subdomains.
+     */
+    private function isSameOriginRequest(): bool
+    {
+        $fetchSite = $_SERVER['HTTP_SEC_FETCH_SITE'] ?? '';
+        if ($fetchSite !== '') {
+            return $fetchSite === 'same-origin';
+        }
+
+        // Browsers without Fetch Metadata still send the origin with unsafe requests.
+        $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+        if ($origin === '') {
+            return false;
+        }
+
+        return \strtolower($origin) === \strtolower(RouteHandler::getHost());
     }
 
     /**
@@ -788,6 +839,12 @@ final class SessionHandler extends SingletonFactory
             "user_session",
             $this->getCookieValue()
         );
+
+        // Read before the session counts as persisted, otherwise `initSecurityToken()` would send the cookie a second time.
+        $xsrfToken = $this->getSecurityToken();
+        if (!$this->receivedXsrfCookie) {
+            $this->sendXsrfCookie($xsrfToken);
+        }
 
         $this->isPersisted = true;
 
