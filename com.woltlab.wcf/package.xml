@@ -70,6 +70,9 @@
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_likeObject.php</instruction>
 	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.3_step1.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_conditions.php</instruction>
+	The `objectType` PIP must run after `update_com.woltlab.wcf_6.3_conditions.php`,
+	because deleting the legacy condition object types cascades to `wcf1_condition`.
+	<instruction type="objectType" />
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_styleTemplateGroup.php</instruction>
 	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.3_step2.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_embeddedObjects.php</instruction>

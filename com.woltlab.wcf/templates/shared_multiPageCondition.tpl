@@ -1,3 +1,4 @@
+{* @deprecated 6.3 Only used by the deprecated `MultiPageCondition`. *}
 <dl>
 	<dt></dt>
 	<dd>

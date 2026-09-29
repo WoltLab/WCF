@@ -585,104 +585,6 @@
 			<categoryname>com.woltlab.wcf.user</categoryname>
 		</type>
 		<!-- /stat handlers -->
-		<!-- user group assignment conditions -->
-		<type>
-			<name>com.woltlab.wcf.username</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserUsernameCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.email</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserEmailCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userGroup</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserGroupCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.languages</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserLanguageCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.registrationDate</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserRegistrationDateCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.registrationDateInterval</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserRegistrationDateIntervalCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.avatar</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserAvatarCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.signature</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserSignatureCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.coverPhoto</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserCoverPhotoCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.state</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserStateCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.activityPoints</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>activityPoints</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.likesReceived</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>likesReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userOptions</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserOptionsCondition</classname>
-			<conditiongroup>userOptions</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userTrophyCondition</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserTrophyCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.trophyPoints</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>trophyPoints</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<!-- /user group assignment conditions -->
 		<!-- trophy conditions -->
 		<type>
 			<name>com.woltlab.wcf.username</name>
@@ -781,145 +683,6 @@
 			<minvalue>0</minvalue>
 		</type>
 		<!-- /trophy conditions -->
-		<!-- notice conditions -->
-		<type>
-			<name>com.woltlab.wcf.page</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\page\MultiPageCondition</classname>
-			<conditionobject>com.woltlab.wcf.page</conditionobject>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.pointInTime.daysOfWeek</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\DaysOfWeekCondition</classname>
-			<conditionobject>com.woltlab.wcf.pointInTime</conditionobject>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.pointInTime.time</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\TimeCondition</classname>
-			<conditionobject>com.woltlab.wcf.pointInTime</conditionobject>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.username</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserUsernameCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.email</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserEmailCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.userGroup</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserGroupCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-			<includeguests>1</includeguests>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.languages</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserLanguageCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.registrationDate</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserRegistrationDateCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.registrationDateInterval</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserRegistrationDateIntervalCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.avatar</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserAvatarCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.state</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserStateCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.mobileBrowser</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserMobileBrowserCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.birthday</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserBirthdayCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.activityPoints</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>activityPoints</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.likesReceived</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>likesReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.userOptions</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserOptionsCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>userOptions</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userTrophyCondition</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserTrophyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.trophyPoints</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>trophyPoints</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.multifactor</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserMultifactorCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<!-- /notice conditions -->
 		<!-- ad locations -->
 		<type>
 			<name>com.woltlab.wcf.logo</name>
@@ -994,131 +757,6 @@
 			<cssclassname>wcfAdLocationArticleList wcfAdLocationAfterEvery10thArticle</cssclassname>
 		</type>
 		<!-- /ad locations -->
-		<!-- ad conditions -->
-		<type>
-			<name>com.woltlab.wcf.page</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\page\MultiPageCondition</classname>
-			<conditionobject>com.woltlab.wcf.page</conditionobject>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.pointInTime.daysOfWeek</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\DaysOfWeekCondition</classname>
-			<conditionobject>com.woltlab.wcf.pointInTime</conditionobject>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.pointInTime.time</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\TimeCondition</classname>
-			<conditionobject>com.woltlab.wcf.pointInTime</conditionobject>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.username</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserUsernameCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.email</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserEmailCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.userGroup</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserGroupCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-			<includeguests>1</includeguests>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.languages</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserLanguageCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.registrationDate</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserRegistrationDateCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.registrationDateInterval</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserRegistrationDateIntervalCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.avatar</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserAvatarCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.state</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserStateCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.mobileBrowser</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserMobileBrowserCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.activityPoints</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>activityPoints</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.likesReceived</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>likesReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.user.userOptions</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserOptionsCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>userOptions</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userTrophyCondition</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserTrophyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.trophyPoints</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>trophyPoints</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<!-- /ad conditions -->
 		<!-- captcha types -->
 		<type>
 			<name>com.woltlab.wcf.recaptcha</name>
@@ -1750,20 +1388,6 @@
 			<definitionname>com.woltlab.wcf.file</definitionname>
 			<classname>wcf\system\file\processor\ReactionTypeIconFileProcessor</classname>
 		</type>
-		<!-- deprecated -->
-		<type>
-			<name>com.woltlab.wcf.page.controller</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\MultiPageControllerCondition</classname>
-			<conditionobject>com.woltlab.wcf.page</conditionobject>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.page.controller</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\MultiPageControllerCondition</classname>
-			<conditionobject>com.woltlab.wcf.page</conditionobject>
-		</type>
-		<!-- /deprecated -->
 	</import>
 	<delete>
 		<!-- sitemap objects are registered through `wcf\event\sitemap\SitemapObjectCollecting` since 6.3 -->
@@ -1823,6 +1447,166 @@
 		</type>
 		<type name="com.woltlab.wcf.moderation.queue">
 			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
+		</type>
+		<!-- legacy conditions of notices, ads and user group assignments are replaced by object filters since 6.3 -->
+		<type name="com.woltlab.wcf.username">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.email">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.userGroup">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.languages">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.registrationDate">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.registrationDateInterval">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.avatar">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.signature">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.coverPhoto">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.state">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.activityPoints">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.likesReceived">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.userOptions">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.userTrophyCondition">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.trophyPoints">
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.page">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.pointInTime.daysOfWeek">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.pointInTime.time">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.username">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.email">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.userGroup">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.languages">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.registrationDate">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.registrationDateInterval">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.avatar">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.state">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.mobileBrowser">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.birthday">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.activityPoints">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.likesReceived">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.userOptions">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.userTrophyCondition">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.trophyPoints">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.multifactor">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.page.controller">
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.page">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.pointInTime.daysOfWeek">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.pointInTime.time">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.username">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.email">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.userGroup">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.languages">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.registrationDate">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.registrationDateInterval">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.avatar">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.state">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.mobileBrowser">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.activityPoints">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.likesReceived">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user.userOptions">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.userTrophyCondition">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.trophyPoints">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.page.controller">
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
 		</type>
 	</delete>
 </data>

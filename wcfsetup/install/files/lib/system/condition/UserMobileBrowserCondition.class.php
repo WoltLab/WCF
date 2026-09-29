@@ -13,6 +13,7 @@ use wcf\util\UserUtil;
  * @author  Joshua Ruesweg, Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated  6.3 Use `wcf\system\object\filter\user\UserMobileBrowserObjectFilter` instead.
  */
 class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements IContentCondition
 {
