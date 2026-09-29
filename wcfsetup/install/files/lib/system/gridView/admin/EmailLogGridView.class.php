@@ -49,22 +49,6 @@ final class EmailLogGridView extends AbstractGridView
                 ->sortable()
                 ->unsafeDisableEncoding()
                 ->renderer(new TruncatedTextColumnRenderer()),
-            GridViewColumn::for('messageID')
-                ->label('wcf.acp.email.log.messageId')
-                ->filter(TextFilter::class)
-                ->sortable()
-                ->unsafeDisableEncoding()
-                ->renderer(
-                    new class(50) extends TruncatedTextColumnRenderer {
-                        #[\Override]
-                        public function render(mixed $value, DatabaseObject $row): string
-                        {
-                            \assert($row instanceof EmailLogEntry);
-
-                            return parent::render($row->getFormattedMessageId(), $row);
-                        }
-                    }
-                ),
             GridViewColumn::for('recipient')
                 ->label('wcf.user.email')
                 ->filter(WCF::getSession()->hasPermission("admin.user.canEditMailAddress") ? TextFilter::class : null)
@@ -158,6 +142,22 @@ final class EmailLogGridView extends AbstractGridView
                     }
                 )
                 ->sortable(),
+            GridViewColumn::for('messageID')
+                ->label('wcf.acp.email.log.messageId')
+                ->filter(TextFilter::class)
+                ->sortable()
+                ->unsafeDisableEncoding()
+                ->renderer(
+                    new class(50) extends TruncatedTextColumnRenderer {
+                        #[\Override]
+                        public function render(mixed $value, DatabaseObject $row): string
+                        {
+                            \assert($row instanceof EmailLogEntry);
+
+                            return parent::render($row->getFormattedMessageId(), $row);
+                        }
+                    }
+                ),
         ]);
 
         $this->addQuickInteraction($this->getShowDetailsInteraction());
