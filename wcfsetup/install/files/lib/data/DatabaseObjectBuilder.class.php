@@ -81,10 +81,8 @@ abstract class DatabaseObjectBuilder
 
         if (isset($this->properties[static::getBaseClass()::getDatabaseTableIndexName()])) {
             $id = $this->properties[static::getBaseClass()::getDatabaseTableIndexName()];
-        } elseif (static::getBaseClass()::getDatabaseTableIndexIsIdentity()) {
-            $id = WCF::getDB()->getInsertID(static::getBaseClass()::getDatabaseTableName(), static::getBaseClass()::getDatabaseTableIndexName());
         } else {
-            throw new \BadMethodCallException("Missing value for '" . static::getBaseClass()::getDatabaseTableIndexName() . "'");
+            $id = WCF::getDB()->getInsertID(static::getBaseClass()::getDatabaseTableName(), static::getBaseClass()::getDatabaseTableIndexName());
         }
 
         $object = new (static::getBaseClass())($id);
@@ -97,12 +95,26 @@ abstract class DatabaseObjectBuilder
     /**
      * Validates that the pending changes are sufficient to create a new object.
      *
-     * @throws \BadMethodCallException if no properties are set or a required property is missing
+     * @throws \BadMethodCallException if no properties are set without opting in,
+     *                                  the ID is missing for a non-identity table,
+     *                                  or a required property is missing
      */
     private function validateCreate(): void
     {
-        if ($this->properties === [] && $this->customProperties === [] && $this->incrementProperties === []) {
+        if (
+            $this->properties === []
+            && $this->customProperties === []
+            && $this->incrementProperties === []
+            && !$this->allowEmptyCreate()
+        ) {
             throw new \BadMethodCallException("Cannot create an object without any properties.");
+        }
+
+        if (
+            !isset($this->properties[static::getBaseClass()::getDatabaseTableIndexName()])
+            && !static::getBaseClass()::getDatabaseTableIndexIsIdentity()
+        ) {
+            throw new \BadMethodCallException("Missing value for '" . static::getBaseClass()::getDatabaseTableIndexName() . "'");
         }
 
         foreach ($this->getRequiredProperties() as $property) {
@@ -122,6 +134,18 @@ abstract class DatabaseObjectBuilder
     protected function getRequiredProperties(): array
     {
         return [];
+    }
+
+    /**
+     * Returns true if a new object may be created without setting any
+     * properties, inserting a row that consists of the column defaults only.
+     * Subclasses can opt in when every column of the table has a default
+     * value, for example because the required values are stored in a
+     * different table in `afterCreate()`.
+     */
+    protected function allowEmptyCreate(): bool
+    {
+        return false;
     }
 
     /**
