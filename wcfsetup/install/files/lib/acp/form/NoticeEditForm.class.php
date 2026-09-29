@@ -4,13 +4,11 @@ namespace wcf\acp\form;
 
 use wcf\acp\page\NoticeListPage;
 use wcf\data\notice\Notice;
-use wcf\data\notice\NoticeAction;
-use wcf\form\AbstractForm;
 use wcf\http\Helper;
-use wcf\system\condition\ConditionHandler;
+use wcf\system\form\builder\container\IFormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\interaction\admin\NoticeInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
-use wcf\system\language\I18nHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -18,9 +16,9 @@ use wcf\system\WCF;
 /**
  * Shows the form to edit an existing notice.
  *
- * @author  Matthias Schmidt
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Matthias Schmidt, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class NoticeEditForm extends NoticeAddForm
 {
@@ -30,163 +28,69 @@ class NoticeEditForm extends NoticeAddForm
     public $activeMenuItem = 'wcf.acp.menu.link.notice.list';
 
     /**
-     * edited notice object
-     * @var ?Notice
+     * @inheritDoc
      */
-    public $notice;
-
-    /**
-     * 1 if the notice will be displayed for all users again
-     * @var int
-     */
-    public $resetIsDismissed = 0;
-
-    #[\Override]
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        I18nHandler::getInstance()->assignVariables($_POST !== []);
-
-        WCF::getTPL()->assign([
-            'action' => 'edit',
-            'notice' => $this->notice,
-            'resetIsDismissed' => $this->resetIsDismissed,
-            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
-                new NoticeInteractions(),
-                $this->notice,
-                LinkHandler::getInstance()->getControllerLink(NoticeListPage::class)
-            ),
-        ]);
-    }
-
-    #[\Override]
-    public function readData()
-    {
-        parent::readData();
-
-        if ($_POST === []) {
-            I18nHandler::getInstance()->setOptions('notice', 1, $this->notice->notice, 'wcf.notice.notice.notice\d+');
-
-            $this->cssClassName = $this->notice->cssClassName;
-            if (!\in_array($this->cssClassName, Notice::TYPES, true)) {
-                $this->customCssClassName = $this->cssClassName;
-                $this->cssClassName = 'custom';
-            }
-
-            $this->isDisabled = $this->notice->isDisabled;
-            $this->isDismissible = $this->notice->isDismissible;
-            $this->noticeName = $this->notice->noticeName;
-            $this->noticeUseHtml = $this->notice->noticeUseHtml;
-            $this->showOrder = $this->notice->showOrder;
-
-            $conditions = $this->notice->getConditions();
-            $conditionsByObjectTypeID = [];
-            foreach ($conditions as $condition) {
-                $conditionsByObjectTypeID[$condition->objectTypeID] = $condition;
-            }
-
-            foreach ($this->groupedConditionObjectTypes as $objectTypes1) {
-                foreach ($objectTypes1 as $objectTypes2) {
-                    if (\is_array($objectTypes2)) {
-                        foreach ($objectTypes2 as $objectType) {
-                            if (isset($conditionsByObjectTypeID[$objectType->objectTypeID])) {
-                                $conditionsByObjectTypeID[$objectType->objectTypeID]->getObjectType()->getProcessor()->setData($conditionsByObjectTypeID[$objectType->objectTypeID]);
-                            }
-                        }
-                    } elseif (isset($conditionsByObjectTypeID[$objectTypes2->objectTypeID])) {
-                        $conditionsByObjectTypeID[$objectTypes2->objectTypeID]->getObjectType()->getProcessor()->setData($conditionsByObjectTypeID[$objectTypes2->objectTypeID]);
-                    }
-                }
-            }
-        }
-    }
-
-    #[\Override]
-    public function readFormParameters()
-    {
-        parent::readFormParameters();
-
-        if (isset($_POST['resetIsDismissed'])) {
-            $this->resetIsDismissed = 1;
-        }
-    }
+    public string $formAction = 'edit';
 
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        $this->notice = Helper::fetchObjectFromQueryParameter(Notice::class);
+        $this->formObject = Helper::fetchObjectFromQueryParameter(Notice::class);
     }
 
     #[\Override]
-    public function save()
+    protected function createForm(): void
     {
-        AbstractForm::save();
+        parent::createForm();
 
-        $this->objectAction = new NoticeAction([$this->notice], 'update', [
-            'data' => \array_merge($this->additionalFields, [
-                'cssClassName' => $this->cssClassName === 'custom' ? $this->customCssClassName : $this->cssClassName,
-                'isDisabled' => $this->isDisabled,
-                'isDismissible' => $this->isDismissible,
-                'notice' => I18nHandler::getInstance()->isPlainValue('notice') ? I18nHandler::getInstance()->getValue('notice') : 'wcf.notice.notice.notice' . $this->notice->noticeID,
-                'noticeName' => $this->noticeName,
-                'noticeUseHtml' => $this->noticeUseHtml,
-                'showOrder' => $this->showOrder,
-            ]),
-        ]);
-        $this->objectAction->executeAction();
+        $settings = $this->form->getNodeById('settings');
+        \assert($settings instanceof IFormContainer);
 
-        if (I18nHandler::getInstance()->isPlainValue('notice')) {
-            if ($this->notice->notice === 'wcf.notice.notice.notice' . $this->notice->noticeID) {
-                I18nHandler::getInstance()->remove($this->notice->notice);
-            }
-        } else {
-            I18nHandler::getInstance()->save(
-                'notice',
-                'wcf.notice.notice.notice' . $this->notice->noticeID,
-                'wcf.notice',
-                1
-            );
-        }
-
-        // transform conditions array into one-dimensional array
-        $conditions = [];
-        foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
-            foreach ($groupedObjectTypes as $objectTypes) {
-                if (\is_array($objectTypes)) {
-                    $conditions = \array_merge($conditions, $objectTypes);
-                } else {
-                    $conditions[] = $objectTypes;
-                }
-            }
-        }
-
-        ConditionHandler::getInstance()->updateConditions(
-            $this->notice->noticeID,
-            $this->notice->getConditions(),
-            $conditions
+        $settings->appendChild(
+            BooleanFormField::create('resetIsDismissed')
+                ->label('wcf.acp.notice.resetIsDismissed')
+                ->description('wcf.acp.notice.resetIsDismissed.description')
+                ->available($this->formObject?->isDismissible !== 0)
         );
+    }
 
-        if ($this->resetIsDismissed !== 0) {
-            $sql = "DELETE FROM wcf1_notice_dismissed
-                    WHERE       noticeID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                $this->notice->noticeID,
-            ]);
+    #[\Override]
+    protected function afterSave(): void
+    {
+        parent::afterSave();
 
-            $this->resetIsDismissed = 0;
-
-            UserStorageHandler::getInstance()->resetAll('dismissedNotices');
+        $resetIsDismissed = $this->form->getFormField('resetIsDismissed');
+        if ($resetIsDismissed === null || !$resetIsDismissed->isAvailable()) {
+            return;
         }
 
-        $this->saved();
+        if ($resetIsDismissed->getSaveValue() === 0) {
+            return;
+        }
 
-        // reload notice object for proper 'isDismissible' value
-        $this->notice = new Notice($this->notice->noticeID);
+        $sql = "DELETE FROM wcf1_notice_dismissed
+                WHERE       noticeID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $this->object->noticeID,
+        ]);
 
-        WCF::getTPL()->assign('success', true);
+        UserStorageHandler::getInstance()->resetAll('dismissedNotices');
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new NoticeInteractions(),
+                $this->formObject,
+                LinkHandler::getInstance()->getControllerLink(NoticeListPage::class)
+            ),
+        ]);
     }
 }

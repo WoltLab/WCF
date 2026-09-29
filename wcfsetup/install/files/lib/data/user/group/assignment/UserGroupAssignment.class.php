@@ -19,6 +19,7 @@ use wcf\system\request\IRouteController;
  * @property-read   int     $groupID        id of the user group to which users are automatically assigned
  * @property-read   string  $title          title of the automatic user group assignment
  * @property-read   0|1     $isDisabled     is `1` if the user group assignment is disabled and thus not checked for automatic assignments, otherwise `0`
+ * @property-read   string  $conditions
  */
 class UserGroupAssignment extends DatabaseObject implements IRouteController
 {
@@ -26,6 +27,7 @@ class UserGroupAssignment extends DatabaseObject implements IRouteController
      * Returns the conditions of the automatic assignment to a user group.
      *
      * @return  Condition[]
+     * @deprecated 6.3 Use object filter API instead.
      */
     public function getConditions()
     {

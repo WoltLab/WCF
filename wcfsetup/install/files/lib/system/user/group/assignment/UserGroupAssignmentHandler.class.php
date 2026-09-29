@@ -9,6 +9,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserList;
 use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
+use wcf\system\object\filter\builder\UserGroupAssignmentObjectFilterBuilder;
 use wcf\system\SingletonFactory;
 
 /**
@@ -48,25 +49,21 @@ class UserGroupAssignmentHandler extends SingletonFactory
 
         /** @var UserGroupAssignment[] $assignments */
         $assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
+        $builder = new UserGroupAssignmentObjectFilterBuilder();
+
         foreach ($userList as $user) {
             $groupIDs = $user->getGroupIDs();
             $newGroupIDs = [];
 
             foreach ($assignments as $assignment) {
-                if (\in_array($assignment->groupID, $groupIDs, true) || \in_array($assignment->groupID, $newGroupIDs, true)) {
+                if (
+                    \in_array($assignment->groupID, $groupIDs, true)
+                    || \in_array($assignment->groupID, $newGroupIDs, true)
+                ) {
                     continue;
                 }
 
-                $checkFailed = false;
-                $conditions = $assignment->getConditions();
-                foreach ($conditions as $condition) {
-                    if (!$condition->getObjectType()->getProcessor()->checkUser($condition, $user)) {
-                        $checkFailed = true;
-                        break;
-                    }
-                }
-
-                if (!$checkFailed) {
+                if ($builder->testUser($assignment, $user)) {
                     $newGroupIDs[] = $assignment->groupID;
                 }
             }
@@ -114,10 +111,8 @@ class UserGroupAssignmentHandler extends SingletonFactory
             $userList->sqlLimit = $maxUsers;
         }
 
-        $conditions = $assignment->getConditions();
-        foreach ($conditions as $condition) {
-            $condition->getObjectType()->getProcessor()->addUserCondition($condition, $userList);
-        }
+        (new UserGroupAssignmentObjectFilterBuilder())->applyFilters($assignment, $userList->getConditionBuilder());
+
         $userList->readObjects();
 
         return $userList->getObjects();

@@ -3,7 +3,7 @@
 namespace wcf\command\ad;
 
 use wcf\data\ad\Ad;
-use wcf\data\ad\AdEditor;
+use wcf\data\ad\AdBuilder;
 use wcf\event\ad\AdDisabled;
 use wcf\system\event\EventHandler;
 
@@ -23,11 +23,11 @@ final class DisableAd
 
     public function __invoke(): void
     {
-        (new AdEditor($this->ad))->update([
-            'isDisabled' => 1,
-        ]);
+        AdBuilder::forUpdate($this->ad)
+            ->setIsDisabled(true)
+            ->update();
 
-        AdEditor::resetCache();
+        AdBuilder::resetCache();
 
         $event = new AdDisabled($this->ad);
         EventHandler::getInstance()->fire($event);

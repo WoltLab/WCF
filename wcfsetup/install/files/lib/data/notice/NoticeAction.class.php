@@ -17,6 +17,7 @@ use wcf\system\condition\ConditionHandler;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<Notice, NoticeEditor>
+ * @deprecated 6.3 use `NoticeBuilder` instead.
  */
 class NoticeAction extends AbstractDatabaseObjectAction implements IToggleAction
 {

@@ -409,3 +409,48 @@ html[data-color-scheme="dark"] .passwordStrengthScore {
 		grid-column: 1 / 3;
 	}
 }
+
+.objectFilter__container {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.objectFilter__container:not(:empty) {
+	margin-bottom: 10px;
+}
+
+.objectFilter__item {
+	align-items: center;
+	background: var(--wcfContentBackground);
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: var(--wcfBorderRadiusContainer);
+	display: flex;
+	gap: 10px;
+	justify-content: space-between;
+	padding: 12px;
+}
+
+.objectFilter__item__buttons {
+	display: flex;
+	flex-direction: row;
+	gap: 5px;
+}
+
+.objectFilter__joiner {
+	align-items: center;
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	gap: 10px;
+	padding-left: 20px;
+
+	@include wcfFontSmall;
+}
+
+.objectFilter__joiner::before {
+	background: var(--wcfContentBorderInner);
+	content: "";
+	height: 16px;
+	margin-left: -8px;
+	width: 1px;
+}

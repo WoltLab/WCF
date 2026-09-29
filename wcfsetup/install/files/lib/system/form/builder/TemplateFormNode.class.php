@@ -77,11 +77,21 @@ class TemplateFormNode implements IFormChildNode
     #[\Override]
     public function getHtml()
     {
-        return WCF::getTPL()->render(
+        $html = WCF::getTPL()->render(
             $this->getApplication(),
             $this->getTemplateName(),
             $this->getVariables(),
         );
+
+        if ($this->getDependencies() === []) {
+            return $html;
+        }
+
+        // Wraps the contents to allow the dependencies to toggle them on the client.
+        return WCF::getTPL()->render('wcf', 'shared_templateFormNode', [
+            'node' => $this,
+            'html' => $html,
+        ]);
     }
 
     /**

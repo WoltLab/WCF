@@ -42,11 +42,6 @@ parameters:
 			count: 2
 			path: wcfsetup/install/files/lib/acp/form/AbstractCustomOptionForm.class.php
 
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 2
-			path: wcfsetup/install/files/lib/acp/form/AdAddForm.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -101,12 +96,6 @@ parameters:
 			identifier: assign.propertyType
 			count: 1
 			path: wcfsetup/install/files/lib/acp/form/LanguageImportForm.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 3
-			path: wcfsetup/install/files/lib/acp/form/NoticeAddForm.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -203,12 +192,6 @@ parameters:
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/acp/form/UserGroupAddForm.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/acp/form/UserGroupAssignmentAddForm.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'

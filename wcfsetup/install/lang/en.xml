@@ -28,17 +28,11 @@
 		<item name="wcf.acp.ad.ad"><![CDATA[Ad]]></item>
 		<item name="wcf.acp.ad.ad.description"><![CDATA[Enter the ad’s HTML code here. The following expressions will be automatically replace within the HTML code:
 <ul class="nativeList">
-	<li class="jsDefaultItem"><kbd>{literal}{$username}{/literal}</kbd> with the name of the active user or “Guest”</li>
+	<li><kbd>{literal}{$username}{/literal}</kbd> with the name of the active user or “Guest”</li>
 </ul>]]></item>
 		<item name="wcf.acp.ad.add"><![CDATA[Add Ad]]></item>
 		<item name="wcf.acp.ad.conditions"><![CDATA[Conditions]]></item>
-		<item name="wcf.acp.ad.conditions.description"><![CDATA[If no conditions are specified, the ad will display for every user.]]></item>
-		<item name="wcf.acp.ad.conditions.page"><![CDATA[Page]]></item>
-		<item name="wcf.acp.ad.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the ad to be displayed.]]></item>
-		<item name="wcf.acp.ad.conditions.pointInTime"><![CDATA[Time]]></item>
-		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the ad is displayed.]]></item>
-		<item name="wcf.acp.ad.conditions.user"><![CDATA[Active user]]></item>
-		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the ad.]]></item>
+		<item name="wcf.acp.ad.conditions.description"><![CDATA[The ad is displayed if ALL of the following conditions are met. If no conditions are selected, the ad is displayed to every user.]]></item>
 		<item name="wcf.acp.ad.edit"><![CDATA[Edit Ad]]></item>
 		<item name="wcf.acp.ad.isDisabled"><![CDATA[Disable ad]]></item>
 		<item name="wcf.acp.ad.list"><![CDATA[Ads]]></item>
@@ -843,15 +837,11 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.admin.user.canManageGroupAssignment"><![CDATA[Can manage automatic user group assignments]]></item>
 		<item name="wcf.acp.group.assignment.add"><![CDATA[Add User Group Automatic Assignment]]></item>
 		<item name="wcf.acp.group.assignment.button.add"><![CDATA[Add Automatic Assignment]]></item>
-		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatic Assignments]]></item>
 		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[The users need to fulfill the following conditions to automatically be added to the user group.]]></item>
 		<item name="wcf.acp.group.assignment.edit"><![CDATA[Edit User Group Automatic Assignment]]></item>
-		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[You have not provided any conditions yet.]]></item>
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatic User Group Assignments]]></item>
-		<item name="wcf.acp.group.assignment.userGroup"><![CDATA[User Group]]></item>
 		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Disable automatic assignment]]></item>
-		<item name="wcf.acp.group.assignment.title.error.tooLong"><![CDATA[The entered title is too long. The maximum length is 255 characters.]]></item>
 		<item name="wcf.acp.group.option.admin.notice.canManageNotice"><![CDATA[Can manage notices]]></item>
 		<item name="wcf.acp.group.option.admin.ad.canManageAd"><![CDATA[Can manage ads]]></item>
 		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximum About Me Length]]></item>
@@ -1242,19 +1232,15 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.notice.add"><![CDATA[Add Notice]]></item>
 		<item name="wcf.acp.notice.cssClassName"><![CDATA[Appearance]]></item>
 		<item name="wcf.acp.notice.cssClassName.description"><![CDATA[You can select a predefined appearance or provide your own <abbr title="Cascading Style Sheets">CSS</abbr> class name.]]></item>
+		<item name="wcf.acp.notice.cssClassName.custom"><![CDATA[Custom CSS class]]></item>
 		<item name="wcf.acp.notice.cssClassName.error"><![CDATA[Error]]></item>
 		<item name="wcf.acp.notice.cssClassName.error.invalid"><![CDATA[The entered CSS class name is invalid.]]></item>
 		<item name="wcf.acp.notice.cssClassName.info"><![CDATA[Information]]></item>
 		<item name="wcf.acp.notice.cssClassName.success"><![CDATA[Success]]></item>
 		<item name="wcf.acp.notice.cssClassName.warning"><![CDATA[Warning]]></item>
 		<item name="wcf.acp.notice.conditions"><![CDATA[Conditions]]></item>
-		<item name="wcf.acp.notice.conditions.description"><![CDATA[If no conditions are specified, the notice will display for every user.]]></item>
-		<item name="wcf.acp.notice.conditions.page"><![CDATA[Page]]></item>
-		<item name="wcf.acp.notice.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the notice to be displayed.]]></item>
-		<item name="wcf.acp.notice.conditions.pointInTime"><![CDATA[Time]]></item>
-		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the notice is displayed.]]></item>
-		<item name="wcf.acp.notice.conditions.user"><![CDATA[Active user]]></item>
-		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to view the notice.]]></item>
+		<item name="wcf.acp.notice.conditions.description"><![CDATA[The notice is displayed if ALL of the following conditions are met. If no conditions are selected, the notice is displayed to every user on all pages.]]></item>
+		<item name="wcf.acp.notice.customCssClassName"><![CDATA[CSS class]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Edit Notice]]></item>
 		<item name="wcf.acp.notice.example"><![CDATA[Example text of a notice]]></item>
 		<item name="wcf.acp.notice.isDisabled"><![CDATA[Disable notice]]></item>
@@ -3395,6 +3381,70 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.condition.timestamp.error.invalidEnd"><![CDATA[The end date is invalid.]]></item>
 		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[The start date is invalid.]]></item>
 	</category>
+	<category name="wcf.objectFilter">
+		<item name="wcf.objectFilter.addFilter"><![CDATA[Add Condition]]></item>
+		<item name="wcf.objectFilter.daysOfWeek"><![CDATA[Day of the Week]]></item>
+		<item name="wcf.objectFilter.daysOfWeek.summary"><![CDATA[Day of the week: {$values}]]></item>
+		<item name="wcf.objectFilter.editFilter"><![CDATA[Edit Condition]]></item>
+		<item name="wcf.objectFilter.endDate"><![CDATA[End Date]]></item>
+		<item name="wcf.objectFilter.endDate.summary"><![CDATA[Until {$value|plainTime}]]></item>
+		<item name="wcf.objectFilter.error.notRepeatable"><![CDATA[The condition “{$title}” can only be added once.]]></item>
+		<item name="wcf.objectFilter.filter"><![CDATA[Condition]]></item>
+		<item name="wcf.objectFilter.joiner"><![CDATA[AND]]></item>
+		<item name="wcf.objectFilter.notRequestedPage"><![CDATA[Requested Page Excluded]]></item>
+		<item name="wcf.objectFilter.notRequestedPage.summary"><![CDATA[Requested page is none of: {$values}]]></item>
+		<item name="wcf.objectFilter.range.error.endBeforeStart"><![CDATA[The end value is less than the start value.]]></item>
+		<item name="wcf.objectFilter.requestedPage"><![CDATA[Requested Page]]></item>
+		<item name="wcf.objectFilter.requestedPage.summary"><![CDATA[Requested page is one of: {$values}]]></item>
+		<item name="wcf.objectFilter.startDate"><![CDATA[Start Date]]></item>
+		<item name="wcf.objectFilter.startDate.summary"><![CDATA[From {$value|plainTime}]]></item>
+		<item name="wcf.objectFilter.user.activated"><![CDATA[Account Activated]]></item>
+		<item name="wcf.objectFilter.user.activated.summary.no"><![CDATA[Account is not activated]]></item>
+		<item name="wcf.objectFilter.user.activated.summary.yes"><![CDATA[Account is activated]]></item>
+		<item name="wcf.objectFilter.user.avatar"><![CDATA[Avatar]]></item>
+		<item name="wcf.objectFilter.user.avatar.summary.no"><![CDATA[Has no avatar]]></item>
+		<item name="wcf.objectFilter.user.avatar.summary.yes"><![CDATA[Has an avatar]]></item>
+		<item name="wcf.objectFilter.user.banned"><![CDATA[Banned]]></item>
+		<item name="wcf.objectFilter.user.banned.summary.no"><![CDATA[Is not banned]]></item>
+		<item name="wcf.objectFilter.user.banned.summary.yes"><![CDATA[Is banned]]></item>
+		<item name="wcf.objectFilter.user.birthday"><![CDATA[Birthday Today]]></item>
+		<item name="wcf.objectFilter.user.birthday.summary.no"><![CDATA[It is not their birthday today]]></item>
+		<item name="wcf.objectFilter.user.birthday.summary.yes"><![CDATA[It is their birthday today]]></item>
+		<item name="wcf.objectFilter.user.coverPhoto"><![CDATA[Cover Photo]]></item>
+		<item name="wcf.objectFilter.user.coverPhoto.summary.no"><![CDATA[Has no cover photo]]></item>
+		<item name="wcf.objectFilter.user.coverPhoto.summary.yes"><![CDATA[Has a cover photo]]></item>
+		<item name="wcf.objectFilter.user.email"><![CDATA[Email Address]]></item>
+		<item name="wcf.objectFilter.user.email.summary"><![CDATA[Email address contains “{$value}”]]></item>
+		<item name="wcf.objectFilter.user.emailConfirmed"><![CDATA[Email Address Confirmed]]></item>
+		<item name="wcf.objectFilter.user.emailConfirmed.summary.no"><![CDATA[Does not have a confirmed email address]]></item>
+		<item name="wcf.objectFilter.user.emailConfirmed.summary.yes"><![CDATA[Has a confirmed email address]]></item>
+		<item name="wcf.objectFilter.user.group"><![CDATA[Member of User Group]]></item>
+		<item name="wcf.objectFilter.user.group.summary"><![CDATA[Is a member of the user group “{$value}”]]></item>
+		<item name="wcf.objectFilter.user.integerProperty.summary"><![CDATA[{$title}: {if $from !== null && $to !== null}between {#$from} and {#$to}{elseif $from !== null}at least {#$from}{else}at most {#$to}{/if}]]></item>
+		<item name="wcf.objectFilter.user.language"><![CDATA[Language]]></item>
+		<item name="wcf.objectFilter.user.language.summary"><![CDATA[Uses one of the languages: {$values}]]></item>
+		<item name="wcf.objectFilter.user.mobileBrowser"><![CDATA[Mobile Browser]]></item>
+		<item name="wcf.objectFilter.user.mobileBrowser.summary.no"><![CDATA[Does not use a mobile browser]]></item>
+		<item name="wcf.objectFilter.user.mobileBrowser.summary.yes"><![CDATA[Uses a mobile browser]]></item>
+		<item name="wcf.objectFilter.user.multifactor"><![CDATA[Multi-factor Authentication]]></item>
+		<item name="wcf.objectFilter.user.multifactor.summary.no"><![CDATA[Multi-factor authentication is not enabled]]></item>
+		<item name="wcf.objectFilter.user.multifactor.summary.yes"><![CDATA[Multi-factor authentication is enabled]]></item>
+		<item name="wcf.objectFilter.user.noTrophy"><![CDATA[Has Not Received Trophy]]></item>
+		<item name="wcf.objectFilter.user.noTrophy.summary"><![CDATA[Has not received the trophy “{$value}”]]></item>
+		<item name="wcf.objectFilter.user.notInGroup"><![CDATA[Not a Member of User Group]]></item>
+		<item name="wcf.objectFilter.user.notInGroup.summary"><![CDATA[Is not a member of the user group “{$value}”]]></item>
+		<item name="wcf.objectFilter.user.registrationDate"><![CDATA[Registration Date]]></item>
+		<item name="wcf.objectFilter.user.registrationDate.summary"><![CDATA[Registered {if $from !== null && $to !== null}between {$from} and {$to}{elseif $from !== null}on or after {$from}{else}on or before {$to}{/if}]]></item>
+		<item name="wcf.objectFilter.user.registrationDays"><![CDATA[Days since Registration]]></item>
+		<item name="wcf.objectFilter.user.registrationDays.summary"><![CDATA[Registered {if $from !== null && $to !== null}{#$from} to {#$to} days ago{elseif $from !== null}at least {#$from} days ago{else}at most {#$to} days ago{/if}]]></item>
+		<item name="wcf.objectFilter.user.signature"><![CDATA[Signature]]></item>
+		<item name="wcf.objectFilter.user.signature.summary.no"><![CDATA[Has no signature]]></item>
+		<item name="wcf.objectFilter.user.signature.summary.yes"><![CDATA[Has a signature]]></item>
+		<item name="wcf.objectFilter.user.trophy"><![CDATA[Has Received Trophy]]></item>
+		<item name="wcf.objectFilter.user.trophy.summary"><![CDATA[Has received the trophy “{$value}”]]></item>
+		<item name="wcf.objectFilter.user.username"><![CDATA[Username]]></item>
+		<item name="wcf.objectFilter.user.username.summary"><![CDATA[Username contains “{$value}”]]></item>
+	</category>
 	<category name="wcf.contact">
 		<item name="wcf.contact.mail.subject"><![CDATA[New message via the contact form]]></item>
 		<item name="wcf.contact.mail.plaintext"><![CDATA[Hello,
@@ -3914,6 +3964,7 @@ Attachments:
 		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not exist.]]></item>
 		<item name="wcf.form.field.className.error.parentClass"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not extend <kbd>{$parentClass}</kbd>.]]></item>
 		<item name="wcf.form.field.itemList.error.separator"><![CDATA[The following items may contain no {if $separator === ','}comma{else if $separator === "\n"}newline{else}space{/if}: {implode from=$invalidItems item=item}“{$item}”{/implode}.]]></item>
+		<item name="wcf.form.field.numeric.error.invalid"><![CDATA[The entered value is not a valid number.]]></item>
 		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[The entered value may not be greater than {#$maximum}.]]></item>
 		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[The entered value may not be less than {#$minimum}.]]></item>
 		<item name="wcf.form.field.option"><![CDATA[Options]]></item>

@@ -47,7 +47,7 @@ final class UserGroupAssignmentGridView extends AbstractGridView
                 ->filter(TextFilter::class)
                 ->sortable(),
             GridViewColumn::for("groupID")
-                ->label("wcf.acp.group.assignment.userGroup")
+                ->label("wcf.user.group")
                 ->filter(new SelectFilter(
                     UserGroup::getSortedGroupsByType([], [
                         UserGroup::EVERYONE,
@@ -56,7 +56,7 @@ final class UserGroupAssignmentGridView extends AbstractGridView
                         UserGroup::USERS,
                     ]),
                     'groupID',
-                    'wcf.acp.group.assignment.userGroup'
+                    'wcf.user.group'
                 ))
                 ->sortable()
                 ->renderer(

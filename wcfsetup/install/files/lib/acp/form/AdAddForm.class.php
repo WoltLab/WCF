@@ -2,26 +2,37 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\ad\AdAction;
-use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
-use wcf\form\AbstractForm;
+use wcf\command\ad\CreateAd;
+use wcf\command\ad\UpdateAd;
+use wcf\data\ad\Ad;
+use wcf\data\ad\AdBuilder;
+use wcf\data\DatabaseObjectBuilder;
+use wcf\form\AbstractDatabaseObjectBuilderForm;
 use wcf\system\ad\AdHandler;
 use wcf\system\ad\location\IAdLocation;
-use wcf\system\condition\ConditionHandler;
-use wcf\system\exception\UserInputException;
-use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
-use wcf\util\StringUtil;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\MultilineTextFormField;
+use wcf\system\form\builder\field\ObjectFilterFormField;
+use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\IFormChildNode;
+use wcf\system\form\builder\TemplateFormNode;
+use wcf\system\object\filter\builder\AdObjectFilterBuilder;
 
 /**
- * Shows the form to create a new ad notice.
+ * Shows the form to create a new ad.
  *
- * @author  Matthias Schmidt
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Matthias Schmidt, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @extends AbstractDatabaseObjectBuilderForm<Ad, AdBuilder>
  */
-class AdAddForm extends AbstractForm
+class AdAddForm extends AbstractDatabaseObjectBuilderForm
 {
     /**
      * @inheritDoc
@@ -39,229 +50,150 @@ class AdAddForm extends AbstractForm
     public $neededModules = ['MODULE_WCF_AD'];
 
     /**
-     * html code of the ad
-     * @var string
+     * @inheritDoc
      */
-    public $ad = '';
-
-    /**
-     * name of the notice
-     * @var string
-     */
-    public $adName = '';
-
-    /**
-     * grouped ad condition object types
-     * @var (ObjectType|ObjectType[])[][]
-     */
-    public $groupedConditionObjectTypes = [];
-
-    /**
-     * 1 if the ad is disabled
-     * @var int
-     */
-    public $isDisabled = 0;
-
-    /**
-     * list of available location object types
-     * @var ObjectType[]
-     */
-    public $locationObjectTypes = [];
-
-    /**
-     * list of available locations
-     * @var array<string, array<int, string>>
-     */
-    public $locations = [];
-
-    /**
-     * id of the selected location's object type
-     * @var int
-     */
-    public $objectTypeID = 0;
-
-    /**
-     * order used to the show the ads
-     * @var int
-     */
-    public $showOrder = 0;
+    public string $objectEditLinkController = AdEditForm::class;
 
     #[\Override]
-    public function assignVariables()
+    protected function getDatabaseObjectBuilder(): AdBuilder
     {
-        parent::assignVariables();
-
-        $variablesDescriptions = [];
-        foreach ($this->locationObjectTypes as $objectType) {
-            if ($objectType->className !== '' && \is_subclass_of($objectType->className, IAdLocation::class)) {
-                /** @var IAdLocation $adLocation */
-                $adLocation = $objectType->getProcessor();
-
-                $variablesDescriptions[$objectType->objectTypeID] = $adLocation->getVariablesDescription();
-            }
+        if ($this->formObject !== null) {
+            return AdBuilder::forUpdate($this->formObject);
         }
 
-        WCF::getTPL()->assign([
-            'action' => 'add',
-            'ad' => $this->ad,
-            'adName' => $this->adName,
-            'locationObjectTypes' => $this->locationObjectTypes,
-            'locations' => $this->locations,
-            'isDisabled' => $this->isDisabled,
-            'groupedConditionObjectTypes' => $this->groupedConditionObjectTypes,
-            'objectTypeID' => $this->objectTypeID,
-            'showOrder' => $this->showOrder,
-            'variablesDescriptions' => $variablesDescriptions,
-        ]);
+        return AdBuilder::forCreate();
     }
 
     #[\Override]
-    public function readData()
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
     {
-        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.condition.ad');
-        foreach ($objectTypes as $objectType) {
-            if ($objectType->conditionobject === null) {
+        if ($this->formObject !== null) {
+            return new UpdateAd($builder);
+        }
+
+        return new CreateAd($builder);
+    }
+
+    #[\Override]
+    protected function createForm(): void
+    {
+        $location = SelectFormField::create('objectTypeID')
+            ->label('wcf.acp.ad.location')
+            ->options($this->getLocationOptions(), true, false)
+            ->ignoreInvalidValues()
+            ->required()
+            ->saveValueCallback(static function (AdBuilder $builder, IFormField $field) {
+                $builder->setObjectTypeID((int)$field->getSaveValue());
+            });
+
+        $this->form->appendChildren([
+            FormContainer::create('data')
+                ->appendChildren([
+                    TextFormField::create('adName')
+                        ->label('wcf.global.name')
+                        ->maximumLength(255)
+                        ->required()
+                        ->autoFocus()
+                        ->saveValueCallback(static function (AdBuilder $builder, IFormField $field) {
+                            $builder->setAdName($field->getSaveValue());
+                        }),
+                    MultilineTextFormField::create('ad')
+                        ->label('wcf.acp.ad.ad')
+                        ->description('wcf.acp.ad.ad.description')
+                        ->required()
+                        ->rows(10)
+                        ->saveValueCallback(static function (AdBuilder $builder, IFormField $field) {
+                            $builder->setAd($field->getSaveValue());
+                        }),
+                    ...$this->getLocationVariablesNodes($location),
+                    $location,
+                    IntegerFormField::create('showOrder')
+                        ->label('wcf.global.showOrder')
+                        ->description('wcf.acp.ad.showOrder.description')
+                        ->minimum(0)
+                        ->saveValueCallback(static function (AdBuilder $builder, IFormField $field) {
+                            $builder->setShowOrder($field->getSaveValue());
+                        }),
+                ]),
+            FormContainer::create('settings')
+                ->label('wcf.global.settings')
+                ->appendChildren([
+                    BooleanFormField::create('isDisabled')
+                        ->label('wcf.acp.ad.isDisabled')
+                        ->saveValueCallback(static function (AdBuilder $builder, IFormField $field) {
+                            $builder->setIsDisabled((bool)$field->getSaveValue());
+                        }),
+                ]),
+            FormContainer::create('conditionsContainer')
+                ->label('wcf.acp.ad.conditions')
+                ->description('wcf.acp.ad.conditions.description')
+                ->appendChild(
+                    ObjectFilterFormField::create('conditions')
+                        ->builder(new AdObjectFilterBuilder())
+                        ->saveValueCallback(static function (AdBuilder $builder, IFormField $field) {
+                            $builder->setConditions($field->getSaveValue());
+                        })
+                ),
+        ]);
+    }
+
+    /**
+     * Returns the available locations grouped by their category.
+     *
+     * @return list<array{label: string, value: int|string, depth: int, isSelectable?: bool}>
+     */
+    private function getLocationOptions(): array
+    {
+        $options = [];
+        foreach (AdHandler::getInstance()->getLocationSelection() as $categoryLabel => $locations) {
+            $options[] = [
+                'label' => $categoryLabel,
+                'value' => 'category' . \count($options),
+                'depth' => 0,
+                'isSelectable' => false,
+            ];
+
+            foreach ($locations as $objectTypeID => $locationLabel) {
+                $options[] = [
+                    'label' => $locationLabel,
+                    'value' => $objectTypeID,
+                    'depth' => 1,
+                ];
+            }
+        }
+
+        return $options;
+    }
+
+    /**
+     * Returns the nodes that list the location specific variables that are
+     * replaced within the ad, each is only shown while its location is selected.
+     *
+     * @return list<IFormChildNode>
+     */
+    private function getLocationVariablesNodes(SelectFormField $location): array
+    {
+        $nodes = [];
+        foreach (AdHandler::getInstance()->getLocationObjectTypes() as $objectType) {
+            if ($objectType->className === '' || !\is_subclass_of($objectType->className, IAdLocation::class)) {
                 continue;
             }
 
-            if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject])) {
-                $this->groupedConditionObjectTypes[$objectType->conditionobject] = [];
-            }
+            $adLocation = $objectType->getProcessor();
+            \assert($adLocation instanceof IAdLocation);
 
-            if ($objectType->conditiongroup !== null) {
-                if (!isset($this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup])) {
-                    $this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup] = [];
-                }
-
-                $this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->conditiongroup][$objectType->objectTypeID] = $objectType;
-            } else {
-                $this->groupedConditionObjectTypes[$objectType->conditionobject][$objectType->objectTypeID] = $objectType;
-            }
+            $nodes[] = TemplateFormNode::create('locationVariables' . $objectType->objectTypeID)
+                ->templateName('__adLocationVariables')
+                ->variables([
+                    'variablesDescription' => $adLocation->getVariablesDescription(),
+                ])
+                ->addDependency(
+                    ValueFormFieldDependency::create('objectTypeID')
+                        ->field($location)
+                        ->values([$objectType->objectTypeID])
+                );
         }
 
-        $this->locations = AdHandler::getInstance()->getLocationSelection();
-        foreach (AdHandler::getInstance()->getLocationObjectTypes() as $objectType) {
-            $this->locationObjectTypes[$objectType->objectTypeID] = $objectType;
-        }
-
-        parent::readData();
-    }
-
-    #[\Override]
-    public function readFormParameters()
-    {
-        parent::readFormParameters();
-
-        if (isset($_POST['ad'])) {
-            $this->ad = StringUtil::trim($_POST['ad']);
-        }
-        if (isset($_POST['adName'])) {
-            $this->adName = StringUtil::trim($_POST['adName']);
-        }
-        if (isset($_POST['isDisabled'])) {
-            $this->isDisabled = 1;
-        }
-        if (isset($_POST['objectTypeID'])) {
-            $this->objectTypeID = \intval($_POST['objectTypeID']);
-        }
-        if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
-        }
-
-        foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
-            foreach ($groupedObjectTypes as $objectTypes) {
-                if (\is_array($objectTypes)) {
-                    foreach ($objectTypes as $objectType) {
-                        $objectType->getProcessor()->readFormParameters();
-                    }
-                } else {
-                    $objectTypes->getProcessor()->readFormParameters();
-                }
-            }
-        }
-    }
-
-    #[\Override]
-    public function save()
-    {
-        parent::save();
-
-        $this->objectAction = new AdAction([], 'create', [
-            'data' => \array_merge($this->additionalFields, [
-                'ad' => $this->ad,
-                'adName' => $this->adName,
-                'isDisabled' => $this->isDisabled,
-                'objectTypeID' => $this->objectTypeID,
-                'showOrder' => $this->showOrder,
-            ]),
-        ]);
-        $returnValues = $this->objectAction->executeAction();
-
-        // transform conditions array into one-dimensional array
-        $conditions = [];
-        foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
-            foreach ($groupedObjectTypes as $objectTypes) {
-                if (\is_array($objectTypes)) {
-                    $conditions = \array_merge($conditions, $objectTypes);
-                } else {
-                    $conditions[] = $objectTypes;
-                }
-            }
-        }
-
-        ConditionHandler::getInstance()->createConditions($returnValues['returnValues']->adID, $conditions);
-
-        $this->saved();
-
-        // reset values
-        $this->ad = '';
-        $this->adName = '';
-        $this->isDisabled = 0;
-        $this->objectTypeID = 0;
-        $this->showOrder = 0;
-
-        foreach ($conditions as $condition) {
-            $condition->getProcessor()->reset();
-        }
-
-        WCF::getTPL()->assign([
-            'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                AdEditForm::class,
-                ['id' => $returnValues['returnValues']->adID]
-            ),
-        ]);
-    }
-
-    #[\Override]
-    public function validate()
-    {
-        parent::validate();
-
-        if (empty($this->adName)) {
-            throw new UserInputException('adName');
-        }
-
-        if (empty($this->ad)) {
-            throw new UserInputException('ad');
-        }
-
-        if ($this->objectTypeID === 0) {
-            throw new UserInputException('objectTypeID');
-        } elseif (!isset($this->locationObjectTypes[$this->objectTypeID])) {
-            throw new UserInputException('objectTypeID', 'noValidSelection');
-        }
-
-        foreach ($this->groupedConditionObjectTypes as $groupedObjectTypes) {
-            foreach ($groupedObjectTypes as $objectTypes) {
-                if (\is_array($objectTypes)) {
-                    foreach ($objectTypes as $objectType) {
-                        $objectType->getProcessor()->validate();
-                    }
-                } else {
-                    $objectTypes->getProcessor()->validate();
-                }
-            }
-        }
+        return $nodes;
     }
 }

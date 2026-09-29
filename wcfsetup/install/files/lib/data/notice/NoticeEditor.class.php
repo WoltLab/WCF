@@ -19,6 +19,7 @@ use wcf\system\WCF;
  * @mixin       Notice
  * @extends DatabaseObjectEditor<Notice>
  * @implements IEditableCachedObject<Notice>
+ * @deprecated 6.3 use `NoticeBuilder` instead.
  */
 class NoticeEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {

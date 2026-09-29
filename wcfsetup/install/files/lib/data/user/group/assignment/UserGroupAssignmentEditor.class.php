@@ -18,6 +18,7 @@ use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
  * @mixin       UserGroupAssignment
  * @extends DatabaseObjectEditor<UserGroupAssignment>
  * @implements IEditableCachedObject<UserGroupAssignment>
+ * @deprecated 6.3 use `UserGroupAssignmentBuilder` instead.
  */
 class UserGroupAssignmentEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {

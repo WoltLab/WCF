@@ -2,25 +2,31 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\object\type\ObjectType;
-use wcf\data\user\group\assignment\UserGroupAssignmentAction;
+use wcf\command\user\group\assignment\CreateUserGroupAssignment;
+use wcf\command\user\group\assignment\UpdateUserGroupAssignment;
+use wcf\data\DatabaseObjectBuilder;
+use wcf\data\user\group\assignment\UserGroupAssignment;
+use wcf\data\user\group\assignment\UserGroupAssignmentBuilder;
 use wcf\data\user\group\UserGroup;
-use wcf\form\AbstractForm;
-use wcf\system\condition\ConditionHandler;
-use wcf\system\exception\UserInputException;
-use wcf\system\request\LinkHandler;
-use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
-use wcf\system\WCF;
-use wcf\util\StringUtil;
+use wcf\form\AbstractDatabaseObjectBuilderForm;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\ObjectFilterFormField;
+use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\form\builder\field\TitleFormField;
+use wcf\system\object\filter\builder\UserGroupAssignmentObjectFilterBuilder;
 
 /**
  * Shows the form to create a new automatic user group assignment.
  *
- * @author  Matthias Schmidt
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Alexander Ebert, Matthias Schmidt
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @extends AbstractDatabaseObjectBuilderForm<UserGroupAssignment, UserGroupAssignmentBuilder>
  */
-class UserGroupAssignmentAddForm extends AbstractForm
+class UserGroupAssignmentAddForm extends AbstractDatabaseObjectBuilderForm
 {
     /**
      * @inheritDoc
@@ -28,171 +34,88 @@ class UserGroupAssignmentAddForm extends AbstractForm
     public $activeMenuItem = 'wcf.acp.menu.link.group.assignment.add';
 
     /**
-     * list of grouped user group assignment condition object types
-     * @var ObjectType[][]
-     */
-    public $conditions = [];
-
-    /**
-     * id of the selected user group
-     * @var int
-     */
-    public $groupID = 0;
-
-    /**
-     * true if the automatic assignment is disabled
-     * @var int
-     */
-    public $isDisabled = 0;
-
-    /**
      * @inheritDoc
      */
     public $neededPermissions = ['admin.user.canManageGroupAssignment'];
 
     /**
-     * title of the user group assignment
-     * @var string
+     * @inheritDoc
      */
-    public $title = '';
+    public string $objectEditLinkController = UserGroupAssignmentEditForm::class;
+
+    #[\Override]
+    protected function getDatabaseObjectBuilder(): UserGroupAssignmentBuilder
+    {
+        if ($this->formObject !== null) {
+            return UserGroupAssignmentBuilder::forUpdate($this->formObject);
+        }
+
+        return UserGroupAssignmentBuilder::forCreate();
+    }
+
+    #[\Override]
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
+    {
+        if ($this->formObject !== null) {
+            return new UpdateUserGroupAssignment($builder);
+        }
+
+        return new CreateUserGroupAssignment($builder);
+    }
+
+    #[\Override]
+    protected function createForm(): void
+    {
+        $this->form->appendChildren([
+            FormContainer::create('data')
+                ->appendChildren([
+                    TitleFormField::create('title')
+                        ->label('wcf.global.name')
+                        ->maximumLength(255)
+                        ->required()
+                        ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {
+                            $builder->setTitle($field->getSaveValue());
+                        }),
+                    SelectFormField::create('groupID')
+                        ->label('wcf.user.group')
+                        ->options($this->getAvailableUserGroups())
+                        ->required()
+                        ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {
+                            $builder->setGroupID((int)$field->getSaveValue());
+                        }),
+                    BooleanFormField::create('isDisabled')
+                        ->label('wcf.acp.group.assignment.isDisabled')
+                        ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {
+                            $builder->setIsDisabled((bool)$field->getSaveValue());
+                        }),
+                ]),
+            FormContainer::create('conditionsContainer')
+                ->label('wcf.acp.group.assignment.conditions')
+                ->description('wcf.acp.group.assignment.conditions.description')
+                ->appendChild(
+                    ObjectFilterFormField::create('conditions')
+                        ->builder(new UserGroupAssignmentObjectFilterBuilder())
+                        ->required()
+                        ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {
+                            $builder->setConditions($field->getSaveValue());
+                        }),
+                ),
+        ]);
+    }
 
     /**
-     * list of selectable user groups
-     * @var UserGroup[]
+     * @return array<int, UserGroup>
      */
-    public $userGroups = [];
-
-    #[\Override]
-    public function assignVariables()
+    private function getAvailableUserGroups(): array
     {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'action' => 'add',
-            'groupedObjectTypes' => $this->conditions,
-            'groupID' => $this->groupID,
-            'isDisabled' => $this->isDisabled,
-            'title' => $this->title,
-            'userGroups' => $this->userGroups,
-        ]);
-    }
-
-    #[\Override]
-    public function readData()
-    {
-        $this->userGroups = UserGroup::getSortedGroupsByType([], [
-            UserGroup::EVERYONE,
-            UserGroup::GUESTS,
-            UserGroup::OWNER,
-            UserGroup::USERS,
-        ]);
-        foreach ($this->userGroups as $key => $userGroup) {
-            if (!$userGroup->isAccessible()) {
-                unset($this->userGroups[$key]);
-            }
-        }
-
-        $this->conditions = UserGroupAssignmentHandler::getInstance()->getGroupedObjectTypes();
-
-        parent::readData();
-    }
-
-    #[\Override]
-    public function readFormParameters()
-    {
-        parent::readFormParameters();
-
-        if (isset($_POST['groupID'])) {
-            $this->groupID = \intval($_POST['groupID']);
-        }
-        if (isset($_POST['isDisabled'])) {
-            $this->isDisabled = 1;
-        }
-        if (isset($_POST['title'])) {
-            $this->title = StringUtil::trim($_POST['title']);
-        }
-
-        foreach ($this->conditions as $conditions) {
-            /** @var ObjectType $condition */
-            foreach ($conditions as $condition) {
-                $condition->getProcessor()->readFormParameters();
-            }
-        }
-    }
-
-    #[\Override]
-    public function save()
-    {
-        parent::save();
-
-        $this->objectAction = new UserGroupAssignmentAction([], 'create', [
-            'data' => \array_merge($this->additionalFields, [
-                'groupID' => $this->groupID,
-                'isDisabled' => $this->isDisabled,
-                'title' => $this->title,
+        return \array_filter(
+            UserGroup::getSortedGroupsByType([], [
+                UserGroup::EVERYONE,
+                UserGroup::GUESTS,
+                UserGroup::OWNER,
+                UserGroup::USERS,
             ]),
-        ]);
-        $returnValues = $this->objectAction->executeAction();
-
-        // transform conditions array into one-dimensional array
-        $conditions = [];
-        foreach ($this->conditions as $groupedObjectTypes) {
-            $conditions = \array_merge($conditions, $groupedObjectTypes);
-        }
-
-        ConditionHandler::getInstance()->createConditions($returnValues['returnValues']->assignmentID, $conditions);
-
-        $this->saved();
-
-        // reset values
-        $this->groupID = 0;
-        $this->isDisabled = 0;
-        $this->title = '';
-
-        foreach ($this->conditions as $conditions) {
-            foreach ($conditions as $condition) {
-                $condition->getProcessor()->reset();
-            }
-        }
-
-        WCF::getTPL()->assign([
-            'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                UserGroupAssignmentEditForm::class,
-                ['id' => $returnValues['returnValues']->assignmentID]
-            ),
-        ]);
-    }
-
-    #[\Override]
-    public function validate()
-    {
-        parent::validate();
-
-        if (empty($this->title)) {
-            throw new UserInputException('title');
-        }
-        if (\strlen($this->title) > 255) {
-            throw new UserInputException('title', 'tooLong');
-        }
-
-        if (!isset($this->userGroups[$this->groupID])) {
-            throw new UserInputException('groupID', 'noValidSelection');
-        }
-
-        $hasData = false;
-        foreach ($this->conditions as $conditions) {
-            foreach ($conditions as $condition) {
-                $condition->getProcessor()->validate();
-
-                if (!$hasData && $condition->getProcessor()->getData() !== null) {
-                    $hasData = true;
-                }
-            }
-        }
-
-        if (!$hasData) {
-            throw new UserInputException('conditions');
-        }
+            static fn(UserGroup $userGroup) => $userGroup->isAccessible(),
+        );
     }
 }

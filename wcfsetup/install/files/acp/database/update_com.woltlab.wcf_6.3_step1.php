@@ -120,4 +120,16 @@ return [
                 ->onDelete('SET NULL')
                 ->onUpdate('NO ACTION'),
         ]),
+    PartialDatabaseTable::create('wcf1_user_group_assignment')
+        ->columns([
+            JsonDatabaseTableColumn::create('conditions'),
+        ]),
+    PartialDatabaseTable::create('wcf1_notice')
+        ->columns([
+            JsonDatabaseTableColumn::create('conditions'),
+        ]),
+    PartialDatabaseTable::create('wcf1_ad')
+        ->columns([
+            JsonDatabaseTableColumn::create('conditions'),
+        ]),
 ];

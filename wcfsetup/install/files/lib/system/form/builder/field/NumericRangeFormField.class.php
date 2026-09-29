@@ -80,7 +80,55 @@ class NumericRangeFormField extends AbstractFormField implements
     {
         if ($this->isRequired() && ($this->getFromValue() === '' || $this->getToValue() === '')) {
             $this->addValidationError(new FormFieldValidationError('empty'));
+
+            return;
         }
+
+        foreach ([$this->getFromValue(), $this->getToValue()] as $value) {
+            if ($value === '') {
+                continue;
+            }
+
+            $error = $this->validateBound($value);
+            if ($error !== null) {
+                $this->addValidationError($error);
+
+                return;
+            }
+        }
+    }
+
+    /**
+     * Returns the validation error for the given lower or upper bound or `null`
+     * if the bound is a valid number within the minimum and maximum.
+     */
+    private function validateBound(string $value): ?FormFieldValidationError
+    {
+        $isValid = $this->integerValues ? \preg_match('~^-?\d+$~', $value) === 1 : \is_numeric($value);
+        if (!$isValid) {
+            return new FormFieldValidationError(
+                'invalid',
+                'wcf.form.field.numeric.error.invalid'
+            );
+        }
+
+        if ($this->getMinimum() !== null && $value < $this->getMinimum()) {
+            return new FormFieldValidationError(
+                'minimum',
+                'wcf.form.field.numeric.error.minimum',
+                ['minimum' => $this->getMinimum()]
+            );
+        }
+
+        if ($this->getMaximum() !== null && $value > $this->getMaximum()) {
+            return new FormFieldValidationError(
+                'maximum',
+                'wcf.form.field.numeric.error.maximum',
+                ['maximum' => $this->getMaximum()]
+            );
+        }
+
+        return null;
     }
 
     #[\Override]
@@ -94,11 +142,23 @@ class NumericRangeFormField extends AbstractFormField implements
         }
 
         $this->value = [
-            'from' => $this->integerValues ? \intval($values[0]) : \floatval($values[0]),
-            'to' => $this->integerValues ? \intval($values[1]) : \floatval($values[1]),
+            'from' => $this->castValue($values[0]),
+            'to' => $this->castValue($values[1]),
         ];
 
         return $this;
+    }
+
+    /**
+     * Casts a bound of the range to its numeric type, empty bounds are preserved.
+     */
+    private function castValue(string $value): int|float|string
+    {
+        if ($value === '') {
+            return '';
+        }
+
+        return $this->integerValues ? (int)$value : (float)$value;
     }
 
     public function getFromValue(): string

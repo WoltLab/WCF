@@ -19,6 +19,7 @@ use wcf\system\WCF;
  * @mixin       Ad
  * @extends DatabaseObjectEditor<Ad>
  * @implements IEditableCachedObject<Ad>
+ * @deprecated 6.3 use `AdBuilder` instead.
  */
 class AdEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {
