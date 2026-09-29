@@ -70,6 +70,13 @@
 
 {event name='footer'}
 
+{* Evaluated at the end of the page, because content and boxes may request a check after the head was rendered. *}
+{if $__wcf->getBackgroundQueueHandler()->hasPendingCheck()}
+<script data-relocate="true">
+	require(["WoltLabSuite/Core/BackgroundQueue"], (BackgroundQueue) => BackgroundQueue.invoke());
+</script>
+{/if}
+
 <div class="pageFooterStickyNotice">
 	{event name='pageFooterStickyNotice'}
 	

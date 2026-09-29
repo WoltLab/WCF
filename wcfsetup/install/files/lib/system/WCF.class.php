@@ -12,6 +12,7 @@ use wcf\data\page\Page;
 use wcf\data\user\User;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\application\IApplication;
+use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\benchmark\Benchmark;
 use wcf\system\box\BoxHandler;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
@@ -1086,6 +1087,16 @@ class WCF
     public function getBoxHandler(): BoxHandler
     {
         return BoxHandler::getInstance();
+    }
+
+    /**
+     * Returns the background queue handler.
+     *
+     * @since 6.3
+     */
+    public function getBackgroundQueueHandler(): BackgroundQueueHandler
+    {
+        return BackgroundQueueHandler::getInstance();
     }
 
     /**

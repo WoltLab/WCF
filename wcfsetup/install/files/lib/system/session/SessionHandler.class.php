@@ -372,12 +372,6 @@ final class SessionHandler extends SingletonFactory
         // assign language
         $languageID = $this->getVar('languageID') ?: $this->user->languageID;
         $this->languageID = $languageID ?: 0;
-
-        // https://github.com/WoltLab/WCF/issues/2568
-        if ($this->getVar('__wcfIsFirstVisit') === true) {
-            $this->firstVisit = true;
-            $this->unregister('__wcfIsFirstVisit');
-        }
     }
 
     /**
@@ -506,6 +500,10 @@ final class SessionHandler extends SingletonFactory
     public function unregister(string $key): void
     {
         $scope = $this->isACP ? 'acp' : 'frontend';
+
+        if (!\array_key_exists($key, $this->variables[$scope] ?? [])) {
+            return;
+        }
 
         unset($this->variables[$scope][$key]);
         $this->variablesChanged = true;
