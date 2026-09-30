@@ -37,7 +37,7 @@ final class UploaderToken
      */
     public static function isValid(mixed $token): bool
     {
-        return \is_string($token) && \preg_match('~^[a-f0-9]{32}$~', $token) === 1;
+        return \is_string($token) && \preg_match('~^[a-f0-9]{32}\z~', $token) === 1;
     }
 
     /**
@@ -132,9 +132,14 @@ final class UploaderToken
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('fileID IN (?)', [$fileIDs]);
 
-        $sql = "UPDATE  wcf1_file_uploader_token
-                SET     tokenHash = NULL
-                {$conditionBuilder}";
+        // Files without a record, e.g. uploaded before the update, would otherwise
+        // remain unclaimed and could still be adopted by someone else.
+        $sql = "INSERT INTO             wcf1_file_uploader_token
+                                        (fileID, tokenHash)
+                SELECT                  fileID, NULL
+                FROM                    wcf1_file
+                {$conditionBuilder}
+                ON DUPLICATE KEY UPDATE tokenHash = NULL";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
     }
