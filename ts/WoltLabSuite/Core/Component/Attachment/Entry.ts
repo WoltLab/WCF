@@ -18,7 +18,12 @@ export type FileProcessorData = {
   messageObjectID: number | null;
 };
 
-function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFileElement, editor: HTMLElement): void {
+function fileInitializationCompleted(
+  element: HTMLElement,
+  file: WoltlabCoreFileElement,
+  editor: HTMLElement,
+  uploaderToken: string | undefined,
+): void {
   const data = file.data;
   if (data === undefined) {
     throw new Error("No meta data was returned from the server.", {
@@ -110,7 +115,14 @@ function fileInitializationCompleted(element: HTMLElement, file: WoltlabCoreFile
 
   const listItem = document.createElement("li");
   listItem.append(
-    getDeleteAttachButton(fileId, (data as FileProcessorData).attachmentID, editor, element, file.filename),
+    getDeleteAttachButton(
+      fileId,
+      (data as FileProcessorData).attachmentID,
+      editor,
+      element,
+      file.filename,
+      uploaderToken,
+    ),
   );
   dropdownMenu.append(listItem);
 
@@ -141,6 +153,7 @@ function getDeleteAttachButton(
   editor: HTMLElement,
   element: HTMLElement,
   filename: string | undefined,
+  uploaderToken: string | undefined,
 ): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
@@ -152,7 +165,7 @@ function getDeleteAttachButton(
       return;
     }
 
-    (await deleteFile(fileId)).unwrap();
+    (await deleteFile(fileId, uploaderToken)).unwrap();
 
     dispatchToCkeditor(editor).removeAttachment({
       attachmentId,
@@ -179,7 +192,7 @@ function getInsertButton(attachmentId: number, url: string, editor: HTMLElement)
   return button;
 }
 
-export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: HTMLElement) {
+export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: HTMLElement, uploaderToken?: string) {
   const element = document.createElement("li");
   element.classList.add("fileList__item", "attachment__item");
 
@@ -191,7 +204,7 @@ export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: H
 
   void file.ready
     .then(() => {
-      fileInitializationCompleted(element, file, editor);
+      fileInitializationCompleted(element, file, editor, uploaderToken);
     })
     .catch((reason) => {
       fileInitializationFailed(element, file, reason);

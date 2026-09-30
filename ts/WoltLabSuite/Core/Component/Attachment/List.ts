@@ -8,9 +8,15 @@ import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { postObject } from "WoltLabSuite/Core/Api/PostObject";
 import { debounce } from "WoltLabSuite/Core/Core";
 import { getCkeditor } from "../Ckeditor";
+import { getUploaderToken } from "../File/Helper";
 
-function fileToAttachment(fileList: HTMLElement, file: WoltlabCoreFileElement, editor: HTMLElement): void {
-  fileList.append(createAttachmentFromFile(file, editor));
+function fileToAttachment(
+  fileList: HTMLElement,
+  file: WoltlabCoreFileElement,
+  editor: HTMLElement,
+  uploaderToken: string | undefined,
+): void {
+  fileList.append(createAttachmentFromFile(file, editor, uploaderToken));
 }
 
 type Context = {
@@ -79,7 +85,7 @@ export function setup(editorId: string): void {
 
   let showOrder = -1;
   uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
-    fileToAttachment(fileList, event.detail, editor);
+    fileToAttachment(fileList, event.detail, editor, getUploaderToken(uploadButton));
 
     const context = JSON.parse(uploadButton.dataset.context!) as Record<string, unknown>;
     context.showOrder = ++showOrder;
@@ -126,7 +132,7 @@ export function setup(editorId: string): void {
   const existingFiles = container.querySelector<HTMLElement>(".attachment__list__existingFiles");
   if (existingFiles !== null) {
     existingFiles.querySelectorAll("woltlab-core-file").forEach((file) => {
-      fileToAttachment(fileList, file, editor);
+      fileToAttachment(fileList, file, editor, getUploaderToken(uploadButton));
 
       const attachmentShowOrder = file.data?.showOrder;
       if (typeof attachmentShowOrder === "number") {

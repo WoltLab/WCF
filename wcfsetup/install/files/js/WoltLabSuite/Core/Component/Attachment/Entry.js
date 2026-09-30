@@ -3,7 +3,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createAttachmentFromFile = createAttachmentFromFile;
     Listener_1 = tslib_1.__importDefault(Listener_1);
-    function fileInitializationCompleted(element, file, editor) {
+    function fileInitializationCompleted(element, file, editor, uploaderToken) {
         const data = file.data;
         if (data === undefined) {
             throw new Error("No meta data was returned from the server.", {
@@ -80,7 +80,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
             dropdownMenu.append(listItem);
         }
         const listItem = document.createElement("li");
-        listItem.append(getDeleteAttachButton(fileId, data.attachmentID, editor, element, file.filename));
+        listItem.append(getDeleteAttachButton(fileId, data.attachmentID, editor, element, file.filename, uploaderToken));
         dropdownMenu.append(listItem);
         const moreOptions = document.createElement("button");
         moreOptions.classList.add("button", "small");
@@ -98,7 +98,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
             (0, Simple_1.toggleDropdown)(moreOptions.id);
         });
     }
-    function getDeleteAttachButton(fileId, attachmentId, editor, element, filename) {
+    function getDeleteAttachButton(fileId, attachmentId, editor, element, filename, uploaderToken) {
         const button = document.createElement("button");
         button.type = "button";
         button.textContent = (0, Language_1.getPhrase)("wcf.global.button.delete");
@@ -107,7 +107,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
             if (!confirmationResult) {
                 return;
             }
-            (await (0, DeleteFile_1.deleteFile)(fileId)).unwrap();
+            (await (0, DeleteFile_1.deleteFile)(fileId, uploaderToken)).unwrap();
             (0, Event_1.dispatchToCkeditor)(editor).removeAttachment({
                 attachmentId,
             });
@@ -127,7 +127,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
         });
         return button;
     }
-    function createAttachmentFromFile(file, editor) {
+    function createAttachmentFromFile(file, editor, uploaderToken) {
         const element = document.createElement("li");
         element.classList.add("fileList__item", "attachment__item");
         (0, Helper_1.insertFileInformation)(element, file);
@@ -136,7 +136,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
         });
         void file.ready
             .then(() => {
-            fileInitializationCompleted(element, file, editor);
+            fileInitializationCompleted(element, file, editor, uploaderToken);
         })
             .catch((reason) => {
             (0, Helper_1.fileInitializationFailed)(element, file, reason);
