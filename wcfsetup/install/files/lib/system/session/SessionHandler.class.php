@@ -110,6 +110,12 @@ final class SessionHandler extends SingletonFactory
     private bool $receivedXsrfCookie = false;
 
     /**
+     * true once the token of the request was discarded, the `XSRF-TOKEN` cookie
+     * must no longer be read
+     */
+    private bool $xsrfTokenDiscarded = false;
+
+    /**
      * true if the request carried no session, even if one is started during the request
      */
     private bool $startedWithoutSession = false;
@@ -392,6 +398,12 @@ final class SessionHandler extends SingletonFactory
         } elseif ($this->onDemand) {
             $this->initGuest();
             $this->startedWithoutSession = true;
+
+            // Nothing replaces the cookie of a session that no longer exists, it would
+            // otherwise remain until it expires and cost a lookup on every request.
+            if (isset($_COOKIE[\COOKIE_PREFIX . 'user_session'])) {
+                $this->expireCookie();
+            }
         } else {
             $this->create();
         }
@@ -464,7 +476,7 @@ final class SessionHandler extends SingletonFactory
     private function initSecurityToken(): void
     {
         $xsrfToken = '';
-        if (!empty($_COOKIE['XSRF-TOKEN'])) {
+        if (!$this->xsrfTokenDiscarded && !empty($_COOKIE['XSRF-TOKEN'])) {
             // We intentionally do not extract the signed value and instead just verify the correctness.
             //
             // The reason is that common JavaScript frameworks can use the contents of the `XSRF-TOKEN` cookie as-is,
@@ -499,6 +511,24 @@ final class SessionHandler extends SingletonFactory
         }
 
         $this->xsrfToken = $xsrfToken;
+    }
+
+    /**
+     * Discards the token, the next call to `getSecurityToken()` generates a new one.
+     */
+    private function discardSecurityToken(): void
+    {
+        unset($this->xsrfToken);
+        $this->receivedXsrfCookie = false;
+        $this->xsrfTokenDiscarded = true;
+    }
+
+    private function expireXsrfCookie(): void
+    {
+        \header(
+            'set-cookie: XSRF-TOKEN=; path=/; max-age=0' . (RouteHandler::secureConnection() ? '; secure' : ''),
+            false
+        );
     }
 
     private function sendXsrfCookie(string $xsrfToken): void
@@ -765,11 +795,13 @@ final class SessionHandler extends SingletonFactory
 
     /**
      * Creates a new session.
+     *
+     * @param int $cookieExpires expiry of the session cookie, `0` for a cookie that ends with the browser session
      */
-    private function create(): void
+    private function create(int $cookieExpires = 0): void
     {
         $this->initGuest();
-        $this->persist();
+        $this->store($cookieExpires);
     }
 
     /**
@@ -790,9 +822,22 @@ final class SessionHandler extends SingletonFactory
     /**
      * Stores the session and sends the session cookie, unless this already happened.
      *
+     * Sessions are stored implicitly once a variable is registered or the session id is
+     * read. Call this method only if a later request depends on the session cookie being
+     * present, without anything being stored yet.
+     *
      * @throws \LogicException if the headers were already sent
+     * @since 6.3
      */
-    private function persist(): void
+    public function persist(): void
+    {
+        $this->store(0);
+    }
+
+    /**
+     * @param int $cookieExpires expiry of the session cookie, `0` for a cookie that ends with the browser session
+     */
+    private function store(int $cookieExpires): void
     {
         if ($this->isPersisted) {
             return;
@@ -848,7 +893,8 @@ final class SessionHandler extends SingletonFactory
 
         HeaderUtil::setCookie(
             "user_session",
-            $this->getCookieValue()
+            $this->getCookieValue(),
+            $cookieExpires
         );
 
         // Read before the session counts as persisted, otherwise `initSecurityToken()` would send the cookie a second time.
@@ -1190,12 +1236,17 @@ final class SessionHandler extends SingletonFactory
         }
 
         // We must delete the old session to not carry over any state across different users.
-        $this->delete();
+        // On login the cookies are replaced below, expiring them would only add redundant
+        // headers.
+        $this->deleteSession($user->isGuest());
 
         // If the target user is a registered user ...
         if (!$user->isGuest()) {
-            // ... we create a new session with a new session ID ...
-            $this->create();
+            // ... we rotate the XSRF token, a token known before the login must not remain valid ...
+            $this->discardSecurityToken();
+
+            // ... we create a new session with a new session ID and a long-lived cookie ...
+            $this->create(\TIME_NOW + (self::USER_SESSION_LIFETIME + (7 * 86400)));
 
             // ... delete the newly created legacy session ...
             $sql = "DELETE FROM wcf1_session
@@ -1242,13 +1293,6 @@ final class SessionHandler extends SingletonFactory
             if (!$hasSession) {
                 throw new \LogicException('Unreachable');
             }
-
-            // Replace the session-lived cookie by a long-lived cookie.
-            HeaderUtil::setCookie(
-                'user_session',
-                $this->getCookieValue(),
-                \TIME_NOW + (self::USER_SESSION_LIFETIME + (7 * 86400))
-            );
 
             foreach ($saveVars as $key => $value) {
                 $this->register($key, $value);
@@ -1479,6 +1523,11 @@ final class SessionHandler extends SingletonFactory
      */
     public function delete(): void
     {
+        $this->deleteSession(true);
+    }
+
+    private function deleteSession(bool $expireCookies): void
+    {
         // clear storage
         if (!$this->user->isGuest()) {
             self::resetSessions([$this->user->userID]);
@@ -1490,11 +1539,25 @@ final class SessionHandler extends SingletonFactory
 
         if ($this->isPersisted) {
             $this->deleteUserSession($this->sessionID);
+
+            if ($this->onDemand && $expireCookies) {
+                $this->expireCookie();
+                $this->expireXsrfCookie();
+                $this->discardSecurityToken();
+            }
         }
 
         if ($this->onDemand) {
             $this->isPersisted = false;
         }
+    }
+
+    /**
+     * Instructs the client to delete the session cookie.
+     */
+    private function expireCookie(): void
+    {
+        HeaderUtil::setCookie('user_session', '', \TIME_NOW - 86400);
     }
 
     /**
