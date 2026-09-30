@@ -327,11 +327,16 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
     /**
      * Returns true if given user is ignored.
      *
+     * @param  ?int  $userID `null` for content by guests, who cannot be ignored
      * @param  ?int  $type One of the UserIgnore::TYPE_* constants.
      * @return  bool
      */
-    public function isIgnoredUser(int $userID, ?int $type = null)
+    public function isIgnoredUser(?int $userID, ?int $type = null)
     {
+        if ($userID === null) {
+            return false;
+        }
+
         return \in_array($userID, $this->getIgnoredUsers($type), true);
     }
 
