@@ -23,6 +23,8 @@ final class BackgroundQueuePerformAction extends AbstractAction
     #[\Override]
     public function execute(): JsonResponse
     {
+        WCF::getSession()->disablePersistence();
+
         parent::execute();
 
         for ($i = 0; $i < self::$jobsPerRun; $i++) {

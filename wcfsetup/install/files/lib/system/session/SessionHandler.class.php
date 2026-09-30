@@ -55,6 +55,11 @@ final class SessionHandler extends SingletonFactory
     private bool $disableTracking = false;
 
     /**
+     * prevents a guest session that has not been stored yet from being stored
+     */
+    private bool $disablePersistence = false;
+
+    /**
      * group data and permissions
      * @var mixed[][]|null
      */
@@ -481,6 +486,20 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
+     * Prevents a guest session that has not been stored yet from being stored during this
+     * request. Variables can still be registered, but they only exist within the request
+     * and no cookie is sent. Intended for requests that the client issues in the background.
+     *
+     * @since 6.3
+     */
+    public function disablePersistence(): void
+    {
+        if (!$this->isPersisted) {
+            $this->disablePersistence = true;
+        }
+    }
+
+    /**
      * Initializes security token.
      */
     private function initSecurityToken(): void
@@ -856,6 +875,13 @@ final class SessionHandler extends SingletonFactory
     private function store(int $cookieExpires): void
     {
         if ($this->isPersisted) {
+            return;
+        }
+
+        if ($this->disablePersistence) {
+            // Code reading the session id still receives one, it is just never stored.
+            $this->sessionID ??= $this->generateSessionID();
+
             return;
         }
 
