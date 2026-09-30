@@ -603,6 +603,12 @@ final class SessionHandler extends SingletonFactory
      */
     private function isSameOriginRequest(): bool
     {
+        // Links and images in user generated content are same-origin too, only methods
+        // that links and images cannot issue may pass.
+        if (!\in_array($_SERVER['REQUEST_METHOD'] ?? '', ['POST', 'PUT', 'PATCH', 'DELETE'], true)) {
+            return false;
+        }
+
         $fetchSite = $_SERVER['HTTP_SEC_FETCH_SITE'] ?? '';
         if ($fetchSite !== '') {
             return $fetchSite === 'same-origin';
