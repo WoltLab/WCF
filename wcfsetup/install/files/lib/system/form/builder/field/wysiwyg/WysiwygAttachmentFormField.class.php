@@ -2,13 +2,11 @@
 
 namespace wcf\system\form\builder\field\wysiwyg;
 
-use ParagonIE\ConstantTime\Hex;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\TWysiwygFormNode;
-use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
 /**
@@ -58,23 +56,12 @@ final class WysiwygAttachmentFormField extends AbstractFormField
     {
         if ($attachmentHandler !== null) {
             if ($this->attachmentHandler === null) {
-                if (WCF::getUser()->isGuest()) {
-                    // Reading the session id would start an on-demand session merely by rendering
-                    // the form. The random value is carried by the form instead, at the expense of
-                    // the uploads being lost when the guest reloads the page.
-                    $identifier = SessionHandler::hasOnDemandGuestSessions()
-                        ? Hex::encode(\random_bytes(20))
-                        : WCF::getSession()->sessionID;
-                } else {
-                    $identifier = WCF::getUser()->userID;
-                }
-
                 $tmpHash = \sha1(\implode("\0", [
                     $this->getId(),
                     $attachmentHandler->getObjectType()->objectType,
                     $attachmentHandler->getParentObjectID(),
                     $attachmentHandler->getObjectID(),
-                    $identifier,
+                    AttachmentHandler::getTmpHashIdentifier(),
                 ]));
 
                 if ($this->getDocument()->isAjax()) {

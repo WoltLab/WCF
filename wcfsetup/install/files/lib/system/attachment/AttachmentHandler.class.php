@@ -2,6 +2,7 @@
 
 namespace wcf\system\attachment;
 
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\attachment\AttachmentBuilder;
 use wcf\data\attachment\AttachmentList;
 use wcf\data\object\type\ObjectType;
@@ -10,6 +11,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\file\processor\AttachmentFileProcessor;
 use wcf\system\file\processor\FileProcessor;
+use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
 /**
@@ -161,6 +163,29 @@ class AttachmentHandler implements \Countable
         } else {
             $conditions->add('userID = ?', [$userID]);
         }
+    }
+
+    /**
+     * Returns the per-user component of a deterministic tmpHash. For logged-in users this
+     * is public data, so `addUploaderCondition()` is what blocks claiming by third parties.
+     *
+     * Guests with on-demand sessions receive a random value, because reading the session id
+     * would start a session merely by rendering the form. The form must carry that tmpHash,
+     * and uploads are lost when the guest reloads the page.
+     *
+     * @since 6.3
+     */
+    public static function getTmpHashIdentifier(): string
+    {
+        if (!WCF::getUser()->isGuest()) {
+            return (string)WCF::getUser()->userID;
+        }
+
+        if (SessionHandler::hasOnDemandGuestSessions()) {
+            return Hex::encode(\random_bytes(20));
+        }
+
+        return WCF::getSession()->sessionID;
     }
 
     /**
