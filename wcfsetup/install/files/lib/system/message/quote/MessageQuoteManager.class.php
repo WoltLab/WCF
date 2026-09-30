@@ -459,6 +459,12 @@ final class MessageQuoteManager extends SingletonFactory
      */
     protected function updateSession(): void
     {
+        // Guests never receive the list, see `headIncludeJavaScript.tpl`, storing it
+        // would only start a session.
+        if (WCF::getUser()->isGuest()) {
+            return;
+        }
+
         WCF::getSession()->register('__messageQuotes', [
             'removeQuoteIDs' => $this->removeQuoteIDs,
         ]);
