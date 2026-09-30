@@ -635,6 +635,17 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
+     * Returns the session tracked for the users online list or `null` if there is none,
+     * which applies to the ACP and to guests with on-demand sessions.
+     *
+     * @since 6.3
+     */
+    public function getLegacySession(): ?LegacySession
+    {
+        return $this->legacySession;
+    }
+
+    /**
      * Tries to read existing session identified by the given session id. Returns whether
      * a session could be found.
      */
