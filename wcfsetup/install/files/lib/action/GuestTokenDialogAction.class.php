@@ -42,6 +42,10 @@ final class GuestTokenDialogAction implements RequestHandlerInterface
 
             $data = $form->getData()['data'];
 
+            // Dialogs do not invoke `saved()`, the captcha would otherwise remain solved and
+            // could be replayed for further tokens.
+            $form->cleanup();
+
             return new JsonResponse([
                 'result' => [
                     'token' => UserUtil::createGuestToken($data['username']),
