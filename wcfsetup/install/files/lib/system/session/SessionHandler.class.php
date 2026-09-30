@@ -120,6 +120,12 @@ final class SessionHandler extends SingletonFactory
      */
     private bool $startedWithoutSession = false;
 
+    /**
+     * result of the spider detection for guests without a legacy session, `false` if the
+     * visitor is not a spider
+     */
+    private string|false $detectedSpiderIdentifier;
+
     private const GUEST_SESSION_LIFETIME = 2 * 3600;
 
     private const USER_SESSION_LIFETIME = 60 * 86400;
@@ -161,7 +167,11 @@ final class SessionHandler extends SingletonFactory
                     return null;
                 }
 
-                return $this->legacySession?->spiderIdentifier;
+                if ($this->legacySession !== null) {
+                    return $this->legacySession->spiderIdentifier;
+                }
+
+                return $this->detectSpider();
             case 'pageID':
             case 'pageObjectID':
             case 'parentPageID':
@@ -1618,11 +1628,23 @@ final class SessionHandler extends SingletonFactory
         $this->languageID = $languageID;
 
         // Spiders follow the links of the language chooser, each of them would start a session.
-        if (!$this->isPersisted && SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent()) !== null) {
+        if (!$this->isPersisted && $this->detectSpider() !== null) {
             return;
         }
 
         $this->register('languageID', $this->languageID);
+    }
+
+    /**
+     * Guests with on-demand sessions have no legacy session that stores the identifier.
+     */
+    private function detectSpider(): ?string
+    {
+        if (!isset($this->detectedSpiderIdentifier)) {
+            $this->detectedSpiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent()) ?? false;
+        }
+
+        return $this->detectedSpiderIdentifier === false ? null : $this->detectedSpiderIdentifier;
     }
 
     /**
