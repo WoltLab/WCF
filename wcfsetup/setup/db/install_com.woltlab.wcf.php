@@ -1598,6 +1598,26 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    DatabaseTable::create('wcf1_file_uploader_token')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('fileID'),
+            BinaryDatabaseTableColumn::create('tokenHash')
+                ->length(16),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['fileID']),
+            DatabaseTableIndex::create('tokenHash')
+                ->columns(['tokenHash']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['fileID'])
+                ->referencedTable('wcf1_file')
+                ->referencedColumns(['fileID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
     /*
         As the flood control table can be a high traffic table and as it is
         periodically emptied, there is no foreign key on the `objectTypeID`

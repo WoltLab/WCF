@@ -222,4 +222,34 @@ interface IFileProcessor
      * @since 6.3
      */
     public function serveSvgStatically(): bool;
+
+    /**
+     * Opts into the tracking of ownership through a secret token that is only
+     * known to the uploader, see `UploaderToken`. The form field adds the token
+     * to the `$context` and it is sent along when the uploader deletes or
+     * downloads one of the files.
+     *
+     * Use this instead of the session to track the files of guests, their
+     * session is only started on demand and parallel uploads would otherwise
+     * each start a session of their own.
+     *
+     * @since 6.3
+     */
+    public function usesUploaderToken(): bool;
+
+    /**
+     * Validates that the uploader identified by `$uploaderToken` can delete
+     * this file. Only invoked for requests that carry a token.
+     *
+     * @since 6.3
+     */
+    public function canDeleteWithUploaderToken(File $file, string $uploaderToken): bool;
+
+    /**
+     * Validates that the uploader identified by `$uploaderToken` may download
+     * this file. Only invoked for requests that carry a token.
+     *
+     * @since 6.3
+     */
+    public function canDownloadWithUploaderToken(File $file, string $uploaderToken): bool;
 }

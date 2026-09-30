@@ -14,6 +14,7 @@ use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\UserInputException;
 use wcf\system\file\processor\FileProcessor;
+use wcf\system\file\processor\UploaderToken;
 use wcf\system\io\File;
 
 /**
@@ -150,13 +151,18 @@ final class SaveChunk implements IController
                 $data = $processor->getUploadResponse($file);
             }
 
+            $uploaderToken = null;
+            if ($processor !== null && $processor->usesUploaderToken()) {
+                $uploaderToken = UploaderToken::fromContext($context);
+            }
+
             return new JsonResponse([
                 'completed' => true,
                 'generateThumbnails' => $generateThumbnails,
                 'fileID' => $file->fileID,
                 'objectTypeID' => $file->objectTypeID,
                 'mimeType' => $file->mimeType,
-                'link' => $file->getLink(),
+                'link' => $uploaderToken === null ? $file->getLink() : $file->getLinkWithUploaderToken($uploaderToken),
                 'data' => $data,
             ]);
         }

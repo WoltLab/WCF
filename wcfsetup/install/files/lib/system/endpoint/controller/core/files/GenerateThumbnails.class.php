@@ -30,7 +30,16 @@ final class GenerateThumbnails implements IController
     {
         $file = Helper::fetchObjectFromRequestParameter($variables['id'], File::class);
 
-        $this->assertCanGenerateThumbnails($file);
+        $parameters = Helper::mapQueryParameters(
+            $request->getQueryParams(),
+            <<<'EOT'
+                array {
+                    uploaderToken?: non-empty-string
+                }
+                EOT,
+        );
+
+        $this->assertCanGenerateThumbnails($file, $parameters['uploaderToken'] ?? null);
 
         $file = FileProcessor::getInstance()->stripExif($file);
         $file = FileProcessor::getInstance()->generateWebpVariant($file);
@@ -53,14 +62,20 @@ final class GenerateThumbnails implements IController
         ]);
     }
 
-    private function assertCanGenerateThumbnails(File $file): void
+    private function assertCanGenerateThumbnails(File $file, ?string $uploaderToken): void
     {
         $processor = $file->getProcessor();
         if ($processor === null) {
             throw new PermissionDeniedException();
         }
 
-        if (!$processor->canDelete($file)) {
+        if ($uploaderToken !== null) {
+            $canDelete = $processor->canDeleteWithUploaderToken($file, $uploaderToken);
+        } else {
+            $canDelete = $processor->canDelete($file);
+        }
+
+        if (!$canDelete) {
             throw new PermissionDeniedException();
         }
     }

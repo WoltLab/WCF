@@ -3,7 +3,6 @@
 namespace wcf\system\file\processor;
 
 use wcf\data\file\File;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\FileUtil;
@@ -16,14 +15,15 @@ use wcf\util\FileUtil;
  */
 final class ContactFormFileProcessor extends AbstractFileProcessor
 {
-    private const SESSION_VARIABLE_PREFIX = 'contact_form_file_processor_';
-    private const SESSION_VARIABLE = self::SESSION_VARIABLE_PREFIX . '%d';
-
     #[\Override]
     public function acceptUpload(string $filename, int $fileSize, array $context): FileProcessorPreflightResult
     {
         if (\CONTACT_FORM_ENABLE_ATTACHMENTS === 0) {
             return FileProcessorPreflightResult::InsufficientPermissions;
+        }
+
+        if (UploaderToken::fromContext($context) === null) {
+            return FileProcessorPreflightResult::InvalidContext;
         }
 
         if ($fileSize > $this->getMaximumSize($context)) {
@@ -40,15 +40,33 @@ final class ContactFormFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function canAdopt(File $file, array $context): bool
     {
-        return true;
+        $uploaderToken = UploaderToken::fromContext($context);
+        if ($uploaderToken === null) {
+            return false;
+        }
+
+        // The file is claimed by `adopt()`, which is invoked right after this check
+        // once the upload has been completed.
+        if (UploaderToken::isUnclaimed($file)) {
+            return true;
+        }
+
+        return UploaderToken::matches($file, $uploaderToken);
     }
 
     #[\Override]
     public function adopt(File $file, array $context): void
     {
-        // Save the `fileID` in the session variable so that the current user can download or delete it.
-        WCF::getSession()->register(\sprintf(self::SESSION_VARIABLE, $file->fileID), \TIME_NOW);
-        WCF::getSession()->update();
+        $uploaderToken = UploaderToken::fromContext($context);
+        if ($uploaderToken !== null) {
+            UploaderToken::store($file, $uploaderToken);
+        }
+    }
+
+    #[\Override]
+    public function usesUploaderToken(): bool
+    {
+        return true;
     }
 
     #[\Override]
@@ -80,56 +98,47 @@ final class ContactFormFileProcessor extends AbstractFileProcessor
     #[\Override]
     public function canDelete(File $file): bool
     {
-        return WCF::getSession()->getVar(
-            \sprintf(self::SESSION_VARIABLE, $file->fileID)
-        ) !== null;
+        // Only the uploader can delete a file, identified by their token.
+        return false;
+    }
+
+    #[\Override]
+    public function canDeleteWithUploaderToken(File $file, string $uploaderToken): bool
+    {
+        return UploaderToken::matches($file, $uploaderToken);
     }
 
     #[\Override]
     public function canDownload(File $file): bool
     {
-        if (WCF::getSession()->hasPermission('admin.contact.canManageContactForm')) {
+        return WCF::getSession()->hasPermission('admin.contact.canManageContactForm');
+    }
+
+    #[\Override]
+    public function canDownloadWithUploaderToken(File $file, string $uploaderToken): bool
+    {
+        if ($this->canDownload($file)) {
             return true;
         }
 
-        return WCF::getSession()->getVar(
-            \sprintf(self::SESSION_VARIABLE, $file->fileID)
-        ) !== null;
+        return UploaderToken::matches($file, $uploaderToken);
     }
 
     #[\Override]
     public function countExistingFiles(array $context): int
     {
-        $fileIDs = $this->getFileIDsFromSession();
-        if ($fileIDs === []) {
+        $uploaderToken = UploaderToken::fromContext($context);
+        if ($uploaderToken === null) {
             return 0;
         }
 
-        $objectTypeID = FileProcessor::getInstance()->getObjectType($this->getObjectTypeName())?->objectTypeID;
-        if ($objectTypeID === null) {
-            return 0;
-        }
-
-        // The session may reference files that have already been deleted or
-        // that were pruned by `FileCleanUpCronjob`, those must not count
-        // towards the limit.
-        $conditionBuilder = new PreparedStatementConditionBuilder();
-        $conditionBuilder->add('fileID IN (?)', [$fileIDs]);
-        $conditionBuilder->add('objectTypeID = ?', [$objectTypeID]);
-
-        $sql = "SELECT  COUNT(*)
-                FROM    wcf1_file
-                {$conditionBuilder}";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditionBuilder->getParameters());
-
-        return (int)$statement->fetchSingleColumn();
+        return UploaderToken::countFiles($uploaderToken);
     }
 
     #[\Override]
     public function delete(array $fileIDs, array $thumbnailIDs): void
     {
-        $this->unregisterFiles($fileIDs);
+        // The records of the uploader tokens are deleted along with the files.
     }
 
     #[\Override]
@@ -139,47 +148,14 @@ final class ContactFormFileProcessor extends AbstractFileProcessor
     }
 
     /**
-     * Releases the claim of the current user on the files of a message that
-     * has been submitted. The files are retained until they are pruned, but
-     * they must not count towards the upload limit of any future message.
+     * Releases the claim of the uploader on the files of a message that has been
+     * submitted. The files are retained until they are pruned, but they can no
+     * longer be deleted by the uploader or be adopted by another message.
      *
      * @param list<int> $fileIDs
      */
     public function releaseFiles(array $fileIDs): void
     {
-        $this->unregisterFiles($fileIDs);
-
-        // `WCF::destruct()` writes the session only after the response has been
-        // flushed, therefore the redirect could otherwise race the removal.
-        WCF::getSession()->update();
-    }
-
-    /**
-     * @param list<int> $fileIDs
-     */
-    private function unregisterFiles(array $fileIDs): void
-    {
-        foreach ($fileIDs as $fileID) {
-            WCF::getSession()->unregister(
-                \sprintf(self::SESSION_VARIABLE, $fileID)
-            );
-        }
-    }
-
-    /**
-     * @return list<int>
-     */
-    private function getFileIDsFromSession(): array
-    {
-        $fileIDs = [];
-        foreach (\array_keys(WCF::getSession()->getVariables()) as $key) {
-            if (!\str_starts_with($key, self::SESSION_VARIABLE_PREFIX)) {
-                continue;
-            }
-
-            $fileIDs[] = (int)\substr($key, \strlen(self::SESSION_VARIABLE_PREFIX));
-        }
-
-        return $fileIDs;
+        UploaderToken::release($fileIDs);
     }
 }

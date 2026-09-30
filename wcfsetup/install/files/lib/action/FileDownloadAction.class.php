@@ -37,7 +37,8 @@ final class FileDownloadAction implements RequestHandlerInterface
             $request->getQueryParams(),
             <<<'EOT'
                 array {
-                    id: positive-int
+                    id: positive-int,
+                    uploaderToken?: non-empty-string
                 }
                 EOT,
         );
@@ -52,7 +53,14 @@ final class FileDownloadAction implements RequestHandlerInterface
             throw new IllegalLinkException();
         }
 
-        if (!$processor->canDownload($file)) {
+        $uploaderToken = $parameters['uploaderToken'] ?? null;
+        if ($uploaderToken !== null) {
+            $canDownload = $processor->canDownloadWithUploaderToken($file, $uploaderToken);
+        } else {
+            $canDownload = $processor->canDownload($file);
+        }
+
+        if (!$canDownload) {
             throw new PermissionDeniedException();
         }
 

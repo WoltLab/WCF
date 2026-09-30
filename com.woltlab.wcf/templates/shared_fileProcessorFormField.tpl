@@ -1,18 +1,21 @@
 {unsafe:$fileProcessorHtmlElement}
+{if $uploaderToken !== null}
+	<input type="hidden" id="{$field->getPrefixedId()}_uploaderToken" name="{$field->getPrefixedId()}_uploaderToken" value="{$uploaderToken}">
+{/if}
 
 {assign var="files" value=$field->getFiles()}
 {if $field->isBigPreview()}
 	<div class="fileUpload__preview">
 		{if $field->getValue()}
 			{assign var="file" value=$files|reset}
-			{unsafe:$file->toHtmlElement()}
+			{unsafe:$file->toHtmlElement(null, $uploaderToken)}
 		{/if}
 	</div>
 {else}
 	<ul class="fileList">
 		{foreach from=$files item=file}
 			<li class="fileList__item">
-				{unsafe:$file->toHtmlElement()}
+				{unsafe:$file->toHtmlElement(null, $uploaderToken)}
 			</li>
 		{/foreach}
 	</ul>

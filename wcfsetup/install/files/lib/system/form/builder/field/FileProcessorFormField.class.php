@@ -8,6 +8,7 @@ use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\data\IStorableObject;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\IFileProcessor;
+use wcf\system\file\processor\UploaderToken;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
@@ -53,6 +54,11 @@ final class FileProcessorFormField extends AbstractFormField
     private ?string $thumbnailSize = null;
 
     /**
+     * secret token of the uploader if the processor opts into `IFileProcessor::usesUploaderToken()`
+     */
+    private ?string $uploaderToken = null;
+
+    /**
      * @var list<array{
      *  actionName: string,
      *  title: string,
@@ -66,6 +72,15 @@ final class FileProcessorFormField extends AbstractFormField
     #[\Override]
     public function readValue()
     {
+        // The token must survive the submit, the files were uploaded with it.
+        $uploaderTokenId = $this->getPrefixedId() . '_uploaderToken';
+        if ($this->getDocument()->hasRequestData($uploaderTokenId)) {
+            $uploaderToken = $this->getDocument()->getRequestData($uploaderTokenId);
+            if (UploaderToken::isValid($uploaderToken)) {
+                $this->uploaderToken = $uploaderToken;
+            }
+        }
+
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
             $value = $this->getDocument()->getRequestData($this->getPrefixedId());
 
@@ -88,14 +103,17 @@ final class FileProcessorFormField extends AbstractFormField
     #[\Override]
     public function getHtmlVariables()
     {
+        $context = $this->getProcessorContext();
+
         return [
             'fileProcessorHtmlElement' => FileProcessor::getInstance()->getHtmlElement(
                 $this->getFileProcessor(),
-                $this->context
+                $context
             ),
-            'maxUploads' => $this->getFileProcessor()->getMaximumCount($this->context),
+            'maxUploads' => $this->getFileProcessor()->getMaximumCount($context),
             'actionButtons' => $this->actionButtons,
             'simpleReplace' => $this->simpleReplace,
+            'uploaderToken' => $this->getUploaderToken(),
         ];
     }
 
@@ -227,8 +245,9 @@ final class FileProcessorFormField extends AbstractFormField
         }
 
         $fileProcessor = $this->getFileProcessor();
+        $context = $this->getProcessorContext();
 
-        $maximumCount = $fileProcessor->getMaximumCount($this->context);
+        $maximumCount = $fileProcessor->getMaximumCount($context);
         if ($maximumCount !== null && \count($this->files) > $maximumCount) {
             $this->addValidationError(
                 new FormFieldValidationError(
@@ -243,7 +262,7 @@ final class FileProcessorFormField extends AbstractFormField
         }
 
         foreach ($this->files as $file) {
-            if (!FileProcessor::getInstance()->canAdopt($fileProcessor, $file, $this->context)) {
+            if (!FileProcessor::getInstance()->canAdopt($fileProcessor, $file, $context)) {
                 $this->addValidationError(
                     new FormFieldValidationError(
                         'adopt',
@@ -277,6 +296,39 @@ final class FileProcessorFormField extends AbstractFormField
         ];
 
         return $this;
+    }
+
+    /**
+     * Returns the token of the uploader or `null` if the processor does not use it.
+     */
+    private function getUploaderToken(): ?string
+    {
+        if (!$this->getFileProcessor()->usesUploaderToken()) {
+            return null;
+        }
+
+        $this->uploaderToken ??= UploaderToken::generate();
+
+        return $this->uploaderToken;
+    }
+
+    /**
+     * Returns the context that is passed to the file processor, including the
+     * token of the uploader.
+     *
+     * @return array<string, mixed>
+     */
+    private function getProcessorContext(): array
+    {
+        $uploaderToken = $this->getUploaderToken();
+        if ($uploaderToken === null) {
+            return $this->context;
+        }
+
+        return [
+            ...$this->context,
+            UploaderToken::CONTEXT_KEY => $uploaderToken,
+        ];
     }
 
     /**

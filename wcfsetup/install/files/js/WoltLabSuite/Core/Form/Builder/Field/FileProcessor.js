@@ -16,9 +16,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Form/Builder/Field/Fie
             if (value === undefined) {
                 return {};
             }
-            return {
+            const data = {
                 [this._fieldId]: value,
             };
+            // The files were uploaded with the token, the server must receive it again.
+            const uploaderToken = document.getElementById(`${this._fieldId}_uploaderToken`);
+            if (uploaderToken !== null) {
+                data[`${this._fieldId}_uploaderToken`] = uploaderToken.value;
+            }
+            return data;
         }
         _readField() {
             // does nothing

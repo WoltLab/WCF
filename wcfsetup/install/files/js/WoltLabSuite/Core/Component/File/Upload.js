@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk", "WoltLabSuite/Core/Api/Files/GenerateThumbnails", "WoltLabSuite/Core/Image/Resizer", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "hash-wasm", "WoltLabSuite/Core/Component/Image/Cropper", "WoltLabSuite/Core/Image/ExifUtil"], function (require, exports, tslib_1, Selector_1, Upload_1, Chunk_1, GenerateThumbnails_1, Resizer_1, Util_1, Language_1, hash_wasm_1, Cropper_1, ExifUtil_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Api/Files/Upload", "WoltLabSuite/Core/Api/Files/Chunk/Chunk", "WoltLabSuite/Core/Api/Files/GenerateThumbnails", "WoltLabSuite/Core/Component/File/Helper", "WoltLabSuite/Core/Image/Resizer", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "hash-wasm", "WoltLabSuite/Core/Component/Image/Cropper", "WoltLabSuite/Core/Image/ExifUtil"], function (require, exports, tslib_1, Selector_1, Upload_1, Chunk_1, GenerateThumbnails_1, Helper_1, Resizer_1, Util_1, Language_1, hash_wasm_1, Cropper_1, ExifUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.clearPreviousErrors = clearPreviousErrors;
@@ -36,7 +36,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 throw new Error("Unexpected validation error", { cause: response.error });
             }
             notifyChunkProgress(fileElement, i + 1, numberOfChunks);
-            await chunkUploadCompleted(fileElement, response.value);
+            await chunkUploadCompleted(fileElement, response.value, (0, Helper_1.getUploaderToken)(element));
             if (response.value.completed) {
                 return response.value;
             }
@@ -53,13 +53,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         });
         element.dispatchEvent(event);
     }
-    async function chunkUploadCompleted(fileElement, result) {
+    async function chunkUploadCompleted(fileElement, result, uploaderToken) {
         if (!result.completed) {
             return;
         }
         fileElement.uploadCompleted(result.fileID, result.mimeType, result.link, result.data, result.generateThumbnails);
         if (result.generateThumbnails) {
-            const { filename, fileSize, mimeType, thumbnails } = (await (0, GenerateThumbnails_1.generateThumbnails)(result.fileID)).unwrap();
+            const { filename, fileSize, mimeType, thumbnails } = (await (0, GenerateThumbnails_1.generateThumbnails)(result.fileID, uploaderToken)).unwrap();
             fileElement.setThumbnails(thumbnails);
             fileElement.updateFileData(filename, fileSize, mimeType);
         }

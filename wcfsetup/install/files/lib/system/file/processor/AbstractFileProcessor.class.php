@@ -136,4 +136,22 @@ abstract class AbstractFileProcessor implements IFileProcessor
         // You MUST NOT enable this for unprivileged uploads.
         return false;
     }
+
+    #[\Override]
+    public function usesUploaderToken(): bool
+    {
+        return false;
+    }
+
+    #[\Override]
+    public function canDeleteWithUploaderToken(File $file, string $uploaderToken): bool
+    {
+        return $this->canDelete($file);
+    }
+
+    #[\Override]
+    public function canDownloadWithUploaderToken(File $file, string $uploaderToken): bool
+    {
+        return $this->canDownload($file);
+    }
 }

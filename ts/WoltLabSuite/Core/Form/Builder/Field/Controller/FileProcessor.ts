@@ -11,6 +11,7 @@ import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 import DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 import {
   getErrorMessageFromFile,
+  getUploaderToken,
   insertFileInformation,
   removeUploadProgress,
   trackUploadProgress,
@@ -212,7 +213,7 @@ export class FileProcessor {
         return;
       }
 
-      const result = await deleteFile(element.fileId!);
+      const result = await deleteFile(element.fileId!, getUploaderToken(this.#uploadButton));
       if (result.ok) {
         this.#unregisterFile(element);
 
@@ -312,7 +313,7 @@ export class FileProcessor {
     element.ready
       .then(() => {
         if (this.#replaceElement !== undefined) {
-          void deleteFile(this.#replaceElement.fileId!);
+          void deleteFile(this.#replaceElement.fileId!, getUploaderToken(this.#uploadButton));
           this.#replaceElement = undefined;
         }
         this.#fileInitializationCompleted(element, container!, notifyCallback);

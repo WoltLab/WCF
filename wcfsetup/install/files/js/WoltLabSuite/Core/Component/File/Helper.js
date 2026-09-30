@@ -1,12 +1,25 @@
 define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/FileUtil", "WoltLabSuite/Core/Component/File/woltlab-core-file"], function (require, exports, Language_1, FileUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.getUploaderToken = getUploaderToken;
     exports.trackUploadProgress = trackUploadProgress;
     exports.removeUploadProgress = removeUploadProgress;
     exports.getErrorMessageFromFile = getErrorMessageFromFile;
     exports.fileInitializationFailed = fileInitializationFailed;
     exports.insertFileInformation = insertFileInformation;
     exports.updateFileInformation = updateFileInformation;
+    /**
+     * Returns the secret token of the uploader that the server added to the context
+     * of the upload element, if the file processor uses one.
+     */
+    function getUploaderToken(element) {
+        const context = element.dataset.context;
+        if (!context) {
+            return undefined;
+        }
+        const uploaderToken = JSON.parse(context).uploaderToken;
+        return typeof uploaderToken === "string" ? uploaderToken : undefined;
+    }
     function trackUploadProgress(element, file) {
         const progress = document.createElement("progress");
         progress.classList.add("fileList__item__progress__bar");

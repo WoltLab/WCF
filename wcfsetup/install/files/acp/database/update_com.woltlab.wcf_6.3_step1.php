@@ -241,6 +241,26 @@ return [
             DatabaseTableIndex::create('expires')
                 ->columns(['expires']),
         ]),
+    DatabaseTable::create('wcf1_file_uploader_token')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('fileID'),
+            BinaryDatabaseTableColumn::create('tokenHash')
+                ->length(16),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['fileID']),
+            DatabaseTableIndex::create('tokenHash')
+                ->columns(['tokenHash']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['fileID'])
+                ->referencedTable('wcf1_file')
+                ->referencedColumns(['fileID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
     DatabaseTable::create('wcf1_user_rank_l10n')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('rankID'),

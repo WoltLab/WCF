@@ -158,7 +158,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                 if (!(await (0, Confirmation_1.confirmationFactory)().delete())) {
                     return;
                 }
-                const result = await (0, DeleteFile_1.deleteFile)(element.fileId);
+                const result = await (0, DeleteFile_1.deleteFile)(element.fileId, (0, Helper_1.getUploaderToken)(this.#uploadButton));
                 if (result.ok) {
                     this.#unregisterFile(element);
                     notifyValueChange(this.#fieldId, this.values);
@@ -242,7 +242,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             element.ready
                 .then(() => {
                 if (this.#replaceElement !== undefined) {
-                    void (0, DeleteFile_1.deleteFile)(this.#replaceElement.fileId);
+                    void (0, DeleteFile_1.deleteFile)(this.#replaceElement.fileId, (0, Helper_1.getUploaderToken)(this.#uploadButton));
                     this.#replaceElement = undefined;
                 }
                 this.#fileInitializationCompleted(element, container, notifyCallback);

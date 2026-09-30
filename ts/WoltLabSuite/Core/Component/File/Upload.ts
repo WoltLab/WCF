@@ -7,6 +7,7 @@ import {
   uploadChunk,
 } from "WoltLabSuite/Core/Api/Files/Chunk/Chunk";
 import { generateThumbnails } from "WoltLabSuite/Core/Api/Files/GenerateThumbnails";
+import { getUploaderToken } from "WoltLabSuite/Core/Component/File/Helper";
 import ImageResizer from "WoltLabSuite/Core/Image/Resizer";
 import { AttachmentData } from "../Ckeditor/Attachment";
 import { innerError } from "WoltLabSuite/Core/Dom/Util";
@@ -100,7 +101,7 @@ async function upload(
 
     notifyChunkProgress(fileElement, i + 1, numberOfChunks);
 
-    await chunkUploadCompleted(fileElement, response.value);
+    await chunkUploadCompleted(fileElement, response.value, getUploaderToken(element));
 
     if (response.value.completed) {
       return response.value;
@@ -121,7 +122,11 @@ function notifyChunkProgress(element: WoltlabCoreFileElement, currentChunk: numb
   element.dispatchEvent(event);
 }
 
-async function chunkUploadCompleted(fileElement: WoltlabCoreFileElement, result: UploadChunkResponse): Promise<void> {
+async function chunkUploadCompleted(
+  fileElement: WoltlabCoreFileElement,
+  result: UploadChunkResponse,
+  uploaderToken: string | undefined,
+): Promise<void> {
   if (!result.completed) {
     return;
   }
@@ -129,7 +134,7 @@ async function chunkUploadCompleted(fileElement: WoltlabCoreFileElement, result:
   fileElement.uploadCompleted(result.fileID, result.mimeType, result.link, result.data, result.generateThumbnails);
 
   if (result.generateThumbnails) {
-    const { filename, fileSize, mimeType, thumbnails } = (await generateThumbnails(result.fileID)).unwrap();
+    const { filename, fileSize, mimeType, thumbnails } = (await generateThumbnails(result.fileID, uploaderToken)).unwrap();
     fileElement.setThumbnails(thumbnails);
     fileElement.updateFileData(filename, fileSize, mimeType);
   }
