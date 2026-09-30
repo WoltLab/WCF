@@ -3350,6 +3350,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 	</category>
 	<category name="wcf.captcha.question">
 		<item name="wcf.captcha.question.answer.error.false"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine falsche Antwort angegeben.]]></item>
+		<item name="wcf.captcha.question.answer.error.invalid"><![CDATA[Diese Frage ist nicht mehr gültig, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beantworte{else}beantworten Sie{/if} die neue Frage.]]></item>
 		<item name="wcf.captcha.question.captcha.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Beantworte{else}Beantworten Sie{/if} die obenstehende Frage bzw. {if LANGUAGE_USE_INFORMAL_VARIANT}löse{else}lösen Sie{/if} die Aufgabe.]]></item>
 	</category>
 	<category name="wcf.captcha.recaptchaV2">

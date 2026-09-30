@@ -194,7 +194,7 @@ final class CaptchaQuestionHandler implements ICaptchaHandler
         }
 
         if ($questionID === null || !isset($this->questions[$questionID])) {
-            throw new UserInputException('captchaAnswer');
+            throw new UserInputException('captchaAnswer', 'invalid');
         }
 
         $this->question = new CaptchaQuestionEditor($this->questions[$questionID]);
@@ -215,7 +215,10 @@ final class CaptchaQuestionHandler implements ICaptchaHandler
         }
 
         if ($token !== null && !$this->markTokenAsUsed($token)) {
-            throw new UserInputException('captchaAnswer');
+            // This token can no longer be answered, so the re-rendered form must ask a new question.
+            unset($this->question);
+
+            throw new UserInputException('captchaAnswer', 'invalid');
         }
 
         $this->question->updateCounters([

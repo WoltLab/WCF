@@ -3275,6 +3275,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	</category>
 	<category name="wcf.captcha.question">
 		<item name="wcf.captcha.question.answer.error.false"><![CDATA[The entered answer is incorrect.]]></item>
+		<item name="wcf.captcha.question.answer.error.invalid"><![CDATA[This question is no longer valid. Please answer the new question.]]></item>
 		<item name="wcf.captcha.question.captcha.description"><![CDATA[Please answer the question respectively to solve the problem above.]]></item>
 	</category>
 	<category name="wcf.captcha.recaptchaV2">
