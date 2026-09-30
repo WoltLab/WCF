@@ -1558,6 +1558,14 @@ final class SessionHandler extends SingletonFactory
         }
 
         if ($this->onDemand) {
+            // A session that is started later in this request must not inherit the state
+            // of the deleted one.
+            $this->variables = [
+                'frontend' => [],
+                'acp' => [],
+            ];
+            $this->variablesChanged = false;
+            $this->legacySession = null;
             $this->isPersisted = false;
         }
     }
