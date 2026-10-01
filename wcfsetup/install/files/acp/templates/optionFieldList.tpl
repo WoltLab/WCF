@@ -21,7 +21,7 @@
 							{icon name='shield-halved'}
 						</span>
 					{/if}
-					{lang}{$langPrefix}{$option->optionName}{/lang}
+					{if $optionData[title]|isset}{$optionData[title]}{else}{lang}{$langPrefix}{$option->optionName}{/lang}{/if}
 
 					{event name='afterOptionName'}
 				</label>
@@ -37,7 +37,7 @@
 					{/if}
 				</small>
 			{/if}
-			<small>{lang __optional=true}{$langPrefix}{$option->optionName}.description{/lang}</small>
+			<small>{if $optionData[description]|isset}{$optionData[description]}{else}{lang __optional=true}{$langPrefix}{$option->optionName}.description{/lang}{/if}</small>
 		</dd>
 	</dl>
 {/foreach}

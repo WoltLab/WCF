@@ -117,7 +117,7 @@
 									{if $userProfile->getUserOption($__sidebarUserOption)}
 										{assign var='__formattedUserOption' value=$userProfile->getFormattedUserOption($__sidebarUserOption)}
 										{if $__formattedUserOption}
-											<dt>{lang}wcf.user.option.{$__sidebarUserOption}{/lang}</dt>
+											<dt>{$userProfile->getUserOptionTitle($__sidebarUserOption)}</dt>
 											<dd>{unsafe:$__formattedUserOption}</dd>
 										{/if}
 									{/if}

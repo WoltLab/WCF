@@ -3,6 +3,8 @@
 namespace wcf\system\option;
 
 use wcf\data\option\Option;
+use wcf\data\user\option\UserOption;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -59,10 +61,18 @@ class UseroptionsOptionType extends AbstractOptionType
             $userOptions = \array_merge($sortedOptions, \array_diff($userOptions, $sortedOptions));
         }
 
+        $options = UserOptionCacheBuilder::getInstance()->getData([], 'options');
+        $optionTitles = [];
+        foreach ($userOptions as $optionName) {
+            \assert($options[$optionName] instanceof UserOption);
+            $optionTitles[$optionName] = $options[$optionName]->getTitle();
+        }
+
         return WCF::getTPL()->render('wcf', 'useroptionsOptionType', [
             'option' => $option,
             'value' => \explode(',', $value),
             'availableOptions' => $userOptions,
+            'optionTitles' => $optionTitles,
         ]);
     }
 
