@@ -17,6 +17,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\io\AtomicWriter;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
+use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
@@ -743,6 +744,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         DirectoryUtil::getInstance(\WCF_DIR . 'templates/compiled/')->removePattern(new Regex('.*_' . $this->languageID . '_.*\.php$'));
         // acp templates
         DirectoryUtil::getInstance(\WCF_DIR . 'acp/templates/compiled/')->removePattern(new Regex('.*_' . $this->languageID . '_.*\.php$'));
+
+        TemplateEngine::resetUpToDateTemplates();
     }
 
     /**

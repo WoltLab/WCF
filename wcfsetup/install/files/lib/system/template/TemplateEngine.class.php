@@ -185,6 +185,12 @@ class TemplateEngine extends SingletonFactory
     protected $forceCompile = false;
 
     /**
+     * compiled templates that are known to be up to date for the current request
+     * @var array<string, true>
+     */
+    private static array $upToDateTemplates = [];
+
+    /**
      * list of registered prefilters
      * @var string[]
      */
@@ -447,22 +453,29 @@ class TemplateEngine extends SingletonFactory
             EventHandler::getInstance()->fireAction($this, 'beforeDisplay');
         }
 
-        $sourceFilename = $this->getSourceFilename($templateName, $application);
         $compiledFilename = $this->getCompiledFilename($templateName, $application);
-        $metaDataFilename = $this->getMetaDataFilename($templateName);
-        $metaData = $this->getMetaData($templateName, $metaDataFilename);
 
-        // check if compilation is necessary
-        if (
-            $metaData === null
-            || !$this->isCompiled($templateName, $sourceFilename, $compiledFilename, $application, $metaData)
-        ) {
-            // compile
-            $this->compileTemplate($templateName, $sourceFilename, $compiledFilename, [
-                'application' => $application,
-                'data' => $metaData,
-                'filename' => $metaDataFilename,
-            ]);
+        // The same template is frequently displayed multiple times per request, but its
+        // sources only need to be checked for changes once.
+        if (!isset(self::$upToDateTemplates[$compiledFilename])) {
+            $sourceFilename = $this->getSourceFilename($templateName, $application);
+            $metaDataFilename = $this->getMetaDataFilename($templateName);
+            $metaData = $this->getMetaData($templateName, $metaDataFilename);
+
+            // check if compilation is necessary
+            if (
+                $metaData === null
+                || !$this->isCompiled($templateName, $sourceFilename, $compiledFilename, $application, $metaData)
+            ) {
+                // compile
+                $this->compileTemplate($templateName, $sourceFilename, $compiledFilename, [
+                    'application' => $application,
+                    'data' => $metaData,
+                    'filename' => $metaDataFilename,
+                ]);
+            }
+
+            self::$upToDateTemplates[$compiledFilename] = true;
         }
 
         // assign current package id
@@ -841,6 +854,19 @@ class TemplateEngine extends SingletonFactory
 
         // delete compiled templates
         DirectoryUtil::getInstance($compileDir)->removePattern(new Regex('.*_.*\.php$'));
+
+        self::resetUpToDateTemplates();
+    }
+
+    /**
+     * Forces the next display of every template to check its compiled file again.
+     * Must be called whenever compiled templates are deleted.
+     *
+     * @internal
+     */
+    public static function resetUpToDateTemplates(): void
+    {
+        self::$upToDateTemplates = [];
     }
 
     /**
@@ -1011,12 +1037,10 @@ class TemplateEngine extends SingletonFactory
      */
     protected function getMetaData(string $templateName, string $filename)
     {
-        if (!\file_exists($filename) || !\is_readable($filename)) {
+        $contents = @\file_get_contents($filename);
+        if ($contents === false) {
             return null;
         }
-
-        // get file contents
-        $contents = \file_get_contents($filename);
 
         // find first newline
         $position = \strpos($contents, "\n");

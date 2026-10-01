@@ -4,6 +4,7 @@ namespace wcf\data\template;
 
 use wcf\data\DatabaseObjectEditor;
 use wcf\system\Regex;
+use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
@@ -145,5 +146,7 @@ class TemplateEditor extends DatabaseObjectEditor
                     $this->templateGroupID . '_' . $this->application . '_.*_' . \preg_quote($this->templateName) . '.php$'
                 )
             );
+
+        TemplateEngine::resetUpToDateTemplates();
     }
 }
