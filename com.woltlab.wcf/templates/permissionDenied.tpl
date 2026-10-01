@@ -1,20 +1,19 @@
 {capture assign='pageTitle'}{lang}wcf.page.error.permissionDenied.title{/lang}{/capture}
 {capture assign='contentTitle'}{lang}wcf.page.error.permissionDenied.title{/lang}{/capture}
-{if !$isFirstVisit}
-	{capture assign='contentHeaderNavigation'}
-		<li id="backToReferrer" style="display: none"><a href="#" class="button" rel="noopener">{icon name='arrow-left'} {lang}wcf.page.error.backward{/lang}</a></li>
-	{/capture}
-	
-	<script data-relocate="true">
-		(function() {
-			if (document.referrer) {
-				var backToReferrer = elById('backToReferrer');
-				elShow(backToReferrer);
-				backToReferrer.children[0].href = document.referrer;
-			}
-		})();
-	</script>
-{/if}
+{capture assign='contentHeaderNavigation'}
+	<li id="backToReferrer" style="display: none"><a href="#" class="button" rel="noopener">{icon name='arrow-left'} {lang}wcf.page.error.backward{/lang}</a></li>
+{/capture}
+
+<script data-relocate="true">
+	(function() {
+		// Visitors arriving from another site, e.g. a search engine, must not be sent back there.
+		if (document.referrer && new URL(document.referrer).origin === window.location.origin) {
+			var backToReferrer = elById('backToReferrer');
+			elShow(backToReferrer);
+			backToReferrer.children[0].href = document.referrer;
+		}
+	})();
+</script>
 
 {include file='header' __disableAds=true}
 

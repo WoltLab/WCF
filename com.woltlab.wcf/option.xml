@@ -285,6 +285,11 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
+			<option name="visitor_on_demand_session">
+				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
 			<option name="module_article">
 				<categoryname>module.content</categoryname>
 				<optiontype>boolean</optiontype>

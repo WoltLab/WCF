@@ -61,7 +61,7 @@ final class WysiwygAttachmentFormField extends AbstractFormField
                     $attachmentHandler->getObjectType()->objectType,
                     $attachmentHandler->getParentObjectID(),
                     $attachmentHandler->getObjectID(),
-                    WCF::getUser()->userID ?: WCF::getSession()->sessionID,
+                    AttachmentHandler::getTmpHashIdentifier(),
                 ]));
 
                 if ($this->getDocument()->isAjax()) {

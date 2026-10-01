@@ -107,7 +107,32 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
             return false;
         }
 
+        // Only the uploader can delete the temporary attachments of guests, proven by the tmpHash.
+        if ($this->isTemporaryGuestAttachment($attachment)) {
+            return false;
+        }
+
         return $attachment->canDelete();
+    }
+
+    #[\Override]
+    public function canDeleteWithUploaderToken(File $file, string $uploaderToken): bool
+    {
+        $attachment = Attachment::findByFileID($file->fileID);
+        if ($attachment === null) {
+            return false;
+        }
+
+        if ($this->isTemporaryGuestAttachment($attachment)) {
+            return \hash_equals($attachment->tmpHash, $uploaderToken);
+        }
+
+        return $attachment->canDelete();
+    }
+
+    private function isTemporaryGuestAttachment(Attachment $attachment): bool
+    {
+        return $attachment->tmpHash !== '' && $attachment->userID === null;
     }
 
     #[\Override]
@@ -148,15 +173,19 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
 
     public function toHtmlElement(string $objectType, int $objectID, string $tmpHash, int $parentObjectID): string
     {
-        return FileProcessor::getInstance()->getHtmlElement(
-            $this,
-            [
-                'objectType' => $objectType,
-                'objectID' => $objectID,
-                'parentObjectID' => $parentObjectID,
-                'tmpHash' => $tmpHash,
-            ],
-        );
+        $context = [
+            'objectType' => $objectType,
+            'objectID' => $objectID,
+            'parentObjectID' => $parentObjectID,
+            'tmpHash' => $tmpHash,
+        ];
+
+        // Guests are identified by the tmpHash that only they know, see `canDeleteWithUploaderToken()`.
+        if (WCF::getUser()->isGuest() && $tmpHash !== '') {
+            $context[UploaderToken::CONTEXT_KEY] = \explode(',', $tmpHash)[0];
+        }
+
+        return FileProcessor::getInstance()->getHtmlElement($this, $context);
     }
 
     #[\Override]

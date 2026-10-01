@@ -24,6 +24,7 @@ parameters:
         - WCF_UUID
         - WOLTLAB_BRANDING
         - VISITOR_USE_TINY_BUILD
+        - VISITOR_ON_DEMAND_SESSION
         - ENABLE_DEBUG_MODE
         - ENABLE_BENCHMARK
         - LOG_IP_ADDRESS

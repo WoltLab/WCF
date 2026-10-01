@@ -5140,10 +5140,17 @@ WCF.Upload = Class.extend({
 				$fd.append('parameters[' + $name + ']', $additionalParameters[$name]);
 			}
 			
+			// A guest's token changes once their session is started, which can happen
+			// after the URL was built.
+			var $url = this._options.url;
+			if ($url.indexOf(WSC_API_URL) === 0) {
+				$url = $url.replace(/([?&])t=[^&#]*/, '$1t=' + encodeURIComponent(SECURITY_TOKEN));
+			}
+
 			var self = this;
 			$.ajax({
 				type: 'POST',
-				url: this._options.url,
+				url: $url,
 				enctype: 'multipart/form-data',
 				data: $fd,
 				contentType: false,

@@ -229,7 +229,9 @@ final class HeaderUtil
     public static function redirect(string $location, bool $sendStatusCode = false, bool $temporaryRedirect = true): void
     {
         // https://github.com/WoltLab/WCF/issues/2568
-        if (SessionHandler::getInstance()->isFirstVisit()) {
+        // On-demand sessions must not be started by a redirect, a guest without
+        // a stored session remains on their first visit anyway.
+        if (!SessionHandler::hasOnDemandGuestSessions() && SessionHandler::getInstance()->isFirstVisit()) {
             SessionHandler::getInstance()->register('__wcfIsFirstVisit', true);
         }
 

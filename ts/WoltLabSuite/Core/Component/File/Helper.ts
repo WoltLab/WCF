@@ -6,6 +6,21 @@ import { formatFilesize } from "WoltLabSuite/Core/FileUtil";
 // element. Do not remove!
 import "WoltLabSuite/Core/Component/File/woltlab-core-file";
 
+/**
+ * Returns the secret token of the uploader that the server added to the context
+ * of the upload element, if the file processor uses one.
+ */
+export function getUploaderToken(element: HTMLElement): string | undefined {
+  const context = element.dataset.context;
+  if (!context) {
+    return undefined;
+  }
+
+  const uploaderToken = (JSON.parse(context) as Record<string, unknown>).uploaderToken;
+
+  return typeof uploaderToken === "string" ? uploaderToken : undefined;
+}
+
 export function trackUploadProgress(element: HTMLElement, file: WoltlabCoreFileElement): void {
   const progress = document.createElement("progress");
   progress.classList.add("fileList__item__progress__bar");

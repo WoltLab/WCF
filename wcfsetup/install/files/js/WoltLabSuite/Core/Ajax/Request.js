@@ -15,6 +15,16 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
     let _didInit = false;
     let _ignoreAllErrors = false;
     /**
+     * A guest's token changes once their session is started, which can happen after
+     * the URL of a reused request was built.
+     */
+    function withCurrentXsrfToken(url) {
+        if (!url.startsWith(window.WSC_API_URL)) {
+            return url;
+        }
+        return url.replace(/([?&])t=[^&#]*/, `$1t=${encodeURIComponent(Core.getXsrfToken())}`);
+    }
+    /**
      * @constructor
      */
     class AjaxRequest {
@@ -91,7 +101,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                 AjaxStatus.show();
             }
             this._xhr = new XMLHttpRequest();
-            this._xhr.open(this._options.type, this._options.url, true);
+            this._xhr.open(this._options.type, withCurrentXsrfToken(this._options.url), true);
             if (this._options.contentType) {
                 this._xhr.setRequestHeader("Content-Type", this._options.contentType);
             }

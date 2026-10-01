@@ -26,7 +26,24 @@ final class DeleteFile implements IController
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $file = Helper::fetchObjectFromRequestParameter($variables['id'], File::class);
-        if (!$file->canDelete()) {
+
+        $parameters = Helper::mapQueryParameters(
+            $request->getQueryParams(),
+            <<<'EOT'
+                array {
+                    uploaderToken?: non-empty-string
+                }
+                EOT,
+        );
+
+        $uploaderToken = $parameters['uploaderToken'] ?? null;
+        if ($uploaderToken !== null) {
+            $canDelete = $file->canDeleteWithUploaderToken($uploaderToken);
+        } else {
+            $canDelete = $file->canDelete();
+        }
+
+        if (!$canDelete) {
             throw new PermissionDeniedException();
         }
 

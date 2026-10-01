@@ -1,10 +1,10 @@
-define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Message/MessageTabMenu", "sortablejs", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Api/PostObject", "WoltLabSuite/Core/Core", "../Ckeditor"], function (require, exports, tslib_1, Entry_1, Event_1, MessageTabMenu_1, sortablejs_1, PromiseMutex_1, PostObject_1, Core_1, Ckeditor_1) {
+define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Message/MessageTabMenu", "sortablejs", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Api/PostObject", "WoltLabSuite/Core/Core", "../Ckeditor", "../File/Helper"], function (require, exports, tslib_1, Entry_1, Event_1, MessageTabMenu_1, sortablejs_1, PromiseMutex_1, PostObject_1, Core_1, Ckeditor_1, Helper_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     sortablejs_1 = tslib_1.__importDefault(sortablejs_1);
-    function fileToAttachment(fileList, file, editor) {
-        fileList.append((0, Entry_1.createAttachmentFromFile)(file, editor));
+    function fileToAttachment(fileList, file, editor, uploaderToken) {
+        fileList.append((0, Entry_1.createAttachmentFromFile)(file, editor, uploaderToken));
     }
     function setup(editorId) {
         const container = document.getElementById(`attachments_${editorId}`);
@@ -61,7 +61,7 @@ define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Messa
         });
         let showOrder = -1;
         uploadButton.addEventListener("uploadStart", (event) => {
-            fileToAttachment(fileList, event.detail, editor);
+            fileToAttachment(fileList, event.detail, editor, (0, Helper_1.getUploaderToken)(uploadButton));
             const context = JSON.parse(uploadButton.dataset.context);
             context.showOrder = ++showOrder;
             uploadButton.dataset.context = JSON.stringify(context);
@@ -103,7 +103,7 @@ define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Messa
         const existingFiles = container.querySelector(".attachment__list__existingFiles");
         if (existingFiles !== null) {
             existingFiles.querySelectorAll("woltlab-core-file").forEach((file) => {
-                fileToAttachment(fileList, file, editor);
+                fileToAttachment(fileList, file, editor, (0, Helper_1.getUploaderToken)(uploadButton));
                 const attachmentShowOrder = file.data?.showOrder;
                 if (typeof attachmentShowOrder === "number") {
                     showOrder = Math.max(showOrder, attachmentShowOrder);

@@ -21,6 +21,8 @@ final class CronjobPerformAction implements RequestHandlerInterface
     #[\Override]
     public function handle(ServerRequestInterface $request): EmptyResponse
     {
+        WCF::getSession()->disablePersistence();
+
         CronjobScheduler::getInstance()->executeCronjobs();
 
         WCF::getSession()->disableUpdate();

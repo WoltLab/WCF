@@ -19,6 +19,16 @@ class LoginForm extends \wcf\acp\form\LoginForm
     const AVAILABLE_DURING_OFFLINE_MODE = true;
 
     #[\Override]
+    public function readParameters()
+    {
+        parent::readParameters();
+
+        // Guests with on-demand sessions have none yet, but submitting the form
+        // requires the session cookie to tell whether cookies are accepted.
+        WCF::getSession()->persist();
+    }
+
+    #[\Override]
     protected function createForm()
     {
         parent::createForm();

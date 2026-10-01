@@ -18,9 +18,17 @@ export default class FileProcessor extends Field {
       return {};
     }
 
-    return {
+    const data: FormBuilderData = {
       [this._fieldId]: value,
     };
+
+    // The files were uploaded with the token, the server must receive it again.
+    const uploaderToken = document.getElementById(`${this._fieldId}_uploaderToken`) as HTMLInputElement | null;
+    if (uploaderToken !== null) {
+      data[`${this._fieldId}_uploaderToken`] = uploaderToken.value;
+    }
+
+    return data;
   }
 
   protected _readField(): void {

@@ -43,7 +43,9 @@ final class Xsrf implements MiddlewareInterface
             $xsrfToken
         );
 
-        $hasValidXsrfToken = \hash_equals($xsrfToken, $request->getHeaderLine('x-xsrf-token'));
+        // Also accepts requests of guests without a session, which have no token yet,
+        // if the browser reports that the request originates from this site.
+        $hasValidXsrfToken = WCF::getSession()->checkSecurityToken($request->getHeaderLine('x-xsrf-token'));
 
         $request = $request->withAttribute(
             self::HAS_VALID_HEADER_ATTRIBUTE,

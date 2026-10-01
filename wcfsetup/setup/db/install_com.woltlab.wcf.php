@@ -940,6 +940,19 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    DatabaseTable::create('wcf1_captcha_question_token')
+        ->columns([
+            BinaryDatabaseTableColumn::create('nonce')
+                ->notNull()
+                ->length(16),
+            NotNullInt10DatabaseTableColumn::create('expires'),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['nonce']),
+            DatabaseTableIndex::create('expires')
+                ->columns(['expires']),
+        ]),
     DatabaseTable::create('wcf1_category')
         ->columns([
             ObjectIdDatabaseTableColumn::create('categoryID'),
@@ -1576,6 +1589,26 @@ return [
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['thumbnailID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['fileID'])
+                ->referencedTable('wcf1_file')
+                ->referencedColumns(['fileID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_file_uploader_token')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('fileID'),
+            BinaryDatabaseTableColumn::create('tokenHash')
+                ->length(16),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['fileID']),
+            DatabaseTableIndex::create('tokenHash')
+                ->columns(['tokenHash']),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()

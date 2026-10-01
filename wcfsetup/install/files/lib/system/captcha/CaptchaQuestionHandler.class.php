@@ -7,7 +7,9 @@ use wcf\data\captcha\question\CaptchaQuestion;
 use wcf\data\captcha\question\CaptchaQuestionEditor;
 use wcf\system\cache\builder\CaptchaQuestionCacheBuilder;
 use wcf\system\exception\UserInputException;
+use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
+use wcf\util\CryptoUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -20,12 +22,19 @@ use wcf\util\StringUtil;
 final class CaptchaQuestionHandler implements ICaptchaHandler
 {
     /**
+     * Separates the signed token from other values signed with `CryptoUtil`.
+     */
+    private const TOKEN_PREFIX = self::class . "\0";
+
+    private const TOKEN_LIFETIME = 24 * 3600;
+
+    /**
      * answer to the captcha question
      */
     private string $captchaAnswer = '';
 
     /**
-     * unique identifier of the captcha question
+     * unique identifier of the captcha question, a signed token with on-demand guest sessions
      */
     private string $captchaQuestion = '';
 
@@ -103,20 +112,89 @@ final class CaptchaQuestionHandler implements ICaptchaHandler
         $questionID = \array_rand($this->questions);
         $this->question = new CaptchaQuestionEditor($this->questions[$questionID]);
 
-        // A random ID needs to be generated, otherwise an attacker will
-        // trivially be able to select a specific question.
-        $this->captchaQuestion = Hex::encode(\random_bytes(16));
+        if (SessionHandler::hasOnDemandGuestSessions()) {
+            // The question is carried by a signed token, because rendering a form must not
+            // start a session. The random bytes make every token unique, they are recorded
+            // once the question was answered to prevent the token from being reused.
+            $this->captchaQuestion = CryptoUtil::createSignedString(
+                self::TOKEN_PREFIX
+                    . \pack('NN', $questionID, \TIME_NOW + self::TOKEN_LIFETIME)
+                    . \random_bytes(16)
+            );
+        } else {
+            // A random ID needs to be generated, otherwise an attacker will
+            // trivially be able to select a specific question.
+            $this->captchaQuestion = Hex::encode(\random_bytes(16));
 
-        WCF::getSession()->register('captchaQuestion_' . $this->captchaQuestion, $questionID);
+            WCF::getSession()->register('captchaQuestion_' . $this->captchaQuestion, $questionID);
+        }
+    }
+
+    /**
+     * Returns the data of the signed token or `null` if the token is invalid or expired.
+     *
+     * @return ?array{questionID: int, expires: int, nonce: string}
+     */
+    private function parseToken(): ?array
+    {
+        $value = CryptoUtil::getValueFromSignedString($this->captchaQuestion);
+        if ($value === null || !\str_starts_with($value, self::TOKEN_PREFIX)) {
+            return null;
+        }
+
+        if (\strlen($value) !== \strlen(self::TOKEN_PREFIX) + 24) {
+            return null;
+        }
+
+        [
+            'questionID' => $questionID,
+            'expires' => $expires,
+            'nonce' => $nonce,
+        ] = \unpack('NquestionID/Nexpires/a16nonce', $value, \strlen(self::TOKEN_PREFIX));
+
+        if ($expires < \TIME_NOW) {
+            return null;
+        }
+
+        return [
+            'questionID' => $questionID,
+            'expires' => $expires,
+            'nonce' => $nonce,
+        ];
+    }
+
+    /**
+     * Records the token as used, returns false if it was used before.
+     *
+     * @param array{questionID: int, expires: int, nonce: string} $token
+     */
+    private function markTokenAsUsed(array $token): bool
+    {
+        $sql = "INSERT IGNORE INTO  wcf1_captcha_question_token
+                                    (nonce, expires)
+                VALUES              (?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $token['nonce'],
+            $token['expires'],
+        ]);
+
+        return $statement->getAffectedRows() === 1;
     }
 
     #[\Override]
     public function validate()
     {
-        $questionID = WCF::getSession()->getVar('captchaQuestion_' . $this->captchaQuestion);
+        $token = null;
+        if (SessionHandler::hasOnDemandGuestSessions()) {
+            $token = $this->parseToken();
+            $questionID = $token['questionID'] ?? null;
+        } else {
+            $questionID = WCF::getSession()->getVar('captchaQuestion_' . $this->captchaQuestion);
+        }
 
         if ($questionID === null || !isset($this->questions[$questionID])) {
-            throw new UserInputException('captchaAnswer');
+            throw new UserInputException('captchaAnswer', 'invalid');
         }
 
         $this->question = new CaptchaQuestionEditor($this->questions[$questionID]);
@@ -136,10 +214,30 @@ final class CaptchaQuestionHandler implements ICaptchaHandler
             throw new UserInputException('captchaAnswer', 'false');
         }
 
+        if ($token !== null && !$this->markTokenAsUsed($token)) {
+            // This token can no longer be answered, so the re-rendered form must ask a new question.
+            unset($this->question);
+
+            throw new UserInputException('captchaAnswer', 'invalid');
+        }
+
         $this->question->updateCounters([
             'correctSubmissions' => 1,
         ]);
 
         WCF::getSession()->register('captchaQuestionSolved_' . $this->captchaQuestion, true);
+    }
+
+    /**
+     * Deletes the records of used tokens that have expired.
+     *
+     * @since 6.3
+     */
+    public static function pruneUsedTokens(): void
+    {
+        $sql = "DELETE FROM wcf1_captcha_question_token
+                WHERE       expires < ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([\TIME_NOW]);
     }
 }

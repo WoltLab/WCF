@@ -1660,6 +1660,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[Sollte einer Position mehr als eine Werbung zugewiesen sein, so wird bei jedem Aufruf eine zufällige Werbung angezeigt. Bei Deaktivierung dieser Option werden alle Werbungen parallel angezeigt.]]></item>
 		<item name="wcf.acp.option.visitor_use_tiny_build"><![CDATA[Seitenbeschleunigung für Gäste aktivieren]]></item>
 		<item name="wcf.acp.option.visitor_use_tiny_build.description"><![CDATA[Aktiviert einen besonderen Modus in dem Gästen und Suchmaschinen stark reduzierte JavaScript-Dateien ausgeliefert werden, um das Laden als auch den Seitenaufbau zu beschleunigen.<br><strong>Warnung:</strong> Dieser Modus arbeitet sehr restriktiv und untersagt unter anderem jeglichen Schreibzugriff, bitte überprüfe{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if}, ob alle installierten Plugins mit diesem Modus kompatibel sind.]]></item>
+		<item name="wcf.acp.option.visitor_on_demand_session"><![CDATA[Sitzungen und Cookies für Gäste nur bei Bedarf]]></item>
+		<item name="wcf.acp.option.visitor_on_demand_session.description"><![CDATA[Gäste werden ohne Sitzung und Cookies bedient, bis sie sich anmelden, registrieren oder ein Formular absenden. Das spart bei jedem Seitenaufruf Datenbankzugriffe und vermeidet unnötige Cookies.<br><strong>Hinweis:</strong> Gäste und Suchmaschinen werden in der Liste der Benutzer online nicht mehr angezeigt oder mitgezählt.]]></item>
 		<item name="wcf.acp.option.fb_share_app_id"><![CDATA[Facebook App ID]]></item>
 		<item name="wcf.acp.option.fb_share_app_id.description"><![CDATA[Die App ID kann direkt über das <a href="https://developers.facebook.com/apps/" class="externalURL">App-Dashboard angefordert werden</a>, und wird für die Open Graph-Tags zum Teilen verwendet.]]></item>
 		<item name="wcf.acp.option.enable_polling"><![CDATA[Hintergrund-Aktualisierung von Benachrichtigungen aktivieren]]></item>
@@ -3348,6 +3350,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 	</category>
 	<category name="wcf.captcha.question">
 		<item name="wcf.captcha.question.answer.error.false"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine falsche Antwort angegeben.]]></item>
+		<item name="wcf.captcha.question.answer.error.invalid"><![CDATA[Diese Frage ist nicht mehr gültig, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beantworte{else}beantworten Sie{/if} die neue Frage.]]></item>
 		<item name="wcf.captcha.question.captcha.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Beantworte{else}Beantworten Sie{/if} die obenstehende Frage bzw. {if LANGUAGE_USE_INFORMAL_VARIANT}löse{else}lösen Sie{/if} die Aufgabe.]]></item>
 	</category>
 	<category name="wcf.captcha.recaptchaV2">

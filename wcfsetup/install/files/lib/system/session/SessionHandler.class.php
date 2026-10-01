@@ -20,6 +20,7 @@ use wcf\system\request\RouteHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\spider\SpiderHandler;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\CLIWCF;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\CryptoUtil;
@@ -52,6 +53,11 @@ final class SessionHandler extends SingletonFactory
      * disables page tracking
      */
     private bool $disableTracking = false;
+
+    /**
+     * prevents a guest session that has not been stored yet from being stored
+     */
+    private bool $disablePersistence = false;
 
     /**
      * group data and permissions
@@ -91,7 +97,39 @@ final class SessionHandler extends SingletonFactory
 
     private bool $firstVisit = false;
 
+    /**
+     * true if guests receive a session only once something needs to be stored
+     */
+    private bool $onDemand = false;
+
+    /**
+     * false while the session only exists within this request
+     */
+    private bool $isPersisted = true;
+
     private string $xsrfToken;
+
+    /**
+     * true if the request carried a valid `XSRF-TOKEN` cookie
+     */
+    private bool $receivedXsrfCookie = false;
+
+    /**
+     * true once the token of the request was discarded, the `XSRF-TOKEN` cookie
+     * must no longer be read
+     */
+    private bool $xsrfTokenDiscarded = false;
+
+    /**
+     * true if the request carried no session, even if one is started during the request
+     */
+    private bool $startedWithoutSession = false;
+
+    /**
+     * result of the spider detection for guests without a legacy session, `false` if the
+     * visitor is not a spider
+     */
+    private string|false $detectedSpiderIdentifier;
 
     private const GUEST_SESSION_LIFETIME = 2 * 3600;
 
@@ -120,6 +158,8 @@ final class SessionHandler extends SingletonFactory
     {
         switch ($key) {
             case 'sessionID':
+                $this->persist();
+
                 return $this->sessionID;
             case 'userID':
                 return $this->user->userID;
@@ -132,7 +172,11 @@ final class SessionHandler extends SingletonFactory
                     return null;
                 }
 
-                return $this->legacySession->spiderIdentifier;
+                if ($this->legacySession !== null) {
+                    return $this->legacySession->spiderIdentifier;
+                }
+
+                return $this->detectSpider();
             case 'pageID':
             case 'pageObjectID':
             case 'parentPageID':
@@ -160,6 +204,23 @@ final class SessionHandler extends SingletonFactory
     protected function init(): void
     {
         $this->isACP = (\class_exists(WCFACP::class, false) || \PACKAGE_ID === 0);
+
+        // The CLI authenticates after it already printed output, a session can no
+        // longer be started on demand at that point.
+        $this->onDemand = !$this->isACP
+            && !\class_exists(CLIWCF::class, false)
+            && self::hasOnDemandGuestSessions();
+    }
+
+    /**
+     * Returns true if guests receive a session only once something needs to be stored.
+     *
+     * @since 6.3
+     */
+    public static function hasOnDemandGuestSessions(): bool
+    {
+        // The option does not exist yet while the update to 6.3 is running.
+        return \defined('VISITOR_ON_DEMAND_SESSION') && \VISITOR_ON_DEMAND_SESSION !== 0;
     }
 
     /**
@@ -301,7 +362,22 @@ final class SessionHandler extends SingletonFactory
      */
     public function hasValidCookie(): bool
     {
+        if (!$this->isPersisted) {
+            return false;
+        }
+
         return $this->getSessionIdFromCookie($this->getParsedCookieData()) === $this->sessionID;
+    }
+
+    /**
+     * Returns false if the session was not stored yet, because guests receive a session
+     * only once something needs to be stored.
+     *
+     * @since 6.3
+     */
+    public function isPersisted(): bool
+    {
+        return $this->isPersisted;
     }
 
     /**
@@ -334,6 +410,15 @@ final class SessionHandler extends SingletonFactory
 
         if ($hasSession) {
             $this->maybeRefreshCookie($cookieData);
+        } elseif ($this->onDemand) {
+            $this->initGuest();
+            $this->startedWithoutSession = true;
+
+            // Nothing replaces the cookie of a session that no longer exists, it would
+            // otherwise remain until it expires and cost a lookup on every request.
+            if (isset($_COOKIE[\COOKIE_PREFIX . 'user_session'])) {
+                $this->expireCookie();
+            }
         } else {
             $this->create();
         }
@@ -401,12 +486,26 @@ final class SessionHandler extends SingletonFactory
     }
 
     /**
+     * Prevents a guest session that has not been stored yet from being stored during this
+     * request. Variables can still be registered, but they only exist within the request
+     * and no cookie is sent. Intended for requests that the client issues in the background.
+     *
+     * @since 6.3
+     */
+    public function disablePersistence(): void
+    {
+        if (!$this->isPersisted) {
+            $this->disablePersistence = true;
+        }
+    }
+
+    /**
      * Initializes security token.
      */
     private function initSecurityToken(): void
     {
         $xsrfToken = '';
-        if (!empty($_COOKIE['XSRF-TOKEN'])) {
+        if (!$this->xsrfTokenDiscarded && !empty($_COOKIE['XSRF-TOKEN'])) {
             // We intentionally do not extract the signed value and instead just verify the correctness.
             //
             // The reason is that common JavaScript frameworks can use the contents of the `XSRF-TOKEN` cookie as-is,
@@ -422,6 +521,7 @@ final class SessionHandler extends SingletonFactory
                 || CryptoUtil::getValueFromSignedString($_COOKIE['XSRF-TOKEN']) !== null
             ) {
                 $xsrfToken = $_COOKIE['XSRF-TOKEN'];
+                $this->receivedXsrfCookie = true;
             }
         }
 
@@ -432,25 +532,52 @@ final class SessionHandler extends SingletonFactory
                 $xsrfToken = Hex::encode(\random_bytes(16));
             }
 
-            // We construct the cookie manually instead of using HeaderUtil::setCookie(), because:
-            // 1) We don't want the prefix. The `XSRF-TOKEN` cookie name is a standard name across applications
-            //    and it is supported by default in common JavaScript frameworks.
-            // 2) We want to set the SameSite=lax parameter.
-            // 3) We don't want the HttpOnly parameter.
-
-            $sameSite = '; SameSite=lax';
-
-            // Workaround for WebKit Bug #255524.
-            // https://bugs.webkit.org/show_bug.cgi?id=255524
-            $sameSite = '';
-
-            \header(
-                'set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
-                false
-            );
+            // Guests without a session are protected by `isSameOriginRequest()` instead,
+            // the cookie is sent once the session is persisted.
+            if ($this->isPersisted) {
+                $this->sendXsrfCookie($xsrfToken);
+            }
         }
 
         $this->xsrfToken = $xsrfToken;
+    }
+
+    /**
+     * Discards the token, the next call to `getSecurityToken()` generates a new one.
+     */
+    private function discardSecurityToken(): void
+    {
+        unset($this->xsrfToken);
+        $this->receivedXsrfCookie = false;
+        $this->xsrfTokenDiscarded = true;
+    }
+
+    private function expireXsrfCookie(): void
+    {
+        \header(
+            'set-cookie: XSRF-TOKEN=; path=/; max-age=0' . (RouteHandler::secureConnection() ? '; secure' : ''),
+            false
+        );
+    }
+
+    private function sendXsrfCookie(string $xsrfToken): void
+    {
+        // We construct the cookie manually instead of using HeaderUtil::setCookie(), because:
+        // 1) We don't want the prefix. The `XSRF-TOKEN` cookie name is a standard name across applications
+        //    and it is supported by default in common JavaScript frameworks.
+        // 2) We want to set the SameSite=lax parameter.
+        // 3) We don't want the HttpOnly parameter.
+
+        $sameSite = '; SameSite=lax';
+
+        // Workaround for WebKit Bug #255524.
+        // https://bugs.webkit.org/show_bug.cgi?id=255524
+        $sameSite = '';
+
+        \header(
+            'set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
+            false
+        );
     }
 
     /**
@@ -476,7 +603,43 @@ final class SessionHandler extends SingletonFactory
         // Convert it back before comparing.
         $token = \str_replace(' ', '+', $token);
 
-        return \hash_equals($this->getSecurityToken(), $token);
+        if (\hash_equals($this->getSecurityToken(), $token)) {
+            return true;
+        }
+
+        if ($this->startedWithoutSession && !$this->receivedXsrfCookie) {
+            return $this->isSameOriginRequest();
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns true if the browser reports that the request was issued by this site.
+     *
+     * Requests lacking both `Sec-Fetch-Site` and `Origin` are rejected, the check must
+     * fail closed. `same-site` is not sufficient, it includes other subdomains.
+     */
+    private function isSameOriginRequest(): bool
+    {
+        // Links and images in user generated content are same-origin too, only methods
+        // that links and images cannot issue may pass.
+        if (!\in_array($_SERVER['REQUEST_METHOD'] ?? '', ['POST', 'PUT', 'PATCH', 'DELETE'], true)) {
+            return false;
+        }
+
+        $fetchSite = $_SERVER['HTTP_SEC_FETCH_SITE'] ?? '';
+        if ($fetchSite !== '') {
+            return $fetchSite === 'same-origin';
+        }
+
+        // Browsers without Fetch Metadata still send the origin with unsafe requests.
+        $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+        if ($origin === '') {
+            return false;
+        }
+
+        return \strtolower($origin) === \strtolower(RouteHandler::getHost());
     }
 
     /**
@@ -498,6 +661,8 @@ final class SessionHandler extends SingletonFactory
 
         $this->variables[$scope][$key] = $value;
         $this->variablesChanged = true;
+
+        $this->persist();
     }
 
     /**
@@ -506,6 +671,10 @@ final class SessionHandler extends SingletonFactory
     public function unregister(string $key): void
     {
         $scope = $this->isACP ? 'acp' : 'frontend';
+
+        if (!\array_key_exists($key, $this->variables[$scope] ?? [])) {
+            return;
+        }
 
         unset($this->variables[$scope][$key]);
         $this->variablesChanged = true;
@@ -528,6 +697,17 @@ final class SessionHandler extends SingletonFactory
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    /**
+     * Returns the session tracked for the users online list or `null` if there is none,
+     * which applies to the ACP and to guests with on-demand sessions.
+     *
+     * @since 6.3
+     */
+    public function getLegacySession(): ?LegacySession
+    {
+        return $this->legacySession;
     }
 
     /**
@@ -569,6 +749,7 @@ final class SessionHandler extends SingletonFactory
         $this->sessionID = $sessionID;
         $this->user = $row['userID'] === null ? User::getGuestUser() : new User($row['userID']);
         $this->variables = $variables;
+        $this->isPersisted = true;
 
         // Update ipAddress, userAgent and lastActivityTime only once per minute to
         // reduce write traffic to the hot 'user_session' table.
@@ -590,7 +771,8 @@ final class SessionHandler extends SingletonFactory
             ]);
         }
 
-        if (!$this->isACP) {
+        // Guests with on-demand sessions are not tracked in the users online list.
+        if (!$this->isACP && ($row['userID'] !== null || !$this->onDemand)) {
             // Fetch legacy session.
             $condition = new PreparedStatementConditionBuilder();
 
@@ -648,25 +830,76 @@ final class SessionHandler extends SingletonFactory
 
     /**
      * Creates a new session.
+     *
+     * @param int $cookieExpires expiry of the session cookie, `0` for a cookie that ends with the browser session
      */
-    private function create(): void
+    private function create(int $cookieExpires = 0): void
     {
-        $this->sessionID = $this->generateSessionID();
+        $this->initGuest();
+        $this->store($cookieExpires);
+    }
 
-        $variables = [
+    /**
+     * Initializes a guest session that only exists within this request.
+     */
+    private function initGuest(): void
+    {
+        $this->variables = [
             'frontend' => [],
             'acp' => [],
         ];
-
-        $this->variables = $variables;
         $this->user = User::getGuestUser();
         $this->firstVisit = true;
+        $this->legacySession = null;
+        $this->isPersisted = false;
+    }
+
+    /**
+     * Stores the session and sends the session cookie, unless this already happened.
+     *
+     * Sessions are stored implicitly once a variable is registered or the session id is
+     * read. Call this method only if a later request depends on the session cookie being
+     * present, without anything being stored yet.
+     *
+     * @throws \LogicException if the headers were already sent
+     * @since 6.3
+     */
+    public function persist(): void
+    {
+        $this->store(0);
+    }
+
+    /**
+     * @param int $cookieExpires expiry of the session cookie, `0` for a cookie that ends with the browser session
+     */
+    private function store(int $cookieExpires): void
+    {
+        if ($this->isPersisted) {
+            return;
+        }
+
+        if ($this->disablePersistence) {
+            // Code reading the session id still receives one, it is just never stored.
+            $this->sessionID ??= $this->generateSessionID();
+
+            return;
+        }
+
+        if ($this->onDemand && \headers_sent($file, $line)) {
+            throw new \LogicException(\sprintf(
+                "Unable to start the session, output was already sent at %s:%d.",
+                $file,
+                $line
+            ));
+        }
+
+        $this->sessionID = $this->generateSessionID();
 
         // Maintain legacy session table for users online list.
-        $this->legacySession = null;
+        $trackGuest = !$this->isACP && !$this->onDemand;
 
         $spiderIdentifier = null;
-        if (!$this->isACP) {
+        if ($trackGuest) {
             $spiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent());
             if ($spiderIdentifier !== null) {
                 $this->legacySession = $this->getSpiderLegacySession($spiderIdentifier);
@@ -686,10 +919,10 @@ final class SessionHandler extends SingletonFactory
                 UserUtil::getUserAgent(),
                 \TIME_NOW,
                 \TIME_NOW,
-                \serialize($variables),
+                \serialize($this->variables),
             ]);
 
-            if (!$this->isACP && $this->legacySession === null) {
+            if ($trackGuest && $this->legacySession === null) {
                 $this->legacySession = $this->createLegacySession($spiderIdentifier);
             }
 
@@ -702,8 +935,41 @@ final class SessionHandler extends SingletonFactory
 
         HeaderUtil::setCookie(
             "user_session",
-            $this->getCookieValue()
+            $this->getCookieValue(),
+            $cookieExpires
         );
+
+        // Read before the session counts as persisted, otherwise `initSecurityToken()` would send the cookie a second time.
+        $xsrfToken = $this->getSecurityToken();
+        if (!$this->receivedXsrfCookie) {
+            $this->sendXsrfCookie($xsrfToken);
+        }
+
+        $this->isPersisted = true;
+
+        // The variables were written by the insert above.
+        $this->variablesChanged = false;
+
+        if ($this->onDemand && \ENABLE_DEBUG_MODE !== 0) {
+            \header('x-session-started-by: ' . $this->getSessionStarter(), false);
+        }
+    }
+
+    /**
+     * Returns the method that caused the session to be started on demand.
+     */
+    private function getSessionStarter(): string
+    {
+        $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
+        for ($i = 0, $length = \count($trace) - 1; $i < $length; $i++) {
+            if (($trace[$i]['class'] ?? '') === self::class && ($trace[$i + 1]['class'] ?? '') !== self::class) {
+                $caller = $trace[$i + 1];
+
+                return isset($caller['class']) ? $caller['class'] . '::' . $caller['function'] : $caller['function'];
+            }
+        }
+
+        return 'unknown';
     }
 
     /**
@@ -1012,12 +1278,17 @@ final class SessionHandler extends SingletonFactory
         }
 
         // We must delete the old session to not carry over any state across different users.
-        $this->delete();
+        // On login the cookies are replaced below, expiring them would only add redundant
+        // headers.
+        $this->deleteSession($user->isGuest());
 
         // If the target user is a registered user ...
         if (!$user->isGuest()) {
-            // ... we create a new session with a new session ID ...
-            $this->create();
+            // ... we rotate the XSRF token, a token known before the login must not remain valid ...
+            $this->discardSecurityToken();
+
+            // ... we create a new session with a new session ID and a long-lived cookie ...
+            $this->create(\TIME_NOW + (self::USER_SESSION_LIFETIME + (7 * 86400)));
 
             // ... delete the newly created legacy session ...
             $sql = "DELETE FROM wcf1_session
@@ -1064,13 +1335,6 @@ final class SessionHandler extends SingletonFactory
             if (!$hasSession) {
                 throw new \LogicException('Unreachable');
             }
-
-            // Replace the session-lived cookie by a long-lived cookie.
-            HeaderUtil::setCookie(
-                'user_session',
-                $this->getCookieValue(),
-                \TIME_NOW + (self::USER_SESSION_LIFETIME + (7 * 86400))
-            );
 
             foreach ($saveVars as $key => $value) {
                 $this->register($key, $value);
@@ -1218,7 +1482,7 @@ final class SessionHandler extends SingletonFactory
      */
     public function update(): void
     {
-        if ($this->doNotUpdate) {
+        if ($this->doNotUpdate || !$this->isPersisted) {
             return;
         }
 
@@ -1301,6 +1565,11 @@ final class SessionHandler extends SingletonFactory
      */
     public function delete(): void
     {
+        $this->deleteSession(true);
+    }
+
+    private function deleteSession(bool $expireCookies): void
+    {
         // clear storage
         if (!$this->user->isGuest()) {
             self::resetSessions([$this->user->userID]);
@@ -1310,7 +1579,35 @@ final class SessionHandler extends SingletonFactory
             $editor->update(['lastActivityTime' => \TIME_NOW]);
         }
 
-        $this->deleteUserSession($this->sessionID);
+        if ($this->isPersisted) {
+            $this->deleteUserSession($this->sessionID);
+
+            if ($this->onDemand && $expireCookies) {
+                $this->expireCookie();
+                $this->expireXsrfCookie();
+                $this->discardSecurityToken();
+            }
+        }
+
+        if ($this->onDemand) {
+            // A session that is started later in this request must not inherit the state
+            // of the deleted one.
+            $this->variables = [
+                'frontend' => [],
+                'acp' => [],
+            ];
+            $this->variablesChanged = false;
+            $this->legacySession = null;
+            $this->isPersisted = false;
+        }
+    }
+
+    /**
+     * Instructs the client to delete the session cookie.
+     */
+    private function expireCookie(): void
+    {
+        HeaderUtil::setCookie('user_session', '', \TIME_NOW - 86400);
     }
 
     /**
@@ -1369,7 +1666,25 @@ final class SessionHandler extends SingletonFactory
     public function setLanguageID(int $languageID): void
     {
         $this->languageID = $languageID;
+
+        // Spiders follow the links of the language chooser, each of them would start a session.
+        if (!$this->isPersisted && $this->detectSpider() !== null) {
+            return;
+        }
+
         $this->register('languageID', $this->languageID);
+    }
+
+    /**
+     * Guests with on-demand sessions have no legacy session that stores the identifier.
+     */
+    private function detectSpider(): ?string
+    {
+        if (!isset($this->detectedSpiderIdentifier)) {
+            $this->detectedSpiderIdentifier = SpiderHandler::getInstance()->getIdentifier(UserUtil::getUserAgent()) ?? false;
+        }
+
+        return $this->detectedSpiderIdentifier === false ? null : $this->detectedSpiderIdentifier;
     }
 
     /**

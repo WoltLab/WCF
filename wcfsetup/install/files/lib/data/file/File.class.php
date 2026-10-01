@@ -130,6 +130,23 @@ class File extends DatabaseObject implements ITitledLinkObject, IImageDataProvid
         );
     }
 
+    /**
+     * Returns the link for the uploader of the file, see `UploaderToken`.
+     *
+     * @since 6.3
+     */
+    public function getLinkWithUploaderToken(string $uploaderToken): string
+    {
+        return LinkHandler::getInstance()->getControllerLink(
+            FileDownloadAction::class,
+            [
+                'id' => $this->fileID,
+                'uploaderToken' => $uploaderToken,
+                'forceFrontend' => true,
+            ]
+        );
+    }
+
     public function getFullSizeImageSource(): ?string
     {
         $isImage = $this->isImage() || $this->mimeType === 'image/svg+xml';
@@ -173,6 +190,21 @@ class File extends DatabaseObject implements ITitledLinkObject, IImageDataProvid
         return $processor->canDelete($this);
     }
 
+    /**
+     * Returns true if the uploader of the file can delete it, see `UploaderToken`.
+     *
+     * @since 6.3
+     */
+    public function canDeleteWithUploaderToken(string $uploaderToken): bool
+    {
+        $processor = $this->getProcessor();
+        if ($processor === null) {
+            return true;
+        }
+
+        return $processor->canDeleteWithUploaderToken($this, $uploaderToken);
+    }
+
     public function addThumbnail(FileThumbnail $thumbnail): void
     {
         $this->thumbnails[$thumbnail->identifier] = $thumbnail;
@@ -193,8 +225,9 @@ class File extends DatabaseObject implements ITitledLinkObject, IImageDataProvid
 
     /**
      * @param ?mixed[] $metaData
+     * @param ?string $uploaderToken links the file for its uploader, see `UploaderToken`
      */
-    public function toHtmlElement(?array $metaData = null): string
+    public function toHtmlElement(?array $metaData = null, ?string $uploaderToken = null): string
     {
         $thumbnails = [];
         foreach ($this->thumbnails as $thumbnail) {
@@ -222,7 +255,9 @@ class File extends DatabaseObject implements ITitledLinkObject, IImageDataProvid
             StringUtil::encodeHTML($this->mimeType),
             StringUtil::encodeHTML(\json_encode($thumbnails, \JSON_THROW_ON_ERROR)),
             $metaData === null ? "" : 'data-meta-data="' . StringUtil::encodeHTML(\json_encode($metaData, \JSON_THROW_ON_ERROR)) . '"',
-            StringUtil::encodeHTML($this->getLink()),
+            StringUtil::encodeHTML(
+                $uploaderToken === null ? $this->getLink() : $this->getLinkWithUploaderToken($uploaderToken)
+            ),
         );
     }
 
