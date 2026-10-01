@@ -157,7 +157,7 @@ class TagEngine extends SingletonFactory
     /**
      * Returns all tags set for given object.
      *
-     * @param int[] $languageIDs
+     * @param (int|''|null)[] $languageIDs
      * @return  Tag[]
      */
     public function getObjectTags(string $objectType, int $objectID, array $languageIDs = [])
@@ -171,7 +171,7 @@ class TagEngine extends SingletonFactory
      * Returns all tags set for given objects.
      *
      * @param int[] $objectIDs
-     * @param int[] $languageIDs
+     * @param (int|''|null)[] $languageIDs
      * @return array<int, array<int, Tag>>
      */
     public function getObjectsTags(string $objectType, array $objectIDs, array $languageIDs = [])
@@ -183,7 +183,9 @@ class TagEngine extends SingletonFactory
         $conditions->add("tag_to_object.objectID IN (?)", [$objectIDs]);
         if ($languageIDs !== []) {
             foreach ($languageIDs as $index => $languageID) {
-                if ($languageID === 0) {
+                // Many callers pass `''` or `null` to request all languages, a convention that
+                // relied on the former loose check.
+                if ($languageID === 0 || $languageID === '' || $languageID === null) {
                     unset($languageIDs[$index]);
                 }
             }
