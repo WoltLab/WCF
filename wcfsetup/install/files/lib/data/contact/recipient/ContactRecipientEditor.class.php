@@ -13,6 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  *
  * @mixin       ContactRecipient
  * @extends DatabaseObjectEditor<ContactRecipient>
+ * @deprecated 6.3 use `ContactRecipientBuilder` instead.
  */
 class ContactRecipientEditor extends DatabaseObjectEditor
 {

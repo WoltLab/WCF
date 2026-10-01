@@ -4,7 +4,7 @@ namespace wcf\system\gridView\admin;
 
 use wcf\acp\form\ContactRecipientEditForm;
 use wcf\data\contact\recipient\ContactRecipient;
-use wcf\data\contact\recipient\ContactRecipientList;
+use wcf\data\contact\recipient\L10nContactRecipientList;
 use wcf\event\gridView\admin\ContactRecipientGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
@@ -12,13 +12,12 @@ use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\EmailColumnRenderer;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
-use wcf\system\gridView\renderer\PhraseColumnRenderer;
 use wcf\system\interaction\admin\ContactRecipientInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\interaction\ToggleInteraction;
-use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\L10nTextFilter;
 use wcf\system\WCF;
 
 /**
@@ -29,7 +28,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  *
- * @extends AbstractGridView<ContactRecipient, ContactRecipientList>
+ * @extends AbstractGridView<ContactRecipient, L10nContactRecipientList>
  */
 final class ContactRecipientGridView extends AbstractGridView
 {
@@ -42,14 +41,18 @@ final class ContactRecipientGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for("name")
                 ->label("wcf.global.name")
-                ->filter(I18nTextFilter::class)
+                ->filter(new L10nTextFilter(
+                    ContactRecipient::getL10nDefinition(),
+                    'name',
+                    'name',
+                    'wcf.global.name',
+                ))
                 ->titleColumn()
-                ->renderer(new PhraseColumnRenderer())
-                ->sortable(sortByDatabaseColumn: $this->subqueryName()),
+                ->sortable(sortByDatabaseColumn: 'name'),
             GridViewColumn::for("email")
                 ->label("wcf.user.email")
                 ->renderer(new EmailColumnRenderer())
-                ->sortable(),
+                ->sortable(sortByDatabaseColumn: $this->getEmailSortExpression()),
             GridViewColumn::for("showOrder")
                 ->label("wcf.acp.customOption.showOrder")
                 ->filter(IntegerFilter::class)
@@ -85,23 +88,21 @@ final class ContactRecipientGridView extends AbstractGridView
     }
 
     #[\Override]
-    protected function createObjectList(): ContactRecipientList
+    protected function createObjectList(): L10nContactRecipientList
     {
-        return new ContactRecipientList();
+        return new L10nContactRecipientList();
     }
 
-    private function subqueryName(): string
+    private function getEmailSortExpression(): string
     {
-        $languageID = WCF::getLanguage()->languageID;
+        // The administrator recipient stores an empty email address and is
+        // displayed with `MAIL_ADMIN_ADDRESS`, which cannot be bound in `ORDER BY`.
+        $administratorEmail = WCF::getDB()->escapeString(\MAIL_ADMIN_ADDRESS);
 
-        return "
-            COALESCE((
-                SELECT languageItemValue
-                FROM   wcf1_language_item
-                WHERE  languageItem = contact_recipient.name
-                AND    languageID = {$languageID}
-            ), contact_recipient.name)
-        ";
+        return "CASE
+            WHEN contact_recipient.isAdministrator = 1 THEN '{$administratorEmail}'
+            ELSE email
+        END";
     }
 
     #[\Override]

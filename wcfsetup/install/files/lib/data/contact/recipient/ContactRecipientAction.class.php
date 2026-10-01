@@ -2,15 +2,20 @@
 
 namespace wcf\data\contact\recipient;
 
+use wcf\command\contact\recipient\DeleteContactRecipient;
 use wcf\command\contact\recipient\DisableContactRecipient;
 use wcf\command\contact\recipient\EnableContactRecipient;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\TI18nDatabaseObjectAction;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Executes contact recipient related actions.
+ *
+ * Contact recipients should be created, updated and deleted through the
+ * `CreateContactRecipient`, `UpdateContactRecipient` and
+ * `DeleteContactRecipient` commands, the `create`, `update` and `delete`
+ * actions are `@deprecated 6.3`.
  *
  * @author  Olaf Braun, Alexander Ebert
  * @copyright   2001-2025 WoltLab GmbH
@@ -20,8 +25,6 @@ use wcf\system\exception\PermissionDeniedException;
  */
 class ContactRecipientAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
-    use TI18nDatabaseObjectAction;
-
     /**
      * @inheritDoc
      */
@@ -68,66 +71,21 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ITo
         parent::validateUpdate();
     }
 
-    #[\Override]
-    public function create()
-    {
-        // Database columns do not have default values
-        if (!isset($this->parameters['data']['name'])) {
-            $this->parameters['data']['name'] = '';
-        }
-        if (!isset($this->parameters['data']['email'])) {
-            $this->parameters['data']['email'] = '';
-        }
-
-        $contactRecipient = parent::create();
-
-        $this->saveI18nValue($contactRecipient);
-
-        return $contactRecipient;
-    }
-
+    /**
+     * @deprecated 6.3 use the `DeleteContactRecipient` command instead.
+     */
     #[\Override]
     public function delete()
     {
-        $count = parent::delete();
-
-        $this->deleteI18nValues();
-
-        return $count;
-    }
-
-    #[\Override]
-    public function update()
-    {
-        parent::update();
-
-        foreach ($this->getObjects() as $contactRecipient) {
-            $this->saveI18nValue($contactRecipient->getDecoratedObject());
+        if ($this->objects === []) {
+            $this->readObjects();
         }
-    }
 
-    /**
-     * @return array<string, string>
-     */
-    #[\Override]
-    public function getI18nSaveTypes(): array
-    {
-        return [
-            'name' => 'wcf.contact.recipient.name\d+',
-            'email' => 'wcf.contact.recipient.email\d+',
-        ];
-    }
+        foreach ($this->objects as $object) {
+            new DeleteContactRecipient($object->getDecoratedObject())();
+        }
 
-    #[\Override]
-    public function getLanguageCategory(): string
-    {
-        return 'wcf.contact';
-    }
-
-    #[\Override]
-    public function getPackageID(): int
-    {
-        return 1;
+        return \count($this->objects);
     }
 
     /**

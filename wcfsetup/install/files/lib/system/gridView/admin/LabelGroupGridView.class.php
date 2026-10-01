@@ -5,7 +5,7 @@ namespace wcf\system\gridView\admin;
 use wcf\acp\form\LabelGroupEditForm;
 use wcf\acp\page\LabelListPage;
 use wcf\data\DatabaseObject;
-use wcf\data\label\group\I18nLabelGroupList;
+use wcf\data\label\group\L10nLabelGroupList;
 use wcf\data\label\group\LabelGroup;
 use wcf\event\gridView\admin\LabelGroupGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
@@ -14,14 +14,13 @@ use wcf\system\gridView\GridViewRowLink;
 use wcf\system\gridView\renderer\ILinkColumnRenderer;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
-use wcf\system\gridView\renderer\PhraseColumnRenderer;
 use wcf\system\gridView\renderer\TruncatedTextColumnRenderer;
 use wcf\system\interaction\admin\LabelGroupInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\request\LinkHandler;
-use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\L10nTextFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 
@@ -33,7 +32,7 @@ use wcf\system\WCF;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  *
- * @extends AbstractGridView<LabelGroup, I18nLabelGroupList>
+ * @extends AbstractGridView<LabelGroup, L10nLabelGroupList>
  */
 final class LabelGroupGridView extends AbstractGridView
 {
@@ -47,9 +46,13 @@ final class LabelGroupGridView extends AbstractGridView
             GridViewColumn::for('groupName')
                 ->label('wcf.global.title')
                 ->titleColumn()
-                ->renderer(new PhraseColumnRenderer())
-                ->filter(I18nTextFilter::class)
-                ->sortable(sortByDatabaseColumn: 'groupNameI18n'),
+                ->filter(new L10nTextFilter(
+                    LabelGroup::getL10nDefinition(),
+                    'groupName',
+                    'groupName',
+                    'wcf.global.title',
+                ))
+                ->sortable(sortByDatabaseColumn: 'groupName'),
             GridViewColumn::for('groupDescription')
                 ->label('wcf.global.description')
                 ->filter(TextFilter::class)
@@ -104,9 +107,9 @@ final class LabelGroupGridView extends AbstractGridView
     }
 
     #[\Override]
-    protected function createObjectList(): I18nLabelGroupList
+    protected function createObjectList(): L10nLabelGroupList
     {
-        $list = new I18nLabelGroupList();
+        $list = new L10nLabelGroupList();
         if ($list->sqlSelects !== '') {
             $list->sqlSelects .= ', ';
         }

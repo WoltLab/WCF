@@ -23,6 +23,7 @@ class EmailFormField extends AbstractFormField implements
     IAutoFocusFormField,
     ICssClassFormField,
     II18nFormField,
+    IL10nFormField,
     IImmutableFormField,
     IInputModeFormField,
     IPatternFormField,
@@ -36,7 +37,7 @@ class EmailFormField extends AbstractFormField implements
     use TCssClassFormField;
     use TImmutableFormField;
     use TInputModeFormField;
-    use TI18nFormField {
+    use TL10nFormField {
         validate as protected i18nValidate;
     }
     use TPatternFormField;

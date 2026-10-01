@@ -205,6 +205,11 @@ class UserOptionHandler extends OptionHandler
     {
         $optionData = parent::getOption($optionName);
 
+        // The shared `optionFieldList` template cannot derive the localized
+        // title and description of user options from a language item.
+        $optionData['title'] = $optionData['object']->getTitle();
+        $optionData['description'] = $optionData['object']->getDescription();
+
         if (!$this->editMode && !$this->searchMode) {
             /** @var UserOption $option */
             $option = $optionData['object'];

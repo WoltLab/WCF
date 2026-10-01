@@ -47,6 +47,12 @@ final class UserRankCacheBuilder extends AbstractCacheBuilder
             }
         }
 
+        // The user ranks share one collection, loading the titles once stores
+        // them in the cache instead of querying them on every request.
+        if ($ranks !== []) {
+            \reset($ranks)->getL10nValues('rankTitle');
+        }
+
         return $ranks;
     }
 

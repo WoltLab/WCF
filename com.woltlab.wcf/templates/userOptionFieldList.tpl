@@ -1,9 +1,9 @@
 {foreach from=$options item=optionData}
 	{assign var=option value=$optionData[object]}
 	<dl class="{$option->optionName}Input{if $errorType|is_array && $errorType[$option->optionName]|isset} formError{/if}">
-		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}>{if $isSearchMode|empty || !$optionData[hideLabelInSearch]}<label for="{$option->optionName}">{$langPrefix|concat:$option->optionName|phrase}</label>{if $isSearchMode|empty && $option->required} <span class="customOptionRequired">*</span>{/if}{/if}</dt>
+		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}>{if $isSearchMode|empty || !$optionData[hideLabelInSearch]}<label for="{$option->optionName}">{$option->getTitle()}</label>{if $isSearchMode|empty && $option->required} <span class="customOptionRequired">*</span>{/if}{/if}</dt>
 		<dd>{unsafe:$optionData[html]}
-			<small>{lang __optional=true}{$langPrefix}{$option->optionName}.description{/lang}</small>
+			<small>{$option->getDescription()}</small>
 			
 			{if $errorType|is_array && $errorType[$option->optionName]|isset}
 				<small class="innerError">

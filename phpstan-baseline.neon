@@ -124,12 +124,6 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 3
-			path: wcfsetup/install/files/lib/acp/form/PaidSubscriptionAddForm.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/acp/form/PaidSubscriptionUserAddForm.class.php
 
@@ -456,12 +450,6 @@ parameters:
 			identifier: instanceof.alwaysTrue
 			count: 1
 			path: wcfsetup/install/files/lib/data/comment/response/CommentResponseCollection.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 2
-			path: wcfsetup/install/files/lib/data/contact/recipient/ContactRecipient.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'

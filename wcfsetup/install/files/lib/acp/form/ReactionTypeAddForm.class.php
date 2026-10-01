@@ -2,15 +2,20 @@
 
 namespace wcf\acp\form;
 
+use wcf\command\reaction\type\CreateReactionType;
+use wcf\command\reaction\type\UpdateReactionType;
+use wcf\data\DatabaseObjectBuilder;
 use wcf\data\reaction\type\ReactionType;
-use wcf\data\reaction\type\ReactionTypeAction;
+use wcf\data\reaction\type\ReactionTypeBuilder;
 use wcf\data\reaction\type\ReactionTypeList;
-use wcf\form\AbstractFormBuilderForm;
+use wcf\form\AbstractDatabaseObjectBuilderForm;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\FileProcessorFormField;
+use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
 use wcf\system\form\builder\field\TitleFormField;
+use wcf\util\StringUtil;
 
 /**
  * Represents the reaction type add form.
@@ -20,20 +25,10 @@ use wcf\system\form\builder\field\TitleFormField;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  *
- * @extends AbstractFormBuilderForm<ReactionType>
+ * @extends AbstractDatabaseObjectBuilderForm<ReactionType, ReactionTypeBuilder>
  */
-class ReactionTypeAddForm extends AbstractFormBuilderForm
+class ReactionTypeAddForm extends AbstractDatabaseObjectBuilderForm
 {
-    /**
-     * @inheritDoc
-     */
-    public $formAction = 'create';
-
-    /**
-     * @inheritDoc
-     */
-    public $objectActionClass = ReactionTypeAction::class;
-
     /**
      * @inheritDoc
      */
@@ -52,10 +47,30 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm
     /**
      * @inheritDoc
      */
-    public $objectEditLinkController = ReactionTypeEditForm::class;
+    public string $objectEditLinkController = ReactionTypeEditForm::class;
 
     #[\Override]
-    protected function createForm()
+    protected function getDatabaseObjectBuilder(): ReactionTypeBuilder
+    {
+        if ($this->formObject !== null) {
+            return ReactionTypeBuilder::forUpdate($this->formObject);
+        }
+
+        return ReactionTypeBuilder::forCreate();
+    }
+
+    #[\Override]
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
+    {
+        if ($this->formObject !== null) {
+            return new UpdateReactionType($builder);
+        }
+
+        return new CreateReactionType($builder);
+    }
+
+    #[\Override]
+    protected function createForm(): void
     {
         parent::createForm();
 
@@ -65,15 +80,32 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm
                     ->required()
                     ->autoFocus()
                     ->maximumLength(255)
-                    ->i18n()
-                    ->languageItemPattern('wcf.reactionType.title\d+'),
+                    ->l10n()
+                    ->saveValueCallback(static function (ReactionTypeBuilder $builder, TitleFormField $field) {
+                        $builder->setTitle($field->getL10nValues());
+                    })
+                    ->loadValueCallback(static function (ReactionType $object, IFormField $field) {
+                        $field->value($object->getL10nValues('title'));
+                    }),
                 ShowOrderFormField::create()
                     ->required()
-                    ->options($this->getReactionTypes()),
+                    ->options($this->getReactionTypes(), labelLanguageItems: false)
+                    ->saveValueCallback(static function (ReactionTypeBuilder $builder, ShowOrderFormField $field) {
+                        $builder->setShowOrder($field->getSaveValue());
+                    })
+                    ->loadValueCallback(static function (ReactionType $object, IFormField $field) {
+                        $field->value($object->showOrder);
+                    }),
                 BooleanFormField::create('isAssignable')
                     ->label('wcf.acp.reactionType.isAssignable')
                     ->description('wcf.acp.reactionType.isAssignable.description')
-                    ->value(true),
+                    ->value(true)
+                    ->saveValueCallback(static function (ReactionTypeBuilder $builder, IFormField $field) {
+                        $builder->setIsAssignable((bool)$field->getSaveValue());
+                    })
+                    ->loadValueCallback(static function (ReactionType $object, IFormField $field) {
+                        $field->value($object->isAssignable);
+                    }),
             ]);
 
         $iconContainer = FormContainer::create('imageSection')
@@ -84,7 +116,15 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm
                     ->label('wcf.acp.reactionType.image')
                     ->required()
                     ->singleFileUpload()
-                    ->bigPreview(),
+                    ->bigPreview()
+                    ->saveValueCallback(static function (ReactionTypeBuilder $builder, FileProcessorFormField $field) {
+                        $builder->setIconFileID($field->getSaveValue());
+                    })
+                    ->loadValueCallback(static function (ReactionType $object, IFormField $field) {
+                        if ($object->iconFileID !== null) {
+                            $field->value($object->iconFileID);
+                        }
+                    }),
             ]);
 
         $this->form->appendChildren([
@@ -101,6 +141,6 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm
         $list = new ReactionTypeList();
         $list->readObjects();
 
-        return \array_map(static fn($option) => $option->getTitle(), $list->getObjects());
+        return \array_map(static fn($option) => StringUtil::encodeHTML($option->getTitle()), $list->getObjects());
     }
 }

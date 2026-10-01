@@ -27,7 +27,7 @@ class UserRankEditForm extends UserRankAddForm
     /**
      * @inheritDoc
      */
-    public $formAction = 'edit';
+    public string $formAction = 'edit';
 
     #[\Override]
     public function readParameters()

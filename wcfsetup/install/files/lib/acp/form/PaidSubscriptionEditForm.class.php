@@ -4,22 +4,17 @@ namespace wcf\acp\form;
 
 use wcf\acp\page\PaidSubscriptionListPage;
 use wcf\data\paid\subscription\PaidSubscription;
-use wcf\data\paid\subscription\PaidSubscriptionAction;
-use wcf\data\paid\subscription\PaidSubscriptionList;
-use wcf\form\AbstractForm;
-use wcf\system\exception\PermissionDeniedException;
+use wcf\http\Helper;
 use wcf\system\interaction\admin\PaidSubscriptionInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
-use wcf\system\language\I18nHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
 
 /**
  * Shows the paid subscription edit form.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Marcel Werk, Alexander Ebert
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
@@ -30,136 +25,16 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
     public $activeMenuItem = 'wcf.acp.menu.link.paidSubscription.list';
 
     /**
-     * id of the edited subscription
-     * @var int
+     * @inheritDoc
      */
-    public $subscriptionID = 0;
-
-    /**
-     * edited subscription object
-     * @var ?PaidSubscription
-     */
-    public $subscription;
+    public string $formAction = 'edit';
 
     #[\Override]
     public function readParameters()
     {
-        if (isset($_REQUEST['id'])) {
-            $this->subscriptionID = \intval($_REQUEST['id']);
-        }
-        $this->subscription = new PaidSubscription($this->subscriptionID);
-        if ($this->subscription->isNil()) {
-            throw new PermissionDeniedException();
-        }
-
         parent::readParameters();
-    }
 
-    #[\Override]
-    public function readFormParameters()
-    {
-        parent::readFormParameters();
-
-        if ($this->subscription->hasActiveSubscriptions()) {
-            $this->cost = (float)$this->subscription->cost;
-            $this->currency = $this->subscription->currency;
-            $this->subscriptionLength = $this->subscription->subscriptionLength;
-            $this->subscriptionLengthUnit = $this->subscription->subscriptionLengthUnit;
-            $this->isRecurring = $this->subscription->isRecurring;
-            if ($this->subscriptionLength === 0) {
-                $this->subscriptionLengthPermanent = 1;
-            }
-        }
-    }
-
-    /**
-     * @return void
-     */
-    #[\Override]
-    protected function getAvailableSubscriptions()
-    {
-        $subscriptionList = new PaidSubscriptionList();
-        $subscriptionList->getConditionBuilder()->add('subscriptionID <> ?', [$this->subscriptionID]);
-        $subscriptionList->sqlOrderBy = 'title';
-        $subscriptionList->readObjects();
-        $this->availableSubscriptions = $subscriptionList->getObjects();
-    }
-
-    #[\Override]
-    public function readData()
-    {
-        parent::readData();
-
-        if ($_POST === []) {
-            I18nHandler::getInstance()->setOptions(
-                'description',
-                1,
-                $this->subscription->description,
-                'wcf.paidSubscription.subscription\d+.description'
-            );
-            I18nHandler::getInstance()->setOptions(
-                'title',
-                1,
-                $this->subscription->title,
-                'wcf.paidSubscription.subscription\d+'
-            );
-
-            $this->isDisabled = $this->subscription->isDisabled;
-            $this->showOrder = $this->subscription->showOrder;
-            $this->cost = (float)$this->subscription->cost;
-            $this->currency = $this->subscription->currency;
-            $this->subscriptionLength = $this->subscription->subscriptionLength;
-            $this->subscriptionLengthUnit = $this->subscription->subscriptionLengthUnit;
-            $this->isRecurring = $this->subscription->isRecurring;
-            $this->groupIDs = ArrayUtil::toIntegerArray(\explode(',', $this->subscription->groupIDs));
-            $this->excludedSubscriptionIDs = ArrayUtil::toIntegerArray(\explode(',', $this->subscription->excludedSubscriptionIDs));
-        }
-    }
-
-    #[\Override]
-    public function save()
-    {
-        AbstractForm::save();
-
-        // update description
-        $this->description = 'wcf.paidSubscription.subscription' . $this->subscription->subscriptionID . '.description';
-        if (I18nHandler::getInstance()->isPlainValue('description')) {
-            I18nHandler::getInstance()->remove($this->description);
-            $this->description = I18nHandler::getInstance()->getValue('description');
-        } else {
-            I18nHandler::getInstance()->save('description', $this->description, 'wcf.paidSubscription', 1);
-        }
-
-        // update title
-        $this->title = 'wcf.paidSubscription.subscription' . $this->subscription->subscriptionID;
-        if (I18nHandler::getInstance()->isPlainValue('title')) {
-            I18nHandler::getInstance()->remove($this->title);
-            $this->title = I18nHandler::getInstance()->getValue('title');
-        } else {
-            I18nHandler::getInstance()->save('title', $this->title, 'wcf.paidSubscription', 1);
-        }
-
-        // save subscription
-        $this->objectAction = new PaidSubscriptionAction([$this->subscription], 'update', [
-            'data' => \array_merge($this->additionalFields, [
-                'title' => $this->title,
-                'description' => $this->description,
-                'isDisabled' => $this->isDisabled,
-                'showOrder' => $this->showOrder,
-                'cost' => $this->cost,
-                'currency' => $this->currency,
-                'subscriptionLength' => $this->subscriptionLength,
-                'subscriptionLengthUnit' => $this->subscriptionLengthUnit,
-                'isRecurring' => $this->isRecurring,
-                'groupIDs' => \implode(',', $this->groupIDs),
-                'excludedSubscriptionIDs' => \implode(',', $this->excludedSubscriptionIDs),
-            ]),
-        ]);
-        $this->objectAction->executeAction();
-        $this->saved();
-
-        // show success message
-        WCF::getTPL()->assign('success', true);
+        $this->formObject = Helper::fetchObjectFromQueryParameter(PaidSubscription::class);
     }
 
     #[\Override]
@@ -167,19 +42,32 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
     {
         parent::assignVariables();
 
-        $useRequestData = $_POST !== [];
-        I18nHandler::getInstance()->assignVariables($useRequestData);
-
         WCF::getTPL()->assign([
-            'action' => 'edit',
-            'subscriptionID' => $this->subscriptionID,
-            'subscription' => $this->subscription,
-            'canChangePaymentOptions' => !$this->subscription->hasActiveSubscriptions(),
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new PaidSubscriptionInteractions(),
-                $this->subscription,
+                $this->formObject,
                 LinkHandler::getInstance()->getControllerLink(PaidSubscriptionListPage::class)
             ),
         ]);
+    }
+
+    #[\Override]
+    protected function getAvailableSubscriptions(): array
+    {
+        return \array_filter(
+            parent::getAvailableSubscriptions(),
+            fn(int $key) => $key !== $this->formObject->getObjectID(),
+            \ARRAY_FILTER_USE_KEY
+        );
+    }
+
+    #[\Override]
+    protected function getSubscriptionsByShowOrder(): array
+    {
+        return \array_filter(
+            parent::getSubscriptionsByShowOrder(),
+            fn(int $key) => $key !== $this->formObject->getObjectID(),
+            \ARRAY_FILTER_USE_KEY
+        );
     }
 }

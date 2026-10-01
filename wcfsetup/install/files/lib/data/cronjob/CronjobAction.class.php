@@ -2,6 +2,7 @@
 
 namespace wcf\data\cronjob;
 
+use wcf\command\cronjob\DeleteCronjob;
 use wcf\command\cronjob\DisableCronjob;
 use wcf\command\cronjob\EnableCronjob;
 use wcf\data\AbstractDatabaseObjectAction;
@@ -16,6 +17,10 @@ use wcf\util\DateUtil;
 
 /**
  * Executes cronjob-related actions.
+ *
+ * Cronjobs should be created, updated and deleted through the
+ * `CreateCronjob`, `UpdateCronjob` and `DeleteCronjob` commands, the
+ * `create`, `update` and `delete` actions are `@deprecated 6.3`.
  *
  * @author  Tim Duesterhus, Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
@@ -92,6 +97,23 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
                 throw new PermissionDeniedException();
             }
         }
+    }
+
+    /**
+     * @deprecated 6.3 use the `DeleteCronjob` command instead.
+     */
+    #[\Override]
+    public function delete()
+    {
+        if ($this->objects === []) {
+            $this->readObjects();
+        }
+
+        foreach ($this->objects as $object) {
+            new DeleteCronjob($object->getDecoratedObject())();
+        }
+
+        return \count($this->objects);
     }
 
     /**

@@ -3,14 +3,17 @@
 namespace wcf\data\cronjob;
 
 use Cron\CronExpression;
-use wcf\data\DatabaseObject;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\TDatabaseObjectOptions;
-use wcf\system\WCF;
+use wcf\system\l10n\L10nDefinition;
+use wcf\system\l10n\L10nStorage;
 
 /**
  * Represents a cronjob.
+ *
+ * The localized description is stored in the `wcf1_cronjob_l10n` table.
  *
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
@@ -20,7 +23,6 @@ use wcf\system\WCF;
  * @property-read   string  $className      PHP class name implementing `wcf\system\cronjob\ICronjob`
  * @property-read   int     $packageID      id of the package which delivers the cronjob or the id of the active application during creation in the ACP
  * @property-read   string  $cronjobName    name and textual identifier of the cronjob
- * @property-read   string  $description    description of the cronjob or name of language item which contains the description
  * @property-read   string  $startMinute    minutes in the hour at which the cronjob is executed, wildcard `*` (any minute) or a rule using wildcard `*`
  * @property-read   string  $startHour      hour in the day at which the cronjob is executed, wildcard `*` (any hour) or a rule using wildcard `*`
  * @property-read   string  $startDom       day of the month at which the cronjob is executed, wildcard `*` (any day) or a rule using wildcard `*`
@@ -35,8 +37,12 @@ use wcf\system\WCF;
  * @property-read   int     $state          current state of the cronjob (see `Cronjob::READY`, `Cronjob::PENDING`, `Cronjob::EXECUTING` and `Cronjob::MAX_FAIL_COUNT`)
  * @property-read   int     $failCount      number of times the cronjob execution failed consecutively
  * @property-read   ?string $options        comma separated list of options of which at least one needs to be enabled for the cronjob to be executed
+ *
+ * @extends CollectionDatabaseObject<CronjobCollection>
+ *
+ * @phpstan-import-type L10nValue from L10nStorage
  */
-class Cronjob extends DatabaseObject
+class Cronjob extends CollectionDatabaseObject
 {
     use TDatabaseObjectOptions;
 
@@ -137,7 +143,23 @@ class Cronjob extends DatabaseObject
      */
     public function getDescription()
     {
-        return WCF::getLanguage()->get($this->description);
+        return $this->getCollection()->getResolvedL10nValue($this, 'description');
+    }
+
+    /**
+     * Returns the localized values of the given column as a
+     * `languageID => value` map (see `L10nStorage`).
+     *
+     * @return L10nValue
+     * @since 6.3
+     */
+    public function getL10nValues(string $columnName): array
+    {
+        if ($columnName !== 'description') {
+            throw new \InvalidArgumentException("Invalid column name given.");
+        }
+
+        return $this->getCollection()->getL10nValues($this, $columnName);
     }
 
     /**
@@ -146,5 +168,19 @@ class Cronjob extends DatabaseObject
     public function getPackage(): Package
     {
         return PackageCache::getInstance()->getPackage($this->packageID);
+    }
+
+    /**
+     * @since 6.3
+     */
+    public static function getL10nDefinition(): L10nDefinition
+    {
+        return new L10nDefinition(
+            'wcf1_cronjob',
+            'wcf1_cronjob_l10n',
+            'cronjobID',
+            ['description'],
+            maximumLengths: ['description' => 255],
+        );
     }
 }

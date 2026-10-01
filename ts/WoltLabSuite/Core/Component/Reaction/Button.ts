@@ -95,7 +95,7 @@ class ReactionPopover {
 
       const reactionTypeButtonTitle = document.createElement("span");
       reactionTypeButtonTitle.className = "reactionTypeButtonTitle";
-      reactionTypeButtonTitle.innerHTML = reactionType.title;
+      reactionTypeButtonTitle.textContent = reactionType.title;
       reactionTypeButton.appendChild(reactionTypeButtonTitle);
 
       reactionTypeButton.addEventListener("click", () => this.#click(reactionType.reactionTypeID));

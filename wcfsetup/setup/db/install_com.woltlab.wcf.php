@@ -902,8 +902,6 @@ return [
     DatabaseTable::create('wcf1_captcha_question')
         ->columns([
             ObjectIdDatabaseTableColumn::create('questionID'),
-            NotNullVarchar255DatabaseTableColumn::create('question'),
-            MediumtextDatabaseTableColumn::create('answers'),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             NotNullInt10DatabaseTableColumn::create('views')
                 ->defaultValue(0),
@@ -915,6 +913,32 @@ return [
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['questionID']),
+        ]),
+    DatabaseTable::create('wcf1_captcha_question_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('questionID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('question')
+                ->length(255),
+            MediumtextDatabaseTableColumn::create('answers'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('questionID')
+                ->columns(['questionID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['questionID'])
+                ->referencedTable('wcf1_captcha_question')
+                ->referencedColumns(['questionID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
         ]),
     DatabaseTable::create('wcf1_category')
         ->columns([
@@ -1160,17 +1184,47 @@ return [
     DatabaseTable::create('wcf1_contact_recipient')
         ->columns([
             ObjectIdDatabaseTableColumn::create('recipientID'),
-            NotNullVarchar255DatabaseTableColumn::create('name'),
-            NotNullVarchar255DatabaseTableColumn::create('email'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('isAdministrator'),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             DefaultFalseBooleanDatabaseTableColumn::create('originIsSystem'),
+            VarcharDatabaseTableColumn::create('l10nIdentifier')
+                ->length(255),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['recipientID']),
+        ]),
+    DatabaseTable::create('wcf1_contact_recipient_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('recipientID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('name')
+                ->length(255),
+            VarcharDatabaseTableColumn::create('email')
+                ->length(255),
+            TinyintDatabaseTableColumn::create('isPristine')
+                ->notNull()
+                ->defaultValue(1),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('recipientID')
+                ->columns(['recipientID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['recipientID'])
+                ->referencedTable('wcf1_contact_recipient')
+                ->referencedColumns(['recipientID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
         ]),
     DatabaseTable::create('wcf1_core_object')
         ->columns([
@@ -1201,8 +1255,6 @@ return [
                 ->defaultValue(''),
             NotNullInt10DatabaseTableColumn::create('packageID'),
             NotNullVarchar191DatabaseTableColumn::create('cronjobName'),
-            NotNullVarchar255DatabaseTableColumn::create('description')
-                ->defaultValue(''),
             NotNullVarchar255DatabaseTableColumn::create('startMinute')
                 ->defaultValue('*'),
             NotNullVarchar255DatabaseTableColumn::create('startHour')
@@ -1242,6 +1294,31 @@ return [
                 ->columns(['packageID'])
                 ->referencedTable('wcf1_package')
                 ->referencedColumns(['packageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_cronjob_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('cronjobID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('description')
+                ->length(255),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('cronjobID')
+                ->columns(['cronjobID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['cronjobID'])
+                ->referencedTable('wcf1_cronjob')
+                ->referencedColumns(['cronjobID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
@@ -1581,9 +1658,6 @@ return [
     DatabaseTable::create('wcf1_label_group')
         ->columns([
             ObjectIdDatabaseTableColumn::create('groupID'),
-            VarcharDatabaseTableColumn::create('groupName')
-                ->notNull()
-                ->length(80),
             NotNullVarchar255DatabaseTableColumn::create('groupDescription')
                 ->defaultValue(''),
             DefaultFalseBooleanDatabaseTableColumn::create('forceSelection'),
@@ -1594,6 +1668,31 @@ return [
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['groupID']),
+        ]),
+    DatabaseTable::create('wcf1_label_group_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('groupID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('groupName')
+                ->length(80),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('groupID')
+                ->columns(['groupID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['groupID'])
+                ->referencedTable('wcf1_label_group')
+                ->referencedColumns(['groupID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
         ]),
     DatabaseTable::create('wcf1_label_group_to_object')
         ->columns([
@@ -2873,9 +2972,6 @@ return [
     DatabaseTable::create('wcf1_paid_subscription')
         ->columns([
             ObjectIdDatabaseTableColumn::create('subscriptionID'),
-            NotNullVarchar255DatabaseTableColumn::create('title')
-                ->defaultValue(''),
-            TextDatabaseTableColumn::create('description'),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
@@ -2907,6 +3003,32 @@ return [
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['subscriptionID']),
+        ]),
+    DatabaseTable::create('wcf1_paid_subscription_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('subscriptionID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            TextDatabaseTableColumn::create('description'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('subscriptionID')
+                ->columns(['subscriptionID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['subscriptionID'])
+                ->referencedTable('wcf1_paid_subscription')
+                ->referencedColumns(['subscriptionID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
         ]),
     DatabaseTable::create('wcf1_paid_subscription_transaction_log')
         ->columns([
@@ -3081,11 +3203,12 @@ return [
     DatabaseTable::create('wcf1_reaction_type')
         ->columns([
             ObjectIdDatabaseTableColumn::create('reactionTypeID'),
-            NotNullVarchar255DatabaseTableColumn::create('title'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
             IntDatabaseTableColumn::create('iconFileID'),
             DefaultTrueBooleanDatabaseTableColumn::create('isAssignable'),
+            VarcharDatabaseTableColumn::create('l10nIdentifier')
+                ->length(255),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -3097,6 +3220,34 @@ return [
                 ->referencedTable('wcf1_file')
                 ->referencedColumns(['fileID'])
                 ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_reaction_type_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('reactionTypeID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            TinyintDatabaseTableColumn::create('isPristine')
+                ->notNull()
+                ->defaultValue(1),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('reactionTypeID')
+                ->columns(['reactionTypeID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['reactionTypeID'])
+                ->referencedTable('wcf1_reaction_type')
+                ->referencedColumns(['reactionTypeID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
     DatabaseTable::create('wcf1_registry')
@@ -4633,6 +4784,8 @@ return [
             MediumtextDatabaseTableColumn::create('additionalData'),
             DefaultFalseBooleanDatabaseTableColumn::create('originIsSystem'),
             DefaultFalseBooleanDatabaseTableColumn::create('showOnUserCard'),
+            VarcharDatabaseTableColumn::create('l10nIdentifier')
+                ->length(255),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -4648,6 +4801,35 @@ return [
                 ->columns(['packageID'])
                 ->referencedTable('wcf1_package')
                 ->referencedColumns(['packageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_user_option_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('optionID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            MediumtextDatabaseTableColumn::create('description'),
+            TinyintDatabaseTableColumn::create('isPristine')
+                ->notNull()
+                ->defaultValue(1),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('optionID')
+                ->columns(['optionID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['optionID'])
+                ->referencedTable('wcf1_user_option')
+                ->referencedColumns(['optionID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
@@ -4758,8 +4940,6 @@ return [
             NotNullInt10DatabaseTableColumn::create('groupID'),
             NotNullInt10DatabaseTableColumn::create('requiredPoints')
                 ->defaultValue(0),
-            NotNullVarchar255DatabaseTableColumn::create('rankTitle')
-                ->defaultValue(''),
             NotNullVarchar255DatabaseTableColumn::create('cssClassName')
                 ->defaultValue(''),
             IntDatabaseTableColumn::create('rankImageFileID'),
@@ -4770,6 +4950,8 @@ return [
                 ->notNull()
                 ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('hideTitle'),
+            VarcharDatabaseTableColumn::create('l10nIdentifier')
+                ->length(255),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -4787,6 +4969,34 @@ return [
                 ->referencedTable('wcf1_file')
                 ->referencedColumns(['fileID'])
                 ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_user_rank_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('rankID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('rankTitle')
+                ->length(255),
+            TinyintDatabaseTableColumn::create('isPristine')
+                ->notNull()
+                ->defaultValue(1),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('rankID')
+                ->columns(['rankID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['rankID'])
+                ->referencedTable('wcf1_user_rank')
+                ->referencedColumns(['rankID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
     DatabaseTable::create('wcf1_user_session')

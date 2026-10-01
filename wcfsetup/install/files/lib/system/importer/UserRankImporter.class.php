@@ -5,7 +5,9 @@ namespace wcf\system\importer;
 use wcf\command\file\CreateFileFromExistingFile;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\rank\UserRank;
-use wcf\data\user\rank\UserRankEditor;
+use wcf\data\user\rank\UserRankBuilder;
+use wcf\system\l10n\L10nLanguageItemSync;
+use wcf\system\l10n\L10nStorage;
 
 /**
  * Imports user ranks.
@@ -21,6 +23,17 @@ class UserRankImporter extends AbstractImporter
      */
     protected $className = UserRank::class;
 
+    private const SHIPPED_LANGUAGE_ITEMS = [
+        'wcf.user.rank.administrator',
+        'wcf.user.rank.moderator',
+        'wcf.user.rank.user0',
+        'wcf.user.rank.user1',
+        'wcf.user.rank.user2',
+        'wcf.user.rank.user3',
+        'wcf.user.rank.user4',
+        'wcf.user.rank.user5',
+    ];
+
     #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
@@ -29,10 +42,37 @@ class UserRankImporter extends AbstractImporter
             $data['groupID'] = UserGroup::getGroupByType(UserGroup::USERS)->groupID;
         }
 
-        $data['rankImageFileID'] = $this->importImage($data['rankImage'] ?? '');
-        unset($data['rankImage']);
+        $rankTitle = (string)$data['rankTitle'];
+        $builder = UserRankBuilder::forCreate()
+            ->setGroupID($data['groupID'])
+            ->setRankImageFileID($this->importImage($data['rankImage'] ?? ''));
 
-        $rank = UserRankEditor::create($data);
+        // Exporters of WoltLab Suite pass the title of the default ranks as the
+        // name of the language variable shipped with the package.
+        $isShippedRank = \in_array($rankTitle, self::SHIPPED_LANGUAGE_ITEMS, true);
+        if ($isShippedRank) {
+            $builder->setL10nIdentifier($rankTitle);
+        } else {
+            $builder->setRankTitle([L10nStorage::MONOLINGUAL => $rankTitle]);
+        }
+
+        $handledColumns = ['rankID', 'groupID', 'rankTitle', 'rankImage', 'rankImageFileID', 'l10nIdentifier'];
+        foreach ($data as $key => $value) {
+            if (\in_array($key, $handledColumns, true)) {
+                continue;
+            }
+            if ($value !== null && !\is_string($value) && !\is_int($value) && !\is_float($value)) {
+                continue;
+            }
+
+            $builder->setCustomProperty($key, $value);
+        }
+
+        $rank = $builder->create();
+
+        if ($isShippedRank) {
+            L10nLanguageItemSync::sync(UserRank::getL10nDefinition());
+        }
 
         ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user.rank', $oldID, $rank->rankID);
 

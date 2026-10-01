@@ -3,7 +3,10 @@
 namespace wcf\command\user\option;
 
 use wcf\data\user\option\UserOption;
-use wcf\data\user\option\UserOptionEditor;
+use wcf\data\user\option\UserOptionBuilder;
+use wcf\event\user\option\UserOptionEnabled;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
+use wcf\system\event\EventHandler;
 
 /**
  * Enables a user option.
@@ -21,8 +24,12 @@ final class EnableOption
 
     public function __invoke(): void
     {
-        (new UserOptionEditor($this->option))->update([
-            'isDisabled' => 0,
-        ]);
+        UserOptionBuilder::forUpdate($this->option)
+            ->setIsDisabled(false)
+            ->update();
+
+        UserOptionCacheBuilder::getInstance()->reset();
+
+        EventHandler::getInstance()->fire(new UserOptionEnabled($this->option));
     }
 }

@@ -5,6 +5,7 @@ namespace wcf\acp\form;
 use wcf\acp\page\CronjobListPage;
 use wcf\data\cronjob\Cronjob;
 use wcf\http\Helper;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\interaction\admin\CronjobInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
@@ -27,7 +28,7 @@ class CronjobEditForm extends CronjobAddForm
     /**
      * @inheritDoc
      */
-    public $formAction = 'edit';
+    public string $formAction = 'edit';
 
     #[\Override]
     public function readParameters()
@@ -35,10 +36,13 @@ class CronjobEditForm extends CronjobAddForm
         parent::readParameters();
 
         $this->formObject = Helper::fetchObjectFromQueryParameter(Cronjob::class);
+        if (!$this->formObject->isEditable()) {
+            throw new PermissionDeniedException();
+        }
     }
 
     #[\Override]
-    protected function createForm()
+    protected function createForm(): void
     {
         parent::createForm();
 

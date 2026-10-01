@@ -2,6 +2,7 @@
 
 namespace wcf\data\paid\subscription;
 
+use wcf\command\paid\subscription\DeletePaidSubscription;
 use wcf\command\paid\subscription\DisablePaidSubscription;
 use wcf\command\paid\subscription\EnablePaidSubscription;
 use wcf\data\AbstractDatabaseObjectAction;
@@ -9,6 +10,11 @@ use wcf\data\IToggleAction;
 
 /**
  * Executes paid subscription-related actions.
+ *
+ * Paid subscriptions should be created, updated and deleted through the
+ * `CreatePaidSubscription`, `UpdatePaidSubscription` and
+ * `DeletePaidSubscription` commands, the `create`, `update` and `delete`
+ * actions are `@deprecated 6.3`.
  *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
@@ -33,35 +39,21 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
      */
     protected $requireACP = ['create', 'delete', 'toggle', 'update'];
 
+    /**
+     * @deprecated 6.3 use the `DeletePaidSubscription` command instead.
+     */
     #[\Override]
-    public function create()
+    public function delete()
     {
-        $showOrder = 0;
-        if (isset($this->parameters['data']['showOrder'])) {
-            $showOrder = $this->parameters['data']['showOrder'];
-            unset($this->parameters['data']['showOrder']);
+        if ($this->objects === []) {
+            $this->readObjects();
         }
 
-        /** @var PaidSubscription $subscription */
-        $subscription = parent::create();
-        $editor = new PaidSubscriptionEditor($subscription);
-        $editor->setShowOrder($showOrder);
-
-        return new PaidSubscription($subscription->subscriptionID);
-    }
-
-    #[\Override]
-    public function update()
-    {
-        parent::update();
-
-        if (
-            \count($this->objects) === 1
-            && isset($this->parameters['data']['showOrder'])
-            && $this->parameters['data']['showOrder'] !== \reset($this->objects)->showOrder
-        ) {
-            \reset($this->objects)->setShowOrder($this->parameters['data']['showOrder']);
+        foreach ($this->objects as $object) {
+            new DeletePaidSubscription($object->getDecoratedObject())();
         }
+
+        return \count($this->objects);
     }
 
     /**

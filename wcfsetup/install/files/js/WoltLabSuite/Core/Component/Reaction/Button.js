@@ -69,7 +69,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
                 reactionTypeButton.innerHTML = reactionType.renderedIcon;
                 const reactionTypeButtonTitle = document.createElement("span");
                 reactionTypeButtonTitle.className = "reactionTypeButtonTitle";
-                reactionTypeButtonTitle.innerHTML = reactionType.title;
+                reactionTypeButtonTitle.textContent = reactionType.title;
                 reactionTypeButton.appendChild(reactionTypeButtonTitle);
                 reactionTypeButton.addEventListener("click", () => this.#click(reactionType.reactionTypeID));
                 if (!reactionType.isAssignable) {

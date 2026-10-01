@@ -2,13 +2,14 @@
 
 namespace wcf\system\user\notification\event;
 
-use wcf\data\paid\subscription\PaidSubscription;
-use wcf\data\paid\subscription\PaidSubscriptionAction;
+use wcf\command\paid\subscription\CreatePaidSubscription;
+use wcf\data\paid\subscription\PaidSubscriptionBuilder;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 use wcf\data\user\UserProfile;
 use wcf\page\PaidSubscriptionListPage;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\PaidSubscriptionUserUserNotificationObject;
 use wcf\system\WCF;
@@ -81,13 +82,11 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
     #[\Override]
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {
-        /** @var PaidSubscription $paidSubscription */
-        $paidSubscription = (new PaidSubscriptionAction([], 'create', [
-            'data' => [
-                'groupIDs' => '',
-                'title' => 'Test Subscription',
-            ],
-        ]))->executeAction()['returnValues'];
+        $paidSubscription = (new CreatePaidSubscription(
+            PaidSubscriptionBuilder::forCreate()
+                ->setTitle([L10nStorage::MONOLINGUAL => 'Test Subscription'])
+                ->setGroupIDs([])
+        ))();
 
         /** @var PaidSubscriptionUser $paidSubscriptionUser */
         $paidSubscriptionUser = (new PaidSubscriptionUserAction([], 'create', [

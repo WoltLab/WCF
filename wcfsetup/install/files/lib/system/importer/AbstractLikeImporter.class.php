@@ -3,10 +3,9 @@
 namespace wcf\system\importer;
 
 use wcf\command\file\CreateFileFromExistingFile;
-use wcf\data\language\item\LanguageItemEditor;
 use wcf\data\like\Like;
 use wcf\data\reaction\type\ReactionType;
-use wcf\data\reaction\type\ReactionTypeEditor;
+use wcf\data\reaction\type\ReactionTypeBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\WCF;
@@ -111,30 +110,16 @@ class AbstractLikeImporter extends AbstractImporter
                     copy: true,
                 )();
 
-                $reaction = ReactionTypeEditor::create([
-                    'iconFileID' => $file?->fileID,
-                    'showOrder' => $showOrder + 1,
-                ]);
-
-                $sql = "SELECT  languageCategoryID
-                        FROM    wcf1_language_category
-                        WHERE   languageCategory = ?";
-                $statement = WCF::getDB()->prepare($sql, 1);
-                $statement->execute(['wcf.reactionType']);
-                $languageCategoryID = $statement->fetchSingleColumn();
-
+                $title = [];
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-                    LanguageItemEditor::create([
-                        'languageID' => $language->languageID,
-                        'languageItem' => 'wcf.reactionType.title' . $reaction->reactionTypeID,
-                        'languageItemValue' => ($language->getFixedLanguageCode() === 'de' ? 'Gefällt mir nicht' : 'Dislike'),
-                        'languageCategoryID' => $languageCategoryID,
-                        'packageID' => 1,
-                    ]);
+                    $title[$language->languageID] = $language->getFixedLanguageCode() === 'de' ? 'Gefällt mir nicht' : 'Dislike';
                 }
 
-                $editor = new ReactionTypeEditor($reaction);
-                $editor->update(['title' => 'wcf.reactionType.title' . $reaction->reactionTypeID]);
+                $reaction = ReactionTypeBuilder::forCreate()
+                    ->setTitle($title)
+                    ->setShowOrder($showOrder + 1)
+                    ->setIconFileID($file?->fileID)
+                    ->create();
             }
 
             self::$dislikeReactionTypeID = $reaction->reactionTypeID;

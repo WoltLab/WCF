@@ -5,7 +5,7 @@ namespace wcf\system\gridView\admin;
 use wcf\acp\form\UserRankEditForm;
 use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\rank\I18nUserRankList;
+use wcf\data\user\rank\L10nUserRankList;
 use wcf\data\user\rank\UserRank;
 use wcf\event\gridView\admin\UserRankGridViewInitialized;
 use wcf\system\cache\runtime\FileRuntimeCache;
@@ -19,8 +19,8 @@ use wcf\system\interaction\admin\UserRankInteractions;
 use wcf\system\interaction\bulk\admin\UserRankBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
-use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
+use wcf\system\view\filter\L10nTextFilter;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -33,7 +33,7 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  *
- * @extends AbstractGridView<UserRank, I18nUserRankList>
+ * @extends AbstractGridView<UserRank, L10nUserRankList>
  */
 final class UserRankGridView extends AbstractGridView
 {
@@ -46,9 +46,14 @@ final class UserRankGridView extends AbstractGridView
                 ->sortable(),
             GridViewColumn::for('rankTitle')
                 ->label('wcf.acp.user.rank.title')
-                ->sortable(true, 'rankTitleI18n')
+                ->sortable(sortByDatabaseColumn: 'rankTitle')
                 ->titleColumn()
-                ->filter(I18nTextFilter::class)
+                ->filter(new L10nTextFilter(
+                    UserRank::getL10nDefinition(),
+                    'rankTitle',
+                    'rankTitle',
+                    'wcf.acp.user.rank.title',
+                ))
                 ->renderer([
                     new class extends DefaultColumnRenderer {
                         #[\Override]
@@ -57,7 +62,7 @@ final class UserRankGridView extends AbstractGridView
                             \assert($row instanceof UserRank);
 
                             return '<span class="badge label' . ($row->cssClassName !== '' ? ' ' . $row->cssClassName : '') . '">'
-                                . StringUtil::encodeHTML($row->getTitle())
+                                . ($value ?? '')
                                 . '</span>';
                         }
                     }
@@ -149,9 +154,9 @@ final class UserRankGridView extends AbstractGridView
     }
 
     #[\Override]
-    protected function createObjectList(): I18nUserRankList
+    protected function createObjectList(): L10nUserRankList
     {
-        return new I18nUserRankList();
+        return new L10nUserRankList();
     }
 
     #[\Override]

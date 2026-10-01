@@ -23,6 +23,7 @@ class TextFormField extends AbstractFormField implements
     ICensorshipFormField,
     ICssClassFormField,
     II18nFormField,
+    IL10nFormField,
     IImmutableFormField,
     IInputModeFormField,
     IMaximumLengthFormField,
@@ -37,7 +38,7 @@ class TextFormField extends AbstractFormField implements
     use TCssClassFormField;
     use TImmutableFormField;
     use TInputModeFormField;
-    use TI18nFormField {
+    use TL10nFormField {
         validate as protected i18nValidate;
     }
     use TMaximumLengthFormField;

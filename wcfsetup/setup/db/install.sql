@@ -197,4 +197,4 @@ INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optio
 INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optionType, configuration, showOrder, originIsSystem) VALUES (2, 'wcf.contact.option2', '', 'textarea', '{\"required\":1}', 1, 1);
 
 -- default recipient: site administrator
-INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, originIsSystem) VALUES (1, 'wcf.contact.recipient.name1', '', 1, 1);
+INSERT INTO wcf1_contact_recipient (recipientID, isAdministrator, originIsSystem, l10nIdentifier) VALUES (1, 1, 1, 'wcf.contact.recipient.name1');

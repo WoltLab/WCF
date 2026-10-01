@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\contact\recipients;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\contact\recipient\DeleteContactRecipient;
 use wcf\data\contact\recipient\ContactRecipient;
-use wcf\data\contact\recipient\ContactRecipientAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -32,7 +32,7 @@ final class DeleteRecipient implements IController
 
         $this->assertRecipientCanBeDeleted($recipient);
 
-        (new ContactRecipientAction([$recipient], 'delete'))->executeAction();
+        (new DeleteContactRecipient($recipient))();
 
         return new JsonResponse([]);
     }

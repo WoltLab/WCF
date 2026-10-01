@@ -936,7 +936,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             return $this->userTitle;
         }
         if ($this->getRank() !== null && $this->getRank()->showTitle()) {
-            return WCF::getLanguage()->get($this->getRank()->rankTitle);
+            return $this->getRank()->getTitle();
         }
 
         return '';
@@ -1116,6 +1116,16 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         $option->setOptionValue($this->getDecoratedObject());
 
         return $option->optionValue;
+    }
+
+    /**
+     * Returns the localized title of the user option with the given name.
+     *
+     * @since 6.3
+     */
+    public function getUserOptionTitle(string $name): string
+    {
+        return ViewableUserOption::getUserOption($name)->getTitle();
     }
 
     /**

@@ -3,7 +3,8 @@
 namespace wcf\system\importer;
 
 use wcf\data\label\group\LabelGroup;
-use wcf\data\label\group\LabelGroupEditor;
+use wcf\data\label\group\LabelGroupBuilder;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
 
 /**
@@ -24,7 +25,22 @@ class LabelGroupImporter extends AbstractImporter
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
         // save label group
-        $labelGroup = LabelGroupEditor::create($data);
+        $builder = LabelGroupBuilder::forCreate()
+            ->setGroupName([L10nStorage::MONOLINGUAL => (string)$data['groupName']]);
+
+        $handledColumns = ['groupID', 'groupName'];
+        foreach ($data as $key => $value) {
+            if (\in_array($key, $handledColumns, true)) {
+                continue;
+            }
+            if ($value !== null && !\is_string($value) && !\is_int($value) && !\is_float($value)) {
+                continue;
+            }
+
+            $builder->setCustomProperty($key, $value);
+        }
+
+        $labelGroup = $builder->create();
 
         // save objects
         if (!empty($additionalData['objects'])) {

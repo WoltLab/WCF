@@ -2,12 +2,14 @@
 
 namespace wcf\data\paid\subscription;
 
-use wcf\data\DatabaseObject;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\ITitledObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 use wcf\page\PaidSubscriptionReturnPage;
 use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\l10n\L10nDefinition;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\payment\method\PaymentMethodHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -16,13 +18,14 @@ use wcf\util\StringUtil;
 /**
  * Represents a paid subscription.
  *
+ * The localized title and description are stored in the
+ * `wcf1_paid_subscription_l10n` table.
+ *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @property-read   int     $subscriptionID             unique id of the paid subscription
- * @property-read   string  $title                      title of the paid subscription or name of language item which contains the title
- * @property-read   ?string $description                description of the paid subscription or name of language item which contains the description
  * @property-read   0|1     $isDisabled                 is `1` if the paid subscription is disabled and thus cannot be bought, otherwise `0`
  * @property-read   int     $showOrder                  position of the paid subscription in relation to the other paid subscriptions
  * @property-read   string  $cost                       cost of the paid subscription as a decimal string
@@ -32,8 +35,12 @@ use wcf\util\StringUtil;
  * @property-read   0|1     $isRecurring                is `1` if the paid subscription is recurring and thus requires regular (automatic) payments, otherwise `0`
  * @property-read   ?string $groupIDs                   comma-separated list with the ids of the user groups for which the subscription pays membership
  * @property-read   ?string $excludedSubscriptionIDs    comma-separated list with the ids of paid subscriptions which prohibit purchase of this paid subscription
+ *
+ * @extends CollectionDatabaseObject<PaidSubscriptionCollection>
+ *
+ * @phpstan-import-type L10nValue from L10nStorage
  */
-class PaidSubscription extends DatabaseObject implements ITitledObject
+class PaidSubscription extends CollectionDatabaseObject implements ITitledObject
 {
     /**
      * Returns list of purchase buttons.
@@ -61,7 +68,7 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
             $buttons[] = $paymentMethod->getPurchaseButton(
                 (float)$this->cost,
                 $this->currency,
-                WCF::getLanguage()->get($this->title),
+                $this->getTitle(),
                 $objectTypeID . ':' . WCF::getUser()->userID . ':' . $this->subscriptionID,
                 LinkHandler::getInstance()->getControllerLink(PaidSubscriptionReturnPage::class),
                 LinkHandler::getInstance()->getLink(),
@@ -103,17 +110,13 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
     }
 
     /**
-     * Returns the description with transparent handling of phrases.
+     * Returns the localized description.
      *
      * @return      string
      */
     protected function getDescription()
     {
-        if (\preg_match('~^wcf.paidSubscription.subscription\d+.description$~', $this->description)) {
-            return WCF::getLanguage()->get($this->description);
-        }
-
-        return $this->description;
+        return $this->getCollection()->getResolvedL10nValue($this, 'description');
     }
 
     /**
@@ -122,7 +125,37 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
     #[\Override]
     public function getTitle(): string
     {
-        return WCF::getLanguage()->get($this->title);
+        return $this->getCollection()->getResolvedL10nValue($this, 'title');
+    }
+
+    /**
+     * Returns the localized values of the given column as a
+     * `languageID => value` map (see `L10nStorage`).
+     *
+     * @return L10nValue
+     * @since 6.3
+     */
+    public function getL10nValues(string $columnName): array
+    {
+        if ($columnName !== 'title' && $columnName !== 'description') {
+            throw new \InvalidArgumentException("Invalid column name given.");
+        }
+
+        return $this->getCollection()->getL10nValues($this, $columnName);
+    }
+
+    /**
+     * @since 6.3
+     */
+    public static function getL10nDefinition(): L10nDefinition
+    {
+        return new L10nDefinition(
+            'wcf1_paid_subscription',
+            'wcf1_paid_subscription_l10n',
+            'subscriptionID',
+            ['title', 'description'],
+            maximumLengths: ['title' => 255],
+        );
     }
 
     /**

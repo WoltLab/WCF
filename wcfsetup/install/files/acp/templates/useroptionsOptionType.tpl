@@ -31,7 +31,7 @@
 						</span>
 						<label>
 							<input type="checkbox" name="values[{$option->optionName}][]" value="{$availableOption}"{if $availableOption|in_array:$value} checked{/if}>
-							{lang}wcf.user.option.{$availableOption}{/lang}
+							{$optionTitles[$availableOption]}
 						</label>
 					</span>
 				</li>
@@ -40,6 +40,6 @@
 	</div>
 {else}
 	{foreach from=$availableOptions item=availableOption}
-		<label><input type="checkbox" name="values[{$option->optionName}][]" value="{$availableOption}"{if $availableOption|in_array:$value} checked{/if}> {lang}wcf.user.option.{$availableOption}{/lang}</label>
+		<label><input type="checkbox" name="values[{$option->optionName}][]" value="{$availableOption}"{if $availableOption|in_array:$value} checked{/if}> {$optionTitles[$availableOption]}</label>
 	{/foreach}
 {/if}

@@ -69,10 +69,23 @@ return new class {
                 }
             }
         );
+
+        $eventHandler->register(
+            \wcf\event\l10n\L10nDefinitionCollecting::class,
+            static function (\wcf\event\l10n\L10nDefinitionCollecting $event) {
+                $event->register(\wcf\data\user\option\UserOption::getL10nDefinition());
+                $event->register(\wcf\data\reaction\type\ReactionType::getL10nDefinition());
+                $event->register(\wcf\data\user\rank\UserRank::getL10nDefinition());
+                $event->register(\wcf\data\contact\recipient\ContactRecipient::getL10nDefinition());
+            }
+        );
         $eventHandler->register(
             \wcf\event\language\LanguageImported::class,
             static function (\wcf\event\language\LanguageImported $event) {
                 new ResetPreloadCache($event->language)();
+
+                // A new language has no localized values yet.
+                (new \wcf\command\l10n\SyncL10nLanguageItems())();
             }
         );
         $eventHandler->register(

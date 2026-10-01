@@ -35,6 +35,12 @@ class LabelCacheBuilder extends AbstractCacheBuilder
         $groupList->readObjects();
         $data['groups'] = $groupList->getObjects();
 
+        // The label groups share one collection, loading the titles once
+        // stores them in the cache instead of querying them on every request.
+        if ($data['groups'] !== []) {
+            \reset($data['groups'])->getL10nValues('groupName');
+        }
+
         // get permissions for groups
         $permissions = ACLHandler::getInstance()->getPermissions(
             ACLHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.label'),

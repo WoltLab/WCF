@@ -30,6 +30,8 @@ use wcf\util\StringUtil;
  *  html: string,
  *  cssClassName: string,
  *  hideLabelInSearch: bool,
+ *  title?: string,
+ *  description?: string,
  * }|null
  */
 class OptionHandler implements IOptionHandler

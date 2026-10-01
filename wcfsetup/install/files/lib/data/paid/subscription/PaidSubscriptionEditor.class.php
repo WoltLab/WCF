@@ -17,6 +17,7 @@ use wcf\system\WCF;
  * @mixin       PaidSubscription
  * @extends DatabaseObjectEditor<PaidSubscription>
  * @implements IEditableCachedObject<PaidSubscription>
+ * @deprecated 6.3 use `PaidSubscriptionBuilder` instead.
  */
 class PaidSubscriptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {
@@ -29,6 +30,7 @@ class PaidSubscriptionEditor extends DatabaseObjectEditor implements IEditableCa
      * Sets the show order of the subscription.
      *
      * @return void
+     * @deprecated 6.3 use `PaidSubscriptionBuilder::setShowOrder()` instead.
      */
     public function setShowOrder(int $showOrder = 0)
     {

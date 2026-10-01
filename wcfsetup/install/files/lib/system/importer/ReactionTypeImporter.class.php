@@ -4,7 +4,8 @@ namespace wcf\system\importer;
 
 use wcf\command\file\CreateFileFromExistingFile;
 use wcf\data\reaction\type\ReactionType;
-use wcf\data\reaction\type\ReactionTypeEditor;
+use wcf\data\reaction\type\ReactionTypeBuilder;
+use wcf\system\l10n\L10nStorage;
 
 /**
  * Imports reaction types.
@@ -34,11 +35,25 @@ class ReactionTypeImporter extends AbstractImporter
             return 0;
         }
 
-        unset($data['iconFile']);
-        $data['iconFileID'] = $file->fileID;
+        // Imported reaction types are owned by the administrator: they are not
+        // linked to a language variable and their title is monolingual.
+        $builder = ReactionTypeBuilder::forCreate()
+            ->setTitle([L10nStorage::MONOLINGUAL => (string)$data['title']])
+            ->setIconFileID($file->fileID);
 
-        /** @var ReactionType $reactionType */
-        $reactionType = ReactionTypeEditor::create($data);
+        $handledColumns = ['reactionTypeID', 'title', 'iconFile', 'iconFileID', 'l10nIdentifier'];
+        foreach ($data as $key => $value) {
+            if (\in_array($key, $handledColumns, true)) {
+                continue;
+            }
+            if ($value !== null && !\is_string($value) && !\is_int($value) && !\is_float($value)) {
+                continue;
+            }
+
+            $builder->setCustomProperty($key, $value);
+        }
+
+        $reactionType = $builder->create();
 
         ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.reactionType', $oldID, $reactionType->reactionTypeID);
 

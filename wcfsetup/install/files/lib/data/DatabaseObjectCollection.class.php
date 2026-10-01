@@ -17,10 +17,15 @@ abstract class DatabaseObjectCollection
     /**
      * @param TDatabaseObject[] $objects
      */
-    public function __construct(protected readonly array $objects) {}
+    public function __construct(protected readonly array $objects)
+    {
+        if ($objects === []) {
+            throw new \InvalidArgumentException("A collection must contain at least one object.");
+        }
+    }
 
     /**
-     * @return int[]
+     * @return non-empty-array<int>
      */
     public function getObjectIDs(): array
     {
@@ -28,7 +33,7 @@ abstract class DatabaseObjectCollection
     }
 
     /**
-     * @return TDatabaseObject[]
+     * @return non-empty-array<TDatabaseObject>
      */
     public function getObjects(): array
     {
