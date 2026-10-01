@@ -295,6 +295,8 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
                     {$condition}";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute(\array_merge([\TIME_NOW], $condition->getParameters()));
+
+            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'userNotificationLastReadTime');
         }
 
         // Step 4) Clear cached values.

@@ -955,8 +955,10 @@ class UserNotificationHandler extends SingletonFactory
         if ($confirmedCount !== 0) {
             if ($recipientIDs !== []) {
                 UserStorageHandler::getInstance()->reset($recipientIDs, 'userNotificationCount');
+                UserStorageHandler::getInstance()->reset($recipientIDs, 'userNotificationLastReadTime');
             } else {
                 UserStorageHandler::getInstance()->resetAll('userNotificationCount');
+                UserStorageHandler::getInstance()->resetAll('userNotificationLastReadTime');
             }
         }
     }
@@ -1004,6 +1006,7 @@ class UserNotificationHandler extends SingletonFactory
         // Check whether anything was changed. If not, we don't need to do anything else.
         if ($confirmedCount !== 0) {
             UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'userNotificationCount');
+            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'userNotificationLastReadTime');
         }
     }
 
@@ -1090,12 +1093,28 @@ class UserNotificationHandler extends SingletonFactory
      */
     public function getTimeOfLastReadNotification(): int
     {
+        if (WCF::getUser()->isGuest()) {
+            return 0;
+        }
+
+        $data = UserStorageHandler::getInstance()->getField('userNotificationLastReadTime');
+        if ($data !== null) {
+            return (int)$data;
+        }
+
         $sql = "SELECT MAX(confirmTime)
                 FROM   wcf1_user_notification
                 WHERE  userID = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([WCF::getUser()->userID]);
+        $lastReadTime = $statement->fetchSingleColumn() ?? 0;
 
-        return $statement->fetchSingleColumn() ?: 0;
+        UserStorageHandler::getInstance()->update(
+            WCF::getUser()->userID,
+            'userNotificationLastReadTime',
+            (string)$lastReadTime
+        );
+
+        return $lastReadTime;
     }
 }
