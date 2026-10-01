@@ -4,6 +4,7 @@ namespace wcf\data\user\option;
 
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -28,6 +29,12 @@ use wcf\util\StringUtil;
 final class UserOptionBuilder extends DatabaseObjectBuilder
 {
     private bool $isGenericOptionName = false;
+
+    /**
+     * Is `true` if the configuration has been set explicitly and must not be
+     * derived from the select options and the required flag.
+     */
+    private bool $hasExplicitConfiguration = false;
 
     /**
      * @var L10nValue
@@ -107,6 +114,10 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    /**
+     * Sets the legacy option type, see `UserOption::getFormOption()` for the
+     * mapping to form options.
+     */
     public function setOptionType(string $optionType): static
     {
         $this->properties['optionType'] = $optionType;
@@ -128,9 +139,13 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    /**
+     * Sets the select options in the legacy format, one `value:label` pair per line.
+     */
     public function setSelectOptions(string $selectOptions): static
     {
         $this->properties['selectOptions'] = $selectOptions;
+        $this->syncConfiguration();
 
         return $this;
     }
@@ -180,6 +195,7 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     public function setRequired(bool $required): static
     {
         $this->properties['required'] = $required ? 1 : 0;
+        $this->syncConfiguration();
 
         return $this;
     }
@@ -239,6 +255,22 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     public function setAdditionalData(array $additionalData): static
     {
         $this->properties['additionalData'] = \serialize($additionalData);
+
+        return $this;
+    }
+
+    /**
+     * Sets the form option configuration explicitly instead of deriving it
+     * from the select options and the required flag.
+     *
+     * @param array<string, mixed> $configuration
+     */
+    public function setConfiguration(array $configuration): static
+    {
+        $this->hasExplicitConfiguration = true;
+        $this->properties['configuration'] = $configuration !== []
+            ? \json_encode($configuration, \JSON_THROW_ON_ERROR)
+            : '';
 
         return $this;
     }
@@ -324,5 +356,61 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
         foreach ($objectIDs as $objectID) {
             WCF::getDB()->getEditor()->dropColumn('wcf1_user_option_value', 'userOption' . $objectID);
         }
+    }
+
+    /**
+     * Derives the configuration from the select options and the required flag,
+     * falling back to the values of the updated option for the missing one.
+     */
+    private function syncConfiguration(): void
+    {
+        if ($this->hasExplicitConfiguration) {
+            return;
+        }
+
+        $this->properties['configuration'] = self::buildConfiguration(
+            (string)($this->properties['selectOptions'] ?? ($this->isUpdate() ? $this->getObject()->selectOptions : '')),
+            (bool)($this->properties['required'] ?? ($this->isUpdate() ? $this->getObject()->required : false))
+        );
+    }
+
+    /**
+     * Builds the JSON-encoded form option configuration from the legacy option data.
+     */
+    public static function buildConfiguration(string $selectOptions, bool $required): string
+    {
+        $configuration = [];
+        if ($required) {
+            $configuration['required'] = 1;
+        }
+
+        $selectOptions = StringUtil::trim(StringUtil::unifyNewlines($selectOptions));
+        if ($selectOptions !== '') {
+            $options = [];
+            foreach (\explode("\n", $selectOptions) as $selectOption) {
+                $key = $value = $selectOption;
+                if (\str_contains($selectOption, ':')) {
+                    [$key, $value] = \explode(':', $selectOption, 2);
+                }
+
+                $options[] = [
+                    'key' => $key,
+                    'value' => [0 => $value],
+                ];
+            }
+
+            $configuration['selectOptions'] = \json_encode($options, \JSON_THROW_ON_ERROR);
+        }
+
+        if ($configuration === []) {
+            return '';
+        }
+
+        return \json_encode($configuration, \JSON_THROW_ON_ERROR);
+    }
+
+    public static function resetCache(): void
+    {
+        UserOptionCacheBuilder::getInstance()->reset();
     }
 }

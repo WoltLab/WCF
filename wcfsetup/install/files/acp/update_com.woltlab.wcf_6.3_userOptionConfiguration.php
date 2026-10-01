@@ -8,7 +8,7 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-use wcf\data\user\option\UserOptionEditor;
+use wcf\data\user\option\UserOptionBuilder;
 use wcf\system\WCF;
 
 $sql = "SELECT  optionID, selectOptions, required
@@ -17,7 +17,7 @@ $statement = WCF::getDB()->prepare($sql);
 $statement->execute();
 $configurations = [];
 while ($row = $statement->fetchArray()) {
-    $configurations[$row['optionID']] = UserOptionEditor::buildConfiguration(
+    $configurations[$row['optionID']] = UserOptionBuilder::buildConfiguration(
         $row['selectOptions'] ?? '',
         (bool)$row['required']
     );
@@ -37,4 +37,4 @@ foreach ($configurations as $optionID => $configuration) {
 }
 WCF::getDB()->commitTransaction();
 
-UserOptionEditor::resetCache();
+UserOptionBuilder::resetCache();

@@ -5,14 +5,13 @@ namespace wcf\command\user\option;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionBuilder;
 use wcf\event\user\option\UserOptionDeleted;
-use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\event\EventHandler;
 
 /**
  * Deletes a user option.
  *
  * @author      Marcel Werk
- * @copyright   2001-2024 WoltLab GmbH
+ * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
@@ -26,7 +25,7 @@ final class DeleteOption
     {
         UserOptionBuilder::delete($this->option);
 
-        UserOptionCacheBuilder::getInstance()->reset();
+        UserOptionBuilder::resetCache();
 
         EventHandler::getInstance()->fire(new UserOptionDeleted($this->option));
     }
