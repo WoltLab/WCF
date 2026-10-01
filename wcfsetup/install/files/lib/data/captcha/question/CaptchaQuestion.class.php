@@ -101,6 +101,7 @@ class CaptchaQuestion extends CollectionDatabaseObject implements ITitledObject
             'wcf1_captcha_question_l10n',
             'questionID',
             ['question', 'answers'],
+            maximumLengths: ['question' => 255],
         );
     }
 }

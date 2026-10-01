@@ -53,18 +53,6 @@ $existingLanguageItems = $statement->fetchAll(\PDO::FETCH_COLUMN);
 // This script owns the table's content at this point (idempotency on re-runs).
 WCF::getDB()->prepare("DELETE FROM wcf1_contact_recipient_l10n")->execute();
 
-// The length of multilingual names was never validated, and the language
-// editor allows phrases of any length, which would exceed the l10n columns. The
-// phrases of recipients created by an administrator are removed below anyway,
-// shortening them is lossless for a retry. The kept phrase of the shipped
-// recipient is shortened for good, it would otherwise break its synchronization.
-$sql = "UPDATE  wcf1_language_item
-        SET     languageItemValue = SUBSTRING(languageItemValue, 1, 255)
-        WHERE   languageItem REGEXP ?
-            AND CHAR_LENGTH(languageItemValue) > 255";
-$statement = WCF::getDB()->prepare($sql);
-$statement->execute(['^wcf\.contact\.recipient\.(name|email)[0-9]+$']);
-
 // Link the shipped administrator recipient to its language variable. A legacy
 // monolingual edit deleted the phrase and stored a literal name, such a
 // recipient owns its name and stays unlinked.

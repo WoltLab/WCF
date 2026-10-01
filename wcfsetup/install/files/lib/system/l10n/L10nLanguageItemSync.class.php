@@ -177,7 +177,8 @@ final class L10nLanguageItemSync
     /**
      * Builds the `columnName => [languageID => value]` map from the resolved
      * language items of each column. Writes a single monolingual row when none
-     * of the columns is backed by a language variable.
+     * of the columns is backed by a language variable. Language variables are
+     * not limited in length, every value is shortened to its column's length.
      *
      * @param array<string, ?L10nValue> $columnItems
      * @param \Closure(string): ?string $literalProvider
@@ -201,7 +202,10 @@ final class L10nLanguageItemSync
         if ($languageIDs === []) {
             foreach ($definition->columnNames as $columnName) {
                 $values[$columnName] = [
-                    L10nStorage::MONOLINGUAL => $literalProvider($columnName) ?? '',
+                    L10nStorage::MONOLINGUAL => $definition->truncateValue(
+                        $columnName,
+                        $literalProvider($columnName) ?? ''
+                    ),
                 ];
             }
 
@@ -210,12 +214,15 @@ final class L10nLanguageItemSync
 
         foreach ($languageIDs as $languageID) {
             foreach ($definition->columnNames as $columnName) {
-                $values[$columnName][$languageID] = self::resolve(
-                    $columnItems[$columnName],
-                    $literalProvider($columnName),
-                    $languageID,
-                    $defaultLanguageID
-                ) ?? '';
+                $values[$columnName][$languageID] = $definition->truncateValue(
+                    $columnName,
+                    self::resolve(
+                        $columnItems[$columnName],
+                        $literalProvider($columnName),
+                        $languageID,
+                        $defaultLanguageID
+                    ) ?? ''
+                );
             }
         }
 

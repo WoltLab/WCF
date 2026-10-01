@@ -40,48 +40,38 @@ $languageItemPattern = '^wcf\.paidSubscription\.subscription[0-9]+(\.description
 WCF::getDB()->prepare("DELETE FROM wcf1_paid_subscription_l10n")->execute();
 
 // The length of phrases was never validated, and the language editor allows
-// phrases of any length, which would exceed the l10n columns. The phrases are
-// removed below anyway, shortening them is lossless for a retry. A shortened
-// HTML description is repaired by the input processor below.
-$sql = "UPDATE  wcf1_language_item
-        SET     languageItemValue = SUBSTRING(languageItemValue, 1, 255)
-        WHERE   languageItem REGEXP ?
-            AND CHAR_LENGTH(languageItemValue) > 255";
-$statement = WCF::getDB()->prepare($sql);
-$statement->execute(['^wcf\.paidSubscription\.subscription[0-9]+$']);
-
-$sql = "UPDATE  wcf1_language_item
-        SET     languageItemValue = SUBSTRING(languageItemValue, 1, 16383)
-        WHERE   languageItem REGEXP ?
-            AND LENGTH(languageItemValue) > 65535";
-$statement = WCF::getDB()->prepare($sql);
-$statement->execute(['^wcf\.paidSubscription\.subscription[0-9]+\.description$']);
+// phrases of any length. Titles are shortened by the migration, but the limit of
+// the description is measured in bytes. The phrases are removed below anyway,
+// shortening them is lossless for a retry. A shortened HTML description is
+// repaired by the input processor below.
+foreach (['languageItemValue', 'languageCustomItemValue'] as $valueColumn) {
+    $sql = "UPDATE  wcf1_language_item
+            SET     {$valueColumn} = SUBSTRING({$valueColumn}, 1, 16383)
+            WHERE   languageItem REGEXP ?
+                AND LENGTH({$valueColumn}) > 65535";
+    $statement = WCF::getDB()->prepare($sql);
+    $statement->execute(['^wcf\.paidSubscription\.subscription[0-9]+\.description$']);
+}
 
 // Legacy `PaidSubscription::getTitle()` resolved any existing phrase, which
 // includes the phrases of other subscriptions and phrases named by other
 // packages. `getDescription()` only resolved the subscription phrase pattern.
-// Phrases that are not removed below keep their value, a value that exceeds
-// the l10n column would block the update, the phrase name is migrated instead.
-$sql = "SELECT      languageItem
-        FROM        wcf1_language_item
-        WHERE       languageItem IN (
-                        SELECT  title
-                        FROM    wcf1_paid_subscription
-                    )
-        GROUP BY    languageItem
-        HAVING      MAX(CHAR_LENGTH(languageItemValue)) <= 255";
+$sql = "SELECT  DISTINCT languageItem
+        FROM    wcf1_language_item
+        WHERE   languageItem IN (
+                    SELECT  title
+                    FROM    wcf1_paid_subscription
+                )";
 $statement = WCF::getDB()->prepare($sql);
 $statement->execute();
 $existingTitleLanguageItems = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-$sql = "SELECT      languageItem
-        FROM        wcf1_language_item
-        WHERE       languageItem IN (
-                        SELECT  description
-                        FROM    wcf1_paid_subscription
-                    )
-        GROUP BY    languageItem
-        HAVING      MAX(LENGTH(languageItemValue)) <= 65535";
+$sql = "SELECT  DISTINCT languageItem
+        FROM    wcf1_language_item
+        WHERE   languageItem IN (
+                    SELECT  description
+                    FROM    wcf1_paid_subscription
+                )";
 $statement = WCF::getDB()->prepare($sql);
 $statement->execute();
 $existingDescriptionLanguageItems = \array_filter(

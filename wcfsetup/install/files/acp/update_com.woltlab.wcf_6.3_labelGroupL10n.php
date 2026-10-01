@@ -42,17 +42,6 @@ $existingLanguageItems = $statement->fetchAll(\PDO::FETCH_COLUMN);
 // This script owns the table's content at this point (idempotency on re-runs).
 WCF::getDB()->prepare("DELETE FROM wcf1_label_group_l10n")->execute();
 
-// Up to 6.1 the length of multilingual titles was not validated, and the
-// language editor allows phrases of any length, which would exceed the l10n
-// column. The phrases are removed below anyway, shortening them is lossless for
-// a retry.
-$sql = "UPDATE  wcf1_language_item
-        SET     languageItemValue = SUBSTRING(languageItemValue, 1, 80)
-        WHERE   languageItem REGEXP ?
-            AND CHAR_LENGTH(languageItemValue) > 80";
-$statement = WCF::getDB()->prepare($sql);
-$statement->execute(['^wcf\.acp\.label\.group[0-9]+$']);
-
 // The phrases are removed only by the final `DELETE` below, so that a failure
 // before it leaves them in place for a retry.
 L10nLanguageItemSync::migrate(

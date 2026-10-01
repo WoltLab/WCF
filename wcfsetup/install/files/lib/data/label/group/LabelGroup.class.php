@@ -104,6 +104,7 @@ class LabelGroup extends CollectionDatabaseObject implements IRouteController, \
             'wcf1_label_group_l10n',
             'groupID',
             ['groupName'],
+            maximumLengths: ['groupName' => 80],
         );
     }
 }

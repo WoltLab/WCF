@@ -32,6 +32,7 @@ final class L10nDefinition
      * @param list<string> $columnNames names of the localized payload columns
      * @param ?string $identifierColumnName name of the primary table column holding the language variable base name, `null` if the definition does not support the synchronization with language variables
      * @param array<string, string> $languageItemSuffixes maps each payload column to the suffix appended to the identifier to form its language variable name
+     * @param array<string, positive-int> $maximumLengths maps payload columns of a limited character length (`VARCHAR`) to that length
      */
     public function __construct(
         public readonly string $primaryTableName,
@@ -40,6 +41,7 @@ final class L10nDefinition
         public readonly array $columnNames,
         public readonly ?string $identifierColumnName = null,
         public readonly array $languageItemSuffixes = [],
+        public readonly array $maximumLengths = [],
     ) {
         if (!\str_ends_with($l10nTableName, '_l10n')) {
             throw new \InvalidArgumentException(
@@ -60,6 +62,28 @@ final class L10nDefinition
                 }
             }
         }
+
+        foreach ($maximumLengths as $columnName => $maximumLength) {
+            if (!\in_array($columnName, $columnNames, true)) {
+                throw new \InvalidArgumentException(
+                    "Cannot set the maximum length of the unknown localized column '{$columnName}'."
+                );
+            }
+        }
+    }
+
+    /**
+     * Shortens the given value to the maximum length of the given column.
+     * Values from language variables are not limited in length and must be
+     * passed through this method before they are written.
+     */
+    public function truncateValue(string $columnName, string $value): string
+    {
+        if (!isset($this->maximumLengths[$columnName])) {
+            return $value;
+        }
+
+        return \mb_substr($value, 0, $this->maximumLengths[$columnName]);
     }
 
     /**

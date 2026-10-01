@@ -142,6 +142,7 @@ class ReactionType extends CollectionDatabaseObject implements ITitledObject
             ['title'],
             'l10nIdentifier',
             ['title' => ''],
+            ['title' => 255],
         );
     }
 }

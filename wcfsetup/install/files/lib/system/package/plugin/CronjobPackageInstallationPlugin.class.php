@@ -124,10 +124,16 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
             $builder = CronjobBuilder::forUpdate(new Cronjob(null, $row));
         }
 
+        $definition = Cronjob::getL10nDefinition();
+        $descriptions = \array_map(
+            static fn(string $description) => $definition->truncateValue('description', $description),
+            $this->getDescriptionValues($data['description'] ?? '')
+        );
+
         $builder
             ->setCronjobName($data['cronjobName'])
             ->setClassName($data['className'])
-            ->setDescription($this->getDescriptionValues($data['description'] ?? ''))
+            ->setDescription($descriptions)
             ->setStartMinute($data['startMinute'])
             ->setStartHour($data['startHour'])
             ->setStartDom($data['startDom'])

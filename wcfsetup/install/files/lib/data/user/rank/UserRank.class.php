@@ -145,6 +145,7 @@ class UserRank extends CollectionDatabaseObject implements ITitledObject
             ['rankTitle'],
             'l10nIdentifier',
             ['rankTitle' => ''],
+            ['rankTitle' => 255],
         );
     }
 }

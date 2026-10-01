@@ -180,6 +180,7 @@ class Cronjob extends CollectionDatabaseObject
             'wcf1_cronjob_l10n',
             'cronjobID',
             ['description'],
+            maximumLengths: ['description' => 255],
         );
     }
 }

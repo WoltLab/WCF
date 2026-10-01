@@ -122,6 +122,7 @@ class ContactRecipient extends CollectionDatabaseObject implements ITitledObject
             // No language variable exists for the email address, the
             // administrator's address is `MAIL_ADMIN_ADDRESS`.
             ['name' => '', 'email' => '.email'],
+            ['name' => 255, 'email' => 255],
         );
     }
 }

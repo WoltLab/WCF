@@ -187,6 +187,7 @@ class UserOption extends Option implements ITitledObject
                 'title' => '',
                 'description' => '.description',
             ],
+            ['title' => 255],
         );
     }
 

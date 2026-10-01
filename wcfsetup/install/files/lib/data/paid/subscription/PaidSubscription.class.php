@@ -154,6 +154,7 @@ class PaidSubscription extends CollectionDatabaseObject implements ITitledObject
             'wcf1_paid_subscription_l10n',
             'subscriptionID',
             ['title', 'description'],
+            maximumLengths: ['title' => 255],
         );
     }
 
