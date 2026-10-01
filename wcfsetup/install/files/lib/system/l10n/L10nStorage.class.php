@@ -5,6 +5,7 @@ namespace wcf\system\l10n;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Reads and writes the localized values of a content type.
@@ -111,6 +112,11 @@ final class L10nStorage
             $previousValues = $this->getValues($objectID);
             $previousPristineLanguageIDs = $this->getPristineLanguageIDs($objectID);
             $isDeliveredObject = $this->getIdentifier($objectID) !== null;
+
+            if ($isDeliveredObject) {
+                $values = $this->retainLanguageSpecificValues($values, $previousValues);
+                $languageIDs = $this->validateValues($values);
+            }
         }
 
         $columnList = \implode(', ', $this->definition->columnNames);
@@ -185,12 +191,65 @@ final class L10nStorage
         }
 
         foreach ($this->definition->columnNames as $columnName) {
-            if (($previousValues[$columnName][$languageID] ?? null) !== ($values[$columnName][$languageID] ?? null)) {
+            $previousValue = self::normalizeValue($previousValues[$columnName][$languageID] ?? null);
+            if ($previousValue !== self::normalizeValue($values[$columnName][$languageID] ?? null)) {
                 return 0;
             }
         }
 
         return 1;
+    }
+
+    /**
+     * Keeps the per-language values of a column when a monolingual value only
+     * restates them. Forms submit a monolingual value whenever a single
+     * language is installed, which would otherwise replace the pristine rows
+     * of a delivered object and stop their synchronization for good.
+     *
+     * @param array<string, L10nValue> $values
+     * @param array<string, L10nValue> $previousValues
+     * @return array<string, L10nValue>
+     */
+    private function retainLanguageSpecificValues(array $values, array $previousValues): array
+    {
+        foreach ($this->definition->columnNames as $columnName) {
+            if (\array_keys($values[$columnName]) !== [self::MONOLINGUAL]) {
+                continue;
+            }
+
+            // Languages that only exist because of another column are `NULL`.
+            $previousColumnValues = \array_filter(
+                $previousValues[$columnName] ?? [],
+                static fn(?string $value) => $value !== null
+            );
+            if ($previousColumnValues === [] || isset($previousColumnValues[self::MONOLINGUAL])) {
+                continue;
+            }
+
+            $value = self::normalizeValue($values[$columnName][self::MONOLINGUAL]);
+            foreach ($previousColumnValues as $previousValue) {
+                if (self::normalizeValue($previousValue) !== $value) {
+                    continue 2;
+                }
+            }
+
+            $values[$columnName] = $previousColumnValues;
+        }
+
+        return $values;
+    }
+
+    /**
+     * Applies the normalization of `I18nHandler::readValues()`, so that a value
+     * submitted unchanged through a form compares equal to the stored value.
+     */
+    private static function normalizeValue(?string $value): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        return StringUtil::unifyNewlines(StringUtil::trim($value));
     }
 
     /**
