@@ -220,6 +220,10 @@ class ClipboardHandler extends SingletonFactory
             }
         }
 
+        if (WCF::getUser()->isGuest()) {
+            return;
+        }
+
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID = ?", [WCF::getUser()->userID]);
         if ($objectTypeID !== null) {
