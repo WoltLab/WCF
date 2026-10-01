@@ -400,4 +400,9 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    PartialDatabaseTable::create('wcf1_language_item')
+        ->indices([
+            DatabaseTableIndex::create('languageCustomItemDisableTime')
+                ->columns(['languageCustomItemDisableTime']),
+        ]),
 ];

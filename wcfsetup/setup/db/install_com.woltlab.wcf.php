@@ -1839,6 +1839,8 @@ return [
                 ->columns(['languageItem', 'languageID']),
             DatabaseTableIndex::create('languageItemOriginIsSystem')
                 ->columns(['languageItemOriginIsSystem']),
+            DatabaseTableIndex::create('languageCustomItemDisableTime')
+                ->columns(['languageCustomItemDisableTime']),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()
