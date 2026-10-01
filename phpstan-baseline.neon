@@ -416,12 +416,6 @@ parameters:
 			path: wcfsetup/install/files/lib/data/category/CategoryNode.class.php
 
 		-
-			message: '#^Return type \(RecursiveIteratorIterator\<wcf\\data\\category\\CategoryNode\>\) of method wcf\\data\\category\\CategoryNodeTree\:\:getIterator\(\) should be covariant with return type \(Traversable\<int, wcf\\data\\category\\CategoryNode\>\) of method IteratorAggregate\<int,wcf\\data\\category\\CategoryNode\>\:\:getIterator\(\)$#'
-			identifier: method.childReturnType
-			count: 1
-			path: wcfsetup/install/files/lib/data/category/CategoryNodeTree.class.php
-
-		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 1
@@ -636,12 +630,6 @@ parameters:
 			identifier: empty.notAllowed
 			count: 2
 			path: wcfsetup/install/files/lib/data/tag/TagAction.class.php
-
-		-
-			message: '#^Return type \(RecursiveIteratorIterator\<wcf\\data\\template\\group\\TemplateGroupNode\>\) of method wcf\\data\\template\\group\\TemplateGroupNodeTree\:\:getIterator\(\) should be covariant with return type \(Traversable\<int, wcf\\data\\template\\group\\TemplateGroupNode\>\) of method IteratorAggregate\<int,wcf\\data\\template\\group\\TemplateGroupNode\>\:\:getIterator\(\)$#'
-			identifier: method.childReturnType
-			count: 1
-			path: wcfsetup/install/files/lib/data/template/group/TemplateGroupNodeTree.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
