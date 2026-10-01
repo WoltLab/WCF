@@ -10,7 +10,9 @@ use wcf\system\l10n\L10nLanguageItemSync;
  * Synchronizes the localized values of all registered l10n definitions with
  * their language variables. The definitions are collected via the
  * `L10nDefinitionCollecting` event and this command is invoked at the end of a
- * package installation or update.
+ * package installation or update and whenever a language is added. Cached
+ * objects carry their localized values (see `TCollectionL10n`), callers must
+ * flush the cache afterwards.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH

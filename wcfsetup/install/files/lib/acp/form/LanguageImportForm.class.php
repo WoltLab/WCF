@@ -8,6 +8,7 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\event\language\LanguageImported;
 use wcf\form\AbstractForm;
+use wcf\system\cache\CacheHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -147,6 +148,9 @@ class LanguageImportForm extends AbstractForm
         LanguageFactory::getInstance()->deleteLanguageCache();
 
         EventHandler::getInstance()->fire(new LanguageImported(new Language($this->language->languageID)));
+
+        // The localized values synchronized for the language are part of cached objects.
+        CacheHandler::getInstance()->flushAll();
 
         $this->saved();
 

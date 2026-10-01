@@ -44,7 +44,7 @@ final class L10nLanguageItemSync
     public static function migrate(L10nDefinition $definition, \Closure $rowMapper): void
     {
         $storage = new L10nStorage($definition);
-        $installedLanguageIDs = \array_keys(LanguageFactory::getInstance()->getLanguages());
+        $installedLanguageIDs = self::getInstalledLanguageIDs();
         $defaultLanguageID = LanguageFactory::getInstance()->getDefaultLanguageID();
         $fetchItems = self::createItemReader();
 
@@ -133,7 +133,7 @@ final class L10nLanguageItemSync
         }
 
         $storage = new L10nStorage($definition);
-        $installedLanguageIDs = \array_keys(LanguageFactory::getInstance()->getLanguages());
+        $installedLanguageIDs = self::getInstalledLanguageIDs();
         $defaultLanguageID = LanguageFactory::getInstance()->getDefaultLanguageID();
         $fetchItems = self::createItemReader();
 
@@ -248,6 +248,24 @@ final class L10nLanguageItemSync
         }
 
         return $items !== [] ? \reset($items) : $literal;
+    }
+
+    /**
+     * Returns the ids of all languages, including disabled ones.
+     *
+     * The language cache is not used, because it keeps serving the previous
+     * state for the remainder of the request after a language was added.
+     *
+     * @return list<int>
+     */
+    private static function getInstalledLanguageIDs(): array
+    {
+        $sql = "SELECT  languageID
+                FROM    wcf1_language";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
+
+        return $statement->fetchAll(\PDO::FETCH_COLUMN);
     }
 
     /**

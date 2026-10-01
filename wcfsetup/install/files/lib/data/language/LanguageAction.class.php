@@ -2,6 +2,7 @@
 
 namespace wcf\data\language;
 
+use wcf\command\l10n\SyncL10nLanguageItems;
 use wcf\command\language\DisableLanguage;
 use wcf\command\language\EnableLanguage;
 use wcf\data\AbstractDatabaseObjectAction;
@@ -66,6 +67,9 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
 
             LanguageFactory::getInstance()->clearCache();
             LanguageFactory::getInstance()->deleteLanguageCache();
+
+            // The copied phrases provide the localized values of the new language.
+            (new SyncL10nLanguageItems())();
         }
         StyleHandler::resetStylesheets();
 

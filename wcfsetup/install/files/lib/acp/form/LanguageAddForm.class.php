@@ -5,6 +5,7 @@ namespace wcf\acp\form;
 use wcf\data\language\Language;
 use wcf\data\language\LanguageAction;
 use wcf\form\AbstractFormBuilderForm;
+use wcf\system\cache\CacheHandler;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -189,5 +190,16 @@ class LanguageAddForm extends AbstractFormBuilderForm
                 return $parameters;
             }
         ));
+    }
+
+    #[\Override]
+    public function saved()
+    {
+        if ($this->formAction === 'create') {
+            // The localized values synchronized for the language are part of cached objects.
+            CacheHandler::getInstance()->flushAll();
+        }
+
+        parent::saved();
     }
 }

@@ -83,6 +83,9 @@ return new class {
             \wcf\event\language\LanguageImported::class,
             static function (\wcf\event\language\LanguageImported $event) {
                 new ResetPreloadCache($event->language)();
+
+                // A new language has no localized values yet.
+                (new \wcf\command\l10n\SyncL10nLanguageItems())();
             }
         );
         $eventHandler->register(
