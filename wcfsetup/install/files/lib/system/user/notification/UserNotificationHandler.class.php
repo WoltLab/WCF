@@ -46,15 +46,15 @@ class UserNotificationHandler extends SingletonFactory
 {
     /**
      * list of available object types
-     * @var IUserNotificationObjectType[]
+     * @var ?IUserNotificationObjectType[]
      */
-    protected $availableObjectTypes = [];
+    protected $availableObjectTypes;
 
     /**
      * list of available events
-     * @var IUserNotificationEvent[][]
+     * @var ?IUserNotificationEvent[][]
      */
-    protected $availableEvents = [];
+    protected $availableEvents;
 
     /**
      * number of outstanding notifications
@@ -73,12 +73,6 @@ class UserNotificationHandler extends SingletonFactory
     {
         // get available object types
         $this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.notification.objectType');
-        foreach ($this->objectTypes as $typeName => $object) {
-            $this->availableObjectTypes[$typeName] = $object->getProcessor();
-        }
-
-        // get available events
-        $this->availableEvents = UserNotificationEventCacheBuilder::getInstance()->getData();
     }
 
     /**
@@ -99,7 +93,7 @@ class UserNotificationHandler extends SingletonFactory
         int $contentLanguageID = 0
     ) {
         // check given object type and event name
-        if (!isset($this->availableEvents[$objectType][$eventName])) {
+        if (!isset($this->getAvailableEvents()[$objectType][$eventName])) {
             throw new SystemException("Unknown event " . $objectType . "-" . $eventName . " given");
         }
         if ($recipientIDs === []) {
@@ -107,8 +101,8 @@ class UserNotificationHandler extends SingletonFactory
         }
 
         // get objects
-        $objectTypeObject = $this->availableObjectTypes[$objectType];
-        $event = $this->availableEvents[$objectType][$eventName];
+        $objectTypeObject = $this->getAvailableObjectTypes()[$objectType];
+        $event = $this->getAvailableEvents()[$objectType][$eventName];
 
         // get author's profile
         $userProfile = null;
@@ -491,7 +485,7 @@ class UserNotificationHandler extends SingletonFactory
             // cache object types
             if (!isset($objectTypes[$notification->objectType])) {
                 $objectTypes[$notification->objectType] = [
-                    'objectType' => $this->availableObjectTypes[$notification->objectType],
+                    'objectType' => $this->getAvailableObjectTypes()[$notification->objectType],
                     'objectIDs' => [],
                     'objects' => [],
                 ];
@@ -621,11 +615,11 @@ class UserNotificationHandler extends SingletonFactory
      */
     public function getEvent(string $objectType, string $eventName)
     {
-        if (!isset($this->availableEvents[$objectType][$eventName])) {
+        if (!isset($this->getAvailableEvents()[$objectType][$eventName])) {
             return null;
         }
 
-        return $this->availableEvents[$objectType][$eventName];
+        return $this->getAvailableEvents()[$objectType][$eventName];
     }
 
     /**
@@ -635,11 +629,11 @@ class UserNotificationHandler extends SingletonFactory
      */
     public function getEvents(string $objectType)
     {
-        if (!isset($this->availableEvents[$objectType])) {
+        if (!isset($this->getAvailableEvents()[$objectType])) {
             return [];
         }
 
-        return $this->availableEvents[$objectType];
+        return $this->getAvailableEvents()[$objectType];
     }
 
     /**
@@ -682,6 +676,13 @@ class UserNotificationHandler extends SingletonFactory
      */
     public function getAvailableObjectTypes()
     {
+        // Loaded on demand, because every logged-in page instantiates this handler for the
+        // notification count, which needs neither the processors nor the events.
+        $this->availableObjectTypes ??= \array_map(
+            static fn (ObjectType $objectType) => $objectType->getProcessor(),
+            $this->objectTypes
+        );
+
         return $this->availableObjectTypes;
     }
 
@@ -692,6 +693,8 @@ class UserNotificationHandler extends SingletonFactory
      */
     public function getAvailableEvents()
     {
+        $this->availableEvents ??= UserNotificationEventCacheBuilder::getInstance()->getData();
+
         return $this->availableEvents;
     }
 
@@ -717,7 +720,7 @@ class UserNotificationHandler extends SingletonFactory
      */
     public function getObjectTypeProcessor(string $objectType)
     {
-        return $this->availableObjectTypes[$objectType] ?? null;
+        return $this->getAvailableObjectTypes()[$objectType] ?? null;
     }
 
     /**
@@ -912,12 +915,12 @@ class UserNotificationHandler extends SingletonFactory
     public function markAsConfirmed(string $eventName, string $objectType, array $recipientIDs, array $objectIDs = [])
     {
         // check given object type and event name
-        if (!isset($this->availableEvents[$objectType][$eventName])) {
+        if (!isset($this->getAvailableEvents()[$objectType][$eventName])) {
             throw new SystemException("Unknown event " . $objectType . "-" . $eventName . " given");
         }
 
         // get objects
-        $event = $this->availableEvents[$objectType][$eventName];
+        $event = $this->getAvailableEvents()[$objectType][$eventName];
 
         // mark as confirmed
         $conditions = new PreparedStatementConditionBuilder();
