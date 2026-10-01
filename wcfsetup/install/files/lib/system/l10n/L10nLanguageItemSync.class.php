@@ -251,8 +251,14 @@ final class L10nLanguageItemSync
      */
     private static function createItemReader(): \Closure
     {
+        // Mirrors `LanguageEditor::writeLanguageFiles()`, a custom value set by
+        // an administrator takes precedence over the delivered value.
         $statement = WCF::getDB()->prepare(
-            "SELECT languageID, languageItemValue
+            "SELECT CASE
+                        WHEN languageUseCustomValue = 1 THEN languageCustomItemValue
+                        ELSE languageItemValue
+                    END AS languageItemValue,
+                    languageID
              FROM   wcf1_language_item
              WHERE  languageItem = ?"
         );
