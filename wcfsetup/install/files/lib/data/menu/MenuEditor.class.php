@@ -2,6 +2,7 @@
 
 namespace wcf\data\menu;
 
+use wcf\data\box\BoxEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\cache\builder\MenuCacheBuilder;
@@ -111,5 +112,8 @@ class MenuEditor extends DatabaseObjectEditor implements IEditableCachedObject
         // The titles are stored as phrases, thus the language cache
         // has to be reset as well.
         LanguageFactory::getInstance()->deleteLanguageCache();
+
+        // Each menu has a box, which is created and deleted along with the menu.
+        BoxEditor::resetCache();
     }
 }

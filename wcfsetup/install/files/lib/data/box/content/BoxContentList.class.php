@@ -39,39 +39,66 @@ class BoxContentList extends DatabaseObjectList
     {
         parent::readObjects();
 
-        $imageIDs = $embeddedObjectBoxContentIDs = [];
-        foreach ($this->getObjects() as $boxContent) {
+        if ($this->imageLoading) {
+            self::loadImages($this->getObjects());
+        }
+
+        if ($this->embeddedObjectLoading) {
+            self::loadEmbeddedObjects($this->getObjects());
+        }
+    }
+
+    /**
+     * Loads the images of the given box contents.
+     *
+     * @param BoxContent[] $boxContents
+     * @since 6.3
+     */
+    public static function loadImages(array $boxContents): void
+    {
+        $imageIDs = [];
+        foreach ($boxContents as $boxContent) {
             if ($boxContent->imageID !== null) {
                 $imageIDs[] = $boxContent->imageID;
             }
+        }
 
+        if ($imageIDs === []) {
+            return;
+        }
+
+        $mediaList = new ViewableMediaList();
+        $mediaList->setObjectIDs($imageIDs);
+        $mediaList->readObjects();
+        $images = $mediaList->getObjects();
+
+        foreach ($boxContents as $boxContent) {
+            if ($boxContent->imageID !== null && isset($images[$boxContent->imageID])) {
+                $boxContent->setImage($images[$boxContent->imageID]);
+            }
+        }
+    }
+
+    /**
+     * Loads the embedded objects of the given box contents.
+     *
+     * @param BoxContent[] $boxContents
+     * @since 6.3
+     */
+    public static function loadEmbeddedObjects(array $boxContents): void
+    {
+        $embeddedObjectBoxContentIDs = [];
+        foreach ($boxContents as $boxContent) {
             if ($boxContent->hasEmbeddedObjects !== 0) {
                 $embeddedObjectBoxContentIDs[] = $boxContent->boxContentID;
             }
         }
 
-        if ($this->imageLoading) {
-            if ($imageIDs !== []) {
-                $mediaList = new ViewableMediaList();
-                $mediaList->setObjectIDs($imageIDs);
-                $mediaList->readObjects();
-                $images = $mediaList->getObjects();
-
-                foreach ($this->getObjects() as $boxContent) {
-                    if ($boxContent->imageID !== null && isset($images[$boxContent->imageID])) {
-                        $boxContent->setImage($images[$boxContent->imageID]);
-                    }
-                }
-            }
-        }
-
-        if ($this->embeddedObjectLoading) {
-            if ($embeddedObjectBoxContentIDs !== []) {
-                MessageEmbeddedObjectManager::getInstance()->loadObjects(
-                    'com.woltlab.wcf.box.content',
-                    $embeddedObjectBoxContentIDs
-                );
-            }
+        if ($embeddedObjectBoxContentIDs !== []) {
+            MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                'com.woltlab.wcf.box.content',
+                $embeddedObjectBoxContentIDs
+            );
         }
     }
 

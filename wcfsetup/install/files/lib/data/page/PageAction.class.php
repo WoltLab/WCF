@@ -6,6 +6,7 @@ use wcf\command\page\DisablePage;
 use wcf\command\page\EnablePage;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\box\Box;
+use wcf\data\box\BoxEditor;
 use wcf\data\ISearchAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
@@ -508,6 +509,8 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                 WHERE       pageID = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$this->pageEditor->getDecoratedObject()->pageID]);
+
+        BoxEditor::resetCache();
     }
 
     /**

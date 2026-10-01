@@ -4,8 +4,10 @@ namespace wcf\system\box;
 
 use wcf\data\box\Box;
 use wcf\data\box\BoxList;
+use wcf\data\box\content\BoxContentList;
 use wcf\command\box\CreateBoxCondition;
 use wcf\command\box\CreateBoxToPageAssignments;
+use wcf\system\cache\eager\BoxCache;
 use wcf\system\event\EventHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
@@ -154,50 +156,61 @@ class BoxHandler extends SingletonFactory
      */
     public static function loadBoxes(int $pageID, bool $forDisplay)
     {
-        // load box layout for active page
-        $boxList = new BoxList();
         if ($forDisplay) {
-            $boxList->getConditionBuilder()->add("box.isDisabled = ?", [0]);
-        }
-        if ($pageID !== 0) {
-            $boxList->getConditionBuilder()->add(
-                '
-                (
-                    (box.visibleEverywhere = ?
-                    AND boxID NOT IN (
-                        SELECT  boxID
-                        FROM    wcf1_box_to_page
-                        WHERE   pageID = ?
-                            AND visible = ?
-                    )) OR
-                    boxID IN (
-                        SELECT  boxID
-                        FROM    wcf1_box_to_page
-                        WHERE   pageID = ?
-                            AND visible = ?
-                    )
-                )',
-                [1, $pageID, 0, $pageID, 1]
+            $cache = (new BoxCache(WCF::getLanguage()->languageID))->getCache();
+
+            // The boxes are modified below, which must not leak into the shared cache data.
+            $boxList = \array_map(
+                static fn(Box $box) => clone $box,
+                $cache->getBoxesForPage($pageID)
             );
+            $showOrders = $cache->getShowOrders($pageID);
+
+            $boxContents = [];
+            foreach ($boxList as $box) {
+                foreach ($box->boxContents ?? [] as $boxContent) {
+                    $boxContents[] = $boxContent;
+                }
+            }
+            BoxContentList::loadImages($boxContents);
+            BoxContentList::loadEmbeddedObjects($boxContents);
         } else {
-            $boxList->getConditionBuilder()->add('box.visibleEverywhere = ?', [1]);
-        }
+            $boxList = new BoxList();
+            if ($pageID !== 0) {
+                $boxList->getConditionBuilder()->add(
+                    '
+                    (
+                        (box.visibleEverywhere = ?
+                        AND boxID NOT IN (
+                            SELECT  boxID
+                            FROM    wcf1_box_to_page
+                            WHERE   pageID = ?
+                                AND visible = ?
+                        )) OR
+                        boxID IN (
+                            SELECT  boxID
+                            FROM    wcf1_box_to_page
+                            WHERE   pageID = ?
+                                AND visible = ?
+                        )
+                    )',
+                    [1, $pageID, 0, $pageID, 1]
+                );
+            } else {
+                $boxList->getConditionBuilder()->add('box.visibleEverywhere = ?', [1]);
+            }
+            $boxList->readObjects();
 
-        if ($forDisplay) {
-            $boxList->enableContentLoading();
-        }
-
-        $boxList->readObjects();
-
-        $showOrders = [];
-        if ($pageID !== 0) {
-            $sql = "SELECT  boxID, showOrder
-                    FROM    wcf1_page_box_order
-                    WHERE   pageID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$pageID]);
-            while ($row = $statement->fetchArray()) {
-                $showOrders[$row['boxID']] = $row['showOrder'];
+            $showOrders = [];
+            if ($pageID !== 0) {
+                $sql = "SELECT  boxID, showOrder
+                        FROM    wcf1_page_box_order
+                        WHERE   pageID = ?";
+                $statement = WCF::getDB()->prepare($sql);
+                $statement->execute([$pageID]);
+                while ($row = $statement->fetchArray()) {
+                    $showOrders[$row['boxID']] = $row['showOrder'];
+                }
             }
         }
 

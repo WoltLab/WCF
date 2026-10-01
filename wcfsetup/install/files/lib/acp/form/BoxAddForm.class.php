@@ -653,6 +653,7 @@ class BoxAddForm extends AbstractForm
         $boxEditor->update([
             'identifier' => 'com.woltlab.wcf.genericBox' . $boxEditor->boxID,
         ]);
+        BoxEditor::resetCache();
 
         if ($this->boxController !== null) {
             if ($this->boxController->getProcessor() instanceof IConditionBoxController) {

@@ -2,6 +2,7 @@
 
 namespace wcf\data\page;
 
+use wcf\data\box\BoxEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\data\package\PackageCache;
@@ -52,6 +53,9 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject
         RoutingCacheBuilder::getInstance()->reset();
         PageCacheBuilder::getInstance()->reset();
         MenuCacheBuilder::getInstance()->reset();
+
+        // Pages carry the box assignments and custom box show order.
+        BoxEditor::resetCache();
     }
 
     /**

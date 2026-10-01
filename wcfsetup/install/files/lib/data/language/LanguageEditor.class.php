@@ -2,6 +2,7 @@
 
 namespace wcf\data\language;
 
+use wcf\data\box\BoxEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\data\language\category\LanguageCategory;
@@ -656,6 +657,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     $updateContentStatement->execute([$boxContent['content'], $boxIDs[$identifier], $this->languageID]);
                 }
             }
+
+            BoxEditor::resetCache();
         }
 
         // update the relevant language files

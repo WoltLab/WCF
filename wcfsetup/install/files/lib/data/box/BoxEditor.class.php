@@ -3,6 +3,9 @@
 namespace wcf\data\box;
 
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
+use wcf\system\cache\eager\BoxCache;
+use wcf\system\language\LanguageFactory;
 
 /**
  * Provides functions to edit boxes.
@@ -13,8 +16,9 @@ use wcf\data\DatabaseObjectEditor;
  *
  * @mixin       Box
  * @extends DatabaseObjectEditor<Box>
+ * @implements IEditableCachedObject<Box>
  */
-class BoxEditor extends DatabaseObjectEditor
+class BoxEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {
     /**
      * @inheritDoc
@@ -33,6 +37,18 @@ class BoxEditor extends DatabaseObjectEditor
                 \WCF_DIR . 'templates/' . $this->getDecoratedObject()->getTplName(($languageID ?: null)) . '.tpl',
                 $content
             );
+        }
+    }
+
+    /**
+     * Rebuilds the box cache, which also covers the box to page assignments and
+     * the custom box show order of pages.
+     */
+    #[\Override]
+    public static function resetCache()
+    {
+        foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+            (new BoxCache($language->languageID))->rebuild();
         }
     }
 }

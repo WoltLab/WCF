@@ -3,6 +3,7 @@
 namespace wcf\command\box;
 
 use wcf\data\box\Box;
+use wcf\data\box\BoxEditor;
 use wcf\data\page\Page;
 use wcf\system\WCF;
 
@@ -63,5 +64,7 @@ final class CreateBoxToPageAssignments
                 $statement->execute([$box->boxID, $page->pageID, $this->visible ? 1 : 0]);
             }
         }
+
+        BoxEditor::resetCache();
     }
 }

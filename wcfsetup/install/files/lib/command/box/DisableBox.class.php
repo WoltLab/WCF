@@ -24,6 +24,7 @@ final class DisableBox
         (new BoxEditor($this->box))->update([
             'isDisabled' => 1,
         ]);
+        BoxEditor::resetCache();
 
         $event = new BoxDisabled($this->box);
         EventHandler::getInstance()->fire($event);
