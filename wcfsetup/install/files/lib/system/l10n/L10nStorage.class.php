@@ -76,7 +76,10 @@ final class L10nStorage
         while ($row = $statement->fetchArray()) {
             $languageID = $row['languageID'] === null ? self::MONOLINGUAL : (int)$row['languageID'];
             foreach ($this->definition->columnNames as $columnName) {
-                $values[$row[$objectColumnName]][$columnName][$languageID] = $row[$columnName];
+                // A row exists for every language of any column, absent values are `NULL`.
+                if ($row[$columnName] !== null) {
+                    $values[$row[$objectColumnName]][$columnName][$languageID] = $row[$columnName];
+                }
             }
         }
 
@@ -217,11 +220,7 @@ final class L10nStorage
                 continue;
             }
 
-            // Languages that only exist because of another column are `NULL`.
-            $previousColumnValues = \array_filter(
-                $previousValues[$columnName] ?? [],
-                static fn(?string $value) => $value !== null
-            );
+            $previousColumnValues = $previousValues[$columnName] ?? [];
             if ($previousColumnValues === [] || isset($previousColumnValues[self::MONOLINGUAL])) {
                 continue;
             }
@@ -347,7 +346,7 @@ final class L10nStorage
      * deterministic fallback chain: monolingual value, requested language,
      * default language, lowest language id.
      *
-     * @param array<int, ?string> $values
+     * @param L10nValue $values
      */
     public static function resolveValue(array $values, ?int $languageID = null): string
     {
@@ -367,13 +366,6 @@ final class L10nStorage
         $defaultLanguageID = LanguageFactory::getInstance()->getDefaultLanguageID();
         if (isset($values[$defaultLanguageID])) {
             return $values[$defaultLanguageID];
-        }
-
-        // A column can be `NULL` for a given language, drop those before
-        // falling back to the value with the lowest language id.
-        $values = \array_filter($values, static fn($value) => $value !== null);
-        if ($values === []) {
-            return '';
         }
 
         return $values[\min(\array_keys($values))];
