@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Provides functions to edit user options.
@@ -28,6 +29,13 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
     #[\Override]
     public static function create(array $parameters = [])
     {
+        if (!\array_key_exists('configuration', $parameters)) {
+            $parameters['configuration'] = self::buildConfiguration(
+                $parameters['selectOptions'] ?? '',
+                (bool)($parameters['required'] ?? false)
+            );
+        }
+
         /** @var UserOption $userOption */
         $userOption = parent::create($parameters);
 
@@ -52,6 +60,16 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
     #[\Override]
     public function update(array $parameters = [])
     {
+        if (
+            !\array_key_exists('configuration', $parameters)
+            && (\array_key_exists('selectOptions', $parameters) || \array_key_exists('required', $parameters))
+        ) {
+            $parameters['configuration'] = self::buildConfiguration(
+                $parameters['selectOptions'] ?? $this->selectOptions ?? '',
+                (bool)($parameters['required'] ?? $this->required)
+            );
+        }
+
         parent::update($parameters);
 
         // alter the table "wcf1_user_option_value" with this new option
@@ -168,6 +186,43 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
         }
 
         return $column;
+    }
+
+    /**
+     * Builds the JSON-encoded form option configuration from the legacy option data.
+     *
+     * @since 6.3
+     */
+    public static function buildConfiguration(string $selectOptions, bool $required): string
+    {
+        $configuration = [];
+        if ($required) {
+            $configuration['required'] = 1;
+        }
+
+        $selectOptions = StringUtil::trim(StringUtil::unifyNewlines($selectOptions));
+        if ($selectOptions !== '') {
+            $options = [];
+            foreach (\explode("\n", $selectOptions) as $selectOption) {
+                $key = $value = $selectOption;
+                if (\str_contains($selectOption, ':')) {
+                    [$key, $value] = \explode(':', $selectOption, 2);
+                }
+
+                $options[] = [
+                    'key' => $key,
+                    'value' => [0 => $value],
+                ];
+            }
+
+            $configuration['selectOptions'] = \json_encode($options, \JSON_THROW_ON_ERROR);
+        }
+
+        if ($configuration === []) {
+            return '';
+        }
+
+        return \json_encode($configuration, \JSON_THROW_ON_ERROR);
     }
 
     #[\Override]

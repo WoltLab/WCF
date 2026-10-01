@@ -4823,6 +4823,7 @@ return [
             DefaultFalseBooleanDatabaseTableColumn::create('showOnUserCard'),
             VarcharDatabaseTableColumn::create('l10nIdentifier')
                 ->length(255),
+            MediumtextDatabaseTableColumn::create('configuration'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()

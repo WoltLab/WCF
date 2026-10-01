@@ -51,6 +51,7 @@ final class FormOptionHandler extends SingletonFactory
                 new SourceCodeFormOption(),
                 new TextFormOption(),
                 new TextareaFormOption(),
+                new TimezoneFormOption(),
                 new UrlFormOption(),
                 new WysiwygFormOption(),
             ] as $defaultOption

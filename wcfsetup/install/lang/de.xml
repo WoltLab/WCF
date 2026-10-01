@@ -4099,6 +4099,7 @@ Dateianhänge:
 		<item name="wcf.form.option.select"><![CDATA[Auswahlmöglichkeit]]></item>
 		<item name="wcf.form.option.text"><![CDATA[Text]]></item>
 		<item name="wcf.form.option.textarea"><![CDATA[Mehrzeiliger Text]]></item>
+		<item name="wcf.form.option.timezone"><![CDATA[Zeitzone]]></item>
 		<item name="wcf.form.option.sourceCode"><![CDATA[Quellcode]]></item>
 		<item name="wcf.form.option.url"><![CDATA[Link]]></item>
 		<item name="wcf.form.option.wysiwyg"><![CDATA[WYSIWYG]]></item>

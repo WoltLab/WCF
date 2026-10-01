@@ -7,6 +7,8 @@ use wcf\data\option\Option;
 use wcf\data\user\User;
 use wcf\system\l10n\L10nDefinition;
 use wcf\system\l10n\L10nStorage;
+use wcf\system\form\option\FormOptionHandler;
+use wcf\system\form\option\IFormOption;
 use wcf\system\WCF;
 
 /**
@@ -30,6 +32,7 @@ use wcf\system\WCF;
  * @property-read   ?string $l10nIdentifier     base name of the language variable the localized title/description are derived from, `null` for options created by an administrator
  *
  * @phpstan-import-type L10nValue from L10nStorage
+ * @property-read   ?string $configuration      JSON-encoded configuration information depending on the option type
  */
 class UserOption extends Option implements ITitledObject
 {
@@ -104,6 +107,24 @@ class UserOption extends Option implements ITitledObject
      * @var int
      */
     const EDITABILITY_OWNER_DURING_REGISTRATION_AND_ADMINISTRATOR = 6;
+
+    /**
+     * Maps the legacy option types to the ids of the form options with a compatible value format.
+     * Option types without a compatible form option fall back to the text form option.
+     *
+     * @var array<string, string>
+     */
+    private const FORM_OPTION_TYPES = [
+        'boolean' => 'boolean',
+        'float' => 'float',
+        'integer' => 'integer',
+        'radioButton' => 'radioButton',
+        'select' => 'select',
+        'text' => 'text',
+        'textarea' => 'textarea',
+        'timezone' => 'timezone',
+        'URL' => 'url',
+    ];
 
     /**
      * @inheritDoc
@@ -189,6 +210,47 @@ class UserOption extends Option implements ITitledObject
             ],
             ['title' => 255],
         );
+    }
+
+    /**
+     * Returns the identifier for the form field.
+     *
+     * @since 6.3
+     */
+    public function getIdentifier(): string
+    {
+        return "userOption{$this->optionID}";
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getFormOption(): IFormOption
+    {
+        $formOption = null;
+        if (isset(self::FORM_OPTION_TYPES[$this->optionType])) {
+            $formOption = FormOptionHandler::getInstance()->getOption(self::FORM_OPTION_TYPES[$this->optionType]);
+        }
+
+        if ($formOption === null) {
+            $formOption = FormOptionHandler::getInstance()->getOption('text');
+            \assert($formOption !== null);
+        }
+
+        return $formOption;
+    }
+
+    /**
+     * @return array<string, mixed>
+     * @since 6.3
+     */
+    public function getConfiguration(): array
+    {
+        return ($this->configuration ?? '') !== '' ? \json_decode(
+            $this->configuration,
+            true,
+            flags: \JSON_THROW_ON_ERROR
+        ) : [];
     }
 
     /**

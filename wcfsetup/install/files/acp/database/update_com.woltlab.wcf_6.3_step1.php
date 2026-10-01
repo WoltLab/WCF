@@ -67,6 +67,7 @@ return [
     PartialDatabaseTable::create('wcf1_user_option')
         ->columns([
             DefaultFalseBooleanDatabaseTableColumn::create('showOnUserCard'),
+            MediumtextDatabaseTableColumn::create('configuration'),
             VarcharDatabaseTableColumn::create('l10nIdentifier')
                 ->length(255),
         ]),
