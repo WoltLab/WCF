@@ -8,7 +8,7 @@
  * IMPORTANT ordering constraints for package.xml:
  * - The database script `acp/database/update_com.woltlab.wcf_6.3_step1.php`
  *   (creating the `wcf1_captcha_question_l10n` table) must run BEFORE this script.
- * - The database script `acp/database/update_com.woltlab.wcf_6.3_captchaQuestion.php`
+ * - The database script `acp/database/update_com.woltlab.wcf_6.3_step3.php`
  *   (dropping the migrated columns) must run AFTER this script.
  */
 

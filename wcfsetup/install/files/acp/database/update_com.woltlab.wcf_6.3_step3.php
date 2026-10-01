@@ -8,6 +8,7 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
+use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\TextDatabaseTableColumn;
 use wcf\system\database\table\column\VarcharDatabaseTableColumn;
@@ -57,6 +58,13 @@ return [
                 ->defaultValue('')
                 ->drop(),
             TextDatabaseTableColumn::create('description')
+                ->drop(),
+        ]),
+    PartialDatabaseTable::create('wcf1_captcha_question')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('question')
+                ->drop(),
+            MediumtextDatabaseTableColumn::create('answers')
                 ->drop(),
         ]),
 ];

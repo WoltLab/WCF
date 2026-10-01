@@ -66,6 +66,37 @@ return [
     PartialDatabaseTable::create('wcf1_user_option')
         ->columns([
             DefaultFalseBooleanDatabaseTableColumn::create('showOnUserCard'),
+            VarcharDatabaseTableColumn::create('l10nIdentifier')
+                ->length(255),
+        ]),
+    DatabaseTable::create('wcf1_user_option_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('optionID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            MediumtextDatabaseTableColumn::create('description'),
+            TinyintDatabaseTableColumn::create('isPristine')
+                ->notNull()
+                ->defaultValue(1),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('optionID')
+                ->columns(['optionID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['optionID'])
+                ->referencedTable('wcf1_user_option')
+                ->referencedColumns(['optionID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
         ]),
     PartialDatabaseTable::create('wcf1_smiley')
         ->columns([

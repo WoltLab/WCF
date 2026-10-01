@@ -12,7 +12,7 @@
  * obsolete phrases are removed.
  *
  * IMPORTANT ordering constraint for package.xml: The database script
- * `acp/database/update_com.woltlab.wcf_6.3_userOption.php` (adding the
+ * `acp/database/update_com.woltlab.wcf_6.3_step1.php` (adding the
  * `l10nIdentifier` column and creating the `wcf1_user_option_l10n` table) must
  * run BEFORE this script.
  */
