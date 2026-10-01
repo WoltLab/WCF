@@ -158,6 +158,7 @@ final class SettingsForm extends AbstractFormBuilderForm
                         ->required()
                         ->ignoreInvalidValues()
                         ->value(WCF::getUser()->languageID)
+                        ->defaultValue(LanguageFactory::getInstance()->getDefaultLanguageID())
                 );
 
             if ($this->availableContentLanguages !== []) {
@@ -193,6 +194,7 @@ final class SettingsForm extends AbstractFormBuilderForm
                     ->required()
                     ->ignoreInvalidValues()
                     ->value(WCF::getUser()->styleID)
+                    ->defaultValue(0)
             );
         }
         $styleContainer->appendChild(
@@ -207,6 +209,7 @@ final class SettingsForm extends AbstractFormBuilderForm
                 ->required()
                 ->ignoreInvalidValues()
                 ->value(WCF::getUser()->getUserOption('colorScheme') ?? 'system')
+                ->defaultValue('system')
         );
         $containers[] = $styleContainer;
 
