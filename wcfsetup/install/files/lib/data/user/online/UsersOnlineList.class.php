@@ -103,22 +103,29 @@ class UsersOnlineList extends SessionList
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
 
-        $users = $userIDs = [];
-        while ($row = $statement->fetchArray()) {
+        // `isVisibleUser()` lets this permission see every user.
+        $canViewInvisible = WCF::getSession()->hasPermission('admin.user.canViewInvisible');
+
+        foreach ($statement->fetchAll() as $row) {
             $this->stats['total']++;
 
-            $user = new UserOnline(new User(null, $row));
-            if (!$user->isGuest()) {
-                $this->stats['members']++;
-                $users[] = $user;
-                $userIDs[] = $user->userID;
-            } else {
+            if ($row['userID'] === null) {
                 $this->stats['guests']++;
+                continue;
             }
-        }
 
-        foreach ($users as $user) {
-            if ($user->canViewOnlineStatus !== 0 && !self::isVisibleUser($user)) {
+            $this->stats['members']++;
+
+            // The option is stored as text, members without a value are visible to everyone.
+            if (
+                $canViewInvisible
+                || $row['canViewOnlineStatus'] === null
+                || $row['canViewOnlineStatus'] === (string)UserProfile::ACCESS_EVERYONE
+            ) {
+                continue;
+            }
+
+            if (!self::isVisibleUser(new UserOnline(new User(null, $row)))) {
                 $this->stats['invisible']++;
             }
         }
