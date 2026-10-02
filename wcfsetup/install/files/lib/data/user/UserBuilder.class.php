@@ -3,14 +3,8 @@
 namespace wcf\data\user;
 
 use ParagonIE\ConstantTime\Hex;
-use wcf\command\file\DeleteFiles;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
-use wcf\data\file\File;
-use wcf\system\attachment\AttachmentHandler;
-use wcf\system\clipboard\ClipboardHandler;
-use wcf\system\comment\CommentHandler;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\user\authentication\password\algorithm\Invalid as InvalidPasswordAlgorithm;
 use wcf\system\user\authentication\password\PasswordAlgorithmManager;
 use wcf\system\WCF;
@@ -332,32 +326,6 @@ final class UserBuilder extends DatabaseObjectBuilder
         if ($this->languageIDs !== null) {
             $editor->addToLanguages($this->languageIDs, true);
         }
-    }
-
-    #[\Override]
-    protected static function beforeDeleteAll(array $objectIDs): void
-    {
-        ClipboardHandler::getInstance()->unmark(
-            $objectIDs,
-            ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')
-        );
-
-        $conditionBuilder = new PreparedStatementConditionBuilder();
-        $conditionBuilder->add('userID IN (?)', [$objectIDs]);
-        $conditionBuilder->add('avatarFileID IS NOT NULL');
-
-        $sql = "SELECT  avatarFileID
-                FROM    wcf1_user
-                {$conditionBuilder}";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditionBuilder->getParameters());
-        $avatarFiles = File::findByIDs($statement->fetchAll(\PDO::FETCH_COLUMN));
-        if ($avatarFiles !== []) {
-            new DeleteFiles($avatarFiles)();
-        }
-
-        CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.user.profileComment', $objectIDs);
-        AttachmentHandler::removeAttachments('com.woltlab.wcf.user.signature', $objectIDs);
     }
 
     /**
