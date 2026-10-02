@@ -5,7 +5,6 @@ namespace wcf\form;
 use wcf\command\user\UpdateUser;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\language\Language;
-use wcf\data\option\category\OptionCategory;
 use wcf\data\style\Style;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
@@ -16,16 +15,13 @@ use wcf\data\user\User;
 use wcf\data\user\UserBuilder;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileAction;
-use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\ICensorshipFormField;
-use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\option\user\TUserOptionFormFields;
 use wcf\system\language\LanguageFactory;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\request\LinkHandler;
@@ -44,6 +40,8 @@ use wcf\util\StringUtil;
  */
 final class SettingsForm extends AbstractDatabaseObjectBuilderForm
 {
+    use TUserOptionFormFields;
+
     /**
      * @inheritDoc
      */
@@ -104,7 +102,12 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
         }
 
         $this->formObject = new User(WCF::getUser()->userID);
-        $this->options = $this->getAvailableOptions('settings.' . $this->category);
+        $this->options = $this->getUserOptionsByCategory(
+            'settings.' . $this->category,
+            static fn(UserOption $option) => $option->validateOptions()
+                && $option->validatePermissions()
+                && $option->isEditable()
+        );
 
         if ($this->category === 'general') {
             $this->availableContentLanguages = LanguageFactory::getInstance()->getContentLanguages();
@@ -145,14 +148,7 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
             $this->form->appendChildren($this->getGeneralFormContainers());
         }
 
-        $categories = UserOptionCacheBuilder::getInstance()->getData([], 'categories');
-        foreach ($this->options as $categoryName => $options) {
-            $this->form->appendChild(
-                FormContainer::create('optionCategory' . $categories[$categoryName]->categoryID)
-                    ->label('wcf.user.option.category.' . $categoryName)
-                    ->appendChildren(\array_map($this->getOptionFormField(...), $options))
-            );
-        }
+        $this->form->appendChildren($this->getUserOptionFormContainers($this->options));
     }
 
     /**
@@ -293,129 +289,6 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
         }
 
         return $containers;
-    }
-
-    /**
-     * Returns the form field for the given user option.
-     */
-    protected function getOptionFormField(UserOption $option): AbstractFormField
-    {
-        $formOption = $option->getFormOption();
-        $configuration = $option->getConfiguration();
-
-        $formField = $formOption->getFormField($option->getIdentifier(), $configuration)
-            ->label('wcf.user.option.' . $option->optionName);
-
-        $description = 'wcf.user.option.' . $option->optionName . '.description';
-        if (WCF::getLanguage()->get($description, true) !== '') {
-            $formField->description($description);
-        }
-
-        if ((bool)($configuration['required'] ?? false)) {
-            $formField->required();
-        }
-
-        if ($formField instanceof ICensorshipFormField) {
-            $formField->censorship();
-        }
-
-        if ($formField instanceof SelectFormField && isset($formField->getOptions()[$option->defaultValue ?? ''])) {
-            $formField->defaultValue($option->defaultValue);
-        }
-
-        if (($option->validationPattern ?? '') !== '') {
-            $formField->addValidator(new FormFieldValidator(
-                'validationPattern',
-                static function (IFormField $formField) use ($option) {
-                    $value = (string)$formField->getValue();
-                    if ($value !== '' && !\preg_match('~' . $option->validationPattern . '~', $value)) {
-                        $formField->addValidationError(new FormFieldValidationError(
-                            'validationFailed',
-                            'wcf.user.option.error.validationFailed'
-                        ));
-                    }
-                }
-            ));
-        }
-
-        $formField->loadValueCallback(static function (User $user, IFormField $formField) use ($option, $formOption) {
-            $value = $user->{$option->getIdentifier()};
-            if ($value !== null) {
-                $formField->value($formOption->unserializeValue((string)$value));
-            }
-        });
-        $formField->saveValueCallback(static function (UserBuilder $builder, IFormField $formField) use ($option, $formOption) {
-            $value = $formField->getSaveValue();
-
-            $builder->setUserOption(
-                $option->optionID,
-                $value !== null ? $formOption->serializeValue($value) : $option->defaultValue
-            );
-        });
-
-        return $formField;
-    }
-
-    /**
-     * Returns the options of the child categories of the given category that
-     * the active user can edit, grouped by the name of the child category.
-     *
-     * @return array<string, UserOption[]>
-     */
-    protected function getAvailableOptions(string $parentCategoryName): array
-    {
-        $categories = UserOptionCacheBuilder::getInstance()->getData([], 'categories');
-        $categoryStructure = UserOptionCacheBuilder::getInstance()->getData([], 'categoryStructure');
-
-        $options = [];
-        foreach ($categoryStructure[$parentCategoryName] ?? [] as $categoryName) {
-            if (!$this->isAccessibleCategory($categories[$categoryName])) {
-                continue;
-            }
-
-            $categoryOptions = $this->getCategoryOptions($categoryName);
-            if ($categoryOptions !== []) {
-                $options[$categoryName] = $categoryOptions;
-            }
-        }
-
-        return $options;
-    }
-
-    /**
-     * Returns the editable options of the given category and its child categories.
-     *
-     * @return UserOption[]
-     */
-    protected function getCategoryOptions(string $categoryName): array
-    {
-        $categories = UserOptionCacheBuilder::getInstance()->getData([], 'categories');
-        $categoryStructure = UserOptionCacheBuilder::getInstance()->getData([], 'categoryStructure');
-        $cachedOptions = UserOptionCacheBuilder::getInstance()->getData([], 'options');
-        $optionToCategories = UserOptionCacheBuilder::getInstance()->getData([], 'optionToCategories');
-
-        $options = [];
-        foreach ($optionToCategories[$categoryName] ?? [] as $optionName) {
-            $option = $cachedOptions[$optionName];
-            if ($option->validateOptions() && $option->validatePermissions() && $option->isEditable()) {
-                $options[] = $option;
-            }
-        }
-
-        foreach ($categoryStructure[$categoryName] ?? [] as $childCategoryName) {
-            if ($this->isAccessibleCategory($categories[$childCategoryName])) {
-                $options = \array_merge($options, $this->getCategoryOptions($childCategoryName));
-            }
-        }
-
-        return $options;
-    }
-
-    private function isAccessibleCategory(OptionCategory $category): bool
-    {
-        return $category->categoryName !== 'hidden'
-            && $category->validateOptions()
-            && $category->validatePermissions();
     }
 
     #[\Override]

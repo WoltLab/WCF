@@ -100,6 +100,8 @@ final class UserRegistrationUtil
 
     /**
      * Generates a random field name.
+     *
+     * @deprecated 6.3 No longer in use.
      */
     public static function getRandomFieldName(string $unused): string
     {

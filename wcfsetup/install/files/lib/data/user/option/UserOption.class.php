@@ -115,7 +115,9 @@ class UserOption extends Option implements ITitledObject
      * @var array<string, string>
      */
     private const FORM_OPTION_TYPES = [
+        'birthday' => 'date',
         'boolean' => 'boolean',
+        'date' => 'date',
         'float' => 'float',
         'integer' => 'integer',
         'radioButton' => 'radioButton',

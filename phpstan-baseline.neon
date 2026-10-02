@@ -766,12 +766,6 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 4
-			path: wcfsetup/install/files/lib/form/RegisterForm.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
 			count: 11
 			path: wcfsetup/install/files/lib/form/SearchForm.class.php
 

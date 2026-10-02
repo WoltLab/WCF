@@ -230,7 +230,8 @@ final class UserBuilder extends DatabaseObjectBuilder
 
     /**
      * Sets the user groups of the user, replacing the existing ones. New users
-     * are always added to the default groups `EVERYONE` and `USERS`.
+     * are added to the default groups `EVERYONE` and `USERS` unless the user
+     * groups are set explicitly.
      *
      * @param list<int> $groupIDs
      */
@@ -283,6 +284,20 @@ final class UserBuilder extends DatabaseObjectBuilder
         return $this->passwordChanged;
     }
 
+    /**
+     * Sets the matches of the spam check during the registration.
+     *
+     * @param string[] $blacklistMatches
+     */
+    public function setBlacklistMatches(array $blacklistMatches): static
+    {
+        $this->properties['blacklistMatches'] = $blacklistMatches !== []
+            ? \json_encode($blacklistMatches, \JSON_THROW_ON_ERROR)
+            : '';
+
+        return $this;
+    }
+
     #[\Override]
     protected function getRequiredProperties(): array
     {
@@ -295,7 +310,11 @@ final class UserBuilder extends DatabaseObjectBuilder
         $this->createUserOptions($object);
 
         $editor = new UserEditor($object);
-        $editor->addToGroups($this->groupIDs ?? [], false, true);
+        if ($this->groupIDs === null) {
+            $editor->addToGroups([], false, true);
+        } else {
+            $editor->addToGroups($this->groupIDs, false, false);
+        }
         $editor->addToLanguages($this->languageIDs ?? [], false);
 
         if (\PACKAGE_ID !== 0) {
@@ -342,7 +361,12 @@ final class UserBuilder extends DatabaseObjectBuilder
         $values = $statement->fetchMap('optionID', 'defaultValue');
 
         foreach ($this->userOptions ?? [] as $optionID => $value) {
-            $values[$optionID] = $value;
+            if ($value === null) {
+                // Omit the column to fall back to its default value.
+                unset($values[$optionID]);
+            } else {
+                $values[$optionID] = $value;
+            }
         }
 
         $keys = $placeholders = '';
