@@ -22,6 +22,11 @@ use wcf\util\FileUtil;
  */
 final class AttachmentFileProcessor extends AbstractFileProcessor
 {
+    /**
+     * @var array<string, ?AttachmentFileProcessorContext>
+     */
+    private array $mappedContexts = [];
+
     #[\Override]
     public function getObjectTypeName(): string
     {
@@ -308,14 +313,12 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
      */
     private function getAttachmentHandlerFromContext(array $context): ?AttachmentHandler
     {
-        try {
-            $parameters = Helper::mapQueryParameters($context, AttachmentFileProcessorContext::class);
-        } catch (MappingError) {
+        $parameters = $this->mapContext($context);
+        if ($parameters === null) {
             return null;
         }
 
-        \assert($parameters instanceof AttachmentFileProcessorContext);
-
+        // The handler caches the attachment list and must not be shared between calls.
         return new AttachmentHandler(
             $parameters->objectType,
             $parameters->objectID,
@@ -329,15 +332,28 @@ final class AttachmentFileProcessor extends AbstractFileProcessor
      */
     private function getShowOrderFromContext(array $context): int
     {
-        try {
-            $parameters = Helper::mapQueryParameters($context, AttachmentFileProcessorContext::class);
-        } catch (MappingError) {
-            return 0;
+        return $this->mapContext($context)->showOrder ?? 0;
+    }
+
+    /**
+     * @param array<string, mixed> $context
+     */
+    private function mapContext(array $context): ?AttachmentFileProcessorContext
+    {
+        // Rendering the upload field alone queries the context three times.
+        $key = \serialize($context);
+        if (!\array_key_exists($key, $this->mappedContexts)) {
+            try {
+                $parameters = Helper::mapQueryParameters($context, AttachmentFileProcessorContext::class);
+                \assert($parameters instanceof AttachmentFileProcessorContext);
+            } catch (MappingError) {
+                $parameters = null;
+            }
+
+            $this->mappedContexts[$key] = $parameters;
         }
 
-        \assert($parameters instanceof AttachmentFileProcessorContext);
-
-        return $parameters->showOrder;
+        return $this->mappedContexts[$key];
     }
 }
 
