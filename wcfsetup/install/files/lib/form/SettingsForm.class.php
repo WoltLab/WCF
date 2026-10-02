@@ -2,7 +2,8 @@
 
 namespace wcf\form;
 
-use wcf\command\user\SetColorScheme;
+use wcf\command\user\UpdateUser;
+use wcf\data\DatabaseObjectBuilder;
 use wcf\data\language\Language;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\style\Style;
@@ -11,7 +12,8 @@ use wcf\data\trophy\TrophyCache;
 use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\trophy\UserTrophyList;
-use wcf\data\user\UserAction;
+use wcf\data\user\User;
+use wcf\data\user\UserBuilder;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileAction;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
@@ -28,7 +30,6 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -39,14 +40,19 @@ use wcf\util\StringUtil;
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @extends AbstractFormBuilderForm<null>
+ * @extends AbstractDatabaseObjectBuilderForm<User, UserBuilder>
  */
-final class SettingsForm extends AbstractFormBuilderForm
+final class SettingsForm extends AbstractDatabaseObjectBuilderForm
 {
     /**
      * @inheritDoc
      */
     public $loginRequired = true;
+
+    /**
+     * @inheritDoc
+     */
+    public string $formAction = 'edit';
 
     /**
      * option category
@@ -97,6 +103,7 @@ final class SettingsForm extends AbstractFormBuilderForm
             }
         }
 
+        $this->formObject = new User(WCF::getUser()->userID);
         $this->options = $this->getAvailableOptions('settings.' . $this->category);
 
         if ($this->category === 'general') {
@@ -115,6 +122,18 @@ final class SettingsForm extends AbstractFormBuilderForm
         } elseif ($this->options === []) {
             throw new IllegalLinkException();
         }
+    }
+
+    #[\Override]
+    protected function getDatabaseObjectBuilder(): UserBuilder
+    {
+        return UserBuilder::forUpdate($this->formObject);
+    }
+
+    #[\Override]
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
+    {
+        return new UpdateUser($builder);
     }
 
     #[\Override]
@@ -157,8 +176,10 @@ final class SettingsForm extends AbstractFormBuilderForm
                         ))
                         ->required()
                         ->ignoreInvalidValues()
-                        ->value(WCF::getUser()->languageID)
                         ->defaultValue(LanguageFactory::getInstance()->getDefaultLanguageID())
+                        ->saveValueCallback(static function (UserBuilder $builder, SelectFormField $field) {
+                            $builder->setLanguageID((int)$field->getSaveValue());
+                        })
                 );
 
             if ($this->availableContentLanguages !== []) {
@@ -171,7 +192,20 @@ final class SettingsForm extends AbstractFormBuilderForm
                             $this->availableContentLanguages
                         ))
                         ->ignoreInvalidValues()
-                        ->value(WCF::getUser()->getLanguageIDs())
+                        ->loadValueCallback(static function (User $user, MultipleSelectionFormField $field) {
+                            $field->value($user->getLanguageIDs());
+                        })
+                        ->saveValueCallback(function (UserBuilder $builder, MultipleSelectionFormField $field) {
+                            $languageIDs = \array_map(\intval(...), $field->getValue() ?? []);
+                            if ($languageIDs === []) {
+                                $languageID = (int)$field->getDocument()->getFormField('languageID')?->getSaveValue();
+                                if (isset($this->availableContentLanguages[$languageID])) {
+                                    $languageIDs[] = $languageID;
+                                }
+                            }
+
+                            $builder->setLanguageIDs($languageIDs);
+                        })
                 );
             }
 
@@ -193,8 +227,10 @@ final class SettingsForm extends AbstractFormBuilderForm
                     ->options($styles)
                     ->required()
                     ->ignoreInvalidValues()
-                    ->value(WCF::getUser()->styleID)
                     ->defaultValue(0)
+                    ->saveValueCallback(static function (UserBuilder $builder, SelectFormField $field) {
+                        $builder->setStyleID((int)$field->getSaveValue());
+                    })
             );
         }
         $styleContainer->appendChild(
@@ -208,8 +244,16 @@ final class SettingsForm extends AbstractFormBuilderForm
                 ])
                 ->required()
                 ->ignoreInvalidValues()
-                ->value(WCF::getUser()->getUserOption('colorScheme') ?? 'system')
                 ->defaultValue('system')
+                ->loadValueCallback(static function (User $user, SelectFormField $field) {
+                    $field->value($user->getUserOption('colorScheme') ?? 'system');
+                })
+                ->saveValueCallback(static function (UserBuilder $builder, SelectFormField $field) {
+                    $optionID = User::getUserOptionID('colorScheme');
+                    if ($optionID !== null) {
+                        $builder->setUserOption($optionID, (string)$field->getSaveValue());
+                    }
+                })
         );
         $containers[] = $styleContainer;
 
@@ -238,11 +282,13 @@ final class SettingsForm extends AbstractFormBuilderForm
                                 }
                             }
                         ))
-                        ->value(\array_values(\array_unique(\array_map(
-                            static fn(Trophy $trophy) => $trophy->trophyID,
-                            (new UserProfile(WCF::getUser()))->getSpecialTrophies()
-                        ))))
                         ->ignoreInvalidValues()
+                        ->loadValueCallback(static function (User $user, MultipleSelectionFormField $field) {
+                            $field->value(\array_values(\array_unique(\array_map(
+                                static fn(Trophy $trophy) => $trophy->trophyID,
+                                (new UserProfile($user))->getSpecialTrophies()
+                            ))));
+                        })
                 );
         }
 
@@ -292,10 +338,20 @@ final class SettingsForm extends AbstractFormBuilderForm
             ));
         }
 
-        $value = WCF::getUser()->{$option->getIdentifier()};
-        if ($value !== null) {
-            $formField->value($formOption->unserializeValue((string)$value));
-        }
+        $formField->loadValueCallback(static function (User $user, IFormField $formField) use ($option, $formOption) {
+            $value = $user->{$option->getIdentifier()};
+            if ($value !== null) {
+                $formField->value($formOption->unserializeValue((string)$value));
+            }
+        });
+        $formField->saveValueCallback(static function (UserBuilder $builder, IFormField $formField) use ($option, $formOption) {
+            $value = $formField->getSaveValue();
+
+            $builder->setUserOption(
+                $option->optionID,
+                $value !== null ? $formOption->serializeValue($value) : $option->defaultValue
+            );
+        });
 
         return $formField;
     }
@@ -363,7 +419,7 @@ final class SettingsForm extends AbstractFormBuilderForm
     }
 
     #[\Override]
-    protected function setFormAction()
+    protected function setFormAction(): void
     {
         $parameters = [];
         if ($this->category !== 'general') {
@@ -374,82 +430,17 @@ final class SettingsForm extends AbstractFormBuilderForm
     }
 
     #[\Override]
-    public function save(): void
+    protected function afterSave(): void
     {
-        AbstractForm::save();
+        parent::afterSave();
 
-        $formData = $this->form->getData();
-
-        $optionValues = [];
-        foreach ($this->options as $options) {
-            foreach ($options as $option) {
-                $key = $option->getIdentifier();
-
-                if (\array_key_exists($key, $formData['data'])) {
-                    $value = $formData['data'][$key];
-                } elseif (\array_key_exists($key, $formData)) {
-                    // multi-select fields place value at top-level via custom processor, see MultipleSelectionFormField::populate
-                    $value = $formData[$key];
-                } else {
-                    continue;
-                }
-
-                $optionValues[$option->optionID] = $value !== null
-                    ? $option->getFormOption()->serializeValue($value)
-                    : $option->defaultValue;
-            }
+        $specialTrophies = $this->form->getFormField('specialTrophies');
+        if ($specialTrophies !== null) {
+            $userProfileAction = new UserProfileAction([$this->object->userID], 'updateSpecialTrophies', [
+                'trophyIDs' => \array_map(\intval(...), $specialTrophies->getValue() ?? []),
+            ]);
+            $userProfileAction->executeAction();
         }
-
-        $parameters = ['options' => $optionValues];
-        if ($this->category === 'general') {
-            $parameters['data'] = $this->additionalFields;
-
-            if (isset($formData['data']['languageID'])) {
-                $parameters['data']['languageID'] = (int)$formData['data']['languageID'];
-
-                $contentLanguageIDs = \array_map(\intval(...), $formData['contentLanguageIDs'] ?? []);
-                if ($contentLanguageIDs === [] && isset($this->availableContentLanguages[$parameters['data']['languageID']])) {
-                    $contentLanguageIDs[] = $parameters['data']['languageID'];
-                }
-                $parameters['languageIDs'] = $contentLanguageIDs;
-            }
-
-            if (isset($formData['data']['styleID'])) {
-                $parameters['data']['styleID'] = (int)$formData['data']['styleID'];
-            }
-        }
-
-        $this->objectAction = new UserAction([WCF::getUser()], 'update', $parameters);
-        $this->objectAction->executeAction();
-
-        if ($this->category === 'general') {
-            // reset user language ids cache
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'languageIDs');
-
-            if ($this->form->getNodeById('specialTrophies') !== null) {
-                $userProfileAction = new UserProfileAction([WCF::getUser()->userID], 'updateSpecialTrophies', [
-                    'trophyIDs' => \array_map(\intval(...), $formData['specialTrophies'] ?? []),
-                ]);
-                $userProfileAction->executeAction();
-            }
-
-            $colorScheme = $formData['data']['colorScheme'] ?? 'system';
-            if (WCF::getUser()->getUserOption('colorScheme') !== $colorScheme) {
-                new SetColorScheme(WCF::getUser(), $colorScheme)();
-            }
-        }
-
-        $this->saved();
-    }
-
-    #[\Override]
-    public function saved(): void
-    {
-        AbstractForm::saved();
-
-        // The form is intentionally not rebuilt, because `WCF::getUser()` still
-        // holds the values from before saving.
-        $this->form->showSuccessMessage(true);
     }
 
     #[\Override]

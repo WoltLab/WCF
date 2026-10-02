@@ -1,0 +1,409 @@
+<?php
+
+namespace wcf\data\user;
+
+use ParagonIE\ConstantTime\Hex;
+use wcf\command\file\DeleteFiles;
+use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectBuilder;
+use wcf\data\file\File;
+use wcf\system\attachment\AttachmentHandler;
+use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\comment\CommentHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\user\authentication\password\algorithm\Invalid as InvalidPasswordAlgorithm;
+use wcf\system\user\authentication\password\PasswordAlgorithmManager;
+use wcf\system\WCF;
+
+/**
+ * Builder for creating, updating and deleting users.
+ *
+ * The user options, the user groups and the content languages are stored in
+ * separate tables that are written after the user itself. The object returned
+ * by `create()` and `update()` is loaded before these tables are written, use
+ * the `CreateUser` and `UpdateUser` commands to obtain an up-to-date object.
+ *
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since       6.3
+ *
+ * @extends DatabaseObjectBuilder<User>
+ */
+final class UserBuilder extends DatabaseObjectBuilder
+{
+    /**
+     * values of the user options by option id, `null` if the user options are not changed
+     * @var ?array<int, ?string>
+     */
+    private ?array $userOptions = null;
+
+    /**
+     * ids of the user groups, `null` if the user groups are not changed
+     * @var ?list<int>
+     */
+    private ?array $groupIDs = null;
+
+    /**
+     * ids of the content languages, `null` if the content languages are not changed
+     * @var ?list<int>
+     */
+    private ?array $languageIDs = null;
+
+    private bool $passwordChanged = false;
+
+    public function setUsername(string $username): static
+    {
+        $this->properties['username'] = $username;
+
+        return $this;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->properties['email'] = $email;
+
+        return $this;
+    }
+
+    /**
+     * Sets the password of the user, which is stored as a hash. Passing `null`
+     * sets an invalid password that prevents logging in with a password.
+     *
+     * Changing the password also changes the access token of the user.
+     */
+    public function setPassword(
+        #[\SensitiveParameter]
+        ?string $password
+    ): static {
+        $this->properties['password'] = self::getPasswordHash($password);
+        $this->properties['accessToken'] = Hex::encode(\random_bytes(20));
+        $this->passwordChanged = true;
+
+        return $this;
+    }
+
+    public function setLanguageID(int $languageID): static
+    {
+        $this->properties['languageID'] = $languageID;
+
+        return $this;
+    }
+
+    /**
+     * Sets the id of the style chosen by the user, `0` uses the default style.
+     */
+    public function setStyleID(int $styleID): static
+    {
+        $this->properties['styleID'] = $styleID;
+
+        return $this;
+    }
+
+    public function setRegistrationDate(int $registrationDate): static
+    {
+        $this->properties['registrationDate'] = $registrationDate;
+
+        return $this;
+    }
+
+    public function setRegistrationIpAddress(string $registrationIpAddress): static
+    {
+        $this->properties['registrationIpAddress'] = $registrationIpAddress;
+
+        return $this;
+    }
+
+    /**
+     * Sets the activation code, `0` marks the user as activated.
+     */
+    public function setActivationCode(int $activationCode): static
+    {
+        $this->properties['activationCode'] = $activationCode;
+
+        return $this;
+    }
+
+    /**
+     * Sets the code to confirm the email address, `null` marks the email
+     * address as confirmed.
+     */
+    public function setEmailConfirmed(?string $emailConfirmed): static
+    {
+        $this->properties['emailConfirmed'] = $emailConfirmed;
+
+        return $this;
+    }
+
+    public function setBanned(bool $banned): static
+    {
+        $this->properties['banned'] = (int)$banned;
+
+        return $this;
+    }
+
+    public function setBanReason(?string $banReason): static
+    {
+        $this->properties['banReason'] = $banReason;
+
+        return $this;
+    }
+
+    /**
+     * Sets the timestamp at which the ban expires, `0` bans the user permanently.
+     */
+    public function setBanExpires(int $banExpires): static
+    {
+        $this->properties['banExpires'] = $banExpires;
+
+        return $this;
+    }
+
+    public function setSignature(?string $signature): static
+    {
+        $this->properties['signature'] = $signature;
+
+        return $this;
+    }
+
+    public function setSignatureEnableHtml(bool $signatureEnableHtml): static
+    {
+        $this->properties['signatureEnableHtml'] = (int)$signatureEnableHtml;
+
+        return $this;
+    }
+
+    public function setDisableSignature(bool $disableSignature): static
+    {
+        $this->properties['disableSignature'] = (int)$disableSignature;
+
+        return $this;
+    }
+
+    public function setDisableSignatureReason(?string $disableSignatureReason): static
+    {
+        $this->properties['disableSignatureReason'] = $disableSignatureReason;
+
+        return $this;
+    }
+
+    public function setDisableSignatureExpires(int $disableSignatureExpires): static
+    {
+        $this->properties['disableSignatureExpires'] = $disableSignatureExpires;
+
+        return $this;
+    }
+
+    public function setUserTitle(string $userTitle): static
+    {
+        $this->properties['userTitle'] = $userTitle;
+
+        return $this;
+    }
+
+    public function setLastUsernameChange(int $lastUsernameChange): static
+    {
+        $this->properties['lastUsernameChange'] = $lastUsernameChange;
+
+        return $this;
+    }
+
+    public function setOldUsername(string $oldUsername): static
+    {
+        $this->properties['oldUsername'] = $oldUsername;
+
+        return $this;
+    }
+
+    public function setAuthData(string $authData): static
+    {
+        $this->properties['authData'] = $authData;
+
+        return $this;
+    }
+
+    /**
+     * Sets the value of a user option, see `UserOption::getFormOption()` for
+     * serializing form values.
+     */
+    public function setUserOption(int $optionID, ?string $value): static
+    {
+        $this->userOptions ??= [];
+        $this->userOptions[$optionID] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Sets the user groups of the user, replacing the existing ones. New users
+     * are always added to the default groups `EVERYONE` and `USERS`.
+     *
+     * @param list<int> $groupIDs
+     */
+    public function setGroupIDs(array $groupIDs): static
+    {
+        $this->groupIDs = $groupIDs;
+
+        return $this;
+    }
+
+    /**
+     * Sets the content languages of the user, replacing the existing ones. An
+     * empty list falls back to the default language.
+     *
+     * @param list<int> $languageIDs
+     */
+    public function setLanguageIDs(array $languageIDs): static
+    {
+        $this->languageIDs = $languageIDs;
+
+        return $this;
+    }
+
+    /**
+     * @return ?array<int, ?string>
+     */
+    public function getUserOptions(): ?array
+    {
+        return $this->userOptions;
+    }
+
+    /**
+     * @return ?list<int>
+     */
+    public function getGroupIDs(): ?array
+    {
+        return $this->groupIDs;
+    }
+
+    /**
+     * @return ?list<int>
+     */
+    public function getLanguageIDs(): ?array
+    {
+        return $this->languageIDs;
+    }
+
+    public function isPasswordChanged(): bool
+    {
+        return $this->passwordChanged;
+    }
+
+    #[\Override]
+    protected function getRequiredProperties(): array
+    {
+        return ['username', 'email', 'password', 'registrationDate'];
+    }
+
+    #[\Override]
+    protected function afterCreate(DatabaseObject $object): void
+    {
+        $this->createUserOptions($object);
+
+        $editor = new UserEditor($object);
+        $editor->addToGroups($this->groupIDs ?? [], false, true);
+        $editor->addToLanguages($this->languageIDs ?? [], false);
+
+        if (\PACKAGE_ID !== 0) {
+            // set default notifications
+            $sql = "INSERT INTO wcf1_user_notification_event_to_user
+                                (userID, eventID, mailNotificationType)
+                    SELECT      ?, eventID, presetMailNotificationType
+                    FROM        wcf1_user_notification_event
+                    WHERE       preset = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([$object->userID, 1]);
+        }
+    }
+
+    #[\Override]
+    protected function afterUpdate(DatabaseObject $object): void
+    {
+        $editor = new UserEditor($object);
+
+        if ($this->userOptions !== null) {
+            $editor->updateUserOptions($this->userOptions);
+        }
+
+        if ($this->groupIDs !== null) {
+            $editor->addToGroups($this->groupIDs, true, false);
+        }
+
+        if ($this->languageIDs !== null) {
+            $editor->addToLanguages($this->languageIDs, true);
+        }
+    }
+
+    #[\Override]
+    protected static function beforeDeleteAll(array $objectIDs): void
+    {
+        ClipboardHandler::getInstance()->unmark(
+            $objectIDs,
+            ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')
+        );
+
+        $conditionBuilder = new PreparedStatementConditionBuilder();
+        $conditionBuilder->add('userID IN (?)', [$objectIDs]);
+        $conditionBuilder->add('avatarFileID IS NOT NULL');
+
+        $sql = "SELECT  avatarFileID
+                FROM    wcf1_user
+                {$conditionBuilder}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditionBuilder->getParameters());
+        $avatarFiles = File::findByIDs($statement->fetchAll(\PDO::FETCH_COLUMN));
+        if ($avatarFiles !== []) {
+            new DeleteFiles($avatarFiles)();
+        }
+
+        CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.user.profileComment', $objectIDs);
+        AttachmentHandler::removeAttachments('com.woltlab.wcf.user.signature', $objectIDs);
+    }
+
+    /**
+     * Inserts the row with the user option values, using the default value of
+     * the options that have not been set explicitly.
+     */
+    private function createUserOptions(User $user): void
+    {
+        $sql = "SELECT  optionID, defaultValue
+                FROM    wcf1_user_option
+                WHERE   defaultValue IS NOT NULL";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
+        $values = $statement->fetchMap('optionID', 'defaultValue');
+
+        foreach ($this->userOptions ?? [] as $optionID => $value) {
+            $values[$optionID] = $value;
+        }
+
+        $keys = $placeholders = '';
+        $statementParameters = [$user->userID];
+        foreach ($values as $optionID => $value) {
+            $keys .= ', userOption' . $optionID;
+            $placeholders .= ', ?';
+            $statementParameters[] = $value;
+        }
+
+        $sql = "INSERT INTO wcf1_user_option_value
+                            (userID" . $keys . ")
+                VALUES      (?" . $placeholders . ")";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($statementParameters);
+    }
+
+    private static function getPasswordHash(
+        #[\SensitiveParameter]
+        ?string $password
+    ): string {
+        $manager = PasswordAlgorithmManager::getInstance();
+
+        $algorithm = $manager->getDefaultAlgorithm();
+        if ($password === null) {
+            $algorithm = new InvalidPasswordAlgorithm();
+            $password = '';
+        }
+
+        return $manager->getNameFromAlgorithm($algorithm) . ':' . $algorithm->hash($password);
+    }
+}
