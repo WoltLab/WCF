@@ -48,21 +48,20 @@ final class TimeFunctionTemplatePlugin implements IFunctionTemplatePlugin
             throw new \InvalidArgumentException("Unknown data type for 'time' given.");
         }
 
-        $dateTime = $dateTime->setTimezone(WCF::getUser()->getTimeZone());
+        $timeZone = WCF::getUser()->getTimeZone();
+        $dateTime = $dateTime->setTimezone($timeZone);
         $locale = WCF::getLanguage()->getLocale();
 
         switch ($type) {
             case 'interactive':
                 $isFutureDate = $dateTime->getTimestamp() > \TIME_NOW;
 
-                $dateAndTime = \IntlDateFormatter::formatObject(
-                    $dateTime,
-                    [
-                        \IntlDateFormatter::LONG,
-                        \IntlDateFormatter::SHORT,
-                    ],
-                    $locale
-                );
+                $dateAndTime = self::getFormatter(
+                    $locale,
+                    $timeZone,
+                    \IntlDateFormatter::LONG,
+                    \IntlDateFormatter::SHORT
+                )->format($dateTime);
 
                 return \sprintf(
                     '<woltlab-core-date-time date="%s"%s>%s</woltlab-core-date-time>',
@@ -71,23 +70,19 @@ final class TimeFunctionTemplatePlugin implements IFunctionTemplatePlugin
                     $dateAndTime
                 );
             case 'plainTime':
-                return \IntlDateFormatter::formatObject(
-                    $dateTime,
-                    [
-                        \IntlDateFormatter::LONG,
-                        \IntlDateFormatter::SHORT,
-                    ],
-                    $locale
-                );
+                return self::getFormatter(
+                    $locale,
+                    $timeZone,
+                    \IntlDateFormatter::LONG,
+                    \IntlDateFormatter::SHORT
+                )->format($dateTime);
             case 'plainDate':
-                return \IntlDateFormatter::formatObject(
-                    $dateTime,
-                    [
-                        \IntlDateFormatter::LONG,
-                        \IntlDateFormatter::NONE,
-                    ],
-                    $locale
-                );
+                return self::getFormatter(
+                    $locale,
+                    $timeZone,
+                    \IntlDateFormatter::LONG,
+                    \IntlDateFormatter::NONE
+                )->format($dateTime);
             case 'machine':
                 return $dateTime->format(\DateTimeInterface::ATOM);
             case 'custom':
@@ -95,5 +90,25 @@ final class TimeFunctionTemplatePlugin implements IFunctionTemplatePlugin
             default:
                 throw new \InvalidArgumentException("Invalid type '{$type}' given.");
         }
+    }
+
+    /**
+     * Constructing an `IntlDateFormatter` costs about ten times as much as formatting
+     * with it, and `IntlDateFormatter::formatObject()` constructs one on every call.
+     */
+    private static function getFormatter(
+        string $locale,
+        \DateTimeZone $timeZone,
+        int $dateType,
+        int $timeType
+    ): \IntlDateFormatter {
+        static $formatters = [];
+
+        $key = "{$locale}|{$timeZone->getName()}|{$dateType}|{$timeType}";
+        if (!isset($formatters[$key])) {
+            $formatters[$key] = new \IntlDateFormatter($locale, $dateType, $timeType, $timeZone);
+        }
+
+        return $formatters[$key];
     }
 }
