@@ -5,17 +5,16 @@ namespace wcf\system\menu\user\profile\content;
 use wcf\data\user\User;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\option\user\UserOptionHandler;
-use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
 /**
  * Handles user profile information content.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Alexander Ebert
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfileMenuContent
+final class AboutUserProfileMenuContent implements IUserProfileMenuContent
 {
     /**
      * user option handler object
@@ -24,7 +23,7 @@ class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfi
     public $optionHandler;
 
     #[\Override]
-    public function getContent(int $userID)
+    public function getContent(int $userID): string
     {
         if ($this->optionHandler === null) {
             $this->optionHandler = new UserOptionHandler(false, '', 'profile');
@@ -43,7 +42,7 @@ class AboutUserProfileMenuContent extends SingletonFactory implements IUserProfi
     }
 
     #[\Override]
-    public function isVisible(int $userID)
+    public function isVisible(int $userID): bool
     {
         return true;
     }

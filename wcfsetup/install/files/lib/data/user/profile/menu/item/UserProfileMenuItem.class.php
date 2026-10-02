@@ -7,7 +7,6 @@ use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\exception\ClassNotFoundException;
 use wcf\system\exception\ImplementationException;
-use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\menu\user\profile\content\IUserProfileMenuContent;
 use wcf\system\SingletonFactory;
@@ -67,15 +66,16 @@ class UserProfileMenuItem extends DatabaseObject implements \Stringable
                 throw new ClassNotFoundException($this->className);
             }
 
-            if (!\is_subclass_of($this->className, SingletonFactory::class)) {
-                throw new ParentClassException($this->className, SingletonFactory::class);
-            }
-
             if (!\is_subclass_of($this->className, IUserProfileMenuContent::class)) {
                 throw new ImplementationException($this->className, IUserProfileMenuContent::class);
             }
 
-            $this->contentManager = \call_user_func([$this->className, 'getInstance']);
+            // Extending `SingletonFactory` is no longer required, but still supported for backwards compatibility.
+            if (\is_subclass_of($this->className, SingletonFactory::class)) {
+                $this->contentManager = \call_user_func([$this->className, 'getInstance']);
+            } else {
+                $this->contentManager = new $this->className();
+            }
         }
 
         return $this->contentManager;

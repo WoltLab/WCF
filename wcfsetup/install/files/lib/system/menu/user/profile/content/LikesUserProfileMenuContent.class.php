@@ -3,20 +3,19 @@
 namespace wcf\system\menu\user\profile\content;
 
 use wcf\data\like\ViewableLikeList;
-use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
 /**
  * Handles user profile likes content.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Alexander Ebert
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class LikesUserProfileMenuContent extends SingletonFactory implements IUserProfileMenuContent
+final class LikesUserProfileMenuContent implements IUserProfileMenuContent
 {
     #[\Override]
-    public function getContent(int $userID)
+    public function getContent(int $userID): string
     {
         $likeList = new ViewableLikeList();
         $likeList->getConditionBuilder()->add("like_table.objectUserID = ?", [$userID]);
@@ -30,7 +29,7 @@ class LikesUserProfileMenuContent extends SingletonFactory implements IUserProfi
     }
 
     #[\Override]
-    public function isVisible(int $userID)
+    public function isVisible(int $userID): bool
     {
         if (!WCF::getSession()->hasPermission('user.like.canViewLike')) {
             return false;
