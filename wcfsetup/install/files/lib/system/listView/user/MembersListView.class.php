@@ -13,6 +13,7 @@ use wcf\system\option\user\TUserOptionsByCategory;
 use wcf\system\view\filter\exception\InvalidFilterValue;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\UserAgeFilter;
 use wcf\system\view\filter\UserOptionFilter;
 use wcf\system\listView\ListViewSortField;
 use wcf\system\user\storage\UserStorageHandler;
@@ -104,7 +105,7 @@ class MembersListView extends AbstractListView
      * Returns the filters for the searchable user options that are visible to
      * the active user.
      *
-     * @return list<UserOptionFilter>
+     * @return list<UserOptionFilter|UserAgeFilter>
      * @since 6.3
      */
     protected function getUserOptionFilters(): array
@@ -127,13 +128,16 @@ class MembersListView extends AbstractListView
             }
 
             // Date options store `Y-m-d` instead of the timestamps expected by the
-            // date range filter, filtering by the birthday would also reveal the
-            // year of birth if it is hidden.
-            return !\in_array($option->optionType, ['birthday', 'date'], true);
+            // date range filter. The birthday is filtered by the age instead, which
+            // respects users who hide the year of their birth.
+            return $option->optionType !== 'date';
         });
 
         return \array_map(
-            static fn(UserOption $option) => new UserOptionFilter($option),
+            static fn(UserOption $option) => match ($option->optionType) {
+                'birthday' => new UserAgeFilter($option),
+                default => new UserOptionFilter($option),
+            },
             \array_merge(...\array_values($options))
         );
     }
