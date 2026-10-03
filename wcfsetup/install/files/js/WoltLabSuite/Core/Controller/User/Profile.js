@@ -8,6 +8,7 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Ui/TabMenu", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Component/Dialog"], function (require, exports, tslib_1, Ajax_1, EventHandler, Util_1, Listener_1, TabMenu_1, PromiseMutex_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.reloadTabMenuContent = reloadTabMenuContent;
     exports.setup = setup;
     EventHandler = tslib_1.__importStar(EventHandler);
     function setupUserList(userId, buttonId, className) {
@@ -60,6 +61,20 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
         tabContentLoaded.set(tabName, true);
         (0, Util_1.insertHtml)(response.template, document.querySelector('.tabMenuContent[data-name="' + tabName + '"]'), "append");
         (0, Listener_1.trigger)();
+    }
+    /**
+     * Replaces the content of the given tab with its current content.
+     *
+     * @since 6.3
+     */
+    async function reloadTabMenuContent(userId, tabName) {
+        const container = document.querySelector('.tabMenuContent[data-name="' + tabName + '"]');
+        if (container === null) {
+            return;
+        }
+        tabContentLoaded.delete(tabName);
+        container.innerHTML = "";
+        await loadTabMenuContent(userId, tabName);
     }
     function setup(userId) {
         setupFollowingList(userId);

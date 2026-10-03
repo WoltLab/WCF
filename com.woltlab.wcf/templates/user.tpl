@@ -46,18 +46,21 @@
 				{jsphrase name='wcf.user.activityPoint'}
 			{/if}
 
-			{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
-				{jsphrase name='wcf.user.editProfile'}
-				
-				new WCF.User.Profile.Editor({$user->userID}, {if $editOnInit}true{else}false{/if});
-			{/if}
-			
 			{event name='javascriptInit'}
 		});
 
 		require(['WoltLabSuite/Core/Controller/User/Profile'], ({ setup }) => {
 			setup({$user->userID});
 		});
+
+		{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
+			require(['WoltLabSuite/Core/Component/User/Profile/Editor'], ({ setup }) => {
+				const button = document.querySelector('.jsButtonEditProfile');
+				if (button !== null) {
+					setup(button, {$user->userID}, {if $editOnInit}true{else}false{/if});
+				}
+			});
+		{/if}
 	</script>
 	
 	<noscript>

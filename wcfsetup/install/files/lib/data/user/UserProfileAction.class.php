@@ -12,15 +12,10 @@ use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
-use wcf\system\option\user\UserOptionHandler;
 use wcf\system\upload\UploadFile;
-use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\storage\UserStorageHandler;
-use wcf\system\view\user\profile\UserProfileAboutView;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\MessageUtil;
-use wcf\util\StringUtil;
 
 /**
  * Executes user profile-related actions.
@@ -177,158 +172,6 @@ class UserProfileAction extends UserAction
             ),
             'userID' => $this->userProfile->userID,
         ];
-    }
-
-    /**
-     * Validates parameters to begin profile inline editing.
-     *
-     * @return void
-     * @throws PermissionDeniedException
-     * @throws UserInputException
-     */
-    public function validateBeginEdit()
-    {
-        if ($this->objectIDs !== [] && \count($this->objectIDs) === 1) {
-            $userID = \reset($this->objectIDs);
-            $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
-        }
-
-        if ($this->userProfile === null || $this->userProfile->isGuest()) {
-            throw new UserInputException('objectIDs');
-        }
-
-        if ($this->userProfile->userID !== WCF::getUser()->userID) {
-            if (!$this->userProfile->canEdit()) {
-                throw new PermissionDeniedException();
-            }
-        } elseif (!$this->userProfile->canEditOwnProfile()) {
-            throw new PermissionDeniedException();
-        }
-    }
-
-    /**
-     * Begins profile inline editing.
-     *
-     * @return array{template: string}
-     */
-    public function beginEdit()
-    {
-        $optionTree = $this->getOptionHandler($this->userProfile->getDecoratedObject())->getOptionTree();
-
-        return [
-            'template' => WCF::getTPL()->render('wcf', 'userProfileAboutEditable', [
-                'errorType' => [],
-                'optionTree' => $optionTree,
-                '__userTitle' => $this->userProfile->userTitle,
-            ]),
-        ];
-    }
-
-    /**
-     * Validates parameters to save changes to user profile.
-     *
-     * @return void
-     * @throws PermissionDeniedException
-     */
-    public function validateSave()
-    {
-        $this->validateBeginEdit();
-
-        if (!isset($this->parameters['values']) || !\is_array($this->parameters['values'])) {
-            $this->parameters['values'] = [];
-        }
-
-        if (
-            isset($this->parameters['values']['__userTitle'])
-            && !WCF::getSession()->hasPermission('user.profile.canEditUserTitle')
-        ) {
-            throw new PermissionDeniedException();
-        }
-    }
-
-    /**
-     * Saves changes to user profile.
-     *
-     * @return array{success: bool, template: string}
-     */
-    public function save()
-    {
-        $userTitle = null;
-        if (isset($this->parameters['values']['__userTitle'])) {
-            $userTitle = StringUtil::trim(MessageUtil::stripCrap($this->parameters['values']['__userTitle']));
-            unset($this->parameters['values']['__userTitle']);
-        }
-
-        $optionHandler = $this->getOptionHandler($this->userProfile->getDecoratedObject());
-        $optionHandler->readUserInput($this->parameters);
-
-        $errors = $optionHandler->validate();
-
-        // validate user title
-        if ($userTitle !== null) {
-            try {
-                if (\mb_strlen($userTitle) > \USER_TITLE_MAX_LENGTH) {
-                    throw new UserInputException('__userTitle', 'tooLong');
-                }
-                if (!StringUtil::executeWordFilter($userTitle, \USER_FORBIDDEN_TITLES)) {
-                    throw new UserInputException('__userTitle', 'forbidden');
-                }
-            } catch (UserInputException $e) {
-                $errors[$e->getField()] = $e->getType();
-            }
-        }
-
-        // validation was successful
-        if ($errors === []) {
-            $saveOptions = $optionHandler->save();
-            $data = [
-                'options' => $saveOptions,
-            ];
-
-            // save user title
-            if ($userTitle !== null) {
-                $data['data'] = [
-                    'userTitle' => $userTitle,
-                ];
-            }
-
-            $userAction = new UserAction([$this->userProfile->userID], 'update', $data);
-            $userAction->executeAction();
-
-            // check if the user will be automatically added to new
-            // user groups because of the changed user options
-            UserGroupAssignmentHandler::getInstance()->checkUsers([$this->userProfile->userID]);
-
-            // reload user object to get updated data
-            $user = new User($this->userProfile->userID);
-
-            // update user rank
-            if (\MODULE_USER_RANK !== 0) {
-                $action = new self([new UserEditor($user)], 'updateUserRank');
-                $action->executeAction();
-            }
-
-            $userProfile = new UserProfile($user);
-
-            return [
-                'success' => true,
-                'template' => WCF::getTPL()->render('wcf', 'userProfileAbout', [
-                    'view' => new UserProfileAboutView($userProfile),
-                    'userID' => $userProfile->userID,
-                    'user' => $userProfile,
-                ]),
-            ];
-        } else {
-            // validation failed
-            return [
-                'success' => false,
-                'template' => WCF::getTPL()->render('wcf', 'userProfileAboutEditable', [
-                    'errorType' => $errors,
-                    'optionTree' => $optionHandler->getOptionTree(),
-                    '__userTitle' => $userTitle !== null ? $userTitle : $this->userProfile->userTitle,
-                ]),
-            ];
-        }
     }
 
     /**
@@ -548,22 +391,5 @@ class UserProfileAction extends UserAction
 
             UserStorageHandler::getInstance()->reset([$user->userID], 'specialTrophies');
         }
-    }
-
-    /**
-     * Returns the user option handler object.
-     *
-     * @return UserOptionHandler
-     */
-    protected function getOptionHandler(User $user, bool $editMode = true)
-    {
-        $optionHandler = new UserOptionHandler(false, '', 'profile');
-        if (!$editMode) {
-            $optionHandler->showEmptyOptions(false);
-            $optionHandler->enableEditMode(false);
-        }
-        $optionHandler->setUser($user);
-
-        return $optionHandler;
     }
 }

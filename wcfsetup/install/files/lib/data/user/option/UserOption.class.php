@@ -115,11 +115,13 @@ class UserOption extends Option implements ITitledObject
      * @var array<string, string>
      */
     private const FORM_OPTION_TYPES = [
+        'aboutMe' => 'wysiwyg',
         'birthday' => 'date',
         'boolean' => 'boolean',
         'date' => 'date',
         'float' => 'float',
         'integer' => 'integer',
+        'message' => 'wysiwyg',
         'radioButton' => 'radioButton',
         'select' => 'select',
         'text' => 'text',

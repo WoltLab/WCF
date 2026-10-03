@@ -86,6 +86,23 @@ async function loadTabMenuContent(userId: number, tabName: string): Promise<void
   triggerDomChange();
 }
 
+/**
+ * Replaces the content of the given tab with its current content.
+ *
+ * @since 6.3
+ */
+export async function reloadTabMenuContent(userId: number, tabName: string): Promise<void> {
+  const container = document.querySelector<HTMLElement>('.tabMenuContent[data-name="' + tabName + '"]');
+  if (container === null) {
+    return;
+  }
+
+  tabContentLoaded.delete(tabName);
+  container.innerHTML = "";
+
+  await loadTabMenuContent(userId, tabName);
+}
+
 export function setup(userId: number): void {
   setupFollowingList(userId);
   setupFollowerList(userId);

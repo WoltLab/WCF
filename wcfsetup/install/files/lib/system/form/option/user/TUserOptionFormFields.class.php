@@ -13,6 +13,7 @@ use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\option\WysiwygFormOption;
 use wcf\system\option\user\TUserOptionsByCategory;
 use wcf\system\WCF;
 
@@ -55,6 +56,9 @@ trait TUserOptionFormFields
     protected function getUserOptionFormField(UserOption $option): AbstractFormField
     {
         $formOption = $option->getFormOption();
+        if ($formOption instanceof WysiwygFormOption) {
+            $formOption->setContext($option->messageObjectType ?: 'com.woltlab.wcf.user.aboutMe', 0);
+        }
         $configuration = $option->getConfiguration();
 
         $formField = $formOption->getFormField($option->getIdentifier(), $configuration)

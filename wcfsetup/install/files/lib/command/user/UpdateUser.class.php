@@ -54,19 +54,24 @@ final class UpdateUser
             UserStorageHandler::getInstance()->reset([$user->userID], 'languageIDs');
         }
 
-        if ($this->builder->getGroupIDs() !== null) {
+        $groupsChanged = $this->builder->getGroupIDs() !== null;
+        if ($groupsChanged) {
             UserStorageHandler::getInstance()->reset([$user->userID], 'groupIDs');
+        }
 
+        // The automatic group assignments and the user rank can depend on user options.
+        if ($groupsChanged || $this->builder->getUserOptions() !== null) {
             UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
 
             if (\MODULE_USER_RANK !== 0) {
                 $action = new UserProfileAction([$user], 'updateUserRank');
                 $action->executeAction();
             }
-            if (\MODULE_USERS_ONLINE !== 0) {
-                $action = new UserProfileAction([$user], 'updateUserOnlineMarking');
-                $action->executeAction();
-            }
+        }
+
+        if ($groupsChanged && \MODULE_USERS_ONLINE !== 0) {
+            $action = new UserProfileAction([$user], 'updateUserOnlineMarking');
+            $action->executeAction();
         }
 
         EventHandler::getInstance()->fire(new UserUpdated($user, $this->builder));

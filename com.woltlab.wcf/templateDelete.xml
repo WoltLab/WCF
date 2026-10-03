@@ -118,5 +118,7 @@
 		<template>email_notification_userRegistration</template>
 		<template>imageViewer</template>
 		<template>avatarEdit</template>
+		<template>userProfileAboutEditable</template>
+		<template>userProfileOptionFieldList</template>
 	</delete>
 </data>

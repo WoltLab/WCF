@@ -46,7 +46,7 @@
 			{/if}
 
 			{if $view->canEditUser()}
-				<button type="button" class="jsButtonEditProfile button small">
+				<button type="button" class="jsButtonEditProfile button small" data-endpoint="{link controller='UserProfileEdit' id=$view->user->userID}{/link}">
 					{icon name='pencil'}
 					<span>{lang}wcf.user.editProfile{/lang}</span>
 				</button>
