@@ -2,9 +2,8 @@
 
 namespace wcf\system\menu\user\profile\content;
 
-use wcf\data\user\User;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\option\user\UserOptionHandler;
+use wcf\system\view\user\profile\UserProfileAboutView;
 use wcf\system\WCF;
 
 /**
@@ -16,28 +15,18 @@ use wcf\system\WCF;
  */
 final class AboutUserProfileMenuContent implements IUserProfileMenuContent
 {
-    /**
-     * user option handler object
-     * @var ?UserOptionHandler
-     */
-    public $optionHandler;
-
     #[\Override]
     public function getContent(int $userID): string
     {
-        if ($this->optionHandler === null) {
-            $this->optionHandler = new UserOptionHandler(false, '', 'profile');
-            $this->optionHandler->enableEditMode(false);
-            $this->optionHandler->showEmptyOptions(false);
+        $user = UserProfileRuntimeCache::getInstance()->getObject($userID);
+        if ($user === null) {
+            return '';
         }
 
-        $user = new User($userID);
-        $this->optionHandler->setUser($user);
-
         return WCF::getTPL()->render('wcf', 'userProfileAbout', [
-            'options' => $this->optionHandler->getOptionTree(),
+            'view' => new UserProfileAboutView($user),
             'userID' => $user->userID,
-            'user' => UserProfileRuntimeCache::getInstance()->getObject($user->userID),
+            'user' => $user,
         ]);
     }
 

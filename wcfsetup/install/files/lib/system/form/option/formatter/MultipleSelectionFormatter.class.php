@@ -15,6 +15,8 @@ use wcf\util\StringUtil;
  */
 final class MultipleSelectionFormatter implements IFormOptionFormatter
 {
+    use TSelectOptionLabelFormatter;
+
     #[\Override]
     public function format(string $value, int $languageID, array $configuration): string
     {
@@ -36,6 +38,8 @@ final class MultipleSelectionFormatter implements IFormOptionFormatter
                     } else {
                         $value = reset($selectOption['value']);
                     }
+
+                    $value = $this->resolveLabel((string)$value, $languageID);
 
                     if ($html !== '') {
                         $html .= ', ';

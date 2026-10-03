@@ -15,6 +15,8 @@ use wcf\util\StringUtil;
  */
 final class SelectFormatter implements IFormOptionFormatter
 {
+    use TSelectOptionLabelFormatter;
+
     public function __construct(private readonly bool $encode = true) {}
 
     #[\Override]
@@ -29,6 +31,8 @@ final class SelectFormatter implements IFormOptionFormatter
                 } else {
                     $value = reset($selectOption['value']);
                 }
+
+                $value = $this->resolveLabel((string)$value, $languageID);
 
                 if ($this->encode) {
                     return StringUtil::encodeHTML($value);

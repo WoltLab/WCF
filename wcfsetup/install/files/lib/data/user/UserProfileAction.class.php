@@ -16,6 +16,7 @@ use wcf\system\option\user\UserOptionHandler;
 use wcf\system\upload\UploadFile;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\view\user\profile\UserProfileAboutView;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\MessageUtil;
@@ -307,17 +308,14 @@ class UserProfileAction extends UserAction
                 $action->executeAction();
             }
 
-            // reload option handler
-            $optionHandler = $this->getOptionHandler($user, false);
-
-            // return parsed template
-            $options = $optionHandler->getOptionTree();
+            $userProfile = new UserProfile($user);
 
             return [
                 'success' => true,
                 'template' => WCF::getTPL()->render('wcf', 'userProfileAbout', [
-                    'options' => $options,
-                    'userID' => $this->userProfile->userID,
+                    'view' => new UserProfileAboutView($userProfile),
+                    'userID' => $userProfile->userID,
+                    'user' => $userProfile,
                 ]),
             ];
         } else {
