@@ -49,12 +49,6 @@
 			<title language="en">Staff</title>
 			<page>com.woltlab.wcf.Team</page>
 		</item>
-		<item identifier="com.woltlab.wcf.UserSearch">
-			<parent>com.woltlab.wcf.MembersList</parent>
-			<title language="de">Mitgliedersuche</title>
-			<title language="en">Search Members</title>
-			<page>com.woltlab.wcf.UserSearch</page>
-		</item>
 		<item identifier="com.woltlab.wcf.PrivacyPolicy">
 			<menu>com.woltlab.wcf.FooterMenu</menu>
 			<title language="de">Datenschutzerklärung</title>

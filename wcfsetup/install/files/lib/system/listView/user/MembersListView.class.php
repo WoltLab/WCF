@@ -3,14 +3,17 @@
 namespace wcf\system\listView\user;
 
 use wcf\data\DatabaseObjectList;
+use wcf\data\user\option\UserOption;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
 use wcf\event\listView\user\MembersListViewInitialized;
 use wcf\system\interaction\user\UserProfileInteractions;
 use wcf\system\listView\AbstractListView;
+use wcf\system\option\user\TUserOptionsByCategory;
 use wcf\system\view\filter\exception\InvalidFilterValue;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TextFilter;
+use wcf\system\view\filter\UserOptionFilter;
 use wcf\system\listView\ListViewSortField;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -27,6 +30,8 @@ use wcf\system\WCF;
  */
 class MembersListView extends AbstractListView
 {
+    use TUserOptionsByCategory;
+
     private bool $userStoragePreloaded = false;
 
     public function __construct()
@@ -42,6 +47,7 @@ class MembersListView extends AbstractListView
         $this->addAvailableFilters([
             $this->getFirstLetterFilter(),
             new TextFilter('username', 'wcf.user.username'),
+            ...$this->getUserOptionFilters(),
         ]);
 
         $this->setInteractionProvider(new UserProfileInteractions());
@@ -92,6 +98,44 @@ class MembersListView extends AbstractListView
     protected function getInitializedEvent(): MembersListViewInitialized
     {
         return new MembersListViewInitialized($this);
+    }
+
+    /**
+     * Returns the filters for the searchable user options that are visible to
+     * the active user.
+     *
+     * @return list<UserOptionFilter>
+     * @since 6.3
+     */
+    protected function getUserOptionFilters(): array
+    {
+        $options = $this->getUserOptionsByCategory('profile', static function (UserOption $option) {
+            if ($option->searchable === 0 || !$option->validateOptions() || !$option->validatePermissions()) {
+                return false;
+            }
+
+            // Filtering must not reveal values that are only visible to the owner
+            // of the option, thus the visibility is checked without an owner.
+            $option = clone $option;
+            $option->user = null;
+            if (!$option->isVisible()) {
+                return false;
+            }
+
+            if (!$option->getFormOption()->isFilterable()) {
+                return false;
+            }
+
+            // Date options store `Y-m-d` instead of the timestamps expected by the
+            // date range filter, filtering by the birthday would also reveal the
+            // year of birth if it is hidden.
+            return !\in_array($option->optionType, ['birthday', 'date'], true);
+        });
+
+        return \array_map(
+            static fn(UserOption $option) => new UserOptionFilter($option),
+            \array_merge(...\array_values($options))
+        );
     }
 
     protected function getFirstLetterFilter(): SelectFilter

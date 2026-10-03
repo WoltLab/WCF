@@ -25,6 +25,7 @@ interface ISearchableUserOption
      * Returns a condition for search sql query.
      *
      * @return  bool
+     * @deprecated 6.3 No longer in use.
      */
     public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, mixed $value);
 }

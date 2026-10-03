@@ -4778,10 +4778,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.birthday.age"><![CDATA[Alter]]></item>
 		<item name="wcf.user.birthday.age.from"><![CDATA[von]]></item>
 		<item name="wcf.user.birthday.age.to"><![CDATA[bis]]></item>
-		<item name="wcf.user.search"><![CDATA[Mitgliedersuche]]></item>
-		<item name="wcf.user.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Mitglied gefunden.]]></item>
 		<item name="wcf.user.newestMember"><![CDATA[Neuestes Mitglied]]></item>
-		<item name="wcf.user.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Erhaltene Reaktionen]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Inhalte suchen]]></item>
@@ -5798,5 +5795,8 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.article.setCategory"/>
 	<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"/>
 	<item name="wcf.acp.sitemap.cliInfo"/>
+	<item name="wcf.user.search"/>
+	<item name="wcf.user.search.error.noMatches"/>
+	<item name="wcf.user.search.results"/>
 </delete>
 </language>

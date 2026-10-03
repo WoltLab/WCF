@@ -4774,10 +4774,7 @@ not register with us.]]></item>
 		<item name="wcf.user.birthday.age"><![CDATA[Age]]></item>
 		<item name="wcf.user.birthday.age.from"><![CDATA[from]]></item>
 		<item name="wcf.user.birthday.age.to"><![CDATA[to]]></item>
-		<item name="wcf.user.search"><![CDATA[Search Members]]></item>
-		<item name="wcf.user.search.error.noMatches"><![CDATA[Your criteria did not match any member.]]></item>
 		<item name="wcf.user.newestMember"><![CDATA[Latest Member]]></item>
-		<item name="wcf.user.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Last Activity]]></item>
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Search Content]]></item>
@@ -5800,5 +5797,8 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.article.setCategory"/>
 	<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"/>
 	<item name="wcf.acp.sitemap.cliInfo"/>
+	<item name="wcf.user.search"/>
+	<item name="wcf.user.search.error.noMatches"/>
+	<item name="wcf.user.search.results"/>
 </delete>
 </language>

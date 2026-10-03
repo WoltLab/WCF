@@ -120,5 +120,12 @@
 		<template>avatarEdit</template>
 		<template>userProfileAboutEditable</template>
 		<template>userProfileOptionFieldList</template>
+		<template>userSearch</template>
+		<template>userOptionFieldList</template>
+		<template>birthdaySearchableOptionType</template>
+		<template>multiSelectSearchableOptionType</template>
+		<template>selectSearchableOptionType</template>
+		<template>textSearchableOptionType</template>
+		<template>textareaSearchableOptionType</template>
 	</delete>
 </data>

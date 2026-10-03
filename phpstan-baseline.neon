@@ -790,12 +790,6 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/form/UserSearchForm.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
 			count: 7
 			path: wcfsetup/install/files/lib/page/AbstractPage.class.php
 
@@ -810,12 +804,6 @@ parameters:
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/page/ContactAttachmentPage.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/page/MembersListPage.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
