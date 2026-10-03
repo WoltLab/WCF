@@ -42,10 +42,6 @@
 		{/if}
 
 		$(function() {
-			{if !$__wcf->getUser()->isGuest() && $__wcf->getUser()->userID != $user->userID}
-				{jsphrase name='wcf.user.activityPoint'}
-			{/if}
-
 			{event name='javascriptInit'}
 		});
 
