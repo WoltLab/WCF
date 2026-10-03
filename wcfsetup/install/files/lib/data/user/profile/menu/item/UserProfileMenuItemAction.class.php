@@ -44,6 +44,7 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction implements 
      * Validates menu item.
      *
      * @return void
+     * @deprecated 6.3 use `wcf\system\endpoint\controller\core\users\RenderUserProfileMenuContent` instead
      */
     public function validateGetContent()
     {
@@ -80,6 +81,7 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction implements 
      * Returns content for given menu item.
      *
      * @return array{template: string}
+     * @deprecated 6.3 use `wcf\system\endpoint\controller\core\users\RenderUserProfileMenuContent` instead
      */
     public function getContent()
     {

@@ -5,7 +5,7 @@
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Ui/TabMenu", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Component/Dialog"], function (require, exports, tslib_1, Ajax_1, EventHandler, Util_1, Listener_1, TabMenu_1, PromiseMutex_1, Dialog_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Ui/TabMenu", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Api/Users/RenderUserProfileMenuContent"], function (require, exports, tslib_1, EventHandler, Util_1, Listener_1, TabMenu_1, PromiseMutex_1, Dialog_1, RenderUserProfileMenuContent_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.reloadTabMenuContent = reloadTabMenuContent;
@@ -50,14 +50,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
         if (tabContentLoaded.has(tabName)) {
             return;
         }
-        const response = (await (0, Ajax_1.dboAction)("getContent", "wcf\\data\\user\\profile\\menu\\item\\UserProfileMenuItemAction")
-            .payload({
-            data: {
-                menuItem: tabName,
-                userID: userId,
-            },
-        })
-            .dispatch());
+        const response = await (0, RenderUserProfileMenuContent_1.renderUserProfileMenuContent)(userId, tabName);
         tabContentLoaded.set(tabName, true);
         (0, Util_1.insertHtml)(response.template, document.querySelector('.tabMenuContent[data-name="' + tabName + '"]'), "append");
         (0, Listener_1.trigger)();

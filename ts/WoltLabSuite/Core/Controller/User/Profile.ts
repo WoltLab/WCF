@@ -6,13 +6,13 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import { dboAction } from "WoltLabSuite/Core/Ajax";
 import * as EventHandler from "WoltLabSuite/Core/Event/Handler";
 import { insertHtml } from "WoltLabSuite/Core/Dom/Util";
 import { trigger as triggerDomChange } from "WoltLabSuite/Core/Dom/Change/Listener";
 import { getTabMenu } from "WoltLabSuite/Core/Ui/TabMenu";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
+import { renderUserProfileMenuContent } from "WoltLabSuite/Core/Api/Users/RenderUserProfileMenuContent";
 
 function setupUserList(userId: number, buttonId: string, className: string): void {
   const button = document.getElementById(buttonId) as HTMLElement;
@@ -62,23 +62,12 @@ function setupTabMenu(userId: number): void {
   });
 }
 
-type ResponseGetTabContent = {
-  template: string;
-};
-
 async function loadTabMenuContent(userId: number, tabName: string): Promise<void> {
   if (tabContentLoaded.has(tabName)) {
     return;
   }
 
-  const response = (await dboAction("getContent", "wcf\\data\\user\\profile\\menu\\item\\UserProfileMenuItemAction")
-    .payload({
-      data: {
-        menuItem: tabName,
-        userID: userId,
-      },
-    })
-    .dispatch()) as ResponseGetTabContent;
+  const response = await renderUserProfileMenuContent(userId, tabName);
 
   tabContentLoaded.set(tabName, true);
 
