@@ -1,5 +1,5 @@
 /**
- * Edits the profile of a user in a dialog and reloads the "About" tab afterwards.
+ * Edits the profile of a user in a dialog.
  *
  * @author Marcel Werk
  * @copyright 2001-2026 WoltLab GmbH
@@ -9,28 +9,23 @@
 
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
-import { reloadTabMenuContent } from "WoltLabSuite/Core/Controller/User/Profile";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
-import { getTabMenu } from "WoltLabSuite/Core/Ui/TabMenu";
 
-async function editProfile(userId: number, endpoint: string): Promise<void> {
+async function editProfile(endpoint: string, onSuccess: () => Promise<void>): Promise<void> {
   const { ok } = await dialogFactory().usingFormBuilder().fromEndpoint(endpoint);
   if (!ok) {
     return;
   }
 
-  // Reload the tab before selecting it, otherwise the select event would load
-  // the content of a tab that has not been loaded yet a second time.
-  await reloadTabMenuContent(userId, "about");
-  getTabMenu("profileContent")?.select("about");
+  await onSuccess();
 
   showDefaultSuccessSnackbar();
 }
 
-export function setup(button: HTMLElement, userId: number, editOnInit: boolean): void {
+export function setup(button: HTMLElement, editOnInit: boolean, onSuccess: () => Promise<void>): void {
   const endpoint = button.dataset.endpoint!;
 
-  const openDialog = promiseMutex(() => editProfile(userId, endpoint));
+  const openDialog = promiseMutex(() => editProfile(endpoint, onSuccess));
   button.addEventListener("click", () => openDialog());
 
   if (editOnInit) {

@@ -50,17 +50,8 @@
 		});
 
 		require(['WoltLabSuite/Core/Controller/User/Profile'], ({ setup }) => {
-			setup({$user->userID});
+			setup({$user->userID}, {if $editOnInit}true{else}false{/if});
 		});
-
-		{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
-			require(['WoltLabSuite/Core/Component/User/Profile/Editor'], ({ setup }) => {
-				const button = document.querySelector('.jsButtonEditProfile');
-				if (button !== null) {
-					setup(button, {$user->userID}, {if $editOnInit}true{else}false{/if});
-				}
-			});
-		{/if}
 	</script>
 	
 	<noscript>

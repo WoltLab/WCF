@@ -5,10 +5,9 @@
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Ui/TabMenu", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Api/Users/RenderUserProfileMenuContent"], function (require, exports, tslib_1, EventHandler, Util_1, Listener_1, TabMenu_1, PromiseMutex_1, Dialog_1, RenderUserProfileMenuContent_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Ui/TabMenu", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Api/Users/RenderUserProfileMenuContent", "WoltLabSuite/Core/Component/User/Profile/Editor"], function (require, exports, tslib_1, EventHandler, Util_1, Listener_1, TabMenu_1, PromiseMutex_1, Dialog_1, RenderUserProfileMenuContent_1, Editor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.reloadTabMenuContent = reloadTabMenuContent;
     exports.setup = setup;
     EventHandler = tslib_1.__importStar(EventHandler);
     function setupUserList(userId, buttonId, className) {
@@ -57,8 +56,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Event/Handler", "WoltL
     }
     /**
      * Replaces the content of the given tab with its current content.
-     *
-     * @since 6.3
      */
     async function reloadTabMenuContent(userId, tabName) {
         const container = document.querySelector('.tabMenuContent[data-name="' + tabName + '"]');
@@ -69,10 +66,23 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Event/Handler", "WoltL
         container.innerHTML = "";
         await loadTabMenuContent(userId, tabName);
     }
-    function setup(userId) {
+    function setupEditor(userId, editOnInit) {
+        const button = document.querySelector(".jsButtonEditProfile");
+        if (button === null) {
+            return;
+        }
+        (0, Editor_1.setup)(button, editOnInit, async () => {
+            // Reload the tab before selecting it, otherwise the select event would load
+            // the content of a tab that has not been loaded yet a second time.
+            await reloadTabMenuContent(userId, "about");
+            (0, TabMenu_1.getTabMenu)("profileContent")?.select("about");
+        });
+    }
+    function setup(userId, editOnInit = false) {
         setupFollowingList(userId);
         setupFollowerList(userId);
         setupVisitorList(userId);
         setupTabMenu(userId);
+        setupEditor(userId, editOnInit);
     }
 });

@@ -13,6 +13,7 @@ import { getTabMenu } from "WoltLabSuite/Core/Ui/TabMenu";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import { renderUserProfileMenuContent } from "WoltLabSuite/Core/Api/Users/RenderUserProfileMenuContent";
+import { setup as setupProfileEditor } from "WoltLabSuite/Core/Component/User/Profile/Editor";
 
 function setupUserList(userId: number, buttonId: string, className: string): void {
   const button = document.getElementById(buttonId) as HTMLElement;
@@ -77,10 +78,8 @@ async function loadTabMenuContent(userId: number, tabName: string): Promise<void
 
 /**
  * Replaces the content of the given tab with its current content.
- *
- * @since 6.3
  */
-export async function reloadTabMenuContent(userId: number, tabName: string): Promise<void> {
+async function reloadTabMenuContent(userId: number, tabName: string): Promise<void> {
   const container = document.querySelector<HTMLElement>('.tabMenuContent[data-name="' + tabName + '"]');
   if (container === null) {
     return;
@@ -92,9 +91,24 @@ export async function reloadTabMenuContent(userId: number, tabName: string): Pro
   await loadTabMenuContent(userId, tabName);
 }
 
-export function setup(userId: number): void {
+function setupEditor(userId: number, editOnInit: boolean): void {
+  const button = document.querySelector<HTMLElement>(".jsButtonEditProfile");
+  if (button === null) {
+    return;
+  }
+
+  setupProfileEditor(button, editOnInit, async () => {
+    // Reload the tab before selecting it, otherwise the select event would load
+    // the content of a tab that has not been loaded yet a second time.
+    await reloadTabMenuContent(userId, "about");
+    getTabMenu("profileContent")?.select("about");
+  });
+}
+
+export function setup(userId: number, editOnInit: boolean = false): void {
   setupFollowingList(userId);
   setupFollowerList(userId);
   setupVisitorList(userId);
   setupTabMenu(userId);
+  setupEditor(userId, editOnInit);
 }
