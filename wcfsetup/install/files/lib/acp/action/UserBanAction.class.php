@@ -48,11 +48,7 @@ final class UserBanAction implements RequestHandlerInterface
             $data = $form->getData()['data'];
             $banExpires = 0;
             if (!(bool)$data['banNeverExpires']) {
-                $banExpires = \DateTimeImmutable::createFromFormat(
-                    '!Y-m-d',
-                    $data['banExpires'],
-                    new \DateTimeZone(\TIMEZONE)
-                )->getTimestamp();
+                $banExpires = $data['banExpires'];
             }
 
             WCF::getDB()->beginTransaction();
@@ -125,7 +121,6 @@ final class UserBanAction implements RequestHandlerInterface
             DateFormField::create('banExpires')
                 ->label('wcf.acp.user.ban.expires')
                 ->description('wcf.acp.user.ban.expires.description')
-                ->saveValueFormat('Y-m-d')
                 ->earliestDate(\TIME_NOW)
                 ->required()
                 ->addDependency(
