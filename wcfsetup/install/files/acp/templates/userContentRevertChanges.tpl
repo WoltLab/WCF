@@ -51,6 +51,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		{foreach from=$users item=user}<input type="hidden" name="ids[]" value="{$user->userID}">{/foreach}
 		{csrfToken}
 	</div>
 </form>

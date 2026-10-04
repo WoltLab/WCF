@@ -4,10 +4,7 @@ namespace wcf\acp\form;
 
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -20,6 +17,8 @@ use wcf\util\StringUtil;
  */
 class UserEmailAddressExportForm extends AbstractForm
 {
+    use TMultipleUsersForm;
+
     /**
      * @inheritDoc
      */
@@ -60,33 +59,13 @@ class UserEmailAddressExportForm extends AbstractForm
      */
     public $users = [];
 
-    /**
-     * clipboard item type id
-     * @var ?int
-     */
-    protected $objectTypeID;
-
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        // get object type id
-        $this->objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
-        if ($this->objectTypeID === null) {
-            throw new SystemException("Unknown clipboard item type 'com.woltlab.wcf.user'");
-        }
-
-        // get user ids
-        $users = ClipboardHandler::getInstance()->getMarkedItems($this->objectTypeID);
-        /** @var User[] $users */
-        if ($users === []) {
-            throw new IllegalLinkException();
-        }
-
-        // load users
-        $this->userIDs = \array_keys($users);
-        $this->users = $users;
+        $this->users = $this->readUsersFromRequest();
+        $this->userIDs = \array_keys($this->users);
     }
 
     #[\Override]
@@ -142,9 +121,6 @@ class UserEmailAddressExportForm extends AbstractForm
         }
 
         $this->saved();
-
-        // remove items
-        ClipboardHandler::getInstance()->removeItems($this->objectTypeID);
 
         exit;
     }

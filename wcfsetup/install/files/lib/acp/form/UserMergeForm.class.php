@@ -7,7 +7,6 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\form\AbstractForm;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -23,6 +22,8 @@ use wcf\system\WCF;
  */
 class UserMergeForm extends AbstractForm
 {
+    use TMultipleUsersForm;
+
     /**
      * @inheritDoc
      */
@@ -57,27 +58,16 @@ class UserMergeForm extends AbstractForm
      */
     public $mergedUserIDs = [];
 
-    /**
-     * id of the user clipboard item object type
-     * @var ?int
-     */
-    protected $objectTypeID;
-
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        // get object type id
-        $this->objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
-        // get user
-        // @phpstan-ignore assign.propertyType
-        $this->users = ClipboardHandler::getInstance()->getMarkedItems($this->objectTypeID);
-        if ($this->users === [] || \count($this->users) < 2) {
+        $this->users = $this->readUsersFromRequest();
+        if (\count($this->users) < 2) {
             throw new IllegalLinkException();
         }
         foreach ($this->users as $user) {
-            /** @var User $user */
             if (!$user->canEdit()) {
                 throw new PermissionDeniedException();
             }
@@ -298,7 +288,6 @@ class UserMergeForm extends AbstractForm
         $action->executeAction();
 
         // reset clipboard
-        ClipboardHandler::getInstance()->removeItems($this->objectTypeID);
         UserEditor::resetCache();
         $this->saved();
 

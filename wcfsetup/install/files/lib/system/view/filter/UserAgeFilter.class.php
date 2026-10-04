@@ -12,7 +12,8 @@ use wcf\util\DateUtil;
 /**
  * Filters users by their age that is derived from the birthday user option,
  * requires a list of users. Users who hide the year of their birthday are
- * never matched.
+ * never matched unless `$respectShowYear` is disabled, which is reserved for
+ * administrative views.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
@@ -23,8 +24,10 @@ final class UserAgeFilter extends IntegerFilter
 {
     private const MAXIMUM_AGE = 120;
 
-    public function __construct(UserOption $birthdayOption)
-    {
+    public function __construct(
+        UserOption $birthdayOption,
+        private readonly bool $respectShowYear = true,
+    ) {
         parent::__construct(
             'age',
             'wcf.user.birthday.age',
@@ -54,7 +57,7 @@ final class UserAgeFilter extends IntegerFilter
         $this->joinUserOptionValues($list);
 
         $showYearOptionID = User::getUserOptionID('birthdayShowYear');
-        if ($showYearOptionID !== null) {
+        if ($this->respectShowYear && $showYearOptionID !== null) {
             $list->getConditionBuilder()->add("user_option_value.userOption{$showYearOptionID} = ?", [1]);
         }
 

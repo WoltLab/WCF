@@ -11,6 +11,23 @@
 		<file>lib/form/UserSearchForm.class.php</file>
 		<file>lib/action/EmailValidationAction.class.php</file>
 		<file>lib/action/UsernameValidationAction.class.php</file>
+		<file>js/WoltLabSuite/Core/Acp/Controller/User/List.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Editor.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/Abstract.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/BanAction.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/DeleteAction.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/DisableAction.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/SendNewPasswordAction.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/ToggleConfirmEmailAction.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Ban.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Ban/Dialog.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Delete.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Clipboard.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler.js</file>
+		<file>lib/acp/action/UserQuickSearchAction.class.php</file>
+		<file>lib/acp/form/UserSearchForm.class.php</file>
+		<file>lib/system/clipboard/action/UserClipboardAction.class.php</file>
+		<file>lib/system/clipboard/action/UserContentClipboardAction.class.php</file>
 		<file>lib/system/listView/user/UserSearchResultsListView.class.php</file>
 		<file>lib/system/api/cuyz/valinor/qa/PHPStan/Stubs/Psr/SimpleCache/CacheInterface.stub</file>
 		<file>lib/system/api/cuyz/valinor/src/Cache/ChainCache.php</file>

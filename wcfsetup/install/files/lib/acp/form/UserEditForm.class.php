@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\UserListPage;
 use wcf\data\file\File;
 use wcf\data\style\Style;
 use wcf\data\user\cover\photo\IUserCoverPhoto;
@@ -9,6 +10,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
+use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileAction;
 use wcf\form\AbstractForm;
 use wcf\system\cache\runtime\FileRuntimeCache;
@@ -17,8 +19,11 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\upcast\HtmlUpcastProcessor;
+use wcf\system\interaction\admin\UserInteractions;
+use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
 use wcf\command\user\SetColorScheme;
 use wcf\system\user\multifactor\Setup;
@@ -357,10 +362,14 @@ class UserEditForm extends UserAddForm
         $signatureProcessor->process($this->signature ?: '', 'com.woltlab.wcf.user.signature', $this->user->userID);
 
         WCF::getTPL()->assign([
+            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
+                new UserInteractions(),
+                new UserProfile($this->user->getDecoratedObject()),
+                LinkHandler::getInstance()->getControllerLink(UserListPage::class)
+            ),
             'userID' => $this->user->userID,
             'action' => 'edit',
             'url' => '',
-            'markedUsers' => 0,
             'user' => $this->user,
             'banned' => $this->banned,
             'banReason' => $this->banReason,

@@ -3,7 +3,7 @@
 namespace wcf\system\gridView\admin;
 
 use wcf\acp\form\UserGroupEditForm;
-use wcf\acp\form\UserSearchForm;
+use wcf\acp\page\UserListPage;
 use wcf\data\DatabaseObject;
 use wcf\data\user\group\I18nUserGroupList;
 use wcf\data\user\group\UserGroup;
@@ -22,6 +22,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\view\filter\I18nTextFilter;
 use wcf\system\view\filter\IntegerFilter;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Grid view for the list of user groups.
@@ -78,17 +79,19 @@ final class UserGroupGridView extends AbstractGridView
                         {
                             \assert($row instanceof UserGroup);
 
-                            if ($row->groupType === 1 || $row->groupType === 2) {
+                            // The user list can only filter by accessible groups other than
+                            // the "Everyone" and the "Guests" group.
+                            if ($row->groupType === 1 || $row->groupType === 2 || !$row->isAccessible()) {
                                 return parent::render($value, $row);
                             }
 
                             return \sprintf(
                                 '<a class="jsTooltip" title="%s" href="%s">%s</a>',
                                 WCF::getLanguage()->get("wcf.acp.group.showMembers"),
-                                LinkHandler::getInstance()->getControllerLink(
-                                    UserSearchForm::class,
-                                    ["groupID" => $row->groupID]
-                                ),
+                                StringUtil::encodeHTML(LinkHandler::getInstance()->getControllerLink(
+                                    UserListPage::class,
+                                    ["filters" => ["groupID" => $row->groupID]]
+                                )),
                                 parent::render($value, $row)
                             );
                         }

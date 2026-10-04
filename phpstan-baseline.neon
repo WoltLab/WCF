@@ -256,12 +256,6 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/acp/page/UserListPage.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
 			count: 2
 			path: wcfsetup/install/files/lib/action/AJAXInvokeAction.class.php
 
@@ -646,7 +640,7 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 10
+			count: 9
 			path: wcfsetup/install/files/lib/data/user/UserAction.class.php
 
 		-
@@ -1182,12 +1176,6 @@ parameters:
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/system/clipboard/action/AbstractClipboardAction.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/system/clipboard/action/UserClipboardAction.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'

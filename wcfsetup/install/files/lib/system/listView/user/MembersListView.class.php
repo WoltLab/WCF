@@ -123,23 +123,10 @@ class MembersListView extends AbstractListView
                 return false;
             }
 
-            if (!$option->getFormOption()->isFilterable()) {
-                return false;
-            }
-
-            // Date options store `Y-m-d` instead of the timestamps expected by the
-            // date range filter. The birthday is filtered by the age instead, which
-            // respects users who hide the year of their birth.
-            return $option->optionType !== 'date';
+            return $option->getFormOption()->isFilterable();
         });
 
-        return \array_map(
-            static fn(UserOption $option) => match ($option->optionType) {
-                'birthday' => new UserAgeFilter($option),
-                default => new UserOptionFilter($option),
-            },
-            \array_merge(...\array_values($options))
-        );
+        return UserOptionFilter::createFilters(\array_merge(...\array_values($options)));
     }
 
     protected function getFirstLetterFilter(): SelectFilter

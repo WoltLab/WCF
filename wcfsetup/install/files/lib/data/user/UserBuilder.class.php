@@ -217,6 +217,24 @@ final class UserBuilder extends DatabaseObjectBuilder
     }
 
     /**
+     * Sets the hash of the key that allows the user to set a new password,
+     * `null` invalidates a pending request.
+     */
+    public function setLostPasswordKey(?string $lostPasswordKeyHash): static
+    {
+        $this->properties['lostPasswordKey'] = $lostPasswordKeyHash;
+
+        return $this;
+    }
+
+    public function setLastLostPasswordRequestTime(int $lastLostPasswordRequestTime): static
+    {
+        $this->properties['lastLostPasswordRequestTime'] = $lastLostPasswordRequestTime;
+
+        return $this;
+    }
+
+    /**
      * Sets the value of a user option, see `UserOption::getFormOption()` for
      * serializing form values.
      */

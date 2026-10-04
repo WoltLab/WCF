@@ -157,5 +157,7 @@
 		<template>imageViewer</template>
 		<template>tagSetAsSynonyms</template>
 		<template>contactSettings</template>
+		<template>removeUserContentDialog</template>
+		<template>userSearch</template>
 	</delete>
 </data>

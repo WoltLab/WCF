@@ -1132,7 +1132,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.menu.link.user.mail"><![CDATA[E-Mail an alle Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
-		<item name="wcf.acp.menu.link.user.search"><![CDATA[Benutzer suchen]]></item>
 		<item name="wcf.acp.menu.link.user.option"><![CDATA[Profilfelder]]></item>
 		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[Profilfelder]]></item>
 		<item name="wcf.acp.menu.link.user.option.add"><![CDATA[Profilfeld hinzufügen]]></item>
@@ -3059,7 +3058,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.ban.expires"><![CDATA[Entsperrung]]></item>
 		<item name="wcf.acp.user.ban.expires.description"><![CDATA[Der Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.ban.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
-		<item name="wcf.acp.user.ban.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den/die Benutzer wirklich sperren?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bearbeitest dein{else}Sie bearbeiten Ihr{/if} eigenes Benutzerkonto. Änderungen an den Mitgliedschaften in Benutzergruppen können womöglich dazu führen, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} aus der Administrationsoberfläche ausgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}wirst{else}werden{/if}. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}sei{else}seien Sie{/if} entsprechend vorsichtig!]]></item>
 		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
@@ -3085,15 +3083,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Zeitraum in dem Änderungen des Benutzers zurückgesetzt werden sollen. Inhalte werden auf die neuste Version, welche entweder älter als der angegebene Zeitraum ist oder welche von einem anderen Nutzer stammt, zurückgesetzt. [Zeitraum in Tagen]]]></item>
 		<item name="wcf.acp.user.revertChanges.markedUsers"><![CDATA[Änderungen folgender Nutzer zurücksetzen]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Benutzer suchen]]></item>
-		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profil]]></item>
-		<item name="wcf.acp.user.search.display"><![CDATA[Darstellung]]></item>
-		<item name="wcf.acp.user.search.display.columns"><![CDATA[Spalten]]></item>
-		<item name="wcf.acp.user.search.display.columns.other"><![CDATA[Sonstiges]]></item>
-		<item name="wcf.acp.user.search.display.columns.profile"><![CDATA[Profil]]></item>
-		<item name="wcf.acp.user.search.display.general"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.user.search.display.itemsPerPage"><![CDATA[Benutzer pro Seite]]></item>
-		<item name="wcf.acp.user.search.display.sort"><![CDATA[Sortierung]]></item>
-		<item name="wcf.acp.user.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Benutzer gefunden.]]></item>
 		<item name="wcf.acp.user.sendMail"><![CDATA[E-Mail an Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail an alle Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[E-Mail als HTML versenden]]></item>
@@ -3148,10 +3137,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Erlaubt die Angabe einer speziellen PHP-Klasse für die Ausgabeformatierung bei der Anzeige des Feldes.]]></item>
 		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 		<item name="wcf.acp.user.option.error.noCategories"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein Benutzerprofilfeld hinzufügen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} eine <a href="{link controller='UserOptionCategoryAdd'}{/link}">Benutzerprofilfeld-Kategorie hinzufügen</a>.]]></item>
-		<item name="wcf.acp.user.search.conditions"><![CDATA[Bedingungen]]></item>
-		<item name="wcf.acp.user.search.conditions.states"><![CDATA[Zustände]]></item>
-		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Gesperrt]]></item>
-		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Nicht gesperrt]]></item>
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Aktivitätspunkte]]></item>
 		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Punkte pro Aktivität aktualisieren]]></item>
 		<item name="wcf.acp.user.delete"><![CDATA[Benutzer löschen]]></item>
@@ -3196,8 +3181,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.quickSearch.pendingActivation"><![CDATA[Benutzer die auf Freischaltung warten]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledAvatars"><![CDATA[Gesperrte Avatare]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Gesperrte Signaturen]]></item>
-		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Aktiviert]]></item>
-		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Nicht aktiviert]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[Neues Kennwort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|phrase}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
@@ -3259,6 +3242,20 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesem Benutzer wirklich ein neues Kennwort zusenden?]]></item>
 		<item name="wcf.acp.user.action.confirmEmail"><![CDATA[E-Mail-Adresse bestätigen]]></item>
 		<item name="wcf.acp.user.action.unconfirmEmail"><![CDATA[Bestätigung der E-Mail-Adresse widerrufen]]></item>
+		<item name="wcf.acp.user.action.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
+		<item name="wcf.acp.user.action.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
+		<item name="wcf.acp.user.action.merge"><![CDATA[Zusammenfügen]]></item>
+		<item name="wcf.acp.user.action.resendActivationMail"><![CDATA[Neuen Aktivierungscode versenden]]></item>
+		<item name="wcf.acp.user.action.revertContentChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
+		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage.bulk"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den ausgewählten Benutzern wirklich ein neues Kennwort zusenden?]]></item>
+		<item name="wcf.acp.user.filter.banned"><![CDATA[Gesperrt]]></item>
+		<item name="wcf.acp.user.filter.disableAvatar"><![CDATA[Avatar gesperrt]]></item>
+		<item name="wcf.acp.user.filter.disableSignature"><![CDATA[Signatur gesperrt]]></item>
+		<item name="wcf.acp.user.filter.emailConfirmed"><![CDATA[E-Mail-Adresse]]></item>
+		<item name="wcf.acp.user.filter.emailConfirmed.no"><![CDATA[Nicht bestätigt]]></item>
+		<item name="wcf.acp.user.filter.emailConfirmed.yes"><![CDATA[Bestätigt]]></item>
+		<item name="wcf.acp.user.filter.isDisabled"><![CDATA[Nicht aktiviert]]></item>
+		<item name="wcf.acp.user.filter.pendingActivation"><![CDATA[Wartet auf Freischaltung]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Persönliche Daten exportieren (DSGVO)]]></item>
 		<item name="wcf.acp.user.security.multifactor"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
 		<item name="wcf.acp.user.security.multifactor.active"><![CDATA[Aktiv]]></item>
@@ -3435,21 +3432,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}eine Datei{else}{#$count} Dateien{/if} löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.insert"><![CDATA[Einfügen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.setCategory"><![CDATA[Kategorie bearbeiten ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[Sperren ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Löschen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einen{else}{#$count}{/if} Benutzer löschen?]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Aktivieren]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Zusammenfügen]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.resendActivationMail"><![CDATA[Neuen Aktivierungscode versenden ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[E-Mail senden]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Neues Kennwort senden ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einem Benutzer{else}{#$count} Benutzern{/if} ein neues Kennwort zusenden?]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse bestätigen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"><![CDATA[Bestätigung der E-Mail-Adresse widerrufen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.deleteUserContent"><![CDATA[Inhalte der Benutzer löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}Eine Datei{else}{#$count} Dateien{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer]]></item>
 	</category>
@@ -5798,5 +5780,37 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.search"/>
 	<item name="wcf.user.search.error.noMatches"/>
 	<item name="wcf.user.search.results"/>
+	<item name="wcf.acp.menu.link.user.search"/>
+	<item name="wcf.acp.user.ban.sure"/>
+	<item name="wcf.acp.user.search.conditions"/>
+	<item name="wcf.acp.user.search.conditions.profile"/>
+	<item name="wcf.acp.user.search.conditions.state.banned"/>
+	<item name="wcf.acp.user.search.conditions.state.disabled"/>
+	<item name="wcf.acp.user.search.conditions.state.enabled"/>
+	<item name="wcf.acp.user.search.conditions.state.notBanned"/>
+	<item name="wcf.acp.user.search.conditions.states"/>
+	<item name="wcf.acp.user.search.display"/>
+	<item name="wcf.acp.user.search.display.columns"/>
+	<item name="wcf.acp.user.search.display.columns.other"/>
+	<item name="wcf.acp.user.search.display.columns.profile"/>
+	<item name="wcf.acp.user.search.display.general"/>
+	<item name="wcf.acp.user.search.display.itemsPerPage"/>
+	<item name="wcf.acp.user.search.display.sort"/>
+	<item name="wcf.acp.user.search.error.noMatches"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.confirmEmail"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.deleteUserContent"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.resendActivationMail"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"/>
 </delete>
 </language>

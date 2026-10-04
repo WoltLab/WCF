@@ -2,11 +2,11 @@
 
 namespace wcf\acp\form;
 
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\edit\EditHistoryManager;
-use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -19,6 +19,8 @@ use wcf\system\WCF;
  */
 class UserContentRevertChangesForm extends AbstractForm
 {
+    use TMultipleUsersForm;
+
     /**
      * @inheritDoc
      */
@@ -52,24 +54,16 @@ class UserContentRevertChangesForm extends AbstractForm
      */
     public $timeframe = 7;
 
-    /**
-     * id of the user clipboard item object type
-     * @var ?int
-     */
-    protected $objectTypeID;
-
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        // get object type id
-        $this->objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
-        // get user
-        // @phpstan-ignore assign.propertyType
-        $this->users = ClipboardHandler::getInstance()->getMarkedItems($this->objectTypeID);
-        if ($this->users === []) {
-            throw new IllegalLinkException();
+        $this->users = $this->readUsersFromRequest();
+        foreach ($this->users as $user) {
+            if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                throw new PermissionDeniedException();
+            }
         }
         $this->userIDs = \array_keys($this->users);
     }
@@ -102,7 +96,6 @@ class UserContentRevertChangesForm extends AbstractForm
         EditHistoryManager::getInstance()->bulkRevert($this->userIDs, $this->timeframe * 86400);
 
         // reset clipboard
-        ClipboardHandler::getInstance()->removeItems($this->objectTypeID);
         $this->saved();
 
         // show success message

@@ -7,11 +7,9 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\form\AbstractForm;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -25,6 +23,8 @@ use wcf\util\ArrayUtil;
  */
 class UserAssignToGroupForm extends AbstractForm
 {
+    use TMultipleUsersForm;
+
     /**
      * @inheritDoc
      */
@@ -59,28 +59,16 @@ class UserAssignToGroupForm extends AbstractForm
      */
     public $groups = [];
 
-    /**
-     * id of the user clipboard item object type
-     * @var ?int
-     */
-    protected $objectTypeID;
-
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        // get object type id
-        $this->objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
-        if ($this->objectTypeID === null) {
-            throw new SystemException("clipboard item type 'com.woltlab.wcf.user' is unknown.");
-        }
-
-        // get user
-        // @phpstan-ignore assign.propertyType
-        $this->users = ClipboardHandler::getInstance()->getMarkedItems($this->objectTypeID);
-        if ($this->users === []) {
-            throw new IllegalLinkException();
+        $this->users = $this->readUsersFromRequest();
+        foreach ($this->users as $user) {
+            if (!UserGroup::isAccessibleGroup($user->getGroupIDs())) {
+                throw new PermissionDeniedException();
+            }
         }
 
         $this->userIDs = \array_keys($this->users);
@@ -146,8 +134,6 @@ class UserAssignToGroupForm extends AbstractForm
             ]);
             $action->executeAction();
         }
-
-        ClipboardHandler::getInstance()->removeItems($this->objectTypeID);
 
         $this->saved();
 
