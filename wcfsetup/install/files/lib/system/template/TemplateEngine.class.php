@@ -209,6 +209,13 @@ class TemplateEngine extends SingletonFactory
     protected $templateGroupID = 0;
 
     /**
+     * sorted names of the active template variants, see `setTemplateVariants()`
+     * @var list<string>
+     * @since 6.3
+     */
+    private array $templateVariants = [];
+
+    /**
      * all available template variables and those assigned during runtime
      * @var array<string, mixed|array<string, mixed>>
      */
@@ -499,6 +506,10 @@ class TemplateEngine extends SingletonFactory
         // Map old template names to new shared template names
         if (\array_key_exists($templateName, TemplateEngine::SHARED_TEMPLATES)) {
             $templateName = TemplateEngine::SHARED_TEMPLATES[$templateName];
+        }
+
+        if (\in_array($templateName, $this->templateVariants, true)) {
+            $templateName = 'system_' . $templateName;
         }
 
         if (TemplateEngine::isSharedTemplate($templateName)) {
@@ -904,6 +915,38 @@ class TemplateEngine extends SingletonFactory
     }
 
     /**
+     * Returns the sorted names of the active template variants.
+     *
+     * @return list<string>
+     * @since 6.3
+     */
+    public function getTemplateVariants(): array
+    {
+        return $this->templateVariants;
+    }
+
+    /**
+     * Sets the active template variants. An active variant `foo` resolves the template `foo`
+     * to `system_foo`. All templates are compiled under a key derived from the variants,
+     * because `system_foo` may be included statically into any other template.
+     *
+     * @param string[] $templateVariants
+     * @since 6.3
+     */
+    public function setTemplateVariants(array $templateVariants): void
+    {
+        $templateVariants = \array_values(\array_unique($templateVariants));
+        foreach ($templateVariants as $templateVariant) {
+            if (!\preg_match('~^[a-zA-Z0-9]+$~', $templateVariant)) {
+                throw new \InvalidArgumentException("The template variant '{$templateVariant}' is invalid.");
+            }
+        }
+        \sort($templateVariants);
+
+        $this->templateVariants = $templateVariants;
+    }
+
+    /**
      * Loads cached template group information.
      *
      * @return void
@@ -1091,7 +1134,12 @@ class TemplateEngine extends SingletonFactory
         if (TemplateEngine::isSharedTemplate($templateName)) {
             return TemplateEngine::getInstance()->compileDir . $this->getSharedTemplateGroupID();
         } else {
-            return $this->compileDir . $this->getTemplateGroupID();
+            $prefix = $this->compileDir . $this->getTemplateGroupID();
+            if ($this->templateVariants !== []) {
+                $prefix .= '-' . \implode('.', $this->templateVariants);
+            }
+
+            return $prefix;
         }
     }
 

@@ -177,6 +177,25 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
     }
 
     /**
+     * Returns the template variants this style activates, see `TemplateEngine::setTemplateVariants()`.
+     *
+     * @return list<string>
+     * @since 6.3
+     */
+    public function getTemplateVariants(): array
+    {
+        $templateVariants = [];
+
+        // Unknown values may come from an imported style and fall back to the classic header.
+        $pageHeaderLayout = $this->getVariables()['pageHeaderLayout'] ?? 'classic';
+        if ($pageHeaderLayout !== 'classic' && \in_array($pageHeaderLayout, self::PAGE_HEADER_LAYOUTS, true)) {
+            $templateVariants[] = 'pageHeader';
+        }
+
+        return $templateVariants;
+    }
+
+    /**
      * @since 5.4
      */
     public function getEmailFontFamily(): string

@@ -143,7 +143,7 @@ class TemplateEditor extends DatabaseObjectEditor
         DirectoryUtil::getInstance(\WCF_DIR . 'templates/compiled/')
             ->removePattern(
                 new Regex(
-                    $this->templateGroupID . '_' . $this->application . '_.*_' . \preg_quote($this->templateName) . '.php$'
+                    $this->templateGroupID . '(-[a-zA-Z0-9.]+)?_' . $this->application . '_.*_' . \preg_quote($this->templateName) . '.php$'
                 )
             );
 

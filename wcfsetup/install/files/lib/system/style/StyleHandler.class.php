@@ -118,6 +118,7 @@ class StyleHandler extends SingletonFactory
 
         // set template group id
         WCF::getTPL()->setTemplateGroupID($this->style->templateGroupID ?? 0);
+        WCF::getTPL()->setTemplateVariants($this->style->getTemplateVariants());
     }
 
     /**
