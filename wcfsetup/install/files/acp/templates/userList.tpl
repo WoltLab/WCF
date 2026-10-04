@@ -17,9 +17,8 @@
 				<a class="button dropdownToggle">{icon name='magnifying-glass'} <span>{lang}wcf.acp.user.quickSearch{/lang}</span></a>
 				<ul class="dropdownMenu">
 					<li><a href="{link controller='UserList'}filters[banned]=1{/link}">{lang}wcf.acp.user.quickSearch.banned{/lang}</a></li>
-					<li><a href="{link controller='UserList'}sortField=registrationDate&sortOrder=DESC{/link}">{lang}wcf.acp.user.quickSearch.newest{/lang}</a></li>
-					<li><a href="{link controller='UserList'}filters[isDisabled]=1&sortField=registrationDate&sortOrder=DESC{/link}">{lang}wcf.acp.user.quickSearch.disabled{/lang}</a></li>
-					<li><a href="{link controller='UserList'}filters[pendingActivation]=1&sortField=registrationDate&sortOrder=DESC{/link}">{lang}wcf.acp.user.quickSearch.pendingActivation{/lang}</a></li>
+					<li><a href="{link controller='UserList'}filters[isDisabled]=1{/link}">{lang}wcf.acp.user.quickSearch.disabled{/lang}</a></li>
+					<li><a href="{link controller='UserList'}filters[pendingActivation]=1{/link}">{lang}wcf.acp.user.quickSearch.pendingActivation{/lang}</a></li>
 					<li><a href="{link controller='UserList'}filters[disableAvatar]=1{/link}">{lang}wcf.acp.user.quickSearch.disabledAvatars{/lang}</a></li>
 					<li><a href="{link controller='UserList'}filters[disableSignature]=1{/link}">{lang}wcf.acp.user.quickSearch.disabledSignatures{/lang}</a></li>
 				</ul>

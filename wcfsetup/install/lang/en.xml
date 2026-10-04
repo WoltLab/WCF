@@ -3023,7 +3023,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.sendMail.description"><![CDATA[<kbd>{literal}{$username}{/literal}</kbd> and <kbd>{literal}{$email}{/literal}</kbd> can be used as placeholders to insert the username or email address of the respective recipient.]]></item>
 		<item name="wcf.acp.user.quickSearch"><![CDATA[Quick Search]]></item>
 		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[Banned users]]></item>
-		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[Newest users]]></item>
 		<item name="wcf.acp.user.option.access"><![CDATA[Access]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Add Custom User Field]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Fields]]></item>
@@ -5814,5 +5813,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"/>
 	<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"/>
 	<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"/>
+	<item name="wcf.acp.user.quickSearch.newest"/>
 </delete>
 </language>

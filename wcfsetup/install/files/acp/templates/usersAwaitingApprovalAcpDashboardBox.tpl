@@ -21,7 +21,7 @@
 </ul>
 
 <div class="acpDashboardBox__cta">
-	<a href="{link controller='UserList'}filters[pendingActivation]=1&sortField=registrationDate&sortOrder=DESC{/link}" class="button small">
+	<a href="{link controller='UserList'}filters[pendingActivation]=1{/link}" class="button small">
 		{lang}wcf.global.button.showAll{/lang}
 	</a>
 </div>
