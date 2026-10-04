@@ -14,6 +14,7 @@ use wcf\system\interaction\Divider;
 use wcf\system\interaction\FormBuilderDialogInteraction;
 use wcf\system\interaction\InteractionConfirmationType;
 use wcf\system\interaction\InteractionEffect;
+use wcf\system\interaction\LinkableObjectInteraction;
 use wcf\system\interaction\LinkInteraction;
 use wcf\system\interaction\RpcInteraction;
 use wcf\system\request\LinkHandler;
@@ -36,6 +37,8 @@ final class UserInteractions extends AbstractInteractionProvider
     public function __construct()
     {
         $this->addInteractions([
+            new LinkableObjectInteraction('view', 'wcf.acp.user.action.viewProfile'),
+            new Divider(),
             new RpcInteraction(
                 'enable',
                 'core/users/%s/enable',

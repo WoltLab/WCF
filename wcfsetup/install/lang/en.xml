@@ -3162,6 +3162,7 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[<strong>Attention</strong>: The bulk processing executes all actions below on all users matching the selected conditions without any further confirmation prompt!]]></item>
 		<item name="wcf.acp.user.profileMenu.sort"><![CDATA[User Profile Menu Show Order]]></item>
 		<item name="wcf.acp.user.action.sendMail"><![CDATA[Send Email]]></item>
+		<item name="wcf.acp.user.action.viewProfile"><![CDATA[Show Profile]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Send New Password]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to this user?]]></item>
 		<item name="wcf.acp.user.action.confirmEmail"><![CDATA[Confirm Email Address]]></item>
