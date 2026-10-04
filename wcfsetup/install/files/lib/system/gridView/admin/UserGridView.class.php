@@ -224,7 +224,7 @@ final class UserGridView extends AbstractGridView
 
                 $statusIcons = '';
                 if ($row->banned !== 0) {
-                    $statusIcons .= $this->renderStatusIcon('lock', 'wcf.user.status.banned', $row);
+                    $statusIcons .= $this->renderStatusIcon('lock', 'wcf.user.banned', $row);
                 }
                 if ($row->pendingActivation()) {
                     $statusIcons .= $this->renderStatusIcon('power-off', 'wcf.user.status.isDisabled', $row);
@@ -260,7 +260,7 @@ final class UserGridView extends AbstractGridView
             {
                 return \sprintf(
                     '<span class="jsTooltip" title="%s">%s</span>',
-                    StringUtil::encodeHTML(WCF::getLanguage()->getDynamicVariable($languageItem, ['user' => $user])),
+                    WCF::getLanguage()->getDynamicVariable($languageItem, ['user' => $user]),
                     FontAwesomeIcon::fromValues($icon)->toHtml()
                 );
             }
