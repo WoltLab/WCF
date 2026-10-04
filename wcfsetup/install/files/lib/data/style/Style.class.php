@@ -86,6 +86,12 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
     const DARK_MODE_PREFIX = "darkMode\0";
 
     /**
+     * Accepted values of the `pageHeaderLayout` style variable.
+     * @since 6.3
+     */
+    const PAGE_HEADER_LAYOUTS = ['classic', 'logoTop', 'logoBelow', 'logoInBar'];
+
+    /**
      * Returns the name of this style.
      */
     #[\Override]

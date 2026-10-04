@@ -2888,6 +2888,12 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.imagePath.error.invalid"><![CDATA[You have provided an invalid path.]]></item>
 		<item name="wcf.acp.style.styleVersion.error.invalid"><![CDATA[You have provided an invalid version number.]]></item>
 		<item name="wcf.acp.style.styleDate.error.invalid"><![CDATA[You have provided an invalid date.]]></item>
+		<item name="wcf.acp.style.globals.pageHeaderLayout"><![CDATA[Page Header Layout]]></item>
+		<item name="wcf.acp.style.globals.pageHeaderLayout.classic"><![CDATA[Classic]]></item>
+		<item name="wcf.acp.style.globals.pageHeaderLayout.logoTop"><![CDATA[Logo above the menu bar]]></item>
+		<item name="wcf.acp.style.globals.pageHeaderLayout.logoBelow"><![CDATA[Logo below the menu bar]]></item>
+		<item name="wcf.acp.style.globals.pageHeaderLayout.logoInBar"><![CDATA[Small logo inside the menu bar]]></item>
+		<item name="wcf.acp.style.globals.pageHeaderLayout.description"><![CDATA[The classic page header is deprecated and will be removed in a future version.]]></item>
 		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Page Logo]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.width"><![CDATA[Page Logo Width]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.height"><![CDATA[Page Logo Height]]></item>

@@ -369,6 +369,13 @@ class StyleAddForm extends AbstractForm
             unset($this->variables['wcfFontFamilyFallback']);
         }
 
+        if (
+            isset($this->variables['pageHeaderLayout'])
+            && !\in_array($this->variables['pageHeaderLayout'], Style::PAGE_HEADER_LAYOUTS, true)
+        ) {
+            unset($this->variables['pageHeaderLayout']);
+        }
+
         $this->variables['useFluidLayout'] = isset($_POST['useFluidLayout']) ? 1 : 0;
 
         // style data
@@ -821,6 +828,7 @@ class StyleAddForm extends AbstractForm
             'individualScss',
             'individualScssDarkMode',
             'overrideScss',
+            'pageHeaderLayout',
             'pageLogoWidth',
             'pageLogoHeight',
             'useFluidLayout',
@@ -941,6 +949,7 @@ class StyleAddForm extends AbstractForm
             'authorName' => $this->authorName,
             'authorURL' => $this->authorURL,
             'availableFontFamilies' => $this->availableFontFamilies,
+            'availablePageHeaderLayouts' => Style::PAGE_HEADER_LAYOUTS,
             'availableTemplateGroups' => $this->availableTemplateGroups,
             'availableUnits' => $this->availableUnits,
             'colorCategories' => $this->colorCategories,

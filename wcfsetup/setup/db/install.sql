@@ -28,6 +28,7 @@ INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMess
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('individualScss', '', NULL);
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('messageSidebarOrientation', 'left', NULL);
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('overrideScss', '', NULL);
+INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('pageHeaderLayout', 'classic', NULL);
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('pageLogo', '', NULL);
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('pageLogoWidth', '281', NULL);
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('pageLogoHeight', '40', NULL);

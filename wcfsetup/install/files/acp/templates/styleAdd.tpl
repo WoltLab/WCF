@@ -434,6 +434,18 @@
 				<h2 class="sectionTitle">{lang}wcf.acp.style.globals.pageLogo{/lang}</h2>
 				
 				<dl>
+					<dt><label for="pageHeaderLayout">{lang}wcf.acp.style.globals.pageHeaderLayout{/lang}</label></dt>
+					<dd>
+						<select name="pageHeaderLayout" id="pageHeaderLayout">
+							{foreach from=$availablePageHeaderLayouts item=pageHeaderLayout}
+								<option value="{$pageHeaderLayout}"{if $variables[pageHeaderLayout] === $pageHeaderLayout} selected{/if}>{lang}wcf.acp.style.globals.pageHeaderLayout.{$pageHeaderLayout}{/lang}</option>
+							{/foreach}
+						</select>
+						<small>{lang}wcf.acp.style.globals.pageHeaderLayout.description{/lang}</small>
+					</dd>
+				</dl>
+				
+				<dl>
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
 					<dd>
 						{unsafe:$__wcf->getUploadHandler()->renderField('pageLogo')}
