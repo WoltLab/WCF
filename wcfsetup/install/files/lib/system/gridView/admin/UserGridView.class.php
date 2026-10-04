@@ -234,7 +234,7 @@ final class UserGridView extends AbstractGridView
                     }
                 }
                 if ($statusIcons !== '') {
-                    $html .= ' <span class="userStatusIcons">' . $statusIcons . '</span>';
+                    $html .= ' <span class="gridView__statusIcons">' . $statusIcons . '</span>';
                 }
 
                 if (\MODULE_USER_RANK !== 0) {

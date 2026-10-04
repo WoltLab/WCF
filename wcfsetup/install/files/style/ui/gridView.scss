@@ -359,3 +359,8 @@ html[data-color-scheme="dark"] .gridView__footer__container {
 		grid-template-columns: 1fr;
 	}
 }
+
+.gridView__statusIcons {
+	position: relative;
+	z-index: 1;
+}
