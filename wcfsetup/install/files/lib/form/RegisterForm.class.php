@@ -3,8 +3,6 @@
 namespace wcf\form;
 
 use ParagonIE\ConstantTime\Hex;
-use wcf\action\EmailValidationAction;
-use wcf\action\UsernameValidationAction;
 use wcf\command\user\CreateRegistrationNotification;
 use wcf\command\user\CreateUser;
 use wcf\data\DatabaseObjectBuilder;
@@ -248,10 +246,6 @@ final class RegisterForm extends AbstractDatabaseObjectBuilderForm
                     ->minimumLength(\REGISTER_USERNAME_MIN_LENGTH)
                     ->maximumLength(\REGISTER_USERNAME_MAX_LENGTH)
                     ->autoComplete('username')
-                    ->fieldAttribute(
-                        'data-validation-endpoint',
-                        LinkHandler::getInstance()->getControllerLink(UsernameValidationAction::class)
-                    )
                     ->description('wcf.user.username.description')
                     ->value(WCF::getSession()->getVar('__username') ?? '')
                     ->addValidator(new FormFieldValidator(
@@ -272,10 +266,6 @@ final class RegisterForm extends AbstractDatabaseObjectBuilderForm
                     ->label('wcf.user.email')
                     ->required()
                     ->autoComplete('email')
-                    ->fieldAttribute(
-                        'data-validation-endpoint',
-                        LinkHandler::getInstance()->getControllerLink(EmailValidationAction::class)
-                    )
                     ->value(WCF::getSession()->getVar('__email') ?? '')
                     ->addValidator(new FormFieldValidator(
                         'registrationUtil',

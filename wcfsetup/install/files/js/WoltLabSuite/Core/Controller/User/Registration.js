@@ -5,7 +5,7 @@
  * @copyright 2001-2023 WoltLab GmbH
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Language", "../../Dom/Util"], function (require, exports, tslib_1, Backend_1, Language_1, Util_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Users/ValidateEmail", "WoltLabSuite/Core/Api/Users/ValidateUsername", "WoltLabSuite/Core/Language", "../../Dom/Util"], function (require, exports, tslib_1, ValidateEmail_1, ValidateUsername_1, Language_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -20,11 +20,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax/Backend", "WoltLa
             showErrorMessage(username, "wcf.user.username.error.invalid");
             return;
         }
-        const result = (await (0, Backend_1.prepareRequest)(username.dataset.validationEndpoint)
-            .post({
-            username: value,
-        })
-            .fetchAsJson());
+        const result = await (0, ValidateUsername_1.validateUsername)(value);
         if (!result.ok) {
             showErrorMessage(username, `wcf.user.username.error.${result.error}`);
             return;
@@ -37,11 +33,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax/Backend", "WoltLa
             showErrorMessage(email, "wcf.global.form.error.empty");
             return;
         }
-        const result = (await (0, Backend_1.prepareRequest)(email.dataset.validationEndpoint)
-            .post({
-            email: value,
-        })
-            .fetchAsJson());
+        const result = await (0, ValidateEmail_1.validateEmail)(value);
         if (!result.ok) {
             showErrorMessage(email, `wcf.user.email.error.${result.error}`);
             return;

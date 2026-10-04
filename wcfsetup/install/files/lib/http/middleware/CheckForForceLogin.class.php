@@ -31,11 +31,11 @@ final class CheckForForceLogin implements MiddlewareInterface
     private const STATUS_CODE = 403;
 
     private const ALLOWED_CONTROLLERS = [
+        // The API enforces the 'force login' option for each endpoint, see `AvailableDuringForceLogin`.
+        \wcf\action\ApiAction::class,
         \wcf\action\BackgroundQueuePerformAction::class,
         \wcf\action\CronjobPerformAction::class,
-        \wcf\action\EmailValidationAction::class,
         \wcf\action\PaypalCallbackAction::class,
-        \wcf\action\UsernameValidationAction::class,
         \wcf\form\EmailActivationForm::class,
         \wcf\form\EmailNewActivationCodeForm::class,
         \wcf\form\LoginForm::class,
@@ -50,12 +50,7 @@ final class CheckForForceLogin implements MiddlewareInterface
     #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if (
-            !$this->forceLoginEnabled()
-            || RequestHandler::getInstance()->isACPRequest()
-            || $this->userCanBypassForceLogin()
-            || $this->requestCanBypassForceLogin()
-        ) {
+        if (!self::appliesToActiveUser() || $this->requestCanBypassForceLogin()) {
             return $handler->handle($request);
         }
 
@@ -133,12 +128,25 @@ final class CheckForForceLogin implements MiddlewareInterface
         };
     }
 
-    private function forceLoginEnabled(): bool
+    /**
+     * Returns true if the 'force login' option restricts the requests of the
+     * active user, regardless of the requested controller.
+     *
+     * @since 6.3
+     */
+    public static function appliesToActiveUser(): bool
+    {
+        return self::forceLoginEnabled()
+            && !RequestHandler::getInstance()->isACPRequest()
+            && !self::userCanBypassForceLogin();
+    }
+
+    private static function forceLoginEnabled(): bool
     {
         return \defined('FORCE_LOGIN') && \FORCE_LOGIN !== 0;
     }
 
-    private function userCanBypassForceLogin(): bool
+    private static function userCanBypassForceLogin(): bool
     {
         return !WCF::getUser()->isGuest()
             && !WCF::getUser()->pendingActivation();
