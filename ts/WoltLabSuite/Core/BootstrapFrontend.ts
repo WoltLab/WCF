@@ -26,6 +26,7 @@ import { setup as setupMainMenu } from "./Component/MainMenu";
 import { setup as setupLanguageSwitcher } from "./Component/LanguageSwitcher";
 import { setup as setupUserMenuDrawer } from "./Component/UserMenuDrawer";
 import { setup as setupPageHeaderSearch } from "./Component/PageHeaderSearch";
+import { setup as setupPageHeaderShadow } from "./Component/PageHeaderShadow";
 
 interface BootstrapOptions {
   backgroundQueue: {
@@ -113,6 +114,7 @@ export function setup(options: BootstrapOptions): void {
     setupLanguageSwitcher();
     setupUserMenuDrawer();
     setupPageHeaderSearch();
+    setupPageHeaderShadow();
   } else {
     UiPageHeaderMenu.init();
   }

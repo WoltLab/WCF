@@ -37,6 +37,9 @@ body {
 
 html {
 	overflow-y: scroll;
+
+	/* The height of the bar that sticks to the top, sticky elements are offset by it. */
+	--wcfPageHeaderHeight: 50px;
 }
 
 body {

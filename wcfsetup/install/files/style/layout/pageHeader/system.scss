@@ -20,11 +20,17 @@
 		}
 	}
 
+	/* Leaves the viewport when the bar starts to stick, see `Component/PageHeaderShadow`. */
+	.pageHeaderSentinel {
+		height: 1px;
+		margin-bottom: -1px;
+	}
+
 	/* Matches the classic header, third-party styles offset sticky elements by 50px. */
 	.pageHeaderPanel > .layoutBoundary {
 		align-items: center;
 		display: flex;
-		height: 50px;
+		height: var(--wcfPageHeaderHeight);
 	}
 
 	.pageHeaderFacade {

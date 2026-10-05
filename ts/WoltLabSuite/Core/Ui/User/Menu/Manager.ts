@@ -136,21 +136,24 @@ export function registerProvider(provider: UserMenuProvider): void {
       });
     });
 
-    // Update the position of the user menu if the browser is
-    // resized while the menu is visible.
-    window.addEventListener(
-      "resize",
-      () => {
-        providers.forEach((provider) => {
-          const button = provider.getPanelButton();
-          if (button.classList.contains("open")) {
-            const view = getView(provider);
-            setAlignment(view.getElement(), button);
-          }
-        });
-      },
-      { passive: true },
-    );
+    // Update the position of the user menu if the browser is resized while the menu is
+    // visible, or if the page is scrolled while the header has not stuck to the top yet.
+    const realign = () => {
+      providers.forEach((provider) => {
+        const button = provider.getPanelButton();
+        if (button.classList.contains("open")) {
+          const view = getView(provider);
+          setAlignment(view.getElement(), button);
+        }
+      });
+    };
+    let realignFrame = 0;
+    const scheduleRealign = () => {
+      window.cancelAnimationFrame(realignFrame);
+      realignFrame = window.requestAnimationFrame(realign);
+    };
+    window.addEventListener("resize", scheduleRealign, { passive: true });
+    window.addEventListener("scroll", scheduleRealign, { passive: true });
 
     UiScreen.on("screen-md-down", {
       match() {

@@ -58,12 +58,18 @@ define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus
             CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/User/Menu/ControlPanel", () => close());
             (0, Manager_1.getContainer)().append(element);
             element.addEventListener("click", (event) => event.stopPropagation());
-            window.addEventListener("resize", () => {
-                if (element.hidden) {
-                    return;
-                }
-                setAlignment(element, button);
-            }, { passive: true });
+            // The element is visible without being open while it is shown in the user drawer.
+            let realignFrame = 0;
+            const scheduleRealign = () => {
+                window.cancelAnimationFrame(realignFrame);
+                realignFrame = window.requestAnimationFrame(() => {
+                    if (button.classList.contains("open")) {
+                        setAlignment(element, button);
+                    }
+                });
+            };
+            window.addEventListener("resize", scheduleRealign, { passive: true });
+            window.addEventListener("scroll", scheduleRealign, { passive: true });
             button.addEventListener("click", (event) => {
                 event.preventDefault();
                 event.stopPropagation();
