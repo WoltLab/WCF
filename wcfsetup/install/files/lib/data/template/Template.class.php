@@ -106,12 +106,14 @@ class Template extends DatabaseObject
 
     /**
      * Returns true if current template is considered system critical and
-     * may not be customized at any point.
+     * may not be customized at any point. This includes every template whose
+     * name starts with `system_`.
      *
      * @return      bool
      */
     public static function isSystemCritical(string $templateName)
     {
-        return \in_array($templateName, self::$systemCriticalTemplates, true);
+        return \str_starts_with($templateName, 'system_')
+            || \in_array($templateName, self::$systemCriticalTemplates, true);
     }
 }

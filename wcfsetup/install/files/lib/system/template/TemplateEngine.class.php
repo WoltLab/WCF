@@ -512,6 +512,11 @@ class TemplateEngine extends SingletonFactory
             $templateName = 'system_' . $templateName;
         }
 
+        // `system_` templates are reserved for the Core, files of the same name in other apps are ignored.
+        if (\str_starts_with($templateName, 'system_')) {
+            $application = 'wcf';
+        }
+
         if (TemplateEngine::isSharedTemplate($templateName)) {
             $sourceFilename = $this->getPath(TemplateEngine::getInstance()->templatePaths[$application], $templateName);
         } else {

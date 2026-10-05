@@ -45,6 +45,12 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler
                     return \pathinfo($file, \PATHINFO_FILENAME);
                 }, $files);
 
+                foreach ($files as $file) {
+                    if (\str_starts_with($file, 'system_')) {
+                        throw new SystemException("The template prefix 'system_' is reserved for WoltLab Suite Core. (Package '" . $this->packageInstallation->getPackage()->package . "' tries to install template '" . $file . "')");
+                    }
+                }
+
                 // get by other packages registered files
                 $conditions = new PreparedStatementConditionBuilder();
                 $conditions->add('packageID <> ?', [$this->packageInstallation->getPackageID()]);

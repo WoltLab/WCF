@@ -590,6 +590,11 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                                 continue;
                             }
 
+                            $templateName = \str_replace('.tpl', '', $template['filename']);
+                            if (Template::isSystemCritical($templateName)) {
+                                continue;
+                            }
+
                             // The filename originates from the archive and must not be
                             // able to escape the template group of this style.
                             $targetFile = FileUtil::getRealPath($templatesDir . $template['filename']);
@@ -598,8 +603,6 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                             }
 
                             $templatesTar->extract($template['index'], $targetFile);
-
-                            $templateName = \str_replace('.tpl', '', $template['filename']);
 
                             if (isset($knownTemplates[Package::getAbbreviation($package) . '-' . $templateName])) {
                                 $knownTemplates[Package::getAbbreviation($package) . '-' . $templateName]->update([
