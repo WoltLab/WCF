@@ -12,7 +12,6 @@ use wcf\command\user\UnbanUser;
 use wcf\command\user\UnconfirmUserEmail;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\file\File;
-use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
 use wcf\data\user\group\UserGroup;
 use wcf\system\attachment\AttachmentHandler;
@@ -37,7 +36,7 @@ use wcf\system\WCF;
  *
  * @extends AbstractDatabaseObjectAction<User, UserEditor>
  */
-class UserAction extends AbstractDatabaseObjectAction implements IClipboardAction, ISearchAction
+class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
 {
     /**
      * @inheritDoc
@@ -227,8 +226,6 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         foreach ($this->getObjects() as $userEditor) {
             (new BanUser($userEditor->getDecoratedObject(), $this->parameters['banReason'], $banExpires))();
         }
-
-        $this->unmarkItems();
 
         $firstUser = new User(\reset($this->objectIDs));
 
@@ -597,13 +594,21 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         return $list;
     }
 
-    #[\Override]
+    /**
+     * @return void
+     *
+     * @deprecated 6.3
+     */
     public function validateUnmarkAll()
     {
         // does nothing
     }
 
-    #[\Override]
+    /**
+     * @return void
+     *
+     * @deprecated 6.3
+     */
     public function unmarkAll()
     {
         // does nothing
@@ -614,6 +619,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      *
      * @param int[] $userIDs
      * @return void
+     *
+     * @deprecated 6.3
      */
     protected function unmarkItems(array $userIDs = [])
     {
@@ -679,8 +686,6 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         foreach ($this->getObjects() as $userEditor) {
             (new ConfirmUserEmail($userEditor->getDecoratedObject()))();
         }
-
-        $this->unmarkItems();
     }
 
     /**
@@ -698,8 +703,6 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         foreach ($this->getObjects() as $userEditor) {
             (new UnconfirmUserEmail($userEditor->getDecoratedObject()))();
         }
-
-        $this->unmarkItems();
     }
 
     /**
@@ -717,8 +720,6 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         foreach ($this->getObjects() as $userEditor) {
             (new EnableUser($userEditor->getDecoratedObject(), $sendNotification))();
         }
-
-        $this->unmarkItems();
     }
 
     /**
@@ -735,8 +736,6 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         foreach ($this->getObjects() as $userEditor) {
             (new DisableUser($userEditor->getDecoratedObject()))();
         }
-
-        $this->unmarkItems();
     }
 
     #[\Override]
@@ -1058,8 +1057,6 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         foreach ($this->getObjects() as $userEditor) {
             (new ResendActivationMail($userEditor->getDecoratedObject()))();
         }
-
-        $this->unmarkItems($this->objectIDs);
     }
 
     /**
