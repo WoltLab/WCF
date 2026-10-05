@@ -8,7 +8,6 @@ use wcf\data\user\User;
 use wcf\data\user\UserBuilder;
 use wcf\event\user\UserDeleted;
 use wcf\system\attachment\AttachmentHandler;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\event\EventHandler;
 
@@ -37,11 +36,6 @@ final class DeleteUser
 
     private function cleanup(User $user): void
     {
-        ClipboardHandler::getInstance()->unmark(
-            [$user->userID],
-            ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')
-        );
-
         $fileIDs = \array_values(\array_filter([$user->avatarFileID, $user->coverPhotoFileID]));
         if ($fileIDs !== []) {
             $files = File::findByIDs($fileIDs);

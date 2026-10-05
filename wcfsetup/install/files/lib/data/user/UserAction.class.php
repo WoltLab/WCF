@@ -16,7 +16,6 @@ use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
 use wcf\data\user\group\UserGroup;
 use wcf\system\attachment\AttachmentHandler;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
@@ -24,7 +23,6 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\request\RequestHandler;
 use wcf\system\session\SessionHandler;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
@@ -608,7 +606,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     #[\Override]
     public function unmarkAll()
     {
-        ClipboardHandler::getInstance()->removeItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
+        // does nothing
     }
 
     /**
@@ -619,16 +617,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
      */
     protected function unmarkItems(array $userIDs = [])
     {
-        if ($userIDs === []) {
-            $userIDs = $this->objectIDs;
-        }
-
-        if ($userIDs !== []) {
-            ClipboardHandler::getInstance()->unmark(
-                $userIDs,
-                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')
-            );
-        }
+        // does nothing
     }
 
     /**

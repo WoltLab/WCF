@@ -10,7 +10,6 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\content\provider\IUserContentProvider;
@@ -245,11 +244,6 @@ class UserContentRemoveWorker extends AbstractWorker
         $dataArray[$this->generateKey()] = $this->data;
 
         WCF::getSession()->register(self::USER_CONTENT_REMOVE_WORKER_SESSION_NAME, $dataArray);
-
-        ClipboardHandler::getInstance()->unmark(
-            \array_column($this->users, 'userID'),
-            ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')
-        );
     }
 
     #[\Override]

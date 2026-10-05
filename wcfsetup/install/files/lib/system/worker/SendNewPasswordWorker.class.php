@@ -6,7 +6,6 @@ use wcf\acp\page\UserListPage;
 use wcf\command\user\SendNewPassword;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
@@ -54,22 +53,6 @@ class SendNewPasswordWorker extends AbstractWorker
     public function getProceedURL()
     {
         return LinkHandler::getInstance()->getControllerLink(UserListPage::class);
-    }
-
-    #[\Override]
-    public function getProgress()
-    {
-        $progress = parent::getProgress();
-
-        if ($progress === 100) {
-            // unmark users
-            ClipboardHandler::getInstance()->unmark(
-                $this->parameters['userIDs'],
-                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')
-            );
-        }
-
-        return $progress;
     }
 
     #[\Override]

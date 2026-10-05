@@ -6,7 +6,6 @@ use ParagonIE\ConstantTime\Hex;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\data\user\group\UserGroup;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\user\authentication\password\algorithm\Invalid as InvalidPasswordAlgorithm;
 use wcf\system\user\authentication\password\PasswordAlgorithmManager;
@@ -82,18 +81,6 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
         self::createUserOptions($user->userID);
 
         return $user;
-    }
-
-    #[\Override]
-    public static function deleteAll(array $objectIDs = [])
-    {
-        // unmark users
-        ClipboardHandler::getInstance()->unmark(
-            $objectIDs,
-            ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')
-        );
-
-        return parent::deleteAll($objectIDs);
     }
 
     #[\Override]
