@@ -168,11 +168,19 @@ define(["require", "exports", "tslib", "../Ui/User/Menu/Manager", "../Ui/User/Me
         drawer.addEventListener("drawer:open", (event) => onOpen(event.detail));
         drawer.addEventListener("drawer:close", () => onClose());
         // The counters of the user panel are updated by polling and push notifications.
+        // The bell shows its own counter in the bar, the avatar signals the content behind the other tabs.
+        const avatarButton = document.querySelector(".pageHeaderUserMobile");
+        const userPanelItems = document.querySelector(".userPanelItems");
+        const refreshUnread = () => {
+            avatarButton.toggleAttribute("data-has-unread", userPanelItems.querySelector(":scope > li:not(#userNotifications) .badge.badgeUpdate") !== null);
+        };
         new MutationObserver(() => {
+            refreshUnread();
             if (activeTab !== undefined) {
                 refreshCounters();
             }
-        }).observe(document.querySelector(".userPanelItems"), { characterData: true, childList: true, subtree: true });
+        }).observe(userPanelItems, { characterData: true, childList: true, subtree: true });
+        refreshUnread();
         // The bell opens the notifications in the drawer instead of the dropdown on small screens.
         const notifications = document.getElementById("userNotifications");
         notifications?.addEventListener("click", (event) => {

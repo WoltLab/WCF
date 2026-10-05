@@ -563,6 +563,23 @@
 				height: 30px;
 				width: 30px;
 			}
+
+			/* Unread content inside the drawer, see `Component/MainMenu` and `Component/UserMenuDrawer`. */
+			&[data-has-unread] {
+				position: relative;
+
+				&::after {
+					background-color: var(--wcfHeaderMenuLinkActive);
+					border-radius: 50%;
+					box-shadow: 0 0 0 2px var(--wcfHeaderMenuBackground);
+					content: "";
+					height: 10px;
+					position: absolute;
+					right: 5px;
+					top: 5px;
+					width: 10px;
+				}
+			}
 		}
 
 		/* The search fills the bar while it is open, only the button to close it remains. */

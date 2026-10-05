@@ -259,4 +259,14 @@ export function setup(): void {
   void document.fonts.ready.then(() => updateOverflow());
 
   updateOverflow();
+
+  // Apps remove the counters when their content is marked as read.
+  const menuButton = document.querySelector(".pageHeaderMenuMobile");
+  if (menuButton !== null) {
+    const refreshUnread = () => {
+      menuButton.toggleAttribute("data-has-unread", nav.querySelector(".boxMenuLinkOutstandingItems") !== null);
+    };
+    new MutationObserver(refreshUnread).observe(menu, { childList: true, subtree: true });
+    refreshUnread();
+  }
 }
