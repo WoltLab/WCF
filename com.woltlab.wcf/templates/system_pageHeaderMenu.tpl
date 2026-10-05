@@ -89,7 +89,7 @@
 						<button
 							type="button"
 							class="mainMenuLanguage"
-							data-language-id="{$_language->languageID}"
+							data-switch-language="{$_language->languageID}"
 							data-language-code="{$_language->languageCode}"
 							lang="{$_language->languageCode}"
 							{if $_language->languageID === $__wcf->getLanguage()->languageID} aria-current="true"{/if}

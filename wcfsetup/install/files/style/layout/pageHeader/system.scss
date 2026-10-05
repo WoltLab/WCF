@@ -361,6 +361,420 @@
 			display: none;
 		}
 	}
+
+	@include screen-md-down {
+		.pageHeaderPanel > .layoutBoundary {
+			column-gap: 0;
+			height: 56px;
+			padding: 0 4px;
+		}
+
+		/* The logo row is replaced by the mobile logo in the bar. */
+		.pageHeaderFacade,
+		.pageHeaderLogoLarge {
+			display: none;
+		}
+
+		.pageHeaderBarLogo,
+		.pageHeaderPanel .pageHeaderLogo > a {
+			align-items: center;
+			display: flex;
+			flex: 0 0 auto;
+			height: 44px;
+			margin-left: 6px;
+		}
+
+		.pageHeaderLogoSmall {
+			height: auto;
+			max-height: 32px;
+			max-width: 100%;
+			object-fit: contain;
+			width: auto;
+		}
+
+		/* The bar keeps the bell and, for guests, the login, everything else lives in the drawers. */
+		.userPanel {
+			margin-left: auto;
+		}
+
+		.userPanelItems {
+			align-items: center;
+			display: flex;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			> li:not(#userNotifications, #userLogin) {
+				display: none;
+			}
+
+			> li {
+				position: relative;
+			}
+
+			> li > a {
+				align-items: center;
+				border-radius: 22px;
+				color: var(--wcfHeaderMenuLink);
+				display: flex;
+				height: 44px;
+				justify-content: center;
+				min-width: 44px;
+
+				> span:not(.badge) {
+					clip: rect(1px, 1px, 1px, 1px);
+					height: 1px;
+					overflow: hidden;
+					position: absolute;
+					width: 1px;
+				}
+
+				fa-icon[size="32"] {
+					--font-size: 20px;
+					--icon-size: 24px;
+				}
+			}
+
+			> #userLogin > a {
+				font-weight: 600;
+				padding: 0 12px;
+			}
+
+			.badgeUpdate {
+				background-color: var(--wcfHeaderMenuLinkActive);
+				box-shadow: 0 0 0 2px var(--wcfHeaderMenuBackground);
+				color: var(--wcfHeaderMenuBackground);
+				position: absolute;
+				right: 2px;
+				top: 4px;
+			}
+		}
+
+		.pageHeaderMenuMobile,
+		.pageHeaderUserMobile {
+			align-items: center;
+			background-color: transparent;
+			border: 0;
+			border-radius: 50%;
+			color: var(--wcfHeaderMenuLink);
+			display: flex;
+			flex: 0 0 auto;
+			height: 44px;
+			justify-content: center;
+			padding: 0;
+			width: 44px;
+
+			&[aria-expanded="true"] {
+				background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+				color: var(--wcfHeaderMenuLinkActive);
+			}
+
+			.userAvatarImage {
+				border-radius: 50%;
+				height: 30px;
+				width: 30px;
+			}
+		}
+
+		/* The search is redesigned in a later step, until then it stays out of the bar. */
+		.pageHeaderSearchMobile,
+		.pageHeaderSearch {
+			display: none;
+		}
+
+		/* The main menu is a drawer from the right, see `Component/Drawer`. */
+		.drawerBackdrop {
+			background-color: rgba(var(--wcfHeaderMenuBackground-rgb) / 0.5);
+			inset: 0;
+			position: fixed;
+			z-index: 1;
+		}
+
+		.mainMenu {
+			background-color: var(--wcfUserMenuBackground);
+			border-radius: 12px 0 0 12px;
+			box-shadow: var(--wcfBoxShadow);
+			box-sizing: border-box;
+			color: var(--wcfUserMenuText);
+			display: flex;
+			flex-direction: column;
+			height: 100dvh;
+			overflow-y: auto;
+			overscroll-behavior: contain;
+			position: fixed;
+			right: 0;
+			top: 0;
+			transform: translateX(100%);
+			/* Hidden only once the slide-out has finished. */
+			transition:
+				transform 0.2s ease,
+				visibility 0s 0.2s;
+			visibility: hidden;
+			width: min(88%, 400px);
+			z-index: 2;
+
+			/* Visible at once, the focus trap looks for focusable elements right away. */
+			&[data-open] {
+				transform: none;
+				transition: transform 0.2s ease;
+				visibility: visible;
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				transition: none;
+			}
+
+			:focus-visible {
+				outline: 2px solid var(--wcfContentLink);
+				outline-offset: -2px;
+			}
+		}
+
+		.mainMenuHead {
+			align-items: center;
+			display: flex;
+			flex: 0 0 auto;
+			min-height: 56px;
+			padding: 0 8px 0 20px;
+		}
+
+		.mainMenuTitle {
+			flex: 1 1 auto;
+			font-size: var(--wcfFontSizeHeadline);
+			font-weight: 600;
+		}
+
+		.mainMenuClose,
+		.mainMenu .boxMenuToggle,
+		.mainMenuSettingsToggle fa-icon {
+			color: var(--wcfUserMenuTextDimmed);
+		}
+
+		.mainMenuClose {
+			align-items: center;
+			background-color: transparent;
+			border: 0;
+			border-radius: 50%;
+			display: flex;
+			height: 44px;
+			justify-content: center;
+			padding: 0;
+			width: 44px;
+
+			&:hover {
+				background-color: var(--wcfUserMenuBackgroundActive);
+				color: var(--wcfUserMenuTextActive);
+			}
+		}
+
+		.mainMenuGuest {
+			display: flex;
+			gap: 8px;
+			padding: 4px 16px 10px;
+
+			.button {
+				flex: 1 1 0;
+				justify-content: center;
+			}
+		}
+
+		.mainMenu .boxMenu {
+			list-style: none;
+			margin: 0;
+			padding: 4px 8px 8px;
+
+			li {
+				display: grid;
+				grid-template-areas:
+					"link toggle"
+					"list list";
+				grid-template-columns: 1fr auto;
+			}
+
+			li[hidden] {
+				display: none;
+			}
+
+			.boxMenuLink {
+				align-items: center;
+				border-radius: var(--wcfBorderRadius);
+				color: var(--wcfUserMenuText);
+				column-gap: 6px;
+				display: flex;
+				grid-area: link;
+				min-height: 48px;
+				padding: 0 6px 0 12px;
+
+				&:hover {
+					background-color: var(--wcfUserMenuBackgroundActive);
+					color: var(--wcfUserMenuTextActive);
+				}
+
+				&[aria-current="page"] {
+					background-color: var(--wcfUserMenuBackgroundActive);
+					color: var(--wcfUserMenuTextActive);
+					font-weight: 600;
+				}
+			}
+
+			.boxMenuToggle {
+				align-items: center;
+				align-self: center;
+				background-color: transparent;
+				border: 0;
+				border-radius: 50%;
+				display: flex;
+				grid-area: toggle;
+				height: 40px;
+				justify-content: center;
+				padding: 0;
+				width: 40px;
+
+				&:hover {
+					background-color: var(--wcfUserMenuBorder);
+					color: var(--wcfUserMenuText);
+				}
+
+				fa-icon {
+					transition: transform 0.16s ease;
+				}
+
+				&[aria-expanded="true"] fa-icon {
+					transform: rotate(180deg);
+				}
+			}
+
+			ol {
+				/* Overrides the shadow of the flyouts in `ui/wsc31.scss`. */
+				box-shadow: none;
+				display: none;
+				grid-area: list;
+				list-style: none;
+				margin: 0;
+				padding: 0 0 4px;
+			}
+
+			.boxMenuToggle[aria-expanded="true"] + ol {
+				display: block;
+			}
+
+			/* An expanded parent and its children share one tinted block ("tray"). */
+			li:has(> .boxMenuToggle[aria-expanded="true"]) {
+				background-color: var(--wcfUserMenuBackgroundActive);
+				border-radius: var(--wcfBorderRadius);
+				margin: 2px 0;
+
+				.boxMenuLink {
+					color: var(--wcfUserMenuTextActive);
+
+					&:hover {
+						background-color: var(--wcfUserMenuBackground);
+					}
+				}
+			}
+
+			ol .boxMenuLink {
+				min-height: 42px;
+				padding-left: 28px;
+			}
+
+			ol ol .boxMenuLink {
+				padding-left: 40px;
+			}
+		}
+
+		.mainMenuSettings {
+			border-top: 1px solid var(--wcfUserMenuBorder);
+			margin: 6px 8px 0;
+			padding: 8px 0 4px;
+		}
+
+		.mainMenuSettingsToggle {
+			align-items: center;
+			background-color: transparent;
+			border: 0;
+			border-radius: var(--wcfBorderRadius);
+			color: var(--wcfUserMenuText);
+			column-gap: 8px;
+			display: flex;
+			font: inherit;
+			min-height: 48px;
+			padding: 0 6px 0 12px;
+			text-align: start;
+			width: 100%;
+
+			&:hover {
+				background-color: var(--wcfUserMenuBackgroundActive);
+				color: var(--wcfUserMenuTextActive);
+			}
+
+			fa-icon {
+				transition: transform 0.16s ease;
+			}
+
+			&[aria-expanded="true"] fa-icon {
+				transform: rotate(180deg);
+			}
+		}
+
+		.mainMenuSettingsLabel {
+			flex: 1 1 auto;
+		}
+
+		.mainMenuSettingsValue {
+			color: var(--wcfUserMenuTextDimmed);
+		}
+
+		.mainMenuLanguageList {
+			list-style: none;
+			margin: 0;
+			padding: 0 0 4px;
+		}
+
+		.mainMenuLanguage {
+			align-items: center;
+			background-color: transparent;
+			border: 0;
+			border-radius: var(--wcfBorderRadius);
+			color: var(--wcfUserMenuText);
+			column-gap: 10px;
+			display: flex;
+			font: inherit;
+			min-height: 42px;
+			padding: 0 12px 0 28px;
+			width: 100%;
+
+			&:hover,
+			&[aria-current="true"] {
+				background-color: var(--wcfUserMenuBackgroundActive);
+				color: var(--wcfUserMenuTextActive);
+			}
+
+			&[aria-current="true"] {
+				font-weight: 600;
+			}
+		}
+
+		.mainMenuFooter {
+			border-top: 1px solid var(--wcfUserMenuBorder);
+			display: flex;
+			flex-wrap: wrap;
+			gap: 4px 16px;
+			list-style: none;
+			margin: auto 0 0;
+			padding: 14px 20px 18px;
+
+			a {
+				color: var(--wcfUserMenuTextDimmed);
+				font-size: var(--wcfFontSizeSmall);
+
+				&:hover {
+					color: var(--wcfUserMenuText);
+					text-decoration: underline;
+				}
+			}
+		}
+	}
 }
 
 /* The auth flow keeps the classic, logo-only header for every style, see `authFlowHeader.tpl`. */

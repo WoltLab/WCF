@@ -168,8 +168,16 @@ define(["require", "exports", "tslib", "../Ui/CloseOverlay", "../Ui/Screen"], fu
                 }
             }
         });
+        const settingsToggle = nav.querySelector(".mainMenuSettingsToggle");
+        settingsToggle?.addEventListener("click", () => {
+            const list = document.getElementById(settingsToggle.getAttribute("aria-controls"));
+            list.hidden = !list.hidden;
+            settingsToggle.setAttribute("aria-expanded", list.hidden ? "false" : "true");
+        });
+        // Flyouts are popups that close on Escape, the expanded submenus of the drawer are not,
+        // there Escape closes the drawer.
         menu.addEventListener("keydown", (event) => {
-            if (event.key !== "Escape" || !(document.activeElement instanceof HTMLElement)) {
+            if (event.key !== "Escape" || !isDesktop() || !(document.activeElement instanceof HTMLElement)) {
                 return;
             }
             const item = document.activeElement.closest(".boxMenuHasChildren");
@@ -178,8 +186,6 @@ define(["require", "exports", "tslib", "../Ui/CloseOverlay", "../Ui/Screen"], fu
             }
             const openItem = isOpen(item) ? item : item.parentElement?.closest(".boxMenuHasChildren");
             if (openItem && isOpen(openItem)) {
-                // Collapses the submenu instead of closing the drawer that contains the menu.
-                event.stopPropagation();
                 setOpen(openItem, false);
                 getToggle(openItem).focus();
             }
