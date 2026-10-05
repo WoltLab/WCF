@@ -1,3 +1,357 @@
+/* The auth flow uses the classic markup, see below, the redesigned header is scoped to its layouts. */
+.pageHeaderContainer:is(
+	.pageHeaderContainer--logoTop,
+	.pageHeaderContainer--logoBelow,
+	.pageHeaderContainer--logoInBar
+) {
+	/* The bar must stick relative to `#pageContainer`, not to this short wrapper. */
+	display: contents;
+
+	.pageHeader {
+		background-color: var(--wcfHeaderMenuBackground);
+		color: var(--wcfHeaderMenuLink);
+		position: sticky;
+		top: 0;
+		transition: box-shadow 0.2s ease;
+		z-index: 300;
+
+		&[data-stuck] {
+			box-shadow: var(--wcfBoxShadow);
+		}
+	}
+
+	.pageHeaderPanel > .layoutBoundary {
+		align-items: center;
+		display: flex;
+	}
+
+	.pageHeaderFacade {
+		background-color: var(--wcfHeaderBackground);
+		color: var(--wcfHeaderText);
+
+		> .layoutBoundary {
+			align-items: center;
+			display: flex;
+			padding-bottom: 20px;
+			padding-top: 20px;
+		}
+	}
+
+	.pageHeaderLogo > a {
+		display: block;
+	}
+
+	.pageHeaderLogoLarge {
+		height: auto;
+		max-width: 100%;
+	}
+
+	@include screen-lg {
+		.pageHeaderPanel > .layoutBoundary {
+			height: 64px;
+		}
+
+		.pageHeaderBarLogo,
+		.pageHeaderLogoSmall,
+		.pageHeaderMenuMobile,
+		.pageHeaderUserMobile,
+		.mainMenuMobileOnly {
+			display: none;
+		}
+
+		/* logoInBar: the regular logo at 36px height */
+		.pageHeaderPanel .pageHeaderLogo {
+			flex: 0 0 auto;
+			margin-right: 24px;
+
+			.pageHeaderLogoLarge {
+				max-height: 36px;
+				width: auto;
+			}
+		}
+
+		/* main menu */
+		.mainMenu {
+			flex: 0 1 auto;
+			min-width: 0;
+		}
+
+		.mainMenu .boxMenu {
+			align-items: center;
+			display: flex;
+			gap: 8px;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			> li {
+				display: flex;
+				position: relative;
+
+				&[hidden] {
+					display: none;
+				}
+
+				> .boxMenuLink {
+					align-items: center;
+					background-color: var(--wcfHeaderMenuLinkBackground);
+					border: 0;
+					border-radius: var(--wcfBorderRadius);
+					box-sizing: border-box;
+					color: var(--wcfHeaderMenuLink);
+					column-gap: 6px;
+					display: flex;
+					font: inherit;
+					height: 36px;
+					padding: 0 12px;
+					transition:
+						background-color 0.12s ease,
+						color 0.12s ease;
+					white-space: nowrap;
+
+					&:hover {
+						background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+						color: var(--wcfHeaderMenuLinkActive);
+					}
+				}
+
+				&.active > .boxMenuLink {
+					background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+					color: var(--wcfHeaderMenuLinkActive);
+					font-weight: 600;
+				}
+
+				/* An open submenu continues the item's fill into the panel ("tray"). */
+				&:has(> .boxMenuToggle[aria-expanded="true"]) > .boxMenuLink {
+					background-color: var(--wcfHeaderMenuDropdownBackground);
+					border-bottom-left-radius: 0;
+					border-bottom-right-radius: 0;
+					color: var(--wcfHeaderMenuDropdownLink);
+				}
+			}
+
+			:focus-visible {
+				outline: 2px solid var(--wcfHeaderMenuLinkActive);
+				outline-offset: 2px;
+			}
+		}
+
+		/* The toggle is a real button in the tab order, but only visible once it has the keyboard focus.
+		   It overlaps the item's edge, therefore revealing it never shifts the layout. */
+		.mainMenu .boxMenuToggle {
+			align-items: center;
+			background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+			border: 0;
+			border-radius: 50%;
+			clip-path: inset(50%);
+			color: var(--wcfHeaderMenuLinkActive);
+			display: flex;
+			height: 20px;
+			justify-content: center;
+			margin-top: -10px;
+			opacity: 0;
+			padding: 0;
+			position: absolute;
+			right: -14px;
+			top: 50%;
+			width: 20px;
+			z-index: 1;
+
+			&:focus-visible {
+				clip-path: none;
+				opacity: 1;
+			}
+
+			fa-icon {
+				transition: transform 0.16s ease;
+			}
+
+			&[aria-expanded="true"] fa-icon {
+				transform: rotate(180deg);
+			}
+		}
+
+		/* "More" is a toggle with a visible label. */
+		.mainMenu .mainMenuOverflowToggle {
+			clip-path: none;
+			cursor: pointer;
+			height: 36px;
+			margin-top: 0;
+			opacity: 1;
+			position: static;
+			width: auto;
+		}
+
+		@media (pointer: coarse) {
+			.mainMenu .boxMenu > li.boxMenuHasChildren:not(.mainMenuOverflow) > .boxMenuLink {
+				padding-right: 36px;
+			}
+
+			.mainMenu .boxMenuToggle {
+				clip-path: none;
+				opacity: 1;
+				right: 6px;
+			}
+		}
+
+		.mainMenu .boxMenuDepth1 {
+			background-color: var(--wcfHeaderMenuDropdownBackground);
+			border-radius: 0 var(--wcfBorderRadius) var(--wcfBorderRadius) var(--wcfBorderRadius);
+			box-shadow: rgb(0 0 0 / 18%) 0 10px 20px -4px;
+			display: none;
+			left: 0;
+			list-style: none;
+			margin: 0;
+			min-width: 176px;
+			padding: 4px;
+			position: absolute;
+			top: 100%;
+			z-index: 1;
+
+			.boxMenuLink {
+				align-items: center;
+				border-radius: var(--wcfBorderRadius);
+				color: var(--wcfHeaderMenuDropdownLink);
+				column-gap: 6px;
+				display: flex;
+				min-height: 34px;
+				padding: 0 8px;
+				white-space: nowrap;
+
+				&:hover {
+					background-color: var(--wcfHeaderMenuDropdownBackgroundActive);
+					color: var(--wcfHeaderMenuDropdownLinkActive);
+				}
+
+				&[aria-current="page"] {
+					font-weight: 600;
+				}
+			}
+
+			:focus-visible {
+				outline-color: var(--wcfHeaderMenuDropdownLinkActive);
+				outline-offset: -2px;
+			}
+
+			/* Deeper levels are indented inside the panel, there is no second flyout. */
+			.boxMenuToggle {
+				display: none;
+			}
+
+			ol {
+				list-style: none;
+				margin: 0;
+				padding: 0 0 0 12px;
+			}
+		}
+
+		.mainMenu .boxMenuToggle[aria-expanded="true"] + .boxMenuDepth1 {
+			display: block;
+		}
+
+		/* user panel */
+		.userPanel {
+			flex: 0 0 auto;
+			margin-left: auto;
+			padding-left: 24px;
+		}
+
+		.userPanelItems {
+			align-items: center;
+			column-gap: 4px;
+			display: flex;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			> li {
+				position: relative;
+			}
+
+			> li > a {
+				align-items: center;
+				background-color: var(--wcfHeaderMenuLinkBackground);
+				border-radius: 50%;
+				color: var(--wcfHeaderMenuLink);
+				display: flex;
+				height: 40px;
+				justify-content: center;
+				transition:
+					background-color 0.12s ease,
+					color 0.12s ease;
+				width: 40px;
+
+				&:hover,
+				&[aria-expanded="true"] {
+					background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+					color: var(--wcfHeaderMenuLinkActive);
+				}
+
+				> span:not(.badge) {
+					clip: rect(1px, 1px, 1px, 1px);
+					height: 1px;
+					overflow: hidden;
+					position: absolute;
+					width: 1px;
+				}
+
+				fa-icon[size="32"] {
+					--font-size: 20px;
+					--icon-size: 24px;
+				}
+
+				.userAvatarImage {
+					border-radius: 50%;
+					height: 30px;
+					width: 30px;
+				}
+			}
+
+			:focus-visible {
+				outline: 2px solid var(--wcfHeaderMenuLinkActive);
+				outline-offset: 2px;
+			}
+
+			.badgeUpdate {
+				background-color: var(--wcfHeaderMenuLinkActive);
+				box-shadow: 0 0 0 2px var(--wcfHeaderMenuBackground);
+				color: var(--wcfHeaderMenuBackground);
+				position: absolute;
+				right: 0;
+				top: 2px;
+			}
+
+			/* Guests: login as text, registration as a filled button. */
+			> #userLogin > a,
+			> #userRegistration > a {
+				border-radius: var(--wcfBorderRadius);
+				height: 36px;
+				padding: 0 12px;
+				white-space: nowrap;
+				width: auto;
+			}
+
+			> #userRegistration > a {
+				background-color: var(--wcfHeaderMenuLinkActive);
+				color: var(--wcfHeaderMenuBackground);
+				font-weight: 600;
+				padding: 0 16px;
+
+				&:hover {
+					text-decoration: underline;
+					text-underline-offset: 3px;
+				}
+			}
+		}
+
+		/* The search is redesigned in a later step, until then it stays out of the bar. */
+		.pageHeaderSearchMobile,
+		.pageHeaderSearch {
+			display: none;
+		}
+	}
+}
+
 /* The auth flow keeps the classic, logo-only header for every style, see `authFlowHeader.tpl`. */
 .authFlow {
 	.pageHeaderContainer {
