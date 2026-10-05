@@ -149,6 +149,7 @@ final class UserGridView extends AbstractGridView
             )
         );
 
+        $this->setColumnConfigurable();
         $this->setDefaultSortField('registrationDate');
         $this->setDefaultSortOrder('DESC');
         $this->setRowsPerPage(50);

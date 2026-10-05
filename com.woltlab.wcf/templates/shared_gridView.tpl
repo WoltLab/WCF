@@ -1,5 +1,5 @@
 <div class="gridView">
-	{if $view->isFilterable()}
+	{if $view->isFilterable() || $view->isColumnConfigurable()}
 		<div class="gridView__filterBar">
 			<div class="gridView__filters" id="{$view->getID()}_filters">
 				{foreach from=$view->getActiveFilters() item='value' key='key'}
@@ -16,10 +16,18 @@
 				{/foreach}
 			</div>
 			<div class="gridView__filterButton">
-				<button type="button" class="button small" id="{$view->getID()}_filterButton" data-endpoint="{$view->getFilterActionEndpoint()}">
-					{icon name='sliders'}
-					{lang}wcf.global.filter{/lang}
-				</button>
+				{if $view->isColumnConfigurable()}
+					<button type="button" class="button small" id="{$view->getID()}_columnConfigurationButton" data-endpoint="{$view->getColumnConfigurationEndpoint()}">
+						{icon name='table-columns'}
+						{lang}wcf.global.gridView.columns{/lang}
+					</button>
+				{/if}
+				{if $view->isFilterable()}
+					<button type="button" class="button small" id="{$view->getID()}_filterButton" data-endpoint="{$view->getFilterActionEndpoint()}">
+						{icon name='sliders'}
+						{lang}wcf.global.filter{/lang}
+					</button>
+				{/if}
 			</div>
 		</div>
 	{/if}
@@ -33,29 +41,7 @@
 							<input type="checkbox" class="gridView__selectAllRows" aria-label="{lang}wcf.clipboard.item.markAll{/lang}">
 						</th>
 					{/if}
-					{foreach from=$view->getVisibleColumns() item='column'}
-						<th
-							class="gridView__headerColumn {$column->getClasses()} {if $view->isSortedBy($column)}active {$view->getSortOrder()}{/if}"
-							data-id="{$column->getID()}"
-							data-sortable="{$column->isSortable()}"
-							{if $column->isSortable()}data-default-sort-order="{$column->getDefaultSortOrder()}"{/if}
-							{if $column->isSortable()}
-								{if $view->isSortedBy($column)}
-									aria-sort="{if $view->getSortOrder() === 'ASC'}ascending{else}descending{/if}"
-								{else}
-									aria-sort="none"
-								{/if}
-							{/if}
-						>
-							{if $column->isSortable()}
-								<button type="button" class="gridView__headerColumn__button">
-									{unsafe:$column->getLabel()}
-								</button>
-							{else}
-								{unsafe:$column->getLabel()}
-							{/if}
-						</th>
-					{/foreach}
+					{unsafe:$view->renderHeaderColumns()}
 					{if $view->hasInteractions()}
 						<th class="gridView__headerColumn gridView__actionColumn"></th>
 					{/if}
@@ -117,6 +103,7 @@
 					['{unsafe:$name|encodeJS}', {unsafe:$value|json}],
 				{/foreach}
 			]),
+			{if $view->getVisibleColumnIDs() !== null}{unsafe:$view->getVisibleColumnIDs()|json}{else}undefined{/if},
 		);
 	});
 </script>

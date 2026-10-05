@@ -33,6 +33,11 @@ abstract class AbstractGridViewPage extends AbstractPage
      */
     protected array $filters = [];
 
+    /**
+     * @var list<string>
+     */
+    protected array $columns = [];
+
     #[\Override]
     public function readParameters()
     {
@@ -49,6 +54,9 @@ abstract class AbstractGridViewPage extends AbstractPage
         }
         if (isset($_REQUEST['filters']) && \is_array($_REQUEST['filters'])) {
             $this->filters = $_REQUEST['filters'];
+        }
+        if (isset($_REQUEST['columns']) && \is_array($_REQUEST['columns'])) {
+            $this->columns = \array_values(\array_filter($_REQUEST['columns'], '\is_string'));
         }
     }
 
@@ -98,6 +106,9 @@ abstract class AbstractGridViewPage extends AbstractPage
         if ($this->filters !== []) {
             $this->gridView->setActiveFilters($this->filters);
         }
+        if ($this->columns !== []) {
+            $this->gridView->setVisibleColumnIDs($this->columns);
+        }
         if ($this->pageNo > 1) {
             $this->gridView->setPageNo($this->pageNo);
         }
@@ -122,6 +133,7 @@ abstract class AbstractGridViewPage extends AbstractPage
         // example when the grid view has no sortable columns at all.
         $sortField = $this->gridView->getSortField();
         $sortOrder = $sortField !== '' ? $this->gridView->getSortOrder() : '';
+        $columns = $this->gridView->getVisibleColumnIDs();
         if ($this->gridView->getPageNo() < $this->gridView->countPages()) {
             $linkTags[] = \sprintf(
                 '<link rel="next" href="%s">',
@@ -132,6 +144,7 @@ abstract class AbstractGridViewPage extends AbstractPage
                             'pageNo' => $this->gridView->getPageNo() + 1,
                             'sortField' => $sortField ?: null,
                             'sortOrder' => $sortOrder ?: null,
+                            'columns' => $columns,
                         ]
                     ))
                 )
@@ -148,6 +161,7 @@ abstract class AbstractGridViewPage extends AbstractPage
                             'pageNo' => $this->gridView->getPageNo() !== 2 ? $this->gridView->getPageNo() - 1 : null,
                             'sortField' => $sortField ?: null,
                             'sortOrder' => $sortOrder ?: null,
+                            'columns' => $columns,
                         ]
                     ))
                 )

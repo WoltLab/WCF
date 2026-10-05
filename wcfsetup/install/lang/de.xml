@@ -3938,6 +3938,7 @@ Dateianhänge:
 		<item name="wcf.global.worker.completed"><![CDATA[Aufgabe abgeschlossen]]></item>
 		<item name="wcf.global.worker.executing"><![CDATA[Aufgaben werden ausgeführt …]]></item>
 		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
+		<item name="wcf.global.gridView.columns"><![CDATA[Spalten]]></item>
 		<item name="wcf.global.noItems"><![CDATA[Es wurden keine Einträge gefunden.]]></item>
 		<item name="wcf.global.button.showAll"><![CDATA[Alle anzeigen]]></item>
 		<item name="wcf.global.reason"><![CDATA[Begründung]]></item>

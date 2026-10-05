@@ -15,6 +15,7 @@ type Response = {
   pages: number;
   totalRows: number;
   filterLabels: ArrayLike<string>;
+  header?: string;
 };
 
 export async function getRows(
@@ -24,6 +25,8 @@ export async function getRows(
   sortOrder: string = "ASC",
   filters?: Map<string, string>,
   gridViewParameters?: Map<string, string>,
+  columns?: string[],
+  includeHeader = false,
 ): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/grid-views/rows`);
   url.searchParams.set("gridView", gridViewClass);
@@ -45,6 +48,14 @@ export async function getRows(
         url.searchParams.set(`gridViewParameters[${key}]`, value);
       }
     });
+  }
+  if (columns) {
+    columns.forEach((column, index) => {
+      url.searchParams.set(`columns[${index}]`, column);
+    });
+  }
+  if (includeHeader) {
+    url.searchParams.set("includeHeader", "true");
   }
 
   return fromInfallibleApiRequest(() => {

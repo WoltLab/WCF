@@ -3884,6 +3884,7 @@ Attachments:
 		<item name="wcf.global.worker.completed"><![CDATA[Task completed]]></item>
 		<item name="wcf.global.worker.executing"><![CDATA[Executing …]]></item>
 		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
+		<item name="wcf.global.gridView.columns"><![CDATA[Columns]]></item>
 		<item name="wcf.global.noItems"><![CDATA[There are no items at the moment.]]></item>
 		<item name="wcf.global.button.showAll"><![CDATA[Display All]]></item>
 		<item name="wcf.global.reason"><![CDATA[Reason]]></item>

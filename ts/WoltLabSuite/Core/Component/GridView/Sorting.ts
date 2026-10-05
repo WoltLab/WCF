@@ -30,14 +30,17 @@ export class Sorting extends EventTarget {
     this.#defaultSortOrder = defaultSortOrder;
     this.#table = table;
 
-    this.#table
-      .querySelectorAll<HTMLTableCellElement>('.gridView__headerColumn[data-sortable="1"]')
-      .forEach((element) => {
-        const button = element.querySelector<HTMLButtonElement>(".gridView__headerColumn__button");
-        button?.addEventListener("click", () => {
-          this.#sort(element.dataset.id!, element.dataset.defaultSortOrder ?? "ASC");
-        });
-      });
+    // The header columns can be replaced at runtime when the user configures
+    // the visible columns, therefore the click events are delegated.
+    this.#table.tHead?.addEventListener("click", (event) => {
+      const button = (event.target as HTMLElement).closest(".gridView__headerColumn__button");
+      const element = button?.closest<HTMLTableCellElement>('.gridView__headerColumn[data-sortable="1"]');
+      if (!element) {
+        return;
+      }
+
+      this.#sort(element.dataset.id!, element.dataset.defaultSortOrder ?? "ASC");
+    });
 
     this.#renderActiveSorting();
   }

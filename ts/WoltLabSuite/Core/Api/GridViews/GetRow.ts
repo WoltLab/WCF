@@ -19,6 +19,7 @@ export async function getRow(
   objectId: string | number,
   filters?: Map<string, string>,
   gridViewParameters?: Map<string, string>,
+  columns?: string[],
 ): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/grid-views/row`);
   url.searchParams.set("gridView", gridViewClass);
@@ -37,6 +38,11 @@ export async function getRow(
       } else {
         url.searchParams.set(`gridViewParameters[${key}]`, value);
       }
+    });
+  }
+  if (columns) {
+    columns.forEach((column, index) => {
+      url.searchParams.set(`columns[${index}]`, column);
     });
   }
 
