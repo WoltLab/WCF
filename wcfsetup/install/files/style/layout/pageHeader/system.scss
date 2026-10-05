@@ -20,9 +20,11 @@
 		}
 	}
 
+	/* Matches the classic header, third-party styles offset sticky elements by 50px. */
 	.pageHeaderPanel > .layoutBoundary {
 		align-items: center;
 		display: flex;
+		height: 50px;
 	}
 
 	.pageHeaderFacade {
@@ -124,10 +126,6 @@
 	}
 
 	@include screen-lg {
-		.pageHeaderPanel > .layoutBoundary {
-			height: 64px;
-		}
-
 		.pageHeaderBarLogo,
 		.pageHeaderLogoSmall,
 		.pageHeaderMenuMobile,
@@ -451,7 +449,6 @@
 	@include screen-md-down {
 		.pageHeaderPanel > .layoutBoundary {
 			column-gap: 0;
-			height: 56px;
 			padding: 0 4px;
 		}
 
