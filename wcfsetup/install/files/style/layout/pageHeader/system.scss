@@ -86,6 +86,7 @@
 
 			> li {
 				display: flex;
+				flex: 0 0 auto;
 				position: relative;
 
 				&[hidden] {
@@ -247,6 +248,16 @@
 
 		.mainMenu .boxMenuToggle[aria-expanded="true"] + .boxMenuDepth1 {
 			display: block;
+		}
+
+		/* Submenus of items that were moved into "More" are shown inline in its panel. */
+		.mainMenu .boxMenuDepth1 .boxMenuDepth1 {
+			background-color: transparent;
+			box-shadow: none;
+			display: block;
+			min-width: 0;
+			padding: 0 0 0 12px;
+			position: static;
 		}
 
 		/* user panel */

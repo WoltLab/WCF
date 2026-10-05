@@ -22,6 +22,7 @@ import { setup as serviceWorkerSetup } from "./Notification/ServiceWorker";
 import { getArticlePopover } from "./Api/Articles/GetArticlePopover";
 import { getUserPopover } from "./Api/Users/GetUserPopover";
 import { setup as setupDrawers } from "./Component/Drawer";
+import { setup as setupMainMenu } from "./Component/MainMenu";
 
 interface BootstrapOptions {
   backgroundQueue: {
@@ -104,6 +105,7 @@ export function setup(options: BootstrapOptions): void {
 
   if (hasSystemPageHeader) {
     setupDrawers();
+    setupMainMenu();
   } else {
     UiPageHeaderMenu.init();
   }
