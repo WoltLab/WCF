@@ -184,10 +184,22 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
      */
     public function getTemplateVariants(): array
     {
+        return self::getTemplateVariantsFromVariables($this->getVariables());
+    }
+
+    /**
+     * Returns the template variants the given style variables activate.
+     *
+     * @param array<string, mixed> $variables
+     * @return list<string>
+     * @since 6.3
+     */
+    public static function getTemplateVariantsFromVariables(array $variables): array
+    {
         $templateVariants = [];
 
         // Unknown values may come from an imported style and fall back to the classic header.
-        $pageHeaderLayout = $this->getVariables()['pageHeaderLayout'] ?? 'classic';
+        $pageHeaderLayout = $variables['pageHeaderLayout'] ?? 'classic';
         if ($pageHeaderLayout !== 'classic' && \in_array($pageHeaderLayout, self::PAGE_HEADER_LAYOUTS, true)) {
             $templateVariants[] = 'pageHeader';
         }

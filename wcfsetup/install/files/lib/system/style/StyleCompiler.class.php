@@ -31,10 +31,10 @@ use wcf\util\Url;
 final class StyleCompiler extends SingletonFactory
 {
     /**
-     * Contains all files, which are compiled for a style.
-     * @var string[]|null
+     * Contains all files, which are compiled for a style, grouped by the page header stylesheet.
+     * @var array<string, string[]>
      */
-    private ?array $files = null;
+    private array $files = [];
 
     /**
      * names of option types which are supported as additional variables
@@ -119,6 +119,8 @@ final class StyleCompiler extends SingletonFactory
         array $variables,
         ?string $customCustomSCSSFile = null,
     ): ?\Exception {
+        $pageHeader = self::getPageHeaderStylesheet(Style::getTemplateVariantsFromVariables($variables));
+
         $individualScss = '';
         if (isset($variables['individualScss'])) {
             $individualScss = $variables['individualScss'];
@@ -166,7 +168,7 @@ final class StyleCompiler extends SingletonFactory
         $parameters = ['scss' => ''];
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 
-        $files = $this->getFiles();
+        $files = $this->getFiles($pageHeader);
 
         if ($customCustomSCSSFile !== null) {
             if (($customSCSSFileKey = \array_search(\WCF_DIR . self::FILE_GLOBAL_VALUES, $files, true)) !== false) {
@@ -214,10 +216,10 @@ final class StyleCompiler extends SingletonFactory
      * @return string[]
      * @since 5.3
      */
-    private function getFiles(): array
+    private function getFiles(string $pageHeader): array
     {
-        if ($this->files === null) {
-            $files = $this->getCoreFiles();
+        if (!isset($this->files[$pageHeader])) {
+            $files = $this->getCoreFiles($pageHeader);
 
             // read stylesheets in dependency order
             $sql = "SELECT      filename, application
@@ -244,10 +246,10 @@ final class StyleCompiler extends SingletonFactory
                 $files[] = \WCF_DIR . self::FILE_GLOBAL_VALUES;
             }
 
-            $this->files = $files;
+            $this->files[$pageHeader] = $files;
         }
 
-        return $this->files;
+        return $this->files[$pageHeader];
     }
 
     /**
@@ -306,7 +308,7 @@ final class StyleCompiler extends SingletonFactory
 
         $scss = "/*!\n\nstylesheet for '" . \str_replace(['*', '/'], '', $style->styleName) . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
         $scss .= $this->bootstrap($variables);
-        foreach ($this->getFiles() as $file) {
+        foreach ($this->getFiles(self::getPageHeaderStylesheet($style->getTemplateVariants())) as $file) {
             $scss .= $this->prepareFile($file);
         }
         $scss .= $individualScss;
@@ -421,7 +423,7 @@ final class StyleCompiler extends SingletonFactory
      */
     public function compileACP(): void
     {
-        $files = $this->getCoreFiles();
+        $files = $this->getCoreFiles('classic');
 
         // ACP uses a slightly different layout
         $files[] = \WCF_DIR . 'acp/style/layout.scss';
@@ -472,11 +474,21 @@ final class StyleCompiler extends SingletonFactory
     }
 
     /**
+     * Returns the name of the page header stylesheet in `style/layout/pageHeader/`.
+     *
+     * @param list<string> $templateVariants
+     */
+    private static function getPageHeaderStylesheet(array $templateVariants): string
+    {
+        return \in_array('pageHeader', $templateVariants, true) ? 'system' : 'classic';
+    }
+
+    /**
      * Returns a list of common stylesheets provided by the core.
      *
      * @return string[] list of common stylesheets
      */
-    private function getCoreFiles(): array
+    private function getCoreFiles(string $pageHeader): array
     {
         $files = [];
         if ($handle = \opendir(\WCF_DIR . 'style/')) {
@@ -504,6 +516,10 @@ final class StyleCompiler extends SingletonFactory
             }
 
             \closedir($handle);
+
+            // The subdirectory is skipped above. Sorting places the selected file
+            // at the position of the former `layout/pageHeader.scss`.
+            $files[] = \WCF_DIR . "style/layout/pageHeader/{$pageHeader}.scss";
 
             // Directory order is not deterministic in some cases,
             // also the `darkMode.scss` must be at the end.

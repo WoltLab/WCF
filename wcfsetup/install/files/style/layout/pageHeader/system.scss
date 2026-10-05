@@ -1,0 +1,91 @@
+/* The auth flow keeps the classic, logo-only header for every style, see `authFlowHeader.tpl`. */
+.authFlow {
+	.pageHeaderContainer {
+		background-color: var(--wcfHeaderBackground);
+		color: var(--wcfHeaderText);
+		z-index: 100;
+
+		a {
+			color: var(--wcfHeaderLink);
+
+			&:hover {
+				color: var(--wcfHeaderLinkActive);
+			}
+		}
+
+		@include screen-md-down {
+			padding-top: 50px;
+		}
+	}
+
+	.pageHeaderFacade > .layoutBoundary {
+		align-items: center;
+		display: flex;
+
+		@include screen-lg {
+			padding-bottom: 30px;
+			padding-top: 30px;
+		}
+	}
+
+	.pageHeaderLogo {
+		@include screen-lg {
+			flex: 1 1 auto;
+
+			.pageHeaderLogoLarge {
+				height: auto;
+				max-width: 100%;
+			}
+
+			.pageHeaderLogoSmall {
+				display: none;
+			}
+
+			> a {
+				display: block;
+				padding: 10px 0;
+			}
+		}
+
+		@include screen-md-down {
+			.pageHeaderLogoLarge {
+				display: none;
+			}
+
+			.pageHeaderLogoSmall {
+				max-height: 30px;
+				max-width: 100%;
+				object-fit: contain;
+				width: auto;
+			}
+
+			a {
+				align-items: center;
+				display: inline-flex;
+				height: 40px;
+				padding: 0 4px;
+			}
+		}
+	}
+
+	@include screen-md-down {
+		.pageHeader {
+			align-items: center;
+			background-color: var(--wcfHeaderBackground);
+			display: flex;
+			height: 50px;
+			justify-content: center;
+			left: 0;
+			padding: 0 6px;
+			position: fixed;
+			right: 0;
+			top: 0;
+		}
+
+		.pageHeaderFacade,
+		.pageHeaderFacade .layoutBoundary {
+			display: contents;
+			position: static;
+		}
+	}
+}
