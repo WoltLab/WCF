@@ -27,7 +27,7 @@
 				
 				{include file='pageHeaderSearch'}
 				
-				{include file='pageHeaderUser'}
+				{include file='system_pageHeaderUser'}
 				
 				<button
 					type="button"
