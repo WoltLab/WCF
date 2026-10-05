@@ -55,7 +55,8 @@
 		.pageHeaderLogoSmall,
 		.pageHeaderMenuMobile,
 		.pageHeaderUserMobile,
-		.mainMenuMobileOnly {
+		.mainMenuMobileOnly,
+		.userMenuDrawer {
 			display: none;
 		}
 
@@ -490,7 +491,8 @@
 			z-index: 1;
 		}
 
-		.mainMenu {
+		.mainMenu,
+		.userMenuDrawer {
 			background-color: var(--wcfUserMenuBackground);
 			border-radius: 12px 0 0 12px;
 			box-shadow: var(--wcfBoxShadow);
@@ -545,12 +547,14 @@
 		}
 
 		.mainMenuClose,
+		.userMenuDrawerClose,
 		.mainMenu .boxMenuToggle,
 		.mainMenuSettingsToggle fa-icon {
 			color: var(--wcfUserMenuTextDimmed);
 		}
 
-		.mainMenuClose {
+		.mainMenuClose,
+		.userMenuDrawerClose {
 			align-items: center;
 			background-color: transparent;
 			border: 0;
@@ -752,6 +756,138 @@
 
 			&[aria-current="true"] {
 				font-weight: 600;
+			}
+		}
+
+		/* The head and the tabs stay in place, the panel scrolls. */
+		.userMenuDrawer {
+			overflow: hidden;
+		}
+
+		.userMenuDrawerHead {
+			align-items: center;
+			column-gap: 14px;
+			display: flex;
+			flex: 0 0 auto;
+			padding: 8px 8px 12px 20px;
+
+			.userAvatarImage {
+				border-radius: 50%;
+				flex: 0 0 auto;
+				height: 48px;
+				width: 48px;
+			}
+		}
+
+		.userMenuDrawerUser {
+			display: flex;
+			flex: 1 1 auto;
+			flex-direction: column;
+			min-width: 0;
+		}
+
+		.userMenuDrawerUsername {
+			font-size: var(--wcfFontSizeHeadline);
+			font-weight: 600;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.userMenuDrawerUserTitle {
+			color: var(--wcfUserMenuTextDimmed);
+			font-size: var(--wcfFontSizeSmall);
+		}
+
+		.userMenuDrawerTabs {
+			background-color: var(--wcfUserMenuBackgroundActive);
+			border-radius: 10px;
+			column-gap: 4px;
+			display: flex;
+			flex: 0 0 auto;
+			margin: 0 12px 6px;
+			padding: 4px;
+		}
+
+		.userMenuDrawerTab {
+			align-items: center;
+			background-color: transparent;
+			border: 0;
+			border-radius: 7px;
+			color: var(--wcfUserMenuTextActive);
+			display: flex;
+			flex: 1 1 0;
+			flex-direction: column;
+			font: inherit;
+			font-size: 11px;
+			gap: 3px;
+			height: 52px;
+			justify-content: center;
+			min-width: 0;
+			padding: 0 4px;
+			position: relative;
+
+			fa-icon {
+				--font-size: 18px;
+				--icon-size: 20px;
+			}
+
+			&[aria-selected="true"] {
+				background-color: var(--wcfUserMenuBackground);
+				box-shadow: var(--wcfBoxShadowCard);
+				font-weight: 600;
+			}
+		}
+
+		.userMenuDrawerTabLabel {
+			max-width: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.userMenuDrawerTabCount {
+			background-color: var(--wcfUserMenuText);
+			border-radius: 9px;
+			box-sizing: border-box;
+			color: var(--wcfUserMenuBackground);
+			font-size: 11px;
+			font-weight: 700;
+			left: calc(50% + 4px);
+			line-height: 18px;
+			min-width: 18px;
+			padding: 0 5px;
+			position: absolute;
+			text-align: center;
+			top: 3px;
+		}
+
+		.userMenuDrawerPanel {
+			display: flex;
+			flex: 1 1 auto;
+			flex-direction: column;
+			min-height: 0;
+
+			> .userMenu {
+				display: flex;
+				flex: 1 1 auto;
+				flex-direction: column;
+				min-height: 0;
+			}
+
+			.userMenuContentScrollable {
+				flex: 1 1 auto;
+				min-height: 0;
+				overflow-y: auto;
+			}
+
+			/* The head of the drawer already shows the user. */
+			.userMenuControlPanel {
+				> .userMenuHeader,
+				> .userMenuHeader + .userMenuContent,
+				> .userMenuHeader + .userMenuContent + .userMenuContentDivider {
+					display: none;
+				}
 			}
 		}
 

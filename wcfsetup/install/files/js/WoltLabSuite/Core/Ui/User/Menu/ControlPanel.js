@@ -37,6 +37,10 @@ define(["require", "exports", "tslib", "../../CloseOverlay", "./Manager", "focus
         }
     }
     function close() {
+        // The element is shown elsewhere while it is not open as a dropdown, e.g. in the user drawer.
+        if (!button.classList.contains("open")) {
+            return;
+        }
         focusTrap.deactivate();
         element.hidden = true;
         button.classList.remove("open");

@@ -227,4 +227,22 @@
 	>
 		{unsafe:$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32, false)}
 	</button>
+	
+	{* The tabs and their panels are built on the client from the registered user menus. *}
+	<div id="userMenuDrawer" class="userMenuDrawer" aria-label="{lang}wcf.menu.user{/lang}">
+		<div class="userMenuDrawerHead">
+			{unsafe:$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48, false)}
+			<div class="userMenuDrawerUser">
+				<span class="userMenuDrawerUsername">{$__wcf->user->username}</span>
+				{if MODULE_USER_RANK && $__wcf->getUserProfileHandler()->getUserTitle()}
+					<span class="userMenuDrawerUserTitle">{$__wcf->getUserProfileHandler()->getUserTitle()}</span>
+				{/if}
+			</div>
+			<button type="button" class="userMenuDrawerClose" data-drawer-close aria-label="{lang}wcf.global.button.close{/lang}">
+				{icon size=24 name='xmark'}
+			</button>
+		</div>
+		<div class="userMenuDrawerTabs" role="tablist" aria-label="{lang}wcf.menu.user{/lang}"></div>
+		<div class="userMenuDrawerPanel" role="tabpanel" tabindex="0"></div>
+	</div>
 {/if}

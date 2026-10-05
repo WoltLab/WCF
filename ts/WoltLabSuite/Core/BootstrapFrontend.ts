@@ -24,6 +24,7 @@ import { getUserPopover } from "./Api/Users/GetUserPopover";
 import { setup as setupDrawers } from "./Component/Drawer";
 import { setup as setupMainMenu } from "./Component/MainMenu";
 import { setup as setupLanguageSwitcher } from "./Component/LanguageSwitcher";
+import { setup as setupUserMenuDrawer } from "./Component/UserMenuDrawer";
 
 interface BootstrapOptions {
   backgroundQueue: {
@@ -108,6 +109,7 @@ export function setup(options: BootstrapOptions): void {
     setupDrawers();
     setupMainMenu();
     setupLanguageSwitcher();
+    setupUserMenuDrawer();
   } else {
     UiPageHeaderMenu.init();
   }

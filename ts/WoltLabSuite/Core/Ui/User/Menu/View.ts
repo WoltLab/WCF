@@ -75,14 +75,19 @@ export class UserMenuView {
     return this.element;
   }
 
-  async open(): Promise<void> {
+  /**
+   * @param activateFocusTrap is `false` when the view is embedded into a container that traps the focus itself
+   */
+  async open(activateFocusTrap = true): Promise<void> {
     const isStale = this.provider.isStale();
     if (isStale) {
       this.reset();
     }
 
     this.element.hidden = false;
-    this.focusTrap.activate();
+    if (activateFocusTrap) {
+      this.focusTrap.activate();
+    }
 
     if (isStale) {
       const data = await this.provider.getData();

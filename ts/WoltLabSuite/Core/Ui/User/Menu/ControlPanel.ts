@@ -45,6 +45,11 @@ function setAlignment(element: HTMLElement, referenceElement: HTMLElement): void
 }
 
 function close(): void {
+  // The element is shown elsewhere while it is not open as a dropdown, e.g. in the user drawer.
+  if (!button.classList.contains("open")) {
+    return;
+  }
+
   focusTrap.deactivate();
 
   element.hidden = true;
