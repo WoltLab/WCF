@@ -121,7 +121,7 @@ class MenuItemNodeTree
                     /** @var MenuItemNode $node */
                     foreach ($nodeList as $node) {
                         if ($node->itemID === $itemIDs[$i]) {
-                            $node->setIsActive();
+                            $node->setIsCurrent();
 
                             // only one effective item can be marked as active, use the first
                             // occurrence with the highest priority and ignore everything else

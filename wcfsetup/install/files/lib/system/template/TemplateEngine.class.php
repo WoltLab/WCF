@@ -149,6 +149,16 @@ class TemplateEngine extends SingletonFactory
     ];
 
     /**
+     * Maps `system_` templates to the template whose listeners they inherit when it is
+     * not the name without the prefix, see `getTemplateListenerCode()`.
+     * @since 6.3
+     */
+    private const SYSTEM_TEMPLATE_LISTENER_ALIASES = [
+        // The main menu was rendered by the generic menu template before.
+        'system_pageHeaderMenu' => '__menu',
+    ];
+
+    /**
      * directory used to cache previously compiled templates
      * @var string
      */
@@ -1076,7 +1086,8 @@ class TemplateEngine extends SingletonFactory
         }
         // `system_foo` replaces `foo`, therefore the listeners of `foo` apply as well.
         if (\str_starts_with($templateName, 'system_')) {
-            $classicTemplateName = \substr($templateName, \strlen('system_'));
+            $classicTemplateName = self::SYSTEM_TEMPLATE_LISTENER_ALIASES[$templateName]
+                ?? \substr($templateName, \strlen('system_'));
             if (isset($this->templateListeners[$classicTemplateName][$eventName])) {
                 $listeners = \array_merge($listeners, $this->templateListeners[$classicTemplateName][$eventName]);
             }

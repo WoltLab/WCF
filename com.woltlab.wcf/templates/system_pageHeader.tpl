@@ -23,11 +23,22 @@
 					</a>
 				{/if}
 				
-				{unsafe:$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->render()}
+				{include file='system_pageHeaderMenu' sandbox=true}
 				
 				{include file='pageHeaderSearch'}
 				
 				{include file='pageHeaderUser'}
+				
+				<button
+					type="button"
+					class="pageHeaderMenuMobile"
+					aria-controls="mainMenu"
+					aria-expanded="false"
+					aria-label="{lang}wcf.menu.page{/lang}"
+					data-drawer-target="mainMenu"
+				>
+					{icon size=24 name='bars'}
+				</button>
 			</div>
 		</div>
 	</header>

@@ -31,6 +31,12 @@ class MenuItemNode extends DatabaseObjectDecorator implements IObjectTreeNode
     protected bool $isActive = false;
 
     /**
+     * true if this item itself represents the current page
+     * @since 6.3
+     */
+    protected bool $isCurrent = false;
+
+    /**
      * @inheritDoc
      */
     protected static $baseClass = MenuItem::class;
@@ -77,6 +83,28 @@ class MenuItemNode extends DatabaseObjectDecorator implements IObjectTreeNode
     public function isActiveNode(): bool
     {
         return $this->isActive;
+    }
+
+    /**
+     * Marks this item as the current page, and it and all its direct ancestors as active.
+     *
+     * @since 6.3
+     */
+    public function setIsCurrent(): void
+    {
+        $this->isCurrent = true;
+
+        $this->setIsActive();
+    }
+
+    /**
+     * Returns true if this item itself represents the current page, unlike its active ancestors.
+     *
+     * @since 6.3
+     */
+    public function isCurrentNode(): bool
+    {
+        return $this->isCurrent;
     }
 
     /**
