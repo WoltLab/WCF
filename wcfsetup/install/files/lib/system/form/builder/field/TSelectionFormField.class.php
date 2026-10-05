@@ -7,6 +7,7 @@ use wcf\data\IObjectTreeNode;
 use wcf\data\ITitledObject;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
+use wcf\util\StringUtil;
 
 /**
  * Provides default implementations of `ISelectionFormField` methods.
@@ -94,6 +95,10 @@ trait TSelectionFormField
      * callable returning an array. Each array value must be an array with the
      * following entries: `depth`, `label`, and `value`.
      *
+     * String labels are output as HTML and have to be encoded by the caller. Labels
+     * derived from objects via `__toString()` or `ITitledObject::getTitle()` are
+     * encoded automatically.
+     *
      * @param array<string|int, mixed>|callable|\Traversable<mixed>|DatabaseObjectList $options selectable options or callable returning the options
      * @param bool $nestedOptions is `true` if the passed options are nested options
      * @param bool $labelLanguageItems is `true` if the labels should be treated as language items if possible
@@ -178,12 +183,12 @@ trait TSelectionFormField
                 // validate label
                 if (\is_object($option['label'])) {
                     if (\method_exists($option['label'], '__toString')) {
-                        $option['label'] = (string)$option['label'];
+                        $option['label'] = StringUtil::encodeHTML((string)$option['label']);
                     } elseif (
                         $option['label'] instanceof ITitledObject
                         || ClassUtil::isDecoratedInstanceOf($option['label'], ITitledObject::class)
                     ) {
-                        $option['label'] = $option['label']->getTitle();
+                        $option['label'] = StringUtil::encodeHTML($option['label']->getTitle());
                     } else {
                         throw new \InvalidArgumentException(
                             "Nested option with key '{$key}' has invalid label of type " . \gettype($option['label']) . " for field '{$this->getId()}'."
@@ -247,12 +252,12 @@ trait TSelectionFormField
 
                 if (\is_object($label)) {
                     if (\method_exists($label, '__toString')) {
-                        $label = (string)$label;
+                        $label = StringUtil::encodeHTML((string)$label);
                     } elseif (
                         $label instanceof ITitledObject
                         || ClassUtil::isDecoratedInstanceOf($label, ITitledObject::class)
                     ) {
-                        $label = $label->getTitle();
+                        $label = StringUtil::encodeHTML($label->getTitle());
                     } else {
                         throw new \InvalidArgumentException(
                             "Options contain invalid label of type " . \gettype($label) . " for field '{$this->getId()}'."

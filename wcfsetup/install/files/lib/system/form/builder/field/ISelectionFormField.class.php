@@ -50,6 +50,10 @@ interface ISelectionFormField extends IFormField
      * callable returning an array. Each array value must be an array with the
      * following entries: `depth`, `label`, and `value`.
      *
+     * String labels are output as HTML and have to be encoded by the caller. Labels
+     * derived from objects via `__toString()` or `ITitledObject::getTitle()` are
+     * encoded automatically.
+     *
      * @param mixed[]|callable|DatabaseObjectList<DatabaseObject> $options selectable options or callable returning the options
      * @param bool $nestedOptions is `true` if the passed options are nested options
      * @param bool $labelLanguageItems is `true` if the labels should be treated as language items if possible
