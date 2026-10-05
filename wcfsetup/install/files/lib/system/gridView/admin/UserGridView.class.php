@@ -181,7 +181,18 @@ final class UserGridView extends AbstractGridView
     #[\Override]
     protected function createObjectList(): UserProfileList
     {
-        return new UserProfileList();
+        $list = new UserProfileList();
+
+        // `UserList` only joins the user option values when reading the objects,
+        // sorting by an option requires them when reading the ids as well.
+        $sortColumn = $this->getColumn($this->getSortField());
+        if ($sortColumn !== null && \str_starts_with($sortColumn->getSortByDatabaseColumn(), 'user_option_value.')) {
+            $list->sqlConditionJoins .= "
+                LEFT JOIN   wcf1_user_option_value user_option_value
+                ON          user_option_value.userID = user_table.userID";
+        }
+
+        return $list;
     }
 
     #[\Override]
