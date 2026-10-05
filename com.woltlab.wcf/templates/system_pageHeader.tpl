@@ -25,7 +25,7 @@
 				
 				{include file='system_pageHeaderMenu' sandbox=true}
 				
-				{include file='pageHeaderSearch'}
+				{include file='system_pageHeaderSearch'}
 				
 				{include file='system_pageHeaderUser'}
 				

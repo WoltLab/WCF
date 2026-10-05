@@ -46,6 +46,83 @@
 		max-width: 100%;
 	}
 
+	.pageHeaderSearch {
+		display: none;
+	}
+
+	.pageHeaderSearchInputContainer {
+		align-items: center;
+		background-color: var(--wcfHeaderSearchBoxBackgroundActive);
+		border: 2px solid var(--wcfHeaderSearchBoxTextActive);
+		border-radius: var(--wcfBorderRadius);
+		box-sizing: border-box;
+		color: var(--wcfHeaderSearchBoxTextActive);
+		display: flex;
+		height: 40px;
+
+		> fa-icon {
+			flex: 0 0 auto;
+			margin-left: 10px;
+		}
+	}
+
+	.pageHeaderSearchInput {
+		appearance: none;
+		background-color: transparent;
+		border: 0;
+		color: var(--wcfHeaderSearchBoxTextActive);
+		flex: 1 1 auto;
+		font: inherit;
+		height: 100%;
+		min-width: 0;
+		padding: 0 12px 0 8px;
+
+		&::placeholder {
+			color: var(--wcfHeaderSearchBoxPlaceholderActive);
+		}
+
+		/* The button in the bar closes the search, a second clear button would compete with it. */
+		&::-webkit-search-cancel-button {
+			appearance: none;
+		}
+
+		/* The border of the field already marks the focus. */
+		&:focus-visible {
+			outline: none;
+		}
+	}
+
+	/* The search scope is a select at the end of the field. */
+	.pageHeaderSearchType {
+		flex: 0 0 auto;
+		margin-right: 4px;
+
+		> .button {
+			align-items: center;
+			background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+			border: 0;
+			border-radius: 3px;
+			color: var(--wcfHeaderMenuLinkActive);
+			column-gap: 4px;
+			display: flex;
+			font-size: 14px;
+			height: 28px;
+			line-height: 1;
+			padding: 0 6px 0 10px;
+			white-space: nowrap;
+
+			&:hover {
+				background-color: var(--wcfHeaderMenuDropdownBackgroundActive);
+				color: var(--wcfHeaderMenuDropdownLinkActive);
+			}
+		}
+
+		&.dropdownOpen > .button {
+			background-color: var(--wcfHeaderMenuDropdownBackgroundActive);
+			color: var(--wcfHeaderMenuDropdownLinkActive);
+		}
+	}
+
 	@include screen-lg {
 		.pageHeaderPanel > .layoutBoundary {
 			height: 64px;
@@ -356,10 +433,18 @@
 			}
 		}
 
-		/* The search is redesigned in a later step, until then it stays out of the bar. */
-		.pageHeaderSearchMobile,
-		.pageHeaderSearch {
-			display: none;
+		/* The search replaces the menu while it is open, the bar keeps its height. */
+		.pageHeader.searchBarOpen {
+			.mainMenu {
+				display: none;
+			}
+
+			.pageHeaderSearch {
+				display: block;
+				flex: 1 1 auto;
+				margin-right: 16px;
+				min-width: 0;
+			}
 		}
 	}
 
@@ -405,7 +490,7 @@
 			margin: 0;
 			padding: 0;
 
-			> li:not(#userNotifications, #userLogin) {
+			> li:not(.userPanelSearch, #userNotifications, #userLogin) {
 				display: none;
 			}
 
@@ -477,10 +562,27 @@
 			}
 		}
 
-		/* The search is redesigned in a later step, until then it stays out of the bar. */
-		.pageHeaderSearchMobile,
-		.pageHeaderSearch {
-			display: none;
+		/* The search fills the bar while it is open, only the button to close it remains. */
+		.pageHeader.searchBarOpen {
+			.pageHeaderBarLogo,
+			.pageHeaderPanel .pageHeaderLogo,
+			.pageHeaderUserMobile,
+			.pageHeaderMenuMobile,
+			.userPanelItems > li:not(.userPanelSearch) {
+				display: none;
+			}
+
+			.pageHeaderSearch {
+				display: block;
+				flex: 1 1 auto;
+				margin: 0 4px 0 8px;
+				min-width: 0;
+			}
+		}
+
+		/* 16px keeps iOS from zooming into the field. */
+		.pageHeaderSearchInput {
+			font-size: 16px;
 		}
 
 		/* The main menu is a drawer from the right, see `Component/Drawer`. */

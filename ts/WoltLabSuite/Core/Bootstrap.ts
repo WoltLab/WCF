@@ -52,6 +52,8 @@ window.__wcf_bc_eventHandler = EventHandler;
 export interface BoostrapOptions {
   dynamicColorScheme: boolean;
   enableMobileMenu: boolean;
+  /** @since 6.3 */
+  enableSearch?: boolean;
   pageMenuMainProvider: PageMenuMainProvider;
 }
 
@@ -79,6 +81,7 @@ export function setup(options: BoostrapOptions): void {
     {
       colorScheme: "light",
       enableMobileMenu: true,
+      enableSearch: true,
       pageMenuMainProvider: undefined,
     },
     options,
@@ -104,7 +107,9 @@ export function setup(options: BoostrapOptions): void {
   UiObjectAction.setup();
   UiObjectActionDelete.setup();
   UiObjectActionToggle.setup();
-  initSearch();
+  if (options.enableSearch) {
+    initSearch();
+  }
 
   // Convert forms with `method="get"` into `method="post"`
   document.querySelectorAll("form[method=get]").forEach((form: HTMLFormElement) => {

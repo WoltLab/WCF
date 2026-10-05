@@ -25,6 +25,7 @@ import { setup as setupDrawers } from "./Component/Drawer";
 import { setup as setupMainMenu } from "./Component/MainMenu";
 import { setup as setupLanguageSwitcher } from "./Component/LanguageSwitcher";
 import { setup as setupUserMenuDrawer } from "./Component/UserMenuDrawer";
+import { setup as setupPageHeaderSearch } from "./Component/PageHeaderSearch";
 
 interface BootstrapOptions {
   backgroundQueue: {
@@ -89,6 +90,7 @@ export function setup(options: BootstrapOptions): void {
   Bootstrap.setup({
     dynamicColorScheme: options.dynamicColorScheme,
     enableMobileMenu: !hasSystemPageHeader,
+    enableSearch: !hasSystemPageHeader,
     pageMenuMainProvider: new UiPageMenuMainFrontend(),
   });
 
@@ -110,6 +112,7 @@ export function setup(options: BootstrapOptions): void {
     setupMainMenu();
     setupLanguageSwitcher();
     setupUserMenuDrawer();
+    setupPageHeaderSearch();
   } else {
     UiPageHeaderMenu.init();
   }

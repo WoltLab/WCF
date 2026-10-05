@@ -1,8 +1,16 @@
 <nav id="topMenu" class="userPanel{if !$__wcf->user->isGuest()} userPanelLoggedIn{/if}">
 	<ul class="userPanelItems">
 		<!-- page search -->
-		<li>
-			<a href="{link controller='Search'}{/link}" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}">{icon size=32 name='magnifying-glass'} <span>{lang}wcf.global.search{/lang}</span></a>
+		<li class="userPanelSearch">
+			<a
+				href="{link controller='Search'}{/link}"
+				id="userPanelSearchButton"
+				class="jsTooltip"
+				title="{lang}wcf.global.search{/lang}"
+				role="button"
+				aria-controls="pageHeaderSearch"
+				aria-expanded="false"
+			>{icon size=32 name='magnifying-glass'} <span>{lang}wcf.global.search{/lang}</span></a>
 		</li>
 		
 		{if !$__hideUserMenu|isset}

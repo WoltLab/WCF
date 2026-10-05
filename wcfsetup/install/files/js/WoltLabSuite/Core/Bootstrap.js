@@ -64,6 +64,7 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
         options = Core.extend({
             colorScheme: "light",
             enableMobileMenu: true,
+            enableSearch: true,
             pageMenuMainProvider: undefined,
         }, options);
         XsrfToken.setup();
@@ -83,7 +84,9 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
         UiObjectAction.setup();
         UiObjectActionDelete.setup();
         UiObjectActionToggle.setup();
-        (0, Search_1.init)();
+        if (options.enableSearch) {
+            (0, Search_1.init)();
+        }
         // Convert forms with `method="get"` into `method="post"`
         document.querySelectorAll("form[method=get]").forEach((form) => {
             form.method = "post";
