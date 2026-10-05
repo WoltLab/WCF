@@ -44,6 +44,13 @@ class DevtoolsPip extends DatabaseObjectDecorator
     protected $pip;
 
     /**
+     * Walking the source tree is expensive, and the sync requests the same target
+     * twice per request, from `invoke()` and from `DevtoolsInstaller::getTar()`.
+     * @var array<string, array{0: array<string, array<string, string>|string>, 1: array<string, string>}>
+     */
+    private static array $archiveInstructions = [];
+
+    /**
      * @inheritDoc
      */
     protected static $baseClass = PackageInstallationPlugin::class;
@@ -349,6 +356,30 @@ class DevtoolsPip extends DatabaseObjectDecorator
      * @return array<string, array<string, string>|string>
      */
     public function getInstructions(DevtoolsProject $project, string $target)
+    {
+        $pluginName = $this->getDecoratedObject()->pluginName;
+        if (!\in_array($pluginName, ['acpTemplate', 'file', 'template'], true)) {
+            return $this->readInstructions($project, $target);
+        }
+
+        $tar = $project->getPackageArchive()->getTar();
+        $key = "{$project->projectID}-{$pluginName}-{$target}";
+        if (isset(self::$archiveInstructions[$key])) {
+            [$instructions, $files] = self::$archiveInstructions[$key];
+            $tar->reset();
+            $tar->setFiles($files);
+        } else {
+            $instructions = $this->readInstructions($project, $target);
+            self::$archiveInstructions[$key] = [$instructions, $tar->getFiles()];
+        }
+
+        return $instructions;
+    }
+
+    /**
+     * @return array<string, array<string, string>|string>
+     */
+    private function readInstructions(DevtoolsProject $project, string $target): array
     {
         $defaultFilename = $this->getDefaultFilename();
         $pluginName = $this->getDecoratedObject()->pluginName;
