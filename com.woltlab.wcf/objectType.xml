@@ -3,24 +3,9 @@
 	<import>
 		<!-- clipboard items -->
 		<type>
-			<name>com.woltlab.wcf.user</name>
-			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
-			<listclassname>wcf\data\user\UserList</listclassname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.tag</name>
-			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
-			<listclassname>wcf\data\tag\TagList</listclassname>
-		</type>
-		<type>
 			<name>com.woltlab.wcf.media</name>
 			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
 			<listclassname>wcf\data\media\ViewableMediaList</listclassname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.article</name>
-			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
-			<listclassname>wcf\data\article\ArticleList</listclassname>
 		</type>
 		<!-- /clipboard items -->
 		<!-- articles -->
@@ -1612,6 +1597,15 @@
 		</type>
 		<type name="com.woltlab.wcf.page.controller">
 			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.user">
+			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.tag">
+			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.article">
+			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
 		</type>
 	</delete>
 </data>
