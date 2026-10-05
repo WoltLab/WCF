@@ -13,6 +13,36 @@
 			>{icon size=32 name='magnifying-glass'} <span>{lang}wcf.global.search{/lang}</span></a>
 		</li>
 		
+		{* Members only switch the language through the developer tools. *}
+		{if $__wcf->getLanguage()->getLanguages()|count > 1 && ($__wcf->user->isGuest() || (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS))}
+			<li id="pageLanguageContainer" class="dropdown">
+				<button
+					type="button"
+					class="dropdownToggle jsTooltip"
+					title="{lang}wcf.user.language{/lang}"
+					aria-label="{lang}wcf.user.language{/lang}"
+				>
+					{icon size=32 name='language'} <span>{lang}wcf.user.language{/lang}</span>
+				</button>
+				<ul class="dropdownMenu">
+					{foreach from=$__wcf->getLanguage()->getLanguages() item=_language}
+						<li>
+							<button
+								type="button"
+								data-switch-language="{$_language->languageID}"
+								data-language-code="{$_language->languageCode}"
+								lang="{$_language->languageCode}"
+								{if $_language->languageID === $__wcf->getLanguage()->languageID} aria-current="true"{/if}
+							>
+								<img src="{$_language->getIconPath()}" alt="" class="iconFlag">
+								<span>{$_language}</span>
+							</button>
+						</li>
+					{/foreach}
+				</ul>
+			</li>
+		{/if}
+		
 		{if !$__hideUserMenu|isset}
 			{event name='menuItems'}
 			
@@ -176,35 +206,6 @@
 				</script>
 			</li>
 		{else}
-			{if $__wcf->getLanguage()->getLanguages()|count > 1}
-				<li id="pageLanguageContainer" class="dropdown">
-					<a
-						href="#"
-						class="dropdownToggle jsTooltip"
-						title="{lang}wcf.user.language{/lang}"
-						role="button"
-						aria-label="{lang}wcf.user.language{/lang}"
-					>
-						{icon size=32 name='language'} <span>{lang}wcf.user.language{/lang}</span>
-					</a>
-					<ul class="dropdownMenu">
-						{foreach from=$__wcf->getLanguage()->getLanguages() item=_language}
-							<li>
-								<a
-									href="#"
-									data-switch-language="{$_language->languageID}"
-									data-language-code="{$_language->languageCode}"
-									lang="{$_language->languageCode}"
-									{if $_language->languageID === $__wcf->getLanguage()->languageID} aria-current="true"{/if}
-								>
-									<img src="{$_language->getIconPath()}" alt="" class="iconFlag">
-									<span>{$_language}</span>
-								</a>
-							</li>
-						{/foreach}
-					</ul>
-				</li>
-			{/if}
 			<li id="userLogin">
 				<a
 					class="loginLink"

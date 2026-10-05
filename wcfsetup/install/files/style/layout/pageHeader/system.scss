@@ -361,13 +361,17 @@
 				position: relative;
 			}
 
-			> li > a {
+			> li > :is(a, button) {
 				align-items: center;
 				background-color: var(--wcfHeaderMenuLinkBackground);
+				border: 0;
 				border-radius: 50%;
 				color: var(--wcfHeaderMenuLink);
+				cursor: pointer;
 				display: flex;
+				font: inherit;
 				height: 40px;
+				padding: 0;
 				justify-content: center;
 				transition:
 					background-color 0.12s ease,
@@ -501,11 +505,14 @@
 				position: relative;
 			}
 
-			> li > a {
+			> li > :is(a, button) {
 				align-items: center;
+				background-color: transparent;
+				border: 0;
 				border-radius: 22px;
 				color: var(--wcfHeaderMenuLink);
 				display: flex;
+				font: inherit;
 				height: 44px;
 				justify-content: center;
 				min-width: 44px;
