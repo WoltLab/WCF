@@ -204,12 +204,13 @@
 					font-weight: 600;
 				}
 
-				/* An open submenu continues the item's fill into the panel ("tray"). */
+				/* An open submenu continues the item's fill into the panel ("tray"). The tray uses the
+				   hover fill, otherwise the item would change its colour again when the submenu opens. */
 				&:has(> .boxMenuToggle[aria-expanded="true"]) > .boxMenuLink {
-					background-color: var(--wcfHeaderMenuDropdownBackground);
+					background-color: var(--wcfHeaderMenuLinkBackgroundActive);
 					border-bottom-left-radius: 0;
 					border-bottom-right-radius: 0;
-					color: var(--wcfHeaderMenuDropdownLink);
+					color: var(--wcfHeaderMenuLinkActive);
 				}
 			}
 
@@ -278,7 +279,7 @@
 		}
 
 		.mainMenu .boxMenuDepth1 {
-			background-color: var(--wcfHeaderMenuDropdownBackground);
+			background-color: var(--wcfHeaderMenuLinkBackgroundActive);
 			border-radius: 0 var(--wcfBorderRadius) var(--wcfBorderRadius) var(--wcfBorderRadius);
 			box-shadow: rgb(0 0 0 / 18%) 0 10px 20px -4px;
 			display: none;
@@ -294,7 +295,7 @@
 			.boxMenuLink {
 				align-items: center;
 				border-radius: var(--wcfBorderRadius);
-				color: var(--wcfHeaderMenuDropdownLink);
+				color: var(--wcfHeaderMenuLinkActive);
 				column-gap: 6px;
 				display: flex;
 				min-height: 34px;
