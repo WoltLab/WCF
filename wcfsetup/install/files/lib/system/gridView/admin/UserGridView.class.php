@@ -121,6 +121,7 @@ final class UserGridView extends AbstractGridView
                 ->filter(IntegerFilter::class)
                 ->sortable(defaultSortOrder: 'DESC')
                 ->hidden(),
+            ...$this->getUserOptionColumns(),
         ]);
 
         $this->addAvailableFilters([
@@ -285,6 +286,58 @@ final class UserGridView extends AbstractGridView
                 }
 
                 return parent::render($value, $row);
+            }
+        };
+    }
+
+    /**
+     * Returns the hidden columns for the profile options, except for messages.
+     * Unlike the members list, administrators can see every option regardless
+     * of its visibility.
+     *
+     * @return list<GridViewColumn>
+     */
+    private function getUserOptionColumns(): array
+    {
+        $options = $this->getUserOptionsByCategory('profile', static function (UserOption $option) {
+            return $option->optionType !== 'aboutMe'
+                && $option->optionType !== 'message'
+                && $option->validateOptions()
+                && $option->validatePermissions();
+        });
+
+        $columns = [];
+        foreach (\array_merge(...\array_values($options)) as $option) {
+            $columns[] = GridViewColumn::for($option->getIdentifier())
+                ->label('wcf.user.option.' . $option->optionName)
+                ->renderer($this->getUserOptionRenderer($option))
+                ->unsafeDisableEncoding()
+                ->sortable(sortByDatabaseColumn: 'user_option_value.' . $option->getIdentifier())
+                ->hidden();
+        }
+
+        return $columns;
+    }
+
+    private function getUserOptionRenderer(UserOption $option): DefaultColumnRenderer
+    {
+        return new class($option) extends DefaultColumnRenderer {
+            public function __construct(private readonly UserOption $option) {}
+
+            #[\Override]
+            public function render(mixed $value, DatabaseObject $row): string
+            {
+                // The value is not encoded, because the formatters take care of it.
+                $value = (string)$value;
+                if ($value === '' || $value === '0000-00-00') {
+                    return '';
+                }
+
+                return $this->option->getFormOption()->getFormatter()->format(
+                    $value,
+                    WCF::getLanguage()->languageID,
+                    $this->option->getConfiguration()
+                );
             }
         };
     }
