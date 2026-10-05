@@ -947,14 +947,10 @@
 			color: var(--wcfUserMenuTextActive);
 			display: flex;
 			flex: 1 1 0;
-			flex-direction: column;
 			font: inherit;
-			font-size: 11px;
-			gap: 3px;
-			height: 52px;
 			justify-content: center;
 			min-width: 0;
-			padding: 0 4px;
+			padding: 16px 4px;
 			position: relative;
 
 			fa-icon {
@@ -965,15 +961,16 @@
 			&[aria-selected="true"] {
 				background-color: var(--wcfUserMenuBackground);
 				box-shadow: var(--wcfBoxShadowCard);
-				font-weight: 600;
 			}
 		}
 
+		/* The labels do not fit on small phones, they remain as the accessible name of the tab. */
 		.userMenuDrawerTabLabel {
-			max-width: 100%;
+			clip: rect(1px, 1px, 1px, 1px);
+			height: 1px;
 			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
+			position: absolute;
+			width: 1px;
 		}
 
 		.userMenuDrawerTabCount {
@@ -989,7 +986,7 @@
 			padding: 0 5px;
 			position: absolute;
 			text-align: center;
-			top: 3px;
+			top: 12px;
 		}
 
 		.userMenuDrawerPanel {
