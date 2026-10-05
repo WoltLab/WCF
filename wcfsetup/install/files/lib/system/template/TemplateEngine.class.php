@@ -1064,9 +1064,22 @@ class TemplateEngine extends SingletonFactory
     public function getTemplateListenerCode(string $templateName, string $eventName)
     {
         $this->loadTemplateListenerCode();
+
+        // The source of an active variant is compiled under the classic template name.
+        if (\in_array($templateName, $this->templateVariants, true)) {
+            $templateName = 'system_' . $templateName;
+        }
+
         $listeners = [];
         if (isset($this->templateListeners[$templateName][$eventName])) {
             $listeners = $this->templateListeners[$templateName][$eventName];
+        }
+        // `system_foo` replaces `foo`, therefore the listeners of `foo` apply as well.
+        if (\str_starts_with($templateName, 'system_')) {
+            $classicTemplateName = \substr($templateName, \strlen('system_'));
+            if (isset($this->templateListeners[$classicTemplateName][$eventName])) {
+                $listeners = \array_merge($listeners, $this->templateListeners[$classicTemplateName][$eventName]);
+            }
         }
         // Load old template listener code
         if ($templateName = \array_search($templateName, TemplateEngine::SHARED_TEMPLATES, true)) {
