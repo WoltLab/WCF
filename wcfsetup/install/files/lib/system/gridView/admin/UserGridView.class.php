@@ -99,6 +99,7 @@ final class UserGridView extends AbstractGridView
                     ->label('wcf.user.registrationIpAddress')
                     ->renderer(new IpAddressColumnRenderer())
                     ->filter(IpAddressFilter::class)
+                    ->hidden()
             );
         }
 
@@ -112,12 +113,14 @@ final class UserGridView extends AbstractGridView
                 ->label('wcf.user.activityPoint')
                 ->renderer(new NumberColumnRenderer())
                 ->filter(IntegerFilter::class)
-                ->sortable(defaultSortOrder: 'DESC'),
+                ->sortable(defaultSortOrder: 'DESC')
+                ->hidden(),
             GridViewColumn::for('likesReceived')
                 ->label('wcf.like.likesReceived')
                 ->renderer(new NumberColumnRenderer())
                 ->filter(IntegerFilter::class)
-                ->sortable(defaultSortOrder: 'DESC'),
+                ->sortable(defaultSortOrder: 'DESC')
+                ->hidden(),
         ]);
 
         $this->addAvailableFilters([
