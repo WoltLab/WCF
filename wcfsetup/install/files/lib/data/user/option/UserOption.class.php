@@ -5,13 +5,12 @@ namespace wcf\data\user\option;
 use wcf\data\ITitledObject;
 use wcf\data\option\Option;
 use wcf\data\user\User;
-use wcf\system\l10n\L10nDefinition;
-use wcf\system\l10n\L10nStorage;
-use wcf\system\form\option\formatter\MultipleSelectionFormatter;
 use wcf\system\form\option\formatter\WysiwygFormatter;
 use wcf\system\form\option\FormOptionHandler;
 use wcf\system\form\option\IFormOption;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\l10n\L10nDefinition;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -114,24 +113,27 @@ class UserOption extends Option implements ITitledObject
     const EDITABILITY_OWNER_DURING_REGISTRATION_AND_ADMINISTRATOR = 6;
 
     /**
-     * Maps the legacy option types to the ids of the form options with a compatible value format.
-     * Option types without a compatible form option fall back to the text form option.
+     * Maps the legacy option types without an equivalent form option to the ids of the form
+     * options with a compatible value format. Other legacy option types fall back to the text
+     * form option.
      *
      * @var array<string, string>
      */
     private const FORM_OPTION_TYPES = [
-        'aboutMe' => 'wysiwyg',
         'birthday' => 'date',
-        'boolean' => 'boolean',
-        'date' => 'date',
-        'float' => 'float',
-        'integer' => 'integer',
+    ];
+
+    /**
+     * Maps the legacy option types that are converted to form options.
+     *
+     * @var array<string, string>
+     * @since 6.3
+     */
+    public const LEGACY_OPTION_TYPES = [
+        'aboutMe' => 'wysiwyg',
+        'checkboxes' => 'checkboxes',
         'message' => 'wysiwyg',
-        'radioButton' => 'radioButton',
-        'select' => 'select',
-        'text' => 'text',
-        'textarea' => 'textarea',
-        'timezone' => 'timezone',
+        'multiSelect' => 'checkboxes',
         'URL' => 'url',
     ];
 
@@ -236,8 +238,8 @@ class UserOption extends Option implements ITitledObject
      */
     public function getFormOption(): IFormOption
     {
-        $formOption = null;
-        if (isset(self::FORM_OPTION_TYPES[$this->optionType])) {
+        $formOption = FormOptionHandler::getInstance()->getOption($this->optionType);
+        if ($formOption === null && isset(self::FORM_OPTION_TYPES[$this->optionType])) {
             $formOption = FormOptionHandler::getInstance()->getOption(self::FORM_OPTION_TYPES[$this->optionType]);
         }
 
@@ -388,8 +390,7 @@ class UserOption extends Option implements ITitledObject
     {
         return match ($this->optionType) {
             'birthday' => $this->formatBirthday($value, $user),
-            'aboutMe', 'message' => $this->formatMessage($value, $user),
-            'checkboxes', 'multiSelect' => $this->formatMultipleSelection($value),
+            'wysiwyg' => $this->formatMessage($value, $user),
             'labeledUrl' => $this->formatLabeledUrl($value),
             default => $this->getFormOption()->getFormatter()->format(
                 $value,
@@ -432,29 +433,6 @@ class UserOption extends Option implements ITitledObject
         }
 
         return $birthday;
-    }
-
-    /**
-     * Formats the values of the legacy multiple selection option types that
-     * are separated by newlines.
-     */
-    private function formatMultipleSelection(string $value): string
-    {
-        $formatter = new MultipleSelectionFormatter();
-        $configuration = $this->getConfiguration();
-        if (!isset($configuration['selectOptions'])) {
-            return StringUtil::encodeHTML($value);
-        }
-
-        $labels = [];
-        foreach (\explode("\n", StringUtil::unifyNewlines($value)) as $key) {
-            $label = $formatter->format($key, WCF::getLanguage()->languageID, $configuration);
-            if ($label !== '') {
-                $labels[] = $label;
-            }
-        }
-
-        return \implode(', ', $labels);
     }
 
     private function formatLabeledUrl(string $value): string

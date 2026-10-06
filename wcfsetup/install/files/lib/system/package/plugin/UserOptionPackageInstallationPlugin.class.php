@@ -8,7 +8,6 @@ use wcf\data\option\Option;
 use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryEditor;
 use wcf\data\user\option\UserOption;
-use wcf\data\user\option\UserOptionBuilder;
 use wcf\data\user\option\UserOptionEditor;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
@@ -122,7 +121,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
             $optionName = $option['name'];
         }
         if (isset($option['optiontype'])) {
-            $optionType = $option['optiontype'];
+            // Legacy option types with an equivalent form option are converted.
+            $optionType = UserOption::LEGACY_OPTION_TYPES[$option['optiontype']] ?? $option['optiontype'];
         }
         if (isset($option['defaultvalue'])) {
             $defaultValue = $option['defaultvalue'];
@@ -203,62 +203,21 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
             $data['searchable'] = \intval($option['searchable']);
         }
 
-        // the localized title/description are shipped as `wcf.user.option.*`
-        // language variables and synchronized into the l10n storage at the end
-        // of the installation, see `SyncL10nLanguageItems`
-        $l10nIdentifier = 'wcf.user.option.' . $optionName;
-
         // update option
         if (!empty($result['optionID']) && $this->installation->getAction() === 'update') {
             $userOption = new UserOption(null, $result);
-            $builder = UserOptionBuilder::forUpdate($userOption)
-                ->setL10nIdentifier($l10nIdentifier);
-            $this->applyOptionData($builder, $data, $additionalData);
-            $builder->update();
+            $userOptionEditor = new UserOptionEditor($userOption);
+            $userOptionEditor->update($data);
         } // insert new option
         else {
-            $builder = UserOptionBuilder::forCreate()
-                ->setOptionName($optionName)
-                ->setL10nIdentifier($l10nIdentifier)
-                ->setIsDisabled((bool)$isDisabled)
-                ->setPackageID($this->installation->getPackageID());
-            $this->applyOptionData($builder, $data, $additionalData);
-            $builder->create();
-        }
-    }
+            // append option name
+            $data['optionName'] = $optionName;
+            // append disabled state
+            $data['isDisabled'] = $isDisabled;
 
-    /**
-     * Applies the shared option data to the given builder.
-     *
-     * @param array<string, mixed> $data
-     * @param array<string, mixed> $additionalData
-     */
-    private function applyOptionData(UserOptionBuilder $builder, array $data, array $additionalData): void
-    {
-        $builder
-            ->setCategoryName($data['categoryName'])
-            ->setOptionType($data['optionType'])
-            ->setDefaultValue($data['defaultValue'])
-            ->setValidationPattern($data['validationPattern'])
-            ->setSelectOptions($data['selectOptions'])
-            ->setEnableOptions($data['enableOptions'])
-            ->setEditable((int)$data['editable'])
-            ->setVisible((int)$data['visible'])
-            ->setOutputClass($data['outputClass'])
-            ->setShowOrder((int)$data['showOrder'])
-            ->setPermissions($data['permissions'])
-            ->setOptions($data['options'])
-            ->setAdditionalData($additionalData)
-            ->setOriginIsSystem((bool)$data['originIsSystem']);
-
-        if (isset($data['required'])) {
-            $builder->setRequired((bool)$data['required']);
-        }
-        if (isset($data['askDuringRegistration'])) {
-            $builder->setAskDuringRegistration((bool)$data['askDuringRegistration']);
-        }
-        if (isset($data['searchable'])) {
-            $builder->setSearchable((bool)$data['searchable']);
+            // create option
+            $data['packageID'] = $this->installation->getPackageID();
+            UserOptionEditor::create($data);
         }
     }
 

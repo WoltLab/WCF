@@ -9,16 +9,14 @@ use wcf\data\user\option\category\UserOptionCategoryList;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionAction;
 use wcf\data\user\option\UserOptionEditor;
-use wcf\form\AbstractFormBuilderForm;
 use wcf\http\error\HtmlErrorRenderer;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IntegerFormField;
-use wcf\system\form\builder\field\ItemListFormField;
-use wcf\system\form\builder\field\MultilineItemListFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -35,9 +33,9 @@ use wcf\util\StringUtil;
  * @copyright   2001-2024 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @extends AbstractFormBuilderForm<UserOption>
+ * @extends AbstractFormOptionAddForm<UserOption>
  */
-class UserOptionAddForm extends AbstractFormBuilderForm
+class UserOptionAddForm extends AbstractFormOptionAddForm
 {
     /**
      * @inheritDoc
@@ -54,39 +52,6 @@ class UserOptionAddForm extends AbstractFormBuilderForm
      * @var UserOptionCategory[]
      */
     public array $availableCategories = [];
-    /**
-     * available option types
-     * @var string[]
-     */
-    public static $availableOptionTypes = [
-        'birthday',
-        'boolean',
-        'checkboxes',
-        'date',
-        'integer',
-        'float',
-        'password',
-        'multiSelect',
-        'radioButton',
-        'select',
-        'text',
-        'textarea',
-        'message',
-        'URL',
-        'labeledUrl',
-    ];
-
-    /**
-     * list of option type that require select options
-     * @var string[]
-     */
-    public static $optionTypesUsingSelectOptions = [
-        'checkboxes',
-        'multiSelect',
-        'radioButton',
-        'select',
-    ];
-
     /**
      * @inheritDoc
      */
@@ -162,26 +127,18 @@ class UserOptionAddForm extends AbstractFormBuilderForm
             FormContainer::create('typeDataContainer')
                 ->label('wcf.acp.user.option.typeData')
                 ->appendChildren([
-                    SingleSelectionFormField::create('optionType')
-                        ->label('wcf.acp.user.option.optionType')
-                        ->description('wcf.acp.user.option.optionType.description')
-                        ->required()
-                        ->immutable($this->formAction !== 'create')
-                        ->options(\array_combine(self::$availableOptionTypes, self::$availableOptionTypes))
-                        ->value('text'),
+                    $this->getOptionTypeFormField(),
+                    ...$this->getSharedConfigurationFormFields(),
                     TextFormField::create('defaultValue')
                         ->label('wcf.acp.user.option.defaultValue')
                         ->description('wcf.acp.user.option.defaultValue.description')
-                        ->addFieldClass('long'),
-                    MultilineItemListFormField::create('selectOptions')
-                        ->label('wcf.acp.user.option.selectOptions')
-                        ->description('wcf.acp.user.option.selectOptions.description')
-                        ->required()
-                        ->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_NSV)
+                        ->addFieldClass('long')
                         ->addDependency(
-                            ValueFormFieldDependency::create('optionType')
+                            // Text options provide their own default value in the configuration.
+                            ValueFormFieldDependency::create('defaultValueOptionTypeDependency')
                                 ->fieldId('optionType')
-                                ->values(self::$optionTypesUsingSelectOptions)
+                                ->negate()
+                                ->values(['text'])
                         ),
                     TextFormField::create('labeledUrl')
                         ->label('wcf.acp.user.option.labeledUrl')
@@ -246,12 +203,8 @@ class UserOptionAddForm extends AbstractFormBuilderForm
                         ->addDependency(
                             ValueFormFieldDependency::create('validationPatternOptionTypeDependency')
                                 ->fieldId('optionType')
-                                ->negate()
-                                ->values(self::$optionTypesUsingSelectOptions)
+                                ->values(['text', 'textarea', 'url', 'email', 'password', 'labeledUrl'])
                         ),
-                    BooleanFormField::create('required')
-                        ->label('wcf.acp.user.option.required')
-                        ->value(false),
                     BooleanFormField::create('askDuringRegistration')
                         ->label('wcf.acp.user.option.askDuringRegistration')
                         ->value(false),
@@ -266,7 +219,14 @@ class UserOptionAddForm extends AbstractFormBuilderForm
     }
 
     #[\Override]
-    protected function finalizeForm()
+    protected function getOptionTypeFormField(): SelectFormField
+    {
+        return parent::getOptionTypeFormField()
+            ->value('text');
+    }
+
+    #[\Override]
+    public function finalizeForm()
     {
         parent::finalizeForm();
 
@@ -300,7 +260,7 @@ class UserOptionAddForm extends AbstractFormBuilderForm
 
                         if ($parameters['data']['optionType'] === 'select') {
                             $additionalData['allowEmptyValue'] = true;
-                        } elseif ($parameters['data']['optionType'] === 'message') {
+                        } elseif ($parameters['data']['optionType'] === 'wysiwyg') {
                             $additionalData['messageObjectType'] = 'com.woltlab.wcf.user.option.generic';
                         }
 
@@ -315,7 +275,7 @@ class UserOptionAddForm extends AbstractFormBuilderForm
                     'defaultValueDataProcessor',
                     function (IFormDocument $document, array $parameters) {
                         $optionType = $parameters['data']['optionType'];
-                        $defaultValue = $parameters['data']['defaultValue'];
+                        $defaultValue = $parameters['data']['defaultValue'] ?? '';
 
                         $parameters['data']['defaultValue'] = match ($optionType) {
                             'boolean', 'integer' => \intval($defaultValue),

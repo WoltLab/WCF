@@ -135,7 +135,7 @@ final class RegisterForm extends AbstractDatabaseObjectBuilderForm
         }
 
         return $option->askDuringRegistration !== 0
-            || $option->required !== 0
+            || (bool)($option->getConfiguration()['required'] ?? false)
             || ($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION) !== 0
             || $this->isBirthdayWithMinimumAge($option);
     }

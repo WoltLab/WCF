@@ -301,8 +301,7 @@ final class UserGridView extends AbstractGridView
     private function getUserOptionColumns(): array
     {
         $options = $this->getUserOptionsByCategory('profile', static function (UserOption $option) {
-            return $option->optionType !== 'aboutMe'
-                && $option->optionType !== 'message'
+            return $option->optionType !== 'wysiwyg'
                 && $option->validateOptions()
                 && $option->validatePermissions();
         });

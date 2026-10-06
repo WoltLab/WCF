@@ -4,10 +4,13 @@ namespace wcf\acp\form;
 
 use wcf\acp\page\UserOptionListPage;
 use wcf\data\user\option\UserOption;
+use wcf\form\AbstractFormBuilderForm;
 use wcf\http\Helper;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\form\option\FormOptionHandler;
 use wcf\system\interaction\admin\UserOptionInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
+use wcf\system\language\I18nHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -28,7 +31,7 @@ class UserOptionEditForm extends UserOptionAddForm
     /**
      * @inheritDoc
      */
-    public string $formAction = 'edit';
+    public $formAction = 'edit';
 
     #[\Override]
     public function readParameters()
@@ -39,19 +42,38 @@ class UserOptionEditForm extends UserOptionAddForm
     }
 
     #[\Override]
-    protected function createForm(): void
+    public function createForm()
     {
         parent::createForm();
 
-        if ($this->formObject->optionName === 'aboutMe') {
+        // Options with a legacy type that has no equivalent form option keep their
+        // type, which must be available to display the immutable field.
+        if (FormOptionHandler::getInstance()->getOption($this->formObject->optionType) === null) {
             $optionType = $this->form->getNodeById('optionType');
-            \assert($optionType instanceof SingleSelectionFormField);
+            \assert($optionType instanceof SelectFormField);
 
             $optionType->options([
                 ...$optionType->getOptions(),
-                'aboutMe' => 'aboutMe',
+                $this->formObject->optionType => $this->formObject->optionType,
             ]);
         }
+    }
+
+    #[\Override]
+    public function saved()
+    {
+        I18nHandler::getInstance()->save(
+            'optionName',
+            'wcf.user.option.' . $this->formObject->optionName,
+            'wcf.user.option'
+        );
+        I18nHandler::getInstance()->save(
+            'optionDescription',
+            'wcf.user.option.' . $this->formObject->optionName . '.description',
+            'wcf.user.option'
+        );
+
+        AbstractFormBuilderForm::saved();
     }
 
     #[\Override]

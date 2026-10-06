@@ -51,7 +51,7 @@
 			<!-- profile -->
 			<option name="aboutMe">
 				<categoryname>profile.aboutMe</categoryname>
-				<optiontype>aboutMe</optiontype>
+				<optiontype>wysiwyg</optiontype>
 				<visible>15</visible>
 				<editable>3</editable>
 				<messageObjectType>com.woltlab.wcf.user.aboutMe</messageObjectType>
@@ -110,7 +110,7 @@
 			</option>
 			<option name="homepage">
 				<categoryname>profile.contact</categoryname>
-				<optiontype>URL</optiontype>
+				<optiontype>url</optiontype>
 				<validationpattern>^$|^https?://</validationpattern>
 				<searchable>1</searchable>
 				<visible>15</visible>
