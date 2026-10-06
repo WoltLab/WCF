@@ -178,6 +178,31 @@ final class UserBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    public function setDisableCoverPhoto(bool $disableCoverPhoto): static
+    {
+        $this->properties['disableCoverPhoto'] = (int)$disableCoverPhoto;
+
+        return $this;
+    }
+
+    public function setDisableCoverPhotoReason(?string $disableCoverPhotoReason): static
+    {
+        $this->properties['disableCoverPhotoReason'] = $disableCoverPhotoReason;
+
+        return $this;
+    }
+
+    /**
+     * Sets the timestamp at which the cover photo is enabled again, `0`
+     * disables the cover photo permanently.
+     */
+    public function setDisableCoverPhotoExpires(int $disableCoverPhotoExpires): static
+    {
+        $this->properties['disableCoverPhotoExpires'] = $disableCoverPhotoExpires;
+
+        return $this;
+    }
+
     public function setSignature(?string $signature): static
     {
         $this->properties['signature'] = $signature;

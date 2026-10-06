@@ -24,7 +24,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
   constructor() {
     this.header = document.querySelector(".userProfileHeader") as HTMLElement;
 
-    ["disableCoverPhoto", "disableSignature"].forEach((action) => {
+    ["disableSignature"].forEach((action) => {
       const button = document.querySelector(
         ".userProfileHeader__managementOptions .jsButtonUser" + StringUtil.ucfirst(action),
       ) as HTMLElement;
@@ -47,12 +47,6 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
     const action = target.dataset.action || "";
     let actionName = "";
     switch (action) {
-      case "disableCoverPhoto":
-        if (Core.stringToBool(this.header.dataset.disableCoverPhoto || "")) {
-          actionName = "enableCoverPhoto";
-        }
-        break;
-
       case "disableSignature":
         if (Core.stringToBool(this.header.dataset.disableSignature || "")) {
           actionName = "enableSignature";
@@ -106,17 +100,6 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
   _ajaxSuccess(data): void {
     let button: HTMLElement;
     switch (data.actionName) {
-      case "disableCoverPhoto":
-      case "enableCoverPhoto":
-        this.header.dataset.disableCoverPhoto = data.actionName === "disableCoverPhoto" ? "true" : "false";
-        button = document.querySelector(
-          ".userProfileHeader__managementOptions .jsButtonUserDisableCoverPhoto",
-        ) as HTMLElement;
-        button.textContent = getPhrase(
-          "wcf.user." + (data.actionName === "disableCoverPhoto" ? "enable" : "disable") + "CoverPhoto",
-        );
-        break;
-
       case "disableSignature":
       case "enableSignature":
         this.header.dataset.disableSignature = data.actionName === "disableSignature" ? "true" : "false";
@@ -129,7 +112,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
         break;
     }
 
-    if (["disableCoverPhoto", "disableSignature"].indexOf(data.actionName) !== -1) {
+    if (["disableSignature"].indexOf(data.actionName) !== -1) {
       UiDialog.close(this);
     }
 

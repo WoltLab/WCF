@@ -5,6 +5,7 @@ namespace wcf\system\interaction\user;
 use wcf\acp\form\UserEditForm;
 use wcf\action\UserBanAction;
 use wcf\action\UserDisableAvatarAction;
+use wcf\action\UserDisableCoverPhotoAction;
 use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
@@ -65,6 +66,22 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                     && $user->canDisableAvatar(),
                 interactionEffect: InteractionEffect::ReloadPage
             ),
+            new FormBuilderDialogInteraction(
+                'disable-cover-photo',
+                LinkHandler::getInstance()->getControllerLink(UserDisableCoverPhotoAction::class, ['id' => '%s']),
+                'wcf.user.disableCoverPhoto',
+                static fn(UserProfile $user) => $user->disableCoverPhoto === 0
+                    && $user->canDisableCoverPhoto(),
+                InteractionEffect::ReloadPage
+            ),
+            new RpcInteraction(
+                'enable-cover-photo',
+                'core/users/%s/enable-cover-photo',
+                'wcf.user.enableCoverPhoto',
+                isAvailableCallback: static fn(UserProfile $user) => $user->disableCoverPhoto === 1
+                    && $user->canDisableCoverPhoto(),
+                interactionEffect: InteractionEffect::ReloadPage
+            ),
         ]);
         if (WCF::getSession()->hasPermission('admin.user.canDisableSignature')) {
             $this->addInteraction(
@@ -82,28 +99,6 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                             <button
                                 type="button"
                                 class="jsButtonUserDisableSignature"
-                            >{$title}</button>
-                            HTML;
-                    }
-                }
-            );
-        }
-        if (WCF::getSession()->hasPermission('admin.user.canDisableCoverPhoto')) {
-            $this->addInteraction(
-                new class(
-                    'disable-cover-photo',
-                    static fn(UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID
-                ) extends AbstractInteraction {
-                    #[\Override]
-                    public function render(DatabaseObject $object): string
-                    {
-                        \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->disableCoverPhoto !== 0 ? 'wcf.user.enableCoverPhoto' : 'wcf.user.disableCoverPhoto');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                class="jsButtonUserDisableCoverPhoto"
                             >{$title}</button>
                             HTML;
                     }

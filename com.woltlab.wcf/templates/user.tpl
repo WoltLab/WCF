@@ -5,17 +5,11 @@
 	<script data-relocate="true">
 		{if !$__wcf->getUser()->isGuest() && $__wcf->getUser()->userID != $user->userID}
 			require(['WoltLabSuite/Core/Ui/User/Editor'], function(UiUserEditor) {
-				{jsphrase name='wcf.user.disableCoverPhoto'}
-				{jsphrase name='wcf.user.disableCoverPhoto.confirmMessage'}
-				{jsphrase name='wcf.user.disableCoverPhoto.expires'}
-				{jsphrase name='wcf.user.disableCoverPhoto.expires.description'}
-				{jsphrase name='wcf.user.disableCoverPhoto.neverExpires'}
 				{jsphrase name='wcf.user.disableSignature'}
 				{jsphrase name='wcf.user.disableSignature.confirmMessage'}
 				{jsphrase name='wcf.user.disableSignature.expires'}
 				{jsphrase name='wcf.user.disableSignature.expires.description'}
 				{jsphrase name='wcf.user.disableSignature.neverExpires'}
-				{jsphrase name='wcf.user.enableCoverPhoto'}
 				{jsphrase name='wcf.user.enableSignature'}
 				
 				{if $isAccessible}

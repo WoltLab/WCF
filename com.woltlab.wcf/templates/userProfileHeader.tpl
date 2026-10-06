@@ -5,9 +5,6 @@
 		{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
 			data-disable-signature="{$view->user->disableSignature}"
 		{/if}
-		{if $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}
-			data-disable-cover-photo="{$view->user->disableCoverPhoto}"
-		{/if}
 	{/if}
 >
 	<div class="userProfileHeader__coverPhotoContainer">

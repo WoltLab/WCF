@@ -6,6 +6,7 @@ use wcf\acp\action\UserExportGdprAction;
 use wcf\acp\form\UserMailForm;
 use wcf\action\UserBanAction;
 use wcf\action\UserDisableAvatarAction;
+use wcf\action\UserDisableCoverPhotoAction;
 use wcf\data\user\User;
 use wcf\event\interaction\admin\UserInteractionCollecting;
 use wcf\system\event\EventHandler;
@@ -108,6 +109,22 @@ final class UserInteractions extends AbstractInteractionProvider
                 'wcf.user.enableAvatar',
                 isAvailableCallback: static fn(User $user) => $user->disableAvatar === 1
                     && $user->canDisableAvatar(),
+                interactionEffect: InteractionEffect::ReloadPage
+            ),
+            new FormBuilderDialogInteraction(
+                'disable-cover-photo',
+                LinkHandler::getInstance()->getControllerLink(UserDisableCoverPhotoAction::class, ['id' => '%s']),
+                'wcf.user.disableCoverPhoto',
+                static fn(User $user) => $user->disableCoverPhoto === 0
+                    && $user->canDisableCoverPhoto(),
+                InteractionEffect::ReloadPage
+            ),
+            new RpcInteraction(
+                'enable-cover-photo',
+                'core/users/%s/enable-cover-photo',
+                'wcf.user.enableCoverPhoto',
+                isAvailableCallback: static fn(User $user) => $user->disableCoverPhoto === 1
+                    && $user->canDisableCoverPhoto(),
                 interactionEffect: InteractionEffect::ReloadPage
             ),
             new LinkInteraction(
