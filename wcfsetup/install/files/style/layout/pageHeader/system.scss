@@ -208,7 +208,6 @@
 	.mainMenu .boxMenu > li.active > .boxMenuLink {
 		background-color: var(--wcfHeaderMenuLinkBackgroundActive);
 		color: var(--wcfHeaderMenuLinkActive);
-		font-weight: 600;
 	}
 
 	/* An open submenu continues the item's fill into the panel ("tray"). The tray uses the
@@ -312,10 +311,6 @@
 		&:hover {
 			background-color: var(--wcfHeaderMenuDropdownBackgroundActive);
 			color: var(--wcfHeaderMenuDropdownLinkActive);
-		}
-
-		&[aria-current="page"] {
-			font-weight: 600;
 		}
 	}
 
@@ -736,7 +731,6 @@
 		&[aria-current="page"] {
 			background-color: var(--wcfUserMenuBackgroundActive);
 			color: var(--wcfUserMenuTextActive);
-			font-weight: 600;
 		}
 	}
 
@@ -872,10 +866,6 @@
 		&[aria-current="true"] {
 			background-color: var(--wcfUserMenuBackgroundActive);
 			color: var(--wcfUserMenuTextActive);
-		}
-
-		&[aria-current="true"] {
-			font-weight: 600;
 		}
 	}
 
