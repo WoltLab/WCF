@@ -1022,6 +1022,61 @@
 	}
 }
 
+/* Breadcrumbs without the bar, the space comes out of the padding of `.main`. `ui/breadcrumb.scss`
+   is compiled after this file, the selectors must outrank it. */
+@include screen-md-up {
+	.pageNavigation:has(.breadcrumbs) {
+		background-color: transparent;
+		color: var(--wcfContentDimmedText);
+		padding-bottom: 0;
+		padding-top: 20px;
+	}
+
+	.pageNavigation:not(:has(.breadcrumbs)) {
+		display: none;
+	}
+
+	.pageNavigation:has(.breadcrumbs) + .main {
+		padding-top: 10px;
+	}
+
+	.pageNavigation .breadcrumbs__link,
+	.pageNavigation .breadcrumbs__link:hover {
+		color: inherit;
+	}
+
+	/* Flex drops the whitespace between the link and the separator. */
+	.pageNavigation .breadcrumbs__item {
+		align-items: center;
+		column-gap: 5px;
+		display: flex;
+	}
+
+	.pageNavigation .breadcrumbs__item:not(:last-child) {
+		margin-right: 5px;
+	}
+
+	/* The chevron of the ACP breadcrumbs, a mask keeps the markup shared with the classic header. */
+	.pageNavigation .breadcrumbs__item:not(:last-child)::after {
+		background-color: currentColor;
+		color: inherit;
+		content: "";
+		flex: 0 0 auto;
+		height: 12px;
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E")
+			center / contain no-repeat;
+		width: 12px;
+	}
+
+	html[dir="rtl"] .pageNavigation .breadcrumbs__item:not(:last-child)::after {
+		transform: scaleX(-1);
+	}
+
+	.pageNavigation .breadcrumbs__item:not(:last-child) .breadcrumbs__link {
+		margin-right: 0;
+	}
+}
+
 /* The auth flow keeps the classic, logo-only header for every style, see `authFlowHeader.tpl`. */
 .authFlow .pageHeaderContainer {
 	background-color: var(--wcfHeaderBackground);

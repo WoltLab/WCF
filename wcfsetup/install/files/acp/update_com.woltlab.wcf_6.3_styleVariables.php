@@ -8,6 +8,7 @@ $styleVariables = [
     ['wcfHeaderMenuDropdownBackgroundActive', 'rgba(65, 121, 173, 1)', 'rgba(63, 82, 112, 1)'],
     ['wcfHeaderSearchBoxPlaceholder', 'rgba(218, 218, 218, 1)', 'rgba(207, 207, 207, 1)'],
     ['wcfHeaderSearchBoxPlaceholderActive', 'rgba(218, 218, 218, 1)', 'rgba(207, 207, 207, 1)'],
+    ['wcfContentDimmedText', 'rgba(106, 110, 115, 1)', 'rgba(139, 141, 144, 1)'],
 ];
 
 $sql = "INSERT INTO             wcf1_style_variable
