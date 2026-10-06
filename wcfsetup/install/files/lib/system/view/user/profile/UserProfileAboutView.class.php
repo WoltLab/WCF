@@ -98,11 +98,7 @@ final class UserProfileAboutView
             $formattedValue = match ($option->optionType) {
                 'birthday' => $this->user->getBirthday(),
                 'aboutMe', 'message' => $this->formatMessage($option, (string)$value),
-                default => $option->getFormOption()->getFormatter()->format(
-                    (string)$value,
-                    WCF::getLanguage()->languageID,
-                    $option->getConfiguration()
-                ),
+                default => $option->getFormattedValue((string)$value),
             };
 
             if ($formattedValue === '') {

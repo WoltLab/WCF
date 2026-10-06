@@ -334,11 +334,7 @@ final class UserGridView extends AbstractGridView
                     return '';
                 }
 
-                return $this->option->getFormOption()->getFormatter()->format(
-                    $value,
-                    WCF::getLanguage()->languageID,
-                    $this->option->getConfiguration()
-                );
+                return $this->option->getFormattedValue($value);
             }
         };
     }

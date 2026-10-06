@@ -373,4 +373,16 @@ class UserOption extends Option implements ITitledObject
     {
         $this->data['required'] = $isRequired ? 1 : 0;
     }
+
+    /**
+     * @since 6.3
+     */
+    public function getFormattedValue(string $value): string
+    {
+        return $this->getFormOption()->getFormatter()->format(
+            $value,
+            WCF::getLanguage()->languageID,
+            $this->getConfiguration()
+        );
+    }
 }
