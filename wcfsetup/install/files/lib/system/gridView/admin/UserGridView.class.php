@@ -334,7 +334,9 @@ final class UserGridView extends AbstractGridView
                     return '';
                 }
 
-                return $this->option->getFormattedValue($value);
+                \assert($row instanceof User);
+
+                return $this->option->getFormattedValue($value, $row);
             }
         };
     }

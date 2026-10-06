@@ -97,6 +97,17 @@
 		<file>lib/system/upload/AvatarUploadFileValidationStrategy.class.php</file>
 		<file>lib/system/upload/UserCoverPhotoUploadFileSaveStrategy.class.php</file>
 		<file>lib/system/upload/UserCoverPhotoUploadFileValidationStrategy.class.php</file>
+		<file>lib/system/option/user/BirthdayUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/DateUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/FacebookUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/FloatUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/ImageUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/LabeledUrlUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/MessageUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/NewlineToBreakUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/SelectOptionsUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/TwitterUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/URLUserOptionOutput.class.php</file>
 
 		<file>icon/font-awesome/v6/brands/42-group.svg</file>
 		<file>icon/font-awesome/v6/brands/500px.svg</file>

@@ -221,13 +221,6 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
-    public function setOutputClass(string $outputClass): static
-    {
-        $this->properties['outputClass'] = $outputClass;
-
-        return $this;
-    }
-
     public function setPermissions(string $permissions): static
     {
         $this->properties['permissions'] = $permissions;

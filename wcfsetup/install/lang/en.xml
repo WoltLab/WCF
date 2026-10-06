@@ -2486,7 +2486,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.userOption.options.editable.description"><![CDATA[The user option value can only be edited by the selected group of users.]]></item>
 		<item name="wcf.acp.pip.userOption.options.visible"><![CDATA[Visibility]]></item>
 		<item name="wcf.acp.pip.userOption.options.visible.description"><![CDATA[The user option value is only visible for the selected group of users.]]></item>
-		<item name="wcf.acp.pip.userOption.options.outputClass"><![CDATA[PHP class for custom output format]]></item>
 		<item name="wcf.acp.pip.userOption.options.searchable"><![CDATA[User option value is searchable]]></item>
 		<item name="wcf.acp.pip.userOption.options.searchable.description"><![CDATA[Users can search this user option in the member search.]]></item>
 		<item name="wcf.acp.pip.userOption.options.isDisabled"><![CDATA[Disable User Option]]></item>
@@ -3061,9 +3060,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.option.visible.7"><![CDATA[Registered Users]]></item>
 		<item name="wcf.acp.user.option.visible.15"><![CDATA[Everyone]]></item>
 		<item name="wcf.acp.user.option.typeData"><![CDATA[Properties]]></item>
-		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP Class Name for Output]]></item>
-		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Allows custom output formatting using a PHP class.]]></item>
-		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
 		<item name="wcf.acp.user.option.error.noCategories"><![CDATA[Please <a href="{link controller='UserOptionCategoryAdd'}{/link}">add a user field category</a> before creating custom user fields.]]></item>
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Update Points per Activity]]></item>
@@ -5536,6 +5532,7 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.modificationLog.time.beforeDate"/>
 	<item name="wcf.acp.modificationLog.unsupportedObjectTypes"/>
 	<item name="wcf.acp.option.google_maps_zoom.description"/>
+	<item name="wcf.acp.pip.userOption.options.outputClass"/>
 	<item name="wcf.acp.reactionType.showOrder.description"/>
 	<item name="wcf.acp.reactionType.type"/>
 	<item name="wcf.acp.smiley.category.add"/>
@@ -5546,6 +5543,9 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.option.category.add"/>
 	<item name="wcf.acp.user.option.category.edit"/>
 	<item name="wcf.acp.user.option.category.list"/>
+	<item name="wcf.acp.user.option.outputClass"/>
+	<item name="wcf.acp.user.option.outputClass.description"/>
+	<item name="wcf.acp.user.option.outputClass.error.doesNotExist"/>
 	<item name="wcf.article.showArticlesWritten"/>
 	<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete"/>
 	<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"/>

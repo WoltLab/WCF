@@ -5,11 +5,6 @@ namespace wcf\data\user\option;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\user\User;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
-use wcf\system\exception\ClassNotFoundException;
-use wcf\system\exception\ImplementationException;
-use wcf\system\exception\SystemException;
-use wcf\system\option\user\IUserOptionOutput;
-use wcf\util\StringUtil;
 
 /**
  * Represents a viewable user option.
@@ -27,12 +22,6 @@ class ViewableUserOption extends DatabaseObjectDecorator
      * @inheritDoc
      */
     protected static $baseClass = UserOption::class;
-
-    /**
-     * list of output objects
-     * @var IUserOptionOutput[]
-     */
-    public static $outputObjects = [];
 
     /**
      * cached user options
@@ -53,41 +42,14 @@ class ViewableUserOption extends DatabaseObjectDecorator
      */
     public function setOptionValue(User $user)
     {
-        $userOption = 'userOption' . $this->optionID;
-        $optionValue = $user->{$userOption};
+        $optionValue = (string)$user->{$this->getIdentifier()};
+        if ($optionValue === '' || $optionValue === '0000-00-00') {
+            $this->optionValue = '';
 
-        // use output class
-        if ($this->outputClass !== '') {
-            $outputObj = $this->getOutputObject();
-            $this->optionValue = $outputObj->getOutput($user, $this->getDecoratedObject(), $optionValue);
-        } else {
-            $this->optionValue = StringUtil::encodeHTML($optionValue);
-        }
-    }
-
-    /**
-     * Returns the output object for current user option.
-     *
-     * @return  IUserOptionOutput
-     * @throws  SystemException
-     */
-    public function getOutputObject()
-    {
-        if (!isset(self::$outputObjects[$this->outputClass])) {
-            // create instance
-            if (!\class_exists($this->outputClass)) {
-                throw new ClassNotFoundException($this->outputClass);
-            }
-
-            // validate interface
-            if (!\is_subclass_of($this->outputClass, IUserOptionOutput::class)) {
-                throw new ImplementationException($this->outputClass, IUserOptionOutput::class);
-            }
-
-            self::$outputObjects[$this->outputClass] = new $this->outputClass();
+            return;
         }
 
-        return self::$outputObjects[$this->outputClass];
+        $this->optionValue = $this->getDecoratedObject()->getFormattedValue($optionValue, $user);
     }
 
     /**

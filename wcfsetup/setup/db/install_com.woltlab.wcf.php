@@ -4810,8 +4810,6 @@ return [
             TinyintDatabaseTableColumn::create('visible')
                 ->notNull()
                 ->defaultValue(0),
-            NotNullVarchar255DatabaseTableColumn::create('outputClass')
-                ->defaultValue(''),
             DefaultFalseBooleanDatabaseTableColumn::create('searchable'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),

@@ -7,9 +7,15 @@ use wcf\data\option\Option;
 use wcf\data\user\User;
 use wcf\system\l10n\L10nDefinition;
 use wcf\system\l10n\L10nStorage;
+use wcf\system\form\option\formatter\MultipleSelectionFormatter;
+use wcf\system\form\option\formatter\WysiwygFormatter;
 use wcf\system\form\option\FormOptionHandler;
 use wcf\system\form\option\IFormOption;
+use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
+use wcf\util\DateUtil;
+use wcf\util\StringUtil;
 
 /**
  * Represents a user option.
@@ -23,7 +29,6 @@ use wcf\system\WCF;
  * @property-read   0|1     $askDuringRegistration  is `1` if the user option will be shown during registration to be filled out, otherwise `0`
  * @property-read   int     $editable           setting for who can edit the user option, see `UserOption::EDITABILITY_*` constants
  * @property-read   int     $visible            setting for who can see the user option, see `UserOption::VISIBILITY_*` constants
- * @property-read   string  $outputClass        name of the PHP class implementing `wcf\system\option\user\IUserOptionOutput` for outputting the user option in the user profile
  * @property-read   0|1     $searchable         is `1` if the user option can be searched, otherwise `0`
  * @property-read   0|1     $isDisabled         is `1` if the user option is disabled and thus neither shown nor editable, otherwise `0`
  * @property-read   0|1     $originIsSystem     is `1` if the user option was created by the system and not manually by an administrator, otherwise `0`
@@ -375,14 +380,109 @@ class UserOption extends Option implements ITitledObject
     }
 
     /**
+     * Returns the formatted value of this option for the given user.
+     *
      * @since 6.3
      */
-    public function getFormattedValue(string $value): string
+    public function getFormattedValue(string $value, User $user): string
     {
-        return $this->getFormOption()->getFormatter()->format(
+        return match ($this->optionType) {
+            'birthday' => $this->formatBirthday($value, $user),
+            'aboutMe', 'message' => $this->formatMessage($value, $user),
+            'checkboxes', 'multiSelect' => $this->formatMultipleSelection($value),
+            'labeledUrl' => $this->formatLabeledUrl($value),
+            default => $this->getFormOption()->getFormatter()->format(
+                $value,
+                WCF::getLanguage()->languageID,
+                $this->getConfiguration()
+            ),
+        };
+    }
+
+    /**
+     * Formats the birthday, the year and the age are only shown if the user
+     * allows it or the active user can view private user options.
+     */
+    private function formatBirthday(string $value, User $user): string
+    {
+        $parts = \explode('-', $value);
+        $birthdayYear = (int)$parts[0];
+        $month = (int)($parts[1] ?? 0);
+        $day = (int)($parts[2] ?? 0);
+        if ($month === 0 || $day === 0) {
+            return '';
+        }
+
+        $showYear = $birthdayYear !== 0
+            && ((bool)$user->birthdayShowYear || WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions'));
+
+        $dateFormat = WCF::getLanguage()->get(DateUtil::DATE_FORMAT);
+        if (!$showYear) {
+            $dateFormat = \str_replace('Y', '', $dateFormat);
+        }
+
+        $date = new \DateTimeImmutable($value, WCF::getUser()->getTimeZone());
+        $birthday = DateUtil::localizeDate($date->format($dateFormat), $dateFormat, WCF::getLanguage());
+
+        if ($showYear) {
+            $age = DateUtil::getAge($value);
+            if ($age > 0) {
+                $birthday .= ' (' . $age . ')';
+            }
+        }
+
+        return $birthday;
+    }
+
+    /**
+     * Formats the values of the legacy multiple selection option types that
+     * are separated by newlines.
+     */
+    private function formatMultipleSelection(string $value): string
+    {
+        $formatter = new MultipleSelectionFormatter();
+        $configuration = $this->getConfiguration();
+        if (!isset($configuration['selectOptions'])) {
+            return StringUtil::encodeHTML($value);
+        }
+
+        $labels = [];
+        foreach (\explode("\n", StringUtil::unifyNewlines($value)) as $key) {
+            $label = $formatter->format($key, WCF::getLanguage()->languageID, $configuration);
+            if ($label !== '') {
+                $labels[] = $label;
+            }
+        }
+
+        return \implode(', ', $labels);
+    }
+
+    private function formatLabeledUrl(string $value): string
+    {
+        $url = \sprintf($this->labeledUrl, \rawurlencode($value));
+        if (!\preg_match('~^https?://~i', $url)) {
+            return StringUtil::encodeHTML($value);
+        }
+
+        return StringUtil::getAnchorTag($url, $value, true, true);
+    }
+
+    private function formatMessage(string $value, User $user): string
+    {
+        $objectType = $this->messageObjectType ?: 'com.woltlab.wcf.user.aboutMe';
+
+        // Load embedded objects by parsing the original message again because for the user options, there
+        // is no central way to save the embedded objects in the database.
+        $htmlInputProcessor = new HtmlInputProcessor();
+        $htmlInputProcessor->setContext($objectType, $user->userID);
+        $htmlInputProcessor->processIntermediate($value);
+        $htmlInputProcessor->processEmbeddedContent($value, $objectType, $user->userID);
+        MessageEmbeddedObjectManager::getInstance()->registerTemporaryMessage($htmlInputProcessor);
+
+        return (new WysiwygFormatter($objectType, $user->userID))->format(
             $value,
             WCF::getLanguage()->languageID,
-            $this->getConfiguration()
+            []
         );
     }
 }

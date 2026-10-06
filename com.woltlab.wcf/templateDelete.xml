@@ -127,5 +127,6 @@
 		<template>selectSearchableOptionType</template>
 		<template>textSearchableOptionType</template>
 		<template>textareaSearchableOptionType</template>
+		<template>messageUserOptionOutput</template>
 	</delete>
 </data>

@@ -15,7 +15,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
-use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
@@ -23,7 +22,6 @@ use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
-use wcf\system\option\user\IUserOptionOutput;
 use wcf\system\option\user\UserOptionHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -68,6 +66,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
         'visible',
         'searchable',
         'showorder',
+        // no longer supported, ignored for backwards compatibility
         'outputclass',
         'selectoptions',
         'enableoptions',
@@ -114,7 +113,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
     protected function saveOption(array $option, string $categoryName, int $existingOptionID = 0)
     {
         // default values
-        $optionName = $optionType = $validationPattern = $outputClass = $selectOptions = $enableOptions = $permissions = $options = '';
+        $optionName = $optionType = $validationPattern = $selectOptions = $enableOptions = $permissions = $options = '';
         $editable = $visible = $isDisabled = 0;
         $defaultValue = $showOrder = null;
 
@@ -139,9 +138,6 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
         }
         if (isset($option['showorder'])) {
             $showOrder = \intval($option['showorder']);
-        }
-        if (isset($option['outputclass'])) {
-            $outputClass = $option['outputclass'];
         }
         if (isset($option['selectoptions'])) {
             $selectOptions = $option['selectoptions'];
@@ -190,7 +186,6 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
             'enableOptions' => $enableOptions,
             'editable' => $editable,
             'visible' => $visible,
-            'outputClass' => $outputClass,
             'showOrder' => $showOrder,
             'permissions' => $permissions,
             'options' => $options,
@@ -358,11 +353,6 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
                         15 => 'wcf.acp.user.option.visible.15',
                     ]),
 
-                ClassNameFormField::create('outputClass')
-                    ->objectProperty('outputclass')
-                    ->label('wcf.acp.pip.userOption.options.outputClass')
-                    ->implementedInterface(IUserOptionOutput::class),
-
                 BooleanFormField::create('searchable')
                     ->label('wcf.acp.pip.userOption.options.searchable')
                     ->description('wcf.acp.pip.userOption.options.searchable.description'),
@@ -448,7 +438,6 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
                     'askDuringRegistration',
                     'editable',
                     'visible',
-                    'outputClass',
                     'searchable',
                     'isDisabled',
                     'contentPattern',
@@ -528,7 +517,6 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
                     $option,
                     [
                         'selectoptions' => '',
-                        'outputclass' => '',
                         'required' => 0,
                         'askduringregistration' => 0,
                         'searchable' => 0,

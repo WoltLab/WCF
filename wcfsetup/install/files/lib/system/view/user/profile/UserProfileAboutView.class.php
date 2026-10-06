@@ -4,11 +4,7 @@ namespace wcf\system\view\user\profile;
 
 use wcf\data\user\option\UserOption;
 use wcf\data\user\UserProfile;
-use wcf\system\form\option\formatter\WysiwygFormatter;
-use wcf\system\html\input\HtmlInputProcessor;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\option\user\TUserOptionsByCategory;
-use wcf\system\WCF;
 
 /**
  * Represents the view for the "About" tab of the user profile.
@@ -95,11 +91,7 @@ final class UserProfileAboutView
                 continue;
             }
 
-            $formattedValue = match ($option->optionType) {
-                'birthday' => $this->user->getBirthday(),
-                'aboutMe', 'message' => $this->formatMessage($option, (string)$value),
-                default => $option->getFormattedValue((string)$value),
-            };
+            $formattedValue = $option->getFormattedValue((string)$value, $this->user->getDecoratedObject());
 
             if ($formattedValue === '') {
                 continue;
@@ -112,24 +104,5 @@ final class UserProfileAboutView
         }
 
         return $output;
-    }
-
-    private function formatMessage(UserOption $option, string $value): string
-    {
-        $objectType = $option->messageObjectType ?: 'com.woltlab.wcf.user.aboutMe';
-
-        // Load embedded objects by parsing the original message again because for the user options, there
-        // is no central way to save the embedded objects in the database.
-        $htmlInputProcessor = new HtmlInputProcessor();
-        $htmlInputProcessor->setContext($objectType, $this->user->userID);
-        $htmlInputProcessor->processIntermediate($value);
-        $htmlInputProcessor->processEmbeddedContent($value, $objectType, $this->user->userID);
-        MessageEmbeddedObjectManager::getInstance()->registerTemporaryMessage($htmlInputProcessor);
-
-        return (new WysiwygFormatter($objectType, $this->user->userID))->format(
-            $value,
-            WCF::getLanguage()->languageID,
-            []
-        );
     }
 }

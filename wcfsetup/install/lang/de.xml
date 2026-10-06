@@ -2275,7 +2275,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.userOption.options.searchable"><![CDATA[Benutzereinstellung ist durchsuchbar]]></item>
 		<item name="wcf.acp.pip.userOption.options.required.description"><![CDATA[Benutzer müssen das Feld der Einstellung ausfüllen.]]></item>
 		<item name="wcf.acp.pip.userOption.options.required"><![CDATA[Muss angegeben werden]]></item>
-		<item name="wcf.acp.pip.userOption.options.outputClass"><![CDATA[PHP-Klasse für ein spezielles Ausgabegabeformat]]></item>
 		<item name="wcf.acp.pip.userOption.options.optionType.description"><![CDATA[Der Optionstyp bestimmt die Art und Weise, wie der Wert der Benutzereinstellung angegeben werden kann und welche (Arten von) Werte die Einstellung haben kann.]]></item>
 		<item name="wcf.acp.pip.userOption.options.messageObjectType.description"><![CDATA[Der Nachrichten-Objekttyp wird dem <kbd>wcf\system\html\input\HtmlInputProcessor</kbd>-Objekt übergeben, dass den Wert der Benutzereinstellung verarbeitet.]]></item>
 		<item name="wcf.acp.pip.userOption.options.messageObjectType"><![CDATA[Nachrichten-Objekttyp]]></item>
@@ -3132,9 +3131,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.option.visible.7"><![CDATA[Registrierte Benutzer]]></item>
 		<item name="wcf.acp.user.option.visible.15"><![CDATA[Jeder]]></item>
 		<item name="wcf.acp.user.option.typeData"><![CDATA[Eigenschaften]]></item>
-		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP-Klasse für Ausgabe]]></item>
-		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Erlaubt die Angabe einer speziellen PHP-Klasse für die Ausgabeformatierung bei der Anzeige des Feldes.]]></item>
-		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 		<item name="wcf.acp.user.option.error.noCategories"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein Benutzerprofilfeld hinzufügen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} eine <a href="{link controller='UserOptionCategoryAdd'}{/link}">Benutzerprofilfeld-Kategorie hinzufügen</a>.]]></item>
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Aktivitätspunkte]]></item>
 		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Punkte pro Aktivität aktualisieren]]></item>
@@ -5541,6 +5537,7 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.modificationLog.time.beforeDate"/>
 	<item name="wcf.acp.modificationLog.unsupportedObjectTypes"/>
 	<item name="wcf.acp.option.google_maps_zoom.description"/>
+	<item name="wcf.acp.pip.userOption.options.outputClass"/>
 	<item name="wcf.acp.reactionType.showOrder.description"/>
 	<item name="wcf.acp.reactionType.type"/>
 	<item name="wcf.acp.smiley.category.add"/>
@@ -5551,6 +5548,9 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.option.category.add"/>
 	<item name="wcf.acp.user.option.category.edit"/>
 	<item name="wcf.acp.user.option.category.list"/>
+	<item name="wcf.acp.user.option.outputClass"/>
+	<item name="wcf.acp.user.option.outputClass.description"/>
+	<item name="wcf.acp.user.option.outputClass.error.doesNotExist"/>
 	<item name="wcf.article.showArticlesWritten"/>
 	<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete"/>
 	<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"/>

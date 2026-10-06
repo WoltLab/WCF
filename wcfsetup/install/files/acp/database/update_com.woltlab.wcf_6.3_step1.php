@@ -68,6 +68,9 @@ return [
         ->columns([
             DefaultFalseBooleanDatabaseTableColumn::create('showOnUserCard'),
             MediumtextDatabaseTableColumn::create('configuration'),
+            NotNullVarchar255DatabaseTableColumn::create('outputClass')
+                ->defaultValue('')
+                ->drop(),
             VarcharDatabaseTableColumn::create('l10nIdentifier')
                 ->length(255),
         ]),

@@ -52,7 +52,6 @@
 			<option name="aboutMe">
 				<categoryname>profile.aboutMe</categoryname>
 				<optiontype>aboutMe</optiontype>
-				<outputclass>wcf\system\option\user\MessageUserOptionOutput</outputclass>
 				<visible>15</visible>
 				<editable>3</editable>
 				<messageObjectType>com.woltlab.wcf.user.aboutMe</messageObjectType>
@@ -60,7 +59,6 @@
 			<option name="birthday">
 				<categoryname>profile.personal</categoryname>
 				<optiontype>birthday</optiontype>
-				<outputclass>wcf\system\option\user\BirthdayUserOptionOutput</outputclass>
 				<searchable>1</searchable>
 				<visible>15</visible>
 				<editable>3</editable>
@@ -79,7 +77,6 @@
 1:wcf.user.gender.male
 2:wcf.user.gender.female
 3:wcf.user.gender.other</selectoptions>
-				<outputclass>wcf\system\option\user\SelectOptionsUserOptionOutput</outputclass>
 				<searchable>1</searchable>
 				<visible>15</visible>
 				<editable>3</editable>
@@ -108,7 +105,6 @@
 			<option name="adminComment">
 				<categoryname>profile.personal</categoryname>
 				<optiontype>textarea</optiontype>
-				<outputclass>wcf\system\option\user\NewlineToBreakUserOptionOutput</outputclass>
 				<visible>2</visible>
 				<editable>2</editable>
 			</option>
@@ -116,7 +112,6 @@
 				<categoryname>profile.contact</categoryname>
 				<optiontype>URL</optiontype>
 				<validationpattern>^$|^https?://</validationpattern>
-				<outputclass>wcf\system\option\user\URLUserOptionOutput</outputclass>
 				<searchable>1</searchable>
 				<visible>15</visible>
 				<editable>3</editable>
@@ -125,7 +120,6 @@
 				<categoryname>profile.contact</categoryname>
 				<optiontype>text</optiontype>
 				<validationpattern>^$|^[A-Za-z\d.]{5,}$</validationpattern>
-				<outputclass>wcf\system\option\user\FacebookUserOptionOutput</outputclass>
 				<searchable>1</searchable>
 				<visible>15</visible>
 				<editable>3</editable>
@@ -135,7 +129,6 @@
 				<categoryname>profile.contact</categoryname>
 				<optiontype>text</optiontype>
 				<validationpattern>^$|^[A-Za-z0-9_]+$</validationpattern>
-				<outputclass>wcf\system\option\user\TwitterUserOptionOutput</outputclass>
 				<searchable>1</searchable>
 				<visible>15</visible>
 				<editable>3</editable>
