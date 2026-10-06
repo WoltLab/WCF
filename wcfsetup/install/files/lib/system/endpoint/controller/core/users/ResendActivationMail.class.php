@@ -9,7 +9,7 @@ use wcf\data\user\User;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\user\UserAdministrationPolicy;
+use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Sends a new activation email to the user with the given ID.
@@ -27,7 +27,9 @@ final class ResendActivationMail implements IController
     {
         $user = Helper::fetchObjectFromRequestParameter($variables['id'], User::class);
 
-        UserAdministrationPolicy::assertCanResendActivationMail($user);
+        if (!$user->canResendActivationMail()) {
+            throw new PermissionDeniedException();
+        }
 
         new \wcf\command\user\ResendActivationMail($user)();
 

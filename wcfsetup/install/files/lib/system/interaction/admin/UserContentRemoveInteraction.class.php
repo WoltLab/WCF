@@ -6,7 +6,6 @@ use wcf\acp\action\UserContentRemoveAction;
 use wcf\data\user\User;
 use wcf\system\interaction\FormBuilderDialogInteraction;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\UserAdministrationPolicy;
 use wcf\util\StringUtil;
 
 /**
@@ -25,7 +24,7 @@ final class UserContentRemoveInteraction extends FormBuilderDialogInteraction
             'remove-content',
             LinkHandler::getInstance()->getControllerLink(UserContentRemoveAction::class, ['id' => '%s']),
             'wcf.acp.content.removeContent',
-            static fn(User $user) => UserAdministrationPolicy::canDelete($user)
+            static fn(User $user) => $user->canDelete()
         );
     }
 

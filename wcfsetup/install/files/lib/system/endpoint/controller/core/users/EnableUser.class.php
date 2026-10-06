@@ -9,7 +9,7 @@ use wcf\data\user\User;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\user\UserAdministrationPolicy;
+use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Enables the user with the given ID.
@@ -27,7 +27,9 @@ final class EnableUser implements IController
     {
         $user = Helper::fetchObjectFromRequestParameter($variables['id'], User::class);
 
-        UserAdministrationPolicy::assertCanEnable($user);
+        if (!$user->canEnable()) {
+            throw new PermissionDeniedException();
+        }
 
         if ($user->pendingActivation()) {
             new \wcf\command\user\EnableUser($user)();

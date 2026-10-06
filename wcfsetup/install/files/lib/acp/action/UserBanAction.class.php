@@ -12,12 +12,12 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\dependency\EmptyFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\Psr15DialogForm;
-use wcf\system\user\UserAdministrationPolicy;
 use wcf\system\WCF;
 
 /**
@@ -98,7 +98,9 @@ final class UserBanAction implements RequestHandlerInterface
         }
 
         foreach ($users as $user) {
-            UserAdministrationPolicy::assertCanBan($user);
+            if (!$user->canBan()) {
+                throw new PermissionDeniedException();
+            }
         }
 
         return $users;

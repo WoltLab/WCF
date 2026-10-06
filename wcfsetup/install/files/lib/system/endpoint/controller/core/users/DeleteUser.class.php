@@ -10,7 +10,7 @@ use wcf\data\user\UserAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
-use wcf\system\user\UserAdministrationPolicy;
+use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Deletes the user with the given ID.
@@ -28,7 +28,9 @@ final class DeleteUser implements IController
     {
         $user = Helper::fetchObjectFromRequestParameter($variables['id'], User::class);
 
-        UserAdministrationPolicy::assertCanDelete($user);
+        if (!$user->canDelete()) {
+            throw new PermissionDeniedException();
+        }
 
         // Plugins clean up their data through the events of `UserAction`.
         $action = new UserAction([$user], 'delete');

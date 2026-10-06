@@ -9,7 +9,7 @@ use wcf\data\user\User;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\user\UserAdministrationPolicy;
+use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Marks the email address of the user with the given ID as unconfirmed.
@@ -27,7 +27,9 @@ final class UnconfirmUserEmail implements IController
     {
         $user = Helper::fetchObjectFromRequestParameter($variables['id'], User::class);
 
-        UserAdministrationPolicy::assertCanEnable($user);
+        if (!$user->canEnable()) {
+            throw new PermissionDeniedException();
+        }
 
         if ($user->isEmailConfirmed()) {
             new \wcf\command\user\UnconfirmUserEmail($user)();

@@ -13,11 +13,11 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\form\builder\NoticeFormNode;
 use wcf\system\form\builder\NoticeFormNodeType;
 use wcf\system\form\builder\Psr15DialogForm;
-use wcf\system\user\UserAdministrationPolicy;
 use wcf\system\WCF;
 
 /**
@@ -90,7 +90,9 @@ final class UserContentRemoveAction implements RequestHandlerInterface
         }
 
         foreach ($users as $user) {
-            UserAdministrationPolicy::assertCanDelete($user);
+            if (!$user->canDelete()) {
+                throw new PermissionDeniedException();
+            }
         }
 
         return $users;

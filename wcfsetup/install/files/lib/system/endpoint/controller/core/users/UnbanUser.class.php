@@ -9,7 +9,7 @@ use wcf\data\user\User;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
-use wcf\system\user\UserAdministrationPolicy;
+use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Lifts the ban of the user with the given ID.
@@ -27,7 +27,9 @@ final class UnbanUser implements IController
     {
         $user = Helper::fetchObjectFromRequestParameter($variables['id'], User::class);
 
-        UserAdministrationPolicy::assertCanBan($user);
+        if (!$user->canBan()) {
+            throw new PermissionDeniedException();
+        }
 
         if ($user->banned !== 0) {
             new \wcf\command\user\UnbanUser($user)();

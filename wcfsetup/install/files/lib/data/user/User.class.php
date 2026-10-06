@@ -583,6 +583,103 @@ final class User extends CollectionDatabaseObject implements IPopoverObject, IRo
     }
 
     /**
+     * Returns true if all groups of this user are accessible to the active user
+     * and, unless `$allowSelf` is set, this user is not the active user.
+     *
+     * @since 6.3
+     */
+    public function isManageable(bool $allowSelf = false): bool
+    {
+        if (!$allowSelf && $this->userID === WCF::getUser()->userID) {
+            return false;
+        }
+
+        return UserGroup::isAccessibleGroup($this->getGroupIDs());
+    }
+
+    /**
+     * Returns true if the active user can enable or disable this user and
+     * confirm or unconfirm the email address of this user.
+     *
+     * @since 6.3
+     */
+    public function canEnable(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canEnableUser')
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can ban or unban this user.
+     *
+     * @since 6.3
+     */
+    public function canBan(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canBanUser')
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can send a link to set a new password to
+     * this user, which is not possible for users that log in via a third party
+     * provider.
+     *
+     * @since 6.3
+     */
+    public function canSendNewPassword(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canEditPassword')
+            && $this->authData === ''
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can resend the activation mail to this user.
+     *
+     * @since 6.3
+     */
+    public function canResendActivationMail(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canEnableUser')
+            && $this->canEmailConfirm()
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can delete this user and its content.
+     *
+     * @since 6.3
+     */
+    public function canDelete(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canDeleteUser')
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can export the GDPR data of this user.
+     *
+     * @since 6.3
+     */
+    public function canExportGdpr(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canExportGdprData')
+            && $this->isManageable(true);
+    }
+
+    /**
+     * Returns true if the active user can send an email to this user.
+     *
+     * @since 6.3
+     */
+    public function canMail(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canMailUser')
+            && $this->userID !== WCF::getUser()->userID;
+    }
+
+    /**
      * Returns true, if this user has access to the ACP.
      */
     public function hasAdministrativeAccess(): bool
