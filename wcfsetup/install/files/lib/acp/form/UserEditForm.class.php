@@ -54,12 +54,6 @@ class UserEditForm extends UserAddForm
     public $user;
 
     /**
-     * true to delete the current auth data
-     * @var int
-     */
-    public $disconnect3rdParty = 0;
-
-    /**
      * true to disable multifactor authentication
      * @var int
      */
@@ -129,9 +123,6 @@ class UserEditForm extends UserAddForm
             $this->colorScheme = $_POST['colorScheme'];
         }
 
-        if (WCF::getSession()->hasPermission('admin.user.canEditPassword') && isset($_POST['disconnect3rdParty'])) {
-            $this->disconnect3rdParty = 1;
-        }
         if (WCF::getSession()->hasPermission('admin.user.canEditPassword') && isset($_POST['multifactorDisable'])) {
             $this->multifactorDisable = 1;
         }
@@ -220,10 +211,6 @@ class UserEditForm extends UserAddForm
         AbstractForm::save();
         $this->htmlInputProcessor->setObjectID($this->userID);
         MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor);
-
-        if ($this->disconnect3rdParty !== 0) {
-            $this->additionalFields['authData'] = '';
-        }
 
         // add default groups
         $defaultGroups = UserGroup::getAccessibleGroups([UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);

@@ -3155,6 +3155,8 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 		<item name="wcf.acp.user.action.viewProfile"><![CDATA[Show Profile]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Send New Password]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to this user?]]></item>
+		<item name="wcf.acp.user.action.disconnectThirdPartyLogin"><![CDATA[Disconnect Third-Party Login]]></item>
+		<item name="wcf.acp.user.action.disconnectThirdPartyLogin.confirmMessage"><![CDATA[Do you really want to disconnect this user from {"wcf.user.3rdparty."|concat:$user->getAuthProvider()|language}? Afterwards, the user can only log in with a password.]]></item>
 		<item name="wcf.acp.user.action.confirmEmail"><![CDATA[Confirm Email Address]]></item>
 		<item name="wcf.acp.user.action.unconfirmEmail"><![CDATA[Unconfirm Email Address]]></item>
 		<item name="wcf.acp.user.action.assignToGroup"><![CDATA[Add to User Group]]></item>
@@ -5124,7 +5126,6 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[Your Google account is already connected to a different user.]]></item>
 		<item name="wcf.user.3rdparty.google.disconnect"><![CDATA[Cancel connection with Google]]></item>
 		<item name="wcf.user.3rdparty.google.disconnect.success"><![CDATA[Your account is no longer connected with Google.]]></item>
-		<item name="wcf.user.3rdparty.connect.info"><![CDATA[The user is connected with {"wcf.user.3rdparty."|concat:$user->getAuthProvider()|language}.]]></item>
 	</category>
 	<category name="wcf.user.avatar">
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
@@ -5816,5 +5817,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.disableSignature.expires.description"/>
 	<item name="wcf.user.disableSignature.neverExpires"/>
 	<item name="wcf.user.coverPhoto.noImage"/>
+	<item name="wcf.user.3rdparty.connect.info"/>
 </delete>
 </language>

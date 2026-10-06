@@ -21,6 +21,7 @@ use wcf\system\interaction\LinkableObjectInteraction;
 use wcf\system\interaction\LinkInteraction;
 use wcf\system\interaction\RpcInteraction;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Interaction provider for the user administration.
@@ -157,6 +158,18 @@ final class UserInteractions extends AbstractInteractionProvider
                 InteractionConfirmationType::Custom,
                 'wcf.acp.user.action.sendNewPassword.confirmMessage',
                 static fn(User $user) => $user->canSendNewPassword()
+            ),
+            new RpcInteraction(
+                'disconnect-third-party-login',
+                'core/users/%s/disconnect-third-party-login',
+                'wcf.acp.user.action.disconnectThirdPartyLogin',
+                InteractionConfirmationType::Custom,
+                static fn(User $user) => WCF::getLanguage()->getDynamicVariable(
+                    'wcf.acp.user.action.disconnectThirdPartyLogin.confirmMessage',
+                    ['user' => $user]
+                ),
+                static fn(User $user) => $user->canDisconnectThirdPartyLogin(),
+                InteractionEffect::ReloadPage
             ),
             new LinkInteraction(
                 'export-gdpr',

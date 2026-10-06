@@ -671,6 +671,19 @@ final class User extends CollectionDatabaseObject implements IPopoverObject, IRo
     }
 
     /**
+     * Returns true if the active user can remove the connection of this user
+     * to a third party login provider.
+     *
+     * @since 6.3
+     */
+    public function canDisconnectThirdPartyLogin(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canEditPassword')
+            && $this->authData !== ''
+            && $this->isManageable();
+    }
+
+    /**
      * Returns true if the active user can resend the activation mail to this user.
      *
      * @since 6.3

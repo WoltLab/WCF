@@ -135,21 +135,6 @@
 			</div>
 
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditPassword')}
-				{if $action == 'edit' && !$user->authData|empty}
-					<section class="section">
-						<h2 class="sectionTitle">{lang}wcf.user.3rdparty{/lang}</h2>
-
-						<woltlab-core-notice type="info">{lang}wcf.user.3rdparty.connect.info{/lang}</woltlab-core-notice>
-						
-						<dl>
-							<dt></dt>
-							<dd>
-								<label><input type="checkbox" name="disconnect3rdParty" value="1"> {lang}wcf.user.3rdparty.{$user->getAuthProvider()}.disconnect{/lang}</label>
-							</dd>
-						</dl>
-					</section>
-				{/if}
-
 				{if $action == 'edit' && $user->multifactorActive}
 					<section class="section">
 						<h2 class="sectionTitle">{lang}wcf.acp.user.security.multifactor{/lang}</h2>
