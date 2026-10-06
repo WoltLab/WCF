@@ -2977,8 +2977,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Add to User Group]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Adding the following users to the user groups selected below]]></item>
 		<item name="wcf.acp.user.assignToGroup.success"><![CDATA[The user{if $users|count > 1}s have{else} has{/if} successfully been added to the selected user group{if $groupIDs|count > 1}s{/if}.]]></item>
-		<item name="wcf.acp.user.banUser"><![CDATA[Ban User]]></item>
-		<item name="wcf.acp.user.banUser.description"><![CDATA[The user is permanently banned from using any site functions and will be notified on site access.]]></item>
 		<item name="wcf.acp.user.banReason"><![CDATA[Reason]]></item>
 		<item name="wcf.acp.user.banReason.description"><![CDATA[The reason for the ban will be displayed for the affected users.]]></item>
 		<item name="wcf.acp.user.ban.expires"><![CDATA[Unbanning]]></item>
@@ -5816,5 +5814,7 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"/>
 	<item name="wcf.acp.user.quickSearch.newest"/>
 	<item name="wcf.user.status.banned"/>
+	<item name="wcf.acp.user.banUser"/>
+	<item name="wcf.acp.user.banUser.description"/>
 </delete>
 </language>

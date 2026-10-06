@@ -61,24 +61,6 @@ class UserEditForm extends UserAddForm
     public $user;
 
     /**
-     * ban status
-     * @var int
-     */
-    public $banned = 0;
-
-    /**
-     * ban reason
-     * @var string
-     */
-    public $banReason = '';
-
-    /**
-     * date when the ban expires
-     * @var int
-     */
-    public $banExpires = 0;
-
-    /**
      * user avatar object
      */
     public ?File $userAvatar = null;
@@ -207,23 +189,6 @@ class UserEditForm extends UserAddForm
             $this->email = $this->user->email;
         }
 
-        if (!empty($_POST['banned'])) {
-            $this->banned = 1;
-        }
-        if (isset($_POST['banReason'])) {
-            $this->banReason = StringUtil::trim($_POST['banReason']);
-        }
-        if ($this->banned !== 0 && !isset($_POST['banNeverExpires'])) {
-            if (isset($_POST['banExpires'])) {
-                $banExpires = \DateTimeImmutable::createFromFormat('!Y-m-d', $_POST['banExpires'], new \DateTimeZone(\TIMEZONE));
-                if ($banExpires === false) {
-                    $this->banExpires = 0;
-                } else {
-                    $this->banExpires = $banExpires->getTimestamp();
-                }
-            }
-        }
-
         if (isset($_POST['styleID'])) {
             $this->styleID = \intval($_POST['styleID']);
         }
@@ -330,9 +295,6 @@ class UserEditForm extends UserAddForm
         $this->email = $this->user->email;
         $this->groupIDs = $this->user->getGroupIDs(true);
         $this->languageID = $this->user->languageID;
-        $this->banned = $this->user->banned;
-        $this->banReason = $this->user->banReason;
-        $this->banExpires = $this->user->banExpires;
         $this->userTitle = $this->user->userTitle;
         $this->styleID = $this->user->styleID;
 
@@ -370,14 +332,11 @@ class UserEditForm extends UserAddForm
             'action' => 'edit',
             'url' => '',
             'user' => $this->user,
-            'banned' => $this->banned,
-            'banReason' => $this->banReason,
             'avatarType' => $this->avatarType,
             'disableAvatar' => $this->disableAvatar,
             'disableAvatarReason' => $this->disableAvatarReason,
             'disableAvatarExpires' => $this->disableAvatarExpires,
             'userAvatar' => $this->userAvatar,
-            'banExpires' => $this->banExpires,
             'userCoverPhoto' => $this->userCoverPhoto,
             'disableCoverPhoto' => $this->disableCoverPhoto,
             'disableCoverPhotoReason' => $this->disableCoverPhotoReason,
@@ -435,13 +394,6 @@ class UserEditForm extends UserAddForm
         if (\mb_strtolower($this->username) !== \mb_strtolower($this->user->username)) {
             $data['data']['lastUsernameChange'] = \TIME_NOW;
             $data['data']['oldUsername'] = $this->user->username;
-        }
-
-        // handle ban
-        if (WCF::getSession()->hasPermission('admin.user.canBanUser')) {
-            $data['data']['banned'] = $this->banned;
-            $data['data']['banReason'] = $this->banReason;
-            $data['data']['banExpires'] = $this->banExpires;
         }
 
         // handle disabled signature
