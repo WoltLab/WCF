@@ -4754,11 +4754,6 @@ not register with us.]]></item>
 		<item name="wcf.user.author"><![CDATA[Author]]></item>
 		<item name="wcf.user.moderate"><![CDATA[Moderate User]]></item>
 		<item name="wcf.user.ban"><![CDATA[Ban User]]></item>
-		<item name="wcf.user.ban.confirmMessage"><![CDATA[Do you really want to ban this user?]]></item>
-		<item name="wcf.user.ban.expires"><![CDATA[Unbanning]]></item>
-		<item name="wcf.user.ban.expires.description"><![CDATA[The user will automatically be unbanned at the set time.]]></item>
-		<item name="wcf.user.ban.neverExpires"><![CDATA[Permanently Ban User]]></item>
-		<item name="wcf.user.ban.reason.description"><![CDATA[The reason for the ban will be displayed for the user when visiting the site.]]></item>
 		<item name="wcf.user.unban"><![CDATA[Unban User]]></item>
 		<item name="wcf.user.disableAvatar"><![CDATA[Block Avatar]]></item>
 		<item name="wcf.user.disableAvatar.confirmMessage"><![CDATA[Do you really want to block the avatar of this user?]]></item>
@@ -5816,5 +5811,10 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.status.banned"/>
 	<item name="wcf.acp.user.banUser"/>
 	<item name="wcf.acp.user.banUser.description"/>
+	<item name="wcf.user.ban.confirmMessage"/>
+	<item name="wcf.user.ban.expires"/>
+	<item name="wcf.user.ban.expires.description"/>
+	<item name="wcf.user.ban.neverExpires"/>
+	<item name="wcf.user.ban.reason.description"/>
 </delete>
 </language>

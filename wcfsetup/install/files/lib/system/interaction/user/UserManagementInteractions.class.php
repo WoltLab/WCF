@@ -3,6 +3,7 @@
 namespace wcf\system\interaction\user;
 
 use wcf\acp\form\UserEditForm;
+use wcf\action\UserBanAction;
 use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
@@ -10,6 +11,9 @@ use wcf\event\interaction\user\UserManagementInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteraction;
 use wcf\system\interaction\AbstractInteractionProvider;
+use wcf\system\interaction\FormBuilderDialogInteraction;
+use wcf\system\interaction\InteractionEffect;
+use wcf\system\interaction\RpcInteraction;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -19,7 +23,7 @@ use wcf\util\StringUtil;
  * This interaction provider currently only works on the user profile page due to the nature of the underlying (outdated) JavaScript code.
  *
  * @author      Marcel Werk
- * @copyright   2001-2025 WoltLab GmbH
+ * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
@@ -27,28 +31,24 @@ final class UserManagementInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
-        if (WCF::getSession()->hasPermission('admin.user.canBanUser')) {
-            $this->addInteraction(
-                new class(
-                    'ban',
-                    static fn(UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID
-                ) extends AbstractInteraction {
-                    #[\Override]
-                    public function render(DatabaseObject $object): string
-                    {
-                        \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->banned !== 0 ? 'wcf.user.unban' : 'wcf.user.ban');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                class="jsButtonUserBan"
-                            >{$title}</button>
-                            HTML;
-                    }
-                }
-            );
-        }
+        $this->addInteractions([
+            new FormBuilderDialogInteraction(
+                'ban',
+                LinkHandler::getInstance()->getControllerLink(UserBanAction::class, ['id' => '%s']),
+                'wcf.user.ban',
+                static fn(UserProfile $user) => $user->banned === 0
+                    && $user->canBan(),
+                InteractionEffect::ReloadPage
+            ),
+            new RpcInteraction(
+                'unban',
+                'core/users/%s/unban',
+                'wcf.user.unban',
+                isAvailableCallback: static fn(UserProfile $user) => $user->banned === 1
+                    && $user->canBan(),
+                interactionEffect: InteractionEffect::ReloadPage
+            ),
+        ]);
         if (WCF::getSession()->hasPermission('admin.user.canDisableAvatar')) {
             $this->addInteraction(
                 new class(
@@ -115,28 +115,24 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                 }
             );
         }
-        if (WCF::getSession()->hasPermission('admin.user.canEnableUser')) {
-            $this->addInteraction(
-                new class(
-                    'enable',
-                    static fn(UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID
-                ) extends AbstractInteraction {
-                    #[\Override]
-                    public function render(DatabaseObject $object): string
-                    {
-                        \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->pendingActivation() ? 'wcf.acp.user.enable' : 'wcf.acp.user.disable');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                class="jsButtonUserEnable"
-                            >{$title}</button>
-                            HTML;
-                    }
-                }
-            );
-        }
+        $this->addInteractions([
+            new RpcInteraction(
+                'enable',
+                'core/users/%s/enable',
+                'wcf.acp.user.enable',
+                isAvailableCallback: static fn(UserProfile $user) => $user->pendingActivation()
+                    && $user->canEnable(),
+                interactionEffect: InteractionEffect::ReloadPage
+            ),
+            new RpcInteraction(
+                'disable',
+                'core/users/%s/disable',
+                'wcf.acp.user.disable',
+                isAvailableCallback: static fn(UserProfile $user) => !$user->pendingActivation()
+                    && $user->canEnable(),
+                interactionEffect: InteractionEffect::ReloadPage
+            ),
+        ]);
         if (WCF::getSession()->hasPermission('admin.general.canUseAcp') && WCF::getSession()->hasPermission('admin.user.canEditUser')) {
             $this->addInteraction(
                 new class(

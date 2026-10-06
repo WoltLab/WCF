@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\acp\action;
+namespace wcf\action;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use Laminas\Diactoros\Response\JsonResponse;

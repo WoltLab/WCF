@@ -24,7 +24,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
   constructor() {
     this.header = document.querySelector(".userProfileHeader") as HTMLElement;
 
-    ["ban", "disableAvatar", "disableCoverPhoto", "disableSignature", "enable"].forEach((action) => {
+    ["disableAvatar", "disableCoverPhoto", "disableSignature"].forEach((action) => {
       const button = document.querySelector(
         ".userProfileHeader__managementOptions .jsButtonUser" + StringUtil.ucfirst(action),
       ) as HTMLElement;
@@ -47,12 +47,6 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
     const action = target.dataset.action || "";
     let actionName = "";
     switch (action) {
-      case "ban":
-        if (Core.stringToBool(this.header.dataset.banned || "")) {
-          actionName = "unban";
-        }
-        break;
-
       case "disableAvatar":
         if (Core.stringToBool(this.header.dataset.disableAvatar || "")) {
           actionName = "enableAvatar";
@@ -69,10 +63,6 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
         if (Core.stringToBool(this.header.dataset.disableSignature || "")) {
           actionName = "enableSignature";
         }
-        break;
-
-      case "enable":
-        actionName = Core.stringToBool(this.header.dataset.isDisabled || "") ? "enable" : "disable";
         break;
     }
 
@@ -122,26 +112,6 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
   _ajaxSuccess(data): void {
     let button: HTMLElement;
     switch (data.actionName) {
-      case "ban":
-      case "unban": {
-        this.header.dataset.banned = data.actionName === "ban" ? "true" : "false";
-        button = document.querySelector(".userProfileHeader__managementOptions .jsButtonUserBan") as HTMLElement;
-        button.textContent = getPhrase("wcf.user." + (data.actionName === "ban" ? "unban" : "ban"));
-
-        const contentTitle = this.header.querySelector(".userProfileHeader__username") as HTMLElement;
-        let banIcon = contentTitle.querySelector(".jsUserBanned") as HTMLElement;
-        if (data.actionName === "ban") {
-          banIcon = document.createElement("span");
-          banIcon.innerHTML = '<fa-icon size="16" name="lock"></fa-icon>';
-          banIcon.classList.add("jsUserBanned", "jsTooltip");
-          banIcon.title = data.returnValues;
-          contentTitle.appendChild(banIcon);
-        } else if (banIcon) {
-          banIcon.remove();
-        }
-        break;
-      }
-
       case "disableAvatar":
       case "enableAvatar":
         this.header.dataset.disableAvatar = data.actionName === "disableAvatar" ? "true" : "false";
@@ -174,16 +144,9 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
           "wcf.user." + (data.actionName === "disableSignature" ? "enable" : "disable") + "Signature",
         );
         break;
-
-      case "enable":
-      case "disable":
-        this.header.dataset.isDisabled = data.actionName === "disable" ? "true" : "false";
-        button = document.querySelector(".userProfileHeader__managementOptions .jsButtonUserEnable") as HTMLElement;
-        button.textContent = getPhrase("wcf.acp.user." + (data.actionName === "enable" ? "disable" : "enable"));
-        break;
     }
 
-    if (["ban", "disableAvatar", "disableCoverPhoto", "disableSignature"].indexOf(data.actionName) !== -1) {
+    if (["disableAvatar", "disableCoverPhoto", "disableSignature"].indexOf(data.actionName) !== -1) {
       UiDialog.close(this);
     }
 

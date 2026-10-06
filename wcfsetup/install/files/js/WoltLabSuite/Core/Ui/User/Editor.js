@@ -20,7 +20,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         header;
         constructor() {
             this.header = document.querySelector(".userProfileHeader");
-            ["ban", "disableAvatar", "disableCoverPhoto", "disableSignature", "enable"].forEach((action) => {
+            ["disableAvatar", "disableCoverPhoto", "disableSignature"].forEach((action) => {
                 const button = document.querySelector(".userProfileHeader__managementOptions .jsButtonUser" + StringUtil.ucfirst(action));
                 // The button is missing if the current user lacks the permission.
                 if (button) {
@@ -38,11 +38,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             const action = target.dataset.action || "";
             let actionName = "";
             switch (action) {
-                case "ban":
-                    if (Core.stringToBool(this.header.dataset.banned || "")) {
-                        actionName = "unban";
-                    }
-                    break;
                 case "disableAvatar":
                     if (Core.stringToBool(this.header.dataset.disableAvatar || "")) {
                         actionName = "enableAvatar";
@@ -57,9 +52,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                     if (Core.stringToBool(this.header.dataset.disableSignature || "")) {
                         actionName = "enableSignature";
                     }
-                    break;
-                case "enable":
-                    actionName = Core.stringToBool(this.header.dataset.isDisabled || "") ? "enable" : "disable";
                     break;
             }
             if (actionName === "") {
@@ -101,25 +93,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         _ajaxSuccess(data) {
             let button;
             switch (data.actionName) {
-                case "ban":
-                case "unban": {
-                    this.header.dataset.banned = data.actionName === "ban" ? "true" : "false";
-                    button = document.querySelector(".userProfileHeader__managementOptions .jsButtonUserBan");
-                    button.textContent = (0, Language_1.getPhrase)("wcf.user." + (data.actionName === "ban" ? "unban" : "ban"));
-                    const contentTitle = this.header.querySelector(".userProfileHeader__username");
-                    let banIcon = contentTitle.querySelector(".jsUserBanned");
-                    if (data.actionName === "ban") {
-                        banIcon = document.createElement("span");
-                        banIcon.innerHTML = '<fa-icon size="16" name="lock"></fa-icon>';
-                        banIcon.classList.add("jsUserBanned", "jsTooltip");
-                        banIcon.title = data.returnValues;
-                        contentTitle.appendChild(banIcon);
-                    }
-                    else if (banIcon) {
-                        banIcon.remove();
-                    }
-                    break;
-                }
                 case "disableAvatar":
                 case "enableAvatar":
                     this.header.dataset.disableAvatar = data.actionName === "disableAvatar" ? "true" : "false";
@@ -138,14 +111,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                     button = document.querySelector(".userProfileHeader__managementOptions .jsButtonUserDisableSignature");
                     button.textContent = (0, Language_1.getPhrase)("wcf.user." + (data.actionName === "disableSignature" ? "enable" : "disable") + "Signature");
                     break;
-                case "enable":
-                case "disable":
-                    this.header.dataset.isDisabled = data.actionName === "disable" ? "true" : "false";
-                    button = document.querySelector(".userProfileHeader__managementOptions .jsButtonUserEnable");
-                    button.textContent = (0, Language_1.getPhrase)("wcf.acp.user." + (data.actionName === "enable" ? "disable" : "enable"));
-                    break;
             }
-            if (["ban", "disableAvatar", "disableCoverPhoto", "disableSignature"].indexOf(data.actionName) !== -1) {
+            if (["disableAvatar", "disableCoverPhoto", "disableSignature"].indexOf(data.actionName) !== -1) {
                 Dialog_1.default.close(this);
             }
             (0, Snackbar_1.showDefaultSuccessSnackbar)();

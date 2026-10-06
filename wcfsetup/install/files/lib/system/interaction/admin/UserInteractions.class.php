@@ -2,9 +2,9 @@
 
 namespace wcf\system\interaction\admin;
 
-use wcf\acp\action\UserBanAction;
 use wcf\acp\action\UserExportGdprAction;
 use wcf\acp\form\UserMailForm;
+use wcf\action\UserBanAction;
 use wcf\data\user\User;
 use wcf\event\interaction\admin\UserInteractionCollecting;
 use wcf\system\event\EventHandler;

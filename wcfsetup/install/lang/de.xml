@@ -4758,11 +4758,6 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.author"><![CDATA[Autor]]></item>
 		<item name="wcf.user.moderate"><![CDATA[Benutzer moderieren]]></item>
 		<item name="wcf.user.ban"><![CDATA[Benutzer sperren]]></item>
-		<item name="wcf.user.ban.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Benutzer wirklich sperren?]]></item>
-		<item name="wcf.user.ban.expires"><![CDATA[Entsperrung]]></item>
-		<item name="wcf.user.ban.expires.description"><![CDATA[Der Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
-		<item name="wcf.user.ban.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
-		<item name="wcf.user.ban.reason.description"><![CDATA[Die Begründung wird dem gesperrten Benutzer beim Aufruf der Seite angezeigt.]]></item>
 		<item name="wcf.user.unban"><![CDATA[Benutzer entsperren]]></item>
 		<item name="wcf.user.disableAvatar"><![CDATA[Avatar sperren]]></item>
 		<item name="wcf.user.disableAvatar.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Avatar des Benutzers wirklich sperren?]]></item>
@@ -5814,5 +5809,10 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.status.banned"/>
 	<item name="wcf.acp.user.banUser"/>
 	<item name="wcf.acp.user.banUser.description"/>
+	<item name="wcf.user.ban.confirmMessage"/>
+	<item name="wcf.user.ban.expires"/>
+	<item name="wcf.user.ban.expires.description"/>
+	<item name="wcf.user.ban.neverExpires"/>
+	<item name="wcf.user.ban.reason.description"/>
 </delete>
 </language>

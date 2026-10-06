@@ -2,9 +2,6 @@
 	class="userProfileHeader"
 	data-object-id="{$view->user->userID}"
 	{if $view->isInAccessibleGroup()}
-		{if $__wcf->session->getPermission('admin.user.canBanUser')}
-			data-banned="{$view->user->banned}"
-		{/if}
 		{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
 			data-disable-avatar="{$view->user->disableAvatar}"
 		{/if}
@@ -13,9 +10,6 @@
 		{/if}
 		{if $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}
 			data-disable-cover-photo="{$view->user->disableCoverPhoto}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canEnableUser')}
-			data-is-disabled="{if $view->user->activationCode}true{else}false{/if}"
 		{/if}
 	{/if}
 >

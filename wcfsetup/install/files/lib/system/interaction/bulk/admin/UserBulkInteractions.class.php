@@ -2,12 +2,12 @@
 
 namespace wcf\system\interaction\bulk\admin;
 
-use wcf\acp\action\UserBanAction;
 use wcf\acp\form\UserAssignToGroupForm;
 use wcf\acp\form\UserContentRevertChangesForm;
 use wcf\acp\form\UserEmailAddressExportForm;
 use wcf\acp\form\UserMailForm;
 use wcf\acp\form\UserMergeForm;
+use wcf\action\UserBanAction;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\event\interaction\bulk\admin\UserBulkInteractionCollecting;
