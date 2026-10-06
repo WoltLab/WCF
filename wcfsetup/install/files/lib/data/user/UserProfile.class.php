@@ -8,9 +8,6 @@ use wcf\data\ITitledLinkObject;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
 use wcf\data\user\avatar\AvatarDecorator;
-use wcf\data\user\avatar\DefaultAvatar;
-use wcf\data\user\avatar\IUserAvatar;
-use wcf\data\user\avatar\StaticAvatar;
 use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
 use wcf\data\user\cover\photo\GeneratedUserCoverPhoto;
 use wcf\data\user\cover\photo\IUserCoverPhoto;
@@ -27,8 +24,6 @@ use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\email\Mailbox;
-use wcf\system\event\EventHandler;
-use wcf\system\exception\ImplementationException;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\user\UserProfileHandler;
@@ -122,13 +117,13 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
 
     const GENDER_OTHER = 3;
 
-    const ACCESS_EVERYONE = 0;
+    const ACCESS_EVERYONE = User::ACCESS_EVERYONE;
 
-    const ACCESS_REGISTERED = 1;
+    const ACCESS_REGISTERED = User::ACCESS_REGISTERED;
 
-    const ACCESS_FOLLOWING = 2;
+    const ACCESS_FOLLOWING = User::ACCESS_FOLLOWING;
 
-    const ACCESS_NOBODY = 3;
+    const ACCESS_NOBODY = User::ACCESS_NOBODY;
 
     #[\Override]
     public function __toString(): string
@@ -358,42 +353,14 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function getAvatar()
     {
-        if ($this->avatar === null) {
-            $avatar = null;
-            if ($this->disableAvatar === 0) {
-                if ($this->canSeeAvatar()) {
-                    if ($this->avatarPathname !== null) {
-                        $avatar = new StaticAvatar($this->avatarPathname);
-                    } else {
-                        $parameters = ['avatar' => null];
-                        EventHandler::getInstance()->fireAction($this, 'getAvatar', $parameters);
-
-                        $avatar = $parameters['avatar'];
-                        if ($avatar !== null && !($avatar instanceof IUserAvatar)) {
-                            throw new ImplementationException(
-                                \get_class($avatar),
-                                IUserAvatar::class
-                            );
-                        }
-                    }
-                }
-            }
-
-            // use default avatar
-            if ($avatar === null) {
-                $avatar = new DefaultAvatar($this->username ?: '');
-            }
-
-            $this->avatar = new AvatarDecorator($avatar);
-        }
-
-        return $this->avatar;
+        return $this->getDecoratedObject()->getAvatar();
     }
 
     /**
      * Sets the user's avatar.
      *
      * @since 6.2
+     * @deprecated 6.3
      */
     public function setFileAvatar(File $file): void
     {
@@ -478,11 +445,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function isOnline()
     {
-        if ($this->getLastActivityTime() > (\TIME_NOW - \USER_ONLINE_TIMEOUT) && $this->canViewOnlineStatus()) {
-            return true;
-        }
-
-        return false;
+        return $this->getDecoratedObject()->isOnline();
     }
 
     /**
@@ -760,41 +723,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function isAccessible(string $name, ?int $userID = null): bool
     {
-        if ($userID === null) {
-            $userID = WCF::getUser()->userID;
-        }
-        $data = ['result' => true, 'name' => $name, 'userID' => $userID];
-
-        switch ($this->{$name}) {
-            case self::ACCESS_EVERYONE:
-                $data['result'] = true;
-                break;
-
-            case self::ACCESS_REGISTERED:
-                $data['result'] = ($userID !== 0 ? true : false);
-                break;
-
-            case self::ACCESS_FOLLOWING:
-                $result = false;
-                if ($userID !== 0) {
-                    if ($userID === $this->userID) {
-                        $result = true;
-                    } elseif ($this->isFollowing($userID)) {
-                        $result = true;
-                    }
-                }
-
-                $data['result'] = $result;
-                break;
-
-            case self::ACCESS_NOBODY:
-                $data['result'] = false;
-                break;
-        }
-
-        EventHandler::getInstance()->fireAction($this, 'isAccessible', $data);
-
-        return $data['result'];
+        return $this->getDecoratedObject()->isAccessible($name, $userID);
     }
 
     /**
@@ -949,14 +878,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function getUserTitle()
     {
-        if ($this->userTitle !== '') {
-            return $this->userTitle;
-        }
-        if ($this->getRank() !== null && $this->getRank()->showTitle()) {
-            return $this->getRank()->getTitle();
-        }
-
-        return '';
+        return $this->getDecoratedObject()->getUserTitle();
     }
 
     public function getRank(): ?UserRank
@@ -1133,16 +1055,6 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         $option->setOptionValue($this->getDecoratedObject());
 
         return $option->optionValue;
-    }
-
-    /**
-     * Returns the localized title of the user option with the given name.
-     *
-     * @since 6.3
-     */
-    public function getUserOptionTitle(string $name): string
-    {
-        return ViewableUserOption::getUserOption($name)->getTitle();
     }
 
     /**

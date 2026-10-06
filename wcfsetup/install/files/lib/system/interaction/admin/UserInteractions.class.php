@@ -5,7 +5,7 @@ namespace wcf\system\interaction\admin;
 use wcf\acp\action\UserBanAction;
 use wcf\acp\action\UserExportGdprAction;
 use wcf\acp\form\UserMailForm;
-use wcf\data\user\UserProfile;
+use wcf\data\user\User;
 use wcf\event\interaction\admin\UserInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
@@ -43,64 +43,62 @@ final class UserInteractions extends AbstractInteractionProvider
                 'enable',
                 'core/users/%s/enable',
                 'wcf.acp.user.enable',
-                isAvailableCallback: static fn(UserProfile $user) => $user->pendingActivation()
-                    && UserAdministrationPolicy::canEnable($user->getDecoratedObject()),
+                isAvailableCallback: static fn(User $user) => $user->pendingActivation()
+                    && UserAdministrationPolicy::canEnable($user),
                 interactionEffect: InteractionEffect::ReloadPage
             ),
             new RpcInteraction(
                 'disable',
                 'core/users/%s/disable',
                 'wcf.acp.user.disable',
-                isAvailableCallback: static fn(UserProfile $user) => !$user->pendingActivation()
-                    && UserAdministrationPolicy::canEnable($user->getDecoratedObject()),
+                isAvailableCallback: static fn(User $user) => !$user->pendingActivation()
+                    && UserAdministrationPolicy::canEnable($user),
                 interactionEffect: InteractionEffect::ReloadPage
             ),
             new RpcInteraction(
                 'confirm-email',
                 'core/users/%s/confirm-email',
                 'wcf.acp.user.action.confirmEmail',
-                isAvailableCallback: static fn(UserProfile $user) => !$user->isEmailConfirmed()
-                    && UserAdministrationPolicy::canEnable($user->getDecoratedObject()),
+                isAvailableCallback: static fn(User $user) => !$user->isEmailConfirmed()
+                    && UserAdministrationPolicy::canEnable($user),
                 interactionEffect: InteractionEffect::ReloadPage
             ),
             new RpcInteraction(
                 'unconfirm-email',
                 'core/users/%s/unconfirm-email',
                 'wcf.acp.user.action.unconfirmEmail',
-                isAvailableCallback: static fn(UserProfile $user) => $user->isEmailConfirmed()
-                    && UserAdministrationPolicy::canEnable($user->getDecoratedObject()),
+                isAvailableCallback: static fn(User $user) => $user->isEmailConfirmed()
+                    && UserAdministrationPolicy::canEnable($user),
                 interactionEffect: InteractionEffect::ReloadPage
             ),
             new RpcInteraction(
                 'resend-activation-mail',
                 'core/users/%s/resend-activation-mail',
                 'wcf.acp.user.action.resendActivationMail',
-                isAvailableCallback: static fn(UserProfile $user) => UserAdministrationPolicy::canResendActivationMail(
-                    $user->getDecoratedObject()
-                ),
+                isAvailableCallback: static fn(User $user) => UserAdministrationPolicy::canResendActivationMail($user),
                 interactionEffect: InteractionEffect::ReloadPage
             ),
             new FormBuilderDialogInteraction(
                 'ban',
                 LinkHandler::getInstance()->getControllerLink(UserBanAction::class, ['id' => '%s']),
                 'wcf.acp.user.ban',
-                static fn(UserProfile $user) => $user->banned === 0
-                    && UserAdministrationPolicy::canBan($user->getDecoratedObject()),
+                static fn(User $user) => $user->banned === 0
+                    && UserAdministrationPolicy::canBan($user),
                 InteractionEffect::ReloadPage
             ),
             new RpcInteraction(
                 'unban',
                 'core/users/%s/unban',
                 'wcf.acp.user.unban',
-                isAvailableCallback: static fn(UserProfile $user) => $user->banned === 1
-                    && UserAdministrationPolicy::canBan($user->getDecoratedObject()),
+                isAvailableCallback: static fn(User $user) => $user->banned === 1
+                    && UserAdministrationPolicy::canBan($user),
                 interactionEffect: InteractionEffect::ReloadPage
             ),
             new LinkInteraction(
                 'send-mail',
                 UserMailForm::class,
                 'wcf.acp.user.action.sendMail',
-                static fn(UserProfile $user) => UserAdministrationPolicy::canMail($user->getDecoratedObject())
+                static fn(User $user) => UserAdministrationPolicy::canMail($user)
             ),
             new RpcInteraction(
                 'send-new-password',
@@ -108,20 +106,18 @@ final class UserInteractions extends AbstractInteractionProvider
                 'wcf.acp.user.action.sendNewPassword',
                 InteractionConfirmationType::Custom,
                 'wcf.acp.user.action.sendNewPassword.confirmMessage',
-                static fn(UserProfile $user) => UserAdministrationPolicy::canSendNewPassword(
-                    $user->getDecoratedObject()
-                )
+                static fn(User $user) => UserAdministrationPolicy::canSendNewPassword($user)
             ),
             new LinkInteraction(
                 'export-gdpr',
                 UserExportGdprAction::class,
                 'wcf.acp.user.exportGdpr',
-                static fn(UserProfile $user) => UserAdministrationPolicy::canExportGdpr($user->getDecoratedObject())
+                static fn(User $user) => UserAdministrationPolicy::canExportGdpr($user)
             ),
             new Divider(),
             new DeleteInteraction(
                 'core/users/%s',
-                static fn(UserProfile $user) => UserAdministrationPolicy::canDelete($user->getDecoratedObject())
+                static fn(User $user) => UserAdministrationPolicy::canDelete($user)
             ),
             new UserContentRemoveInteraction(),
         ]);
@@ -134,6 +130,6 @@ final class UserInteractions extends AbstractInteractionProvider
     #[\Override]
     public function getObjectClassName(): string
     {
-        return UserProfile::class;
+        return User::class;
     }
 }

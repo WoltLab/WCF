@@ -2,14 +2,19 @@
 
 namespace wcf\data\user;
 
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\DatabaseObject;
 use wcf\data\IPopoverObject;
 use wcf\data\IUserContent;
 use wcf\data\language\Language;
+use wcf\data\user\avatar\AvatarDecorator;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\option\UserOption;
+use wcf\data\user\rank\UserRank;
+use wcf\event\user\UserPrivacySettingChecking;
 use wcf\page\UserPage;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
@@ -76,8 +81,10 @@ use wcf\util\UserUtil;
  * @property-read   0|1     $multifactorActive      is `1` if the use has enabled a second factor, otherwise `0`
  * @property-read   int     $trophyPoints           total number of user's trophies in active categories
  * @property-read   ?string $timezone
+ *
+ * @extends CollectionDatabaseObject<UserCollection>
  */
-final class User extends DatabaseObject implements IPopoverObject, IRouteController, IUserContent, \Stringable
+final class User extends CollectionDatabaseObject implements IPopoverObject, IRouteController, IUserContent, \Stringable
 {
     /**
      * list of group ids
@@ -106,6 +113,15 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      * @var UserOption[]|null
      */
     protected static ?array $userOptions = null;
+
+    /**
+     * access levels of the privacy settings
+     * @since 6.3
+     */
+    public const ACCESS_EVERYONE = 0;
+    public const ACCESS_REGISTERED = 1;
+    public const ACCESS_FOLLOWING = 2;
+    public const ACCESS_NOBODY = 3;
 
     const REGISTER_ACTIVATION_NONE = 0;
 
@@ -260,6 +276,73 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         }
 
         return $this->languageIDs;
+    }
+
+    /**
+     * Returns the avatar of this user.
+     *
+     * @since 6.3
+     */
+    public function getAvatar(): AvatarDecorator
+    {
+        return $this->getCollection()->getAvatar($this);
+    }
+
+    /**
+     * Returns the rank of this user or null if they have no rank.
+     *
+     * @since 6.3
+     */
+    public function getRank(): ?UserRank
+    {
+        return $this->getCollection()->getRank($this);
+    }
+
+    /**
+     * Returns the custom user title or the title of the rank of this user.
+     *
+     * @since 6.3
+     */
+    public function getUserTitle(): string
+    {
+        return $this->getCollection()->getUserTitle($this);
+    }
+
+    /**
+     * Returns true if this user is online and the active user can see the
+     * online status.
+     *
+     * @since 6.3
+     */
+    public function isOnline(): bool
+    {
+        return $this->getCollection()->isOnline($this);
+    }
+
+    /**
+     * Returns true if the user with the given id can access the data protected
+     * by the privacy setting `$name` of this user. Checks the access of the
+     * active user if no user id is given.
+     *
+     * @since 6.3
+     */
+    public function isAccessible(string $name, ?int $userID = null): bool
+    {
+        $userID ??= WCF::getUser()->userID;
+
+        $accessible = match ((int)$this->{$name}) {
+            self::ACCESS_EVERYONE => true,
+            self::ACCESS_REGISTERED => $userID !== 0,
+            self::ACCESS_FOLLOWING => $userID !== 0
+                && ($userID === $this->userID || $this->getCollection()->isFollowing($this, $userID)),
+            self::ACCESS_NOBODY => false,
+            default => true,
+        };
+
+        $event = new UserPrivacySettingChecking($this, $name, $userID, $accessible);
+        EventHandler::getInstance()->fire($event);
+
+        return $event->isAccessible();
     }
 
     /**

@@ -10,7 +10,6 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
-use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileAction;
 use wcf\form\AbstractForm;
 use wcf\system\cache\runtime\FileRuntimeCache;
@@ -364,7 +363,7 @@ class UserEditForm extends UserAddForm
         WCF::getTPL()->assign([
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new UserInteractions(),
-                new UserProfile($this->user->getDecoratedObject()),
+                $this->user->getDecoratedObject(),
                 LinkHandler::getInstance()->getControllerLink(UserListPage::class)
             ),
             'userID' => $this->user->userID,

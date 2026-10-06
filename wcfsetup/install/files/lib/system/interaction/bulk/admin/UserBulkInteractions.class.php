@@ -8,8 +8,8 @@ use wcf\acp\form\UserContentRevertChangesForm;
 use wcf\acp\form\UserEmailAddressExportForm;
 use wcf\acp\form\UserMailForm;
 use wcf\acp\form\UserMergeForm;
-use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileList;
+use wcf\data\user\User;
+use wcf\data\user\UserList;
 use wcf\event\interaction\bulk\admin\UserBulkInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
@@ -38,62 +38,60 @@ final class UserBulkInteractions extends AbstractBulkInteractionProvider
                 'enable',
                 'core/users/%s/enable',
                 'wcf.acp.user.enable',
-                isAvailableCallback: static fn(UserProfile $user) => $user->pendingActivation()
-                    && UserAdministrationPolicy::canEnable($user->getDecoratedObject())
+                isAvailableCallback: static fn(User $user) => $user->pendingActivation()
+                    && UserAdministrationPolicy::canEnable($user)
             ),
             new BulkRpcInteraction(
                 'confirm-email',
                 'core/users/%s/confirm-email',
                 'wcf.acp.user.action.confirmEmail',
-                isAvailableCallback: static fn(UserProfile $user) => !$user->isEmailConfirmed()
-                    && UserAdministrationPolicy::canEnable($user->getDecoratedObject())
+                isAvailableCallback: static fn(User $user) => !$user->isEmailConfirmed()
+                    && UserAdministrationPolicy::canEnable($user)
             ),
             new BulkRpcInteraction(
                 'unconfirm-email',
                 'core/users/%s/unconfirm-email',
                 'wcf.acp.user.action.unconfirmEmail',
-                isAvailableCallback: static fn(UserProfile $user) => $user->isEmailConfirmed()
-                    && UserAdministrationPolicy::canEnable($user->getDecoratedObject())
+                isAvailableCallback: static fn(User $user) => $user->isEmailConfirmed()
+                    && UserAdministrationPolicy::canEnable($user)
             ),
             new BulkRpcInteraction(
                 'resend-activation-mail',
                 'core/users/%s/resend-activation-mail',
                 'wcf.acp.user.action.resendActivationMail',
-                isAvailableCallback: static fn(UserProfile $user) => UserAdministrationPolicy::canResendActivationMail(
-                    $user->getDecoratedObject()
-                )
+                isAvailableCallback: static fn(User $user) => UserAdministrationPolicy::canResendActivationMail($user)
             ),
             new BulkFormBuilderDialogInteraction(
                 'ban',
                 UserBanAction::class,
                 'wcf.acp.user.ban',
-                static fn(UserProfile $user) => $user->banned === 0
-                    && UserAdministrationPolicy::canBan($user->getDecoratedObject())
+                static fn(User $user) => $user->banned === 0
+                    && UserAdministrationPolicy::canBan($user)
             ),
             new BulkRpcInteraction(
                 'unban',
                 'core/users/%s/unban',
                 'wcf.acp.user.unban',
-                isAvailableCallback: static fn(UserProfile $user) => $user->banned === 1
-                    && UserAdministrationPolicy::canBan($user->getDecoratedObject())
+                isAvailableCallback: static fn(User $user) => $user->banned === 1
+                    && UserAdministrationPolicy::canBan($user)
             ),
             new BulkLinkInteraction(
                 'assign-to-group',
                 UserAssignToGroupForm::class,
                 'wcf.acp.user.action.assignToGroup',
-                static fn(UserProfile $user) => UserAdministrationPolicy::canEdit($user->getDecoratedObject())
+                static fn(User $user) => UserAdministrationPolicy::canEdit($user)
             ),
             new BulkLinkInteraction(
                 'merge',
                 UserMergeForm::class,
                 'wcf.acp.user.action.merge',
-                static fn(UserProfile $user) => UserAdministrationPolicy::canEdit($user->getDecoratedObject())
+                static fn(User $user) => UserAdministrationPolicy::canEdit($user)
             ),
             new BulkLinkInteraction(
                 'send-mail',
                 UserMailForm::class,
                 'wcf.acp.user.action.sendMail',
-                static fn(UserProfile $user) => UserAdministrationPolicy::canMail($user->getDecoratedObject())
+                static fn(User $user) => UserAdministrationPolicy::canMail($user)
             ),
             new BulkLinkInteraction(
                 'export-mail-address',
@@ -107,9 +105,7 @@ final class UserBulkInteractions extends AbstractBulkInteractionProvider
                 'wcf.acp.user.action.sendNewPassword',
                 InteractionConfirmationType::Custom,
                 'wcf.acp.user.action.sendNewPassword.confirmMessage.bulk',
-                static fn(UserProfile $user) => UserAdministrationPolicy::canSendNewPassword(
-                    $user->getDecoratedObject()
-                )
+                static fn(User $user) => UserAdministrationPolicy::canSendNewPassword($user)
             ),
             new BulkLinkInteraction(
                 'revert-content-changes',
@@ -120,7 +116,7 @@ final class UserBulkInteractions extends AbstractBulkInteractionProvider
             ),
             new BulkDeleteInteraction(
                 'core/users/%s',
-                static fn(UserProfile $user) => UserAdministrationPolicy::canDelete($user->getDecoratedObject())
+                static fn(User $user) => UserAdministrationPolicy::canDelete($user)
             ),
             new UserContentRemoveBulkInteraction(),
         ]);
@@ -133,6 +129,6 @@ final class UserBulkInteractions extends AbstractBulkInteractionProvider
     #[\Override]
     public function getObjectListClassName(): string
     {
-        return UserProfileList::class;
+        return UserList::class;
     }
 }

@@ -8,10 +8,8 @@ use wcf\data\DatabaseObjectList;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\User;
-use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileList;
+use wcf\data\user\UserList;
 use wcf\event\gridView\admin\UserGridViewInitialized;
-use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
@@ -49,7 +47,7 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
- * @extends AbstractGridView<UserProfile, UserProfileList>
+ * @extends AbstractGridView<User, UserList>
  */
 final class UserGridView extends AbstractGridView
 {
@@ -138,7 +136,7 @@ final class UserGridView extends AbstractGridView
         $provider = new UserInteractions();
         $provider->addInteractions([
             new Divider(),
-            new EditInteraction(UserEditForm::class, static fn(UserProfile $user) => $user->canEdit()),
+            new EditInteraction(UserEditForm::class, static fn(User $user) => $user->canEdit()),
         ]);
         $this->setInteractionProvider($provider);
         $this->setBulkInteractionProvider(new UserBulkInteractions());
@@ -146,7 +144,7 @@ final class UserGridView extends AbstractGridView
         $this->addRowLink(
             new GridViewRowLink(
                 UserEditForm::class,
-                isAvailableCallback: static fn(UserProfile $user) => $user->canEdit()
+                isAvailableCallback: static fn(User $user) => $user->canEdit()
             )
         );
 
@@ -179,9 +177,9 @@ final class UserGridView extends AbstractGridView
     }
 
     #[\Override]
-    protected function createObjectList(): UserProfileList
+    protected function createObjectList(): UserList
     {
-        $list = new UserProfileList();
+        $list = new UserList();
 
         // `UserList` only joins the user option values when reading the objects,
         // sorting by an option requires them when reading the ids as well.
@@ -205,17 +203,9 @@ final class UserGridView extends AbstractGridView
     {
         return new class extends AbstractColumnRenderer {
             #[\Override]
-            public function prepare(mixed $value, DatabaseObject $row): void
-            {
-                \assert($row instanceof UserProfile);
-
-                FileRuntimeCache::getInstance()->cacheObjectID($row->avatarFileID);
-            }
-
-            #[\Override]
             public function render(mixed $value, DatabaseObject $row): string
             {
-                \assert($row instanceof UserProfile);
+                \assert($row instanceof User);
 
                 return $row->getAvatar()->getImageTag(24);
             }
@@ -234,7 +224,7 @@ final class UserGridView extends AbstractGridView
             #[\Override]
             public function render(mixed $value, DatabaseObject $row): string
             {
-                \assert($row instanceof UserProfile);
+                \assert($row instanceof User);
 
                 $html = '<span class="username">' . StringUtil::encodeHTML($row->username) . '</span>';
 
@@ -272,7 +262,7 @@ final class UserGridView extends AbstractGridView
                 return $html;
             }
 
-            private function renderStatusIcon(string $icon, string $languageItem, UserProfile $user): string
+            private function renderStatusIcon(string $icon, string $languageItem, User $user): string
             {
                 return \sprintf(
                     '<span class="jsTooltip" title="%s">%s</span>',
@@ -289,7 +279,7 @@ final class UserGridView extends AbstractGridView
             #[\Override]
             public function render(mixed $value, DatabaseObject $row): string
             {
-                \assert($row instanceof UserProfile);
+                \assert($row instanceof User);
 
                 if ($row->isOnline()) {
                     return WCF::getLanguage()->get('wcf.user.online')

@@ -3,7 +3,7 @@
 namespace wcf\system\interaction\bulk\admin;
 
 use wcf\acp\action\UserContentRemoveAction;
-use wcf\data\user\UserProfile;
+use wcf\data\user\User;
 use wcf\system\interaction\bulk\BulkFormBuilderDialogInteraction;
 use wcf\system\user\UserAdministrationPolicy;
 use wcf\util\StringUtil;
@@ -24,7 +24,7 @@ final class UserContentRemoveBulkInteraction extends BulkFormBuilderDialogIntera
             'remove-content',
             UserContentRemoveAction::class,
             'wcf.acp.content.removeContent',
-            static fn(UserProfile $user) => UserAdministrationPolicy::canDelete($user->getDecoratedObject())
+            static fn(User $user) => UserAdministrationPolicy::canDelete($user)
         );
     }
 
