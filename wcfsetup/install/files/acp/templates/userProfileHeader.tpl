@@ -131,6 +131,16 @@
 					<dt>{icon name='network-wired'} {lang}wcf.user.registrationIpAddress{/lang}</dt>
 					<dd>{unsafe:$view->user->getRegistrationIpAddress()|ipSearch}</dd>
 				{/if}
+				{if $__wcf->session->getPermission('admin.user.canEditPassword')}
+					{if !$view->user->authData|empty}
+						<dt>{icon name='arrow-right-to-bracket'} {lang}wcf.user.3rdparty{/lang}</dt>
+						<dd>{lang}wcf.user.3rdparty.{$view->user->getAuthProvider()}{/lang}</dd>
+					{/if}
+					{if $view->user->multifactorActive}
+						<dt>{icon name='fingerprint'} {lang}wcf.user.security.multifactor{/lang}</dt>
+						<dd>{lang}wcf.user.security.multifactor.active{/lang}</dd>
+					{/if}
+				{/if}
 
 				{event name='afterMeta'}
 			</dl>
