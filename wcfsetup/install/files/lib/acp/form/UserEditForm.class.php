@@ -2,7 +2,6 @@
 
 namespace wcf\acp\form;
 
-use wcf\acp\page\UserListPage;
 use wcf\data\file\File;
 use wcf\data\style\Style;
 use wcf\data\user\cover\photo\IUserCoverPhoto;
@@ -18,14 +17,12 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\upcast\HtmlUpcastProcessor;
-use wcf\system\interaction\admin\UserInteractions;
-use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
-use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
 use wcf\command\user\SetColorScheme;
 use wcf\system\user\multifactor\Setup;
+use wcf\system\view\user\profile\AdminUserProfileHeaderView;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -263,9 +260,8 @@ class UserEditForm extends UserAddForm
         // get the user cover photo object
         if ($this->user->coverPhotoFileID !== null) {
             // If the editing user lacks the permissions to view the cover photo, the system
-            // will try to load the default cover photo. However, the default cover photo depends
-            // on the style, eventually triggering a change to the template group which will
-            // fail in the admin panel.
+            // falls back to the default cover photo of the default style, which must not be
+            // shown as the user's own cover photo.
             if ($userProfile->canSeeCoverPhoto()) {
                 $this->userCoverPhoto = UserProfileRuntimeCache::getInstance()
                     ->getObject($this->userID)
@@ -323,10 +319,8 @@ class UserEditForm extends UserAddForm
         $signatureProcessor->process($this->signature ?: '', 'com.woltlab.wcf.user.signature', $this->user->userID);
 
         WCF::getTPL()->assign([
-            'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
-                new UserInteractions(),
-                $this->user->getDecoratedObject(),
-                LinkHandler::getInstance()->getControllerLink(UserListPage::class)
+            'userProfileHeaderView' => new AdminUserProfileHeaderView(
+                UserProfileRuntimeCache::getInstance()->getObject($this->userID)
             ),
             'userID' => $this->user->userID,
             'action' => 'edit',

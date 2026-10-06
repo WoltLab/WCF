@@ -3,29 +3,22 @@
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.user.{$action}{/lang}</h1>
-		{if $action == 'edit'}<p class="contentHeaderDescription">{$user->username}</p>{/if}
 	</div>
 
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $action === 'edit'}
-				{hascontent}
-					<li>
-						{content}{unsafe:$interactionContextMenu->render()}{/content}
-					</li>
-					<script data-relocate="true">
-						{jsphrase name='wcf.acp.content.removeContent'}
-						{jsphrase name='wcf.acp.worker.abort.confirmMessage'}
-					</script>
-				{/hascontent}
-			{/if}
-
-			<li><a href="{link controller='UserList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
-
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
+
+{if $action === 'edit'}
+	{unsafe:$userProfileHeaderView}
+{/if}
 
 {if $userID|isset && $__wcf->user->userID == $userID}
 	<woltlab-core-notice type="warning">{lang}wcf.acp.user.edit.warning.selfEdit{/lang}</woltlab-core-notice>

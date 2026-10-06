@@ -38,6 +38,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/PromiseMutex", 
                     link = file.link;
                 }
                 avatarForm.querySelector("img.userAvatarImage").src = link;
+                // ACP user profile header
+                const headerAvatar = document.querySelector(".userProfileHeader__avatar img.userAvatarImage");
+                if (headerAvatar) {
+                    headerAvatar.src = link;
+                }
                 document
                     .getElementById("wcf\\action\\UserAvatarAction_avatarFileIDContainer")
                     ?.closest("woltlab-core-dialog")

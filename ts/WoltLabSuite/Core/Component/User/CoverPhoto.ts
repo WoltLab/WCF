@@ -40,69 +40,74 @@ async function editCoverPhoto(button: HTMLElement): Promise<void> {
   dialog.show(json.title);
 }
 
-function getCoverPhotoElement(): HTMLElement | null {
-  return (
-    document.querySelector<HTMLElement>(".userProfileHeader__coverPhotoImage") ??
-    document.getElementById("coverPhotoPreview")
-  );
+function getDefaultCoverPhoto(): string {
+  return document.querySelector<HTMLElement>("[data-default-cover-photo]")?.dataset.defaultCoverPhoto ?? "";
+}
+
+function updateAcpCoverPhotoPreview(fileId: number | undefined, fileUrl: string): void {
+  const coverPhotoPreview = document.getElementById("coverPhotoPreview");
+  const coverPhotoNotice = document.getElementById("coverPhotoNotice");
+
+  if (fileUrl) {
+    const coverPhotoStyle = `url("${fileUrl}")`;
+
+    if (coverPhotoPreview) {
+      coverPhotoPreview.style.backgroundImage = coverPhotoStyle;
+      coverPhotoPreview.dataset.objectId = fileId?.toString() || "";
+    } else if (coverPhotoNotice) {
+      coverPhotoNotice.parentElement!.appendChild(
+        DomUtil.createFragmentFromHtml(
+          `<div id="coverPhotoPreview" data-object-id="${fileId}" style="background-image: ${escapeHTML(coverPhotoStyle)};"></div>`,
+        ),
+      );
+      coverPhotoNotice.remove();
+    }
+  } else if (coverPhotoPreview) {
+    coverPhotoPreview.parentElement!.appendChild(
+      DomUtil.createFragmentFromHtml(
+        `<woltlab-core-notice id="coverPhotoNotice" type="info">${getPhrase("wcf.user.coverPhoto.noImage")}</woltlab-core-notice>`,
+      ),
+    );
+    coverPhotoPreview.remove();
+  }
 }
 
 export function setup(): void {
-  wheneverFirstSeen("[data-edit-cover-photo]", (button) => {
-    const defaultCoverPhoto = button.dataset.defaultCoverPhoto;
+  registerCallback("wcf\\action\\UserCoverPhotoAction_coverPhotoFileID", (fileId: number | undefined) => {
+    const headerImage = document.querySelector<HTMLImageElement>(".userProfileHeader__coverPhotoImage");
+    const coverPhotoElement = headerImage ?? document.getElementById("coverPhotoPreview");
 
-    registerCallback("wcf\\action\\UserCoverPhotoAction_coverPhotoFileID", (fileId: number | undefined) => {
-      const coverPhotoElement = getCoverPhotoElement();
+    if (coverPhotoElement && parseInt(coverPhotoElement.dataset.objectId!) === fileId) {
+      // nothing changed
+      return;
+    }
 
-      if (coverPhotoElement && parseInt(coverPhotoElement.dataset.objectId!) === fileId) {
-        // nothing changed
-        return;
-      }
+    const file = document.querySelector<WoltlabCoreFile>(
+      `#wcf\\\\action\\\\UserCoverPhotoAction_coverPhotoFileIDContainer woltlab-core-file[file-id="${fileId}"]`,
+    );
+    const fileUrl = file?.link ?? "";
+    const coverPhotoUrl = fileUrl || getDefaultCoverPhoto();
 
-      const file = document.querySelector<WoltlabCoreFile>(
-        `#wcf\\\\action\\\\UserCoverPhotoAction_coverPhotoFileIDContainer woltlab-core-file[file-id="${fileId}"]`,
-      );
-      const coverPhotoNotice = document.getElementById("coverPhotoNotice");
-      const coverPhotoUrl = file?.link ?? defaultCoverPhoto ?? "";
-      const coverPhotoStyle = `url("${coverPhotoUrl}")`;
+    if (headerImage && coverPhotoUrl) {
+      headerImage.src = coverPhotoUrl;
+      headerImage.dataset.objectId = fileId?.toString() || "";
 
-      if (coverPhotoElement instanceof HTMLImageElement && coverPhotoUrl) {
-        coverPhotoElement.src = coverPhotoUrl;
+      document
+        .getElementById("wcf\\action\\UserCoverPhotoAction_coverPhotoFileIDContainer")
+        ?.closest("woltlab-core-dialog")
+        ?.close();
+    }
 
-        coverPhotoElement.dataset.objectId = fileId?.toString() || "";
+    // ACP cover photo management
+    updateAcpCoverPhotoPreview(fileId, fileUrl);
 
-        document
-          .getElementById("wcf\\action\\UserCoverPhotoAction_coverPhotoFileIDContainer")
-          ?.closest("woltlab-core-dialog")
-          ?.close();
-      } else {
-        // ACP cover photo management
-        if (!coverPhotoElement && coverPhotoUrl) {
-          coverPhotoNotice!.parentElement!.appendChild(
-            DomUtil.createFragmentFromHtml(
-              `<div id="coverPhotoPreview" data-object-id="${fileId}" style="background-image: ${escapeHTML(coverPhotoStyle)};"></div>`,
-            ),
-          );
-          coverPhotoNotice!.remove();
-        } else if (coverPhotoElement && !coverPhotoUrl) {
-          coverPhotoElement.parentElement!.appendChild(
-            DomUtil.createFragmentFromHtml(
-              `<woltlab-core-notice id="coverPhotoNotice" type="info">${getPhrase("wcf.user.coverPhoto.noImage")}</woltlab-core-notice>`,
-            ),
-          );
-          coverPhotoElement.remove();
-        } else if (coverPhotoElement && coverPhotoUrl) {
-          coverPhotoElement.style.backgroundImage = coverPhotoStyle;
-          coverPhotoElement.dataset.objectId = fileId?.toString() || "";
-        }
-      }
-
-      showDefaultSuccessSnackbar();
-      fireEvent("com.woltlab.wcf.user", "coverPhoto", {
-        url: coverPhotoUrl,
-      });
+    showDefaultSuccessSnackbar();
+    fireEvent("com.woltlab.wcf.user", "coverPhoto", {
+      url: coverPhotoUrl,
     });
+  });
 
+  wheneverFirstSeen("[data-edit-cover-photo]", (button) => {
     button.addEventListener(
       "click",
       promiseMutex(() => editCoverPhoto(button)),
