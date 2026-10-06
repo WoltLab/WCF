@@ -134,7 +134,7 @@
 
 @include screen-lg {
 	.pageHeaderBarLogo,
-	.pageHeaderLogoSmall,
+	.pageHeaderFacade .pageHeaderLogoSmall,
 	.pageHeaderMenuMobile,
 	.pageHeaderUserMobile,
 	.mainMenuMobileOnly,
@@ -142,13 +142,14 @@
 		display: none;
 	}
 
-	/* logoInBar: the regular logo at 36px height */
+	/* logoInBar: the mobile logo at up to 36px height */
 	.pageHeaderPanel .pageHeaderLogo {
 		flex: 0 0 auto;
 		margin-right: 24px;
 	}
 
-	.pageHeaderPanel .pageHeaderLogoLarge {
+	.pageHeaderPanel .pageHeaderLogoSmall {
+		height: auto;
 		max-height: 36px;
 		width: auto;
 	}
@@ -453,8 +454,7 @@
 	}
 
 	/* The logo row is replaced by the mobile logo in the bar. */
-	.pageHeaderFacade,
-	.pageHeaderLogoLarge {
+	.pageHeaderFacade {
 		display: none;
 	}
 
