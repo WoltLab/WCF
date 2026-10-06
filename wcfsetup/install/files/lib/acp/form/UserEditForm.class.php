@@ -163,9 +163,6 @@ class UserEditForm extends UserAddForm
         $this->styleID = $this->user->styleID;
 
         $this->signature = $this->user->signature;
-        $this->disableSignature = $this->user->disableSignature;
-        $this->disableSignatureReason = $this->user->disableSignatureReason;
-        $this->disableSignatureExpires = $this->user->disableSignatureExpires;
 
         $this->colorScheme = $this->user->getUserOption('colorScheme') ?? 'system';
     }
@@ -234,13 +231,6 @@ class UserEditForm extends UserAddForm
         if (\mb_strtolower($this->username) !== \mb_strtolower($this->user->username)) {
             $data['data']['lastUsernameChange'] = \TIME_NOW;
             $data['data']['oldUsername'] = $this->user->username;
-        }
-
-        // handle disabled signature
-        if (WCF::getSession()->hasPermission('admin.user.canDisableSignature')) {
-            $data['data']['disableSignature'] = $this->disableSignature;
-            $data['data']['disableSignatureReason'] = $this->disableSignatureReason;
-            $data['data']['disableSignatureExpires'] = $this->disableSignatureExpires;
         }
 
         $this->objectAction = new UserAction([$this->userID], 'update', $data);

@@ -95,24 +95,6 @@ class UserAddForm extends UserOptionListForm
     public $signature = '';
 
     /**
-     * true to disable this signature
-     * @var int
-     */
-    public $disableSignature = 0;
-
-    /**
-     * reason
-     * @var string
-     */
-    public $disableSignatureReason = '';
-
-    /**
-     * date when the signature will be enabled again
-     * @var int
-     */
-    public $disableSignatureExpires = 0;
-
-    /**
      * tree of available user options
      * @var mixed[]
      */
@@ -185,20 +167,6 @@ class UserAddForm extends UserOptionListForm
 
         if (isset($_POST['signature'])) {
             $this->signature = StringUtil::trim($_POST['signature']);
-        }
-
-        if (WCF::getSession()->hasPermission('admin.user.canDisableSignature')) {
-            if (isset($_POST['disableSignatureReason'])) {
-                $this->disableSignatureReason = StringUtil::trim($_POST['disableSignatureReason']);
-            }
-            if (!empty($_POST['disableSignature'])) {
-                $this->disableSignature = 1;
-            }
-            if ($this->disableSignature !== 0 && !isset($_POST['disableSignatureNeverExpires'])) {
-                if (isset($_POST['disableSignatureExpires'])) {
-                    $this->disableSignatureExpires = @\intval(@\strtotime(StringUtil::trim($_POST['disableSignatureExpires'])));
-                }
-            }
         }
     }
 
@@ -318,12 +286,6 @@ class UserAddForm extends UserOptionListForm
             'signatureAttachmentHandler' => $this->attachmentHandler,
         ];
 
-        if (WCF::getSession()->hasPermission('admin.user.canDisableSignature')) {
-            $data['data']['disableSignature'] = $this->disableSignature;
-            $data['data']['disableSignatureReason'] = $this->disableSignatureReason;
-            $data['data']['disableSignatureExpires'] = $this->disableSignatureExpires;
-        }
-
         $this->objectAction = new UserAction([], 'create', $data);
         $returnValues = $this->objectAction->executeAction();
 
@@ -343,9 +305,8 @@ class UserAddForm extends UserOptionListForm
         ]);
 
         // reset values
-        $this->disableSignature = $this->disableSignatureExpires = 0;
         $this->username = $this->email = $this->password = $this->userTitle = '';
-        $this->signature = $this->disableSignatureReason = '';
+        $this->signature = '';
         $this->groupIDs = [];
         $this->languageID = $this->getDefaultFormLanguageID();
         $this->optionHandler->resetOptionValues();
@@ -468,9 +429,6 @@ class UserAddForm extends UserOptionListForm
             'action' => 'add',
             'userTitle' => $this->userTitle,
             'signature' => $this->signature,
-            'disableSignature' => $this->disableSignature,
-            'disableSignatureReason' => $this->disableSignatureReason,
-            'disableSignatureExpires' => $this->disableSignatureExpires,
             'attachmentHandler' => $this->attachmentHandler,
             'attachmentObjectID' => $this->attachmentObjectID,
             'attachmentObjectType' => $this->attachmentObjectType,

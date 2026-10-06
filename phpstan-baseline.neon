@@ -172,7 +172,7 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 5
+			count: 4
 			path: wcfsetup/install/files/lib/acp/form/UserAddForm.class.php
 
 		-

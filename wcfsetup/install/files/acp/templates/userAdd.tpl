@@ -267,69 +267,6 @@
 					{event name='signatureFields'}
 				</section>
 
-				{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
-					<section class="section">
-						<h2 class="sectionTitle">{lang}wcf.acp.user.disableSignature{/lang}</h2>
-
-						<dl>
-							<dt></dt>
-							<dd>
-								<label><input type="checkbox" id="disableSignature" name="disableSignature" value="1"{if $disableSignature == 1} checked{/if}> {lang}wcf.acp.user.disableSignature{/lang}</label>
-							</dd>
-						</dl>
-
-						<dl>
-							<dt><label for="disableSignatureReason">{lang}wcf.acp.user.disableSignatureReason{/lang}</label></dt>
-							<dd>
-								<textarea name="disableSignatureReason" id="disableSignatureReason" cols="40" rows="10">{$disableSignatureReason}</textarea>
-							</dd>
-						</dl>
-
-						<dl>
-							<dt></dt>
-							<dd><label><input type="checkbox" id="disableSignatureNeverExpires" name="disableSignatureNeverExpires" value="1"{if !$disableSignatureExpires} checked{/if}> {lang}wcf.acp.user.disableSignature.neverExpires{/lang}</label></dd>
-						</dl>
-
-						<dl id="disableSignatureExpiresSetting">
-							<dt><label for="disableSignatureExpires">{lang}wcf.acp.user.disableSignature.expires{/lang}</label></dt>
-							<dd>
-								<input type="date" name="disableSignatureExpires" id="disableSignatureExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableSignatureExpires} value="{$disableSignatureExpires|date:'Y-m-d'}"{/if} class="medium" data-ignore-timezone="true">
-								<small>{lang}wcf.acp.user.disableSignature.expires.description{/lang}</small>
-							</dd>
-						</dl>
-
-						{event name='disableSignatureFields'}
-					</section>
-
-					<script data-relocate="true">
-						$('#disableSignature').change(function() {
-							if ($('#disableSignature').is(':checked')) {
-								$('#disableSignatureReason').attr('readonly', false);
-								$('#disableSignatureNeverExpires, #disableSignatureExpires').enable();
-								$('#disableSignatureReason, #disableSignatureNeverExpires, #disableSignatureExpires').parents('dl').removeClass('disabled');
-							}
-							else {
-								$('#disableSignatureReason').attr('readonly', true);
-								$('#disableSignatureNeverExpires, #disableSignatureExpires').disable();
-								$('#disableSignatureReason, #disableSignatureNeverExpires, #disableSignatureExpires').parents('dl').addClass('disabled');
-							}
-						});
-
-						$('#disableSignature').change();
-
-						$('#disableSignatureNeverExpires').change(function() {
-							if ($('#disableSignatureNeverExpires').is(':checked')) {
-								$('#disableSignatureExpiresSetting').hide();
-							}
-							else {
-								$('#disableSignatureExpiresSetting').show();
-							}
-						});
-
-						$('#disableSignatureNeverExpires').change();
-					</script>
-				{/if}
-
 				{event name='signatureFieldsets'}
 			</div>
 		{/if}
