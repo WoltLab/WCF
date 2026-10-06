@@ -134,34 +134,6 @@
 				{event name='generalFields'}
 			</div>
 
-			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditPassword')}
-				{if $action == 'edit' && $user->multifactorActive}
-					<section class="section">
-						<h2 class="sectionTitle">{lang}wcf.acp.user.security.multifactor{/lang}</h2>
-
-						<dl>
-							<dt>{lang}wcf.acp.user.security.multifactor{/lang}</dt>
-							<dd>
-								{icon name='check'} {lang}wcf.acp.user.security.multifactor.active{/lang}
-								<small>{lang}wcf.acp.user.security.multifactor.active.description{/lang}</small>
-							</dd>
-						</dl>
-
-						<dl>
-							<dt></dt>
-							<dd>
-								<label>
-									<input type="checkbox" id="multifactorDisable" name="multifactorDisable" value="1"> {lang}wcf.acp.user.security.multifactor.disable{/lang}
-								</label>
-								<small>
-									{lang}wcf.acp.user.security.multifactor.disable.description{/lang}
-								</small>
-							</dd>
-						</dl>
-					</section>
-				{/if}
-			{/if}
-
 			{event name='sections'}
 		</div>
 

@@ -684,6 +684,19 @@ final class User extends CollectionDatabaseObject implements IPopoverObject, IRo
     }
 
     /**
+     * Returns true if the active user can completely disable the multi-factor
+     * authentication of this user.
+     *
+     * @since 6.3
+     */
+    public function canDisableMultifactor(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canEditPassword')
+            && $this->multifactorActive !== 0
+            && $this->isManageable();
+    }
+
+    /**
      * Returns true if the active user can resend the activation mail to this user.
      *
      * @since 6.3

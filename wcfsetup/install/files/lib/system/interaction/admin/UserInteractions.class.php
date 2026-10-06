@@ -171,6 +171,18 @@ final class UserInteractions extends AbstractInteractionProvider
                 static fn(User $user) => $user->canDisconnectThirdPartyLogin(),
                 InteractionEffect::ReloadPage
             ),
+            new RpcInteraction(
+                'disable-multifactor',
+                'core/users/%s/disable-multifactor',
+                'wcf.acp.user.action.disableMultifactor',
+                InteractionConfirmationType::Custom,
+                static fn(User $user) => WCF::getLanguage()->getDynamicVariable(
+                    'wcf.acp.user.action.disableMultifactor.confirmMessage',
+                    ['user' => $user]
+                ),
+                static fn(User $user) => $user->canDisableMultifactor(),
+                InteractionEffect::ReloadPage
+            ),
             new LinkInteraction(
                 'export-gdpr',
                 UserExportGdprAction::class,

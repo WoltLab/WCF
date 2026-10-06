@@ -18,7 +18,6 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\style\StyleHandler;
 use wcf\command\user\SetColorScheme;
-use wcf\system\user\multifactor\Setup;
 use wcf\system\view\user\profile\AdminUserProfileHeaderView;
 use wcf\system\WCF;
 
@@ -52,12 +51,6 @@ class UserEditForm extends UserAddForm
      * @var ?UserEditor
      */
     public $user;
-
-    /**
-     * true to disable multifactor authentication
-     * @var int
-     */
-    public $multifactorDisable = 0;
 
     /**
      * list of available styles for the edited user
@@ -121,10 +114,6 @@ class UserEditForm extends UserAddForm
         }
         if (isset($_POST['colorScheme'])) {
             $this->colorScheme = $_POST['colorScheme'];
-        }
-
-        if (WCF::getSession()->hasPermission('admin.user.canEditPassword') && isset($_POST['multifactorDisable'])) {
-            $this->multifactorDisable = 1;
         }
     }
 
@@ -256,20 +245,6 @@ class UserEditForm extends UserAddForm
 
         $this->objectAction = new UserAction([$this->userID], 'update', $data);
         $this->objectAction->executeAction();
-
-        // disable multifactor authentication
-        if (WCF::getSession()->hasPermission('admin.user.canEditPassword') && $this->multifactorDisable !== 0) {
-            WCF::getDB()->beginTransaction();
-            $setups = Setup::getAllForUser($this->user->getDecoratedObject());
-            foreach ($setups as $setup) {
-                $setup->delete();
-            }
-
-            $this->user->update([
-                'multifactorActive' => 0,
-            ]);
-            WCF::getDB()->commitTransaction();
-        }
 
         if ($this->user->getUserOption('colorScheme') !== $this->colorScheme) {
             new SetColorScheme($this->user->getDecoratedObject(), $this->colorScheme)();

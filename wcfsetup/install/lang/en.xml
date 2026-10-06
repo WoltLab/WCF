@@ -3157,6 +3157,8 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to this user?]]></item>
 		<item name="wcf.acp.user.action.disconnectThirdPartyLogin"><![CDATA[Disconnect Third-Party Login]]></item>
 		<item name="wcf.acp.user.action.disconnectThirdPartyLogin.confirmMessage"><![CDATA[Do you really want to disconnect this user from {"wcf.user.3rdparty."|concat:$user->getAuthProvider()|language}? Afterwards, the user can only log in with a password.]]></item>
+		<item name="wcf.acp.user.action.disableMultifactor"><![CDATA[Disable Multi-factor Authentication]]></item>
+		<item name="wcf.acp.user.action.disableMultifactor.confirmMessage"><![CDATA[Do you really want to completely disable multi-factor authentication for “{$user->username}”? The user will need to set it up from scratch. Please make sure to properly authenticate the user beforehand.]]></item>
 		<item name="wcf.acp.user.action.confirmEmail"><![CDATA[Confirm Email Address]]></item>
 		<item name="wcf.acp.user.action.unconfirmEmail"><![CDATA[Unconfirm Email Address]]></item>
 		<item name="wcf.acp.user.action.assignToGroup"><![CDATA[Add to User Group]]></item>
@@ -3174,12 +3176,6 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 		<item name="wcf.acp.user.filter.isDisabled"><![CDATA[Disabled]]></item>
 		<item name="wcf.acp.user.filter.pendingActivation"><![CDATA[Awaiting approval]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Export Personal Data (GDPR)]]></item>
-		<item name="wcf.acp.user.security.multifactor"><![CDATA[Multi-factor Authentication]]></item>
-		<item name="wcf.acp.user.security.multifactor.active"><![CDATA[Active]]></item>
-		<item name="wcf.acp.user.security.multifactor.active.description"><![CDATA[This user account is protected by a second factor.]]></item>
-		<item name="wcf.acp.user.security.multifactor.disable"><![CDATA[Completely Disable Multi-factor Authentication]]></item>
-		<item name="wcf.acp.user.security.multifactor.disable.description"><![CDATA[Completely disables multi-factor authentication for the account <strong>{$user->username}</strong>. The user will need to setup up multi-factor authentication from scratch if this checkbox is checked.<br>
-<strong>Attention</strong>: Multi-factor authentication is actively set up by users to better protect their accounts. Please make sure to properly authenticate the user before disabling multi-factor authentication for their account.]]></item>
 	</category>
 	<category name="wcf.acp.worker">
 		<item name="wcf.acp.worker.abort.confirmMessage"><![CDATA[Do you really want to terminate the execution?]]></item>
@@ -5818,5 +5814,10 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.disableSignature.neverExpires"/>
 	<item name="wcf.user.coverPhoto.noImage"/>
 	<item name="wcf.user.3rdparty.connect.info"/>
+	<item name="wcf.acp.user.security.multifactor"/>
+	<item name="wcf.acp.user.security.multifactor.active"/>
+	<item name="wcf.acp.user.security.multifactor.active.description"/>
+	<item name="wcf.acp.user.security.multifactor.disable"/>
+	<item name="wcf.acp.user.security.multifactor.disable.description"/>
 </delete>
 </language>
