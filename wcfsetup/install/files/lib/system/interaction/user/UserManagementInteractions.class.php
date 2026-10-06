@@ -4,6 +4,7 @@ namespace wcf\system\interaction\user;
 
 use wcf\acp\form\UserEditForm;
 use wcf\action\UserBanAction;
+use wcf\action\UserDisableAvatarAction;
 use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
@@ -48,29 +49,23 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                     && $user->canBan(),
                 interactionEffect: InteractionEffect::ReloadPage
             ),
+            new FormBuilderDialogInteraction(
+                'disable-avatar',
+                LinkHandler::getInstance()->getControllerLink(UserDisableAvatarAction::class, ['id' => '%s']),
+                'wcf.user.disableAvatar',
+                static fn(UserProfile $user) => $user->disableAvatar === 0
+                    && $user->canDisableAvatar(),
+                InteractionEffect::ReloadPage
+            ),
+            new RpcInteraction(
+                'enable-avatar',
+                'core/users/%s/enable-avatar',
+                'wcf.user.enableAvatar',
+                isAvailableCallback: static fn(UserProfile $user) => $user->disableAvatar === 1
+                    && $user->canDisableAvatar(),
+                interactionEffect: InteractionEffect::ReloadPage
+            ),
         ]);
-        if (WCF::getSession()->hasPermission('admin.user.canDisableAvatar')) {
-            $this->addInteraction(
-                new class(
-                    'disable-avatar',
-                    static fn(UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID
-                ) extends AbstractInteraction {
-                    #[\Override]
-                    public function render(DatabaseObject $object): string
-                    {
-                        \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->disableAvatar !== 0 ? 'wcf.user.enableAvatar' : 'wcf.user.disableAvatar');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                class="jsButtonUserDisableAvatar"
-                            >{$title}</button>
-                            HTML;
-                    }
-                }
-            );
-        }
         if (WCF::getSession()->hasPermission('admin.user.canDisableSignature')) {
             $this->addInteraction(
                 new class(

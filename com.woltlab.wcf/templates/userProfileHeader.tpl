@@ -2,9 +2,6 @@
 	class="userProfileHeader"
 	data-object-id="{$view->user->userID}"
 	{if $view->isInAccessibleGroup()}
-		{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
-			data-disable-avatar="{$view->user->disableAvatar}"
-		{/if}
 		{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
 			data-disable-signature="{$view->user->disableSignature}"
 		{/if}

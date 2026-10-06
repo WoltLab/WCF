@@ -20,7 +20,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         header;
         constructor() {
             this.header = document.querySelector(".userProfileHeader");
-            ["disableAvatar", "disableCoverPhoto", "disableSignature"].forEach((action) => {
+            ["disableCoverPhoto", "disableSignature"].forEach((action) => {
                 const button = document.querySelector(".userProfileHeader__managementOptions .jsButtonUser" + StringUtil.ucfirst(action));
                 // The button is missing if the current user lacks the permission.
                 if (button) {
@@ -38,11 +38,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             const action = target.dataset.action || "";
             let actionName = "";
             switch (action) {
-                case "disableAvatar":
-                    if (Core.stringToBool(this.header.dataset.disableAvatar || "")) {
-                        actionName = "enableAvatar";
-                    }
-                    break;
                 case "disableCoverPhoto":
                     if (Core.stringToBool(this.header.dataset.disableCoverPhoto || "")) {
                         actionName = "enableCoverPhoto";
@@ -93,12 +88,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         _ajaxSuccess(data) {
             let button;
             switch (data.actionName) {
-                case "disableAvatar":
-                case "enableAvatar":
-                    this.header.dataset.disableAvatar = data.actionName === "disableAvatar" ? "true" : "false";
-                    button = document.querySelector(".userProfileHeader__managementOptions .jsButtonUserDisableAvatar");
-                    button.textContent = (0, Language_1.getPhrase)("wcf.user." + (data.actionName === "disableAvatar" ? "enable" : "disable") + "Avatar");
-                    break;
                 case "disableCoverPhoto":
                 case "enableCoverPhoto":
                     this.header.dataset.disableCoverPhoto = data.actionName === "disableCoverPhoto" ? "true" : "false";
@@ -112,7 +101,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                     button.textContent = (0, Language_1.getPhrase)("wcf.user." + (data.actionName === "disableSignature" ? "enable" : "disable") + "Signature");
                     break;
             }
-            if (["disableAvatar", "disableCoverPhoto", "disableSignature"].indexOf(data.actionName) !== -1) {
+            if (["disableCoverPhoto", "disableSignature"].indexOf(data.actionName) !== -1) {
                 Dialog_1.default.close(this);
             }
             (0, Snackbar_1.showDefaultSuccessSnackbar)();

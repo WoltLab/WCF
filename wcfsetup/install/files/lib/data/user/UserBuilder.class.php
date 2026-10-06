@@ -153,6 +153,31 @@ final class UserBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    public function setDisableAvatar(bool $disableAvatar): static
+    {
+        $this->properties['disableAvatar'] = (int)$disableAvatar;
+
+        return $this;
+    }
+
+    public function setDisableAvatarReason(?string $disableAvatarReason): static
+    {
+        $this->properties['disableAvatarReason'] = $disableAvatarReason;
+
+        return $this;
+    }
+
+    /**
+     * Sets the timestamp at which the avatar is enabled again, `0` disables
+     * the avatar permanently.
+     */
+    public function setDisableAvatarExpires(int $disableAvatarExpires): static
+    {
+        $this->properties['disableAvatarExpires'] = $disableAvatarExpires;
+
+        return $this;
+    }
+
     public function setSignature(?string $signature): static
     {
         $this->properties['signature'] = $signature;

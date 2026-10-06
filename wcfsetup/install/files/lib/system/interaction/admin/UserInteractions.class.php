@@ -5,6 +5,7 @@ namespace wcf\system\interaction\admin;
 use wcf\acp\action\UserExportGdprAction;
 use wcf\acp\form\UserMailForm;
 use wcf\action\UserBanAction;
+use wcf\action\UserDisableAvatarAction;
 use wcf\data\user\User;
 use wcf\event\interaction\admin\UserInteractionCollecting;
 use wcf\system\event\EventHandler;
@@ -91,6 +92,22 @@ final class UserInteractions extends AbstractInteractionProvider
                 'wcf.acp.user.unban',
                 isAvailableCallback: static fn(User $user) => $user->banned === 1
                     && $user->canBan(),
+                interactionEffect: InteractionEffect::ReloadPage
+            ),
+            new FormBuilderDialogInteraction(
+                'disable-avatar',
+                LinkHandler::getInstance()->getControllerLink(UserDisableAvatarAction::class, ['id' => '%s']),
+                'wcf.user.disableAvatar',
+                static fn(User $user) => $user->disableAvatar === 0
+                    && $user->canDisableAvatar(),
+                InteractionEffect::ReloadPage
+            ),
+            new RpcInteraction(
+                'enable-avatar',
+                'core/users/%s/enable-avatar',
+                'wcf.user.enableAvatar',
+                isAvailableCallback: static fn(User $user) => $user->disableAvatar === 1
+                    && $user->canDisableAvatar(),
                 interactionEffect: InteractionEffect::ReloadPage
             ),
             new LinkInteraction(
