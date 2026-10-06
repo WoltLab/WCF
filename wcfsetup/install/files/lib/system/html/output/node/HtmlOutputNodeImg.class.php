@@ -69,6 +69,11 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                 $element->removeAttribute('srcset');
 
                 if (!DOMUtil::hasParent($element, 'a')) {
+                    // Fancybox reads every `data-*` attribute of the trigger as a slide
+                    // option, `data-width` would distort the image in the viewer. Its
+                    // value is already mirrored into the `style` attribute on save.
+                    $element->removeAttribute('data-width');
+
                     $element->setAttribute('data-type', 'image');
                     $element->setAttribute('data-fancybox', \sprintf(
                         'message-%s-%d',
