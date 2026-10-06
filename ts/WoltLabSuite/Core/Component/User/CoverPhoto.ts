@@ -14,9 +14,6 @@ import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import * as FormBuilderManager from "WoltLabSuite/Core/Form/Builder/Manager";
 import { fire as fireEvent } from "WoltLabSuite/Core/Event/Handler";
-import { getPhrase } from "WoltLabSuite/Core/Language";
-import DomUtil from "WoltLabSuite/Core/Dom/Util";
-import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 import { registerCallback } from "WoltLabSuite/Core/Form/Builder/Field/Controller/FileProcessor";
 import WoltlabCoreFile from "WoltLabSuite/Core/Component/File/woltlab-core-file";
 import { showDefaultSuccessSnackbar } from "../Snackbar";
@@ -44,40 +41,11 @@ function getDefaultCoverPhoto(): string {
   return document.querySelector<HTMLElement>("[data-default-cover-photo]")?.dataset.defaultCoverPhoto ?? "";
 }
 
-function updateAcpCoverPhotoPreview(fileId: number | undefined, fileUrl: string): void {
-  const coverPhotoPreview = document.getElementById("coverPhotoPreview");
-  const coverPhotoNotice = document.getElementById("coverPhotoNotice");
-
-  if (fileUrl) {
-    const coverPhotoStyle = `url("${fileUrl}")`;
-
-    if (coverPhotoPreview) {
-      coverPhotoPreview.style.backgroundImage = coverPhotoStyle;
-      coverPhotoPreview.dataset.objectId = fileId?.toString() || "";
-    } else if (coverPhotoNotice) {
-      coverPhotoNotice.parentElement!.appendChild(
-        DomUtil.createFragmentFromHtml(
-          `<div id="coverPhotoPreview" data-object-id="${fileId}" style="background-image: ${escapeHTML(coverPhotoStyle)};"></div>`,
-        ),
-      );
-      coverPhotoNotice.remove();
-    }
-  } else if (coverPhotoPreview) {
-    coverPhotoPreview.parentElement!.appendChild(
-      DomUtil.createFragmentFromHtml(
-        `<woltlab-core-notice id="coverPhotoNotice" type="info">${getPhrase("wcf.user.coverPhoto.noImage")}</woltlab-core-notice>`,
-      ),
-    );
-    coverPhotoPreview.remove();
-  }
-}
-
 export function setup(): void {
   registerCallback("wcf\\action\\UserCoverPhotoAction_coverPhotoFileID", (fileId: number | undefined) => {
     const headerImage = document.querySelector<HTMLImageElement>(".userProfileHeader__coverPhotoImage");
-    const coverPhotoElement = headerImage ?? document.getElementById("coverPhotoPreview");
 
-    if (coverPhotoElement && parseInt(coverPhotoElement.dataset.objectId!) === fileId) {
+    if (headerImage && parseInt(headerImage.dataset.objectId!) === fileId) {
       // nothing changed
       return;
     }
@@ -85,8 +53,7 @@ export function setup(): void {
     const file = document.querySelector<WoltlabCoreFile>(
       `#wcf\\\\action\\\\UserCoverPhotoAction_coverPhotoFileIDContainer woltlab-core-file[file-id="${fileId}"]`,
     );
-    const fileUrl = file?.link ?? "";
-    const coverPhotoUrl = fileUrl || getDefaultCoverPhoto();
+    const coverPhotoUrl = file?.link || getDefaultCoverPhoto();
 
     if (headerImage && coverPhotoUrl) {
       headerImage.src = coverPhotoUrl;
@@ -97,9 +64,6 @@ export function setup(): void {
         ?.closest("woltlab-core-dialog")
         ?.close();
     }
-
-    // ACP cover photo management
-    updateAcpCoverPhotoPreview(fileId, fileUrl);
 
     showDefaultSuccessSnackbar();
     fireEvent("com.woltlab.wcf.user", "coverPhoto", {

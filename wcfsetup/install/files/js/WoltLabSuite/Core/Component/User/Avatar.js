@@ -29,16 +29,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/PromiseMutex", 
             img.classList.add("userAvatarImage");
             img.parentElement.classList.add("userAvatar");
         });
-        const avatarForm = document.getElementById("avatarForm");
-        if (avatarForm) {
+        if (document.body.classList.contains("wcfAcp")) {
             (0, FileProcessor_1.registerCallback)("wcf\\action\\UserAvatarAction_avatarFileID", (fileId) => {
                 let link = defaultAvatar;
                 if (fileId !== undefined) {
                     const file = document.querySelector(`#wcf\\\\action\\\\UserAvatarAction_avatarFileIDContainer woltlab-core-file[file-id="${fileId}"]`);
                     link = file.link;
                 }
-                avatarForm.querySelector("img.userAvatarImage").src = link;
-                // ACP user profile header
                 const headerAvatar = document.querySelector(".userProfileHeader__avatar img.userAvatarImage");
                 if (headerAvatar) {
                     headerAvatar.src = link;

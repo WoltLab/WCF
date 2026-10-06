@@ -5196,7 +5196,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.coverPhoto"><![CDATA[Titelbild]]></item>
 		<item name="wcf.user.coverPhoto.edit"><![CDATA[Titelbild bearbeiten]]></item>
 		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->coverPhotoFileID} {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} derzeitiges Titelbild gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Titelbild-Funktion {if !$__wcf->user->disableCoverPhotoReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableCoverPhotoReason}{/if}]]></item>
-		<item name="wcf.user.coverPhoto.noImage"><![CDATA[Der Benutzer hat noch kein Titelbild hochgeladen.]]></item>
 		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width} × {$coverPhotoDimensions.min.height} Pixel<br>
 Maximale Bildgröße: {$coverPhotoDimensions.max.width} × {$coverPhotoDimensions.max.height} Pixel<br>
 Maximale Dateigröße: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}<br>
@@ -5814,5 +5813,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.disableSignature.expires"/>
 	<item name="wcf.user.disableSignature.expires.description"/>
 	<item name="wcf.user.disableSignature.neverExpires"/>
+	<item name="wcf.user.coverPhoto.noImage"/>
 </delete>
 </language>

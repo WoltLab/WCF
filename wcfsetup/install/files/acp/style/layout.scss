@@ -581,21 +581,6 @@ html[data-color-scheme="dark"] {
 	}
 }
 
-#coverPhotoPreview {
-	background: no-repeat center center;
-	background-size: cover;
-	height: 200px;
-	margin-bottom: 5px;
-
-	@include screen-xs {
-		height: 150px;
-	}
-}
-
-#uploadCoverPhoto > .button {
-	vertical-align: top;
-}
-
 @include screen-md-down {
 	.pageHeaderSearch {
 		display: block;

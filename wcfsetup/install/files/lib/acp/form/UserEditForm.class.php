@@ -2,16 +2,13 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\file\File;
 use wcf\data\style\Style;
-use wcf\data\user\cover\photo\IUserCoverPhoto;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfileAction;
 use wcf\form\AbstractForm;
-use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -24,7 +21,6 @@ use wcf\command\user\SetColorScheme;
 use wcf\system\user\multifactor\Setup;
 use wcf\system\view\user\profile\AdminUserProfileHeaderView;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the user edit form.
@@ -56,66 +52,6 @@ class UserEditForm extends UserAddForm
      * @var ?UserEditor
      */
     public $user;
-
-    /**
-     * user avatar object
-     */
-    public ?File $userAvatar = null;
-
-    /**
-     * avatar type
-     * @var string
-     * @deprecated 6.2 No longer in use.
-     */
-    public $avatarType = 'none';
-
-    /**
-     * true to disable this avatar
-     * @var int
-     */
-    public $disableAvatar = 0;
-
-    /**
-     * reason
-     * @var string
-     */
-    public $disableAvatarReason = '';
-
-    /**
-     * date when the avatar will be enabled again
-     * @var int
-     */
-    public $disableAvatarExpires = 0;
-
-    /**
-     * user cover photo object
-     * @var ?IUserCoverPhoto
-     */
-    public $userCoverPhoto;
-
-    /**
-     * true to disable this cover photo
-     * @var int
-     */
-    public $disableCoverPhoto = 0;
-
-    /**
-     * reason
-     * @var string
-     */
-    public $disableCoverPhotoReason = '';
-
-    /**
-     * date when the cover photo will be enabled again
-     * @var int
-     */
-    public $disableCoverPhotoExpires = 0;
-
-    /**
-     * true to delete the current cover photo
-     * @var int
-     */
-    public $deleteCoverPhoto = 0;
 
     /**
      * true to delete the current auth data
@@ -193,37 +129,6 @@ class UserEditForm extends UserAddForm
             $this->colorScheme = $_POST['colorScheme'];
         }
 
-        if (WCF::getSession()->hasPermission('admin.user.canDisableAvatar')) {
-            if (!empty($_POST['disableAvatar'])) {
-                $this->disableAvatar = 1;
-            }
-            if (isset($_POST['disableAvatarReason'])) {
-                $this->disableAvatarReason = StringUtil::trim($_POST['disableAvatarReason']);
-            }
-            if ($this->disableAvatar !== 0 && !isset($_POST['disableAvatarNeverExpires'])) {
-                if (isset($_POST['disableAvatarExpires'])) {
-                    $this->disableAvatarExpires = @\intval(@\strtotime(StringUtil::trim($_POST['disableAvatarExpires'])));
-                }
-            }
-        }
-
-        if (WCF::getSession()->hasPermission('admin.user.canDisableCoverPhoto')) {
-            if (isset($_POST['deleteCoverPhoto'])) {
-                $this->deleteCoverPhoto = 1;
-            }
-            if (!empty($_POST['disableCoverPhoto'])) {
-                $this->disableCoverPhoto = 1;
-            }
-            if (isset($_POST['disableCoverPhotoReason'])) {
-                $this->disableCoverPhotoReason = StringUtil::trim($_POST['disableCoverPhotoReason']);
-            }
-            if ($this->disableCoverPhoto !== 0 && !isset($_POST['disableCoverPhotoNeverExpires'])) {
-                if (isset($_POST['disableCoverPhotoExpires'])) {
-                    $this->disableCoverPhotoExpires = @\intval(@\strtotime(StringUtil::trim($_POST['disableCoverPhotoExpires'])));
-                }
-            }
-        }
-
         if (WCF::getSession()->hasPermission('admin.user.canEditPassword') && isset($_POST['disconnect3rdParty'])) {
             $this->disconnect3rdParty = 1;
         }
@@ -251,23 +156,6 @@ class UserEditForm extends UserAddForm
         }
 
         parent::readData();
-
-        // get the avatar object
-        if ($this->user->avatarFileID !== null) {
-            $this->userAvatar = FileRuntimeCache::getInstance()->getObject($this->user->avatarFileID);
-        }
-
-        // get the user cover photo object
-        if ($this->user->coverPhotoFileID !== null) {
-            // If the editing user lacks the permissions to view the cover photo, the system
-            // falls back to the default cover photo of the default style, which must not be
-            // shown as the user's own cover photo.
-            if ($userProfile->canSeeCoverPhoto()) {
-                $this->userCoverPhoto = UserProfileRuntimeCache::getInstance()
-                    ->getObject($this->userID)
-                    ->getCoverPhoto(true);
-            }
-        }
     }
 
     /**
@@ -299,14 +187,6 @@ class UserEditForm extends UserAddForm
         $this->disableSignatureReason = $this->user->disableSignatureReason;
         $this->disableSignatureExpires = $this->user->disableSignatureExpires;
 
-        $this->disableAvatar = $this->user->disableAvatar;
-        $this->disableAvatarReason = $this->user->disableAvatarReason;
-        $this->disableAvatarExpires = $this->user->disableAvatarExpires;
-
-        $this->disableCoverPhoto = $this->user->disableCoverPhoto;
-        $this->disableCoverPhotoReason = $this->user->disableCoverPhotoReason;
-        $this->disableCoverPhotoExpires = $this->user->disableCoverPhotoExpires;
-
         $this->colorScheme = $this->user->getUserOption('colorScheme') ?? 'system';
     }
 
@@ -326,16 +206,6 @@ class UserEditForm extends UserAddForm
             'action' => 'edit',
             'url' => '',
             'user' => $this->user,
-            'avatarType' => $this->avatarType,
-            'disableAvatar' => $this->disableAvatar,
-            'disableAvatarReason' => $this->disableAvatarReason,
-            'disableAvatarExpires' => $this->disableAvatarExpires,
-            'userAvatar' => $this->userAvatar,
-            'userCoverPhoto' => $this->userCoverPhoto,
-            'disableCoverPhoto' => $this->disableCoverPhoto,
-            'disableCoverPhotoReason' => $this->disableCoverPhotoReason,
-            'disableCoverPhotoExpires' => $this->disableCoverPhotoExpires,
-            'deleteCoverPhoto' => $this->deleteCoverPhoto,
             'ownerGroupID' => UserGroup::getOwnerGroupID(),
             'availableStyles' => $this->availableStyles,
             'styleID' => $this->styleID,
@@ -395,20 +265,6 @@ class UserEditForm extends UserAddForm
             $data['data']['disableSignature'] = $this->disableSignature;
             $data['data']['disableSignatureReason'] = $this->disableSignatureReason;
             $data['data']['disableSignatureExpires'] = $this->disableSignatureExpires;
-        }
-
-        // handle disabled avatar
-        if (WCF::getSession()->hasPermission('admin.user.canDisableAvatar')) {
-            $data['data']['disableAvatar'] = $this->disableAvatar;
-            $data['data']['disableAvatarReason'] = $this->disableAvatarReason;
-            $data['data']['disableAvatarExpires'] = $this->disableAvatarExpires;
-        }
-
-        // handle disabled cover photo
-        if (WCF::getSession()->hasPermission('admin.user.canDisableCoverPhoto')) {
-            $data['data']['disableCoverPhoto'] = $this->disableCoverPhoto;
-            $data['data']['disableCoverPhotoReason'] = $this->disableCoverPhotoReason;
-            $data['data']['disableCoverPhotoExpires'] = $this->disableCoverPhotoExpires;
         }
 
         $this->objectAction = new UserAction([$this->userID], 'update', $data);
