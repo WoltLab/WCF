@@ -4760,10 +4760,6 @@ not register with us.]]></item>
 		<item name="wcf.user.disableCoverPhoto"><![CDATA[Block Cover Photo]]></item>
 		<item name="wcf.user.enableCoverPhoto"><![CDATA[Unblock Cover Photo]]></item>
 		<item name="wcf.user.disableSignature"><![CDATA[Block Signature]]></item>
-		<item name="wcf.user.disableSignature.confirmMessage"><![CDATA[Do you really want to block the signature of this user?]]></item>
-		<item name="wcf.user.disableSignature.expires"><![CDATA[Unblocking]]></item>
-		<item name="wcf.user.disableSignature.expires.description"><![CDATA[The signature of the user will automatically be unblocked at the set time.]]></item>
-		<item name="wcf.user.disableSignature.neverExpires"><![CDATA[Permanently Block]]></item>
 		<item name="wcf.user.enableSignature"><![CDATA[Unblock Signature]]></item>
 		<item name="wcf.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.user.birthdayToday"><![CDATA[It is their birthday]]></item>
@@ -5816,5 +5812,9 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.disableCoverPhoto.expires"/>
 	<item name="wcf.user.disableCoverPhoto.expires.description"/>
 	<item name="wcf.user.disableCoverPhoto.neverExpires"/>
+	<item name="wcf.user.disableSignature.confirmMessage"/>
+	<item name="wcf.user.disableSignature.expires"/>
+	<item name="wcf.user.disableSignature.expires.description"/>
+	<item name="wcf.user.disableSignature.neverExpires"/>
 </delete>
 </language>

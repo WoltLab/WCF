@@ -6,6 +6,7 @@ use wcf\acp\form\UserEditForm;
 use wcf\action\UserBanAction;
 use wcf\action\UserDisableAvatarAction;
 use wcf\action\UserDisableCoverPhotoAction;
+use wcf\action\UserDisableSignatureAction;
 use wcf\data\DatabaseObject;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
@@ -22,7 +23,6 @@ use wcf\util\StringUtil;
 
 /**
  * Interaction provider for the management context menu in user profiles.
- * This interaction provider currently only works on the user profile page due to the nature of the underlying (outdated) JavaScript code.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
@@ -82,30 +82,22 @@ final class UserManagementInteractions extends AbstractInteractionProvider
                     && $user->canDisableCoverPhoto(),
                 interactionEffect: InteractionEffect::ReloadPage
             ),
-        ]);
-        if (WCF::getSession()->hasPermission('admin.user.canDisableSignature')) {
-            $this->addInteraction(
-                new class(
-                    'disable-signature',
-                    static fn(UserProfile $user) => UserGroup::isAccessibleGroup($user->getGroupIDs()) && WCF::getUser()->userID !== $user->userID
-                ) extends AbstractInteraction {
-                    #[\Override]
-                    public function render(DatabaseObject $object): string
-                    {
-                        \assert($object instanceof UserProfile);
-                        $title = WCF::getLanguage()->get($object->disableSignature !== 0 ? 'wcf.user.enableSignature' : 'wcf.user.disableSignature');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                class="jsButtonUserDisableSignature"
-                            >{$title}</button>
-                            HTML;
-                    }
-                }
-            );
-        }
-        $this->addInteractions([
+            new FormBuilderDialogInteraction(
+                'disable-signature',
+                LinkHandler::getInstance()->getControllerLink(UserDisableSignatureAction::class, ['id' => '%s']),
+                'wcf.user.disableSignature',
+                static fn(UserProfile $user) => $user->disableSignature === 0
+                    && $user->canDisableSignature(),
+                InteractionEffect::ReloadPage
+            ),
+            new RpcInteraction(
+                'enable-signature',
+                'core/users/%s/enable-signature',
+                'wcf.user.enableSignature',
+                isAvailableCallback: static fn(UserProfile $user) => $user->disableSignature === 1
+                    && $user->canDisableSignature(),
+                interactionEffect: InteractionEffect::ReloadPage
+            ),
             new RpcInteraction(
                 'enable',
                 'core/users/%s/enable',

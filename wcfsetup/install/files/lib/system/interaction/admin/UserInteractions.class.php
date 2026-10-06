@@ -7,6 +7,7 @@ use wcf\acp\form\UserMailForm;
 use wcf\action\UserBanAction;
 use wcf\action\UserDisableAvatarAction;
 use wcf\action\UserDisableCoverPhotoAction;
+use wcf\action\UserDisableSignatureAction;
 use wcf\data\user\User;
 use wcf\event\interaction\admin\UserInteractionCollecting;
 use wcf\system\event\EventHandler;
@@ -125,6 +126,22 @@ final class UserInteractions extends AbstractInteractionProvider
                 'wcf.user.enableCoverPhoto',
                 isAvailableCallback: static fn(User $user) => $user->disableCoverPhoto === 1
                     && $user->canDisableCoverPhoto(),
+                interactionEffect: InteractionEffect::ReloadPage
+            ),
+            new FormBuilderDialogInteraction(
+                'disable-signature',
+                LinkHandler::getInstance()->getControllerLink(UserDisableSignatureAction::class, ['id' => '%s']),
+                'wcf.user.disableSignature',
+                static fn(User $user) => $user->disableSignature === 0
+                    && $user->canDisableSignature(),
+                InteractionEffect::ReloadPage
+            ),
+            new RpcInteraction(
+                'enable-signature',
+                'core/users/%s/enable-signature',
+                'wcf.user.enableSignature',
+                isAvailableCallback: static fn(User $user) => $user->disableSignature === 1
+                    && $user->canDisableSignature(),
                 interactionEffect: InteractionEffect::ReloadPage
             ),
             new LinkInteraction(

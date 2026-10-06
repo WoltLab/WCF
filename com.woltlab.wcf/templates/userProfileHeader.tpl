@@ -1,11 +1,6 @@
 <header
 	class="userProfileHeader"
 	data-object-id="{$view->user->userID}"
-	{if $view->isInAccessibleGroup()}
-		{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
-			data-disable-signature="{$view->user->disableSignature}"
-		{/if}
-	{/if}
 >
 	<div class="userProfileHeader__coverPhotoContainer">
 		<div class="userProfileHeader__coverPhoto">

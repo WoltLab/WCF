@@ -645,6 +645,18 @@ final class User extends CollectionDatabaseObject implements IPopoverObject, IRo
     }
 
     /**
+     * Returns true if the active user can disable or enable the signature of
+     * this user.
+     *
+     * @since 6.3
+     */
+    public function canDisableSignature(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canDisableSignature')
+            && $this->isManageable();
+    }
+
+    /**
      * Returns true if the active user can send a link to set a new password to
      * this user, which is not possible for users that log in via a third party
      * provider.

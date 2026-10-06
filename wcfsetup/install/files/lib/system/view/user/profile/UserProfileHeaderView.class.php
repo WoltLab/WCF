@@ -114,6 +114,9 @@ final class UserProfileHeaderView implements \Stringable
         return $this->user->canEdit() || (WCF::getUser()->userID === $this->user->userID && WCF::getSession()->hasPermission('user.profile.coverPhoto.canUploadCoverPhoto'));
     }
 
+    /**
+     * @deprecated 6.3
+     */
     public function isInAccessibleGroup(): bool
     {
         return UserGroup::isAccessibleGroup($this->user->getGroupIDs());

@@ -3,21 +3,6 @@
 {capture assign='headContent'}
 	{event name='javascriptInclude'}
 	<script data-relocate="true">
-		{if !$__wcf->getUser()->isGuest() && $__wcf->getUser()->userID != $user->userID}
-			require(['WoltLabSuite/Core/Ui/User/Editor'], function(UiUserEditor) {
-				{jsphrase name='wcf.user.disableSignature'}
-				{jsphrase name='wcf.user.disableSignature.confirmMessage'}
-				{jsphrase name='wcf.user.disableSignature.expires'}
-				{jsphrase name='wcf.user.disableSignature.expires.description'}
-				{jsphrase name='wcf.user.disableSignature.neverExpires'}
-				{jsphrase name='wcf.user.enableSignature'}
-				
-				{if $isAccessible}
-					UiUserEditor.init();
-				{/if}
-			});
-		{/if}
-
 		$(function() {
 			{event name='javascriptInit'}
 		});
