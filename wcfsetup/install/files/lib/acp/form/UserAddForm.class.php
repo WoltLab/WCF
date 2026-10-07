@@ -502,15 +502,7 @@ class UserAddForm extends AbstractDatabaseObjectBuilderForm
             return false;
         }
 
-        if ($this->formObject === null) {
-            return $option->isEditable();
-        }
-
-        // The cached option objects are shared, the editability depends on the user.
-        $option = clone $option;
-        $option->setUser($this->formObject);
-
-        return $option->isEditable();
+        return $option->isEditable(user: $this->formObject);
     }
 
     /**

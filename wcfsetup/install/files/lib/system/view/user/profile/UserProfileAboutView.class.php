@@ -41,11 +41,7 @@ final class UserProfileAboutView
                     return false;
                 }
 
-                // The cached option objects are shared, the visibility depends on the user.
-                $option = clone $option;
-                $option->setUser($this->user->getDecoratedObject());
-
-                return $option->isVisible();
+                return $option->isVisible($this->user->getDecoratedObject());
             });
         }
 

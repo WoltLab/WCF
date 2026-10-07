@@ -72,9 +72,11 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
             $userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
 
             foreach ($userProfiles as $user) {
-                $birthdayUserOption->setUser($user->getDecoratedObject());
-
-                if (!$user->isProtected() && $birthdayUserOption->isVisible() && $user->getAge($year) >= 0) {
+                if (
+                    !$user->isProtected()
+                    && $birthdayUserOption->isVisible($user->getDecoratedObject())
+                    && $user->getAge($year) >= 0
+                ) {
                     $users[] = $user;
                 }
             }

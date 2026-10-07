@@ -116,11 +116,7 @@ final class UserProfileEditAction implements RequestHandlerInterface
                     return false;
                 }
 
-                // The cached option objects are shared, the editability depends on the user.
-                $option = clone $option;
-                $option->setUser($this->user->getDecoratedObject());
-
-                return $option->isEditable();
+                return $option->isEditable(user: $this->user->getDecoratedObject());
             })
         ));
 

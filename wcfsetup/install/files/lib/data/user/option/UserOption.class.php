@@ -157,12 +157,6 @@ class UserOption extends DatabaseObject implements ITitledObject
      */
     protected static $databaseTableName = 'user_option';
 
-    /**
-     * user object
-     * @var ?User
-     */
-    public $user;
-
     #[\Override]
     public function getCollectionClassName(): string
     {
@@ -303,17 +297,11 @@ class UserOption extends DatabaseObject implements ITitledObject
     }
 
     /**
-     * Sets target user object.
-     *
-     * @param User $user
-     * @return void
+     * Returns true if the active user can see the value of this option of the
+     * given user. Values of options that are only visible to their owner are
+     * not visible if no user is given.
      */
-    public function setUser(User $user)
-    {
-        $this->user = $user;
-    }
-
-    public function isVisible(): bool
+    public function isVisible(?User $user = null): bool
     {
         if ($this->isDisabled !== 0) {
             return false;
@@ -338,7 +326,7 @@ class UserOption extends DatabaseObject implements ITitledObject
 
         // check owner state
         if (($this->visible & self::VISIBILITY_OWNER) !== 0) {
-            if ($this->user !== null && $this->user->userID === WCF::getUser()->userID) {
+            if ($user !== null && $user->userID === WCF::getUser()->userID) {
                 return true;
             }
         }
@@ -347,9 +335,11 @@ class UserOption extends DatabaseObject implements ITitledObject
     }
 
     /**
-     * Returns true if this option is editable.
+     * Returns true if the active user can edit this option of the given user.
+     * Options that are only editable by their owner are editable if no user is
+     * given, e.g. when creating a user.
      */
-    public function isEditable(bool $inRegistration = false): bool
+    public function isEditable(bool $inRegistration = false, ?User $user = null): bool
     {
         if ($this->isDisabled !== 0) {
             return false;
@@ -364,7 +354,7 @@ class UserOption extends DatabaseObject implements ITitledObject
 
         // check owner state
         if (($this->editable & self::EDITABILITY_OWNER) !== 0) {
-            if ($this->user === null || $this->user->userID === WCF::getUser()->userID) {
+            if ($user === null || $user->userID === WCF::getUser()->userID) {
                 return true;
             }
         }

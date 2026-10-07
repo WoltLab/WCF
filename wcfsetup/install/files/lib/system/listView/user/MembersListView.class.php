@@ -117,8 +117,6 @@ class MembersListView extends AbstractListView
 
             // Filtering must not reveal values that are only visible to the owner
             // of the option, thus the visibility is checked without an owner.
-            $option = clone $option;
-            $option->user = null;
             if (!$option->isVisible()) {
                 return false;
             }

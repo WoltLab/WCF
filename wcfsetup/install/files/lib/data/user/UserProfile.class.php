@@ -1107,11 +1107,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             return null;
         }
 
-        // The cached option objects are shared, the visibility depends on the user.
-        $option = clone $option;
-        $option->setUser($this->getDecoratedObject());
-
-        return $option->isVisible() ? $option : null;
+        return $option->isVisible($this->getDecoratedObject()) ? $option : null;
     }
 
     /**
