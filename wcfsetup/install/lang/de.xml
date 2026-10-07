@@ -3066,6 +3066,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.exportEmailAddress.separator"><![CDATA[Trennzeichen]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.textSeparator"><![CDATA[Texttrenner]]></item>
 		<item name="wcf.acp.user.groups"><![CDATA[Benutzergruppe(n)]]></item>
+		<item name="wcf.acp.user.groups.error.ownerGroup"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dich{else}Sie können sich{/if} nicht selbst aus der Besitzer-Gruppe entfernen.]]></item>
 		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Finde Benutzer, die nicht Mitglied der ausgewählten Benutzergruppen sind.]]></item>
 		<item name="wcf.acp.user.list"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[Alle Benutzer]]></item>
@@ -3160,7 +3161,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.disableCoverPhoto.expires"><![CDATA[Entsperrung]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.expires.description"><![CDATA[Das Titelbild des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
-		<item name="wcf.acp.user.deleteCoverPhoto"><![CDATA[Titelbild löschen]]></item>
 		<item name="wcf.acp.user.disableSignature.expires"><![CDATA[Entsperrung]]></item>
 		<item name="wcf.acp.user.disableSignature.expires.description"><![CDATA[Die Signatur des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.disableSignature.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
@@ -4744,7 +4744,6 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.following.noUsers"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du folgst{else}Sie folgen{/if} derzeit keinen Benutzern.]]></item>
 		<item name="wcf.user.userTitle"><![CDATA[Individueller Benutzertitel]]></item>
 		<item name="wcf.user.userTitle.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dir{else}Sie können sich{/if} einen individuellen Benutzertitel geben.]]></item>
-		<item name="wcf.user.userTitle.error.tooLong"><![CDATA[Der eingegebene Titel ist zu lang. Die maximal zulässige Gesamtlänge beträgt {#USER_TITLE_MAX_LENGTH} Zeichen.]]></item>
 		<item name="wcf.user.userTitle.error.forbidden"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Benutzertitel eingegeben.]]></item>
 		<item name="wcf.user.birthday.age"><![CDATA[Alter]]></item>
 		<item name="wcf.user.birthday.age.from"><![CDATA[von]]></item>
@@ -5817,5 +5816,7 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.security.multifactor.active.description"/>
 	<item name="wcf.acp.user.security.multifactor.disable"/>
 	<item name="wcf.acp.user.security.multifactor.disable.description"/>
+	<item name="wcf.user.userTitle.error.tooLong"/>
+	<item name="wcf.acp.user.deleteCoverPhoto"/>
 </delete>
 </language>

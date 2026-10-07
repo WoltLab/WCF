@@ -66,11 +66,39 @@ final class UsernameFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_usernameFormField';
 
+    /**
+     * user whose current username is accepted
+     */
+    private ?User $exceptedUser = null;
+
     public function __construct()
     {
         $this->label('wcf.user.username');
         $this->maximumLength(100);
         $this->minimumLength(3);
+    }
+
+    /**
+     * Accepts the current username of the given user, which is required when
+     * editing an existing user.
+     *
+     * @since 6.3
+     */
+    public function exceptUser(?User $user): static
+    {
+        $this->exceptedUser = $user;
+
+        return $this;
+    }
+
+    /**
+     * Returns the user whose current username is accepted.
+     *
+     * @since 6.3
+     */
+    public function getExceptedUser(): ?User
+    {
+        return $this->exceptedUser;
     }
 
     /**
@@ -113,6 +141,11 @@ final class UsernameFormField extends AbstractFormField implements
             if ($this->isRequired()) {
                 $this->addValidationError(new FormFieldValidationError('empty'));
             }
+        } elseif (
+            $this->exceptedUser !== null
+            && \mb_strtolower($this->getValue()) === \mb_strtolower($this->exceptedUser->username)
+        ) {
+            // The current username remains valid, even if the rules have changed since.
         } else {
             $this->validateMinimumLength($this->getValue());
             $this->validateMaximumLength($this->getValue());

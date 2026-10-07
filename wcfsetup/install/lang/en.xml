@@ -2995,6 +2995,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.exportEmailAddress.separator"><![CDATA[Separator]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.textSeparator"><![CDATA[Text Separator]]></item>
 		<item name="wcf.acp.user.groups"><![CDATA[User Group(s)]]></item>
+		<item name="wcf.acp.user.groups.error.ownerGroup"><![CDATA[You cannot remove yourself from the owner group.]]></item>
 		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Find users which are not part of the selected user group(s)]]></item>
 		<item name="wcf.acp.user.list"><![CDATA[Users]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[All Users]]></item>
@@ -3089,7 +3090,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.disableCoverPhoto.expires"><![CDATA[Unblocking]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.expires.description"><![CDATA[The cover photo of the user will automatically be unblocked at the set time.]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.neverExpires"><![CDATA[Permanently Block]]></item>
-		<item name="wcf.acp.user.deleteCoverPhoto"><![CDATA[Delete Cover Photo]]></item>
 		<item name="wcf.acp.user.disableSignature.expires"><![CDATA[Unblocking]]></item>
 		<item name="wcf.acp.user.disableSignature.expires.description"><![CDATA[The signature of the user will automatically be unblocked at the set time.]]></item>
 		<item name="wcf.acp.user.disableSignature.neverExpires"><![CDATA[Permanently Block]]></item>
@@ -4740,7 +4740,6 @@ not register with us.]]></item>
 		<item name="wcf.user.following.noUsers"><![CDATA[You are not following any users at the moment.]]></item>
 		<item name="wcf.user.userTitle"><![CDATA[Custom User Title]]></item>
 		<item name="wcf.user.userTitle.description"><![CDATA[You can enter a custom user title.]]></item>
-		<item name="wcf.user.userTitle.error.tooLong"><![CDATA[The user title exceeds the maximum length of {#USER_TITLE_MAX_LENGTH} characters.]]></item>
 		<item name="wcf.user.userTitle.error.forbidden"><![CDATA[The user title is invalid.]]></item>
 		<item name="wcf.user.birthday.age"><![CDATA[Age]]></item>
 		<item name="wcf.user.birthday.age.from"><![CDATA[from]]></item>
@@ -5819,5 +5818,7 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.security.multifactor.active.description"/>
 	<item name="wcf.acp.user.security.multifactor.disable"/>
 	<item name="wcf.acp.user.security.multifactor.disable.description"/>
+	<item name="wcf.user.userTitle.error.tooLong"/>
+	<item name="wcf.acp.user.deleteCoverPhoto"/>
 </delete>
 </language>

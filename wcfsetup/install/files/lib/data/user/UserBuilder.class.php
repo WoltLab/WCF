@@ -5,6 +5,9 @@ namespace wcf\data\user;
 use ParagonIE\ConstantTime\Hex;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
+use wcf\system\attachment\AttachmentHandler;
+use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\user\authentication\password\algorithm\Invalid as InvalidPasswordAlgorithm;
 use wcf\system\user\authentication\password\PasswordAlgorithmManager;
 use wcf\system\WCF;
@@ -45,6 +48,10 @@ final class UserBuilder extends DatabaseObjectBuilder
     private ?array $languageIDs = null;
 
     private bool $passwordChanged = false;
+
+    private HtmlInputProcessor $signatureHtmlInputProcessor;
+
+    private AttachmentHandler $signatureAttachmentHandler;
 
     public function setUsername(string $username): static
     {
@@ -217,6 +224,29 @@ final class UserBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    /**
+     * Sets the signature from the given processor, the embedded objects are
+     * registered after the user has been saved.
+     */
+    public function setSignatureHtmlInputProcessor(HtmlInputProcessor $htmlInputProcessor): static
+    {
+        $this->signatureHtmlInputProcessor = $htmlInputProcessor;
+        $this->setSignature($htmlInputProcessor->getHtml());
+
+        return $this;
+    }
+
+    /**
+     * Sets the handler of the signature attachments, which are assigned to the
+     * user after it has been created.
+     */
+    public function setSignatureAttachmentHandler(AttachmentHandler $attachmentHandler): static
+    {
+        $this->signatureAttachmentHandler = $attachmentHandler;
+
+        return $this;
+    }
+
     public function setDisableSignature(bool $disableSignature): static
     {
         $this->properties['disableSignature'] = (int)$disableSignature;
@@ -385,6 +415,14 @@ final class UserBuilder extends DatabaseObjectBuilder
         }
         $editor->addToLanguages($this->languageIDs ?? [], false);
 
+        if (isset($this->signatureHtmlInputProcessor)) {
+            $this->registerSignatureEmbeddedObjects($object);
+        }
+
+        if (isset($this->signatureAttachmentHandler)) {
+            $this->signatureAttachmentHandler->updateObjectID($object->userID);
+        }
+
         if (\PACKAGE_ID !== 0) {
             // set default notifications
             $sql = "INSERT INTO wcf1_user_notification_event_to_user
@@ -413,6 +451,16 @@ final class UserBuilder extends DatabaseObjectBuilder
         if ($this->languageIDs !== null) {
             $editor->addToLanguages($this->languageIDs, true);
         }
+
+        if (isset($this->signatureHtmlInputProcessor)) {
+            $this->registerSignatureEmbeddedObjects($object);
+        }
+    }
+
+    private function registerSignatureEmbeddedObjects(User $user): void
+    {
+        $this->signatureHtmlInputProcessor->setObjectID($user->userID);
+        MessageEmbeddedObjectManager::getInstance()->registerObjects($this->signatureHtmlInputProcessor);
     }
 
     /**

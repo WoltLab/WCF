@@ -8,6 +8,7 @@ use wcf\data\user\UserProfileAction;
 use wcf\event\user\UserRenamed;
 use wcf\event\user\UserUpdated;
 use wcf\system\event\EventHandler;
+use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\session\SessionHandler;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\storage\UserStorageHandler;
@@ -57,6 +58,7 @@ final class UpdateUser
         $groupsChanged = $this->builder->getGroupIDs() !== null;
         if ($groupsChanged) {
             UserStorageHandler::getInstance()->reset([$user->userID], 'groupIDs');
+            $this->resetModerationQueueAssignments($user);
         }
 
         // The automatic group assignments and the user rank can depend on user options.
@@ -77,6 +79,20 @@ final class UpdateUser
         EventHandler::getInstance()->fire(new UserUpdated($user, $this->builder));
 
         return $user;
+    }
+
+    /**
+     * Removes the assignments to the moderation queue, the access to the queue
+     * entries depends on the permissions of the user groups.
+     */
+    private function resetModerationQueueAssignments(User $user): void
+    {
+        $sql = "DELETE FROM wcf1_moderation_queue_to_user
+                WHERE       userID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$user->userID]);
+
+        ModerationQueueManager::getInstance()->resetModerationCount($user->userID);
     }
 
     /**

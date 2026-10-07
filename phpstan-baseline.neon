@@ -172,18 +172,6 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 4
-			path: wcfsetup/install/files/lib/acp/form/UserAddForm.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 2
-			path: wcfsetup/install/files/lib/acp/form/UserEditForm.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/acp/form/UserGroupAddForm.class.php
 
