@@ -653,12 +653,6 @@
 			<minvalue>0</minvalue>
 		</type>
 		<type>
-			<name>com.woltlab.wcf.userOptions</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserOptionsCondition</classname>
-			<conditiongroup>userOptions</conditiongroup>
-		</type>
-		<type>
 			<name>com.woltlab.wcf.userTrophyCondition</name>
 			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
 			<classname>wcf\system\condition\UserTrophyCondition</classname>
@@ -941,12 +935,6 @@
 			<conditiongroup>contents</conditiongroup>
 			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userOptions</name>
-			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
-			<classname>wcf\system\condition\UserOptionsCondition</classname>
-			<conditiongroup>userOptions</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userTrophyCondition</name>
@@ -1552,6 +1540,13 @@
 		</type>
 		<type name="com.woltlab.wcf.user.multifactor">
 			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+		</type>
+		<!-- user option conditions are not supported until trophies and the bulk processing use object filters -->
+		<type name="com.woltlab.wcf.userOptions">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.userOptions">
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
 		</type>
 	</delete>
 </data>

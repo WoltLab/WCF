@@ -109,6 +109,9 @@
 		<file>lib/system/option/user/SelectOptionsUserOptionOutput.class.php</file>
 		<file>lib/system/option/user/TwitterUserOptionOutput.class.php</file>
 		<file>lib/system/option/user/URLUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/UserOptionHandler.class.php</file>
+		<file>lib/acp/form/UserOptionListForm.class.php</file>
+		<file>lib/system/condition/UserOptionsCondition.class.php</file>
 
 		<file>icon/font-awesome/v6/brands/42-group.svg</file>
 		<file>icon/font-awesome/v6/brands/500px.svg</file>

@@ -128,5 +128,6 @@
 		<template>textSearchableOptionType</template>
 		<template>textareaSearchableOptionType</template>
 		<template>messageUserOptionOutput</template>
+		<template>shared_userOptionsCondition</template>
 	</delete>
 </data>

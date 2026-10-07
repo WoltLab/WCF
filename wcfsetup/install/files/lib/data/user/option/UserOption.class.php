@@ -353,12 +353,9 @@ class UserOption extends DatabaseObject implements ITitledObject
     }
 
     /**
-     * Returns true iff this option is editable.
-     *
-     * @param bool $inRegistration True iff the user currently is in registration.
-     * @return  bool
+     * Returns true if this option is editable.
      */
-    public function isEditable(bool $inRegistration = false)
+    public function isEditable(bool $inRegistration = false): bool
     {
         if ($this->isDisabled !== 0) {
             return false;
@@ -386,42 +383,15 @@ class UserOption extends DatabaseObject implements ITitledObject
     }
 
     /**
-     * Returns true iff this user option can be deleted.
-     *
-     * @return  bool
+     * Returns true if this user option can be deleted.
      */
-    public function canDelete()
+    public function canDelete(): bool
     {
         if ($this->originIsSystem !== 0) {
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * Allows modifications of editable option.
-     *
-     * @return void
-     */
-    public function modifyEditableOption(int $editableOption)
-    {
-        $this->data['editable'] = $editableOption;
-    }
-
-    /**
-     * Allows modifications of visible option.
-     *
-     * @return void
-     */
-    public function modifyVisibleOption(int $visibleOption)
-    {
-        $this->data['visible'] = $visibleOption;
-    }
-
-    public function setRequired(bool $isRequired): void
-    {
-        $this->data['required'] = $isRequired ? 1 : 0;
     }
 
     /**

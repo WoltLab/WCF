@@ -22,7 +22,6 @@ use wcf\system\condition\UserIntegerPropertyCondition;
 use wcf\system\condition\UserLanguageCondition;
 use wcf\system\condition\UserMobileBrowserCondition;
 use wcf\system\condition\UserMultifactorCondition;
-use wcf\system\condition\UserOptionsCondition;
 use wcf\system\condition\UserRegistrationDateCondition;
 use wcf\system\condition\UserRegistrationDateIntervalCondition;
 use wcf\system\condition\UserSignatureCondition;
@@ -247,7 +246,8 @@ $converters = [
         ];
     },
     // Options that no longer exist or whose type is not supported keep the object disabled.
-    UserOptionsCondition::class => static function (array $data) use ($getUserOptionTypes): ?array {
+    // The class `UserOptionsCondition` has been removed, its name is used as the key.
+    'wcf\\system\\condition\\UserOptionsCondition' => static function (array $data) use ($getUserOptionTypes): ?array {
         $optionTypes = $getUserOptionTypes();
 
         $filters = [];
@@ -326,3 +326,27 @@ $converters = [
     ->migrate($converters);
 (new LegacyConditionMigration('com.woltlab.wcf.condition.userGroupAssignment', 'wcf1_user_group_assignment', 'assignmentID'))
     ->migrate($converters);
+
+// The user option conditions of trophies are removed together with their object
+// type, the affected trophies are disabled to prevent them from being awarded to
+// users that do not meet the original conditions.
+$sql = "UPDATE  wcf1_trophy
+        SET     isDisabled = ?
+        WHERE   awardAutomatically = ?
+            AND trophyID IN (
+                    SELECT      condition_table.objectID
+                    FROM        wcf1_condition condition_table
+                    INNER JOIN  wcf1_object_type object_type
+                    ON          object_type.objectTypeID = condition_table.objectTypeID
+                    INNER JOIN  wcf1_object_type_definition definition
+                    ON          definition.definitionID = object_type.definitionID
+                    WHERE       object_type.objectType = ?
+                            AND definition.definitionName = ?
+                )";
+$statement = WCF::getDB()->prepare($sql);
+$statement->execute([
+    1,
+    1,
+    'com.woltlab.wcf.userOptions',
+    'com.woltlab.wcf.condition.trophy',
+]);
