@@ -4,6 +4,8 @@ namespace wcf\data\style;
 
 use wcf\data\DatabaseObject;
 use wcf\data\ITitledObject;
+use wcf\system\style\option\IStyleOption;
+use wcf\system\style\option\PageHeaderLayout;
 use wcf\system\style\StyleCompiler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -90,6 +92,15 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
      * @since 6.3
      */
     const PAGE_HEADER_LAYOUTS = ['classic', 'logoTop', 'logoBelow', 'logoInBar'];
+
+    /**
+     * Per-style options stored as style variables.
+     * @var list<class-string<IStyleOption>>
+     * @since 6.3
+     */
+    private const OPTIONS = [
+        PageHeaderLayout::class,
+    ];
 
     /**
      * Returns the name of this style.
@@ -197,14 +208,29 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
     public static function getTemplateVariantsFromVariables(array $variables): array
     {
         $templateVariants = [];
-
-        // Unknown values may come from an imported style and fall back to the classic header.
-        $pageHeaderLayout = $variables['pageHeaderLayout'] ?? 'classic';
-        if ($pageHeaderLayout !== 'classic' && \in_array($pageHeaderLayout, self::PAGE_HEADER_LAYOUTS, true)) {
-            $templateVariants[] = 'pageHeader';
+        foreach (self::getOptionsFromVariables($variables) as $option) {
+            $templateVariant = $option->getTemplateVariant();
+            if ($templateVariant !== null) {
+                $templateVariants[] = $templateVariant;
+            }
         }
 
         return $templateVariants;
+    }
+
+    /**
+     * Returns the selected value of each option in `self::OPTIONS`.
+     *
+     * @param array<string, mixed> $variables
+     * @return list<IStyleOption>
+     * @since 6.3
+     */
+    public static function getOptionsFromVariables(array $variables): array
+    {
+        return \array_map(
+            static fn(string $option) => $option::fromString($variables[$option::getVariableName()]),
+            self::OPTIONS
+        );
     }
 
     /**

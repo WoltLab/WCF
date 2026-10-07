@@ -14,6 +14,8 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\system\style\option\IStyleOption;
+use wcf\system\style\option\PageHeaderLayout;
 use wcf\command\style\CreateManifest;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -119,7 +121,7 @@ final class StyleCompiler extends SingletonFactory
         array $variables,
         ?string $customCustomSCSSFile = null,
     ): ?\Exception {
-        $pageHeader = self::getPageHeaderStylesheet(Style::getTemplateVariantsFromVariables($variables));
+        $optionStylesheets = self::getOptionStylesheets($variables);
 
         $individualScss = '';
         if (isset($variables['individualScss'])) {
@@ -168,7 +170,7 @@ final class StyleCompiler extends SingletonFactory
         $parameters = ['scss' => ''];
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 
-        $files = $this->getFiles($pageHeader);
+        $files = $this->getFiles($optionStylesheets);
 
         if ($customCustomSCSSFile !== null) {
             if (($customSCSSFileKey = \array_search(\WCF_DIR . self::FILE_GLOBAL_VALUES, $files, true)) !== false) {
@@ -213,13 +215,15 @@ final class StyleCompiler extends SingletonFactory
     /**
      * Returns a array with all files, which should be compiled for a style.
      *
+     * @param list<string> $optionStylesheets
      * @return string[]
      * @since 5.3
      */
-    private function getFiles(string $pageHeader): array
+    private function getFiles(array $optionStylesheets): array
     {
-        if (!isset($this->files[$pageHeader])) {
-            $files = $this->getCoreFiles($pageHeader);
+        $key = \implode(',', $optionStylesheets);
+        if (!isset($this->files[$key])) {
+            $files = $this->getCoreFiles($optionStylesheets);
 
             // read stylesheets in dependency order
             $sql = "SELECT      filename, application
@@ -246,10 +250,10 @@ final class StyleCompiler extends SingletonFactory
                 $files[] = \WCF_DIR . self::FILE_GLOBAL_VALUES;
             }
 
-            $this->files[$pageHeader] = $files;
+            $this->files[$key] = $files;
         }
 
-        return $this->files[$pageHeader];
+        return $this->files[$key];
     }
 
     /**
@@ -308,7 +312,7 @@ final class StyleCompiler extends SingletonFactory
 
         $scss = "/*!\n\nstylesheet for '" . \str_replace(['*', '/'], '', $style->styleName) . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
         $scss .= $this->bootstrap($variables);
-        foreach ($this->getFiles(self::getPageHeaderStylesheet($style->getTemplateVariants())) as $file) {
+        foreach ($this->getFiles(self::getOptionStylesheets($style->getVariables())) as $file) {
             $scss .= $this->prepareFile($file);
         }
         $scss .= $individualScss;
@@ -423,7 +427,7 @@ final class StyleCompiler extends SingletonFactory
      */
     public function compileACP(): void
     {
-        $files = $this->getCoreFiles('classic');
+        $files = $this->getCoreFiles([PageHeaderLayout::Classic->getStylesheet()]);
 
         // ACP uses a slightly different layout
         $files[] = \WCF_DIR . 'acp/style/layout.scss';
@@ -474,21 +478,26 @@ final class StyleCompiler extends SingletonFactory
     }
 
     /**
-     * Returns the name of the page header stylesheet in `style/layout/pageHeader/`.
+     * Returns the stylesheets selected by the style options, relative to `style/`.
      *
-     * @param list<string> $templateVariants
+     * @param array<string, mixed> $variables
+     * @return list<string>
      */
-    private static function getPageHeaderStylesheet(array $templateVariants): string
+    private static function getOptionStylesheets(array $variables): array
     {
-        return \in_array('pageHeader', $templateVariants, true) ? 'system' : 'classic';
+        return \array_map(
+            static fn(IStyleOption $option) => $option->getStylesheet(),
+            Style::getOptionsFromVariables($variables)
+        );
     }
 
     /**
      * Returns a list of common stylesheets provided by the core.
      *
+     * @param list<string> $optionStylesheets
      * @return string[] list of common stylesheets
      */
-    private function getCoreFiles(string $pageHeader): array
+    private function getCoreFiles(array $optionStylesheets): array
     {
         $files = [];
         if ($handle = \opendir(\WCF_DIR . 'style/')) {
@@ -517,9 +526,11 @@ final class StyleCompiler extends SingletonFactory
 
             \closedir($handle);
 
-            // The subdirectory is skipped above. Sorting places the selected file
-            // at the position of the former `layout/pageHeader.scss`.
-            $files[] = \WCF_DIR . "style/layout/pageHeader/{$pageHeader}.scss";
+            // Subdirectories are skipped above. Sorting places the selected files
+            // next to the files of their top-level directory.
+            foreach ($optionStylesheets as $optionStylesheet) {
+                $files[] = \WCF_DIR . 'style/' . $optionStylesheet;
+            }
 
             // Directory order is not deterministic in some cases,
             // also the `darkMode.scss` must be at the end.
