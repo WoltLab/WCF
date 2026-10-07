@@ -101,8 +101,8 @@
 						{/if}
 
 						{foreach from=$user->getUserCardOptions() item=userCardOption}
-							<dt>{$userCardOption->getTitle()}</dt>
-							<dd>{unsafe:$userCardOption->optionValue}</dd>
+							<dt>{$userCardOption[title]}</dt>
+							<dd>{unsafe:$userCardOption[value]}</dd>
 						{/foreach}
 
 						{event name='afterDetails'}

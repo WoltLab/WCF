@@ -12,6 +12,7 @@ use wcf\system\cache\builder\UserOptionCacheBuilder;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `UserProfile::getFormattedUserOption()` or `UserOption::getFormattedValue()` instead.
  *
  * @mixin   UserOption
  * @extends DatabaseObjectDecorator<UserOption>
