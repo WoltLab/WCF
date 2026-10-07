@@ -58,7 +58,7 @@ trait TUserOptionFormFields
     {
         $formOption = $option->getFormOption();
         if ($formOption instanceof WysiwygFormOption) {
-            $formOption->setContext($option->messageObjectType ?: 'com.woltlab.wcf.user.aboutMe', 0);
+            $formOption->setContext($option->getMessageObjectType(), 0);
         }
         $configuration = $option->getConfiguration();
 

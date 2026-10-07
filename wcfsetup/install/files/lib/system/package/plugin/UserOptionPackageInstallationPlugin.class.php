@@ -2,7 +2,6 @@
 
 namespace wcf\system\package\plugin;
 
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\package\Package;
 use wcf\data\user\option\category\UserOptionCategory;
@@ -67,37 +66,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
      * @inheritDoc
      */
     public $tagName = 'option';
-
-    /**
-     * list of names of tags which aren't considered as additional data
-     * @var string[]
-     */
-    public static $reservedTags = [
-        'name',
-        'optiontype',
-        'defaultvalue',
-        'validationpattern',
-        'required',
-        'editable',
-        'visible',
-        'searchable',
-        'showorder',
-        'askduringregistration',
-        // no longer supported, ignored for backwards compatibility
-        'outputclass',
-        'enableoptions',
-        'contentpattern',
-        'selectoptions',
-        'isdisabled',
-        'categoryname',
-        'permissions',
-        'options',
-        'attrs',
-        'cdata',
-        'profilenamepattern',
-        'profileurlpattern',
-        'labeledurl',
-    ];
 
     #[\Override]
     public function install()
@@ -349,14 +317,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
         $showOrder = isset($option['showorder']) ? (int)$option['showorder'] : null;
         $showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
 
-        // collect additional tags and their values
-        $additionalData = [];
-        foreach ($option as $tag => $value) {
-            if (!\in_array($tag, self::$reservedTags, true)) {
-                $additionalData[$tag] = $value;
-            }
-        }
-
         $existingOption = $this->getExistingOption($optionName);
         if ($existingOption !== null && $this->installation->getAction() === 'update') {
             $builder = UserOptionBuilder::forUpdate($existingOption);
@@ -378,7 +338,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
             ->setShowOrder($showOrder)
             ->setPermissions(StringUtil::normalizeCsv((string)($option['permissions'] ?? '')))
             ->setOptions(StringUtil::normalizeCsv((string)($option['options'] ?? '')))
-            ->setAdditionalData($additionalData)
             ->setOriginIsSystem(true);
 
         if (isset($option['required'])) {
@@ -695,20 +654,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                         ->description('wcf.acp.pip.userOption.options.isDisabled.description'),
 
                     // option type-specific fields
-                    SingleSelectionFormField::create('messageObjectType')
-                        ->label('wcf.acp.pip.userOption.options.messageObjectType')
-                        ->description('wcf.acp.pip.userOption.options.messageObjectType.description')
-                        ->options(static function () {
-                            $options = [];
-                            foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.message') as $objectType) {
-                                $options[$objectType->objectType] = $objectType->objectType;
-                            }
-
-                            \asort($options);
-
-                            return $options;
-                        }, false, false),
-
                     TextFormField::create('profileNamePattern')
                         ->objectProperty('profilenamepattern')
                         ->label('wcf.form.option.shared.profileNamePattern')
@@ -728,11 +673,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ValueFormFieldDependency::create('optionType')
                         ->field($optionType)
                         ->values($this->getSelectOptionOptionTypes())
-                );
-                $form->getFormField('messageObjectType')->addDependency(
-                    ValueFormFieldDependency::create('optionType')
-                        ->field($optionType)
-                        ->values(['wysiwyg'])
                 );
                 foreach (['profileNamePattern', 'profileUrlPattern'] as $fieldId) {
                     $form->getFormField($fieldId)->addDependency(
@@ -954,7 +894,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
             'visible' => 'visible',
             'searchable' => 'searchable',
             'isdisabled' => 'isDisabled',
-            'messageObjectType' => 'messageObjectType',
             'profilenamepattern' => 'profileNamePattern',
             'profileurlpattern' => 'profileUrlPattern',
         ];
@@ -1059,7 +998,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                         'visible' => '0',
                         'editable' => '0',
                         'isdisabled' => 0,
-                        'messageObjectType' => '',
                         'profilenamepattern' => '',
                         'profileurlpattern' => '',
                     ],

@@ -72,5 +72,7 @@ return [
         ->columns([
             MediumtextDatabaseTableColumn::create('labeledUrl')
                 ->drop(),
+            MediumtextDatabaseTableColumn::create('additionalData')
+                ->drop(),
         ]),
 ];

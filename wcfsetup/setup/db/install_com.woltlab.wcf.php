@@ -4814,7 +4814,6 @@ return [
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             TextDatabaseTableColumn::create('permissions'),
             TextDatabaseTableColumn::create('options'),
-            MediumtextDatabaseTableColumn::create('additionalData'),
             DefaultFalseBooleanDatabaseTableColumn::create('originIsSystem'),
             DefaultFalseBooleanDatabaseTableColumn::create('showOnUserCard'),
             VarcharDatabaseTableColumn::create('l10nIdentifier')

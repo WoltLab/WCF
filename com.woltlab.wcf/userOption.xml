@@ -54,7 +54,6 @@
 				<optiontype>wysiwyg</optiontype>
 				<visible>15</visible>
 				<editable>3</editable>
-				<messageObjectType>com.woltlab.wcf.user.aboutMe</messageObjectType>
 			</option>
 			<option name="birthday">
 				<categoryname>profile.personal</categoryname>

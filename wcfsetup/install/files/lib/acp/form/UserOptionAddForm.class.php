@@ -226,24 +226,6 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
             )
             ->addProcessor(
                 new CustomFormDataProcessor(
-                    'additionDataProcessor',
-                    function (IFormDocument $document, array $parameters) {
-                        $additionalData = $this->formObject?->additionalData ?: [];
-
-                        if ($parameters['data']['optionType'] === 'select') {
-                            $additionalData['allowEmptyValue'] = true;
-                        } elseif ($parameters['data']['optionType'] === 'wysiwyg') {
-                            $additionalData['messageObjectType'] = 'com.woltlab.wcf.user.option.generic';
-                        }
-
-                        $parameters['data']['additionalData'] = \serialize($additionalData);
-
-                        return $parameters;
-                    }
-                )
-            )
-            ->addProcessor(
-                new CustomFormDataProcessor(
                     'defaultValueDataProcessor',
                     function (IFormDocument $document, array $parameters) {
                         $optionType = $parameters['data']['optionType'];

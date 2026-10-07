@@ -267,6 +267,20 @@ class UserOption extends Option implements ITitledObject
     }
 
     /**
+     * Returns the message object type used to process the values of WYSIWYG options.
+     *
+     * @since 6.3
+     */
+    public function getMessageObjectType(): string
+    {
+        if ($this->optionName === 'aboutMe') {
+            return 'com.woltlab.wcf.user.aboutMe';
+        }
+
+        return 'com.woltlab.wcf.user.option.generic';
+    }
+
+    /**
      * @return array<string, mixed>
      * @since 6.3
      */
@@ -451,7 +465,7 @@ class UserOption extends Option implements ITitledObject
 
     private function formatMessage(string $value, User $user): string
     {
-        $objectType = $this->messageObjectType ?: 'com.woltlab.wcf.user.aboutMe';
+        $objectType = $this->getMessageObjectType();
 
         // Load embedded objects by parsing the original message again because for the user options, there
         // is no central way to save the embedded objects in the database.

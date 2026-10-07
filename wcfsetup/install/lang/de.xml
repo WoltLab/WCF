@@ -2276,8 +2276,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.userOption.options.required.description"><![CDATA[Benutzer müssen das Feld der Einstellung ausfüllen.]]></item>
 		<item name="wcf.acp.pip.userOption.options.required"><![CDATA[Muss angegeben werden]]></item>
 		<item name="wcf.acp.pip.userOption.options.optionType.description"><![CDATA[Der Optionstyp bestimmt die Art und Weise, wie der Wert der Benutzereinstellung angegeben werden kann und welche (Arten von) Werte die Einstellung haben kann.]]></item>
-		<item name="wcf.acp.pip.userOption.options.messageObjectType.description"><![CDATA[Der Nachrichten-Objekttyp wird dem <kbd>wcf\system\html\input\HtmlInputProcessor</kbd>-Objekt übergeben, dass den Wert der Benutzereinstellung verarbeitet.]]></item>
-		<item name="wcf.acp.pip.userOption.options.messageObjectType"><![CDATA[Nachrichten-Objekttyp]]></item>
 		<item name="wcf.acp.pip.userOption.options.isDisabled.description"><![CDATA[Die Benutzereinstellung ist nicht sichbar und Ihr Wert kann nicht gesetzt werden.]]></item>
 		<item name="wcf.acp.pip.userOption.options.isDisabled"><![CDATA[Benutzereinstellung deaktivieren]]></item>
 		<item name="wcf.acp.pip.userOption.options.editable.description"><![CDATA[Der Wert der Benutzereinstellung kann nur von der ausgewählte Gruppe an Benutzern bearbeitet werden.]]></item>
@@ -5830,5 +5828,7 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.pip.userOption.options.contentPattern"/>
 	<item name="wcf.acp.pip.userOption.options.contentPattern.description"/>
 	<item name="wcf.acp.pip.userOption.options.contentPattern.error.invalid"/>
+	<item name="wcf.acp.pip.userOption.options.messageObjectType"/>
+	<item name="wcf.acp.pip.userOption.options.messageObjectType.description"/>
 </delete>
 </language>

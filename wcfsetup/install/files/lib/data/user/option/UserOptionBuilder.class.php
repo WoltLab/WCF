@@ -229,16 +229,6 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     }
 
     /**
-     * @param array<string, mixed> $additionalData
-     */
-    public function setAdditionalData(array $additionalData): static
-    {
-        $this->properties['additionalData'] = \serialize($additionalData);
-
-        return $this;
-    }
-
-    /**
      * Sets the form option configuration explicitly instead of deriving it
      * from the select options and the required flag.
      *
