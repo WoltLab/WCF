@@ -41,6 +41,8 @@
 					<xs:element name="menuicon" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="parent" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="showorder" type="xs:unsignedInt" minOccurs="0" />
+					<xs:element name="options" type="xs:string" minOccurs="0" />
+					<xs:element name="permissions" type="xs:string" minOccurs="0" />
 				</xs:all>
 			</xs:extension>
 		</xs:complexContent>
@@ -66,11 +68,12 @@
 					<xs:element name="selectoptions" type="xs:string" minOccurs="0" />
 					<xs:element name="enableoptions" type="xs:string" minOccurs="0" />
 					<xs:element name="required" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="askduringregistration" type="woltlab_boolean" minOccurs="0" />
 					<xs:element name="editable" minOccurs="0" >
 						<xs:simpleType>
 							<xs:restriction base="xs:integer">
 								<xs:minInclusive value="0" />
-								<xs:maxInclusive value="4" />
+								<xs:maxInclusive value="6" />
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
