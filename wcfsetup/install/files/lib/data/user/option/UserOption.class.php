@@ -158,12 +158,6 @@ class UserOption extends DatabaseObject implements ITitledObject
     protected static $databaseTableName = 'user_option';
 
     /**
-     * option value
-     * @var string
-     */
-    public $optionValue = '';
-
-    /**
      * user object
      * @var ?User
      */
