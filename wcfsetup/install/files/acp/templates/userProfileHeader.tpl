@@ -41,7 +41,7 @@
 
 				<div class="userProfileHeader__statusIcons">
 					{if $view->user->banned}
-						<span class="jsTooltip" role="status" title="{lang}wcf.user.banned{/lang}">
+						<span class="jsTooltip" role="status" title="{lang user=$view->user}wcf.user.banned{/lang}">
 							{icon name='lock'}
 						</span>
 					{/if}
