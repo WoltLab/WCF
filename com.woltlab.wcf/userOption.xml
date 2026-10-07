@@ -111,7 +111,6 @@
 			<option name="homepage">
 				<categoryname>profile.contact</categoryname>
 				<optiontype>url</optiontype>
-				<validationpattern>^$|^https?://</validationpattern>
 				<searchable>1</searchable>
 				<visible>15</visible>
 				<editable>3</editable>

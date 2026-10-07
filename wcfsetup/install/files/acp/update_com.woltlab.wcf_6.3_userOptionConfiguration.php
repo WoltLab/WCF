@@ -43,6 +43,12 @@ while ($row = $statement->fetchArray()) {
     $profileConfiguration = [];
     if ($row['optionType'] === 'labeledUrl') {
         $profileConfiguration['profileUrlPattern'] = $row['labeledUrl'] ?? '';
+
+        // The name pattern replaces the validation pattern.
+        if ($validationPattern !== '') {
+            $profileConfiguration['profileNamePattern'] = $validationPattern;
+            $validationPattern = '';
+        }
     } elseif ($row['optionType'] === 'text' && isset($socialMediaProfiles[$row['optionName']])) {
         $optionType = 'socialMedia';
         $profileConfiguration = $socialMediaProfiles[$row['optionName']];

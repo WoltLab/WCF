@@ -169,7 +169,7 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
                         ->addDependency(
                             ValueFormFieldDependency::create('validationPatternOptionTypeDependency')
                                 ->fieldId('optionType')
-                                ->values(['text', 'textarea', 'url', 'email', 'password', 'socialMedia'])
+                                ->values(['text', 'textarea', 'url', 'email', 'password'])
                         ),
                     BooleanFormField::create('askDuringRegistration')
                         ->label('wcf.acp.user.option.askDuringRegistration')
