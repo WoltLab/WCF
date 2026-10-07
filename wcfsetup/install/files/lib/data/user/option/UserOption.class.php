@@ -2,8 +2,10 @@
 
 namespace wcf\data\user\option;
 
+use wcf\data\DatabaseObject;
 use wcf\data\ITitledObject;
-use wcf\data\option\Option;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
 use wcf\data\user\User;
 use wcf\system\form\option\formatter\WysiwygFormatter;
 use wcf\system\form\option\FormOptionHandler;
@@ -23,13 +25,23 @@ use wcf\util\DateUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
+ * @property-read   int     $optionID           unique id of the user option
+ * @property-read   int     $packageID          id of the package which delivers the user option
+ * @property-read   string  $optionName         name and textual identifier of the user option
+ * @property-read   string  $categoryName       name of the user option category the user option belongs to
+ * @property-read   string  $optionType         identifier of the form option type, see `UserOption::getFormOption()`
  * @property-read   ?string $defaultValue       default value of the user option
+ * @property-read   ?string $validationPattern  regular expression used to validate the user option's value or empty if no such regular expression exists
+ * @property-read   ?string $selectOptions      newline-separated list of selectable options in the legacy format (line pattern: `{value}:{label}`)
  * @property-read   0|1     $required           is `1` if the user option has to be filled out, otherwise `0`
  * @property-read   0|1     $askDuringRegistration  is `1` if the user option will be shown during registration to be filled out, otherwise `0`
  * @property-read   int     $editable           setting for who can edit the user option, see `UserOption::EDITABILITY_*` constants
  * @property-read   int     $visible            setting for who can see the user option, see `UserOption::VISIBILITY_*` constants
  * @property-read   0|1     $searchable         is `1` if the user option can be searched, otherwise `0`
+ * @property-read   int     $showOrder          position of the user option in relation to the other user options in the category
  * @property-read   0|1     $isDisabled         is `1` if the user option is disabled and thus neither shown nor editable, otherwise `0`
+ * @property-read   ?string $permissions        comma separated list of user group permissions of which the active user needs to have at least one to access the user option
+ * @property-read   ?string $options            comma separated list of options of which at least one needs to be enabled to access the user option
  * @property-read   0|1     $originIsSystem     is `1` if the user option was created by the system and not manually by an administrator, otherwise `0`
  * @property-read   0|1     $showOnUserCard     is `1` if the user option should be displayed on the user card, otherwise `0`
  * @property-read   ?string $l10nIdentifier     base name of the language variable the localized title/description are derived from, `null` for options created by an administrator
@@ -37,8 +49,11 @@ use wcf\util\DateUtil;
  *
  * @phpstan-import-type L10nValue from L10nStorage
  */
-class UserOption extends Option implements ITitledObject
+class UserOption extends DatabaseObject implements ITitledObject
 {
+    use TDatabaseObjectOptions;
+    use TDatabaseObjectPermissions;
+
     /**
      * visible for no one (no valid bit)
      * @var int
@@ -304,8 +319,7 @@ class UserOption extends Option implements ITitledObject
         $this->user = $user;
     }
 
-    #[\Override]
-    public function isVisible()
+    public function isVisible(): bool
     {
         if ($this->isDisabled !== 0) {
             return false;

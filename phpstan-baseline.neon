@@ -2162,6 +2162,18 @@ parameters:
 			path: wcfsetup/install/files/lib/system/option/user/UserOptionHandler.class.php
 
 		-
+			message: '#^Type wcf\\data\\user\\option\\UserOption in generic type wcf\\system\\option\\OptionHandler\<wcf\\data\\user\\option\\UserOption, wcf\\data\\user\\option\\category\\UserOptionCategory\> in PHPDoc tag @extends is not subtype of template type TOption of wcf\\data\\option\\Option \= wcf\\data\\option\\Option of class wcf\\system\\option\\OptionHandler\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: wcfsetup/install/files/lib/system/option/user/UserOptionHandler.class.php
+
+		-
+			message: '#^PHPDoc tag @var with type wcf\\data\\user\\option\\UserOption is not subtype of native type wcf\\data\\option\\Option\.$#'
+			identifier: varTag.nativeType
+			count: 2
+			path: wcfsetup/install/files/lib/system/option/user/UserOptionHandler.class.php
+
+		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 5

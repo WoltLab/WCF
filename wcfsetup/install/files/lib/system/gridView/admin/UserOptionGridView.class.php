@@ -99,7 +99,7 @@ final class UserOptionGridView extends AbstractGridView
     {
         $list = new L10nUserOptionList();
         $list->getConditionBuilder()->add(
-            "option_table.categoryName IN (
+            "user_option.categoryName IN (
                 SELECT  categoryName
                 FROM    wcf" . \WCF_N . "_user_option_category
                 WHERE   parentCategoryName = ?
