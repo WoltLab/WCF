@@ -480,6 +480,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         $this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.userGroupAssignment', false, true);
 
         // com.woltlab.wcf.condition.userSearch
+        // @deprecated 6.3 add filters to the user list via `wcf\event\gridView\admin\UserGridViewInitialized` instead
         $conditionAdContainer = $this->getObjectTypeDefinitionDataContainer(
             $form,
             'com.woltlab.wcf.condition.userSearch'

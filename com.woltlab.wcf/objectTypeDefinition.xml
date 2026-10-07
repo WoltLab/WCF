@@ -131,6 +131,7 @@
 			<name>com.woltlab.wcf.condition.notice</name>
 			<interfacename>wcf\system\condition\IContentCondition</interfacename>
 		</definition>
+		<!-- deprecated 6.3, add filters to the user list via `wcf\event\gridView\admin\UserGridViewInitialized` instead -->
 		<definition>
 			<name>com.woltlab.wcf.condition.userSearch</name>
 			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
