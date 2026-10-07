@@ -10,6 +10,7 @@ use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\DateRangeFormField;
 use wcf\system\form\option\formatter\DateFormatter;
 use wcf\system\form\option\formatter\IFormOptionFormatter;
+use wcf\system\WCF;
 
 /**
  * Implementation of a form field for date values.
@@ -61,14 +62,19 @@ class DateFormOption extends AbstractFormOption
     {
         $values = $this->parseFilterValue($value);
 
-        if ($values['from'] === 0 && $values['to'] === 0) {
+        if ($values['from'] === '' && $values['to'] === '') {
             return;
         }
 
-        if ($values['to'] === 0) {
+        // Dates are stored as `Y-m-d`, which sorts chronologically. Empty values
+        // are stored as `0000-00-00` and must not match an upper bound.
+        $list->getConditionBuilder()->add("{$columnName} > ?", ['0000-00-00']);
+
+        if ($values['from'] !== '') {
             $list->getConditionBuilder()->add("{$columnName} >= ?", [$values['from']]);
-        } else {
-            $list->getConditionBuilder()->add("{$columnName} BETWEEN ? AND ?", [$values['from'], $values['to']]);
+        }
+        if ($values['to'] !== '') {
+            $list->getConditionBuilder()->add("{$columnName} <= ?", [$values['to']]);
         }
     }
 
@@ -76,36 +82,58 @@ class DateFormOption extends AbstractFormOption
     public function renderFilterValue(string $value, array $configuration = []): string
     {
         $values = $this->parseFilterValue($value);
+        $from = $values['from'] !== '' ? $this->formatFilterDate($values['from'], $configuration) : '';
+        $to = $values['to'] !== '' ? $this->formatFilterDate($values['to'], $configuration) : '';
 
-        if ($values['from'] !== 0 && $values['to'] !== 0) {
-            return $values['from'] . ' ‐ ' . $values['to'];
-        } else if ($values['from'] !== 0) {
-            return '>= ' . $values['from'];
-        } else if ($values['to'] !== 0) {
-            return '<= ' . $values['to'];
+        if ($from !== '' && $to !== '') {
+            return $from . ' ‐ ' . $to;
+        } else if ($from !== '') {
+            return '>= ' . $from;
+        } else if ($to !== '') {
+            return '<= ' . $to;
         }
 
         return '';
     }
 
     /**
-     * @return array{from: int, to: int}
+     * @param array<string, mixed> $configuration
+     */
+    private function formatFilterDate(string $date, array $configuration): string
+    {
+        return $this->getPlainTextFormatter()->format($date, WCF::getLanguage()->languageID, $configuration);
+    }
+
+    /**
+     * Returns the bounds of the given filter value as `Y-m-d`, invalid or
+     * missing bounds are returned as an empty string.
+     *
+     * @return array{from: string, to: string}
      */
     protected function parseFilterValue(string $value): array
     {
-        $from = 0;
-        $to = 0;
-
         $values = \explode(';', $value);
-        if (\count($values) === 2) {
-            $from = (int)$values[0];
-            $to = (int)$values[1];
+        if (\count($values) !== 2) {
+            return [
+                'from' => '',
+                'to' => '',
+            ];
         }
 
         return [
-            'from' => $from,
-            'to' => $to,
+            'from' => $this->parseFilterDate($values[0]),
+            'to' => $this->parseFilterDate($values[1]),
         ];
+    }
+
+    private function parseFilterDate(string $date): string
+    {
+        $dateTime = \DateTimeImmutable::createFromFormat('!Y-m-d', $date);
+        if ($dateTime === false || $dateTime->format('Y-m-d') !== $date) {
+            return '';
+        }
+
+        return $date;
     }
 
     #[\Override]
@@ -119,16 +147,18 @@ class DateFormOption extends AbstractFormOption
     {
         $values = $this->parseFilterValue($filterValue);
 
-        if ($values['from'] === 0 && $values['to'] === 0) {
+        if ($values['from'] === '' && $values['to'] === '') {
             return true;
         }
 
-        // Mirrors the numeric comparison of the date column in `applyFilter()`.
-        $value = (int)$optionValue;
-        if ($value < $values['from']) {
+        if ($optionValue === '' || $optionValue === '0000-00-00') {
             return false;
         }
 
-        return $values['to'] === 0 || $value <= $values['to'];
+        if ($values['from'] !== '' && $optionValue < $values['from']) {
+            return false;
+        }
+
+        return $values['to'] === '' || $optionValue <= $values['to'];
     }
 }

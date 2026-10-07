@@ -35,16 +35,10 @@ final class UserOptionObjectFilterFactory
         $filters = [];
         foreach ($optionsByCategory as $options) {
             foreach ($options as $option) {
-                $filter = match ($option->optionType) {
+                $filters[] = match ($option->optionType) {
                     'birthday' => new UserOptionAgeObjectFilter($option),
-                    // Dates are stored as `Y-m-d`, which the date range of the form option does not support.
-                    'date' => null,
                     default => new UserOptionObjectFilter($option),
                 };
-
-                if ($filter !== null) {
-                    $filters[] = $filter;
-                }
             }
         }
 

@@ -65,8 +65,7 @@ final class UserOptionFilter extends AbstractFilter
 
     /**
      * Creates the filters for the given user options. The birthday is filtered
-     * by the age, date options are skipped because they store `Y-m-d` instead
-     * of the timestamps expected by the date range filter.
+     * by the age.
      *
      * @param UserOption[] $options
      * @param bool $respectBirthdayYearPrivacy skips users who hide the year of their birthday when filtering by age
@@ -76,15 +75,10 @@ final class UserOptionFilter extends AbstractFilter
     {
         $filters = [];
         foreach ($options as $option) {
-            $filter = match ($option->optionType) {
+            $filters[] = match ($option->optionType) {
                 'birthday' => new UserAgeFilter($option, $respectBirthdayYearPrivacy),
-                'date' => null,
                 default => new self($option),
             };
-
-            if ($filter !== null) {
-                $filters[] = $filter;
-            }
         }
 
         return $filters;

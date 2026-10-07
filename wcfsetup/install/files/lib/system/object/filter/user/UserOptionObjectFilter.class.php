@@ -8,6 +8,7 @@ use wcf\data\user\option\UserOption;
 use wcf\data\user\User;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\DateRangeFormField;
 use wcf\system\form\builder\field\NumericRangeFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -63,12 +64,16 @@ final class UserOptionObjectFilter implements IObjectListFilter
             )
             ->label($this->getTitle());
 
-        if ($formField instanceof NumericRangeFormField) {
-            $formField->addValidator(new FormFieldValidator('range', static function (NumericRangeFormField $field) {
-                if ($field->getFromValue() === '' && $field->getToValue() === '') {
-                    $field->addValidationError(new FormFieldValidationError('empty'));
+        if ($formField instanceof DateRangeFormField || $formField instanceof NumericRangeFormField) {
+            // At least one of the bounds is required.
+            $formField->addValidator(new FormFieldValidator(
+                'range',
+                static function (DateRangeFormField|NumericRangeFormField $field) {
+                    if ($field->getFromValue() === '' && $field->getToValue() === '') {
+                        $field->addValidationError(new FormFieldValidationError('empty'));
+                    }
                 }
-            }));
+            ));
         } elseif (!($formField instanceof BooleanFormField)) {
             // A boolean field cannot be required, because "no" is a valid filter value.
             $formField->required();
