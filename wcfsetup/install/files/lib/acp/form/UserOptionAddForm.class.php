@@ -19,8 +19,6 @@ use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
-use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
@@ -134,44 +132,12 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
                         ->description('wcf.acp.user.option.defaultValue.description')
                         ->addFieldClass('long')
                         ->addDependency(
-                            // Text options provide their own default value in the configuration.
+                            // Text options provide their own default value in the configuration,
+                            // social media profiles are specific to each user.
                             ValueFormFieldDependency::create('defaultValueOptionTypeDependency')
                                 ->fieldId('optionType')
                                 ->negate()
-                                ->values(['text'])
-                        ),
-                    TextFormField::create('labeledUrl')
-                        ->label('wcf.acp.user.option.labeledUrl')
-                        ->description('wcf.acp.user.option.labeledUrl.description')
-                        ->addFieldClass('long')
-                        ->required()
-                        ->addValidator(
-                            new FormFieldValidator('labeldUrlValidator', function (TextFormField $field) {
-                                if (\substr_count($field->getValue(), '%s') !== 1) {
-                                    $field->addValidationError(
-                                        new FormFieldValidationError(
-                                            'invalid',
-                                            'wcf.acp.user.option.labeledUrl.error.invalid'
-                                        )
-                                    );
-
-                                    return;
-                                }
-
-                                if (!\preg_match('~^https?://~i', $field->getValue())) {
-                                    $field->addValidationError(
-                                        new FormFieldValidationError(
-                                            'invalidScheme',
-                                            'wcf.acp.user.option.labeledUrl.error.invalidScheme'
-                                        )
-                                    );
-                                }
-                            })
-                        )
-                        ->addDependency(
-                            ValueFormFieldDependency::create('optionType')
-                                ->fieldId('optionType')
-                                ->values(['labeledUrl'])
+                                ->values(['text', 'socialMedia'])
                         ),
                 ]),
             FormContainer::create('access')
@@ -203,7 +169,7 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
                         ->addDependency(
                             ValueFormFieldDependency::create('validationPatternOptionTypeDependency')
                                 ->fieldId('optionType')
-                                ->values(['text', 'textarea', 'url', 'email', 'password', 'labeledUrl'])
+                                ->values(['text', 'textarea', 'url', 'email', 'password', 'socialMedia'])
                         ),
                     BooleanFormField::create('askDuringRegistration')
                         ->label('wcf.acp.user.option.askDuringRegistration')
@@ -216,6 +182,12 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
                         ->value(false),
                 ])
         ]);
+    }
+
+    #[\Override]
+    protected function getAvailableFormOptions(): array
+    {
+        return UserOption::getAvailableFormOptions();
     }
 
     #[\Override]

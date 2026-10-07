@@ -67,4 +67,10 @@ return [
             MediumtextDatabaseTableColumn::create('answers')
                 ->drop(),
         ]),
+    // The link pattern is migrated to the configuration of the user options.
+    PartialDatabaseTable::create('wcf1_user_option')
+        ->columns([
+            MediumtextDatabaseTableColumn::create('labeledUrl')
+                ->drop(),
+        ]),
 ];

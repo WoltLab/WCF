@@ -93,6 +93,9 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
         'options',
         'attrs',
         'cdata',
+        'profilenamepattern',
+        'profileurlpattern',
+        'labeledurl',
     ];
 
     #[\Override]
@@ -387,11 +390,48 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
             $builder->setSearchable((bool)$option['searchable']);
         }
 
+        $profileConfiguration = $this->getProfileConfiguration($option);
+        if ($profileConfiguration !== []) {
+            $required = isset($option['required'])
+                ? (bool)$option['required']
+                : $builder->isUpdate() && $builder->getObject()->required === 1;
+            $configuration = UserOptionBuilder::buildConfiguration((string)($option['selectoptions'] ?? ''), $required);
+
+            $builder->setConfiguration(\array_merge(
+                $configuration !== '' ? \json_decode($configuration, true, flags: \JSON_THROW_ON_ERROR) : [],
+                $profileConfiguration
+            ));
+        }
+
         if ($builder->isUpdate()) {
             $builder->update();
         } else {
             $builder->create();
         }
+    }
+
+    /**
+     * Returns the configuration of social media profiles, the legacy element
+     * `labeledurl` is used as the link pattern.
+     *
+     * @param array<string, int|string|null> $option
+     * @return array<string, string>
+     */
+    private function getProfileConfiguration(array $option): array
+    {
+        $configuration = [];
+
+        $profileNamePattern = (string)($option['profilenamepattern'] ?? '');
+        if ($profileNamePattern !== '') {
+            $configuration['profileNamePattern'] = $profileNamePattern;
+        }
+
+        $profileUrlPattern = (string)($option['profileurlpattern'] ?? $option['labeledurl'] ?? '');
+        if ($profileUrlPattern !== '') {
+            $configuration['profileUrlPattern'] = $profileUrlPattern;
+        }
+
+        return $configuration;
     }
 
     /**
@@ -675,6 +715,19 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                         ->addValidator($this->getRegexValidator(
                             'wcf.acp.pip.userOption.options.contentPattern.error.invalid'
                         )),
+
+                    TextFormField::create('profileNamePattern')
+                        ->objectProperty('profilenamepattern')
+                        ->label('wcf.form.option.shared.profileNamePattern')
+                        ->description('wcf.form.option.shared.profileNamePattern.description')
+                        ->addValidator($this->getRegexValidator(
+                            'wcf.form.option.shared.profileNamePattern.error.invalid'
+                        )),
+
+                    TextFormField::create('profileUrlPattern')
+                        ->objectProperty('profileurlpattern')
+                        ->label('wcf.form.option.shared.profileUrlPattern')
+                        ->description('wcf.form.option.shared.profileUrlPattern.description'),
                 ]);
 
                 $optionType = $form->getFormField('optionType');
@@ -693,6 +746,13 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                         ->field($optionType)
                         ->values(['text'])
                 );
+                foreach (['profileNamePattern', 'profileUrlPattern'] as $fieldId) {
+                    $form->getFormField($fieldId)->addDependency(
+                        ValueFormFieldDependency::create('optionType')
+                            ->field($optionType)
+                            ->values(['socialMedia'])
+                    );
+                }
 
                 // ensure proper normalization of the multi-line values
                 $form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
@@ -732,7 +792,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
      */
     protected function getOptionTypeOptions(): array
     {
-        $options = FormOptionHandler::getInstance()->getSortedOptionTypes();
+        $options = FormOptionHandler::getInstance()->getSortedOptionTypes(UserOption::getAvailableFormOptions());
 
         // The birthday is stored as a date, but has a special meaning, e.g. for the age.
         $options['birthday'] = WCF::getLanguage()->get('wcf.user.option.birthday');
@@ -748,7 +808,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
     protected function getSelectOptionOptionTypes(): array
     {
         $optionTypes = [];
-        foreach (FormOptionHandler::getInstance()->getOptions() as $id => $formOption) {
+        foreach (UserOption::getAvailableFormOptions() as $id => $formOption) {
             if (\in_array('selectOptions', $formOption->getConfigurationFormFields(), true)) {
                 $optionTypes[] = $id;
             }
@@ -908,6 +968,8 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
             'isdisabled' => 'isDisabled',
             'messageObjectType' => 'messageObjectType',
             'contentpattern' => 'contentPattern',
+            'profilenamepattern' => 'profileNamePattern',
+            'profileurlpattern' => 'profileUrlPattern',
         ];
 
         $data = [
@@ -1012,6 +1074,8 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                         'isdisabled' => 0,
                         'messageObjectType' => '',
                         'contentpattern' => '',
+                        'profilenamepattern' => '',
+                        'profileurlpattern' => '',
                     ],
                     $form
                 );

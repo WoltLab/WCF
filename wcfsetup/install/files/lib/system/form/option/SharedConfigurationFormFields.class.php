@@ -15,6 +15,7 @@ use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**
@@ -87,7 +88,39 @@ final class SharedConfigurationFormFields
             'urlLinkText' => TextFormField::create('urlLinkText')
                 ->label('wcf.form.option.shared.urlLinkText')
                 ->maximumLength(80)
-                ->minimumLength(2)
+                ->minimumLength(2),
+            'profileNamePattern' => TextFormField::create('profileNamePattern')
+                ->label('wcf.form.option.shared.profileNamePattern')
+                ->description('wcf.form.option.shared.profileNamePattern.description')
+                ->addFieldClass('long')
+                ->addValidator(new FormFieldValidator('regex', static function (TextFormField $formField) {
+                    $value = (string)$formField->getValue();
+                    if ($value !== '' && !Regex::compile($value)->isValid()) {
+                        $formField->addValidationError(new FormFieldValidationError(
+                            'invalid',
+                            'wcf.form.option.shared.profileNamePattern.error.invalid'
+                        ));
+                    }
+                })),
+            'profileUrlPattern' => TextFormField::create('profileUrlPattern')
+                ->label('wcf.form.option.shared.profileUrlPattern')
+                ->description('wcf.form.option.shared.profileUrlPattern.description')
+                ->addFieldClass('long')
+                ->required()
+                ->addValidator(new FormFieldValidator('profileUrl', static function (TextFormField $formField) {
+                    $value = (string)$formField->getValue();
+                    if (\substr_count($value, '%s') !== 1) {
+                        $formField->addValidationError(new FormFieldValidationError(
+                            'invalid',
+                            'wcf.form.option.shared.profileUrlPattern.error.invalid'
+                        ));
+                    } elseif (!\preg_match('~^https?://~i', $value)) {
+                        $formField->addValidationError(new FormFieldValidationError(
+                            'invalidScheme',
+                            'wcf.form.option.shared.profileUrlPattern.error.invalidScheme'
+                        ));
+                    }
+                })),
         ];
     }
 

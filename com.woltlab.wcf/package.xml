@@ -95,5 +95,10 @@
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_cronjobL10n.php</instruction>
 
 	`acp/database/update_com.woltlab.wcf_6.3_step3.php` must run after all of the scripts above, including `acp/update_com.woltlab.wcf_6.3_cronjobL10n.php`.
+
+	The `userOption` PIP must run after `update_com.woltlab.wcf_6.3_userOptionConfiguration.php`,
+	because the script rebuilds the configuration of all user options and would discard the
+	social media profile configuration of the `facebook` and `twitter` options.
+	<instruction type="userOption" />
 	-->
 </package>

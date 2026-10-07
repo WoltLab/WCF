@@ -15,6 +15,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\option\WysiwygFormOption;
 use wcf\system\option\user\TUserOptionsByCategory;
+use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**
@@ -86,7 +87,7 @@ trait TUserOptionFormFields
                 'validationPattern',
                 static function (IFormField $formField) use ($option) {
                     $value = (string)$formField->getValue();
-                    if ($value !== '' && !\preg_match('~' . $option->validationPattern . '~', $value)) {
+                    if ($value !== '' && Regex::compile($option->validationPattern)->match($value) === 0) {
                         $formField->addValidationError(new FormFieldValidationError(
                             'validationFailed',
                             'wcf.user.option.error.validationFailed'

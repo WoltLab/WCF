@@ -8,13 +8,13 @@ use wcf\data\user\User;
 use wcf\system\form\option\formatter\WysiwygFormatter;
 use wcf\system\form\option\FormOptionHandler;
 use wcf\system\form\option\IFormOption;
+use wcf\system\form\option\user\SocialMediaFormOption;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\l10n\L10nDefinition;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
-use wcf\util\StringUtil;
 
 /**
  * Represents a user option.
@@ -31,12 +31,11 @@ use wcf\util\StringUtil;
  * @property-read   0|1     $searchable         is `1` if the user option can be searched, otherwise `0`
  * @property-read   0|1     $isDisabled         is `1` if the user option is disabled and thus neither shown nor editable, otherwise `0`
  * @property-read   0|1     $originIsSystem     is `1` if the user option was created by the system and not manually by an administrator, otherwise `0`
- * @property-read   ?string $labeledUrl         the url, if the option type is `labeledUrl`
  * @property-read   0|1     $showOnUserCard     is `1` if the user option should be displayed on the user card, otherwise `0`
  * @property-read   ?string $l10nIdentifier     base name of the language variable the localized title/description are derived from, `null` for options created by an administrator
+ * @property-read   ?string $configuration      JSON-encoded configuration information depending on the option type
  *
  * @phpstan-import-type L10nValue from L10nStorage
- * @property-read   ?string $configuration      JSON-encoded configuration information depending on the option type
  */
 class UserOption extends Option implements ITitledObject
 {
@@ -135,6 +134,7 @@ class UserOption extends Option implements ITitledObject
         'message' => 'wysiwyg',
         'multiSelect' => 'checkboxes',
         'URL' => 'url',
+        'labeledUrl' => 'socialMedia',
     ];
 
     /**
@@ -238,17 +238,32 @@ class UserOption extends Option implements ITitledObject
      */
     public function getFormOption(): IFormOption
     {
-        $formOption = FormOptionHandler::getInstance()->getOption($this->optionType);
-        if ($formOption === null && isset(self::FORM_OPTION_TYPES[$this->optionType])) {
-            $formOption = FormOptionHandler::getInstance()->getOption(self::FORM_OPTION_TYPES[$this->optionType]);
+        $formOptions = self::getAvailableFormOptions();
+
+        return $formOptions[$this->optionType]
+            ?? $formOptions[self::FORM_OPTION_TYPES[$this->optionType] ?? '']
+            ?? $formOptions['text'];
+    }
+
+    /**
+     * Returns the form options available for user options, which includes form
+     * options that are exclusive to user options.
+     *
+     * @return array<string, IFormOption>
+     * @since 6.3
+     */
+    public static function getAvailableFormOptions(): array
+    {
+        static $formOptions = null;
+
+        if ($formOptions === null) {
+            $formOptions = FormOptionHandler::getInstance()->getOptions();
+
+            $socialMedia = new SocialMediaFormOption();
+            $formOptions[$socialMedia->getId()] = $socialMedia;
         }
 
-        if ($formOption === null) {
-            $formOption = FormOptionHandler::getInstance()->getOption('text');
-            \assert($formOption !== null);
-        }
-
-        return $formOption;
+        return $formOptions;
     }
 
     /**
@@ -391,7 +406,6 @@ class UserOption extends Option implements ITitledObject
         return match ($this->optionType) {
             'birthday' => $this->formatBirthday($value, $user),
             'wysiwyg' => $this->formatMessage($value, $user),
-            'labeledUrl' => $this->formatLabeledUrl($value),
             default => $this->getFormOption()->getFormatter()->format(
                 $value,
                 WCF::getLanguage()->languageID,
@@ -433,16 +447,6 @@ class UserOption extends Option implements ITitledObject
         }
 
         return $birthday;
-    }
-
-    private function formatLabeledUrl(string $value): string
-    {
-        $url = \sprintf($this->labeledUrl, \rawurlencode($value));
-        if (!\preg_match('~^https?://~i', $url)) {
-            return StringUtil::encodeHTML($value);
-        }
-
-        return StringUtil::getAnchorTag($url, $value, true, true);
     }
 
     private function formatMessage(string $value, User $user): string

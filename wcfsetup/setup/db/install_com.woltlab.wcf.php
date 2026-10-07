@@ -4800,7 +4800,6 @@ return [
             MediumtextDatabaseTableColumn::create('defaultValue'),
             TextDatabaseTableColumn::create('validationPattern'),
             MediumtextDatabaseTableColumn::create('selectOptions'),
-            MediumtextDatabaseTableColumn::create('labeledUrl'),
             DefaultFalseBooleanDatabaseTableColumn::create('required'),
             DefaultFalseBooleanDatabaseTableColumn::create('askDuringRegistration'),
             TinyintDatabaseTableColumn::create('editable')

@@ -3104,10 +3104,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.option.editable.2"><![CDATA[Administrator]]></item>
 		<item name="wcf.acp.user.option.editable.3"><![CDATA[Eigentümer und Administrator]]></item>
 		<item name="wcf.acp.user.option.editable.6"><![CDATA[Eigentümer bei Erstanmeldung und Administrator]]></item>
-		<item name="wcf.acp.user.option.labeledUrl"><![CDATA[URL]]></item>
-		<item name="wcf.acp.user.option.labeledUrl.description"><![CDATA[Wenn der Feldtyp „labeledUrl“ ist, muss hier die URL hinterlegt werden, auf die verlinkt werden soll. {if LANGUAGE_USE_INFORMAL_VARIANT}Nutze{else}Nutzen Sie{/if} <span class="inlineCode">%s</span> als Platzhalter für die Eingabe des Benutzers.]]></item>
-		<item name="wcf.acp.user.option.labeledUrl.error.invalid"><![CDATA[Der Platzhalter <span class="inlineCode">%s</span> fehlt in der URL.]]></item>
-		<item name="wcf.acp.user.option.labeledUrl.error.invalidScheme"><![CDATA[Die URL muss mit <span class="inlineCode">http://</span> oder <span class="inlineCode">https://</span> beginnen.]]></item>
 		<item name="wcf.acp.user.option.optionType"><![CDATA[Feldtyp]]></item>
 		<item name="wcf.acp.user.option.askDuringRegistration"><![CDATA[Das Feld wird im Registrierungs-Formular angezeigt.]]></item>
 		<item name="wcf.acp.user.option.searchable"><![CDATA[Das Feld kann über die Mitgliedersuche durchsucht werden.]]></item>
@@ -4075,6 +4071,8 @@ Dateianhänge:
 		<item name="wcf.form.option.textarea"><![CDATA[Mehrzeiliger Text]]></item>
 		<item name="wcf.form.option.timezone"><![CDATA[Zeitzone]]></item>
 		<item name="wcf.form.option.sourceCode"><![CDATA[Quellcode]]></item>
+		<item name="wcf.form.option.socialMedia"><![CDATA[Social-Media-Profil]]></item>
+		<item name="wcf.form.option.socialMedia.error.profileName"><![CDATA[Der eingegebene Profilname ist ungültig.]]></item>
 		<item name="wcf.form.option.url"><![CDATA[Link]]></item>
 		<item name="wcf.form.option.wysiwyg"><![CDATA[WYSIWYG]]></item>
 		<item name="wcf.form.option.shared.currency"><![CDATA[Währung]]></item>
@@ -4089,6 +4087,13 @@ Dateianhänge:
 		<item name="wcf.form.option.shared.sourceCodeLanguage.description"><![CDATA[Wird keine Sprache ausgewählt, wird sie automatisch anhand des eingegebenen Quellcodes erkannt.]]></item>
 		<item name="wcf.form.option.shared.unit"><![CDATA[Einheit]]></item>
 		<item name="wcf.form.option.shared.urlLinkText"><![CDATA[Linktext]]></item>
+		<item name="wcf.form.option.shared.profileNamePattern"><![CDATA[Muster für den Profilnamen]]></item>
+		<item name="wcf.form.option.shared.profileNamePattern.description"><![CDATA[Regulärer Ausdruck ohne Begrenzer, dem der Profilname entsprechen muss, z. B. <span class="inlineCode">^[A-Za-z0-9_]+$</span>.]]></item>
+		<item name="wcf.form.option.shared.profileNamePattern.error.invalid"><![CDATA[Der reguläre Ausdruck ist ungültig.]]></item>
+		<item name="wcf.form.option.shared.profileUrlPattern"><![CDATA[Link zum Profil]]></item>
+		<item name="wcf.form.option.shared.profileUrlPattern.description"><![CDATA[Link zum Profil mit <span class="inlineCode">%s</span> als Platzhalter für den Profilnamen, z. B. <span class="inlineCode">https://www.facebook.com/%s</span>. Gibt ein Benutzer den Link anstelle des Profilnamens ein, wird nur der Profilname gespeichert.]]></item>
+		<item name="wcf.form.option.shared.profileUrlPattern.error.invalid"><![CDATA[Der Platzhalter <span class="inlineCode">%s</span> muss genau einmal im Link enthalten sein.]]></item>
+		<item name="wcf.form.option.shared.profileUrlPattern.error.invalidScheme"><![CDATA[Der Link muss mit <span class="inlineCode">http://</span> oder <span class="inlineCode">https://</span> beginnen.]]></item>
 		<item name="wcf.form.option.optionType"><![CDATA[Feldtyp]]></item>
 	</category>
 	<category name="wcf.image">
@@ -5821,5 +5826,9 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.security.multifactor.disable.description"/>
 	<item name="wcf.user.userTitle.error.tooLong"/>
 	<item name="wcf.acp.user.deleteCoverPhoto"/>
+	<item name="wcf.acp.user.option.labeledUrl"/>
+	<item name="wcf.acp.user.option.labeledUrl.description"/>
+	<item name="wcf.acp.user.option.labeledUrl.error.invalid"/>
+	<item name="wcf.acp.user.option.labeledUrl.error.invalidScheme"/>
 </delete>
 </language>

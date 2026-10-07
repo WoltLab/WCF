@@ -13,6 +13,7 @@ use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
 use wcf\system\form\option\FormOptionHandler;
+use wcf\system\form\option\IFormOption;
 use wcf\system\form\option\SharedConfigurationFormFields;
 
 /**
@@ -95,7 +96,7 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
     {
         $ids = [];
 
-        foreach (FormOptionHandler::getInstance()->getOptions() as $option) {
+        foreach ($this->getAvailableFormOptions() as $option) {
             foreach ($option->getConfigurationFormFields() as $formFieldId) {
                 $ids[] = $formFieldId;
             }
@@ -112,7 +113,7 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
         $sharedConfigurationFormFields = new SharedConfigurationFormFields();
         $matrix = [];
 
-        foreach (FormOptionHandler::getInstance()->getOptions() as $option) {
+        foreach ($this->getAvailableFormOptions() as $option) {
             foreach ($option->getConfigurationFormFields() as $formFieldId) {
                 if (!isset($matrix[$formFieldId])) {
                     $matrix[$formFieldId] = [];
@@ -143,7 +144,18 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
         return SelectFormField::create('optionType')
             ->label('wcf.form.option.optionType')
             ->immutable($this->formAction !== 'create')
-            ->options(FormOptionHandler::getInstance()->getSortedOptionTypes())
+            ->options(FormOptionHandler::getInstance()->getSortedOptionTypes($this->getAvailableFormOptions()))
             ->required();
+    }
+
+    /**
+     * Returns the form options that can be selected as the type of the option.
+     *
+     * @return array<string, IFormOption>
+     * @since 6.3
+     */
+    protected function getAvailableFormOptions(): array
+    {
+        return FormOptionHandler::getInstance()->getOptions();
     }
 }

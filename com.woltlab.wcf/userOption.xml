@@ -118,21 +118,21 @@
 			</option>
 			<option name="facebook">
 				<categoryname>profile.contact</categoryname>
-				<optiontype>text</optiontype>
-				<validationpattern>^$|^[A-Za-z\d.]{5,}$</validationpattern>
+				<optiontype>socialMedia</optiontype>
+				<profilenamepattern>^[A-Za-z\d.]{5,}$</profilenamepattern>
+				<profileurlpattern>https://www.facebook.com/%s</profileurlpattern>
 				<searchable>1</searchable>
 				<visible>15</visible>
 				<editable>3</editable>
-				<contentpattern>^https?://www.facebook.com/([A-Za-z\d.]{5,})$</contentpattern>
 			</option>
 			<option name="twitter">
 				<categoryname>profile.contact</categoryname>
-				<optiontype>text</optiontype>
-				<validationpattern>^$|^[A-Za-z0-9_]+$</validationpattern>
+				<optiontype>socialMedia</optiontype>
+				<profilenamepattern>^[A-Za-z0-9_]+$</profilenamepattern>
+				<profileurlpattern>https://x.com/%s</profileurlpattern>
 				<searchable>1</searchable>
 				<visible>15</visible>
 				<editable>3</editable>
-				<contentpattern>^https?://twitter.com/([A-Za-z0-9_]+)$</contentpattern>
 			</option>
 			<!-- /profile -->
 			<!-- settings -->

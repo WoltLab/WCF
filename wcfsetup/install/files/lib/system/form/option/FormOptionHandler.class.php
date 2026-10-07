@@ -87,11 +87,15 @@ final class FormOptionHandler extends SingletonFactory
     }
 
     /**
+     * Returns the titles of the given form options, or all registered form
+     * options, sorted by their title.
+     *
+     * @param ?array<string, IFormOption> $options
      * @return array<string, string>
      */
-    public function getSortedOptionTypes(): array
+    public function getSortedOptionTypes(?array $options = null): array
     {
-        $optionTypes = \array_map(fn($option) => $option->getTitle(), $this->getOptions());
+        $optionTypes = \array_map(fn($option) => $option->getTitle(), $options ?? $this->getOptions());
 
         $collator = new \Collator(WCF::getLanguage()->getLocale());
         \uasort(
