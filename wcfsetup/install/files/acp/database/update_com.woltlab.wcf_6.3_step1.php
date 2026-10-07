@@ -71,6 +71,8 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('outputClass')
                 ->defaultValue('')
                 ->drop(),
+            MediumtextDatabaseTableColumn::create('enableOptions')
+                ->drop(),
             VarcharDatabaseTableColumn::create('l10nIdentifier')
                 ->length(255),
         ]),

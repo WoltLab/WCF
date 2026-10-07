@@ -85,8 +85,8 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
         'askduringregistration',
         // no longer supported, ignored for backwards compatibility
         'outputclass',
-        'selectoptions',
         'enableoptions',
+        'selectoptions',
         'isdisabled',
         'categoryname',
         'permissions',
@@ -369,7 +369,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
             ->setDefaultValue(isset($option['defaultvalue']) ? (string)$option['defaultvalue'] : null)
             ->setValidationPattern((string)($option['validationpattern'] ?? ''))
             ->setSelectOptions((string)($option['selectoptions'] ?? ''))
-            ->setEnableOptions(StringUtil::normalizeCsv((string)($option['enableoptions'] ?? '')))
             ->setEditable((int)($option['editable'] ?? 0))
             ->setVisible((int)($option['visible'] ?? 0))
             ->setShowOrder($showOrder)
@@ -598,12 +597,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                         ->description('wcf.acp.pip.abstractOption.options.selectOptions.description')
                         ->rows(5),
 
-                    MultilineTextFormField::create('enableOptions')
-                        ->objectProperty('enableoptions')
-                        ->label('wcf.acp.pip.abstractOption.options.enableOptions')
-                        ->description('wcf.acp.pip.abstractOption.options.enableOptions.description')
-                        ->rows(5),
-
                     IntegerFormField::create('showOrder')
                         ->objectProperty('showorder')
                         ->label('wcf.form.field.showOrder')
@@ -705,7 +698,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                 $form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
                     'multilineValues',
                     static function (IFormDocument $document, array $parameters) {
-                        foreach (['defaultvalue', 'enableoptions', 'selectoptions'] as $key) {
+                        foreach (['defaultvalue', 'selectoptions'] as $key) {
                             if (isset($parameters['data'][$key])) {
                                 $parameters['data'][$key] = StringUtil::unifyNewlines($parameters['data'][$key]);
                             }
@@ -904,7 +897,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
             'defaultvalue' => 'defaultValue',
             'validationpattern' => 'validationPattern',
             'selectoptions' => 'selectOptions',
-            'enableoptions' => 'enableOptions',
             'showorder' => 'showOrder',
             'options' => 'options',
             'permissions' => 'permissions',
@@ -1009,7 +1001,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                         'defaultvalue' => '',
                         'validationpattern' => '',
                         'selectoptions' => '',
-                        'enableoptions' => '',
                         'showorder' => 0,
                         'options' => '',
                         'permissions' => '',

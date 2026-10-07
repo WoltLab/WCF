@@ -150,13 +150,6 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
-    public function setEnableOptions(string $enableOptions): static
-    {
-        $this->properties['enableOptions'] = $enableOptions;
-
-        return $this;
-    }
-
     public function setLabeledUrl(string $labeledUrl): static
     {
         $this->properties['labeledUrl'] = $labeledUrl;
