@@ -12,15 +12,21 @@ namespace wcf\system\style\option;
  */
 enum PageHeaderLayout implements IStyleOption
 {
-    case Classic;
     case LogoTop;
     case LogoBelow;
     case LogoInBar;
+    case Classic;
 
     #[\Override]
     public static function getVariableName(): string
     {
         return 'pageHeaderLayout';
+    }
+
+    #[\Override]
+    public static function getFallback(): static
+    {
+        return self::Classic;
     }
 
     #[\Override]

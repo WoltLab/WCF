@@ -2889,12 +2889,16 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.styleVersion.error.invalid"><![CDATA[You have provided an invalid version number.]]></item>
 		<item name="wcf.acp.style.styleDate.error.invalid"><![CDATA[You have provided an invalid date.]]></item>
 		<item name="wcf.acp.style.option"><![CDATA[Style Options]]></item>
-		<item name="wcf.acp.style.option.deprecated"><![CDATA[The selected value is deprecated and will be removed in a future version.]]></item>
+		<item name="wcf.acp.style.option.deprecated"><![CDATA[Deprecated]]></item>
 		<item name="wcf.acp.style.option.pageHeaderLayout"><![CDATA[Page Header Layout]]></item>
 		<item name="wcf.acp.style.option.pageHeaderLayout.classic"><![CDATA[Classic]]></item>
+		<item name="wcf.acp.style.option.pageHeaderLayout.classic.description"><![CDATA[The page header of earlier versions. The menu bar sits at the very top and stays there while scrolling, the logo follows below.<br><br>This page header will be removed in a future version. Until then, it remains an option for styles whose templates, CSS or JavaScript depend on it and have not been updated yet.]]></item>
 		<item name="wcf.acp.style.option.pageHeaderLayout.logoTop"><![CDATA[Logo above the menu bar]]></item>
+		<item name="wcf.acp.style.option.pageHeaderLayout.logoTop.description"><![CDATA[The logo sits in its own row above the menu bar. Once the logo has scrolled out of view, the menu bar stays at the top of the screen.]]></item>
 		<item name="wcf.acp.style.option.pageHeaderLayout.logoBelow"><![CDATA[Logo below the menu bar]]></item>
+		<item name="wcf.acp.style.option.pageHeaderLayout.logoBelow.description"><![CDATA[The menu bar sits at the very top and stays there while scrolling, the logo follows in its own row below.]]></item>
 		<item name="wcf.acp.style.option.pageHeaderLayout.logoInBar"><![CDATA[Small logo inside the menu bar]]></item>
+		<item name="wcf.acp.style.option.pageHeaderLayout.logoInBar.description"><![CDATA[A compact page header without a separate logo row, the mobile logo is shown inside the menu bar. The menu bar stays at the top of the screen while scrolling.]]></item>
 		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Page Logo]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.width"><![CDATA[Page Logo Width]]></item>
 		<item name="wcf.acp.style.globals.pageLogo.height"><![CDATA[Page Logo Height]]></item>

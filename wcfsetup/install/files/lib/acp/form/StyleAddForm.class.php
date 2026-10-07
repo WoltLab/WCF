@@ -951,6 +951,7 @@ class StyleAddForm extends AbstractForm
             $variableName = $option::getVariableName();
             $styleOptions[$variableName] = [
                 'cases' => $option::cases(),
+                'previewTemplate' => '__styleOptionPreview_' . $variableName,
                 'selected' => $option::tryFromString($this->variables[$variableName] ?? ''),
             ];
         }

@@ -385,18 +385,27 @@
 				
 				{foreach from=$styleOptions key=variableName item=styleOption}
 					<dl{if $errorField == $variableName} class="formError"{/if}>
-						<dt><label for="{$variableName}">{lang}wcf.acp.style.option.{$variableName}{/lang}</label></dt>
+						<dt id="{$variableName}Label">{lang}wcf.acp.style.option.{$variableName}{/lang}</dt>
 						<dd>
-							<select name="{$variableName}" id="{$variableName}">
+							<div class="styleOptionList" role="radiogroup" aria-labelledby="{$variableName}Label">
 								{foreach from=$styleOption[cases] item=case}
-									<option value="{$case->toString()}"{if $styleOption[selected] === $case} selected{/if}>{lang}wcf.acp.style.option.{$variableName}.{$case->toString()}{/lang}</option>
+									<label class="styleOption">
+										{include file=$styleOption[previewTemplate] styleOptionValue=$case->toString()}
+										<span class="styleOption__title">
+											<input type="radio" name="{$variableName}" value="{$case->toString()}" aria-labelledby="{$variableName}_{$case->toString()}_name" aria-describedby="{$variableName}_{$case->toString()}_description"{if $styleOption[selected] === $case} checked{/if}>
+											<span class="styleOption__name" id="{$variableName}_{$case->toString()}_name">
+												{lang}wcf.acp.style.option.{$variableName}.{$case->toString()}{/lang}
+												{if $case->isDeprecated()}
+													<span class="badge">{lang}wcf.acp.style.option.deprecated{/lang}</span>
+												{/if}
+											</span>
+										</span>
+										<small class="styleOption__description" id="{$variableName}_{$case->toString()}_description">{lang}wcf.acp.style.option.{$variableName}.{$case->toString()}.description{/lang}</small>
+									</label>
 								{/foreach}
-							</select>
+							</div>
 							{if $errorField == $variableName}
 								<small class="innerError">{lang}wcf.global.form.error.{$errorType}{/lang}</small>
-							{/if}
-							{if $styleOption[selected] !== null && $styleOption[selected]->isDeprecated()}
-								<woltlab-core-notice type="warning">{lang}wcf.acp.style.option.deprecated{/lang}</woltlab-core-notice>
 							{/if}
 						</dd>
 					</dl>
