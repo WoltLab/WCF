@@ -24,6 +24,7 @@ use wcf\util\StringUtil;
  * @author  Alexander Ebert, Joshua Ruesweg
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `TUserOptionsByCategory` or `wcf\system\form\option\user\TUserOptionFormFields` instead.
  *
  * @extends OptionHandler<UserOption, UserOptionCategory>
  */

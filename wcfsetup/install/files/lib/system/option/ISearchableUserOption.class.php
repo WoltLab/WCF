@@ -11,6 +11,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use the filter methods of `wcf\system\form\option\IFormOption` instead.
  */
 interface ISearchableUserOption
 {
