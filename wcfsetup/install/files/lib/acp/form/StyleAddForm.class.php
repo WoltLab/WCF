@@ -369,13 +369,6 @@ class StyleAddForm extends AbstractForm
             unset($this->variables['wcfFontFamilyFallback']);
         }
 
-        if (
-            isset($this->variables['pageHeaderLayout'])
-            && !\in_array($this->variables['pageHeaderLayout'], Style::PAGE_HEADER_LAYOUTS, true)
-        ) {
-            unset($this->variables['pageHeaderLayout']);
-        }
-
         $this->variables['useFluidLayout'] = isset($_POST['useFluidLayout']) ? 1 : 0;
 
         // style data
@@ -500,6 +493,13 @@ class StyleAddForm extends AbstractForm
         if ($this->templateGroupID !== 0) {
             if (!isset($this->availableTemplateGroups[$this->templateGroupID])) {
                 throw new UserInputException('templateGroupID');
+            }
+        }
+
+        foreach (Style::getAvailableOptions() as $option) {
+            $variableName = $option::getVariableName();
+            if ($option::tryFromString($this->variables[$variableName] ?? '') === null) {
+                throw new UserInputException($variableName, 'noValidSelection');
             }
         }
 
@@ -828,13 +828,15 @@ class StyleAddForm extends AbstractForm
             'individualScss',
             'individualScssDarkMode',
             'overrideScss',
-            'pageHeaderLayout',
             'pageLogoWidth',
             'pageLogoHeight',
             'useFluidLayout',
             'wcfFontFamilyGoogle',
             'wcfFontFamilyFallback',
         ];
+        foreach (Style::getAvailableOptions() as $option) {
+            $this->specialVariables[] = $option::getVariableName();
+        }
 
         EventHandler::getInstance()->fireAction($this, 'setVariables');
     }
@@ -944,12 +946,20 @@ class StyleAddForm extends AbstractForm
 
         I18nHandler::getInstance()->assignVariables();
 
+        $styleOptions = [];
+        foreach (Style::getAvailableOptions() as $option) {
+            $variableName = $option::getVariableName();
+            $styleOptions[$variableName] = [
+                'cases' => $option::cases(),
+                'selected' => $option::tryFromString($this->variables[$variableName] ?? ''),
+            ];
+        }
+
         WCF::getTPL()->assign([
             'action' => 'add',
             'authorName' => $this->authorName,
             'authorURL' => $this->authorURL,
             'availableFontFamilies' => $this->availableFontFamilies,
-            'availablePageHeaderLayouts' => Style::PAGE_HEADER_LAYOUTS,
             'availableTemplateGroups' => $this->availableTemplateGroups,
             'availableUnits' => $this->availableUnits,
             'colorCategories' => $this->colorCategories,
@@ -961,6 +971,7 @@ class StyleAddForm extends AbstractForm
             'styleDate' => $this->styleDate,
             'styleDescription' => $this->styleDescription,
             'styleName' => $this->styleName,
+            'styleOptions' => $styleOptions,
             'styleVersion' => $this->styleVersion,
             'templateGroupID' => $this->templateGroupID,
             'tmpHash' => $this->tmpHash,

@@ -190,6 +190,13 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
 
         $supportsDarkMode = Style::getVariablesWithDarkModeSupport();
 
+        // Options are always stored explicitly. A style relying on the default
+        // would switch when the default changes and lose its value on export.
+        $optionVariables = \array_map(
+            static fn(string $option) => $option::getVariableName(),
+            Style::getAvailableOptions()
+        );
+
         $sql = "SELECT  variableID, variableName, defaultValue, defaultValueDarkMode
                 FROM    wcf1_style_variable";
         $statement = WCF::getDB()->prepare($sql);
@@ -212,7 +219,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
             }
 
             $value = null;
-            if ($this->parameters['variables'][$variableName] !== $compareAgainst) {
+            if (
+                $this->parameters['variables'][$variableName] !== $compareAgainst
+                || \in_array($variableName, $optionVariables, true)
+            ) {
                 $value = $this->parameters['variables'][$variableName];
             }
 

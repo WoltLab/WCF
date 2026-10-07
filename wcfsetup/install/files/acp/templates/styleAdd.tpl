@@ -379,6 +379,30 @@
 		
 		{* globals *}
 		<div id="globals" class="tabMenuContent">
+			{* options *}
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.acp.style.option{/lang}</h2>
+				
+				{foreach from=$styleOptions key=variableName item=styleOption}
+					<dl{if $errorField == $variableName} class="formError"{/if}>
+						<dt><label for="{$variableName}">{lang}wcf.acp.style.option.{$variableName}{/lang}</label></dt>
+						<dd>
+							<select name="{$variableName}" id="{$variableName}">
+								{foreach from=$styleOption[cases] item=case}
+									<option value="{$case->toString()}"{if $styleOption[selected] === $case} selected{/if}>{lang}wcf.acp.style.option.{$variableName}.{$case->toString()}{/lang}</option>
+								{/foreach}
+							</select>
+							{if $errorField == $variableName}
+								<small class="innerError">{lang}wcf.global.form.error.{$errorType}{/lang}</small>
+							{/if}
+							{if $styleOption[selected] !== null && $styleOption[selected]->isDeprecated()}
+								<woltlab-core-notice type="warning">{lang}wcf.acp.style.option.deprecated{/lang}</woltlab-core-notice>
+							{/if}
+						</dd>
+					</dl>
+				{/foreach}
+			</section>
+			
 			{* layout *}
 			<section class="section">
 				<h2 class="sectionTitle">{lang}wcf.acp.style.globals.layout{/lang}</h2>
@@ -432,18 +456,6 @@
 			{* logo *}
 			<section class="section">
 				<h2 class="sectionTitle">{lang}wcf.acp.style.globals.pageLogo{/lang}</h2>
-				
-				<dl>
-					<dt><label for="pageHeaderLayout">{lang}wcf.acp.style.globals.pageHeaderLayout{/lang}</label></dt>
-					<dd>
-						<select name="pageHeaderLayout" id="pageHeaderLayout">
-							{foreach from=$availablePageHeaderLayouts item=pageHeaderLayout}
-								<option value="{$pageHeaderLayout}"{if $variables[pageHeaderLayout] === $pageHeaderLayout} selected{/if}>{lang}wcf.acp.style.globals.pageHeaderLayout.{$pageHeaderLayout}{/lang}</option>
-							{/foreach}
-						</select>
-						<small>{lang}wcf.acp.style.globals.pageHeaderLayout.description{/lang}</small>
-					</dd>
-				</dl>
 				
 				<dl>
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>

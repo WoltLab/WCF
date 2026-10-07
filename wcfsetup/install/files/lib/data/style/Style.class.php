@@ -88,12 +88,6 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
     const DARK_MODE_PREFIX = "darkMode\0";
 
     /**
-     * Accepted values of the `pageHeaderLayout` style variable.
-     * @since 6.3
-     */
-    const PAGE_HEADER_LAYOUTS = ['classic', 'logoTop', 'logoBelow', 'logoInBar'];
-
-    /**
      * Per-style options stored as style variables.
      * @var list<class-string<IStyleOption>>
      * @since 6.3
@@ -216,6 +210,17 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
         }
 
         return $templateVariants;
+    }
+
+    /**
+     * Returns the per-style options.
+     *
+     * @return list<class-string<IStyleOption>>
+     * @since 6.3
+     */
+    public static function getAvailableOptions(): array
+    {
+        return self::OPTIONS;
     }
 
     /**
