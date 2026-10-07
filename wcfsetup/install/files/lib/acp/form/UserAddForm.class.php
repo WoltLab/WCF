@@ -116,7 +116,7 @@ class UserAddForm extends AbstractDatabaseObjectBuilderForm
         $tabMenu->appendChild(
             TabFormContainer::create('generalTab')
                 ->label('wcf.global.form.data')
-                ->appendChildren($this->getGeneralFormContainers())
+                ->appendChild($this->getGeneralFormContainer())
         );
 
         foreach ($this->options as $categoryName => $options) {
@@ -143,37 +143,29 @@ class UserAddForm extends AbstractDatabaseObjectBuilderForm
     }
 
     /**
-     * Returns the form containers of the general tab.
-     *
-     * @return FormContainer[]
+     * Returns the form container of the general tab.
      */
-    protected function getGeneralFormContainers(): array
+    protected function getGeneralFormContainer(): FormContainer
     {
-        $containers = [
-            FormContainer::create('general')
-                ->appendChildren(\array_values(\array_filter([
-                    $this->getUsernameFormField(),
-                    $this->getEmailFormField(),
-                    $this->getPasswordFormField(),
-                    $this->getUserTitleFormField(),
-                    $this->getGroupsFormField(),
-                ]))),
-        ];
+        $container = FormContainer::create('general')
+            ->appendChildren(\array_values(\array_filter([
+                $this->getUsernameFormField(),
+                $this->getEmailFormField(),
+                $this->getPasswordFormField(),
+                $this->getUserTitleFormField(),
+                $this->getGroupsFormField(),
+            ])));
 
         $availableLanguages = LanguageFactory::getInstance()->getLanguages();
         if (\count($availableLanguages) > 1) {
-            $containers[] = FormContainer::create('languageSection')
-                ->label('wcf.user.language')
-                ->appendChildren($this->getLanguageFormFields($availableLanguages));
+            $container->appendChildren($this->getLanguageFormFields($availableLanguages));
         }
 
         if ($this->formObject !== null) {
-            $containers[] = FormContainer::create('styleSection')
-                ->label('wcf.user.styles')
-                ->appendChildren($this->getStyleFormFields());
+            $container->appendChildren($this->getStyleFormFields());
         }
 
-        return $containers;
+        return $container;
     }
 
     protected function getUsernameFormField(): UsernameFormField
