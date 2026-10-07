@@ -2282,9 +2282,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.userOption.options.isDisabled"><![CDATA[Benutzereinstellung deaktivieren]]></item>
 		<item name="wcf.acp.pip.userOption.options.editable.description"><![CDATA[Der Wert der Benutzereinstellung kann nur von der ausgewählte Gruppe an Benutzern bearbeitet werden.]]></item>
 		<item name="wcf.acp.pip.userOption.options.editable"><![CDATA[Wer darf den Inhalt verändern?]]></item>
-		<item name="wcf.acp.pip.userOption.options.contentPattern.error.invalid"><![CDATA[Der angegebene reguläre Ausdruck ist ungültig.]]></item>
-		<item name="wcf.acp.pip.userOption.options.contentPattern.description"><![CDATA[Der angegebene reguläre Ausdruch wird dafür verwendet spezielle Teile des vom Benutzern angegebenen Wertes zu extrahieren und diese Werte zu speichern.]]></item>
-		<item name="wcf.acp.pip.userOption.options.contentPattern"><![CDATA[Regulärer Asudruck für den Inhalt]]></item>
 		<item name="wcf.acp.pip.userOption.options.askDuringRegistration.description"><![CDATA[Die Einstellung wird während der Registrierung angezeigt.]]></item>
 		<item name="wcf.acp.pip.userOption.options.askDuringRegistration"><![CDATA[Verfügbar während der Registrierung]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.presetMailNotificationType.description"><![CDATA[Wenn eine Benachrichtigungsart ausgewählt wird, wird dieser Wert als Standardwert für die Email-Einstellung der Benutzer für dieses Event verwendet.]]></item>
@@ -5830,5 +5827,8 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.option.labeledUrl.description"/>
 	<item name="wcf.acp.user.option.labeledUrl.error.invalid"/>
 	<item name="wcf.acp.user.option.labeledUrl.error.invalidScheme"/>
+	<item name="wcf.acp.pip.userOption.options.contentPattern"/>
+	<item name="wcf.acp.pip.userOption.options.contentPattern.description"/>
+	<item name="wcf.acp.pip.userOption.options.contentPattern.error.invalid"/>
 </delete>
 </language>

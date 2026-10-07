@@ -86,6 +86,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
         // no longer supported, ignored for backwards compatibility
         'outputclass',
         'enableoptions',
+        'contentpattern',
         'selectoptions',
         'isdisabled',
         'categoryname',
@@ -708,14 +709,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                             return $options;
                         }, false, false),
 
-                    TextFormField::create('contentPattern')
-                        ->objectProperty('contentpattern')
-                        ->label('wcf.acp.pip.userOption.options.contentPattern')
-                        ->description('wcf.acp.pip.userOption.options.contentPattern.description')
-                        ->addValidator($this->getRegexValidator(
-                            'wcf.acp.pip.userOption.options.contentPattern.error.invalid'
-                        )),
-
                     TextFormField::create('profileNamePattern')
                         ->objectProperty('profilenamepattern')
                         ->label('wcf.form.option.shared.profileNamePattern')
@@ -740,11 +733,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ValueFormFieldDependency::create('optionType')
                         ->field($optionType)
                         ->values(['wysiwyg'])
-                );
-                $form->getFormField('contentPattern')->addDependency(
-                    ValueFormFieldDependency::create('optionType')
-                        ->field($optionType)
-                        ->values(['text'])
                 );
                 foreach (['profileNamePattern', 'profileUrlPattern'] as $fieldId) {
                     $form->getFormField($fieldId)->addDependency(
@@ -967,7 +955,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
             'searchable' => 'searchable',
             'isdisabled' => 'isDisabled',
             'messageObjectType' => 'messageObjectType',
-            'contentpattern' => 'contentPattern',
             'profilenamepattern' => 'profileNamePattern',
             'profileurlpattern' => 'profileUrlPattern',
         ];
@@ -1073,7 +1060,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                         'editable' => '0',
                         'isdisabled' => 0,
                         'messageObjectType' => '',
-                        'contentpattern' => '',
                         'profilenamepattern' => '',
                         'profileurlpattern' => '',
                     ],

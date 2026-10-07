@@ -2493,9 +2493,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.userOption.options.optionType.description"><![CDATA[The option type determines the interface with which the value of the user option is set and which (types of) values the option may have.]]></item>
 		<item name="wcf.acp.pip.userOption.options.messageObjectType"><![CDATA[Message Object Type]]></item>
 		<item name="wcf.acp.pip.userOption.options.messageObjectType.description"><![CDATA[The message object type is passed to the <kbd>wcf\system\html\input\HtmlInputProcessor</kbd> object used to process the user option value.]]></item>
-		<item name="wcf.acp.pip.userOption.options.contentPattern"><![CDATA[Content Pattern]]></item>
-		<item name="wcf.acp.pip.userOption.options.contentPattern.description"><![CDATA[The entered content pattern is used to extract specific parts of the user-entered value to be stored as the option value.]]></item>
-		<item name="wcf.acp.pip.userOption.options.contentPattern.error.invalid"><![CDATA[The entered regular expression is invalid.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions"><![CDATA[Supports Reactions]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description"><![CDATA[Specifies whether the notification has support for the reaction system. WoltLab Suite Core 5.2 (or higher) will only send notifications about reactions if selected.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions"><![CDATA[Supports Reactions]]></item>
@@ -5832,5 +5829,8 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.option.labeledUrl.description"/>
 	<item name="wcf.acp.user.option.labeledUrl.error.invalid"/>
 	<item name="wcf.acp.user.option.labeledUrl.error.invalidScheme"/>
+	<item name="wcf.acp.pip.userOption.options.contentPattern"/>
+	<item name="wcf.acp.pip.userOption.options.contentPattern.description"/>
+	<item name="wcf.acp.pip.userOption.options.contentPattern.error.invalid"/>
 </delete>
 </language>
