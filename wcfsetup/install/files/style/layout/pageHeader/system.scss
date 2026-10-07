@@ -160,6 +160,8 @@
 	}
 
 	.mainMenu .boxMenu {
+		--mainMenuItemHeight: 36px;
+
 		align-items: center;
 		display: flex;
 		gap: 8px;
@@ -193,7 +195,7 @@
 		column-gap: 6px;
 		display: flex;
 		font: inherit;
-		height: 36px;
+		height: var(--mainMenuItemHeight);
 		padding: 0 12px;
 		transition:
 			background-color 0.12s ease,
@@ -212,12 +214,26 @@
 	}
 
 	/* An open submenu continues the item's fill into the panel ("tray"). The tray uses the
-	   hover fill, otherwise the item would change its colour again when the submenu opens. */
+	   hover fill, otherwise the item would change its colour again when the submenu opens.
+	   The panel cannot fade in, therefore the item does not either. */
 	.mainMenu .boxMenu > li:has(> .boxMenuToggle[aria-expanded="true"]) > .boxMenuLink {
 		background-color: var(--wcfHeaderMenuLinkBackgroundActive);
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;
 		color: var(--wcfHeaderMenuLinkActive);
+		transition: none;
+	}
+
+	/* The fill runs down to the edge of the bar, where the panel starts, so that it never
+	   touches the filled item of the current page next to it. */
+	.mainMenu .boxMenu > li:has(> .boxMenuToggle[aria-expanded="true"])::after {
+		background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+		content: "";
+		height: calc((var(--wcfPageHeaderHeight) - var(--mainMenuItemHeight)) / 2);
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 100%;
 	}
 
 	/* The toggle is a real button in the tab order, but only visible once it has the keyboard focus.
@@ -259,7 +275,7 @@
 	.mainMenu .mainMenuOverflowToggle {
 		clip-path: none;
 		cursor: pointer;
-		height: 36px;
+		height: var(--mainMenuItemHeight);
 		margin-top: 0;
 		opacity: 1;
 		position: static;
@@ -290,7 +306,7 @@
 		min-width: 176px;
 		padding: 4px;
 		position: absolute;
-		top: 100%;
+		top: calc(100% + (var(--wcfPageHeaderHeight) - var(--mainMenuItemHeight)) / 2);
 		z-index: 1;
 
 		:focus-visible {
@@ -336,14 +352,16 @@
 		display: block;
 	}
 
+	/* Menus are aligned to the bottom edge of their item, therefore the items span the height of the bar. */
 	.userPanel {
+		align-self: stretch;
+		display: flex;
 		flex: 0 0 auto;
 		margin-left: auto;
 		padding-left: 24px;
 	}
 
 	.userPanelItems {
-		align-items: center;
 		column-gap: 4px;
 		display: flex;
 		list-style: none;
@@ -357,7 +375,13 @@
 	}
 
 	.userPanelItems > li {
+		align-items: center;
+		display: flex;
 		position: relative;
+
+		&[hidden] {
+			display: none;
+		}
 	}
 
 	.userPanelItems > li > :is(a, button) {
@@ -372,6 +396,7 @@
 		height: 40px;
 		justify-content: center;
 		padding: 0;
+		position: relative;
 		transition:
 			background-color 0.12s ease,
 			color 0.12s ease;
