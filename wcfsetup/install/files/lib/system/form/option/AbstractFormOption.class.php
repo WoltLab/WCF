@@ -90,4 +90,10 @@ abstract class AbstractFormOption implements IFormOption
     {
         return $value;
     }
+
+    #[\Override]
+    public function matchesFilterValue(string $optionValue, string $filterValue, array $configuration = []): bool
+    {
+        return $optionValue === $filterValue;
+    }
 }

@@ -113,4 +113,22 @@ class DateFormOption extends AbstractFormOption
     {
         return DateDatabaseTableColumn::create($name);
     }
+
+    #[\Override]
+    public function matchesFilterValue(string $optionValue, string $filterValue, array $configuration = []): bool
+    {
+        $values = $this->parseFilterValue($filterValue);
+
+        if ($values['from'] === 0 && $values['to'] === 0) {
+            return true;
+        }
+
+        // Mirrors the numeric comparison of the date column in `applyFilter()`.
+        $value = (int)$optionValue;
+        if ($value < $values['from']) {
+            return false;
+        }
+
+        return $values['to'] === 0 || $value <= $values['to'];
+    }
 }

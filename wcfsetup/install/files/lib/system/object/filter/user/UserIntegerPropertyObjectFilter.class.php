@@ -3,8 +3,8 @@
 namespace wcf\system\object\filter\user;
 
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 use wcf\data\user\User;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\NumericRangeFormField;
 use wcf\system\object\filter\AbstractRangeObjectFilter;
 use wcf\system\object\filter\IObjectListFilter;
@@ -82,15 +82,15 @@ final class UserIntegerPropertyObjectFilter extends AbstractRangeObjectFilter im
     }
 
     #[\Override]
-    public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void
+    public function applyFilter(DatabaseObjectList $list, mixed $value): void
     {
         [$from, $to] = $value;
 
         if ($from !== null) {
-            $conditions->add($this->propertyName . ' >= ?', [$from]);
+            $list->getConditionBuilder()->add($this->propertyName . ' >= ?', [$from]);
         }
         if ($to !== null) {
-            $conditions->add($this->propertyName . ' <= ?', [$to]);
+            $list->getConditionBuilder()->add($this->propertyName . ' <= ?', [$to]);
         }
     }
 

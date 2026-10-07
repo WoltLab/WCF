@@ -4,8 +4,8 @@ namespace wcf\system\object\filter\builder;
 
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\User;
+use wcf\data\user\UserList;
 use wcf\event\user\group\assignment\UserGroupAssignmentObjectFilterCollecting;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\object\filter\IObjectListFilter;
 use wcf\system\object\filter\ObjectFilterHandler;
@@ -21,6 +21,7 @@ use wcf\system\object\filter\user\UserIntegerPropertyObjectFilter;
 use wcf\system\object\filter\user\UserLanguageObjectFilter;
 use wcf\system\object\filter\user\UserNotInGroupObjectFilter;
 use wcf\system\object\filter\user\UserNoTrophyObjectFilter;
+use wcf\system\object\filter\user\UserOptionObjectFilterFactory;
 use wcf\system\object\filter\user\UserRegistrationDateObjectFilter;
 use wcf\system\object\filter\user\UserRegistrationDaysObjectFilter;
 use wcf\system\object\filter\user\UserSignatureObjectFilter;
@@ -65,6 +66,9 @@ final class UserGroupAssignmentObjectFilterBuilder extends AbstractObjectFilterB
         $event->register(new UserIntegerPropertyObjectFilter('trophyPoints', 'wcf.user.condition.trophyPoints'));
         $event->register(new UserTrophyObjectFilter());
         $event->register(new UserNoTrophyObjectFilter());
+        foreach ((new UserOptionObjectFilterFactory())->getFilters() as $filter) {
+            $event->register($filter);
+        }
 
         EventHandler::getInstance()->fire($event);
 
@@ -90,14 +94,14 @@ final class UserGroupAssignmentObjectFilterBuilder extends AbstractObjectFilterB
     }
 
     /**
-     * Adds the filters of the assignment to the given conditions of a user list.
+     * Adds the filters of the assignment to the given user list.
      *
      * An assignment without any active filters matches no users.
      */
-    public function applyFilters(UserGroupAssignment $assignment, PreparedStatementConditionBuilder $conditions): void
+    public function applyFilters(UserGroupAssignment $assignment, UserList $userList): void
     {
         $this->getHandler()->applyFilters(
-            $conditions,
+            $userList,
             $assignment->conditions,
         );
     }

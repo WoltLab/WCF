@@ -22,6 +22,7 @@ use wcf\system\condition\UserIntegerPropertyCondition;
 use wcf\system\condition\UserLanguageCondition;
 use wcf\system\condition\UserMobileBrowserCondition;
 use wcf\system\condition\UserMultifactorCondition;
+use wcf\system\condition\UserOptionsCondition;
 use wcf\system\condition\UserRegistrationDateCondition;
 use wcf\system\condition\UserRegistrationDateIntervalCondition;
 use wcf\system\condition\UserSignatureCondition;
@@ -29,6 +30,7 @@ use wcf\system\condition\UserStateCondition;
 use wcf\system\condition\UserTrophyCondition;
 use wcf\system\condition\UserUsernameCondition;
 use wcf\system\object\filter\migration\LegacyConditionMigration;
+use wcf\system\WCF;
 
 /**
  * Returns the given ids as a comma-separated list, or `null` if there are none.
@@ -68,6 +70,26 @@ $boolean = static function (string $identifier, mixed $value): ?array {
         1 => [[$identifier, '1']],
         default => null,
     };
+};
+
+/**
+ * Returns the legacy types of the user options by their name, the types are
+ * converted after the conditions have been migrated.
+ *
+ * @return array<string, string>
+ */
+$getUserOptionTypes = static function (): array {
+    static $optionTypes = null;
+
+    if ($optionTypes === null) {
+        $sql = "SELECT  optionName, optionType
+                FROM    wcf1_user_option";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
+        $optionTypes = $statement->fetchMap('optionName', 'optionType');
+    }
+
+    return $optionTypes;
 };
 
 $converters = [
@@ -223,6 +245,78 @@ $converters = [
             ...$filterPerID('com.woltlab.wcf.userTrophy', $data['userTrophyIDs'] ?? null),
             ...$filterPerID('com.woltlab.wcf.userNoTrophy', $data['notUserTrophyIDs'] ?? null),
         ];
+    },
+    // Options that no longer exist or whose type is not supported keep the object disabled.
+    UserOptionsCondition::class => static function (array $data) use ($getUserOptionTypes): ?array {
+        $optionTypes = $getUserOptionTypes();
+
+        $filters = [];
+        foreach ($data['optionValues'] ?? [] as $optionName => $value) {
+            if (!isset($optionTypes[$optionName])) {
+                return null;
+            }
+
+            $identifier = 'com.woltlab.wcf.userOption.' . $optionName;
+            switch ($optionTypes[$optionName]) {
+                case 'birthday':
+                    $ageFrom = (int)($value['ageFrom'] ?? 0);
+                    $ageTo = (int)($value['ageTo'] ?? 0);
+                    if ($ageFrom !== 0 || $ageTo !== 0) {
+                        $filters[] = [$identifier, ($ageFrom ?: '') . ';' . ($ageTo ?: '')];
+                    }
+                    break;
+
+                case 'boolean':
+                    // The legacy condition only matched users who enabled the option.
+                    if ((int)$value === 1) {
+                        $filters[] = [$identifier, '1'];
+                    }
+                    break;
+
+                case 'checkboxes':
+                case 'multiSelect':
+                    $selectedValues = \is_array($value) ? $value : \explode("\n", (string)$value);
+                    $selectedValues = \array_filter(
+                        \array_map(static fn($selectedValue) => \trim((string)$selectedValue), $selectedValues),
+                        static fn(string $selectedValue) => $selectedValue !== ''
+                    );
+
+                    // The filter is not repeatable, the selected values are
+                    // stored comma-separated like the values of the option.
+                    if ($selectedValues !== []) {
+                        $filters[] = [$identifier, \implode(',', $selectedValues)];
+                    }
+                    break;
+
+                case 'integer':
+                case 'float':
+                    // The legacy condition matched the value as text, which is
+                    // converted into the exact value.
+                    $number = (int)$value;
+                    if ($number === 0) {
+                        return null;
+                    }
+
+                    $filters[] = [$identifier, $number . ';' . $number];
+                    break;
+
+                case 'aboutMe':
+                case 'date':
+                case 'message':
+                case 'password':
+                case 'wysiwyg':
+                    return null;
+
+                default:
+                    $value = \trim((string)$value);
+                    if ($value !== '') {
+                        $filters[] = [$identifier, $value];
+                    }
+                    break;
+            }
+        }
+
+        return $filters;
     },
 ];
 

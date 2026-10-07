@@ -101,4 +101,13 @@ class CurrencyFormOption extends AbstractNumericFormOption
 
         return '';
     }
+
+    #[\Override]
+    public function matchesFilterValue(string $optionValue, string $filterValue, array $configuration = []): bool
+    {
+        $values = $this->parseFilterValue($filterValue);
+
+        // The values are stored in cents.
+        return $this->isInFilterRange((float)$optionValue, $values['from'] * 100, $values['to'] * 100);
+    }
 }

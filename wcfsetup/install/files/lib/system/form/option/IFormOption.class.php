@@ -72,6 +72,16 @@ interface IFormOption
     public function applyFilter(DatabaseObjectList $list, string $columnName, mixed $value): void;
 
     /**
+     * Returns `true` if the given stored value matches the given serialized
+     * filter value, this is the equivalent of `applyFilter()` for a single
+     * value.
+     *
+     * @param array<string, mixed> $configuration
+     * @since 6.3
+     */
+    public function matchesFilterValue(string $optionValue, string $filterValue, array $configuration = []): bool;
+
+    /**
      * Renders the value that is displayed for active filters of a list of grid
      * view.
      *

@@ -48,4 +48,10 @@ class BooleanFormOption extends AbstractFormOption
     {
         return TinyintDatabaseTableColumn::create($name);
     }
+
+    #[\Override]
+    public function matchesFilterValue(string $optionValue, string $filterValue, array $configuration = []): bool
+    {
+        return (int)$optionValue === (int)$filterValue;
+    }
 }

@@ -59,6 +59,12 @@ class EmailFormOption extends AbstractFormOption
     }
 
     #[\Override]
+    public function matchesFilterValue(string $optionValue, string $filterValue, array $configuration = []): bool
+    {
+        return \mb_stripos($optionValue, $filterValue) !== false;
+    }
+
+    #[\Override]
     public function getDatabaseTableColumn(string $name): AbstractDatabaseTableColumn
     {
         return VarcharDatabaseTableColumn::create($name)

@@ -3,11 +3,11 @@
 namespace wcf\system\object\filter\user;
 
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
 use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\user\User;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\object\filter\AbstractSelectionObjectFilter;
 use wcf\system\object\filter\IObjectListFilter;
 use wcf\system\WCF;
@@ -44,9 +44,9 @@ final class UserTrophyObjectFilter extends AbstractSelectionObjectFilter impleme
     }
 
     #[\Override]
-    public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void
+    public function applyFilter(DatabaseObjectList $list, mixed $value): void
     {
-        $conditions->add(
+        $list->getConditionBuilder()->add(
             'user_table.userID IN (
                 SELECT  userID
                 FROM    wcf1_user_trophy

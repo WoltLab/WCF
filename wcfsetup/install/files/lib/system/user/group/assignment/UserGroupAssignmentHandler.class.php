@@ -111,7 +111,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
             $userList->sqlLimit = $maxUsers;
         }
 
-        (new UserGroupAssignmentObjectFilterBuilder())->applyFilters($assignment, $userList->getConditionBuilder());
+        (new UserGroupAssignmentObjectFilterBuilder())->applyFilters($assignment, $userList);
 
         $userList->readObjects();
 

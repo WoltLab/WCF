@@ -85,4 +85,17 @@ class CheckboxesFormOption extends AbstractFormOption
             );
         }
     }
+
+    #[\Override]
+    public function matchesFilterValue(string $optionValue, string $filterValue, array $configuration = []): bool
+    {
+        $values = $this->unserializeValue($optionValue);
+        foreach ($this->unserializeValue($filterValue) as $selectedValue) {
+            if (!\in_array((string)$selectedValue, $values, true)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

@@ -2,10 +2,10 @@
 
 namespace wcf\system\view\filter;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\User;
+use wcf\system\option\user\TJoinUserOptionValues;
 use wcf\system\view\filter\exception\InvalidFilterValue;
 use wcf\util\DateUtil;
 
@@ -22,6 +22,8 @@ use wcf\util\DateUtil;
  */
 final class UserAgeFilter extends IntegerFilter
 {
+    use TJoinUserOptionValues;
+
     private const MAXIMUM_AGE = 120;
 
     public function __construct(
@@ -80,22 +82,5 @@ final class UserAgeFilter extends IntegerFilter
 
             $list->getConditionBuilder()->add("{$columnName} >= ?", [$earliestBirthday->format('Y-m-d')]);
         }
-    }
-
-    /**
-     * Joins the user option values when counting the objects or reading their
-     * ids, `UserList` only joins them when reading the objects.
-     *
-     * @param DatabaseObjectList<DatabaseObject> $list
-     */
-    private function joinUserOptionValues(DatabaseObjectList $list): void
-    {
-        if (\str_contains($list->sqlConditionJoins, 'wcf1_user_option_value user_option_value')) {
-            return;
-        }
-
-        $list->sqlConditionJoins .= "
-            LEFT JOIN   wcf1_user_option_value user_option_value
-            ON          user_option_value.userID = user_table.userID";
     }
 }

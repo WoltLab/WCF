@@ -3,8 +3,8 @@
 namespace wcf\system\object\filter\user;
 
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 use wcf\data\user\User;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\object\filter\IObjectListFilter;
 use wcf\system\WCF;
@@ -82,9 +82,9 @@ final class UserEmailObjectFilter implements IObjectListFilter
     }
 
     #[\Override]
-    public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void
+    public function applyFilter(DatabaseObjectList $list, mixed $value): void
     {
-        $conditions->add('email LIKE ?', ['%' . WCF::getDB()->escapeLikeValue($value) . '%']);
+        $list->getConditionBuilder()->add('email LIKE ?', ['%' . WCF::getDB()->escapeLikeValue($value) . '%']);
     }
 
     #[\Override]

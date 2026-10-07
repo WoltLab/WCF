@@ -3396,6 +3396,8 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.objectFilter.user.activated"><![CDATA[Account Activated]]></item>
 		<item name="wcf.objectFilter.user.activated.summary.no"><![CDATA[Account is not activated]]></item>
 		<item name="wcf.objectFilter.user.activated.summary.yes"><![CDATA[Account is activated]]></item>
+		<item name="wcf.objectFilter.user.age"><![CDATA[Age]]></item>
+		<item name="wcf.objectFilter.user.age.summary"><![CDATA[Age: {if $from !== null && $to !== null}between {#$from} and {#$to}{elseif $from !== null}at least {#$from}{else}at most {#$to}{/if}]]></item>
 		<item name="wcf.objectFilter.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.objectFilter.user.avatar.summary.no"><![CDATA[Has no avatar]]></item>
 		<item name="wcf.objectFilter.user.avatar.summary.yes"><![CDATA[Has an avatar]]></item>
@@ -3428,6 +3430,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.objectFilter.user.noTrophy.summary"><![CDATA[Has not received the trophy “{$value}”]]></item>
 		<item name="wcf.objectFilter.user.notInGroup"><![CDATA[Not a Member of User Group]]></item>
 		<item name="wcf.objectFilter.user.notInGroup.summary"><![CDATA[Is not a member of the user group “{$value}”]]></item>
+		<item name="wcf.objectFilter.user.option.summary"><![CDATA[{$title}: {$value}]]></item>
 		<item name="wcf.objectFilter.user.registrationDate"><![CDATA[Registration Date]]></item>
 		<item name="wcf.objectFilter.user.registrationDate.summary"><![CDATA[Registered {if $from !== null && $to !== null}between {$from} and {$to}{elseif $from !== null}on or after {$from}{else}on or before {$to}{/if}]]></item>
 		<item name="wcf.objectFilter.user.registrationDays"><![CDATA[Days since Registration]]></item>

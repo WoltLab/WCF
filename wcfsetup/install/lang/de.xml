@@ -3471,6 +3471,8 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.objectFilter.user.activated"><![CDATA[Benutzerkonto aktiviert]]></item>
 		<item name="wcf.objectFilter.user.activated.summary.no"><![CDATA[Benutzerkonto ist nicht aktiviert]]></item>
 		<item name="wcf.objectFilter.user.activated.summary.yes"><![CDATA[Benutzerkonto ist aktiviert]]></item>
+		<item name="wcf.objectFilter.user.age"><![CDATA[Alter]]></item>
+		<item name="wcf.objectFilter.user.age.summary"><![CDATA[Alter: {if $from !== null && $to !== null}zwischen {#$from} und {#$to}{elseif $from !== null}mindestens {#$from}{else}höchstens {#$to}{/if}]]></item>
 		<item name="wcf.objectFilter.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.objectFilter.user.avatar.summary.no"><![CDATA[Hat keinen Avatar]]></item>
 		<item name="wcf.objectFilter.user.avatar.summary.yes"><![CDATA[Hat einen Avatar]]></item>
@@ -3503,6 +3505,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.objectFilter.user.noTrophy.summary"><![CDATA[Hat die Trophäe „{$value}“ nicht erhalten]]></item>
 		<item name="wcf.objectFilter.user.notInGroup"><![CDATA[Kein Mitglied der Benutzergruppe]]></item>
 		<item name="wcf.objectFilter.user.notInGroup.summary"><![CDATA[Ist kein Mitglied der Benutzergruppe „{$value}“]]></item>
+		<item name="wcf.objectFilter.user.option.summary"><![CDATA[{$title}: {$value}]]></item>
 		<item name="wcf.objectFilter.user.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.objectFilter.user.registrationDate.summary"><![CDATA[Registriert {if $from !== null && $to !== null}zwischen dem {$from} und dem {$to}{elseif $from !== null}am oder nach dem {$from}{else}am oder vor dem {$to}{/if}]]></item>
 		<item name="wcf.objectFilter.user.registrationDays"><![CDATA[Tage seit Registrierung]]></item>
