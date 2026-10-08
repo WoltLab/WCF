@@ -1639,6 +1639,10 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.avatar_default_type"><![CDATA[Default Avatar Type]]></item>
 		<item name="wcf.acp.option.avatar_default_type.initials"><![CDATA[Initials]]></item>
 		<item name="wcf.acp.option.avatar_default_type.silhouette"><![CDATA[Silhouette]]></item>
+		<item name="wcf.acp.option.user_cover_photo_default_type"><![CDATA[Default Cover Photo Type]]></item>
+		<item name="wcf.acp.option.user_cover_photo_default_type.description"><![CDATA[Generated cover photos are created individually for each user based on the colors of the active style and take precedence over the cover photo of the style.]]></item>
+		<item name="wcf.acp.option.user_cover_photo_default_type.style"><![CDATA[Cover photo of the style]]></item>
+		<item name="wcf.acp.option.user_cover_photo_default_type.generated"><![CDATA[Generated cover photo per user]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation"><![CDATA[Enable ad rotation]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[If there is more than one ad per placeholder, a random ad will be displayed every time. Disabling this option will display all ads simultaneously.]]></item>
 		<item name="wcf.acp.option.visitor_use_tiny_build"><![CDATA[Enable accelerated guest view]]></item>

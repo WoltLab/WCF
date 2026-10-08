@@ -1202,6 +1202,13 @@ silhouette:wcf.acp.option.avatar_default_type.silhouette</selectoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="user_cover_photo_default_type">
+				<categoryname>user.profile</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue>generated</defaultvalue>
+				<selectoptions>generated:wcf.acp.option.user_cover_photo_default_type.generated
+style:wcf.acp.option.user_cover_photo_default_type.style</selectoptions>
+			</option>
 			<!-- /user.profile -->
 			<!-- user.list.members -->
 			<option name="members_list_users_per_page">

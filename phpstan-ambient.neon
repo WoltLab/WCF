@@ -181,6 +181,7 @@ parameters:
         - OG_IMAGE
         - HEAD_CODE
         - AVATAR_DEFAULT_TYPE
+        - USER_COVER_PHOTO_DEFAULT_TYPE
         - ARTICLE_ENABLE_VISIT_TRACKING
         - ENABLE_AD_ROTATION
         - ENABLE_POLLING
