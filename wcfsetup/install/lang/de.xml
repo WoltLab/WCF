@@ -1653,9 +1653,13 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.use_page_title_on_landing_page"><![CDATA[Titel der Seite als Überschrift auf Startseite anzeigen]]></item>
 		<item name="wcf.acp.option.head_code"><![CDATA[Head-Code]]></item>
 		<item name="wcf.acp.option.head_code.description"><![CDATA[Der hier angegebene Code wird im Head-Tag jeder Seite ausgegeben. Der Head-Code eignet sich z.B. sehr gut für die Einbindung von zusätzlichen Meta-Tags.]]></item>
-		<item name="wcf.acp.option.avatar_default_type"><![CDATA[Standard Avatar-Typ]]></item>
+		<item name="wcf.acp.option.avatar_default_type"><![CDATA[Standard-Avatar-Typ]]></item>
 		<item name="wcf.acp.option.avatar_default_type.initials"><![CDATA[Initialen]]></item>
 		<item name="wcf.acp.option.avatar_default_type.silhouette"><![CDATA[Silhouette]]></item>
+		<item name="wcf.acp.option.user_cover_photo_default_type"><![CDATA[Standard-Titelbild-Typ]]></item>
+		<item name="wcf.acp.option.user_cover_photo_default_type.description"><![CDATA[Generierte Titelbilder werden für jeden Benutzer individuell auf Basis der Farben des aktiven Stils erstellt und haben Vorrang vor dem Titelbild des Stils.]]></item>
+		<item name="wcf.acp.option.user_cover_photo_default_type.style"><![CDATA[Titelbild des Stils]]></item>
+		<item name="wcf.acp.option.user_cover_photo_default_type.generated"><![CDATA[Generiertes Titelbild je Benutzer]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation"><![CDATA[Werbung abwechselnd anzeigen]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[Sollte einer Position mehr als eine Werbung zugewiesen sein, so wird bei jedem Aufruf eine zufällige Werbung angezeigt. Bei Deaktivierung dieser Option werden alle Werbungen parallel angezeigt.]]></item>
 		<item name="wcf.acp.option.visitor_use_tiny_build"><![CDATA[Seitenbeschleunigung für Gäste aktivieren]]></item>
