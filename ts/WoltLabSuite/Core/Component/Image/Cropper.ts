@@ -14,7 +14,6 @@ import type { Selection } from "@cropper/element-selection";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-core-dialog";
 import * as ExifUtil from "WoltLabSuite/Core/Image/ExifUtil";
-import ExifReader from "exifreader";
 import DomUtil from "WoltLabSuite/Core/Dom/Util";
 
 export interface CropperConfiguration {
@@ -97,21 +96,17 @@ abstract class ImageCropper {
     const { image, exif } = await this.resizer.loadFile(this.file);
     this.image = image;
     this.exif = exif;
-    // eslint-disable-next-line @typescript-eslint/await-thenable
-    const tags = await ExifReader.load(this.file);
-    if (tags.Orientation) {
-      switch (tags.Orientation.value) {
-        case 3:
-          this.orientation = 180;
-          break;
-        case 6:
-          this.orientation = 90;
-          break;
-        case 8:
-          this.orientation = 270;
-          break;
-        // Any other rotation is unsupported.
-      }
+    switch (await ExifUtil.getOrientation(this.file)) {
+      case 3:
+        this.orientation = 180;
+        break;
+      case 6:
+        this.orientation = 90;
+        break;
+      case 8:
+        this.orientation = 270;
+        break;
+      // Any other rotation is unsupported.
     }
   }
 

@@ -6,13 +6,13 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since     6.2
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltLabSuite/Core/Component/Dialog", "cropperjs", "WoltLabSuite/Core/Language", "exifreader", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, Resizer_1, Dialog_1, cropperjs_1, Language_1, exifreader_1, Util_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltLabSuite/Core/Component/Dialog", "cropperjs", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Image/ExifUtil", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, Resizer_1, Dialog_1, cropperjs_1, Language_1, ExifUtil, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.cropImage = cropImage;
     Resizer_1 = tslib_1.__importDefault(Resizer_1);
     cropperjs_1 = tslib_1.__importDefault(cropperjs_1);
-    exifreader_1 = tslib_1.__importDefault(exifreader_1);
+    ExifUtil = tslib_1.__importStar(ExifUtil);
     Util_1 = tslib_1.__importDefault(Util_1);
     function inSelection(selection, maxSelection) {
         return (Math.round(selection.x) >= maxSelection.x &&
@@ -71,21 +71,17 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Image/Resizer", "WoltL
             const { image, exif } = await this.resizer.loadFile(this.file);
             this.image = image;
             this.exif = exif;
-            // eslint-disable-next-line @typescript-eslint/await-thenable
-            const tags = await exifreader_1.default.load(this.file);
-            if (tags.Orientation) {
-                switch (tags.Orientation.value) {
-                    case 3:
-                        this.orientation = 180;
-                        break;
-                    case 6:
-                        this.orientation = 90;
-                        break;
-                    case 8:
-                        this.orientation = 270;
-                        break;
-                    // Any other rotation is unsupported.
-                }
+            switch (await ExifUtil.getOrientation(this.file)) {
+                case 3:
+                    this.orientation = 180;
+                    break;
+                case 6:
+                    this.orientation = 90;
+                    break;
+                case 8:
+                    this.orientation = 270;
+                    break;
+                // Any other rotation is unsupported.
             }
         }
         async showDialog() {

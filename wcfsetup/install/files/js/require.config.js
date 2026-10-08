@@ -20,7 +20,6 @@ requirejs.config({
 		"hash-wasm": "3rdParty/hash-wasm/sha256.umd.min",
 		sortablejs: "3rdParty/Sortable.min",
 		cropperjs: "3rdParty/cropper.min",
-		exifreader: "3rdParty/exif-reader",
 	},
 	packages: [
 		{

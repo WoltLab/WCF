@@ -46,8 +46,7 @@ class ServiceWorker {
       await this.#serviceWorkerRegistration
     ).pushManager.subscribe({
       userVisibleOnly: true,
-      // The typings for buffers conflict with an implicit dependency on node.
-      applicationServerKey: this.#urlBase64ToUint8Array(this.#publicKey) as BufferSource,
+      applicationServerKey: this.#urlBase64ToUint8Array(this.#publicKey),
     });
     if (!subscription) {
       // subscription failed
@@ -94,7 +93,7 @@ class ServiceWorker {
   }
 
   //@see https://github.com/mdn/serviceworker-cookbook/blob/master/tools.js
-  #urlBase64ToUint8Array(base64String: string): Uint8Array {
+  #urlBase64ToUint8Array(base64String: string): Uint8Array<ArrayBuffer> {
     const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
     const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
 

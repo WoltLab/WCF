@@ -34,11 +34,26 @@ const _signatureEXIF = "Exif";
 const _signatureXMP = "http://ns.adobe.com/xap/1.0/";
 const _signatureXMPExtension = "http://ns.adobe.com/xmp/extension/";
 
+// "Exif\0\0", precedes the TIFF structure in an APP1 segment
+const _headerEXIF = [0x45, 0x78, 0x69, 0x66, 0x00, 0x00];
+const _signaturePNG = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+
+const _tiffTagOrientation = 0x0112;
+const _tiffTypeShort = 3;
+
 function isExifSignature(signature: string): boolean {
   return signature === _signatureEXIF || signature === _signatureXMP || signature === _signatureXMPExtension;
 }
 
-function concatUint8Arrays(...arrays: Uint8Array[]): Uint8Array {
+function startsWith(bytes: Uint8Array, offset: number, expected: number[]): boolean {
+  if (offset + expected.length > bytes.length) {
+    return false;
+  }
+
+  return expected.every((byte, i) => bytes[offset + i] === byte);
+}
+
+function concatUint8Arrays(...arrays: Uint8Array[]): Uint8Array<ArrayBuffer> {
   let offset = 0;
   const length = arrays.reduce((sum, array) => sum + array.length, 0);
 
@@ -51,7 +66,7 @@ function concatUint8Arrays(...arrays: Uint8Array[]): Uint8Array {
   return result;
 }
 
-async function blobToUint8(blob: Blob | File): Promise<Uint8Array> {
+async function blobToUint8(blob: Blob | File): Promise<Uint8Array<ArrayBuffer>> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
@@ -82,7 +97,7 @@ export async function getExifBytesFromJpeg(blob: Blob | File): Promise<Exif> {
 
   const bytes = await blobToUint8(blob);
 
-  let exif: Uint8Array<ArrayBufferLike> = new Uint8Array(0);
+  let exif = new Uint8Array(0);
 
   if (bytes[0] !== 0xff && bytes[1] !== Tag.SOI) {
     throw new Error("Not a JPEG");
@@ -105,7 +120,6 @@ export async function getExifBytesFromJpeg(blob: Blob | File): Promise<Exif> {
       if (isExifSignature(signature)) {
         // append the found EXIF sequence, usually only a single EXIF (APP1) sequence should be defined
         const sequence = bytes.slice(i, length + i);
-        // The typings for buffers conflict with an implicit dependency on node.
         exif = concatUint8Arrays(exif, sequence);
       }
     }
@@ -127,6 +141,137 @@ export async function getExifBytesFromWebP(blob: Blob | File): Promise<Exif | nu
   }
 
   return webp.getExifData();
+}
+
+async function getExifBytesFromPng(blob: Blob | File): Promise<Exif | null> {
+  const bytes = new Uint8Array(await blob.arrayBuffer());
+  if (!startsWith(bytes, 0, _signaturePNG)) {
+    return null;
+  }
+
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  for (let offset = _signaturePNG.length; offset + 8 <= bytes.length; ) {
+    const length = view.getUint32(offset);
+    const type = String.fromCharCode(...bytes.subarray(offset + 4, offset + 8));
+    const dataStart = offset + 8;
+    if (dataStart + length > bytes.length) {
+      return null;
+    }
+
+    if (type === "eXIf") {
+      return bytes.subarray(dataStart, dataStart + length);
+    }
+
+    // The specification requires `eXIf` to precede the image data.
+    if (type === "IDAT") {
+      return null;
+    }
+
+    // Skip the chunk data and the trailing CRC.
+    offset = dataStart + length + 4;
+  }
+
+  return null;
+}
+
+/**
+ * Returns the TIFF structure of the first Exif APP1 segment in the output of
+ * `getExifBytesFromJpeg()`, which may contain XMP segments as well.
+ */
+function getTiffFromJpegSegments(segments: Exif): Exif | null {
+  for (let i = 0; i + 4 <= segments.length; ) {
+    if (segments[i] !== 0xff || segments[i + 1] !== Tag.APP1) {
+      break;
+    }
+
+    const length = 2 + ((segments[i + 2] << 8) | segments[i + 3]);
+    if (startsWith(segments, i + 4, _headerEXIF)) {
+      return segments.subarray(i + 4 + _headerEXIF.length, i + length);
+    }
+
+    i += length;
+  }
+
+  return null;
+}
+
+function readOrientationFromTiff(tiff: Exif): number | undefined {
+  if (tiff.length < 8) {
+    return undefined;
+  }
+
+  let littleEndian: boolean;
+  if (tiff[0] === 0x49 && tiff[1] === 0x49) {
+    littleEndian = true;
+  } else if (tiff[0] === 0x4d && tiff[1] === 0x4d) {
+    littleEndian = false;
+  } else {
+    return undefined;
+  }
+
+  const view = new DataView(tiff.buffer, tiff.byteOffset, tiff.byteLength);
+  if (view.getUint16(2, littleEndian) !== 42) {
+    return undefined;
+  }
+
+  const ifdOffset = view.getUint32(4, littleEndian);
+  if (ifdOffset + 2 > tiff.length) {
+    return undefined;
+  }
+
+  const entryCount = view.getUint16(ifdOffset, littleEndian);
+  for (let i = 0; i < entryCount; i++) {
+    const entry = ifdOffset + 2 + i * 12;
+    if (entry + 12 > tiff.length) {
+      return undefined;
+    }
+
+    if (view.getUint16(entry, littleEndian) === _tiffTagOrientation) {
+      if (view.getUint16(entry + 2, littleEndian) !== _tiffTypeShort) {
+        return undefined;
+      }
+
+      // A single SHORT is stored left-aligned in the 4 byte value field.
+      const orientation = view.getUint16(entry + 8, littleEndian);
+      if (orientation >= 1 && orientation <= 8) {
+        return orientation;
+      }
+
+      return undefined;
+    }
+  }
+
+  return undefined;
+}
+
+/**
+ * Returns the EXIF orientation (1–8) of a JPEG, PNG or WebP file, or
+ * `undefined` if there is none or the metadata is malformed.
+ */
+export async function getOrientation(file: File): Promise<number | undefined> {
+  let tiff: Exif | null = null;
+  try {
+    if (file.type === "image/jpeg") {
+      tiff = getTiffFromJpegSegments(await getExifBytesFromJpeg(file));
+    } else if (file.type === "image/png") {
+      tiff = await getExifBytesFromPng(file);
+    } else if (file.type === "image/webp") {
+      tiff = await getExifBytesFromWebP(file);
+
+      // Some encoders prepend the JPEG APP1 header to the WebP EXIF chunk.
+      if (tiff !== null && startsWith(tiff, 0, _headerEXIF)) {
+        tiff = tiff.subarray(_headerEXIF.length);
+      }
+    }
+  } catch {
+    return undefined;
+  }
+
+  if (tiff === null) {
+    return undefined;
+  }
+
+  return readOrientationFromTiff(tiff);
 }
 
 /**
@@ -170,13 +315,7 @@ export async function removeExifData(blob: Blob | File): Promise<Blob> {
     }
   }
 
-  return new Blob(
-    [
-      // The typings for buffers conflict with an implicit dependency on node.
-      result as BlobPart,
-    ],
-    { type: blob.type },
-  );
+  return new Blob([result], { type: blob.type });
 }
 
 /**
@@ -199,13 +338,7 @@ export async function setExifData(blob: Blob, exif: Exif): Promise<Blob> {
 
   const result = concatUint8Arrays(start, exif, end);
 
-  return new Blob(
-    [
-      // The typings for buffers conflict with an implicit dependency on node.
-      result as BlobPart,
-    ],
-    { type: blob.type },
-  );
+  return new Blob([result], { type: blob.type });
 }
 
 export type Exif = Uint8Array;

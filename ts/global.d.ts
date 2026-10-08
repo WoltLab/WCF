@@ -161,4 +161,8 @@ declare global {
   interface Element {
     moveBefore(node: Element | CharacterData, child: Node | null): void;
   }
+
+  // The type `Buffer` does not exist. To avoid having to load `@types/node`, we define it here.
+  // @see https://github.com/Daninet/hash-wasm/issues/68
+  type Buffer = BufferSource;
 }
