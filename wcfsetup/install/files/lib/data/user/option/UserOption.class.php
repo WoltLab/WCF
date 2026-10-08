@@ -11,6 +11,7 @@ use wcf\system\form\option\formatter\WysiwygFormatter;
 use wcf\system\form\option\FormOptionHandler;
 use wcf\system\form\option\IFormOption;
 use wcf\system\form\option\user\SocialMediaFormOption;
+use wcf\system\form\option\user\TimezoneFormOption;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\l10n\L10nDefinition;
 use wcf\system\l10n\L10nStorage;
@@ -262,8 +263,9 @@ class UserOption extends DatabaseObject implements ITitledObject
         if ($formOptions === null) {
             $formOptions = FormOptionHandler::getInstance()->getOptions();
 
-            $socialMedia = new SocialMediaFormOption();
-            $formOptions[$socialMedia->getId()] = $socialMedia;
+            foreach ([new SocialMediaFormOption(), new TimezoneFormOption()] as $formOption) {
+                $formOptions[$formOption->getId()] = $formOption;
+            }
         }
 
         return $formOptions;

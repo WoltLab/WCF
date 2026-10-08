@@ -45,15 +45,18 @@ class UserOptionEditForm extends UserOptionAddForm
     {
         parent::createForm();
 
-        // Options with a legacy type that has no equivalent form option keep their
-        // type, which must be available to display the immutable field.
-        if (!isset(UserOption::getAvailableFormOptions()[$this->formObject->optionType])) {
-            $optionType = $this->form->getNodeById('optionType');
-            \assert($optionType instanceof SelectFormField);
+        // Options with a type that is not selectable, such as a legacy type without
+        // an equivalent form option or a reserved type, keep their type, which must
+        // be available to display the immutable field.
+        $optionType = $this->form->getNodeById('optionType');
+        \assert($optionType instanceof SelectFormField);
+
+        if (!isset($optionType->getOptions()[$this->formObject->optionType])) {
+            $formOption = UserOption::getAvailableFormOptions()[$this->formObject->optionType] ?? null;
 
             $optionType->options([
                 ...$optionType->getOptions(),
-                $this->formObject->optionType => $this->formObject->optionType,
+                $this->formObject->optionType => $formOption?->getTitle() ?? $this->formObject->optionType,
             ]);
         }
     }

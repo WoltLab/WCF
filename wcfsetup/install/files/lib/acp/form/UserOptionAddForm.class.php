@@ -187,7 +187,12 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
     #[\Override]
     protected function getAvailableFormOptions(): array
     {
-        return UserOption::getAvailableFormOptions();
+        // The timezone is reserved for the built-in user setting.
+        return \array_filter(
+            UserOption::getAvailableFormOptions(),
+            static fn($id) => $id !== 'timezone',
+            \ARRAY_FILTER_USE_KEY,
+        );
     }
 
     #[\Override]

@@ -1,11 +1,12 @@
 <?php
 
-namespace wcf\system\form\option;
+namespace wcf\system\form\option\user;
 
 use wcf\system\database\table\column\AbstractDatabaseTableColumn;
 use wcf\system\database\table\column\VarcharDatabaseTableColumn;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\form\option\AbstractFormOption;
 use wcf\util\DateUtil;
 
 /**
@@ -16,7 +17,7 @@ use wcf\util\DateUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  */
-class TimezoneFormOption extends AbstractFormOption
+final class TimezoneFormOption extends AbstractFormOption
 {
     #[\Override]
     public function getId(): string
