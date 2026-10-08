@@ -24,7 +24,7 @@ final class UserOptionFilter extends AbstractFilter
     ) {
         parent::__construct(
             $option->getIdentifier(),
-            'wcf.user.option.' . $option->optionName,
+            $option->getTitle(),
             'user_option_value.' . $option->getIdentifier()
         );
     }

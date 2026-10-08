@@ -1052,6 +1052,18 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
     }
 
     /**
+     * Returns the localized title of the user option with the given name.
+     *
+     * @since 6.3
+     */
+    public function getUserOptionTitle(string $name): string
+    {
+        $option = UserOptionCacheBuilder::getInstance()->getData([], 'options')[$name] ?? null;
+
+        return $option?->getTitle() ?? '';
+    }
+
+    /**
      * Returns true, if the active user has access to the user option with the given name.
      *
      * @return bool

@@ -2,7 +2,7 @@
 
 namespace wcf\data\user\option;
 
-use wcf\data\option\OptionCollection;
+use wcf\data\DatabaseObjectCollection;
 use wcf\data\TCollectionL10n;
 use wcf\system\l10n\L10nDefinition;
 
@@ -14,8 +14,10 @@ use wcf\system\l10n\L10nDefinition;
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
+ *
+ * @extends DatabaseObjectCollection<UserOption>
  */
-class UserOptionCollection extends OptionCollection
+class UserOptionCollection extends DatabaseObjectCollection
 {
     use TCollectionL10n;
 

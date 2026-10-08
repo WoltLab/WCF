@@ -309,7 +309,7 @@ final class UserGridView extends AbstractGridView
         $columns = [];
         foreach (\array_merge(...\array_values($options)) as $option) {
             $columns[] = GridViewColumn::for($option->getIdentifier())
-                ->label('wcf.user.option.' . $option->optionName)
+                ->label($option->getTitle())
                 ->renderer($this->getUserOptionRenderer($option))
                 ->unsafeDisableEncoding()
                 ->sortable(sortByDatabaseColumn: 'user_option_value.' . $option->getIdentifier())

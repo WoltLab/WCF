@@ -2,7 +2,7 @@
 
 namespace wcf\data\user\option;
 
-use wcf\data\DatabaseObject;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\ITitledObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
@@ -49,8 +49,9 @@ use wcf\util\DateUtil;
  * @property-read   ?string $configuration      JSON-encoded configuration information depending on the option type
  *
  * @phpstan-import-type L10nValue from L10nStorage
+ * @extends CollectionDatabaseObject<UserOptionCollection>
  */
-class UserOption extends DatabaseObject implements ITitledObject
+class UserOption extends CollectionDatabaseObject implements ITitledObject
 {
     use TDatabaseObjectOptions;
     use TDatabaseObjectPermissions;
@@ -157,23 +158,6 @@ class UserOption extends DatabaseObject implements ITitledObject
      * @inheritDoc
      */
     protected static $databaseTableName = 'user_option';
-
-    #[\Override]
-    public function getCollectionClassName(): string
-    {
-        return UserOptionCollection::class;
-    }
-
-    #[\Override]
-    public function getCollection(): UserOptionCollection
-    {
-        $collection = parent::getCollection();
-        if (!($collection instanceof UserOptionCollection)) {
-            throw new \RuntimeException('Expected a UserOptionCollection.');
-        }
-
-        return $collection;
-    }
 
     #[\Override]
     public function getTitle(): string

@@ -327,7 +327,11 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                 ->setIsDisabled((bool)($option['isdisabled'] ?? false));
         }
 
+        // The localized title and description are shipped as `wcf.user.option.*`
+        // language variables and synchronized into the l10n storage at the end of
+        // the installation, see `SyncL10nLanguageItems`.
         $builder
+            ->setL10nIdentifier('wcf.user.option.' . $optionName)
             ->setCategoryName($categoryName)
             ->setOptionType($optionType)
             ->setDefaultValue(isset($option['defaultvalue']) ? (string)$option['defaultvalue'] : null)

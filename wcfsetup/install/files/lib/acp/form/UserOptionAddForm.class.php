@@ -20,9 +20,7 @@ use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
-use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the user option add form.
@@ -89,11 +87,9 @@ class UserOptionAddForm extends AbstractFormOptionBuilderForm
             return UserOptionBuilder::forUpdate($this->formObject);
         }
 
-        // The final name `option{$optionID}` is only known once the option has
-        // been created, see `saved()`.
         return UserOptionBuilder::forCreate()
             ->setPackageID(\PACKAGE_ID)
-            ->setOptionName(StringUtil::getRandomID());
+            ->setGenericOptionName();
     }
 
     #[\Override]
@@ -122,24 +118,27 @@ class UserOptionAddForm extends AbstractFormOptionBuilderForm
         $this->form->appendChildren([
             FormContainer::create('general')
                 ->appendChildren([
-                    // The name and the description are unconditionally stored
-                    // in phrases, see `saved()`.
+                    // The localized title and description are stored in the
+                    // `wcf1_user_option_l10n` table via the builder, not in
+                    // columns of `wcf1_user_option`.
                     TextFormField::create('optionName')
                         ->label('wcf.global.name')
                         ->required()
-                        ->i18n()
-                        ->i18nRequired()
-                        ->languageItemPattern('wcf.user.option.(option\d+|\w+)')
+                        ->l10n()
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, TextFormField $field) {
+                            $builder->setL10nTitle($field->getL10nValues());
+                        })
                         ->loadValueCallback(static function (UserOption $object, IFormField $field) {
-                            $field->value('wcf.user.option.' . $object->optionName);
+                            $field->value($object->getL10nValues('title'));
                         }),
                     MultilineTextFormField::create('optionDescription')
                         ->label('wcf.acp.user.option.description')
-                        ->i18n()
-                        ->i18nRequired()
-                        ->languageItemPattern('wcf.user.option.(option\d+|\w+).description')
+                        ->l10n()
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, MultilineTextFormField $field) {
+                            $builder->setL10nDescription($field->getL10nValues());
+                        })
                         ->loadValueCallback(static function (UserOption $object, IFormField $field) {
-                            $field->value('wcf.user.option.' . $object->optionName . '.description');
+                            $field->value($object->getL10nValues('description'));
                         }),
                     BooleanFormField::create('isDisabled')
                         ->label('wcf.global.button.disable')
@@ -279,32 +278,5 @@ class UserOptionAddForm extends AbstractFormOptionBuilderForm
     {
         return parent::getOptionTypeFormField()
             ->value('text');
-    }
-
-    #[\Override]
-    public function saved(): void
-    {
-        \assert($this->object instanceof UserOption);
-
-        if ($this->formAction === 'create') {
-            $this->object = (new UpdateOption(
-                UserOptionBuilder::forUpdate($this->object)
-                    ->setOptionName('option' . $this->object->optionID)
-            ))();
-        }
-
-        // Must be saved before `parent::saved()` resets the form for a new option.
-        I18nHandler::getInstance()->save(
-            'optionName',
-            'wcf.user.option.' . $this->object->optionName,
-            'wcf.user.option'
-        );
-        I18nHandler::getInstance()->save(
-            'optionDescription',
-            'wcf.user.option.' . $this->object->optionName . '.description',
-            'wcf.user.option'
-        );
-
-        parent::saved();
     }
 }

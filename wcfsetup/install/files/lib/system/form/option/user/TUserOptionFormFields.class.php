@@ -16,7 +16,6 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\option\WysiwygFormOption;
 use wcf\system\option\user\TUserOptionsByCategory;
 use wcf\system\Regex;
-use wcf\system\WCF;
 
 /**
  * Provides methods to edit user options with form builder forms that save
@@ -63,10 +62,10 @@ trait TUserOptionFormFields
         $configuration = $option->getConfiguration();
 
         $formField = $formOption->getFormField($option->getIdentifier(), $configuration)
-            ->label('wcf.user.option.' . $option->optionName);
+            ->label($option->getTitle());
 
-        $description = 'wcf.user.option.' . $option->optionName . '.description';
-        if (WCF::getLanguage()->get($description, true) !== '') {
+        $description = $option->getDescription();
+        if ($description !== '') {
             $formField->description($description);
         }
 
