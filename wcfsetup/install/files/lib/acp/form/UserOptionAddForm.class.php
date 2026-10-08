@@ -3,23 +3,23 @@
 namespace wcf\acp\form;
 
 use Laminas\Diactoros\Response\HtmlResponse;
-use wcf\data\IStorableObject;
+use wcf\command\user\option\CreateOption;
+use wcf\command\user\option\UpdateOption;
+use wcf\data\DatabaseObjectBuilder;
 use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryList;
 use wcf\data\user\option\UserOption;
-use wcf\data\user\option\UserOptionAction;
-use wcf\data\user\option\UserOptionEditor;
+use wcf\data\user\option\UserOptionBuilder;
 use wcf\http\error\HtmlErrorRenderer;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
-use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -28,12 +28,12 @@ use wcf\util\StringUtil;
  * Shows the user option add form.
  *
  * @author      Olaf Braun, Marcel Werk
- * @copyright   2001-2024 WoltLab GmbH
+ * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @extends AbstractFormOptionAddForm<UserOption>
+ * @extends AbstractFormOptionBuilderForm<UserOption, UserOptionBuilder>
  */
-class UserOptionAddForm extends AbstractFormOptionAddForm
+class UserOptionAddForm extends AbstractFormOptionBuilderForm
 {
     /**
      * @inheritDoc
@@ -50,15 +50,11 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
      * @var UserOptionCategory[]
      */
     public array $availableCategories = [];
-    /**
-     * @inheritDoc
-     */
-    public $objectActionClass = UserOptionAction::class;
 
     /**
      * @inheritDoc
      */
-    public $objectEditLinkController = UserOptionEditForm::class;
+    public string $objectEditLinkController = UserOptionEditForm::class;
 
     #[\Override]
     public function readParameters()
@@ -87,26 +83,69 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
     }
 
     #[\Override]
-    public function createForm()
+    protected function getDatabaseObjectBuilder(): UserOptionBuilder
+    {
+        if ($this->formObject !== null) {
+            return UserOptionBuilder::forUpdate($this->formObject);
+        }
+
+        // The final name `option{$optionID}` is only known once the option has
+        // been created, see `saved()`.
+        return UserOptionBuilder::forCreate()
+            ->setPackageID(\PACKAGE_ID)
+            ->setOptionName(StringUtil::getRandomID());
+    }
+
+    #[\Override]
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
+    {
+        if ($this->formObject !== null) {
+            return new UpdateOption($builder);
+        }
+
+        return new CreateOption($builder);
+    }
+
+    #[\Override]
+    protected function applyOptionType(DatabaseObjectBuilder $builder, string $optionType, array $configuration): void
+    {
+        $builder
+            ->setOptionType($optionType)
+            ->setConfiguration($configuration);
+    }
+
+    #[\Override]
+    protected function createForm(): void
     {
         parent::createForm();
 
         $this->form->appendChildren([
             FormContainer::create('general')
                 ->appendChildren([
+                    // The name and the description are unconditionally stored
+                    // in phrases, see `saved()`.
                     TextFormField::create('optionName')
                         ->label('wcf.global.name')
                         ->required()
                         ->i18n()
                         ->i18nRequired()
-                        ->languageItemPattern('wcf.user.option.(option\d+|\w+)'),
+                        ->languageItemPattern('wcf.user.option.(option\d+|\w+)')
+                        ->loadValueCallback(static function (UserOption $object, IFormField $field) {
+                            $field->value('wcf.user.option.' . $object->optionName);
+                        }),
                     MultilineTextFormField::create('optionDescription')
                         ->label('wcf.acp.user.option.description')
                         ->i18n()
                         ->i18nRequired()
-                        ->languageItemPattern('wcf.user.option.(option\d+|\w+).description'),
+                        ->languageItemPattern('wcf.user.option.(option\d+|\w+).description')
+                        ->loadValueCallback(static function (UserOption $object, IFormField $field) {
+                            $field->value('wcf.user.option.' . $object->optionName . '.description');
+                        }),
                     BooleanFormField::create('isDisabled')
-                        ->label('wcf.global.button.disable'),
+                        ->label('wcf.global.button.disable')
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
+                            $builder->setIsDisabled((bool)$field->getSaveValue());
+                        }),
                     SingleSelectionFormField::create('categoryName')
                         ->label('wcf.global.category')
                         ->required()
@@ -117,10 +156,16 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
                             }
 
                             return $options;
+                        })
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
+                            $builder->setCategoryName((string)$field->getSaveValue());
                         }),
                     IntegerFormField::create('showOrder')
                         ->label('wcf.form.field.showOrder')
                         ->value(0)
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
+                            $builder->setShowOrder($field->getSaveValue());
+                        }),
                 ]),
             FormContainer::create('typeDataContainer')
                 ->label('wcf.acp.user.option.typeData')
@@ -138,7 +183,17 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
                                 ->fieldId('optionType')
                                 ->negate()
                                 ->values(['text', 'socialMedia'])
-                        ),
+                        )
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
+                            $defaultValue = (string)$field->getSaveValue();
+
+                            $builder->setDefaultValue((string)match ($field->getDocument()->getFormField('optionType')->getSaveValue()) {
+                                'boolean', 'integer' => (int)$defaultValue,
+                                'float' => (float)$defaultValue,
+                                'date' => \preg_match('/\d{4}-\d{2}-\d{2}/', $defaultValue) ? $defaultValue : '',
+                                default => $defaultValue,
+                            });
+                        }),
                 ]),
             FormContainer::create('access')
                 ->label('wcf.acp.user.option.access')
@@ -151,7 +206,10 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
                             3 => 'wcf.acp.user.option.editable.3',
                             6 => 'wcf.acp.user.option.editable.6',
                         ])
-                        ->value(3),
+                        ->value(3)
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
+                            $builder->setEditable((int)$field->getSaveValue());
+                        }),
                     SingleSelectionFormField::create('visible')
                         ->label('wcf.acp.user.option.visible')
                         ->options([
@@ -162,7 +220,10 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
                             7 => 'wcf.acp.user.option.visible.7',
                             15 => 'wcf.acp.user.option.visible.15',
                         ])
-                        ->value(15),
+                        ->value(15)
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
+                            $builder->setVisible((int)$field->getSaveValue());
+                        }),
                     TextFormField::create('validationPattern')
                         ->label('wcf.acp.user.option.validationPattern')
                         ->description('wcf.acp.user.option.validationPattern.description')
@@ -170,16 +231,28 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
                             ValueFormFieldDependency::create('validationPatternOptionTypeDependency')
                                 ->fieldId('optionType')
                                 ->values(['text', 'textarea', 'url', 'email', 'password'])
-                        ),
+                        )
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
+                            $builder->setValidationPattern((string)$field->getSaveValue());
+                        }),
                     BooleanFormField::create('askDuringRegistration')
                         ->label('wcf.acp.user.option.askDuringRegistration')
-                        ->value(false),
+                        ->value(false)
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
+                            $builder->setAskDuringRegistration((bool)$field->getSaveValue());
+                        }),
                     BooleanFormField::create('searchable')
                         ->label('wcf.acp.user.option.searchable')
-                        ->value(false),
+                        ->value(false)
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
+                            $builder->setSearchable((bool)$field->getSaveValue());
+                        }),
                     BooleanFormField::create('showOnUserCard')
                         ->label('wcf.acp.user.option.showOnUserCard')
-                        ->value(false),
+                        ->value(false)
+                        ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
+                            $builder->setShowOnUserCard((bool)$field->getSaveValue());
+                        }),
                 ])
         ]);
     }
@@ -187,9 +260,15 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
     #[\Override]
     protected function getAvailableFormOptions(): array
     {
+        return UserOption::getAvailableFormOptions();
+    }
+
+    #[\Override]
+    protected function getSelectableFormOptions(): array
+    {
         // The timezone is reserved for the built-in user setting.
         return \array_filter(
-            UserOption::getAvailableFormOptions(),
+            $this->getAvailableFormOptions(),
             static fn($id) => $id !== 'timezone',
             \ARRAY_FILTER_USE_KEY,
         );
@@ -203,83 +282,28 @@ class UserOptionAddForm extends AbstractFormOptionAddForm
     }
 
     #[\Override]
-    public function finalizeForm()
+    public function saved(): void
     {
-        parent::finalizeForm();
+        \assert($this->object instanceof UserOption);
 
-        $this->form->getDataHandler()
-            ->addProcessor(
-                new CustomFormDataProcessor(
-                    'optionNameDataProcessor',
-                    function (IFormDocument $document, array $parameters) {
-                        // These values are unconditionally stored in phrases and
-                        // never in actual columns as it is usually the case with
-                        // the `I18nHandler`.
-                        unset($parameters['data']['optionName']);
-                        unset($parameters['data']['optionDescription']);
-
-                        return $parameters;
-                    },
-                    function (IFormDocument $document, array $data, IStorableObject $object) {
-                        \assert($object instanceof UserOption);
-                        $data['optionName'] = 'wcf.user.option.' . $object->optionName;
-                        $data['optionDescription'] = 'wcf.user.option.' . $object->optionName . '.description';
-
-                        return $data;
-                    }
-                ),
-            )
-            ->addProcessor(
-                new CustomFormDataProcessor(
-                    'defaultValueDataProcessor',
-                    function (IFormDocument $document, array $parameters) {
-                        $optionType = $parameters['data']['optionType'];
-                        $defaultValue = $parameters['data']['defaultValue'] ?? '';
-
-                        $parameters['data']['defaultValue'] = match ($optionType) {
-                            'boolean', 'integer' => \intval($defaultValue),
-                            'float' => \floatval($defaultValue),
-                            'date' => \preg_match('/\d{4}-\d{2}-\d{2}/', $defaultValue) ? $defaultValue : '',
-                            default => $defaultValue,
-                        };
-
-                        return $parameters;
-                    }
-                )
-            );
-    }
-
-    #[\Override]
-    public function save()
-    {
         if ($this->formAction === 'create') {
-            $this->additionalFields['optionName'] = StringUtil::getRandomID();
-            $this->additionalFields['packageID'] = \PACKAGE_ID;
+            $this->object = (new UpdateOption(
+                UserOptionBuilder::forUpdate($this->object)
+                    ->setOptionName('option' . $this->object->optionID)
+            ))();
         }
 
-        parent::save();
-    }
-
-    #[\Override]
-    public function saved()
-    {
-        $userOption = $this->objectAction->getReturnValues()['returnValues'];
-        \assert($userOption instanceof UserOption);
-
+        // Must be saved before `parent::saved()` resets the form for a new option.
         I18nHandler::getInstance()->save(
             'optionName',
-            'wcf.user.option.option' . $userOption->optionID,
+            'wcf.user.option.' . $this->object->optionName,
             'wcf.user.option'
         );
         I18nHandler::getInstance()->save(
             'optionDescription',
-            'wcf.user.option.option' . $userOption->optionID . '.description',
+            'wcf.user.option.' . $this->object->optionName . '.description',
             'wcf.user.option'
         );
-        $editor = new UserOptionEditor($userOption);
-        $editor->update([
-            'optionName' => 'option' . $userOption->optionID,
-        ]);
 
         parent::saved();
     }

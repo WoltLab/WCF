@@ -4,12 +4,10 @@ namespace wcf\acp\form;
 
 use wcf\acp\page\UserOptionListPage;
 use wcf\data\user\option\UserOption;
-use wcf\form\AbstractFormBuilderForm;
 use wcf\http\Helper;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\interaction\admin\UserOptionInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
-use wcf\system\language\I18nHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -30,7 +28,7 @@ class UserOptionEditForm extends UserOptionAddForm
     /**
      * @inheritDoc
      */
-    public $formAction = 'edit';
+    public string $formAction = 'edit';
 
     #[\Override]
     public function readParameters()
@@ -41,7 +39,7 @@ class UserOptionEditForm extends UserOptionAddForm
     }
 
     #[\Override]
-    public function createForm()
+    protected function createForm(): void
     {
         parent::createForm();
 
@@ -52,30 +50,13 @@ class UserOptionEditForm extends UserOptionAddForm
         \assert($optionType instanceof SelectFormField);
 
         if (!isset($optionType->getOptions()[$this->formObject->optionType])) {
-            $formOption = UserOption::getAvailableFormOptions()[$this->formObject->optionType] ?? null;
+            $formOption = $this->getAvailableFormOptions()[$this->formObject->optionType] ?? null;
 
             $optionType->options([
                 ...$optionType->getOptions(),
                 $this->formObject->optionType => $formOption?->getTitle() ?? $this->formObject->optionType,
             ]);
         }
-    }
-
-    #[\Override]
-    public function saved()
-    {
-        I18nHandler::getInstance()->save(
-            'optionName',
-            'wcf.user.option.' . $this->formObject->optionName,
-            'wcf.user.option'
-        );
-        I18nHandler::getInstance()->save(
-            'optionDescription',
-            'wcf.user.option.' . $this->formObject->optionName . '.description',
-            'wcf.user.option'
-        );
-
-        AbstractFormBuilderForm::saved();
     }
 
     #[\Override]
