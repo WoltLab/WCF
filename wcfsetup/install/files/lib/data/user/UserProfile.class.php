@@ -11,7 +11,7 @@ use wcf\data\user\avatar\AvatarDecorator;
 use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\avatar\IUserAvatar;
 use wcf\data\user\avatar\StaticAvatar;
-use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
+use wcf\data\user\cover\photo\GeneratedUserCoverPhoto;
 use wcf\data\user\cover\photo\IUserCoverPhoto;
 use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\group\UserGroup;
@@ -437,11 +437,23 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
 
             // use default cover photo
             if ($this->coverPhoto === null) {
-                $this->coverPhoto = new DefaultUserCoverPhoto();
+                $this->coverPhoto = $this->getDefaultCoverPhoto();
             }
         }
 
         return $this->coverPhoto;
+    }
+
+    /**
+     * Returns the cover photo that is shown if the user has no cover photo. Styles
+     * with a custom cover photo use it for all users, otherwise an individual
+     * cover photo is generated for each user.
+     *
+     * @since 6.3
+     */
+    public function getDefaultCoverPhoto(): IUserCoverPhoto
+    {
+        return new GeneratedUserCoverPhoto($this->username);
     }
 
     /**
