@@ -213,6 +213,20 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
     }
 
     /**
+     * Returns true if this style renders the classic page header. Templates that are
+     * shared by both headers, such as listeners on `pageHeaderUser`, use this to adapt
+     * their markup without relying on the template variants.
+     *
+     * @since 6.3
+     */
+    public function usesClassicPageHeader(): bool
+    {
+        $variables = $this->getVariables();
+
+        return PageHeaderLayout::fromString($variables[PageHeaderLayout::getVariableName()]) === PageHeaderLayout::Classic;
+    }
+
+    /**
      * Returns the per-style options.
      *
      * @return list<class-string<IStyleOption>>
