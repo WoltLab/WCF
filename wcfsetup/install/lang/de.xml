@@ -2886,6 +2886,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.colors.linkColor"><![CDATA[Linkfarbe]]></item>
 		<item name="wcf.acp.style.colors.linkHoverColor"><![CDATA[Linkfarbe (Hover)]]></item>
 		<item name="wcf.acp.style.colors.page"><![CDATA[Seite]]></item>
+		<item name="wcf.acp.style.colors.pageHeaderScope.classic"><![CDATA[Wird nur vom klassischen Seitenkopf verwendet.]]></item>
+		<item name="wcf.acp.style.colors.pageHeaderScope.smallScreens"><![CDATA[Wird mit dem gewählten Layout des Seitenkopfs nur auf kleinen Bildschirmen verwendet.]]></item>
 		<item name="wcf.acp.style.colors.primaryBackgroundColor"><![CDATA[Hintergrundfarbe (primär)]]></item>
 		<item name="wcf.acp.style.colors.primaryBorderColor"><![CDATA[Rahmenfarbe (primär)]]></item>
 		<item name="wcf.acp.style.colors.primaryColor"><![CDATA[Schriftfarbe (primär)]]></item>

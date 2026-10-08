@@ -93,9 +93,26 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             });
         });
     }
+    /**
+     * Mirrors the selected page header layout in the preview.
+     */
+    function handlePageHeaderLayout() {
+        document.querySelectorAll('input[name="pageHeaderLayout"]').forEach((input) => {
+            input.addEventListener("change", () => {
+                _stylePreviewWindow.dataset.pageHeaderLayout = input.value;
+            });
+        });
+    }
     function initVisualEditor() {
         _stylePreviewWindow.querySelectorAll("[data-region]").forEach((region) => {
-            _stylePreviewRegions.set(region.dataset.region, region);
+            const name = region.dataset.region;
+            const regions = _stylePreviewRegions.get(name);
+            if (regions === undefined) {
+                _stylePreviewRegions.set(name, [region]);
+            }
+            else {
+                regions.push(region);
+            }
         });
         _stylePreviewRegionMarker = document.createElement("div");
         _stylePreviewRegionMarker.id = "stylePreviewRegionMarker";
@@ -113,7 +130,12 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
                 Util_1.default.hide(_stylePreviewRegionMarker);
                 return;
             }
-            const region = _stylePreviewRegions.get(lastValue);
+            // Some regions appear once per page header layout, only one of them is visible.
+            const region = _stylePreviewRegions.get(lastValue).find((element) => element.getClientRects().length > 0);
+            if (region === undefined) {
+                Util_1.default.hide(_stylePreviewRegionMarker);
+                return;
+            }
             const rect = region.getBoundingClientRect();
             let top = rect.top + (window.scrollY || window.pageYOffset);
             Util_1.default.setStyles(_stylePreviewRegionMarker, {
@@ -224,6 +246,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             handleProtection(options.styleId);
         }
         initVisualEditor();
+        handlePageHeaderLayout();
         UiScreen.on("screen-sm-down", {
             match() {
                 hideVisualEditor();

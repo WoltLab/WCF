@@ -12,7 +12,7 @@ import DomUtil from "../../../Dom/Util";
 import * as EventHandler from "../../../Event/Handler";
 import * as UiScreen from "../../../Ui/Screen";
 
-const _stylePreviewRegions = new Map<string, HTMLElement>();
+const _stylePreviewRegions = new Map<string, HTMLElement[]>();
 let _stylePreviewRegionMarker: HTMLElement;
 const _stylePreviewWindow = document.getElementById("spWindow")!;
 
@@ -103,9 +103,26 @@ function handleProtection(styleId: number): void {
   });
 }
 
+/**
+ * Mirrors the selected page header layout in the preview.
+ */
+function handlePageHeaderLayout(): void {
+  document.querySelectorAll<HTMLInputElement>('input[name="pageHeaderLayout"]').forEach((input) => {
+    input.addEventListener("change", () => {
+      _stylePreviewWindow.dataset.pageHeaderLayout = input.value;
+    });
+  });
+}
+
 function initVisualEditor(): void {
   _stylePreviewWindow.querySelectorAll("[data-region]").forEach((region: HTMLElement) => {
-    _stylePreviewRegions.set(region.dataset.region!, region);
+    const name = region.dataset.region!;
+    const regions = _stylePreviewRegions.get(name);
+    if (regions === undefined) {
+      _stylePreviewRegions.set(name, [region]);
+    } else {
+      regions.push(region);
+    }
   });
 
   _stylePreviewRegionMarker = document.createElement("div");
@@ -128,7 +145,13 @@ function initVisualEditor(): void {
       return;
     }
 
-    const region = _stylePreviewRegions.get(lastValue)!;
+    // Some regions appear once per page header layout, only one of them is visible.
+    const region = _stylePreviewRegions.get(lastValue)!.find((element) => element.getClientRects().length > 0);
+    if (region === undefined) {
+      DomUtil.hide(_stylePreviewRegionMarker);
+      return;
+    }
+
     const rect = region.getBoundingClientRect();
 
     let top = rect.top + (window.scrollY || window.pageYOffset);
@@ -263,6 +286,7 @@ export function setup(options: StyleEditorOptions): void {
   }
 
   initVisualEditor();
+  handlePageHeaderLayout();
 
   UiScreen.on("screen-sm-down", {
     match() {

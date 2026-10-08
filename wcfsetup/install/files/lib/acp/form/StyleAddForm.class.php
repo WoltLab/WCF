@@ -100,6 +100,14 @@ class StyleAddForm extends AbstractForm
     public $colors = [];
 
     /**
+     * Color variables that the new page header layouts use only partially: `classic` for colors
+     * used by the classic page header alone, `smallScreens` for colors limited to small screens.
+     * @var array<string, 'classic'|'smallScreens'>
+     * @since 6.3
+     */
+    public array $pageHeaderColorScopes = [];
+
+    /**
      * copyright message
      * @var string
      */
@@ -810,6 +818,20 @@ class StyleAddForm extends AbstractForm
             'wcfFooterCopyright' => ['background', 'text', 'link', 'linkActive'],
         ];
 
+        $this->pageHeaderColorScopes = [
+            'wcfHeaderMenuLinkBackground' => 'classic',
+            'wcfHeaderMenuDropdownBackground' => 'classic',
+            'wcfHeaderMenuDropdownBorder' => 'classic',
+            'wcfHeaderMenuDropdownLink' => 'classic',
+            'wcfHeaderSearchBoxBackground' => 'classic',
+            'wcfHeaderSearchBoxText' => 'classic',
+            'wcfHeaderSearchBoxPlaceholder' => 'classic',
+            'wcfNavigationBackground' => 'classic',
+            'wcfNavigationText' => 'smallScreens',
+            'wcfNavigationLink' => 'smallScreens',
+            'wcfNavigationLinkActive' => 'smallScreens',
+        ];
+
         // set global variables
         $this->globals = [
             'wcfFontSizeSmall',
@@ -969,6 +991,7 @@ class StyleAddForm extends AbstractForm
             'isTainted' => $this->isTainted,
             'license' => $this->license,
             'packageName' => $this->packageName,
+            'pageHeaderColorScopes' => $this->pageHeaderColorScopes,
             'styleDate' => $this->styleDate,
             'styleDescription' => $this->styleDescription,
             'styleName' => $this->styleName,

@@ -136,6 +136,160 @@ html[dir="rtl"] #spHeaderPanel ol.inlineList > li.active > a::after {
 	color: var(--wcfHeaderMenuDropdownLinkActive);
 }
 
+/* ### page header (new layouts) ### */
+#spBarLogo,
+#spUserPanel {
+	display: none;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spPageHeader {
+	display: flex;
+	flex-direction: column;
+}
+#spWindow[data-page-header-layout="logoTop"] #spHeader {
+	order: -1;
+}
+#spWindow[data-page-header-layout="logoInBar"] #spHeader {
+	display: none;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spHeader > .spBoundary {
+	padding: 20px 0;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spSearch {
+	display: none;
+}
+#spWindow[data-page-header-layout="logoInBar"] #spBarLogo {
+	display: block;
+	flex: 0 0 auto;
+	margin-inline-end: 24px;
+}
+#spBarLogo > img {
+	display: block;
+	height: auto;
+	max-height: 36px;
+	width: auto;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spHeaderPanel > .spBoundary {
+	align-items: center;
+	display: flex;
+	height: 50px;
+	position: relative;
+}
+/* Items that do not fit are cut off, the submenu escapes the clipping through its containing block. */
+#spWindow:not([data-page-header-layout="classic"]) #spHeaderPanel ol.inlineList {
+	column-gap: 8px;
+	flex: 0 1 auto;
+	flex-wrap: nowrap;
+	min-width: 0;
+	overflow-x: clip;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spHeaderPanel ol.inlineList > li {
+	display: flex;
+	flex: 0 0 auto;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spHeaderPanel ol.inlineList > li:is(:nth-child(2), :nth-child(3)) {
+	display: none;
+}
+/* The remaining items read like the breadcrumbs and the page title. */
+.spLabelNew {
+	display: none;
+}
+#spWindow:not([data-page-header-layout="classic"]) .spLabelClassic {
+	display: none;
+}
+#spWindow:not([data-page-header-layout="classic"]) .spLabelNew {
+	display: inline;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spHeaderPanel ol.inlineList > li > a {
+	background-color: transparent;
+	border-radius: var(--wcfBorderRadius);
+	color: var(--wcfHeaderMenuLink);
+	height: 36px;
+	padding: 0 12px;
+	white-space: nowrap;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spHeaderPanel ol.inlineList > li.active > a,
+#spWindow:not([data-page-header-layout="classic"]) #spHeaderPanel ol.inlineList > li:hover > a {
+	background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+	color: var(--wcfHeaderMenuLinkActive);
+}
+#spWindow:not([data-page-header-layout="classic"]) #spHeaderPanel ol.inlineList > li.active > a {
+	border-end-end-radius: 0;
+	border-end-start-radius: 0;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spHeaderPanel ol.inlineList > li > a > fa-icon {
+	display: none;
+}
+/* Continues the fill of the open item down to the edge of the bar, where the submenu starts. */
+#spWindow:not([data-page-header-layout="classic"]) #spHeaderPanel ol.inlineList > li.active > a::after {
+	background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+	content: "";
+	height: 7px;
+	inset-inline: 0;
+	margin: 0;
+	position: absolute;
+	top: 100%;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spSubMenu {
+	background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+	border: 0;
+	border-start-start-radius: 0;
+	box-shadow: rgb(0 0 0 / 18%) 0 10px 20px -4px;
+	min-width: 176px;
+	padding: 4px;
+	top: 100%;
+	z-index: 1;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spSubMenu > li > a {
+	align-items: center;
+	border-radius: var(--wcfBorderRadius);
+	color: var(--wcfHeaderMenuLinkActive);
+	display: flex;
+	min-height: 34px;
+	padding: 0 8px;
+	width: auto;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spSubMenu > li.active > a,
+#spWindow:not([data-page-header-layout="classic"]) #spSubMenu > li > a:hover {
+	background-color: var(--wcfHeaderMenuDropdownBackgroundActive);
+	color: var(--wcfHeaderMenuDropdownLinkActive);
+}
+#spWindow:not([data-page-header-layout="classic"]) #spUserPanel {
+	column-gap: 4px;
+	display: flex;
+	flex: 0 0 auto;
+	list-style: none;
+	margin: 0;
+	margin-inline-start: auto;
+	padding: 0;
+	padding-inline-start: 24px;
+}
+#spUserPanel > li > a {
+	align-items: center;
+	border-radius: 50%;
+	color: var(--wcfHeaderMenuLink);
+	display: flex;
+	height: 40px;
+	justify-content: center;
+	position: relative;
+	width: 40px;
+}
+#spUserPanel > li > a:hover {
+	background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+	color: var(--wcfHeaderMenuLinkActive);
+}
+#spUserPanel fa-icon {
+	--font-size: 20px;
+	--icon-size: 24px;
+}
+#spUserPanel .spUserPanelBadge {
+	background-color: var(--wcfHeaderMenuLinkActive);
+	box-shadow: 0 0 0 2px var(--wcfHeaderMenuBackground);
+	color: var(--wcfHeaderMenuBackground);
+	inset-inline-end: 0;
+	position: absolute;
+	top: 2px;
+}
+
 /* ### navigation ### */
 #spNavigation {
 	background-color: var(--wcfNavigationBackground);
@@ -161,6 +315,37 @@ html[dir="ltr"] #spNavigation li:first-child::after {
 }
 html[dir="rtl"] #spNavigation li:first-child::after {
 	margin-right: 5px;
+}
+
+/* ### navigation (new page header layouts) ### */
+#spWindow:not([data-page-header-layout="classic"]) #spNavigation {
+	background-color: var(--wcfContentBackground);
+	color: var(--wcfContentDimmedText);
+	padding: 20px 0 0;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spNavigation a,
+#spWindow:not([data-page-header-layout="classic"]) #spNavigation a:hover {
+	color: inherit;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spNavigation li:first-child {
+	align-items: center;
+	column-gap: 5px;
+	display: flex;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spNavigation li:first-child::after {
+	background-color: currentColor;
+	content: "";
+	height: 12px;
+	margin: 0;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+	width: 12px;
+}
+html[dir="rtl"] #spWindow:not([data-page-header-layout="classic"]) #spNavigation li:first-child::after {
+	transform: scaleX(-1);
+}
+#spWindow:not([data-page-header-layout="classic"]) #spContent {
+	padding-top: 10px;
 }
 
 /* ### content ### */
@@ -414,6 +599,103 @@ html[dir="rtl"] #spTable th {
 }
 #spUserMenu a:hover {
 	color: var(--color-active) !important;
+}
+
+/* ### search and login header (new page header layouts) ### */
+#spPageTitle {
+	display: none;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spPageTitle {
+	display: block;
+	font-size: 28px;
+	font-weight: 600;
+	line-height: 1.05;
+	margin: 0 0 30px;
+	white-space: nowrap;
+}
+/* Clears the open submenu of the right-most menu item. `logoBelow` is pushed down by the logo row. */
+#spWindow:is([data-page-header-layout="logoTop"], [data-page-header-layout="logoInBar"]) #spContentSidebar {
+	margin-top: 90px;
+}
+#spSearchSample,
+#spAuthFlowSample {
+	display: none;
+	margin-bottom: 40px;
+}
+#spWindow:not([data-page-header-layout="classic"]) #spSearchSample,
+#spWindow[data-page-header-layout="logoInBar"] #spAuthFlowSample {
+	display: block;
+}
+/* The search replaces the menu in the bar while it is open. */
+.spSearchSampleBar {
+	align-items: center;
+	background-color: var(--wcfHeaderMenuBackground);
+	border-radius: var(--wcfBorderRadius);
+	display: flex;
+	height: 50px;
+	padding: 0 12px;
+}
+.spSearchSampleField {
+	align-items: center;
+	background-color: var(--wcfHeaderSearchBoxBackgroundActive);
+	border: 2px solid var(--wcfHeaderSearchBoxTextActive);
+	border-radius: var(--wcfBorderRadius);
+	box-sizing: border-box;
+	color: var(--wcfHeaderSearchBoxTextActive);
+	display: flex;
+	flex: 1 1 auto;
+	height: 40px;
+	min-width: 0;
+	padding-inline-start: 10px;
+}
+.spSearchSampleField > fa-icon {
+	flex: 0 0 auto;
+}
+/* The id outranks the global styles of search fields. */
+#spSearchSample input {
+	appearance: none;
+	background-color: transparent;
+	border: 0;
+	box-shadow: none;
+	color: var(--wcfHeaderSearchBoxTextActive);
+	flex: 1 1 auto;
+	font: inherit;
+	height: 100%;
+	min-width: 0;
+	outline: none;
+	padding: 0;
+	padding-inline: 8px 12px;
+}
+#spSearchSample input::placeholder {
+	color: var(--wcfHeaderSearchBoxPlaceholderActive);
+}
+.spSearchSampleType {
+	align-items: center;
+	background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+	border-radius: 3px;
+	color: var(--wcfHeaderMenuLinkActive);
+	column-gap: 4px;
+	display: flex;
+	flex: 0 0 auto;
+	font-size: 14px;
+	height: 28px;
+	margin-inline-end: 4px;
+	padding: 0;
+	padding-inline: 10px 6px;
+	white-space: nowrap;
+}
+.spAuthFlowSampleHeader {
+	background-color: var(--wcfHeaderBackground);
+	border-radius: var(--wcfBorderRadius);
+	color: var(--wcfHeaderText);
+	padding: 30px 20px;
+}
+.spAuthFlowSampleHeader > img {
+	display: block;
+	height: auto;
+	max-height: 40px;
+	max-width: 100%;
+	width: auto;
 }
 
 /* ### footer box ### */
@@ -676,6 +958,19 @@ html:not(.touch) .spColorBox {
 }
 .spVariableInvisible {
 	font-size: 0;
+}
+.spVariableRow {
+	align-items: center;
+	column-gap: 4px;
+	display: flex;
+}
+.spColorScope {
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	flex: 0 0 auto;
+}
+#spWindow[data-page-header-layout="classic"] + #spSidebar .spColorScope {
+	display: none;
 }
 .spDescription {
 	color: var(--wcfContentDimmedText);

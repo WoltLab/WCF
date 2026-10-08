@@ -616,33 +616,43 @@
 		<div id="colors" class="tabMenuContent">
 			<div class="section">
 				<div id="spWrapper">
-					<div id="spWindow">
-						<div id="spHeaderPanel" data-region="wcfHeaderMenu">
-							<div class="spBoundary">
-								<ol class="inlineList">
-									<li><a>Lorem</a></li>
-									<li><a>Ipsum Dolor</a></li>
-									<li><a>Sit Amet Lorem</a></li>
+					<div id="spWindow" data-page-header-layout="{if $styleOptions[pageHeaderLayout][selected] !== null}{$styleOptions[pageHeaderLayout][selected]->toString()}{else}classic{/if}">
+						<div id="spPageHeader">
+							<div id="spHeaderPanel" data-region="wcfHeaderMenu">
+								<div class="spBoundary">
+									<div id="spBarLogo"><img src="{$__wcf->getPath()}images/default-logo-small.png" height="60" width="110" alt=""></div>
 									
-									<li class="active">
-										<a>
-											<span>Sadipscing</span>
-											{icon name='caret-down'}
-										</a>
-										<ol id="spSubMenu" data-region="wcfHeaderMenuDropdown">
-											<li><a>Lorem</a></li>
-											<li><a>Ipsum</a></li>
-											<li class="active"><a>Dolor Sit</a></li>
-										</ol>
-									</li>
-								</ol>
+									<ol class="inlineList">
+										<li><a>Lorem</a></li>
+										<li><a>Ipsum Dolor</a></li>
+										<li><a>Sit Amet Lorem</a></li>
+										
+										<li class="active">
+											<a>
+												<span class="spLabelClassic">Sadipscing</span><span class="spLabelNew">Ipsum</span>
+												{icon name='caret-down'}
+											</a>
+											<ol id="spSubMenu" data-region="wcfHeaderMenuDropdown">
+												<li><a>Lorem</a></li>
+												<li><a>Ipsum</a></li>
+												<li class="active"><a>Dolor Sit</a></li>
+											</ol>
+										</li>
+									</ol>
+									
+									<ul id="spUserPanel">
+										<li><a>{icon size=32 name='magnifying-glass'}</a></li>
+										<li><a>{icon size=32 name='bell'} <span class="badge spUserPanelBadge">3</span></a></li>
+										<li><a>{icon size=32 name='circle-user' type='solid'}</a></li>
+									</ul>
+								</div>
 							</div>
-						</div>
-						
-						<div id="spHeader" data-region="wcfHeader">
-							<div class="spBoundary">
-								<div id="spLogo"><img src="{$__wcf->getPath()}acp/images/woltlabSuite.png" height="80" width="562" alt=""></div>
-								<div id="spSearch"><div class="spInlineWrapper" data-region="wcfHeaderSearchBox"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off"></div></div>
+							
+							<div id="spHeader" data-region="wcfHeader">
+								<div class="spBoundary">
+									<div id="spLogo"><img src="{$__wcf->getPath()}acp/images/woltlabSuite.png" height="80" width="562" alt=""></div>
+									<div id="spSearch"><div class="spInlineWrapper" data-region="wcfHeaderSearchBox"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off"></div></div>
+								</div>
 							</div>
 						</div>
 						
@@ -658,6 +668,20 @@
 						<div id="spContent">
 							<div class="spBoundary">
 								<div id="spContentWrapper">
+									<div id="spPageTitle">Dolor Sit</div>
+									
+									<div id="spSearchSample">
+										<div class="spHeadline">Search</div>
+
+										<div class="spSearchSampleBar">
+											<div class="spSearchSampleField" data-region="wcfHeaderSearchBox">
+												{icon name='magnifying-glass'}
+												<input type="search" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off">
+												<span class="spSearchSampleType">Lorem {icon name='chevron-down' type='solid'}</span>
+											</div>
+										</div>
+									</div>
+
 									<div class="spHeadline" data-region="wcfContentHeadline">Lorem Ipsum</div>
 									
 									<div data-region="wcfContent">
@@ -816,7 +840,15 @@
 											<a class="userMenuFooterLink">Sed diam nonumy</a>
 										</div>
 									</div>
-									
+
+									<div id="spAuthFlowSample">
+										<div class="spHeadline">Login</div>
+
+										<div class="spAuthFlowSampleHeader" data-region="wcfHeader">
+											<img src="{$__wcf->getPath()}acp/images/woltlabSuite.png" height="80" width="562" alt="">
+										</div>
+									</div>
+
 									<div class="spHeadline">Status</div>
 									
 									<ol id="spStatus">
@@ -941,11 +973,16 @@
 													</div>
 												</div>
 												<div>
-													<span class="spVariable">{*
-														*}<span class="spVariableInvisible">var(--</span>{*
-														*}{$spColor}{*
-														*}<span class="spVariableInvisible">)</span>{*
-													*}</span>
+													<div class="spVariableRow">
+														<span class="spVariable">{*
+															*}<span class="spVariableInvisible">var(--</span>{*
+															*}{$spColor}{*
+															*}<span class="spVariableInvisible">)</span>{*
+														*}</span>
+														{if $pageHeaderColorScopes[$spColor]|isset}
+															<span class="spColorScope jsTooltip" title="{lang}wcf.acp.style.colors.pageHeaderScope.{$pageHeaderColorScopes[$spColor]}{/lang}">{icon name='circle-info'}</span>
+														{/if}
+													</div>
 													<span class="spDescription">{$spType}</span>
 												</div>
 											</li>
