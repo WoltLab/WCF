@@ -148,7 +148,46 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
      */
     public static function getColumnDefinition(string $optionType)
     {
-        return UserOptionBuilder::getColumnDefinition($optionType);
+        $column = [
+            'autoIncrement' => false,
+            'key' => false,
+            'notNull' => false,
+            'type' => 'text',
+        ];
+
+        switch ($optionType) {
+            case 'boolean':
+                $column['notNull'] = true;
+                $column['default'] = 0;
+                $column['type'] = 'tinyint';
+                break;
+
+            case 'integer':
+                $column['notNull'] = true;
+                $column['default'] = 0;
+                $column['type'] = 'int';
+                break;
+
+            case 'float':
+                $column['notNull'] = true;
+                $column['default'] = 0.0;
+                $column['type'] = 'float';
+                break;
+
+            case 'textarea':
+                $column['type'] = 'mediumtext';
+                break;
+
+            case 'birthday':
+            case 'date':
+                $column['notNull'] = true;
+                $column['default'] = "'0000-00-00'";
+                $column['length'] = 10;
+                $column['type'] = 'char';
+                break;
+        }
+
+        return $column;
     }
 
     #[\Override]

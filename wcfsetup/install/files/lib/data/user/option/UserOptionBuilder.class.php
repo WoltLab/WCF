@@ -4,6 +4,11 @@ namespace wcf\data\user\option;
 
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
+use wcf\data\package\PackageCache;
+use wcf\system\database\table\column\IDatabaseTableColumn;
+use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
+use wcf\system\database\table\DatabaseTableChangeProcessor;
+use wcf\system\database\table\PartialDatabaseTable;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -253,11 +258,9 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     protected function afterCreate(DatabaseObject $object): void
     {
         // add the dynamic value column for this option
-        WCF::getDB()->getEditor()->addColumn(
-            'wcf1_user_option_value',
-            'userOption' . $object->optionID,
-            self::getColumnDefinition($object->optionType)
-        );
+        self::applyColumnChanges([
+            $object->getFormOption()->getDatabaseTableColumn($object->getIdentifier()),
+        ]);
 
         // apply the default value to all existing rows
         if ($object->defaultValue !== null) {
@@ -282,12 +285,9 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     {
         // re-type the value column if the option type changed
         if ($object->optionType !== $this->getObject()->optionType) {
-            WCF::getDB()->getEditor()->alterColumn(
-                'wcf1_user_option_value',
-                'userOption' . $object->optionID,
-                'userOption' . $object->optionID,
-                self::getColumnDefinition($object->optionType)
-            );
+            self::applyColumnChanges([
+                $object->getFormOption()->getDatabaseTableColumn($object->getIdentifier()),
+            ]);
         }
 
         $this->saveL10nValues($object);
@@ -321,8 +321,34 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     #[\Override]
     protected static function beforeDeleteAll(array $objectIDs): void
     {
-        foreach ($objectIDs as $objectID) {
-            WCF::getDB()->getEditor()->dropColumn('wcf1_user_option_value', 'userOption' . $objectID);
+        // the column type is irrelevant for dropping a column, only its name is used
+        self::applyColumnChanges(\array_map(
+            static fn($objectID) => MediumtextDatabaseTableColumn::create('userOption' . $objectID)->drop(),
+            $objectIDs
+        ));
+    }
+
+    /**
+     * Applies the given column changes to the `wcf1_user_option_value` table.
+     *
+     * The columns are owned by `com.woltlab.wcf` regardless of the package
+     * that provides the option, matching the ownership of the table itself.
+     *
+     * @param list<IDatabaseTableColumn> $columns
+     */
+    private static function applyColumnChanges(array $columns): void
+    {
+        $tables = [
+            PartialDatabaseTable::create('wcf1_user_option_value')
+                ->columns($columns),
+        ];
+
+        $processor = new DatabaseTableChangeProcessor(
+            PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf'),
+            null,
+            WCF::getDB()->getEditor(),
+        );
+        while ($processor->process($tables)) {
         }
     }
 
@@ -375,61 +401,5 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
         }
 
         return \json_encode($configuration, \JSON_THROW_ON_ERROR);
-    }
-
-    /**
-     * Determines the needed sql statement to modify column definitions.
-     *
-     * @return array{
-     *  autoIncrement: bool,
-     *  key: false,
-     *  notNull: bool,
-     *  type: string,
-     *  default?: int|float|string,
-     *  length?: int,
-     * } column definition
-     */
-    public static function getColumnDefinition(string $optionType): array
-    {
-        $column = [
-            'autoIncrement' => false,
-            'key' => false,
-            'notNull' => false,
-            'type' => 'text',
-        ];
-
-        switch ($optionType) {
-            case 'boolean':
-                $column['notNull'] = true;
-                $column['default'] = 0;
-                $column['type'] = 'tinyint';
-                break;
-
-            case 'integer':
-                $column['notNull'] = true;
-                $column['default'] = 0;
-                $column['type'] = 'int';
-                break;
-
-            case 'float':
-                $column['notNull'] = true;
-                $column['default'] = 0.0;
-                $column['type'] = 'float';
-                break;
-
-            case 'textarea':
-                $column['type'] = 'mediumtext';
-                break;
-
-            case 'birthday':
-            case 'date':
-                $column['notNull'] = true;
-                $column['default'] = "'0000-00-00'";
-                $column['length'] = 10;
-                $column['type'] = 'char';
-                break;
-        }
-
-        return $column;
     }
 }
