@@ -47,7 +47,10 @@ final class ListViewFilterAction implements RequestHandlerInterface
 
         try {
             /** @var AbstractListView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
-            $view = new $parameters['listView'](...$parameters['listViewParameters']);
+            $view = Helper::mapQueryParametersToClass(
+                $parameters['listViewParameters'],
+                $parameters['listView']
+            );
             // @phpstan-ignore catch.neverThrown
         } catch (\ArgumentCountError | \TypeError $e) {
             if (\ENABLE_DEBUG_MODE) {
@@ -93,7 +96,7 @@ final class ListViewFilterAction implements RequestHandlerInterface
             }
 
             return new JsonResponse([
-                'result' => $data
+                'result' => $data,
             ]);
         } else {
             throw new \LogicException('Unreachable');
