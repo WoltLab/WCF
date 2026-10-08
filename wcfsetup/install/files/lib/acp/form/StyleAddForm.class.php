@@ -496,6 +496,13 @@ class StyleAddForm extends AbstractForm
             }
         }
 
+        foreach (Style::getAvailableOptions() as $option) {
+            $variableName = $option::getVariableName();
+            if ($option::tryFromString($this->variables[$variableName] ?? '') === null) {
+                throw new UserInputException($variableName, 'noValidSelection');
+            }
+        }
+
         if (!empty($this->variables['overrideScss'])) {
             $this->parseOverrides();
         }
@@ -827,6 +834,9 @@ class StyleAddForm extends AbstractForm
             'wcfFontFamilyGoogle',
             'wcfFontFamilyFallback',
         ];
+        foreach (Style::getAvailableOptions() as $option) {
+            $this->specialVariables[] = $option::getVariableName();
+        }
 
         EventHandler::getInstance()->fireAction($this, 'setVariables');
     }
@@ -936,6 +946,16 @@ class StyleAddForm extends AbstractForm
 
         I18nHandler::getInstance()->assignVariables();
 
+        $styleOptions = [];
+        foreach (Style::getAvailableOptions() as $option) {
+            $variableName = $option::getVariableName();
+            $styleOptions[$variableName] = [
+                'cases' => $option::cases(),
+                'previewTemplate' => '__styleOptionPreview_' . $variableName,
+                'selected' => $option::tryFromString($this->variables[$variableName] ?? ''),
+            ];
+        }
+
         WCF::getTPL()->assign([
             'action' => 'add',
             'authorName' => $this->authorName,
@@ -952,6 +972,7 @@ class StyleAddForm extends AbstractForm
             'styleDate' => $this->styleDate,
             'styleDescription' => $this->styleDescription,
             'styleName' => $this->styleName,
+            'styleOptions' => $styleOptions,
             'styleVersion' => $this->styleVersion,
             'templateGroupID' => $this->templateGroupID,
             'tmpHash' => $this->tmpHash,

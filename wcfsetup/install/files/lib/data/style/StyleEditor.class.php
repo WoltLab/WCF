@@ -22,6 +22,7 @@ use wcf\system\package\PackageArchive;
 use wcf\system\Regex;
 use wcf\system\style\exception\FontDownloadFailed;
 use wcf\system\style\FontManager;
+use wcf\system\style\option\IStyleOption;
 use wcf\system\style\StyleCompiler;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
@@ -590,6 +591,11 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                                 continue;
                             }
 
+                            $templateName = \str_replace('.tpl', '', $template['filename']);
+                            if (Template::isSystemCritical($templateName)) {
+                                continue;
+                            }
+
                             // The filename originates from the archive and must not be
                             // able to escape the template group of this style.
                             $targetFile = FileUtil::getRealPath($templatesDir . $template['filename']);
@@ -598,8 +604,6 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                             }
 
                             $templatesTar->extract($template['index'], $targetFile);
-
-                            $templateName = \str_replace('.tpl', '', $template['filename']);
 
                             if (isset($knownTemplates[Package::getAbbreviation($package) . '-' . $templateName])) {
                                 $knownTemplates[Package::getAbbreviation($package) . '-' . $templateName]->update([
@@ -634,8 +638,20 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             $duplicateLogo = true;
         }
 
+        /** @var array<string, IStyleOption|null> $importedOptions */
+        $importedOptions = [];
+        foreach (Style::getAvailableOptions() as $option) {
+            $variableName = $option::getVariableName();
+            $importedOptions[$variableName] = $option::tryFromString($styleData['variables'][$variableName] ?? '');
+        }
+
         // save style
         if ($style === null) {
+            foreach (Style::getAvailableOptions() as $option) {
+                $variableName = $option::getVariableName();
+                $styleData['variables'][$variableName] = ($importedOptions[$variableName] ?? $option::getFallback())->toString();
+            }
+
             $styleData['packageID'] = $packageID;
             $style = new self(self::create($styleData));
 
@@ -679,6 +695,20 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                 $styleData['variables']['overrideScss'],
                 $overrideScss['custom']
             );
+
+            // The installed value is kept unless it is deprecated, which lets
+            // an update move the style off a deprecated value.
+            foreach (Style::getAvailableOptions() as $option) {
+                $variableName = $option::getVariableName();
+                $importedOption = $importedOptions[$variableName];
+                if (
+                    $importedOption !== null
+                    && !$importedOption->isDeprecated()
+                    && $option::fromString($variables[$variableName])->isDeprecated()
+                ) {
+                    $variables[$variableName] = $importedOption->toString();
+                }
+            }
 
             // Import variables for the dark mode if the style previously had none.
             if ($style->hasDarkMode === 0 && $styleData['hasDarkMode'] !== 0) {

@@ -45,6 +45,11 @@ function setAlignment(element: HTMLElement, referenceElement: HTMLElement): void
 }
 
 function close(): void {
+  // The element is shown elsewhere while it is not open as a dropdown, e.g. in the user drawer.
+  if (!button.classList.contains("open")) {
+    return;
+  }
+
   focusTrap.deactivate();
 
   element.hidden = true;
@@ -69,17 +74,18 @@ export function setup(): void {
 
     element.addEventListener("click", (event) => event.stopPropagation());
 
-    window.addEventListener(
-      "resize",
-      () => {
-        if (element.hidden) {
-          return;
+    // The element is visible without being open while it is shown in the user drawer.
+    let realignFrame = 0;
+    const scheduleRealign = () => {
+      window.cancelAnimationFrame(realignFrame);
+      realignFrame = window.requestAnimationFrame(() => {
+        if (button.classList.contains("open")) {
+          setAlignment(element, button);
         }
-
-        setAlignment(element, button);
-      },
-      { passive: true },
-    );
+      });
+    };
+    window.addEventListener("resize", scheduleRealign, { passive: true });
+    window.addEventListener("scroll", scheduleRealign, { passive: true });
 
     button.addEventListener("click", (event) => {
       event.preventDefault();

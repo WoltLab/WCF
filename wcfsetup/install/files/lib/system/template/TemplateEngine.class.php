@@ -149,6 +149,16 @@ class TemplateEngine extends SingletonFactory
     ];
 
     /**
+     * Maps `system_` templates to the template whose listeners they inherit when it is
+     * not the name without the prefix, see `getTemplateListenerCode()`.
+     * @since 6.3
+     */
+    private const SYSTEM_TEMPLATE_LISTENER_ALIASES = [
+        // The main menu was rendered by the generic menu template before.
+        'system_pageHeaderMenu' => '__menu',
+    ];
+
+    /**
      * directory used to cache previously compiled templates
      * @var string
      */
@@ -207,6 +217,13 @@ class TemplateEngine extends SingletonFactory
      * @var int
      */
     protected $templateGroupID = 0;
+
+    /**
+     * sorted names of the active template variants, see `setTemplateVariants()`
+     * @var list<string>
+     * @since 6.3
+     */
+    private array $templateVariants = [];
 
     /**
      * all available template variables and those assigned during runtime
@@ -499,6 +516,15 @@ class TemplateEngine extends SingletonFactory
         // Map old template names to new shared template names
         if (\array_key_exists($templateName, TemplateEngine::SHARED_TEMPLATES)) {
             $templateName = TemplateEngine::SHARED_TEMPLATES[$templateName];
+        }
+
+        if (\in_array($templateName, $this->templateVariants, true)) {
+            $templateName = 'system_' . $templateName;
+        }
+
+        // `system_` templates are reserved for the Core, files of the same name in other apps are ignored.
+        if (\str_starts_with($templateName, 'system_')) {
+            $application = 'wcf';
         }
 
         if (TemplateEngine::isSharedTemplate($templateName)) {
@@ -904,6 +930,38 @@ class TemplateEngine extends SingletonFactory
     }
 
     /**
+     * Returns the sorted names of the active template variants.
+     *
+     * @return list<string>
+     * @since 6.3
+     */
+    public function getTemplateVariants(): array
+    {
+        return $this->templateVariants;
+    }
+
+    /**
+     * Sets the active template variants. An active variant `foo` resolves the template `foo`
+     * to `system_foo`. All templates are compiled under a key derived from the variants,
+     * because `system_foo` may be included statically into any other template.
+     *
+     * @param string[] $templateVariants
+     * @since 6.3
+     */
+    public function setTemplateVariants(array $templateVariants): void
+    {
+        $templateVariants = \array_values(\array_unique($templateVariants));
+        foreach ($templateVariants as $templateVariant) {
+            if (!\preg_match('~^[a-zA-Z0-9]+$~', $templateVariant)) {
+                throw new \InvalidArgumentException("The template variant '{$templateVariant}' is invalid.");
+            }
+        }
+        \sort($templateVariants);
+
+        $this->templateVariants = $templateVariants;
+    }
+
+    /**
      * Loads cached template group information.
      *
      * @return void
@@ -1016,9 +1074,23 @@ class TemplateEngine extends SingletonFactory
     public function getTemplateListenerCode(string $templateName, string $eventName)
     {
         $this->loadTemplateListenerCode();
+
+        // The source of an active variant is compiled under the classic template name.
+        if (\in_array($templateName, $this->templateVariants, true)) {
+            $templateName = 'system_' . $templateName;
+        }
+
         $listeners = [];
         if (isset($this->templateListeners[$templateName][$eventName])) {
             $listeners = $this->templateListeners[$templateName][$eventName];
+        }
+        // `system_foo` replaces `foo`, therefore the listeners of `foo` apply as well.
+        if (\str_starts_with($templateName, 'system_')) {
+            $classicTemplateName = self::SYSTEM_TEMPLATE_LISTENER_ALIASES[$templateName]
+                ?? \substr($templateName, \strlen('system_'));
+            if (isset($this->templateListeners[$classicTemplateName][$eventName])) {
+                $listeners = \array_merge($listeners, $this->templateListeners[$classicTemplateName][$eventName]);
+            }
         }
         // Load old template listener code
         if ($templateName = \array_search($templateName, TemplateEngine::SHARED_TEMPLATES, true)) {
@@ -1091,7 +1163,12 @@ class TemplateEngine extends SingletonFactory
         if (TemplateEngine::isSharedTemplate($templateName)) {
             return TemplateEngine::getInstance()->compileDir . $this->getSharedTemplateGroupID();
         } else {
-            return $this->compileDir . $this->getTemplateGroupID();
+            $prefix = $this->compileDir . $this->getTemplateGroupID();
+            if ($this->templateVariants !== []) {
+                $prefix .= '-' . \implode('.', $this->templateVariants);
+            }
+
+            return $prefix;
         }
     }
 

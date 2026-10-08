@@ -354,7 +354,9 @@ function dropdownMenuKeyDown(event: KeyboardEvent): void {
     let target = activeItem;
     if (
       target.childElementCount === 1 &&
-      (target.children[0].nodeName === "SPAN" || target.children[0].nodeName === "A")
+      (target.children[0].nodeName === "SPAN" ||
+        target.children[0].nodeName === "A" ||
+        target.children[0].nodeName === "BUTTON")
     ) {
       target = target.children[0] as HTMLElement;
     }

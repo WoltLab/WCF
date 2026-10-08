@@ -97,8 +97,10 @@ final class TemplateGridView extends AbstractGridView
 
                 if ($row->templateGroupID !== null) {
                     $link = LinkHandler::getInstance()->getControllerLink(TemplateEditForm::class, ['object' => $row]);
-                } else {
+                } elseif ($row->canCopy()) {
                     $link = LinkHandler::getInstance()->getControllerLink(TemplateAddForm::class, ['copy' => $row->templateID]);
+                } else {
+                    return $value;
                 }
 
                 return \sprintf(

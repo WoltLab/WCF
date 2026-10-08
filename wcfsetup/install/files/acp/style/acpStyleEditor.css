@@ -861,3 +861,77 @@ html:not(.touch) .spColorBox {
 		padding: 1px 4px;
 	}
 }
+
+/* ### style options ### */
+.styleOptionList {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+.styleOption {
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: var(--wcfBorderRadius);
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	padding: 10px;
+}
+.styleOption:has(input:checked) {
+	border-color: var(--wcfInputBorderActive);
+	box-shadow: 0 0 0 1px var(--wcfInputBorderActive);
+}
+.styleOption:has(input:focus-visible) {
+	outline: 2px solid var(--wcfInputBorderActive);
+	outline-offset: 2px;
+}
+.styleOption__title {
+	align-items: baseline;
+	display: flex;
+	gap: 5px;
+}
+.styleOption__name {
+	flex: 1 1 auto;
+}
+.styleOption__description {
+	color: var(--wcfContentDimmedText);
+}
+
+.styleOptionPreview {
+	color: var(--wcfContentDimmedText);
+	display: block;
+	height: auto;
+	margin-bottom: 5px;
+	max-width: 320px;
+	width: 100%;
+}
+.styleOption:has(input:checked) .styleOptionPreview {
+	color: var(--wcfInputBorderActive);
+}
+.styleOptionPreview__page {
+	fill: var(--wcfContentBackground);
+}
+.styleOptionPreview__frame {
+	fill: none;
+	stroke: currentColor;
+	stroke-opacity: 0.4;
+}
+.styleOptionPreview__facade {
+	fill: currentColor;
+	fill-opacity: 0.1;
+}
+.styleOptionPreview__logo {
+	fill: var(--wcfContentText);
+	fill-opacity: 0.7;
+}
+.styleOptionPreview__bar {
+	fill: currentColor;
+	fill-opacity: 0.8;
+}
+.styleOptionPreview__item {
+	fill: var(--wcfContentBackground);
+}
+.styleOptionPreview__line {
+	fill: currentColor;
+	fill-opacity: 0.2;
+}

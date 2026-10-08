@@ -130,6 +130,18 @@ class TemplateAddForm extends AbstractFormBuilderForm
                             })
                         )
                         ->addValidator(
+                            new FormFieldValidator('systemCritical', static function (TextFormField $formField) {
+                                if (Template::isSystemCritical($formField->getSaveValue())) {
+                                    $formField->addValidationError(
+                                        new FormFieldValidationError(
+                                            'systemCritical',
+                                            'wcf.acp.template.name.error.systemCritical'
+                                        )
+                                    );
+                                }
+                            })
+                        )
+                        ->addValidator(
                             new FormFieldValidator('unique', function (TextFormField $formField) {
                                 $templateGroupIDFormField = $formField->getDocument()->getFormField('templateGroupID');
                                 $conditionBuilder = new PreparedStatementConditionBuilder();
@@ -249,7 +261,7 @@ class TemplateAddForm extends AbstractFormBuilderForm
         if ($copy !== 0) {
             $this->copy = $copy;
             $this->copiedTemplate = new Template($this->copy);
-            if ($this->copiedTemplate->isNil()) {
+            if ($this->copiedTemplate->isNil() || !$this->copiedTemplate->canCopy()) {
                 throw new IllegalLinkException();
             }
         }

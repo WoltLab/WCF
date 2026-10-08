@@ -4,6 +4,8 @@ namespace wcf\data\style;
 
 use wcf\data\DatabaseObject;
 use wcf\data\ITitledObject;
+use wcf\system\style\option\IStyleOption;
+use wcf\system\style\option\PageHeaderLayout;
 use wcf\system\style\StyleCompiler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -84,6 +86,15 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
     const BASE_ASSET_PATH = WCF_DIR . 'images/';
 
     const DARK_MODE_PREFIX = "darkMode\0";
+
+    /**
+     * Per-style options stored as style variables.
+     * @var list<class-string<IStyleOption>>
+     * @since 6.3
+     */
+    private const OPTIONS = [
+        PageHeaderLayout::class,
+    ];
 
     /**
      * Returns the name of this style.
@@ -168,6 +179,77 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
         }
 
         return null;
+    }
+
+    /**
+     * Returns the template variants this style activates, see `TemplateEngine::setTemplateVariants()`.
+     *
+     * @return list<string>
+     * @since 6.3
+     */
+    public function getTemplateVariants(): array
+    {
+        return self::getTemplateVariantsFromVariables($this->getVariables());
+    }
+
+    /**
+     * Returns the template variants the given style variables activate.
+     *
+     * @param array<string, mixed> $variables
+     * @return list<string>
+     * @since 6.3
+     */
+    public static function getTemplateVariantsFromVariables(array $variables): array
+    {
+        $templateVariants = [];
+        foreach (self::getOptionsFromVariables($variables) as $option) {
+            $templateVariant = $option->getTemplateVariant();
+            if ($templateVariant !== null) {
+                $templateVariants[] = $templateVariant;
+            }
+        }
+
+        return $templateVariants;
+    }
+
+    /**
+     * Returns true if this style renders the classic page header. Templates that are
+     * shared by both headers, such as listeners on `pageHeaderUser`, use this to adapt
+     * their markup without relying on the template variants.
+     *
+     * @since 6.3
+     */
+    public function usesClassicPageHeader(): bool
+    {
+        $variables = $this->getVariables();
+
+        return PageHeaderLayout::fromString($variables[PageHeaderLayout::getVariableName()]) === PageHeaderLayout::Classic;
+    }
+
+    /**
+     * Returns the per-style options.
+     *
+     * @return list<class-string<IStyleOption>>
+     * @since 6.3
+     */
+    public static function getAvailableOptions(): array
+    {
+        return self::OPTIONS;
+    }
+
+    /**
+     * Returns the selected value of each option in `self::OPTIONS`.
+     *
+     * @param array<string, mixed> $variables
+     * @return list<IStyleOption>
+     * @since 6.3
+     */
+    public static function getOptionsFromVariables(array $variables): array
+    {
+        return \array_map(
+            static fn(string $option) => $option::fromString($variables[$option::getVariableName()]),
+            self::OPTIONS
+        );
     }
 
     /**

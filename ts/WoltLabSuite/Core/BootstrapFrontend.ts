@@ -21,6 +21,12 @@ import { prepareRequest } from "./Ajax/Backend";
 import { setup as serviceWorkerSetup } from "./Notification/ServiceWorker";
 import { getArticlePopover } from "./Api/Articles/GetArticlePopover";
 import { getUserPopover } from "./Api/Users/GetUserPopover";
+import { setup as setupDrawers } from "./Component/Drawer";
+import { setup as setupMainMenu } from "./Component/MainMenu";
+import { setup as setupLanguageSwitcher } from "./Component/LanguageSwitcher";
+import { setup as setupUserMenuDrawer } from "./Component/UserMenuDrawer";
+import { setup as setupPageHeaderSearch } from "./Component/PageHeaderSearch";
+import { setup as setupPageHeaderShadow } from "./Component/PageHeaderShadow";
 
 interface BootstrapOptions {
   backgroundQueue: {
@@ -40,6 +46,7 @@ interface BootstrapOptions {
   removeQuotes?: string[];
   usedQuotes?: Map<string, string[]>;
   reportEndpoint: string;
+  templateVariants: string[];
 }
 
 /**
@@ -78,9 +85,13 @@ export function setup(options: BootstrapOptions): void {
   // Modify the URL of the background queue URL to always target the current domain to avoid CORS.
   options.backgroundQueue.url = window.WSC_API_URL + options.backgroundQueue.url.substr(window.WCF_PATH.length);
 
+  // The `system_pageHeader` renders the mobile menus on the server.
+  const hasSystemPageHeader = options.templateVariants.includes("pageHeader");
+
   Bootstrap.setup({
     dynamicColorScheme: options.dynamicColorScheme,
-    enableMobileMenu: true,
+    enableMobileMenu: !hasSystemPageHeader,
+    enableSearch: !hasSystemPageHeader,
     pageMenuMainProvider: new UiPageMenuMainFrontend(),
   });
 
@@ -97,7 +108,16 @@ export function setup(options: BootstrapOptions): void {
     });
   }
 
-  UiPageHeaderMenu.init();
+  if (hasSystemPageHeader) {
+    setupDrawers();
+    setupMainMenu();
+    setupLanguageSwitcher();
+    setupUserMenuDrawer();
+    setupPageHeaderSearch();
+    setupPageHeaderShadow();
+  } else {
+    UiPageHeaderMenu.init();
+  }
 
   if (options.styleChanger) {
     void import("./Controller/Style/Changer").then((ControllerStyleChanger) => {

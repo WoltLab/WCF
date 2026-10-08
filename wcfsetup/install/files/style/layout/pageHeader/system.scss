@@ -1,0 +1,1181 @@
+/* The bar must stick relative to `#pageContainer`, not to this short wrapper. The auth flow keeps the
+   classic markup (see below), therefore the container is selected through its layout. */
+.pageHeaderContainer--logoTop,
+.pageHeaderContainer--logoBelow,
+.pageHeaderContainer--logoInBar {
+	display: contents;
+}
+
+.pageHeader:not(.pageHeader--authFlow) {
+	background-color: var(--wcfHeaderMenuBackground);
+	color: var(--wcfHeaderMenuLink);
+	position: sticky;
+	top: 0;
+	transition: box-shadow 0.2s ease;
+	z-index: 300;
+
+	&[data-stuck] {
+		box-shadow: var(--wcfBoxShadow);
+	}
+}
+
+/* Leaves the viewport when the bar starts to stick, see `Component/PageHeaderShadow`. */
+.pageHeaderSentinel {
+	height: 1px;
+	margin-bottom: -1px;
+}
+
+/* Matches the classic header, third-party styles offset sticky elements by 50px. */
+.pageHeaderPanel > .layoutBoundary {
+	align-items: center;
+	display: flex;
+	height: var(--wcfPageHeaderHeight);
+}
+
+/* The child combinator skips the auth flow, which nests the facade inside its header. */
+.pageHeaderContainer > .pageHeaderFacade {
+	background-color: var(--wcfHeaderBackground);
+	color: var(--wcfHeaderText);
+}
+
+.pageHeaderContainer > .pageHeaderFacade > .layoutBoundary {
+	align-items: center;
+	display: flex;
+	padding-bottom: 20px;
+	padding-top: 20px;
+}
+
+.pageHeaderLogo > a {
+	display: block;
+}
+
+.pageHeaderLogoLarge {
+	height: auto;
+	max-width: 100%;
+}
+
+.pageHeaderSearch {
+	display: none;
+}
+
+.pageHeaderSearchInputContainer {
+	align-items: center;
+	background-color: var(--wcfHeaderSearchBoxBackgroundActive);
+	border: 2px solid var(--wcfHeaderSearchBoxTextActive);
+	border-radius: var(--wcfBorderRadius);
+	box-sizing: border-box;
+	color: var(--wcfHeaderSearchBoxTextActive);
+	display: flex;
+	height: 40px;
+}
+
+.pageHeaderSearchInputContainer > fa-icon {
+	flex: 0 0 auto;
+	margin-left: 10px;
+}
+
+/* The id outranks the global styles of search fields. */
+#pageHeaderSearchInput {
+	appearance: none;
+	background-color: transparent;
+	border: 0;
+	color: var(--wcfHeaderSearchBoxTextActive);
+	flex: 1 1 auto;
+	font: inherit;
+	height: 100%;
+	min-width: 0;
+	padding: 0 12px 0 8px;
+
+	&::placeholder {
+		color: var(--wcfHeaderSearchBoxPlaceholderActive);
+	}
+
+	/* The button in the bar closes the search, a second clear button would compete with it. */
+	&::-webkit-search-cancel-button {
+		appearance: none;
+	}
+
+	/* The border of the field already marks the focus. */
+	&:focus-visible {
+		outline: none;
+	}
+}
+
+/* The search scope is a select at the end of the field. */
+.pageHeaderSearchType {
+	flex: 0 0 auto;
+	margin-right: 4px;
+}
+
+.pageHeaderSearchType > .button {
+	align-items: center;
+	background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+	border: 0;
+	border-radius: 3px;
+	color: var(--wcfHeaderMenuLinkActive);
+	column-gap: 4px;
+	display: flex;
+	font-size: 14px;
+	height: 28px;
+	line-height: 1;
+	padding: 0 6px 0 10px;
+	white-space: nowrap;
+
+	&:hover {
+		background-color: var(--wcfHeaderMenuDropdownBackgroundActive);
+		color: var(--wcfHeaderMenuDropdownLinkActive);
+	}
+}
+
+.pageHeaderSearchType.dropdownOpen > .button {
+	background-color: var(--wcfHeaderMenuDropdownBackgroundActive);
+	color: var(--wcfHeaderMenuDropdownLinkActive);
+}
+
+@include screen-lg {
+	.pageHeaderBarLogo,
+	.pageHeaderFacade .pageHeaderLogoSmall,
+	.pageHeaderMenuMobile,
+	.pageHeaderUserMobile,
+	.mainMenuMobileOnly,
+	.userMenuDrawer {
+		display: none;
+	}
+
+	/* logoInBar: the mobile logo at up to 36px height */
+	.pageHeaderPanel .pageHeaderLogo {
+		flex: 0 0 auto;
+		margin-right: 24px;
+	}
+
+	.pageHeaderPanel .pageHeaderLogoSmall {
+		height: auto;
+		max-height: 36px;
+		width: auto;
+	}
+
+	.mainMenu {
+		flex: 0 1 auto;
+		min-width: 0;
+	}
+
+	.mainMenu .boxMenu {
+		--mainMenuItemHeight: 36px;
+
+		align-items: center;
+		display: flex;
+		gap: 8px;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		:focus-visible {
+			outline: 2px solid var(--wcfHeaderMenuLinkActive);
+			outline-offset: 2px;
+		}
+	}
+
+	.mainMenu .boxMenu > li {
+		display: flex;
+		flex: 0 0 auto;
+		position: relative;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	.mainMenu .boxMenu > li > .boxMenuLink {
+		align-items: center;
+		background-color: transparent;
+		border: 0;
+		border-radius: var(--wcfBorderRadius);
+		box-sizing: border-box;
+		color: var(--wcfHeaderMenuLink);
+		column-gap: 6px;
+		display: flex;
+		font: inherit;
+		height: var(--mainMenuItemHeight);
+		padding: 0 12px;
+		transition:
+			background-color 0.12s ease,
+			color 0.12s ease;
+		white-space: nowrap;
+
+		&:hover {
+			background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+			color: var(--wcfHeaderMenuLinkActive);
+		}
+	}
+
+	.mainMenu .boxMenu > li.active > .boxMenuLink {
+		background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+		color: var(--wcfHeaderMenuLinkActive);
+	}
+
+	/* An open submenu continues the item's fill into the panel ("tray"). The tray uses the
+	   hover fill, otherwise the item would change its colour again when the submenu opens.
+	   The panel cannot fade in, therefore the item does not either. */
+	.mainMenu .boxMenu > li:has(> .boxMenuToggle[aria-expanded="true"]) > .boxMenuLink {
+		background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		color: var(--wcfHeaderMenuLinkActive);
+		transition: none;
+	}
+
+	/* The fill runs down to the edge of the bar, where the panel starts, so that it never
+	   touches the filled item of the current page next to it. */
+	.mainMenu .boxMenu > li:has(> .boxMenuToggle[aria-expanded="true"])::after {
+		background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+		content: "";
+		height: calc((var(--wcfPageHeaderHeight) - var(--mainMenuItemHeight)) / 2);
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 100%;
+	}
+
+	/* The toggle is a real button in the tab order, but only visible once it has the keyboard focus.
+	   It overlaps the item's edge, therefore revealing it never shifts the layout. */
+	.mainMenu .boxMenuToggle {
+		align-items: center;
+		background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+		border: 0;
+		border-radius: 50%;
+		clip-path: inset(50%);
+		color: var(--wcfHeaderMenuLinkActive);
+		display: flex;
+		height: 20px;
+		justify-content: center;
+		margin-top: -10px;
+		opacity: 0;
+		padding: 0;
+		position: absolute;
+		right: -14px;
+		top: 50%;
+		width: 20px;
+		z-index: 1;
+
+		&:focus-visible {
+			clip-path: none;
+			opacity: 1;
+		}
+
+		fa-icon {
+			transition: transform 0.16s ease;
+		}
+
+		&[aria-expanded="true"] fa-icon {
+			transform: rotate(180deg);
+		}
+	}
+
+	/* "More" is a toggle with a visible label. */
+	.mainMenu .mainMenuOverflowToggle {
+		clip-path: none;
+		cursor: pointer;
+		height: var(--mainMenuItemHeight);
+		margin-top: 0;
+		opacity: 1;
+		position: static;
+		width: auto;
+	}
+
+	@media (pointer: coarse) {
+		.mainMenu .boxMenu > li.boxMenuHasChildren:not(.mainMenuOverflow) > .boxMenuLink {
+			padding-right: 36px;
+		}
+
+		.mainMenu .boxMenuToggle {
+			clip-path: none;
+			opacity: 1;
+			right: 6px;
+		}
+	}
+
+	/* `ui/wsc31.scss` adds a shadow through `.mainMenu .boxMenu .boxMenuDepth1`, which must be outranked. */
+	.mainMenu .boxMenu > .boxMenuHasChildren > .boxMenuDepth1 {
+		background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+		border-radius: 0 var(--wcfBorderRadius) var(--wcfBorderRadius) var(--wcfBorderRadius);
+		box-shadow: rgb(0 0 0 / 18%) 0 10px 20px -4px;
+		display: none;
+		left: 0;
+		list-style: none;
+		margin: 0;
+		min-width: 176px;
+		padding: 4px;
+		position: absolute;
+		top: calc(100% + (var(--wcfPageHeaderHeight) - var(--mainMenuItemHeight)) / 2);
+		z-index: 1;
+
+		:focus-visible {
+			outline-color: var(--wcfHeaderMenuDropdownLinkActive);
+			outline-offset: -2px;
+		}
+	}
+
+	.mainMenu .boxMenuDepth1 .boxMenuLink {
+		align-items: center;
+		border-radius: var(--wcfBorderRadius);
+		color: var(--wcfHeaderMenuLinkActive);
+		column-gap: 6px;
+		display: flex;
+		min-height: 34px;
+		padding: 0 8px;
+		white-space: nowrap;
+
+		&:hover {
+			background-color: var(--wcfHeaderMenuDropdownBackgroundActive);
+			color: var(--wcfHeaderMenuDropdownLinkActive);
+		}
+	}
+
+	/* Deeper levels are indented inside the panel, there is no second flyout. */
+	.mainMenu .boxMenuDepth1 .boxMenuToggle {
+		display: none;
+	}
+
+	.mainMenu .boxMenuDepth1 ol {
+		list-style: none;
+		margin: 0;
+		padding: 0 0 0 12px;
+	}
+
+	.mainMenu .boxMenu > .boxMenuHasChildren > .boxMenuToggle[aria-expanded="true"] + .boxMenuDepth1 {
+		display: block;
+	}
+
+	/* Submenus of items that were moved into "More" are shown inline in its panel. */
+	.mainMenu .boxMenu .boxMenuDepth1 .boxMenuDepth1 {
+		box-shadow: none;
+		display: block;
+	}
+
+	/* Menus are aligned to the bottom edge of their item, therefore the items span the height of the bar. */
+	.userPanel {
+		align-self: stretch;
+		display: flex;
+		flex: 0 0 auto;
+		margin-left: auto;
+		padding-left: 24px;
+	}
+
+	.userPanelItems {
+		column-gap: 4px;
+		display: flex;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		:focus-visible {
+			outline: 2px solid var(--wcfHeaderMenuLinkActive);
+			outline-offset: 2px;
+		}
+	}
+
+	.userPanelItems > li {
+		align-items: center;
+		display: flex;
+		position: relative;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	.userPanelItems > li > :is(a, button) {
+		align-items: center;
+		background-color: transparent;
+		border: 0;
+		border-radius: 50%;
+		color: var(--wcfHeaderMenuLink);
+		cursor: pointer;
+		display: flex;
+		font: inherit;
+		height: 40px;
+		justify-content: center;
+		padding: 0;
+		position: relative;
+		transition:
+			background-color 0.12s ease,
+			color 0.12s ease;
+		width: 40px;
+
+		&:hover,
+		&[aria-expanded="true"] {
+			background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+			color: var(--wcfHeaderMenuLinkActive);
+		}
+
+		> span:not(.badge) {
+			clip: rect(1px, 1px, 1px, 1px);
+			height: 1px;
+			overflow: hidden;
+			position: absolute;
+			width: 1px;
+		}
+
+		fa-icon[size="32"] {
+			--font-size: 20px;
+			--icon-size: 24px;
+		}
+
+		.userAvatarImage {
+			border-radius: 50%;
+			height: 30px;
+			width: 30px;
+		}
+	}
+
+	.userPanelItems .badgeUpdate {
+		background-color: var(--wcfHeaderMenuLinkActive);
+		box-shadow: 0 0 0 2px var(--wcfHeaderMenuBackground);
+		color: var(--wcfHeaderMenuBackground);
+		position: absolute;
+		right: 0;
+		top: 2px;
+	}
+
+	/* Guests: login as text, registration as a filled button. */
+	#userLogin > a,
+	#userRegistration > a {
+		border-radius: var(--wcfBorderRadius);
+		height: 36px;
+		padding: 0 12px;
+		white-space: nowrap;
+		width: auto;
+	}
+
+	#userRegistration > a {
+		background-color: var(--wcfHeaderMenuLinkActive);
+		color: var(--wcfHeaderMenuBackground);
+		font-weight: 600;
+		padding: 0 16px;
+
+		&:hover {
+			text-decoration: underline;
+			text-underline-offset: 3px;
+		}
+	}
+
+	/* The search replaces the menu while it is open, the bar keeps its height. */
+	.searchBarOpen .mainMenu {
+		display: none;
+	}
+
+	.searchBarOpen .pageHeaderSearch {
+		display: block;
+		flex: 1 1 auto;
+		margin-right: 16px;
+		min-width: 0;
+	}
+}
+
+@include screen-md-down {
+	.pageHeaderPanel > .layoutBoundary {
+		column-gap: 0;
+		padding: 0 4px;
+	}
+
+	/* The logo row is replaced by the mobile logo in the bar. */
+	.pageHeaderFacade {
+		display: none;
+	}
+
+	.pageHeaderBarLogo,
+	.pageHeaderPanel .pageHeaderLogo > a {
+		align-items: center;
+		display: flex;
+		flex: 0 0 auto;
+		height: 44px;
+		margin-left: 6px;
+	}
+
+	.pageHeaderLogoSmall {
+		height: auto;
+		max-height: 32px;
+		max-width: 100%;
+		object-fit: contain;
+		width: auto;
+	}
+
+	/* The bar keeps the bell and, for guests, the login, everything else lives in the drawers. */
+	.userPanel {
+		margin-left: auto;
+	}
+
+	.userPanelItems {
+		align-items: center;
+		display: flex;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.userPanelItems > li {
+		position: relative;
+	}
+
+	.userPanelItems > li:not(.userPanelSearch, #userNotifications, #userLogin) {
+		display: none;
+	}
+
+	.userPanelItems > li > :is(a, button) {
+		align-items: center;
+		background-color: transparent;
+		border: 0;
+		border-radius: 22px;
+		color: var(--wcfHeaderMenuLink);
+		display: flex;
+		font: inherit;
+		height: 44px;
+		justify-content: center;
+		min-width: 44px;
+
+		> span:not(.badge) {
+			clip: rect(1px, 1px, 1px, 1px);
+			height: 1px;
+			overflow: hidden;
+			position: absolute;
+			width: 1px;
+		}
+
+		fa-icon[size="32"] {
+			--font-size: 20px;
+			--icon-size: 24px;
+		}
+	}
+
+	#userLogin > a {
+		font-weight: 600;
+		padding: 0 12px;
+	}
+
+	.userPanelItems .badgeUpdate {
+		background-color: var(--wcfHeaderMenuLinkActive);
+		box-shadow: 0 0 0 2px var(--wcfHeaderMenuBackground);
+		color: var(--wcfHeaderMenuBackground);
+		position: absolute;
+		right: 2px;
+		top: 4px;
+	}
+
+	.pageHeaderMenuMobile,
+	.pageHeaderUserMobile {
+		align-items: center;
+		background-color: transparent;
+		border: 0;
+		border-radius: 50%;
+		color: var(--wcfHeaderMenuLink);
+		display: flex;
+		flex: 0 0 auto;
+		height: 44px;
+		justify-content: center;
+		padding: 0;
+		width: 44px;
+
+		&[aria-expanded="true"] {
+			background-color: var(--wcfHeaderMenuLinkBackgroundActive);
+			color: var(--wcfHeaderMenuLinkActive);
+		}
+
+		.userAvatarImage {
+			border-radius: 50%;
+			height: 30px;
+			width: 30px;
+		}
+
+		/* Unread content inside the drawer, see `Component/MainMenu` and `Component/UserMenuDrawer`. */
+		&[data-has-unread] {
+			position: relative;
+		}
+
+		&[data-has-unread]::after {
+			background-color: var(--wcfHeaderMenuLinkActive);
+			border-radius: 50%;
+			box-shadow: 0 0 0 2px var(--wcfHeaderMenuBackground);
+			content: "";
+			height: 10px;
+			position: absolute;
+			right: 5px;
+			top: 5px;
+			width: 10px;
+		}
+	}
+
+	/* The search fills the bar while it is open, only the button to close it remains. */
+	.searchBarOpen :is(.pageHeaderBarLogo, .pageHeaderLogo, .pageHeaderUserMobile, .pageHeaderMenuMobile),
+	.searchBarOpen .userPanelItems > li:not(.userPanelSearch) {
+		display: none;
+	}
+
+	.searchBarOpen .pageHeaderSearch {
+		display: block;
+		flex: 1 1 auto;
+		margin: 0 4px 0 8px;
+		min-width: 0;
+	}
+
+	/* 16px keeps iOS from zooming into the field. */
+	#pageHeaderSearchInput {
+		font-size: 16px;
+	}
+
+	/* The main menu and the user menu are drawers from the right, see `Component/Drawer`. */
+	.drawerBackdrop {
+		background-color: rgba(var(--wcfHeaderMenuBackground-rgb) / 0.5);
+		inset: 0;
+		position: fixed;
+		z-index: 1;
+	}
+
+	.mainMenu,
+	.userMenuDrawer {
+		background-color: var(--wcfUserMenuBackground);
+		border-radius: 12px 0 0 12px;
+		box-shadow: var(--wcfBoxShadow);
+		box-sizing: border-box;
+		color: var(--wcfUserMenuText);
+		display: flex;
+		flex-direction: column;
+		height: 100dvh;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		position: fixed;
+		right: 0;
+		top: 0;
+		transform: translateX(100%);
+		/* Hidden only once the slide-out has finished. */
+		transition:
+			transform 0.2s ease,
+			visibility 0s 0.2s;
+		visibility: hidden;
+		width: min(88%, 400px);
+		z-index: 2;
+
+		/* Visible at once, the focus trap looks for focusable elements right away. */
+		&[data-open] {
+			transform: none;
+			transition: transform 0.2s ease;
+			visibility: visible;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			transition: none;
+		}
+
+		:focus-visible {
+			outline: 2px solid var(--wcfContentLink);
+			outline-offset: -2px;
+		}
+	}
+
+	/* The head and the tabs stay in place, the panel scrolls. */
+	.userMenuDrawer {
+		overflow: hidden;
+	}
+
+	.mainMenuHead {
+		align-items: center;
+		display: flex;
+		flex: 0 0 auto;
+		min-height: 56px;
+		padding: 0 8px 0 20px;
+	}
+
+	.mainMenuTitle {
+		flex: 1 1 auto;
+		font-size: var(--wcfFontSizeHeadline);
+		font-weight: 600;
+	}
+
+	.mainMenuClose,
+	.userMenuDrawerClose {
+		align-items: center;
+		background-color: transparent;
+		border: 0;
+		border-radius: 50%;
+		color: var(--wcfUserMenuTextDimmed);
+		display: flex;
+		height: 44px;
+		justify-content: center;
+		padding: 0;
+		width: 44px;
+
+		&:hover {
+			background-color: var(--wcfUserMenuBackgroundActive);
+			color: var(--wcfUserMenuTextActive);
+		}
+	}
+
+	.mainMenuGuest {
+		display: flex;
+		gap: 8px;
+		padding: 4px 16px 10px;
+	}
+
+	.mainMenuGuest .button {
+		flex: 1 1 0;
+		justify-content: center;
+	}
+
+	.mainMenu .boxMenu {
+		list-style: none;
+		margin: 0;
+		padding: 4px 8px 8px;
+	}
+
+	.mainMenu .boxMenu li {
+		display: grid;
+		grid-template-areas:
+			"link toggle"
+			"list list";
+		grid-template-columns: 1fr auto;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	.mainMenu .boxMenuLink {
+		align-items: center;
+		border-radius: var(--wcfBorderRadius);
+		color: var(--wcfUserMenuText);
+		column-gap: 6px;
+		display: flex;
+		grid-area: link;
+		min-height: 48px;
+		padding: 0 6px 0 12px;
+
+		&:hover {
+			background-color: var(--wcfUserMenuBackgroundActive);
+			color: var(--wcfUserMenuTextActive);
+		}
+
+		&[aria-current="page"] {
+			background-color: var(--wcfUserMenuBackgroundActive);
+			color: var(--wcfUserMenuTextActive);
+		}
+	}
+
+	.mainMenu .boxMenuToggle {
+		align-items: center;
+		align-self: center;
+		background-color: transparent;
+		border: 0;
+		border-radius: 50%;
+		color: var(--wcfUserMenuTextDimmed);
+		display: flex;
+		grid-area: toggle;
+		height: 40px;
+		justify-content: center;
+		padding: 0;
+		width: 40px;
+
+		&:hover {
+			background-color: var(--wcfUserMenuBorder);
+			color: var(--wcfUserMenuText);
+		}
+
+		fa-icon {
+			transition: transform 0.16s ease;
+		}
+
+		&[aria-expanded="true"] fa-icon {
+			transform: rotate(180deg);
+		}
+	}
+
+	/* `ui/wsc31.scss` adds a shadow through `.mainMenu .boxMenu .boxMenuDepth1`, which must be outranked. */
+	.mainMenu .boxMenu .boxMenuHasChildren > ol {
+		box-shadow: none;
+		display: none;
+		grid-area: list;
+		list-style: none;
+		margin: 0;
+		padding: 0 0 4px;
+	}
+
+	.mainMenu .boxMenu .boxMenuHasChildren > .boxMenuToggle[aria-expanded="true"] + ol {
+		display: block;
+	}
+
+	/* An expanded parent and its children share one tinted block ("tray"). */
+	.mainMenu .boxMenu li:has(> .boxMenuToggle[aria-expanded="true"]) {
+		background-color: var(--wcfUserMenuBackgroundActive);
+		border-radius: var(--wcfBorderRadius);
+		margin: 2px 0;
+	}
+
+	.mainMenu .boxMenu li:has(> .boxMenuToggle[aria-expanded="true"]) .boxMenuLink {
+		color: var(--wcfUserMenuTextActive);
+
+		&:hover {
+			background-color: var(--wcfUserMenuBackground);
+		}
+	}
+
+	.mainMenu .boxMenu ol .boxMenuLink {
+		min-height: 42px;
+		padding-left: 28px;
+	}
+
+	.mainMenu .boxMenu ol ol .boxMenuLink {
+		padding-left: 40px;
+	}
+
+	.mainMenuSettings {
+		border-top: 1px solid var(--wcfUserMenuBorder);
+		margin: 6px 8px 0;
+		padding: 8px 0 4px;
+	}
+
+	.mainMenuSettingsToggle {
+		align-items: center;
+		background-color: transparent;
+		border: 0;
+		border-radius: var(--wcfBorderRadius);
+		color: var(--wcfUserMenuText);
+		column-gap: 8px;
+		display: flex;
+		font: inherit;
+		min-height: 48px;
+		padding: 0 6px 0 12px;
+		text-align: start;
+		width: 100%;
+
+		&:hover {
+			background-color: var(--wcfUserMenuBackgroundActive);
+			color: var(--wcfUserMenuTextActive);
+		}
+
+		fa-icon {
+			color: var(--wcfUserMenuTextDimmed);
+			transition: transform 0.16s ease;
+		}
+
+		&[aria-expanded="true"] fa-icon {
+			transform: rotate(180deg);
+		}
+	}
+
+	.mainMenuSettingsLabel {
+		flex: 1 1 auto;
+	}
+
+	.mainMenuSettingsValue {
+		color: var(--wcfUserMenuTextDimmed);
+	}
+
+	.mainMenuLanguageList {
+		list-style: none;
+		margin: 0;
+		padding: 0 0 4px;
+	}
+
+	.mainMenuLanguage {
+		align-items: center;
+		background-color: transparent;
+		border: 0;
+		border-radius: var(--wcfBorderRadius);
+		color: var(--wcfUserMenuText);
+		column-gap: 10px;
+		display: flex;
+		font: inherit;
+		min-height: 42px;
+		padding: 0 12px 0 28px;
+		width: 100%;
+
+		&:hover,
+		&[aria-current="true"] {
+			background-color: var(--wcfUserMenuBackgroundActive);
+			color: var(--wcfUserMenuTextActive);
+		}
+	}
+
+	.mainMenuFooter {
+		border-top: 1px solid var(--wcfUserMenuBorder);
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px 16px;
+		list-style: none;
+		margin: auto 0 0;
+		padding: 14px 20px 18px;
+	}
+
+	.mainMenuFooter a {
+		color: var(--wcfUserMenuTextDimmed);
+		font-size: var(--wcfFontSizeSmall);
+
+		&:hover {
+			color: var(--wcfUserMenuText);
+			text-decoration: underline;
+		}
+	}
+
+	.userMenuDrawerHead {
+		align-items: center;
+		column-gap: 14px;
+		display: flex;
+		flex: 0 0 auto;
+		padding: 8px 8px 12px 20px;
+	}
+
+	.userMenuDrawerHead .userAvatarImage {
+		border-radius: 50%;
+		flex: 0 0 auto;
+		height: 48px;
+		width: 48px;
+	}
+
+	.userMenuDrawerUser {
+		display: flex;
+		flex: 1 1 auto;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.userMenuDrawerUsername {
+		font-size: var(--wcfFontSizeHeadline);
+		font-weight: 600;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.userMenuDrawerUserTitle {
+		color: var(--wcfUserMenuTextDimmed);
+		font-size: var(--wcfFontSizeSmall);
+	}
+
+	.userMenuDrawerTabs {
+		background-color: var(--wcfUserMenuBackgroundActive);
+		border-radius: 10px;
+		column-gap: 4px;
+		display: flex;
+		flex: 0 0 auto;
+		margin: 0 12px 6px;
+		padding: 4px;
+	}
+
+	.userMenuDrawerTab {
+		align-items: center;
+		background-color: transparent;
+		border: 0;
+		border-radius: 7px;
+		color: var(--wcfUserMenuTextActive);
+		display: flex;
+		flex: 1 1 0;
+		font: inherit;
+		justify-content: center;
+		min-width: 0;
+		padding: 16px 4px;
+		position: relative;
+
+		fa-icon {
+			--font-size: 18px;
+			--icon-size: 20px;
+		}
+
+		&[aria-selected="true"] {
+			background-color: var(--wcfUserMenuBackground);
+			box-shadow: var(--wcfBoxShadowCard);
+		}
+	}
+
+	/* The labels do not fit on small phones, they remain as the accessible name of the tab. */
+	.userMenuDrawerTabLabel {
+		clip: rect(1px, 1px, 1px, 1px);
+		height: 1px;
+		overflow: hidden;
+		position: absolute;
+		width: 1px;
+	}
+
+	.userMenuDrawerTabCount {
+		background-color: var(--wcfUserMenuText);
+		border-radius: 9px;
+		box-sizing: border-box;
+		color: var(--wcfUserMenuBackground);
+		font-size: 11px;
+		font-weight: 700;
+		left: calc(50% + 4px);
+		line-height: 18px;
+		min-width: 18px;
+		padding: 0 5px;
+		position: absolute;
+		text-align: center;
+		top: 12px;
+	}
+
+	.userMenuDrawerPanel {
+		display: flex;
+		flex: 1 1 auto;
+		flex-direction: column;
+		min-height: 0;
+	}
+
+	.userMenuDrawerPanel > .userMenu {
+		display: flex;
+		flex: 1 1 auto;
+		flex-direction: column;
+		min-height: 0;
+	}
+
+	.userMenuDrawerPanel .userMenuContentScrollable {
+		flex: 1 1 auto;
+		min-height: 0;
+		overflow-y: auto;
+	}
+
+	/* The head of the drawer already shows the user. */
+	.userMenuDrawerPanel .userMenuControlPanel > .userMenuHeader,
+	.userMenuDrawerPanel .userMenuControlPanel > .userMenuHeader + .userMenuContent,
+	.userMenuDrawerPanel .userMenuControlPanel > .userMenuHeader + .userMenuContent + .userMenuContentDivider {
+		display: none;
+	}
+}
+
+/* Breadcrumbs without the bar, the space comes out of the padding of `.main`. `ui/breadcrumb.scss`
+   is compiled after this file, the selectors must outrank it. */
+@include screen-md-up {
+	.pageNavigation:has(.breadcrumbs) {
+		background-color: transparent;
+		color: var(--wcfContentDimmedText);
+		padding-bottom: 0;
+		padding-top: 20px;
+	}
+
+	.pageNavigation:not(:has(.breadcrumbs)) {
+		display: none;
+	}
+
+	.pageNavigation:has(.breadcrumbs) + .main {
+		padding-top: 10px;
+	}
+
+	.pageNavigation .breadcrumbs__link,
+	.pageNavigation .breadcrumbs__link:hover {
+		color: inherit;
+	}
+
+	/* Flex drops the whitespace between the link and the separator. */
+	.pageNavigation .breadcrumbs__item {
+		align-items: center;
+		column-gap: 5px;
+		display: flex;
+	}
+
+	.pageNavigation .breadcrumbs__item:not(:last-child) {
+		margin-right: 5px;
+	}
+
+	/* The chevron of the ACP breadcrumbs, a mask keeps the markup shared with the classic header. */
+	.pageNavigation .breadcrumbs__item:not(:last-child)::after {
+		background-color: currentColor;
+		color: inherit;
+		content: "";
+		flex: 0 0 auto;
+		height: 12px;
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E")
+			center / contain no-repeat;
+		width: 12px;
+	}
+
+	html[dir="rtl"] .pageNavigation .breadcrumbs__item:not(:last-child)::after {
+		transform: scaleX(-1);
+	}
+
+	.pageNavigation .breadcrumbs__item:not(:last-child) .breadcrumbs__link {
+		margin-right: 0;
+	}
+}
+
+/* The auth flow keeps the classic, logo-only header for every style, see `authFlowHeader.tpl`. */
+.authFlow .pageHeaderContainer {
+	background-color: var(--wcfHeaderBackground);
+	color: var(--wcfHeaderText);
+	z-index: 100;
+
+	@include screen-md-down {
+		padding-top: 50px;
+	}
+}
+
+.authFlow .pageHeaderContainer a {
+	color: var(--wcfHeaderLink);
+
+	&:hover {
+		color: var(--wcfHeaderLinkActive);
+	}
+}
+
+.authFlow .pageHeaderFacade > .layoutBoundary {
+	align-items: center;
+	display: flex;
+
+	@include screen-lg {
+		padding-bottom: 30px;
+		padding-top: 30px;
+	}
+}
+
+@include screen-lg {
+	.authFlow .pageHeaderLogo {
+		flex: 1 1 auto;
+	}
+
+	.authFlow .pageHeaderLogoLarge {
+		height: auto;
+		max-width: 100%;
+	}
+
+	.authFlow .pageHeaderLogoSmall {
+		display: none;
+	}
+
+	.authFlow .pageHeaderLogo > a {
+		display: block;
+		padding: 10px 0;
+	}
+}
+
+@include screen-md-down {
+	.authFlow .pageHeaderLogoLarge {
+		display: none;
+	}
+
+	.authFlow .pageHeaderLogoSmall {
+		max-height: 30px;
+		max-width: 100%;
+		object-fit: contain;
+		width: auto;
+	}
+
+	.authFlow .pageHeaderLogo a {
+		align-items: center;
+		display: inline-flex;
+		height: 40px;
+		padding: 0 4px;
+	}
+
+	.authFlow .pageHeader {
+		align-items: center;
+		background-color: var(--wcfHeaderBackground);
+		display: flex;
+		height: 50px;
+		justify-content: center;
+		left: 0;
+		padding: 0 6px;
+		position: fixed;
+		right: 0;
+		top: 0;
+	}
+
+	.authFlow .pageHeaderFacade,
+	.authFlow .pageHeaderFacade .layoutBoundary {
+		display: contents;
+		position: static;
+	}
+}

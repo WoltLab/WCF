@@ -1,4 +1,5 @@
-{if ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && !$__wcf->user->isGuest()}
+{* The `system_pageHeader` renders this chooser on the server. *}
+{if ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && !$__wcf->user->isGuest() && $__wcf->getStyleHandler()->getStyle()->usesClassicPageHeader()}
 	<script data-relocate="true">
 		require(['Ajax', 'WoltLabSuite/Core/Language/Chooser'], function(Ajax, LanguageChooser) {
 			var item = elCreate('li');

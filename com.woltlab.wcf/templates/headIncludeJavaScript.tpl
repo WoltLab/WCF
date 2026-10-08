@@ -108,6 +108,7 @@ window.addEventListener('pageshow', function(event) {
 			]),
 			{/if}
 			reportEndpoint: '{link controller="Report"}{/link}',
+			templateVariants: [{implode from=$__wcf->getStyleHandler()->getStyle()->getTemplateVariants() item=_templateVariant}'{unsafe:$_templateVariant|encodeJS}'{/implode}],
 		});
 	});
 </script>

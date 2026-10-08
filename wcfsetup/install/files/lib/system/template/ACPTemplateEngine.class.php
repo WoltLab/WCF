@@ -63,6 +63,18 @@ class ACPTemplateEngine extends TemplateEngine
         throw new \BadMethodCallException("You may not change the template group of the acp template engine");
     }
 
+    /**
+     * This method always throws, because template variants are not supported.
+     *
+     * @param string[] $templateVariants
+     * @throws  \BadMethodCallException
+     */
+    #[\Override]
+    public function setTemplateVariants(array $templateVariants): void
+    {
+        throw new \BadMethodCallException("You may not set template variants for the acp template engine");
+    }
+
     #[\Override]
     public function getTemplateListenerCode(string $templateName, string $eventName)
     {

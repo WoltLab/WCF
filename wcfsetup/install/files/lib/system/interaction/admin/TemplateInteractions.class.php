@@ -31,7 +31,12 @@ final class TemplateInteractions extends AbstractInteractionProvider
         }
 
         $this->addInteractions([
-            new class("copy", TemplateAddForm::class, "wcf.acp.template.copy") extends LinkInteraction {
+            new class(
+                "copy",
+                TemplateAddForm::class,
+                "wcf.acp.template.copy",
+                static fn(Template $template) => $template->canCopy()
+            ) extends LinkInteraction {
                 #[\Override]
                 protected function getLink(DatabaseObject $object): string
                 {
