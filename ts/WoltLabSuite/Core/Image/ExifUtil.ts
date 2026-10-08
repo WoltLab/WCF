@@ -99,7 +99,7 @@ export async function getExifBytesFromJpeg(blob: Blob | File): Promise<Exif> {
 
   let exif = new Uint8Array(0);
 
-  if (bytes[0] !== 0xff && bytes[1] !== Tag.SOI) {
+  if (bytes[0] !== 0xff || bytes[1] !== Tag.SOI) {
     throw new Error("Not a JPEG");
   }
 
@@ -178,7 +178,7 @@ async function getExifBytesFromPng(blob: Blob | File): Promise<Exif | null> {
  * Returns the TIFF structure of the first Exif APP1 segment in the output of
  * `getExifBytesFromJpeg()`, which may contain XMP segments as well.
  */
-function getTiffFromJpegSegments(segments: Exif): Exif | null {
+export function getTiffFromJpegSegments(segments: Exif): Exif | null {
   for (let i = 0; i + 4 <= segments.length; ) {
     if (segments[i] !== 0xff || segments[i + 1] !== Tag.APP1) {
       break;
@@ -284,7 +284,7 @@ export async function removeExifData(blob: Blob | File): Promise<Blob> {
 
   const bytes = await blobToUint8(blob);
 
-  if (bytes[0] !== 0xff && bytes[1] !== Tag.SOI) {
+  if (bytes[0] !== 0xff || bytes[1] !== Tag.SOI) {
     throw new Error("Not a JPEG");
   }
 

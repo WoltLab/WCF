@@ -105,11 +105,16 @@ class ImageResizer {
 
     let fileData: Blob | File = file;
     if (file.type === "image/jpeg") {
-      // Extract EXIF data
-      exifBytes = ExifUtil.getExifBytesFromJpeg(file);
+      try {
+        // Strip EXIF data
+        fileData = await ExifUtil.removeExifData(fileData);
 
-      // Strip EXIF data
-      fileData = await ExifUtil.removeExifData(fileData);
+        // Extract EXIF data
+        exifBytes = ExifUtil.getExifBytesFromJpeg(file);
+      } catch {
+        // The MIME type is derived from the file extension, but the browser
+        // decodes the image by its contents, so a mislabeled file still loads.
+      }
     }
 
     const imageLoader: Promise<HTMLImageElement> = new Promise((resolve, reject) => {

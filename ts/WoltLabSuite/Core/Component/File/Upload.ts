@@ -14,7 +14,12 @@ import { innerError } from "WoltLabSuite/Core/Dom/Util";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { createSHA256 } from "hash-wasm";
 import { cropImage, CropperConfiguration } from "WoltLabSuite/Core/Component/Image/Cropper";
-import { Exif, getExifBytesFromJpeg, getExifBytesFromWebP } from "WoltLabSuite/Core/Image/ExifUtil";
+import {
+  Exif,
+  getExifBytesFromJpeg,
+  getExifBytesFromWebP,
+  getTiffFromJpegSegments,
+} from "WoltLabSuite/Core/Image/ExifUtil";
 
 export type CkeditorDropEvent = {
   file: File;
@@ -309,12 +314,7 @@ function reportError(element: WoltlabCoreFileUploadElement, file: File | null, m
 async function getExifBytes(file: File): Promise<Exif | null> {
   if (file.type === "image/jpeg") {
     try {
-      const bytes = await getExifBytesFromJpeg(file);
-
-      // ExifUtil returns the entire section but we only need the app data.
-      // Removing the first 10 bytes drops the 0xFF 0xE1 marker followed by two
-      // bytes for the length and then 6 bytes for the "Exif\x00\x00" header.
-      return bytes.slice(10);
+      return getTiffFromJpegSegments(await getExifBytesFromJpeg(file));
     } catch {
       return null;
     }

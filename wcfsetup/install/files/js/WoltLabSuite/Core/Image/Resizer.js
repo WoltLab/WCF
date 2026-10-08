@@ -84,10 +84,16 @@ define(["require", "exports", "tslib", "../FileUtil", "./ExifUtil", "pica"], fun
             let exifBytes = Promise.resolve(undefined);
             let fileData = file;
             if (file.type === "image/jpeg") {
-                // Extract EXIF data
-                exifBytes = ExifUtil.getExifBytesFromJpeg(file);
-                // Strip EXIF data
-                fileData = await ExifUtil.removeExifData(fileData);
+                try {
+                    // Strip EXIF data
+                    fileData = await ExifUtil.removeExifData(fileData);
+                    // Extract EXIF data
+                    exifBytes = ExifUtil.getExifBytesFromJpeg(file);
+                }
+                catch {
+                    // The MIME type is derived from the file extension, but the browser
+                    // decodes the image by its contents, so a mislabeled file still loads.
+                }
             }
             const imageLoader = new Promise((resolve, reject) => {
                 const reader = new FileReader();

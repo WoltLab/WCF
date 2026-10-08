@@ -11,6 +11,7 @@ define(["require", "exports", "./WebP"], function (require, exports, WebP_1) {
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getExifBytesFromJpeg = getExifBytesFromJpeg;
     exports.getExifBytesFromWebP = getExifBytesFromWebP;
+    exports.getTiffFromJpegSegments = getTiffFromJpegSegments;
     exports.getOrientation = getOrientation;
     exports.removeExifData = removeExifData;
     exports.setExifData = setExifData;
@@ -88,7 +89,7 @@ define(["require", "exports", "./WebP"], function (require, exports, WebP_1) {
         }
         const bytes = await blobToUint8(blob);
         let exif = new Uint8Array(0);
-        if (bytes[0] !== 0xff && bytes[1] !== Tag.SOI) {
+        if (bytes[0] !== 0xff || bytes[1] !== Tag.SOI) {
             throw new Error("Not a JPEG");
         }
         for (let i = 2; i < bytes.length;) {
@@ -244,7 +245,7 @@ define(["require", "exports", "./WebP"], function (require, exports, WebP_1) {
             throw new TypeError("The argument must be a Blob or a File");
         }
         const bytes = await blobToUint8(blob);
-        if (bytes[0] !== 0xff && bytes[1] !== Tag.SOI) {
+        if (bytes[0] !== 0xff || bytes[1] !== Tag.SOI) {
             throw new Error("Not a JPEG");
         }
         let result = bytes;
