@@ -8,7 +8,6 @@ use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryBuilder;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionBuilder;
-use wcf\data\user\option\UserOptionEditor;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
@@ -51,11 +50,6 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
         addDeleteElement as defaultAddDeleteElement;
         sanitizeXmlFileAfterDeleteEntry as defaultSanitizeXmlFileAfterDeleteEntry;
     }
-
-    /**
-     * @inheritDoc
-     */
-    public $className = UserOptionEditor::class;
 
     /**
      * @inheritDoc
@@ -1100,6 +1094,8 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
             'options' => $this->deleteOptions('optionName', [$name]),
             default => throw new \LogicException('Unreachable'),
         };
+
+        UserOptionBuilder::resetCache();
     }
 
     /**

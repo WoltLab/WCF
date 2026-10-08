@@ -257,7 +257,7 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
         WCF::getDB()->getEditor()->addColumn(
             'wcf1_user_option_value',
             'userOption' . $object->optionID,
-            UserOptionEditor::getColumnDefinition($object->optionType)
+            self::getColumnDefinition($object->optionType)
         );
 
         // apply the default value to all existing rows
@@ -287,7 +287,7 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
                 'wcf1_user_option_value',
                 'userOption' . $object->optionID,
                 'userOption' . $object->optionID,
-                UserOptionEditor::getColumnDefinition($object->optionType)
+                self::getColumnDefinition($object->optionType)
             );
         }
 
@@ -376,6 +376,62 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
         }
 
         return \json_encode($configuration, \JSON_THROW_ON_ERROR);
+    }
+
+    /**
+     * Determines the needed sql statement to modify column definitions.
+     *
+     * @return array{
+     *  autoIncrement: bool,
+     *  key: false,
+     *  notNull: bool,
+     *  type: string,
+     *  default?: int|float|string,
+     *  length?: int,
+     * } column definition
+     */
+    public static function getColumnDefinition(string $optionType): array
+    {
+        $column = [
+            'autoIncrement' => false,
+            'key' => false,
+            'notNull' => false,
+            'type' => 'text',
+        ];
+
+        switch ($optionType) {
+            case 'boolean':
+                $column['notNull'] = true;
+                $column['default'] = 0;
+                $column['type'] = 'tinyint';
+                break;
+
+            case 'integer':
+                $column['notNull'] = true;
+                $column['default'] = 0;
+                $column['type'] = 'int';
+                break;
+
+            case 'float':
+                $column['notNull'] = true;
+                $column['default'] = 0.0;
+                $column['type'] = 'float';
+                break;
+
+            case 'textarea':
+                $column['type'] = 'mediumtext';
+                break;
+
+            case 'birthday':
+            case 'date':
+                $column['notNull'] = true;
+                $column['default'] = "'0000-00-00'";
+                $column['length'] = 10;
+                $column['type'] = 'char';
+                break;
+        }
+
+        return $column;
     }
 
     public static function resetCache(): void

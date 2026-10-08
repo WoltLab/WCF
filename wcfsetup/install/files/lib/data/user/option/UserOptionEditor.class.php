@@ -17,6 +17,7 @@ use wcf\system\WCF;
  * @mixin   UserOption
  * @extends DatabaseObjectEditor<UserOption>
  * @implements IEditableCachedObject<UserOption>
+ * @deprecated 6.3 use `UserOptionBuilder` instead.
  */
 class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {
@@ -109,6 +110,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
      * Disables this option.
      *
      * @return void
+     * @deprecated 6.3 use the `DisableOption` command instead.
      */
     public function disable()
     {
@@ -119,6 +121,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
      * Enables this option.
      *
      * @return void
+     * @deprecated 6.3 use the `EnableOption` command instead.
      */
     public function enable(bool $enable = true)
     {
@@ -145,46 +148,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
      */
     public static function getColumnDefinition(string $optionType)
     {
-        $column = [
-            'autoIncrement' => false,
-            'key' => false,
-            'notNull' => false,
-            'type' => 'text',
-        ];
-
-        switch ($optionType) {
-            case 'boolean':
-                $column['notNull'] = true;
-                $column['default'] = 0;
-                $column['type'] = 'tinyint';
-                break;
-
-            case 'integer':
-                $column['notNull'] = true;
-                $column['default'] = 0;
-                $column['type'] = 'int';
-                break;
-
-            case 'float':
-                $column['notNull'] = true;
-                $column['default'] = 0.0;
-                $column['type'] = 'float';
-                break;
-
-            case 'textarea':
-                $column['type'] = 'mediumtext';
-                break;
-
-            case 'birthday':
-            case 'date':
-                $column['notNull'] = true;
-                $column['default'] = "'0000-00-00'";
-                $column['length'] = 10;
-                $column['type'] = 'char';
-                break;
-        }
-
-        return $column;
+        return UserOptionBuilder::getColumnDefinition($optionType);
     }
 
     #[\Override]
