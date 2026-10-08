@@ -76,7 +76,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
         $this->importCategories($xpath);
         $this->importOptions($xpath);
 
-        UserOptionBuilder::resetCache();
+        UserOptionCacheBuilder::getInstance()->reset();
 
         return null;
     }
@@ -451,7 +451,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
             UserOptionCategoryBuilder::deleteAll($categoryIDs);
         }
 
-        UserOptionBuilder::resetCache();
+        UserOptionCacheBuilder::getInstance()->reset();
     }
 
     #[\Override]
@@ -1066,7 +1066,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
             default => throw new \LogicException('Unreachable'),
         };
 
-        UserOptionBuilder::resetCache();
+        UserOptionCacheBuilder::getInstance()->reset();
     }
 
     /**
@@ -1095,7 +1095,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
             default => throw new \LogicException('Unreachable'),
         };
 
-        UserOptionBuilder::resetCache();
+        UserOptionCacheBuilder::getInstance()->reset();
     }
 
     /**

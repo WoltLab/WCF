@@ -4,7 +4,6 @@ namespace wcf\data\user\option;
 
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
-use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -432,10 +431,5 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
         }
 
         return $column;
-    }
-
-    public static function resetCache(): void
-    {
-        UserOptionCacheBuilder::getInstance()->reset();
     }
 }

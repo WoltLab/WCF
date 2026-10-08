@@ -13,6 +13,7 @@
 
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionBuilder;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\WCF;
 
 // The social media profiles of the core, which were text options with a custom output.
@@ -111,4 +112,4 @@ foreach ($options as $optionID => $option) {
     ]);
 }
 
-UserOptionBuilder::resetCache();
+UserOptionCacheBuilder::getInstance()->reset();
