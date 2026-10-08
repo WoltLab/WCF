@@ -187,7 +187,7 @@
 
 	.mainMenu .boxMenu > li > .boxMenuLink {
 		align-items: center;
-		background-color: var(--wcfHeaderMenuLinkBackground);
+		background-color: transparent;
 		border: 0;
 		border-radius: var(--wcfBorderRadius);
 		box-sizing: border-box;
@@ -386,7 +386,7 @@
 
 	.userPanelItems > li > :is(a, button) {
 		align-items: center;
-		background-color: var(--wcfHeaderMenuLinkBackground);
+		background-color: transparent;
 		border: 0;
 		border-radius: 50%;
 		color: var(--wcfHeaderMenuLink);
