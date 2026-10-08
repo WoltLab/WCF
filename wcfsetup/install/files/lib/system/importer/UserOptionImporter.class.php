@@ -46,13 +46,35 @@ class UserOptionImporter extends AbstractImporter
         $builder = UserOptionBuilder::forCreate()
             ->setGenericOptionName()
             ->setPackageID(1)
-            ->setOptionType($data['optionType'])
+            ->setOptionType(UserOption::LEGACY_OPTION_TYPES[$data['optionType']] ?? $data['optionType'])
             ->setCategoryName($data['categoryName'])
             ->setL10nTitle([L10nStorage::MONOLINGUAL => (string)$additionalData['name']])
             ->setL10nDescription([L10nStorage::MONOLINGUAL => (string)($additionalData['description'] ?? '')]);
 
-        // carry over the remaining columns of the imported option
-        $handledColumns = ['optionName', 'packageID', 'optionType', 'categoryName', 'l10nIdentifier'];
+        // The select options and the required flag are converted into the
+        // form option configuration.
+        if (isset($data['selectOptions'])) {
+            $builder->setSelectOptions((string)$data['selectOptions']);
+        }
+        if (isset($data['required'])) {
+            $builder->setRequired((bool)$data['required']);
+        }
+
+        // carry over the remaining columns of the imported option, skipping
+        // columns of the legacy option system that no longer exist
+        $handledColumns = [
+            'optionName',
+            'packageID',
+            'optionType',
+            'categoryName',
+            'l10nIdentifier',
+            'selectOptions',
+            'required',
+            'outputClass',
+            'enableOptions',
+            'labeledUrl',
+            'additionalData',
+        ];
         foreach ($data as $key => $value) {
             if (\in_array($key, $handledColumns, true)) {
                 continue;
