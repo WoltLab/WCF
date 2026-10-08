@@ -96,17 +96,22 @@ abstract class ImageCropper {
     const { image, exif } = await this.resizer.loadFile(this.file);
     this.image = image;
     this.exif = exif;
-    switch (await ExifUtil.getOrientation(this.file)) {
-      case 3:
-        this.orientation = 180;
-        break;
-      case 6:
-        this.orientation = 90;
-        break;
-      case 8:
-        this.orientation = 270;
-        break;
-      // Any other rotation is unsupported.
+    // The resizer strips the EXIF data of JPEGs before decoding them, which
+    // prevents the browser from applying their orientation. Browsers apply it
+    // for other formats themselves, with the exception of WebP in some engines.
+    if (this.file.type === "image/jpeg") {
+      switch (await ExifUtil.getOrientationFromJpeg(this.file)) {
+        case 3:
+          this.orientation = 180;
+          break;
+        case 6:
+          this.orientation = 90;
+          break;
+        case 8:
+          this.orientation = 270;
+          break;
+        // Any other rotation is unsupported.
+      }
     }
   }
 

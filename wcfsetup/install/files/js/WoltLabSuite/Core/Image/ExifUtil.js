@@ -12,7 +12,7 @@ define(["require", "exports", "./WebP"], function (require, exports, WebP_1) {
     exports.getExifBytesFromJpeg = getExifBytesFromJpeg;
     exports.getExifBytesFromWebP = getExifBytesFromWebP;
     exports.getTiffFromJpegSegments = getTiffFromJpegSegments;
-    exports.getOrientation = getOrientation;
+    exports.getOrientationFromJpeg = getOrientationFromJpeg;
     exports.removeExifData = removeExifData;
     exports.setExifData = setExifData;
     const Tag = {
@@ -40,7 +40,6 @@ define(["require", "exports", "./WebP"], function (require, exports, WebP_1) {
     const _signatureXMPExtension = "http://ns.adobe.com/xmp/extension/";
     // "Exif\0\0", precedes the TIFF structure in an APP1 segment
     const _headerEXIF = [0x45, 0x78, 0x69, 0x66, 0x00, 0x00];
-    const _signaturePNG = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
     const _tiffTagOrientation = 0x0112;
     const _tiffTypeShort = 3;
     function isExifSignature(signature) {
@@ -124,31 +123,6 @@ define(["require", "exports", "./WebP"], function (require, exports, WebP_1) {
         }
         return webp.getExifData();
     }
-    async function getExifBytesFromPng(blob) {
-        const bytes = new Uint8Array(await blob.arrayBuffer());
-        if (!startsWith(bytes, 0, _signaturePNG)) {
-            return null;
-        }
-        const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
-        for (let offset = _signaturePNG.length; offset + 8 <= bytes.length;) {
-            const length = view.getUint32(offset);
-            const type = String.fromCharCode(...bytes.subarray(offset + 4, offset + 8));
-            const dataStart = offset + 8;
-            if (dataStart + length > bytes.length) {
-                return null;
-            }
-            if (type === "eXIf") {
-                return bytes.subarray(dataStart, dataStart + length);
-            }
-            // The specification requires `eXIf` to precede the image data.
-            if (type === "IDAT") {
-                return null;
-            }
-            // Skip the chunk data and the trailing CRC.
-            offset = dataStart + length + 4;
-        }
-        return null;
-    }
     /**
      * Returns the TIFF structure of the first Exif APP1 segment in the output of
      * `getExifBytesFromJpeg()`, which may contain XMP segments as well.
@@ -209,25 +183,13 @@ define(["require", "exports", "./WebP"], function (require, exports, WebP_1) {
         return undefined;
     }
     /**
-     * Returns the EXIF orientation (1–8) of a JPEG, PNG or WebP file, or
-     * `undefined` if there is none or the metadata is malformed.
+     * Returns the EXIF orientation (1–8) of a JPEG blob, or `undefined` if the
+     * blob is not a JPEG, has no orientation or the metadata is malformed.
      */
-    async function getOrientation(file) {
-        let tiff = null;
+    async function getOrientationFromJpeg(blob) {
+        let tiff;
         try {
-            if (file.type === "image/jpeg") {
-                tiff = getTiffFromJpegSegments(await getExifBytesFromJpeg(file));
-            }
-            else if (file.type === "image/png") {
-                tiff = await getExifBytesFromPng(file);
-            }
-            else if (file.type === "image/webp") {
-                tiff = await getExifBytesFromWebP(file);
-                // Some encoders prepend the JPEG APP1 header to the WebP EXIF chunk.
-                if (tiff !== null && startsWith(tiff, 0, _headerEXIF)) {
-                    tiff = tiff.subarray(_headerEXIF.length);
-                }
-            }
+            tiff = getTiffFromJpegSegments(await getExifBytesFromJpeg(blob));
         }
         catch {
             return undefined;
