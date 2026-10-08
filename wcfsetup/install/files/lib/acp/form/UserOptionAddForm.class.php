@@ -3,8 +3,8 @@
 namespace wcf\acp\form;
 
 use Laminas\Diactoros\Response\HtmlResponse;
-use wcf\command\user\option\CreateOption;
-use wcf\command\user\option\UpdateOption;
+use wcf\command\user\option\CreateUserOption;
+use wcf\command\user\option\UpdateUserOption;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryList;
@@ -96,10 +96,10 @@ class UserOptionAddForm extends AbstractFormOptionBuilderForm
     protected function getCommand(DatabaseObjectBuilder $builder): callable
     {
         if ($this->formObject !== null) {
-            return new UpdateOption($builder);
+            return new UpdateUserOption($builder);
         }
 
-        return new CreateOption($builder);
+        return new CreateUserOption($builder);
     }
 
     #[\Override]
