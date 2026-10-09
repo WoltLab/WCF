@@ -3,8 +3,7 @@
 namespace wcf\system\database\table\column;
 
 /**
- * Represents a `int` database table column with length `10`, whose values cannot be null, and whose
- * values are auto-incremented.
+ * Represents a `int` database table column whose values cannot be null and are auto-incremented.
  *
  * This class should be used for the id column of DBO tables.
  *
@@ -19,7 +18,6 @@ final class ObjectIdDatabaseTableColumn
     {
         return IntDatabaseTableColumn::create($name)
             ->notNull()
-            ->length(10)
             ->autoIncrement();
     }
 

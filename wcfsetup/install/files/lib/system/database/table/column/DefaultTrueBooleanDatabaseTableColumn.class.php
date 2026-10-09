@@ -3,8 +3,8 @@
 namespace wcf\system\database\table\column;
 
 /**
- * Represents a `tinyint` database table column with length `1`, default value `1` and whose values
- * cannot be `null`.
+ * Represents a `tinyint` database table column with default value `1` and whose values cannot be
+ * `null`.
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
@@ -16,7 +16,6 @@ final class DefaultTrueBooleanDatabaseTableColumn
     public static function create(string $name): IDatabaseTableColumn
     {
         return TinyintDatabaseTableColumn::create($name)
-            ->length(1)
             ->notNull()
             ->defaultValue(1);
     }
