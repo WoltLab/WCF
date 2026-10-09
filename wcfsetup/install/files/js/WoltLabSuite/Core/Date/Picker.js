@@ -521,16 +521,43 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
         }
     }
     /**
-     * Validates given element or id if it represents an active date picker.
+     * Validates given element or id if it represents an active date picker
+     * or a native date input.
      */
     function getElement(element) {
         if (typeof element === "string") {
             element = document.getElementById(element);
         }
-        if (!(element instanceof HTMLInputElement) || !element.classList.contains("inputDatePicker") || !_data.has(element)) {
+        if (!(element instanceof HTMLInputElement)) {
+            throw new Error("Expected a valid date picker input element or id.");
+        }
+        if (isNativeInput(element)) {
+            return element;
+        }
+        if (!element.classList.contains("inputDatePicker") || !_data.has(element)) {
             throw new Error("Expected a valid date picker input element or id.");
         }
         return element;
+    }
+    /**
+     * Returns true if the element is a native date input that is not
+     * enhanced by the date picker.
+     */
+    function isNativeInput(element) {
+        return element.hasAttribute("data-native-date-picker");
+    }
+    /**
+     * Returns the value of the given date in the format of the native input.
+     */
+    function formatNativeValue(element, date) {
+        switch (element.type) {
+            case "datetime-local":
+                return DateUtil.format(date, "Y-m-d\\TH:i");
+            case "time":
+                return DateUtil.format(date, "H:i");
+            default:
+                return DateUtil.format(date, "Y-m-d");
+        }
     }
     const DatePicker = {
         /**
@@ -542,7 +569,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
             }
             _didInit = true;
             _firstDayOfWeek = parseInt((0, Language_1.getPhrase)("wcf.date.firstDayOfTheWeek"), 10);
-            (0, Selector_1.wheneverSeen)(`input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)`, (element) => {
+            (0, Selector_1.wheneverSeen)(`input[type="date"]:not(.inputDatePicker, [data-native-date-picker]), input[type="datetime"]:not(.inputDatePicker, [data-native-date-picker])`, (element) => {
                 const now = new Date();
                 element.classList.add("inputDatePicker");
                 element.readOnly = true;
@@ -782,6 +809,19 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
          */
         getDate(element) {
             element = getElement(element);
+            if (isNativeInput(element)) {
+                if (element.value === "") {
+                    return null;
+                }
+                if (element.type === "time") {
+                    const [hours, minutes] = element.value.split(":");
+                    const date = new Date();
+                    date.setHours(+hours, +minutes, 0, 0);
+                    return date;
+                }
+                // Date-only strings are parsed as UTC, append the time to parse it as local time.
+                return new Date(element.type === "date" ? `${element.value}T00:00` : element.value);
+            }
             const value = element.dataset.value || "";
             if (value) {
                 return new Date(+value);
@@ -796,6 +836,10 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
          */
         setDate(element, date) {
             element = getElement(element);
+            if (isNativeInput(element)) {
+                element.value = formatNativeValue(element, date);
+                return;
+            }
             const data = _data.get(element);
             element.dataset.value = date.getTime().toString();
             element.dataset.empty = "false";
@@ -831,6 +875,9 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
          */
         getValue(element) {
             element = getElement(element);
+            if (isNativeInput(element)) {
+                return element.value;
+            }
             const data = _data.get(element);
             if (data) {
                 return data.shadow.value;
@@ -842,6 +889,10 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
          */
         clear(element) {
             element = getElement(element);
+            if (isNativeInput(element)) {
+                element.value = "";
+                return;
+            }
             const data = _data.get(element);
             element.removeAttribute("data-value");
             element.value = "";
@@ -856,6 +907,9 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
          */
         destroy(element) {
             element = getElement(element);
+            if (isNativeInput(element)) {
+                return;
+            }
             const data = _data.get(element);
             const container = element.parentNode;
             container.parentNode.insertBefore(element, container);
@@ -875,6 +929,10 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Event/Handler", 
          */
         setCloseCallback(element, callback) {
             element = getElement(element);
+            if (isNativeInput(element)) {
+                element.addEventListener("change", () => callback());
+                return;
+            }
             _data.get(element).onClose = callback;
         },
     };

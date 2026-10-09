@@ -30,11 +30,17 @@ class DateFormField extends AbstractFormField implements
     use TNullableFormField;
 
     /**
-     * earliest valid date in `DateFormField::$saveValueFormat` format or `null` if no earliest
+     * earliest valid date as passed to `DateFormField::earliestDate()` or `null` if no earliest
      * valid date has been set
-     * @var null|string|int
+     * @var null|string|int|\DateTimeInterface
      */
     protected $earliestDate;
+
+    /**
+     * resolved earliest valid date or `null` if no earliest valid date has been set
+     * @since 6.3
+     */
+    protected ?\DateTimeImmutable $earliestDateTime = null;
 
     /**
      * @inheritDoc
@@ -42,11 +48,17 @@ class DateFormField extends AbstractFormField implements
     protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Date';
 
     /**
-     * latest valid date in `DateFormField::$saveValueFormat` format or `null` if no latest valid
+     * latest valid date as passed to `DateFormField::latestDate()` or `null` if no latest valid
      * date has been set
-     * @var null|string|int
+     * @var null|string|int|\DateTimeInterface
      */
     protected $latestDate;
+
+    /**
+     * resolved latest valid date or `null` if no latest valid date has been set
+     * @since 6.3
+     */
+    protected ?\DateTimeImmutable $latestDateTime = null;
 
     /**
      * date time format of the save value
@@ -69,45 +81,46 @@ class DateFormField extends AbstractFormField implements
 
     const TIME_FORMAT = 'Y-m-d\TH:i:sP';
 
+    /**
+     * format of the value of native `datetime-local` inputs
+     * @since 6.3
+     */
+    const NATIVE_TIME_FORMAT = 'Y-m-d\TH:i';
+
     public function __construct()
     {
         $this->addFieldClass('medium');
     }
 
     /**
-     * Sets the earliest valid date in `DateFormField::$saveValueFormat` format and returns this
-     * field. If `null` is given, the previously set earliest valid date is unset.
+     * Sets the earliest valid date and returns this field. If `null` is given, the previously
+     * set earliest valid date is unset.
+     *
+     * Integers are always treated as unix timestamps, strings have to be given in
+     * `DateFormField::getSaveValueFormat()` format.
      *
      * @return  static
      */
-    public function earliestDate(null|string|int $earliestDate = null)
+    public function earliestDate(null|string|int|\DateTimeInterface $earliestDate = null)
     {
         $this->earliestDate = $earliestDate;
+        $this->earliestDateTime = null;
 
-        if ($this->earliestDate !== null) {
-            $earliestDateTime = \DateTime::createFromFormat(
-                $this->getSaveValueFormat(),
-                $this->earliestDate,
-                new \DateTimeZone('UTC')
-            );
-            if ($earliestDateTime === false) {
+        if ($earliestDate !== null) {
+            $this->earliestDateTime = $this->resolveBoundary($earliestDate);
+            if ($this->earliestDateTime === null) {
                 throw new \InvalidArgumentException(
-                    "Earliest date '{$this->earliestDate}' does not have save value format '{$this->getSaveValueFormat()}' for field '{$this->getId()}'."
+                    "Earliest date '{$earliestDate}' does not have save value format '{$this->getSaveValueFormat()}' for field '{$this->getId()}'."
                 );
             }
 
-            if ($this->getLatestDate() !== null) {
-                $latestDateTime = \DateTime::createFromFormat(
-                    $this->getSaveValueFormat(),
-                    $this->getLatestDate(),
-                    new \DateTimeZone('UTC')
-                );
+            if ($this->latestDateTime !== null && $this->latestDateTime < $this->earliestDateTime) {
+                $earliestDateString = $this->getBoundaryString($earliestDate);
+                $latestDateString = $this->getBoundaryString($this->getLatestDate());
 
-                if ($latestDateTime < $earliestDateTime) {
-                    throw new \InvalidArgumentException(
-                        "Earliest date '{$this->earliestDate}' cannot be later than latest date '{$this->getLatestDate()}' for field '{$this->getId()}'."
-                    );
-                }
+                throw new \InvalidArgumentException(
+                    "Earliest date '{$earliestDateString}' cannot be later than latest date '{$latestDateString}' for field '{$this->getId()}'."
+                );
             }
         }
 
@@ -115,11 +128,11 @@ class DateFormField extends AbstractFormField implements
     }
 
     /**
-     * Returns the earliest valid date in `DateFormField::getSaveValueFormat()` format.
+     * Returns the earliest valid date as passed to `DateFormField::earliestDate()`.
      *
      * If no earliest valid date has been set, `null` is returned.
      *
-     * @return  null|string|int
+     * @return  null|string|int|\DateTimeInterface
      */
     public function getEarliestDate()
     {
@@ -129,44 +142,64 @@ class DateFormField extends AbstractFormField implements
     #[\Override]
     public function getHtmlVariables()
     {
-        // the date picker JavaScript code requires the `min` and `max` value to have a
-        // specific format which is easier to create in PHP than in the template itself
-
+        // the native date input requires the `value`, `min` and `max` value to have
+        // a specific format without a time zone offset
         $format = static::DATE_FORMAT;
+        $timeZone = new \DateTimeZone('UTC');
         if ($this->supportsTime()) {
-            $format = static::TIME_FORMAT;
+            $format = static::NATIVE_TIME_FORMAT;
+            $timeZone = $this->getInputTimeZone();
+        }
+
+        $formattedValue = '';
+        if ($this->getValue() !== null) {
+            $dateTime = $this->getValueDateTimeObject();
+            if ($dateTime !== null) {
+                $formattedValue = $dateTime->setTimezone($timeZone)->format($format);
+            }
         }
 
         $formattedEarliestDate = '';
-        if ($this->getEarliestDate() !== null) {
-            $formattedEarliestDate = \DateTime::createFromFormat(
-                $this->getSaveValueFormat(),
-                $this->getEarliestDate(),
-                new \DateTimeZone('UTC')
-            )->format($format);
+        if ($this->earliestDateTime !== null) {
+            $formattedEarliestDate = $this->earliestDateTime->setTimezone($timeZone)->format($format);
         }
 
         $formattedLatestDate = '';
-        if ($this->getLatestDate() !== null) {
-            $formattedLatestDate = \DateTime::createFromFormat(
-                $this->getSaveValueFormat(),
-                $this->getLatestDate(),
-                new \DateTimeZone('UTC')
-            )->format($format);
+        if ($this->latestDateTime !== null) {
+            $formattedLatestDate = $this->latestDateTime->setTimezone($timeZone)->format($format);
         }
 
         return [
+            'dateFormFieldValue' => $formattedValue,
             'dateFormFieldEarliestDate' => $formattedEarliestDate,
             'dateFormFieldLatestDate' => $formattedLatestDate,
         ];
     }
 
     /**
-     * Returns the latest valid date in `DateFormField::getSaveValueFormat()` format.
+     * Returns the time zone in which the native date time input displays and
+     * submits its value.
+     *
+     * @since 6.3
+     */
+    protected function getInputTimeZone(): \DateTimeZone
+    {
+        if (
+            $this->hasFieldAttribute('data-ignore-timezone')
+            && $this->getFieldAttribute('data-ignore-timezone') === 'true'
+        ) {
+            return new \DateTimeZone('UTC');
+        }
+
+        return WCF::getUser()->getTimeZone();
+    }
+
+    /**
+     * Returns the latest valid date as passed to `DateFormField::latestDate()`.
      *
      * If no latest valid date has been set, `null` is returned.
      *
-     * @return  null|string|int
+     * @return  null|string|int|\DateTimeInterface
      */
     public function getLatestDate()
     {
@@ -176,17 +209,13 @@ class DateFormField extends AbstractFormField implements
     /**
      * Returns the type of the returned save value.
      *
-     * If no save value format has been set, `U` (unix timestamp) will be set and returned.
+     * If no save value format has been set, `U` (unix timestamp) is returned.
      *
      * @return  string
      */
     public function getSaveValueFormat()
     {
-        if ($this->saveValueFormat === null) {
-            $this->saveValueFormat = 'U';
-        }
-
-        return $this->saveValueFormat;
+        return $this->saveValueFormat ?? 'U';
     }
 
     /**
@@ -197,15 +226,17 @@ class DateFormField extends AbstractFormField implements
      */
     protected function getValueDateTimeObject()
     {
+        // The `!` prefix resets all fields not present in the format, otherwise
+        // a date without a time would implicitly receive the current time.
         if ($this->supportsTime()) {
             $dateTime = \DateTime::createFromFormat(
-                static::TIME_FORMAT,
+                '!' . static::TIME_FORMAT,
                 $this->getValue(),
                 new \DateTimeZone('UTC')
             );
         } else {
             $dateTime = \DateTime::createFromFormat(
-                static::DATE_FORMAT,
+                '!' . static::DATE_FORMAT,
                 $this->getValue(),
                 new \DateTimeZone('UTC')
             );
@@ -236,40 +267,34 @@ class DateFormField extends AbstractFormField implements
     }
 
     /**
-     * Sets the latest valid date in `DateFormField::$saveValueFormat` format and returns this
-     * field. If `null` is given, the previously set latest valid date is unset.
+     * Sets the latest valid date and returns this field. If `null` is given, the previously
+     * set latest valid date is unset.
+     *
+     * Integers are always treated as unix timestamps, strings have to be given in
+     * `DateFormField::getSaveValueFormat()` format.
      *
      * @return  static
      */
-    public function latestDate(null|string|int $latestDate = null)
+    public function latestDate(null|string|int|\DateTimeInterface $latestDate = null)
     {
         $this->latestDate = $latestDate;
+        $this->latestDateTime = null;
 
-        if ($this->latestDate !== null) {
-            $latestDateTime = \DateTime::createFromFormat(
-                $this->getSaveValueFormat(),
-                $this->latestDate,
-                new \DateTimeZone('UTC')
-            );
-
-            if ($latestDateTime === false) {
+        if ($latestDate !== null) {
+            $this->latestDateTime = $this->resolveBoundary($latestDate);
+            if ($this->latestDateTime === null) {
                 throw new \InvalidArgumentException(
-                    "Latest date '{$this->latestDate}' does not have save value format '{$this->getSaveValueFormat()}' for field '{$this->getId()}'."
+                    "Latest date '{$latestDate}' does not have save value format '{$this->getSaveValueFormat()}' for field '{$this->getId()}'."
                 );
             }
 
-            if ($this->getEarliestDate() !== null) {
-                $earliestDateTime = \DateTime::createFromFormat(
-                    $this->getSaveValueFormat(),
-                    $this->getEarliestDate(),
-                    new \DateTimeZone('UTC')
-                );
+            if ($this->earliestDateTime !== null && $this->latestDateTime < $this->earliestDateTime) {
+                $latestDateString = $this->getBoundaryString($latestDate);
+                $earliestDateString = $this->getBoundaryString($this->getEarliestDate());
 
-                if ($latestDateTime < $earliestDateTime) {
-                    throw new \InvalidArgumentException(
-                        "Latest date '{$this->latestDate}' cannot be earlier than earliest date '{$this->getEarliestDate()}' for field '{$this->getId()}'."
-                    );
-                }
+                throw new \InvalidArgumentException(
+                    "Latest date '{$latestDateString}' cannot be earlier than earliest date '{$earliestDateString}' for field '{$this->getId()}'."
+                );
             }
         }
 
@@ -289,27 +314,28 @@ class DateFormField extends AbstractFormField implements
             if ($this->value === '') {
                 $this->value = null;
             } else {
-                // Suppressing the time zone causes the generated datetime
-                // string to omit the time zone entirely.
-                //
-                // This is an incorrect behavior of the JS component which we
-                // cannot fix for compatibility reasons.
+                // Native `datetime-local` inputs submit the value without a
+                // time zone offset in the time zone of the input, optionally
+                // including the seconds. The legacy JavaScript component also
+                // omits the time zone if it has been told to ignore it.
                 $isValidTime = false;
-                if (
-                    $this->supportsTime()
-                    && $this->hasFieldAttribute('data-ignore-timezone')
-                    && $this->getFieldAttribute('data-ignore-timezone') === 'true'
-                ) {
-                    $dateTime = \DateTime::createFromFormat(
-                        'Y-m-d\TH:i:s',
-                        $this->getValue(),
-                        new \DateTimeZone('UTC')
-                    );
+                if ($this->supportsTime()) {
+                    foreach (['!' . static::NATIVE_TIME_FORMAT, '!Y-m-d\TH:i:s'] as $format) {
+                        $dateTime = \DateTime::createFromFormat(
+                            $format,
+                            $this->getValue(),
+                            $this->getInputTimeZone()
+                        );
 
-                    if ($dateTime !== false) {
-                        $isValidTime = true;
+                        if ($dateTime !== false) {
+                            $isValidTime = true;
 
-                        $this->value = $dateTime->format(self::TIME_FORMAT);
+                            $this->value = $dateTime
+                                ->setTimezone(new \DateTimeZone('UTC'))
+                                ->format(self::TIME_FORMAT);
+
+                            break;
+                        }
                     }
                 }
 
@@ -329,6 +355,10 @@ class DateFormField extends AbstractFormField implements
     /**
      * Sets the date time format of the save value.
      *
+     * Without time support, the save value represents the selected day at
+     * 00:00 UTC. Timestamps of such values must be formatted in UTC to get
+     * the selected day, thus `Y-m-d` is preferable for pure dates.
+     *
      * @return  static
      */
     public function saveValueFormat(string $saveValueFormat)
@@ -344,6 +374,10 @@ class DateFormField extends AbstractFormField implements
 
     /**
      * Sets if not only the date, but also the time can be set.
+     *
+     * With time support, the value is entered in the user's time zone (or in
+     * UTC if the `data-ignore-timezone` attribute is `true`) and the save value
+     * represents that point in time.
      *
      * @return  static      this field
      */
@@ -391,12 +425,8 @@ class DateFormField extends AbstractFormField implements
                 return;
             }
 
-            if ($this->getEarliestDate() !== null) {
-                $earliestDateTime = \DateTime::createFromFormat(
-                    $this->getSaveValueFormat(),
-                    $this->getEarliestDate(),
-                    new \DateTimeZone('UTC')
-                );
+            if ($this->earliestDateTime !== null) {
+                $earliestDateTime = $this->getBoundaryDateTimeObject($this->earliestDateTime);
 
                 if ($dateTime < $earliestDateTime) {
                     $this->addValidationError(new FormFieldValidationError(
@@ -409,12 +439,8 @@ class DateFormField extends AbstractFormField implements
                 }
             }
 
-            if ($this->getLatestDate() !== null) {
-                $latestDateTime = \DateTime::createFromFormat(
-                    $this->getSaveValueFormat(),
-                    $this->getLatestDate(),
-                    new \DateTimeZone('UTC')
-                );
+            if ($this->latestDateTime !== null) {
+                $latestDateTime = $this->getBoundaryDateTimeObject($this->latestDateTime);
 
                 if ($dateTime > $latestDateTime) {
                     $this->addValidationError(new FormFieldValidationError(
@@ -432,14 +458,22 @@ class DateFormField extends AbstractFormField implements
     #[\Override]
     public function value(mixed $value)
     {
+        // Non-nullable fields store an empty value as `0`, which must be
+        // restored as an empty value instead of 1970-01-01.
+        if (
+            !$this->isNullable()
+            && $this->getSaveValueFormat() === 'U'
+            && (int)$value === 0
+        ) {
+            $this->value = null;
+
+            return $this;
+        }
+
         parent::value($value);
 
-        $dateTime = \DateTime::createFromFormat(
-            $this->getSaveValueFormat(),
-            $this->getValue(),
-            new \DateTimeZone('UTC')
-        );
-        if ($dateTime === false) {
+        $dateTime = $this->parseSaveValue($this->getValue());
+        if ($dateTime === null) {
             throw new \InvalidArgumentException(
                 "Given value does not match format '{$this->getSaveValueFormat()}' for field '{$this->getId()}'."
             );
@@ -471,23 +505,93 @@ class DateFormField extends AbstractFormField implements
     }
 
     /**
+     * Returns the date time object used to validate the value against the given
+     * earliest or latest valid date. Without time support, the time is reset to
+     * the start of the day to allow the day of the boundary itself to be selected.
+     *
+     * @since 6.3
+     */
+    protected function getBoundaryDateTimeObject(\DateTimeImmutable $dateTime): \DateTimeImmutable
+    {
+        if (!$this->supportsTime()) {
+            return $dateTime->setTimezone(new \DateTimeZone('UTC'))->setTime(0, 0);
+        }
+
+        return $dateTime;
+    }
+
+    /**
+     * Returns a date time object for an earliest or latest valid date or `null`
+     * if the given string does not match the save value format.
+     *
+     * @since 6.3
+     */
+    protected function resolveBoundary(string|int|\DateTimeInterface $date): ?\DateTimeImmutable
+    {
+        if ($date instanceof \DateTimeInterface) {
+            return \DateTimeImmutable::createFromInterface($date);
+        }
+
+        if (\is_int($date)) {
+            return new \DateTimeImmutable('@' . $date);
+        }
+
+        return $this->parseSaveValue($date);
+    }
+
+    /**
+     * Returns a date time object for a value in save value format or `null` if
+     * the value does not match the format.
+     *
+     * @since 6.3
+     */
+    protected function parseSaveValue(string|int $value): ?\DateTimeImmutable
+    {
+        // The `!` prefix resets all fields not present in the format, otherwise
+        // a date without a time would implicitly receive the current time.
+        $dateTime = \DateTimeImmutable::createFromFormat(
+            '!' . $this->getSaveValueFormat(),
+            (string)$value,
+            new \DateTimeZone('UTC')
+        );
+
+        if ($dateTime === false) {
+            return null;
+        }
+
+        return $dateTime;
+    }
+
+    private function getBoundaryString(string|int|\DateTimeInterface $date): string
+    {
+        if ($date instanceof \DateTimeInterface) {
+            return $date->format(\DateTimeInterface::ATOM);
+        }
+
+        return (string)$date;
+    }
+
+    /**
      * Returns an instance of `\IntlDateFormatter' for formatting `\DateTime` objects.
      * The formatter displays the date and time (if supported) in the user's locale and timezone.
+     * Dates without a time are displayed in UTC, matching the stored value.
      *
      * @since 6.2
      */
     protected function getDateTimeFormatter(): \IntlDateFormatter
     {
         $timeFormat = \IntlDateFormatter::NONE;
+        $timeZone = new \DateTimeZone('UTC');
         if ($this->supportsTime()) {
             $timeFormat = \IntlDateFormatter::SHORT;
+            $timeZone = $this->getInputTimeZone();
         }
 
         return new \IntlDateFormatter(
             WCF::getLanguage()->getLocale(),
             \IntlDateFormatter::LONG,
             $timeFormat,
-            WCF::getUser()->getTimeZone()
+            $timeZone
         );
     }
 }
