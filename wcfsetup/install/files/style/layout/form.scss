@@ -1,5 +1,6 @@
 input[type="date"],
 input[type="datetime"],
+input[type="datetime-local"],
 input[type="email"],
 input[type="number"],
 input[type="password"],
@@ -22,6 +23,7 @@ select.disabled[tabindex="-1"] {
 /* set placeholder color */
 input[type="date"],
 input[type="datetime"],
+input[type="datetime-local"],
 input[type="email"],
 input[type="number"],
 input[type="password"],
@@ -65,6 +67,7 @@ input[type="text"] {
 @media (pointer: coarse) {
 	input[type="date"],
 	input[type="datetime"],
+	input[type="datetime-local"],
 	input[type="email"],
 	input[type="number"],
 	input[type="password"],

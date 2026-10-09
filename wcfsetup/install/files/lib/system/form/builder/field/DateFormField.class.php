@@ -69,6 +69,12 @@ class DateFormField extends AbstractFormField implements
 
     const TIME_FORMAT = 'Y-m-d\TH:i:sP';
 
+    /**
+     * format of the value of native `datetime-local` inputs
+     * @since 6.3
+     */
+    const NATIVE_TIME_FORMAT = 'Y-m-d\TH:i';
+
     public function __construct()
     {
         $this->addFieldClass('medium');
@@ -129,12 +135,21 @@ class DateFormField extends AbstractFormField implements
     #[\Override]
     public function getHtmlVariables()
     {
-        // the date picker JavaScript code requires the `min` and `max` value to have a
-        // specific format which is easier to create in PHP than in the template itself
-
+        // the native date input requires the `value`, `min` and `max` value to have
+        // a specific format without a time zone offset
         $format = static::DATE_FORMAT;
+        $timeZone = new \DateTimeZone('UTC');
         if ($this->supportsTime()) {
-            $format = static::TIME_FORMAT;
+            $format = static::NATIVE_TIME_FORMAT;
+            $timeZone = $this->getInputTimeZone();
+        }
+
+        $formattedValue = '';
+        if ($this->getValue() !== null) {
+            $dateTime = $this->getValueDateTimeObject();
+            if ($dateTime !== null) {
+                $formattedValue = $dateTime->setTimezone($timeZone)->format($format);
+            }
         }
 
         $formattedEarliestDate = '';
@@ -143,7 +158,7 @@ class DateFormField extends AbstractFormField implements
                 $this->getSaveValueFormat(),
                 $this->getEarliestDate(),
                 new \DateTimeZone('UTC')
-            )->format($format);
+            )->setTimezone($timeZone)->format($format);
         }
 
         $formattedLatestDate = '';
@@ -152,13 +167,32 @@ class DateFormField extends AbstractFormField implements
                 $this->getSaveValueFormat(),
                 $this->getLatestDate(),
                 new \DateTimeZone('UTC')
-            )->format($format);
+            )->setTimezone($timeZone)->format($format);
         }
 
         return [
+            'dateFormFieldValue' => $formattedValue,
             'dateFormFieldEarliestDate' => $formattedEarliestDate,
             'dateFormFieldLatestDate' => $formattedLatestDate,
         ];
+    }
+
+    /**
+     * Returns the time zone in which the native date time input displays and
+     * submits its value.
+     *
+     * @since 6.3
+     */
+    protected function getInputTimeZone(): \DateTimeZone
+    {
+        if (
+            $this->hasFieldAttribute('data-ignore-timezone')
+            && $this->getFieldAttribute('data-ignore-timezone') === 'true'
+        ) {
+            return new \DateTimeZone('UTC');
+        }
+
+        return WCF::getUser()->getTimeZone();
     }
 
     /**
@@ -289,27 +323,28 @@ class DateFormField extends AbstractFormField implements
             if ($this->value === '') {
                 $this->value = null;
             } else {
-                // Suppressing the time zone causes the generated datetime
-                // string to omit the time zone entirely.
-                //
-                // This is an incorrect behavior of the JS component which we
-                // cannot fix for compatibility reasons.
+                // Native `datetime-local` inputs submit the value without a
+                // time zone offset in the time zone of the input, optionally
+                // including the seconds. The legacy JavaScript component also
+                // omits the time zone if it has been told to ignore it.
                 $isValidTime = false;
-                if (
-                    $this->supportsTime()
-                    && $this->hasFieldAttribute('data-ignore-timezone')
-                    && $this->getFieldAttribute('data-ignore-timezone') === 'true'
-                ) {
-                    $dateTime = \DateTime::createFromFormat(
-                        'Y-m-d\TH:i:s',
-                        $this->getValue(),
-                        new \DateTimeZone('UTC')
-                    );
+                if ($this->supportsTime()) {
+                    foreach (['!' . static::NATIVE_TIME_FORMAT, '!Y-m-d\TH:i:s'] as $format) {
+                        $dateTime = \DateTime::createFromFormat(
+                            $format,
+                            $this->getValue(),
+                            $this->getInputTimeZone()
+                        );
 
-                    if ($dateTime !== false) {
-                        $isValidTime = true;
+                        if ($dateTime !== false) {
+                            $isValidTime = true;
 
-                        $this->value = $dateTime->format(self::TIME_FORMAT);
+                            $this->value = $dateTime
+                                ->setTimezone(new \DateTimeZone('UTC'))
+                                ->format(self::TIME_FORMAT);
+
+                            break;
+                        }
                     }
                 }
 

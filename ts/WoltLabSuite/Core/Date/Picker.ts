@@ -634,18 +634,49 @@ function click(event: MouseEvent): void {
 }
 
 /**
- * Validates given element or id if it represents an active date picker.
+ * Validates given element or id if it represents an active date picker
+ * or a native date input.
  */
 function getElement(element: InputElementOrString): HTMLInputElement {
   if (typeof element === "string") {
     element = document.getElementById(element) as HTMLInputElement;
   }
 
-  if (!(element instanceof HTMLInputElement) || !element.classList.contains("inputDatePicker") || !_data.has(element)) {
+  if (!(element instanceof HTMLInputElement)) {
+    throw new Error("Expected a valid date picker input element or id.");
+  }
+
+  if (isNativeInput(element)) {
+    return element;
+  }
+
+  if (!element.classList.contains("inputDatePicker") || !_data.has(element)) {
     throw new Error("Expected a valid date picker input element or id.");
   }
 
   return element;
+}
+
+/**
+ * Returns true if the element is a native date input that is not
+ * enhanced by the date picker.
+ */
+function isNativeInput(element: HTMLInputElement): boolean {
+  return element.hasAttribute("data-native-date-picker");
+}
+
+/**
+ * Returns the value of the given date in the format of the native input.
+ */
+function formatNativeValue(element: HTMLInputElement, date: Date): string {
+  switch (element.type) {
+    case "datetime-local":
+      return DateUtil.format(date, "Y-m-d\\TH:i");
+    case "time":
+      return DateUtil.format(date, "H:i");
+    default:
+      return DateUtil.format(date, "Y-m-d");
+  }
 }
 
 const DatePicker = {
@@ -661,7 +692,7 @@ const DatePicker = {
     _firstDayOfWeek = parseInt(getPhrase("wcf.date.firstDayOfTheWeek"), 10);
 
     wheneverSeen(
-      `input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)`,
+      `input[type="date"]:not(.inputDatePicker, [data-native-date-picker]), input[type="datetime"]:not(.inputDatePicker, [data-native-date-picker])`,
       (element: HTMLInputElement) => {
         const now = new Date();
         element.classList.add("inputDatePicker");
@@ -932,6 +963,23 @@ const DatePicker = {
   getDate(element: InputElementOrString): Date | null {
     element = getElement(element);
 
+    if (isNativeInput(element)) {
+      if (element.value === "") {
+        return null;
+      }
+
+      if (element.type === "time") {
+        const [hours, minutes] = element.value.split(":");
+        const date = new Date();
+        date.setHours(+hours, +minutes, 0, 0);
+
+        return date;
+      }
+
+      // Date-only strings are parsed as UTC, append the time to parse it as local time.
+      return new Date(element.type === "date" ? `${element.value}T00:00` : element.value);
+    }
+
     const value = element.dataset.value || "";
     if (value) {
       return new Date(+value);
@@ -948,6 +996,13 @@ const DatePicker = {
    */
   setDate(element: InputElementOrString, date: Date): void {
     element = getElement(element);
+
+    if (isNativeInput(element)) {
+      element.value = formatNativeValue(element, date);
+
+      return;
+    }
+
     const data = _data.get(element) as DatePickerData;
 
     element.dataset.value = date.getTime().toString();
@@ -985,6 +1040,11 @@ const DatePicker = {
    */
   getValue(element: InputElementOrString): string {
     element = getElement(element);
+
+    if (isNativeInput(element)) {
+      return element.value;
+    }
+
     const data = _data.get(element);
 
     if (data) {
@@ -999,6 +1059,13 @@ const DatePicker = {
    */
   clear(element: InputElementOrString): void {
     element = getElement(element);
+
+    if (isNativeInput(element)) {
+      element.value = "";
+
+      return;
+    }
+
     const data = _data.get(element) as DatePickerData;
 
     element.removeAttribute("data-value");
@@ -1017,6 +1084,11 @@ const DatePicker = {
    */
   destroy(element: InputElementOrString): void {
     element = getElement(element);
+
+    if (isNativeInput(element)) {
+      return;
+    }
+
     const data = _data.get(element) as DatePickerData;
 
     const container = element.parentNode as HTMLElement;
@@ -1041,6 +1113,13 @@ const DatePicker = {
    */
   setCloseCallback(element: InputElementOrString, callback: Callback): void {
     element = getElement(element);
+
+    if (isNativeInput(element)) {
+      element.addEventListener("change", () => callback());
+
+      return;
+    }
+
     _data.get(element)!.onClose = callback;
   },
 };
