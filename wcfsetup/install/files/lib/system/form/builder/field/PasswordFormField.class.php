@@ -72,6 +72,7 @@ class PasswordFormField extends AbstractFormField implements
     public function __construct()
     {
         $this->label('wcf.user.password');
+        $this->addClass('passwordFormField');
         $this->addFieldClass('medium');
     }
 

@@ -93,7 +93,7 @@
 		</dl>
 
 		{if !$isExternalAuthentication}
-			<dl{if $errorType[password]|isset} class="formError"{/if}>
+			<dl class="passwordFormField passwordFormField--stacked{if $errorType[password]|isset} formError{/if}">
 				<dt>
 					<label for="{$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label> <span class="formFieldRequired">*</span>
 				</dt>
