@@ -355,6 +355,10 @@ class DateFormField extends AbstractFormField implements
     /**
      * Sets the date time format of the save value.
      *
+     * Without time support, the save value represents the selected day at
+     * 00:00 UTC. Timestamps of such values must be formatted in UTC to get
+     * the selected day, thus `Y-m-d` is preferable for pure dates.
+     *
      * @return  static
      */
     public function saveValueFormat(string $saveValueFormat)
@@ -370,6 +374,10 @@ class DateFormField extends AbstractFormField implements
 
     /**
      * Sets if not only the date, but also the time can be set.
+     *
+     * With time support, the value is entered in the user's time zone (or in
+     * UTC if the `data-ignore-timezone` attribute is `true`) and the save value
+     * represents that point in time.
      *
      * @return  static      this field
      */
