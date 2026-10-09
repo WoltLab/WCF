@@ -231,15 +231,17 @@ class DateFormField extends AbstractFormField implements
      */
     protected function getValueDateTimeObject()
     {
+        // The `!` prefix resets all fields not present in the format, otherwise
+        // a date without a time would implicitly receive the current time.
         if ($this->supportsTime()) {
             $dateTime = \DateTime::createFromFormat(
-                static::TIME_FORMAT,
+                '!' . static::TIME_FORMAT,
                 $this->getValue(),
                 new \DateTimeZone('UTC')
             );
         } else {
             $dateTime = \DateTime::createFromFormat(
-                static::DATE_FORMAT,
+                '!' . static::DATE_FORMAT,
                 $this->getValue(),
                 new \DateTimeZone('UTC')
             );
@@ -427,11 +429,7 @@ class DateFormField extends AbstractFormField implements
             }
 
             if ($this->getEarliestDate() !== null) {
-                $earliestDateTime = \DateTime::createFromFormat(
-                    $this->getSaveValueFormat(),
-                    $this->getEarliestDate(),
-                    new \DateTimeZone('UTC')
-                );
+                $earliestDateTime = $this->getBoundaryDateTimeObject($this->getEarliestDate());
 
                 if ($dateTime < $earliestDateTime) {
                     $this->addValidationError(new FormFieldValidationError(
@@ -445,11 +443,7 @@ class DateFormField extends AbstractFormField implements
             }
 
             if ($this->getLatestDate() !== null) {
-                $latestDateTime = \DateTime::createFromFormat(
-                    $this->getSaveValueFormat(),
-                    $this->getLatestDate(),
-                    new \DateTimeZone('UTC')
-                );
+                $latestDateTime = $this->getBoundaryDateTimeObject($this->getLatestDate());
 
                 if ($dateTime > $latestDateTime) {
                     $this->addValidationError(new FormFieldValidationError(
@@ -467,6 +461,18 @@ class DateFormField extends AbstractFormField implements
     #[\Override]
     public function value(mixed $value)
     {
+        // Non-nullable fields store an empty value as `0`, which must be
+        // restored as an empty value instead of 1970-01-01.
+        if (
+            !$this->isNullable()
+            && $this->getSaveValueFormat() === 'U'
+            && (int)$value === 0
+        ) {
+            $this->value = null;
+
+            return $this;
+        }
+
         parent::value($value);
 
         $dateTime = \DateTime::createFromFormat(
@@ -506,23 +512,48 @@ class DateFormField extends AbstractFormField implements
     }
 
     /**
+     * Returns a date time object for the given earliest or latest valid date.
+     * Without time support, the time is reset to the start of the day to allow
+     * the day of the boundary itself to be selected.
+     *
+     * @since 6.3
+     */
+    protected function getBoundaryDateTimeObject(string|int $date): \DateTime
+    {
+        $dateTime = \DateTime::createFromFormat(
+            $this->getSaveValueFormat(),
+            (string)$date,
+            new \DateTimeZone('UTC')
+        );
+
+        if (!$this->supportsTime()) {
+            $dateTime->setTimezone(new \DateTimeZone('UTC'))->setTime(0, 0);
+        }
+
+        return $dateTime;
+    }
+
+    /**
      * Returns an instance of `\IntlDateFormatter' for formatting `\DateTime` objects.
      * The formatter displays the date and time (if supported) in the user's locale and timezone.
+     * Dates without a time are displayed in UTC, matching the stored value.
      *
      * @since 6.2
      */
     protected function getDateTimeFormatter(): \IntlDateFormatter
     {
         $timeFormat = \IntlDateFormatter::NONE;
+        $timeZone = new \DateTimeZone('UTC');
         if ($this->supportsTime()) {
             $timeFormat = \IntlDateFormatter::SHORT;
+            $timeZone = $this->getInputTimeZone();
         }
 
         return new \IntlDateFormatter(
             WCF::getLanguage()->getLocale(),
             \IntlDateFormatter::LONG,
             $timeFormat,
-            WCF::getUser()->getTimeZone()
+            $timeZone
         );
     }
 }
