@@ -6,6 +6,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\form\builder\field\DateRangeFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\NumericRangeFormField;
+use wcf\system\form\builder\field\TimeRangeFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\WCF;
@@ -39,7 +40,7 @@ abstract class AbstractRangeObjectFilter implements IObjectFilter
      * Creates the form field to enter the range, the validation of the bounds
      * is added by `getFormField()`.
      */
-    abstract protected function createFormField(): DateRangeFormField|NumericRangeFormField;
+    abstract protected function createFormField(): DateRangeFormField|NumericRangeFormField|TimeRangeFormField;
 
     /**
      * Converts a non-empty bound into its native type.
@@ -55,13 +56,19 @@ abstract class AbstractRangeObjectFilter implements IObjectFilter
     }
 
     #[\Override]
-    public function getFormField(): DateRangeFormField|NumericRangeFormField
+    public function getFormField(): DateRangeFormField|NumericRangeFormField|TimeRangeFormField
     {
+        $supportsInvertedRange = $this->supportsInvertedRange();
+
         return $this->createFormField()
             ->addValidator(new FormFieldValidator(
                 'range',
-                static function (IFormField $field) {
-                    \assert($field instanceof DateRangeFormField || $field instanceof NumericRangeFormField);
+                static function (IFormField $field) use ($supportsInvertedRange) {
+                    \assert(
+                        $field instanceof DateRangeFormField
+                        || $field instanceof NumericRangeFormField
+                        || $field instanceof TimeRangeFormField
+                    );
                     $from = $field->getFromValue();
                     $to = $field->getToValue();
 
@@ -69,7 +76,7 @@ abstract class AbstractRangeObjectFilter implements IObjectFilter
                         $field->addValidationError(
                             new FormFieldValidationError('empty')
                         );
-                    } elseif ($from !== '' && $to !== '' && $from > $to) {
+                    } elseif (!$supportsInvertedRange && $from !== '' && $to !== '' && $from > $to) {
                         $field->addValidationError(
                             new FormFieldValidationError(
                                 'endBeforeStart',
@@ -79,6 +86,15 @@ abstract class AbstractRangeObjectFilter implements IObjectFilter
                     }
                 }
             ));
+    }
+
+    /**
+     * Returns true if the lower bound may be greater than the upper bound, e.g.
+     * for a time range spanning midnight.
+     */
+    protected function supportsInvertedRange(): bool
+    {
+        return false;
     }
 
     #[\Override]

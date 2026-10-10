@@ -12,6 +12,7 @@
 
 use wcf\system\condition\DaysOfWeekCondition;
 use wcf\system\condition\page\MultiPageCondition;
+use wcf\system\condition\TimeCondition;
 use wcf\system\condition\UserAvatarCondition;
 use wcf\system\condition\UserBirthdayCondition;
 use wcf\system\condition\UserCoverPhotoCondition;
@@ -89,6 +90,37 @@ $converters = [
         }
 
         return [['com.woltlab.wcf.daysOfWeek', $days]];
+    },
+    TimeCondition::class => static function (array $data): ?array {
+        // The filter always uses the time zone of the user.
+        if ((string)($data['timezone'] ?? '') !== '') {
+            return null;
+        }
+
+        $times = [];
+        foreach (['startTime', 'endTime'] as $key) {
+            $time = (string)($data[$key] ?? '');
+            if ($time === '') {
+                $times[] = '';
+
+                continue;
+            }
+
+            // Out of range values like `25:00` overflow into the next day.
+            $dateTime = \DateTimeImmutable::createFromFormat('!H:i', $time, new \DateTimeZone('UTC'));
+            if ($dateTime === false || $dateTime->format('Y-m-d') !== '1970-01-01') {
+                return null;
+            }
+
+            $times[] = $dateTime->format('H:i');
+        }
+
+        [$startTime, $endTime] = $times;
+        if ($startTime === $endTime) {
+            return null;
+        }
+
+        return [['com.woltlab.wcf.timeRange', $startTime . ';' . $endTime]];
     },
     UserUsernameCondition::class => static function (array $data): ?array {
         $username = (string)($data['username'] ?? '');

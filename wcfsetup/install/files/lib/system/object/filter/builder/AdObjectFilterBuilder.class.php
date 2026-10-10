@@ -13,6 +13,7 @@ use wcf\system\object\filter\ObjectFilterHandler;
 use wcf\system\object\filter\RequestedPageObjectFilter;
 use wcf\system\object\filter\StartDateObjectFilter;
 use wcf\system\object\filter\user\DaysOfWeekObjectFilter;
+use wcf\system\object\filter\user\TimeRangeObjectFilter;
 use wcf\system\object\filter\user\UserActivatedObjectFilter;
 use wcf\system\object\filter\user\UserAvatarObjectFilter;
 use wcf\system\object\filter\user\UserBannedObjectFilter;
@@ -54,6 +55,7 @@ final class AdObjectFilterBuilder extends AbstractObjectFilterBuilder
         $event->register(new RequestedPageObjectFilter());
         $event->register(new NotRequestedPageObjectFilter());
         $event->register(new DaysOfWeekObjectFilter());
+        $event->register(new TimeRangeObjectFilter());
         $event->register(new StartDateObjectFilter());
         $event->register(new EndDateObjectFilter());
         $event->register(new UserUsernameObjectFilter());

@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @deprecated  6.3 The time of day is no longer supported as a condition.
+ * @deprecated  6.3 Use `wcf\system\object\filter\user\TimeRangeObjectFilter` instead.
  */
 class TimeCondition extends AbstractMultipleFieldsCondition implements IContentCondition
 {

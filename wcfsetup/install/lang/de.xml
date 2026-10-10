@@ -3494,6 +3494,9 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.objectFilter.requestedPage.summary"><![CDATA[Aufgerufene Seite ist eine von: {$values}]]></item>
 		<item name="wcf.objectFilter.startDate"><![CDATA[Startdatum]]></item>
 		<item name="wcf.objectFilter.startDate.summary"><![CDATA[Ab {$value|plainTime}]]></item>
+		<item name="wcf.objectFilter.timeRange"><![CDATA[Uhrzeit]]></item>
+		<item name="wcf.objectFilter.timeRange.error.sameTime"><![CDATA[Die Start- und Endzeit dürfen nicht identisch sein.]]></item>
+		<item name="wcf.objectFilter.timeRange.summary"><![CDATA[{if $from !== null && $to !== null}Zwischen {$from} und {$to} Uhr{if $overnight} (über Nacht){/if}{elseif $from !== null}Ab {$from} Uhr{else}Vor {$to} Uhr{/if}]]></item>
 		<item name="wcf.objectFilter.user.activated"><![CDATA[Benutzerkonto aktiviert]]></item>
 		<item name="wcf.objectFilter.user.activated.summary.no"><![CDATA[Benutzerkonto ist nicht aktiviert]]></item>
 		<item name="wcf.objectFilter.user.activated.summary.yes"><![CDATA[Benutzerkonto ist aktiviert]]></item>

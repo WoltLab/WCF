@@ -3419,6 +3419,9 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.objectFilter.requestedPage.summary"><![CDATA[Requested page is one of: {$values}]]></item>
 		<item name="wcf.objectFilter.startDate"><![CDATA[Start Date]]></item>
 		<item name="wcf.objectFilter.startDate.summary"><![CDATA[From {$value|plainTime}]]></item>
+		<item name="wcf.objectFilter.timeRange"><![CDATA[Time of Day]]></item>
+		<item name="wcf.objectFilter.timeRange.error.sameTime"><![CDATA[The start and end time must not be identical.]]></item>
+		<item name="wcf.objectFilter.timeRange.summary"><![CDATA[{if $from !== null && $to !== null}Between {$from} and {$to}{if $overnight} (overnight){/if}{elseif $from !== null}From {$from}{else}Before {$to}{/if}]]></item>
 		<item name="wcf.objectFilter.user.activated"><![CDATA[Account Activated]]></item>
 		<item name="wcf.objectFilter.user.activated.summary.no"><![CDATA[Account is not activated]]></item>
 		<item name="wcf.objectFilter.user.activated.summary.yes"><![CDATA[Account is activated]]></item>
