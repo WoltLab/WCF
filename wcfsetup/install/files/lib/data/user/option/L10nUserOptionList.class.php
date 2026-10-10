@@ -20,7 +20,7 @@ class L10nUserOptionList extends UserOptionList
 
         $storage = new L10nStorage(UserOption::getL10nDefinition());
 
-        $this->sqlSelects .= (!empty($this->sqlSelects) ? ', ' : '')
+        $this->sqlSelects .= ($this->sqlSelects !== '' ? ', ' : '')
             . $storage->getSubSelect('title', $this->getDatabaseTableAlias())
             . ' AS title';
     }

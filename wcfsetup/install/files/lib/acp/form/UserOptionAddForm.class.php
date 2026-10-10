@@ -201,7 +201,7 @@ class UserOptionAddForm extends AbstractDatabaseObjectBuilderForm
                         ->label('wcf.form.field.showOrder')
                         ->value(0)
                         ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
-                            $builder->setShowOrder((int)$field->getSaveValue());
+                            $builder->setShowOrder($field->getSaveValue());
                         })
                         ->loadValueCallback(static function (UserOption $object, IFormField $field) {
                             $field->value($object->showOrder);
@@ -248,7 +248,7 @@ class UserOptionAddForm extends AbstractDatabaseObjectBuilderForm
                         ->required()
                         ->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_NSV)
                         ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
-                            $builder->setSelectOptions((string)$field->getSaveValue());
+                            $builder->setSelectOptions($field->getSaveValue());
                         })
                         ->loadValueCallback(static function (UserOption $object, IFormField $field) {
                             $field->value($object->selectOptions ?? '');
@@ -306,7 +306,7 @@ class UserOptionAddForm extends AbstractDatabaseObjectBuilderForm
                             $outputClass = $field->getValue();
                             $optionType = $field->getDocument()->getFormField('optionType')->getValue();
                             if ($formAction === 'create' && $outputClass === '') {
-                                if (\in_array($optionType, self::$optionTypesUsingSelectOptions)) {
+                                if (\in_array($optionType, self::$optionTypesUsingSelectOptions, true)) {
                                     $outputClass = SelectOptionsUserOptionOutput::class;
                                 } else {
                                     $outputClass = match ($optionType) {

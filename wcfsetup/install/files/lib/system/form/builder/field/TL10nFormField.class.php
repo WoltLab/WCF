@@ -97,7 +97,7 @@ trait TL10nFormField
 
     /**
      * @param bool $i18n determines if field supports i18n input
-     * @return II18nFormField this field
+     * @return static this field
      */
     public function i18n(bool $i18n = true)
     {
@@ -111,7 +111,7 @@ trait TL10nFormField
     }
 
     /**
-     * @return II18nFormField this field
+     * @return static this field
      */
     public function languageItemPattern(string $pattern)
     {
@@ -195,7 +195,7 @@ trait TL10nFormField
             return;
         }
 
-        if (!empty(ArrayUtil::trim($this->getValue())) || $this->isRequired()) {
+        if (!\in_array(ArrayUtil::trim($this->getValue()), ['', []], true) || $this->isRequired()) {
             if (
                 !I18nHandler::getInstance()->validateValue(
                     $this->getPrefixedId(),

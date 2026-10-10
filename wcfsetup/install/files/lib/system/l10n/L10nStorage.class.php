@@ -286,8 +286,8 @@ final class L10nStorage
         $statement->execute([$objectID]);
         $modifiedLanguageIDs = [];
         while ($row = $statement->fetchArray()) {
-            if (!$row['isPristine']) {
-                $modifiedLanguageIDs[] = $row['languageID'] === null ? self::MONOLINGUAL : (int)$row['languageID'];
+            if ($row['isPristine'] === 0) {
+                $modifiedLanguageIDs[] = $row['languageID'] === null ? self::MONOLINGUAL : $row['languageID'];
             }
         }
 

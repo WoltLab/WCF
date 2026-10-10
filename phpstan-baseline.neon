@@ -1594,12 +1594,6 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/EmailFormField.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
 			count: 3
 			path: wcfsetup/install/files/lib/system/form/builder/field/IconFormField.class.php
 
@@ -1620,12 +1614,6 @@ parameters:
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/system/form/builder/field/SingleSelectionFormField.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/builder/field/TextFormField.class.php
 
 		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'

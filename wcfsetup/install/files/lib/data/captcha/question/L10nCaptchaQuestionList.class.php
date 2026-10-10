@@ -20,7 +20,7 @@ class L10nCaptchaQuestionList extends CaptchaQuestionList
 
         $storage = new L10nStorage(CaptchaQuestion::getL10nDefinition());
 
-        $this->sqlSelects .= (!empty($this->sqlSelects) ? ', ' : '')
+        $this->sqlSelects .= ($this->sqlSelects !== '' ? ', ' : '')
             . $storage->getSubSelect('question', $this->getDatabaseTableAlias())
             . ' AS question';
     }
