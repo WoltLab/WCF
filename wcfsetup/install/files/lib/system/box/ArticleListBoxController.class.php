@@ -4,7 +4,11 @@ namespace wcf\system\box;
 
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\Article;
+use wcf\data\article\category\ArticleCategory;
+use wcf\page\CategoryArticleListPage;
+use wcf\page\ArticleListPage;
 use wcf\system\listView\user\ArticleListView;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -95,5 +99,49 @@ class ArticleListBoxController extends AbstractListViewBoxController
                 'boxPosition' => $this->box->position,
             ])
         };
+    }
+
+    #[\Override]
+    public function hasLink(): bool
+    {
+        return \MODULE_ARTICLE !== 0;
+    }
+
+    #[\Override]
+    public function getLink(): string
+    {
+        $parameters = [];
+        if (($this->sortField ?? '') !== '' && ($this->sortOrder ?? '') !== '') {
+            $parameters['sortField'] = $this->sortField;
+            $parameters['sortOrder'] = $this->sortOrder;
+        }
+
+        $category = $this->getLinkedCategory();
+        if ($category !== null) {
+            $parameters['object'] = $category->getDecoratedObject();
+
+            return LinkHandler::getInstance()->getControllerLink(CategoryArticleListPage::class, $parameters);
+        }
+
+        return LinkHandler::getInstance()->getControllerLink(ArticleListPage::class, $parameters);
+    }
+
+    /**
+     * Returns the category the box is restricted to by its category condition, or `null`
+     * if the box is not restricted to exactly one accessible category.
+     */
+    private function getLinkedCategory(): ?ArticleCategory
+    {
+        $categoryIDs = $this->getConditionData('com.woltlab.wcf.articleCategory')['articleCategoryIDs'] ?? [];
+        if (\count($categoryIDs) !== 1) {
+            return null;
+        }
+
+        $category = ArticleCategory::getCategory((int)\reset($categoryIDs));
+        if ($category === null || !$category->isAccessible()) {
+            return null;
+        }
+
+        return $category;
     }
 }

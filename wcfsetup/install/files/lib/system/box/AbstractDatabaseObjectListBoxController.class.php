@@ -455,6 +455,24 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
     }
 
     /**
+     * Returns the data of the box condition with the given object type or `null`
+     * if the box has no such condition.
+     *
+     * @return ?mixed[]
+     * @since 6.3
+     */
+    protected function getConditionData(string $conditionObjectType): ?array
+    {
+        foreach ($this->box->getControllerConditions() as $condition) {
+            if ($condition->getObjectType()->objectType === $conditionObjectType) {
+                return $condition->conditionData;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * @return void
      * @since 5.2
      */
