@@ -113,6 +113,12 @@ return [
         ->columns([
             IntDatabaseTableColumn::create('templateGroupID'),
         ]),
+    PartialDatabaseTable::create('wcf1_user_activity_event')
+        ->columns([
+            IntDatabaseTableColumn::create('userID'),
+            VarcharDatabaseTableColumn::create('username')
+                ->length(255),
+        ]),
     PartialDatabaseTable::create('wcf1_acp_session_log')
         ->columns([
             BinaryDatabaseTableColumn::create('sessionID')

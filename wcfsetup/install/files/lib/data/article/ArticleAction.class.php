@@ -177,7 +177,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
                 $article->articleID,
                 null,
                 $article->userID,
-                $article->time
+                $article->time,
+                username: $article->username
             );
         }
 
@@ -336,7 +337,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
                             $articleEditor->articleID,
                             null,
                             $this->parameters['data']['userID'] ?? $articleEditor->userID,
-                            $this->parameters['data']['time'] ?? $articleEditor->time
+                            $this->parameters['data']['time'] ?? $articleEditor->time,
+                            username: $this->parameters['data']['username'] ?? $articleEditor->username
                         );
                     } else {
                         $resetArticleIDs[] = $articleEditor->articleID;
@@ -363,9 +365,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
         }
 
         // update author in recent activities
-        if (isset($this->parameters['data']['userID'])) {
+        if (\array_key_exists('userID', $this->parameters['data'] ?? [])) {
             $sql = "UPDATE  wcf1_user_activity_event
-                    SET     userID = ?
+                    SET     userID = ?,
+                            username = ?
                     WHERE   objectTypeID = ?
                         AND objectID = ?";
             $statement = WCF::getDB()->prepare($sql);
@@ -374,6 +377,9 @@ class ArticleAction extends AbstractDatabaseObjectAction
                 if ($articleEditor->userID !== $this->parameters['data']['userID']) {
                     $statement->execute([
                         $this->parameters['data']['userID'],
+                        $this->parameters['data']['userID'] === null
+                            ? ($this->parameters['data']['username'] ?? $articleEditor->username)
+                            : null,
                         UserActivityEventHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article.recentActivityEvent'),
                         $articleEditor->articleID,
                     ]);

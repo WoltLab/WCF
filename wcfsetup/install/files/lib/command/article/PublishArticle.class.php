@@ -31,7 +31,7 @@ final class PublishArticle
             ->update();
 
         $this->updateUserWatch($this->article);
-        $this->addUserActivity($this->article->articleID, $this->article->userID);
+        $this->addUserActivity($this->article);
 
         if ($this->article->userID !== null) {
             ArticleBuilder::incrementArticleCounter($this->article->userID, 1);
@@ -54,14 +54,15 @@ final class PublishArticle
         );
     }
 
-    private function addUserActivity(int $articleID, int $userID): void
+    private function addUserActivity(Article $article): void
     {
         UserActivityEventHandler::getInstance()->fireEvent(
             'com.woltlab.wcf.article.recentActivityEvent',
-            $articleID,
+            $article->articleID,
             null,
-            $userID,
-            \TIME_NOW
+            $article->userID,
+            \TIME_NOW,
+            username: $article->username
         );
     }
 }

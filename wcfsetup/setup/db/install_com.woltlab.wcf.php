@@ -4114,7 +4114,9 @@ return [
             NotNullInt10DatabaseTableColumn::create('objectTypeID'),
             NotNullInt10DatabaseTableColumn::create('objectID'),
             IntDatabaseTableColumn::create('languageID'),
-            NotNullInt10DatabaseTableColumn::create('userID'),
+            IntDatabaseTableColumn::create('userID'),
+            VarcharDatabaseTableColumn::create('username')
+                ->length(255),
             NotNullInt10DatabaseTableColumn::create('time'),
             TextDatabaseTableColumn::create('additionalData'),
         ])

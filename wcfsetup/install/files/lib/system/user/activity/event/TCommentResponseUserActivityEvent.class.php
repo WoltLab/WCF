@@ -71,11 +71,28 @@ trait TCommentResponseUserActivityEvent
 
         $userIDs = [];
         foreach ($this->comments as $comment) {
-            $userIDs[] = $comment->userID;
+            if ($comment->userID !== null) {
+                $userIDs[] = $comment->userID;
+            }
             $this->commentObjectIDs[] = $comment->objectID;
         }
         if ($userIDs !== []) {
             $this->commentAuthors = \array_filter(UserProfileRuntimeCache::getInstance()->getObjects($userIDs));
         }
+    }
+
+    /**
+     * Returns the user profile of the comment's author or a guest profile if
+     * the comment was written by a guest.
+     *
+     * @since 6.3
+     */
+    protected function getCommentAuthor(Comment $comment): ?UserProfile
+    {
+        if ($comment->userID === null) {
+            return UserProfile::getGuestUserProfile($comment->username);
+        }
+
+        return $this->commentAuthors[$comment->userID] ?? null;
     }
 }

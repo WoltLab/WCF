@@ -41,14 +41,14 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
             if (isset($this->responses[$event->objectID])) {
                 $response = $this->responses[$event->objectID];
                 $comment = $this->comments[$response->commentID];
-                if (isset($users[$comment->objectID]) && isset($this->commentAuthors[$comment->userID])) {
+                if (isset($users[$comment->objectID]) && $this->getCommentAuthor($comment) !== null) {
                     if (!$users[$comment->objectID]->isProtected()) {
                         $event->setIsAccessible();
 
                         $event->setTitle(WCF::getLanguage()->getDynamicVariable(
                             'wcf.user.profile.recentActivity.profileCommentResponse',
                             [
-                                'commentAuthor' => $this->commentAuthors[$comment->userID],
+                                'commentAuthor' => $this->getCommentAuthor($comment),
                                 'commentID' => $comment->commentID,
                                 'responseID' => $response->responseID,
                                 'user' => $users[$comment->objectID],

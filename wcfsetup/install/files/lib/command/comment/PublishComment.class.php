@@ -54,8 +54,7 @@ final class PublishComment
     private function fireActivityEvent(): void
     {
         if (
-            $this->comment->userID !== null
-            && UserActivityEventHandler::getInstance()->getObjectTypeID(
+            UserActivityEventHandler::getInstance()->getObjectTypeID(
                 $this->objectType->objectType . '.recentActivityEvent'
             ) !== null
         ) {
@@ -64,7 +63,8 @@ final class PublishComment
                 $this->comment->commentID,
                 null,
                 $this->comment->userID,
-                $this->comment->time
+                $this->comment->time,
+                username: $this->comment->username
             );
         }
     }

@@ -34,7 +34,6 @@ final class UpdateArticle
     {
         $oldArticle = $this->builder->getObject();
         $oldStatus = $oldArticle->publicationStatus;
-        $oldUserID = $oldArticle->userID;
 
         // Capture the current content before it is overwritten so that the
         // previous state can be stored as a version.
@@ -76,9 +75,8 @@ final class UpdateArticle
             $this->handlePublicationStatusChange($article, $oldStatus, $newStatus);
         }
 
-        $newUserID = $this->builder->properties['userID'] ?? $oldUserID;
-        if ($newUserID !== $oldUserID) {
-            $this->updateActivityEventAuthor($article->articleID, (int)$newUserID);
+        if ($article->userID !== $oldArticle->userID || $article->username !== $oldArticle->username) {
+            $this->updateActivityEventAuthor($article);
         }
 
         EventHandler::getInstance()->fire(new ArticleUpdated($article, $this->builder));
@@ -108,7 +106,8 @@ final class UpdateArticle
                 $article->articleID,
                 null,
                 $article->userID,
-                $article->time
+                $article->time,
+                username: $article->username
             );
         } else {
             UserNotificationHandler::getInstance()->removeNotifications(
@@ -122,17 +121,19 @@ final class UpdateArticle
         }
     }
 
-    private function updateActivityEventAuthor(int $articleID, int $userID): void
+    private function updateActivityEventAuthor(Article $article): void
     {
         $sql = "UPDATE  wcf1_user_activity_event
-                SET     userID = ?
+                SET     userID = ?,
+                        username = ?
                 WHERE   objectTypeID = ?
                     AND objectID = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
-            $userID,
+            $article->userID,
+            $article->userID === null ? $article->username : null,
             UserActivityEventHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article.recentActivityEvent'),
-            $articleID,
+            $article->articleID,
         ]);
     }
 

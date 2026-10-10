@@ -54,7 +54,7 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
                 $comment = $this->comments[$response->commentID];
                 if (
                     isset($articleContentToArticle[$comment->objectID])
-                    && isset($this->commentAuthors[$comment->userID])
+                    && $this->getCommentAuthor($comment) !== null
                 ) {
                     $article = $articles[$articleContentToArticle[$comment->objectID]];
 
@@ -67,7 +67,7 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
                     $event->setTitle(WCF::getLanguage()->getDynamicVariable(
                         'wcf.article.recentActivity.articleCommentResponse',
                         [
-                            'commentAuthor' => $this->commentAuthors[$comment->userID],
+                            'commentAuthor' => $this->getCommentAuthor($comment),
                             'commentID' => $comment->commentID,
                             'responseID' => $response->responseID,
                             'article' => $article,

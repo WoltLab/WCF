@@ -31,7 +31,7 @@ class PageCommentResponseUserActivityEvent extends SingletonFactory implements I
                 $comment = $this->comments[$response->commentID];
                 if (
                     PageCache::getInstance()->getPage($comment->objectID) !== null
-                    && isset($this->commentAuthors[$comment->userID])
+                    && $this->getCommentAuthor($comment) !== null
                 ) {
                     $page = PageCache::getInstance()->getPage($comment->objectID);
 
@@ -42,7 +42,7 @@ class PageCommentResponseUserActivityEvent extends SingletonFactory implements I
                     $event->setIsAccessible();
 
                     $event->setTitle(WCF::getLanguage()->getDynamicVariable('wcf.page.recentActivity.pageCommentResponse', [
-                        'commentAuthor' => $this->commentAuthors[$comment->userID],
+                        'commentAuthor' => $this->getCommentAuthor($comment),
                         'commentID' => $comment->commentID,
                         'responseID' => $response->responseID,
                         'page' => $page,

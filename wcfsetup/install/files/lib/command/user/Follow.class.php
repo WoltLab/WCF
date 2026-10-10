@@ -60,7 +60,8 @@ final class Follow
     {
         UserActivityEventHandler::getInstance()->fireEvent(
             'com.woltlab.wcf.user.recentActivityEvent.follow',
-            $this->target->userID
+            $this->target->userID,
+            userID: $this->user->userID,
         );
     }
 
