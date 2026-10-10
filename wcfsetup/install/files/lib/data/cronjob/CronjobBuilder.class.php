@@ -106,6 +106,13 @@ final class CronjobBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    public function setAfterNextExec(int $afterNextExec): static
+    {
+        $this->properties['afterNextExec'] = $afterNextExec;
+
+        return $this;
+    }
+
     public function setIsDisabled(bool $isDisabled): static
     {
         $this->properties['isDisabled'] = $isDisabled ? 1 : 0;
@@ -182,6 +189,33 @@ final class CronjobBuilder extends DatabaseObjectBuilder
         if (isset($this->description)) {
             $this->saveL10nValues($object);
         }
+
+        $this->rescheduleOnExpressionChange($object);
+    }
+
+    /**
+     * Recalculates the next execution if the schedule has changed, otherwise
+     * the previous schedule would apply until the cronjob is executed again.
+     */
+    private function rescheduleOnExpressionChange(Cronjob $cronjob): void
+    {
+        $previousExpression = $this->getObject()->getExpression()->getExpression();
+        if ($cronjob->getExpression()->getExpression() === $previousExpression) {
+            return;
+        }
+
+        $nextExec = $cronjob->getNextExec(\TIME_NOW);
+        $builder = self::forUpdate($cronjob)
+            ->setNextExec($nextExec);
+
+        // The `afterNextExec` of a pending or executing cronjob is used by
+        // `CronjobScheduler` to detect crashes and must remain untouched.
+        if ($cronjob->state === Cronjob::READY) {
+            // Offset taken from `CronjobScheduler`
+            $builder->setAfterNextExec($cronjob->getNextExec($nextExec + 120));
+        }
+
+        $builder->update();
     }
 
     private function saveL10nValues(Cronjob $cronjob): void
