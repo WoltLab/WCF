@@ -4009,6 +4009,9 @@ Attachments:
 		<item name="wcf.form.field.date.error.format"><![CDATA[The format of the entered value is invalid.]]></item>
 		<item name="wcf.form.field.date.error.earliestDate"><![CDATA[The entered value may not be earlier than {$earliestDate}.]]></item>
 		<item name="wcf.form.field.date.error.latestDate"><![CDATA[The entered value may not be later than {$latestDate}.]]></item>
+		<item name="wcf.form.field.time.error.format"><![CDATA[The format of the entered value is invalid.]]></item>
+		<item name="wcf.form.field.time.error.earliestTime"><![CDATA[The entered time may not be earlier than {$earliestTime}.]]></item>
+		<item name="wcf.form.field.time.error.latestTime"><![CDATA[The entered time may not be later than {$latestTime}.]]></item>
 		<item name="wcf.form.field.itemList.error.maximumMultiples"><![CDATA[You may not enter more than {#$maximumCount} {if $maximumCount == 1}entry{else}entries{/if} but {#$count} {if $count == 1}entry is{else}entries are{/if} given.]]></item>
 		<item name="wcf.form.field.itemList.error.minimumMultiples"><![CDATA[You have to entered at least {#$minimumCount} {if $minimumCount == 1}entry{else}entries{/if} but only {#$count} {if $count == 1}entry is{else}entries are{/if} given.]]></item>
 		<item name="wcf.form.field.email"><![CDATA[Email Address]]></item>
