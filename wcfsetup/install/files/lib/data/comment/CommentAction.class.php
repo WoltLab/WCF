@@ -412,13 +412,14 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             $this->commentProcessor->updateCounter($comment->objectID, 1);
 
             // fire activity event
-            if ($comment->userID !== null && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.recentActivityEvent') !== null) {
+            if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.recentActivityEvent') !== null) {
                 UserActivityEventHandler::getInstance()->fireEvent(
                     $objectType->objectType . '.recentActivityEvent',
                     $comment->commentID,
                     null,
                     $comment->userID,
-                    $comment->time
+                    $comment->time,
+                    username: $comment->username
                 );
             }
 
@@ -627,13 +628,14 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             $this->commentProcessor->updateCounter($comment->objectID, 1);
 
             // fire activity event
-            if ($response->userID !== null && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.response.recentActivityEvent') !== null) {
+            if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.response.recentActivityEvent') !== null) {
                 UserActivityEventHandler::getInstance()->fireEvent(
                     $objectType->objectType . '.response.recentActivityEvent',
                     $response->responseID,
                     null,
                     $response->userID,
-                    $response->time
+                    $response->time,
+                    username: $response->username
                 );
             }
 

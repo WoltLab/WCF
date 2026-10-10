@@ -131,7 +131,11 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator
     public function getUserProfile()
     {
         if ($this->userProfile === null) {
-            $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+            if ($this->userID !== null) {
+                $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+            } else {
+                $this->userProfile = UserProfile::getGuestUserProfile($this->username ?? '');
+            }
         }
 
         return $this->userProfile;

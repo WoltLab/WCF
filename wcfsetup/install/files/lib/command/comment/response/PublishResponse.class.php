@@ -65,8 +65,7 @@ final class PublishResponse
     private function fireActivityEvent(): void
     {
         if (
-            $this->response->userID !== null
-            && UserActivityEventHandler::getInstance()->getObjectTypeID(
+            UserActivityEventHandler::getInstance()->getObjectTypeID(
                 $this->objectType->objectType . '.response.recentActivityEvent'
             ) !== null
         ) {
@@ -75,7 +74,8 @@ final class PublishResponse
                 $this->response->responseID,
                 null,
                 $this->response->userID,
-                $this->response->time
+                $this->response->time,
+                username: $this->response->username
             );
         }
     }

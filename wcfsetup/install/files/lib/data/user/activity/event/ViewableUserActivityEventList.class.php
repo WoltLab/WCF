@@ -62,7 +62,9 @@ class ViewableUserActivityEventList extends UserActivityEventList
         $userIDs = [];
         $eventGroups = [];
         foreach ($this->objects as $event) {
-            $userIDs[] = $event->userID;
+            if ($event->userID !== null) {
+                $userIDs[] = $event->userID;
+            }
 
             if (!isset($eventGroups[$event->objectTypeID])) {
                 $objectType = UserActivityEventHandler::getInstance()->getObjectType($event->objectTypeID);

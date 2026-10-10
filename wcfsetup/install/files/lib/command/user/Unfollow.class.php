@@ -45,7 +45,8 @@ final class Unfollow
     {
         UserActivityEventHandler::getInstance()->removeEvent(
             'com.woltlab.wcf.user.recentActivityEvent.follow',
-            $this->target->userID
+            $this->target->userID,
+            userID: $this->user->userID,
         );
     }
 

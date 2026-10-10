@@ -142,7 +142,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
             );
         } elseif (UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES) !== []) {
             $this->objectList->getConditionBuilder()->add(
-                "user_activity_event.userID NOT IN (?)",
+                "(user_activity_event.userID IS NULL OR user_activity_event.userID NOT IN (?))",
                 [UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES)]
             );
         }
@@ -193,7 +193,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
             );
         } elseif (UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES) !== []) {
             $this->objectList->getConditionBuilder()->add(
-                "user_activity_event.userID NOT IN (?)",
+                "(user_activity_event.userID IS NULL OR user_activity_event.userID NOT IN (?))",
                 [UserProfileHandler::getInstance()->getIgnoredUsers(UserIgnore::TYPE_HIDE_MESSAGES)]
             );
         }

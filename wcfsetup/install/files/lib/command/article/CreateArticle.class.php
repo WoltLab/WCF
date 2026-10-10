@@ -51,7 +51,8 @@ final class CreateArticle
                 $article->articleID,
                 null,
                 $article->userID,
-                $article->time
+                $article->time,
+                username: $article->username
             );
 
             new MarkArticleAsRead($article)();
