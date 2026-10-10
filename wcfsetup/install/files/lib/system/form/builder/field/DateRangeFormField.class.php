@@ -3,6 +3,7 @@
 namespace wcf\system\form\builder\field;
 
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\WCF;
 
 /**
  * Implementation of a form field for a date range (with a time).
@@ -46,6 +47,21 @@ class DateRangeFormField extends AbstractFormField implements
     const TIME_FORMAT = 'Y-m-d\TH:i:sP';
 
     /**
+     * format of the value of native `datetime-local` inputs
+     * @since 6.3
+     */
+    const NATIVE_TIME_FORMAT = 'Y-m-d\TH:i';
+
+    #[\Override]
+    public function getHtmlVariables()
+    {
+        return [
+            'dateRangeFormFieldFromValue' => $this->getInputValue($this->getFromValue()),
+            'dateRangeFormFieldToValue' => $this->getInputValue($this->getToValue()),
+        ];
+    }
+
+    /**
      * @return ?string
      */
     #[\Override]
@@ -65,10 +81,75 @@ class DateRangeFormField extends AbstractFormField implements
             $this->getDocument()->hasRequestData($this->getPrefixedId())
             && \is_array($this->getDocument()->getRequestData($this->getPrefixedId()))
         ) {
-            $this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
+            $value = $this->getDocument()->getRequestData($this->getPrefixedId());
+
+            $this->value = [
+                'from' => \is_string($value['from'] ?? null) ? $this->readInputValue($value['from']) : '',
+                'to' => \is_string($value['to'] ?? null) ? $this->readInputValue($value['to']) : '',
+            ];
         }
 
         return $this;
+    }
+
+    /**
+     * Returns the given value in the format of the native date input.
+     *
+     * @since 6.3
+     */
+    protected function getInputValue(string $value): string
+    {
+        if ($value === '' || !$this->supportsTime()) {
+            return $value;
+        }
+
+        $dateTime = \DateTimeImmutable::createFromFormat(static::TIME_FORMAT, $value);
+        if ($dateTime === false) {
+            return '';
+        }
+
+        return $dateTime->setTimezone($this->getInputTimeZone())->format(static::NATIVE_TIME_FORMAT);
+    }
+
+    /**
+     * Converts the value submitted by the native date input into the internal
+     * format. Native `datetime-local` inputs submit the value without a time
+     * zone offset in the time zone of the input, optionally including the seconds.
+     *
+     * @since 6.3
+     */
+    protected function readInputValue(string $value): string
+    {
+        if ($value === '' || !$this->supportsTime()) {
+            return $value;
+        }
+
+        foreach (['!' . static::NATIVE_TIME_FORMAT, '!Y-m-d\TH:i:s'] as $format) {
+            $dateTime = \DateTimeImmutable::createFromFormat($format, $value, $this->getInputTimeZone());
+            if ($dateTime !== false) {
+                return $dateTime->format(static::TIME_FORMAT);
+            }
+        }
+
+        return $value;
+    }
+
+    /**
+     * Returns the time zone in which the native date time inputs display and
+     * submit their values.
+     *
+     * @since 6.3
+     */
+    protected function getInputTimeZone(): \DateTimeZone
+    {
+        if (
+            $this->hasFieldAttribute('data-ignore-timezone')
+            && $this->getFieldAttribute('data-ignore-timezone') === 'true'
+        ) {
+            return new \DateTimeZone('UTC');
+        }
+
+        return WCF::getUser()->getTimeZone();
     }
 
     /**
