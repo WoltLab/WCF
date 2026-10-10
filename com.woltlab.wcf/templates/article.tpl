@@ -67,6 +67,7 @@
 
 <div
 	class="section entry article"
+	data-object-id="{$articleContent->articleContentID}"
 >
 	{if $articleContent->getImage() && $articleContent->getImage()->hasThumbnail('large')}
 		<div
@@ -255,5 +256,11 @@
 {event name='beforeComments'}
 
 {unsafe:$article->getDiscussionProvider()->renderDiscussions()}
+
+<script data-relocate="true">
+	require(["WoltLabSuite/Core/Component/Quote/Message"], ({ registerContainer }) => {
+		registerContainer(".entry.article", ".entry__content", "com.woltlab.wcf.article.content");
+	});
+</script>
 
 {include file='footer'}

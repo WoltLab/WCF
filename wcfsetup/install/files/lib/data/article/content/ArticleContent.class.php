@@ -5,6 +5,7 @@ namespace wcf\data\article\content;
 use wcf\data\article\Article;
 use wcf\data\attachment\Attachment;
 use wcf\data\CollectionDatabaseObject;
+use wcf\data\IMessage;
 use wcf\data\ITitledLinkObject;
 use wcf\data\language\Language;
 use wcf\data\media\ViewableMedia;
@@ -42,7 +43,7 @@ use wcf\util\StringUtil;
  *
  * @extends CollectionDatabaseObject<ArticleContentCollection>
  */
-class ArticleContent extends CollectionDatabaseObject implements ITitledLinkObject, IRouteController
+class ArticleContent extends CollectionDatabaseObject implements IMessage, ITitledLinkObject, IRouteController
 {
     /**
      * @inheritDoc
@@ -136,6 +137,78 @@ class ArticleContent extends CollectionDatabaseObject implements ITitledLinkObje
     public function getArticle(): Article
     {
         return $this->getCollection()->getArticle($this);
+    }
+
+    /**
+     * @since 6.3
+     */
+    #[\Override]
+    public function getExcerpt(int $maxLength = 255): string
+    {
+        return StringUtil::truncateHTML($this->getSimplifiedFormattedContent(), $maxLength);
+    }
+
+    /**
+     * @since 6.3
+     */
+    #[\Override]
+    public function getFormattedMessage(): string
+    {
+        return $this->getFormattedContent();
+    }
+
+    /**
+     * @since 6.3
+     */
+    #[\Override]
+    public function getMessage(): string
+    {
+        return $this->content ?? '';
+    }
+
+    /**
+     * @since 6.3
+     */
+    #[\Override]
+    public function isVisible(): bool
+    {
+        return $this->getArticle()->canRead();
+    }
+
+    /**
+     * @since 6.3
+     */
+    #[\Override]
+    public function getTime(): int
+    {
+        return $this->getArticle()->getTime();
+    }
+
+    /**
+     * @since 6.3
+     */
+    #[\Override]
+    public function getUserID(): ?int
+    {
+        return $this->getArticle()->getUserID();
+    }
+
+    /**
+     * @since 6.3
+     */
+    #[\Override]
+    public function getUsername(): string
+    {
+        return $this->getArticle()->getUsername();
+    }
+
+    /**
+     * @since 6.3
+     */
+    #[\Override]
+    public function __toString(): string
+    {
+        return $this->getFormattedContent();
     }
 
     /**
