@@ -33,8 +33,8 @@ class Language extends DatabaseObject implements \Stringable
     protected $items = [];
 
     /**
-     * list of dynamic language items
-     * @var string[]
+     * compiled template scripting of dynamic language items
+     * @var array<string, \Closure|string>
      */
     protected $dynamicItems = [];
 
@@ -153,7 +153,13 @@ class Language extends DatabaseObject implements \Stringable
             // assign active language
             $variables['__language'] = $this;
 
-            return WCF::getTPL()->fetchString($this->dynamicItems[$item], $variables);
+            // Language files written before 6.3 hold the compiled source as a
+            // string, they remain in use during the update until the cache is reset.
+            if (\is_string($this->dynamicItems[$item])) {
+                return WCF::getTPL()->fetchString($this->dynamicItems[$item], $variables);
+            }
+
+            return WCF::getTPL()->fetchCompiled($this->dynamicItems[$item], $variables);
         }
 
         if (
@@ -263,6 +269,18 @@ class Language extends DatabaseObject implements \Stringable
     public function getLanguages()
     {
         return LanguageFactory::getInstance()->getLanguages();
+    }
+
+    /**
+     * Returns the names of properties that should be serialized.
+     *
+     * @return string[]
+     */
+    public function __sleep(): array
+    {
+        // The loaded language items are reloaded on demand and dynamic items
+        // hold closures, which cannot be serialized.
+        return ['data'];
     }
 
     /**

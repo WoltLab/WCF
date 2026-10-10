@@ -840,6 +840,29 @@ class TemplateEngine extends SingletonFactory
      */
     public function fetchString(string $compiledSource, array $variables = [], bool $sandbox = true)
     {
+        return $this->fetchCompiled(
+            function () use ($compiledSource) {
+                eval('?>' . $compiledSource);
+            },
+            $variables,
+            $sandbox
+        );
+    }
+
+    /**
+     * Executes a compiled template scripting source that is wrapped in a
+     * closure and returns the result. Unlike `fetchString()`, the compiled
+     * code is subject to the OPcache when the closure is declared in a file.
+     *
+     * The closure is executed with `$this` bound to the template engine, it
+     * must not be static.
+     *
+     * @param array<string, mixed> $variables
+     * @param bool $sandbox enables execution in sandbox
+     * @since 6.3
+     */
+    public function fetchCompiled(\Closure $compiledTemplate, array $variables = [], bool $sandbox = true): string
+    {
         // enable sandbox
         if ($sandbox) {
             $this->enableSandbox();
@@ -853,7 +876,7 @@ class TemplateEngine extends SingletonFactory
         // get output
         try {
             \ob_start();
-            eval('?>' . $compiledSource);
+            $compiledTemplate->call($this);
             $output = \ob_get_contents();
         } finally {
             \ob_end_clean();

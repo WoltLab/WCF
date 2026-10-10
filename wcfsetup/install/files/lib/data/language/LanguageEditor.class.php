@@ -120,7 +120,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                         continue;
                     } // ignore compiler errors
 
-                    $writer->write("\$this->dynamicItems[" . \var_export((string)$languageItem, true) . "] = " . \var_export($output['template'], true) . ";\n");
+                    $writer->write("\$this->dynamicItems[" . \var_export((string)$languageItem, true) . "] = " . self::getCompiledClosure($output['template']) . ";\n");
                 }
             }
 
@@ -128,6 +128,25 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $writer->close();
             FileUtil::makeWritable($filename);
         }
+    }
+
+    /**
+     * Returns the PHP code of a closure that executes the compiled template
+     * scripting, allowing the OPcache to cache it as part of the language file.
+     */
+    private static function getCompiledClosure(string $compiledTemplate): string
+    {
+        $closure = "function () { ?>" . $compiledTemplate . "<?php }";
+
+        // A syntax error would break the entire language file, fall back to
+        // evaluating the source at runtime, which confines it to this item.
+        try {
+            eval("return {$closure};");
+        } catch (\CompileError) {
+            return "function () { eval(" . \var_export('?>' . $compiledTemplate, true) . "); }";
+        }
+
+        return $closure;
     }
 
     /**

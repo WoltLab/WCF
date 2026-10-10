@@ -61,7 +61,7 @@ final class SetupLanguage extends Language
             if (\str_contains($value, '{')) {
                 // compile dynamic language variables
                 $compiled = $compiler->compileString($name, $value);
-                $this->dynamicItems[$name] = $compiled['template'];
+                $this->dynamicItems[$name] = eval("return function () { ?>{$compiled['template']}<?php };");
             }
         }
 
