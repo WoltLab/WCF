@@ -28,6 +28,34 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
     protected $nodeInterface = IHtmlOutputNode::class;
 
     /**
+     * Matches a run of one or more consecutive emojis, including keycaps, flags,
+     * skin tone modifiers, tag sequences and ZWJ sequences. Pictographs with a
+     * default text presentation (e.g. `©` or `™`) only qualify when they are
+     * explicitly requested as an emoji through a variation selector or modifier.
+     */
+    private const EMOJI_PATTERN = <<<'REGEX'
+        ~(
+            (?:
+                \p{Regional_Indicator}{2}
+                | [0-9\#*]\x{FE0F}?\x{20E3}
+                | (?:\p{Emoji_Presentation}|\p{Extended_Pictographic}(?=\x{FE0F}|\p{Emoji_Modifier}))
+                    \x{FE0F}?\p{Emoji_Modifier}?
+                    (?:[\x{E0020}-\x{E007E}]+\x{E007F})?
+                    (?:\x{200D}\p{Extended_Pictographic}\x{FE0F}?\p{Emoji_Modifier}?)*
+            )+
+        )~ux
+        REGEX;
+
+    /**
+     * Cheap pre-check for code points that are part of an emoji. The full
+     * `EMOJI_PATTERN` is considerably slower and is only evaluated for text
+     * that contains at least one of these code points. Covers all code points
+     * with the `Extended_Pictographic` or `Emoji_Presentation` property while
+     * skipping common non-emoji ranges such as currency symbols and CJK text.
+     */
+    private const EMOJI_CANDIDATE_PATTERN = '~[\x{A9}\x{AE}\x{203C}\x{2049}\x{20E3}\x{2122}-\x{2BFF}\x{3030}\x{303D}\x{3297}\x{3299}\x{1F000}-\x{1FFFF}]~u';
+
+    /**
      * desired output type
      * @var string
      */
@@ -84,6 +112,10 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
         $this->removeTextFormatting();
 
         $this->highlightKeywords();
+
+        if ($this->outputType === 'text/html') {
+            $this->wrapEmojis();
+        }
 
         $this->invokeHtmlNode(new HtmlOutputNodeWoltlabMetacode());
 
@@ -262,6 +294,61 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
 
             DOMUtil::removeNode($node);
         }
+    }
+
+    /**
+     * Wraps emojis in a `<span class="emoji">` to render them at a larger size
+     * than the surrounding text.
+     */
+    protected function wrapEmojis(): void
+    {
+        $nodes = [];
+        foreach ($this->getXPath()->query('//text()') as $node) {
+            \assert($node instanceof \DOMText);
+            $text = $node->textContent;
+            if (\preg_match(self::EMOJI_CANDIDATE_PATTERN, $text) !== 1) {
+                continue;
+            }
+
+            if (\preg_match(self::EMOJI_PATTERN, $text) !== 1) {
+                continue;
+            }
+
+            if ($this->hasCodeParent($node)) {
+                continue;
+            }
+
+            $nodes[] = $node;
+        }
+
+        foreach ($nodes as $node) {
+            $split = \preg_split(self::EMOJI_PATTERN, $node->textContent, -1, \PREG_SPLIT_DELIM_CAPTURE);
+            foreach ($split as $i => $value) {
+                if ($value === '') {
+                    continue;
+                }
+
+                if ($i % 2 === 0) {
+                    $node->parentNode->insertBefore($node->ownerDocument->createTextNode($value), $node);
+                } else {
+                    $node->parentNode->insertBefore(self::createEmojiElement($node->ownerDocument, $value), $node);
+                }
+            }
+
+            DOMUtil::removeNode($node);
+        }
+    }
+
+    /**
+     * Creates the element that is used to render one or more emojis.
+     */
+    public static function createEmojiElement(\DOMDocument $document, string $emoji): \DOMElement
+    {
+        $element = $document->createElement('span');
+        $element->setAttribute('class', 'emoji');
+        $element->appendChild($document->createTextNode($emoji));
+
+        return $element;
     }
 
     /**

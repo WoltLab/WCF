@@ -44,7 +44,14 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
 
                 // Render the mapped unicode emoji instead of the legacy smiley image.
                 if ($smiley !== null && $smiley->emoji !== '') {
-                    $htmlNodeProcessor->replaceElementWithText($element, $smiley->emoji, false);
+                    if ($this->outputType === 'text/html') {
+                        $element->replaceWith(
+                            HtmlOutputNodeProcessor::createEmojiElement($element->ownerDocument, $smiley->emoji)
+                        );
+                    } else {
+                        $htmlNodeProcessor->replaceElementWithText($element, $smiley->emoji, false);
+                    }
+
                     continue;
                 }
 
