@@ -429,6 +429,12 @@ class WCF
                 \spl_autoload_register([self::class, 'autoloadDebug'], true, true);
             }
         }
+
+        // Without queries, the benchmark would be created only in the footer,
+        // yielding a near-zero runtime.
+        if (self::benchmarkIsEnabled()) {
+            Benchmark::getInstance();
+        }
     }
 
     /**
