@@ -72,6 +72,11 @@
 			<enableToc>1</enableToc>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.article.content</name>
+			<definitionname>com.woltlab.wcf.message.quote</definitionname>
+			<classname>wcf\system\message\quote\ArticleContentMessageQuoteHandler</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.article</name>
 			<definitionname>com.woltlab.wcf.label.object</definitionname>
 			<classname>wcf\system\label\object\ArticleLabelObjectHandler</classname>
