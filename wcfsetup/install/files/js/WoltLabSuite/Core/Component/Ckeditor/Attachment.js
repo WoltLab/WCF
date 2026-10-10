@@ -7,12 +7,12 @@
  * @since 6.0
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "./Event"], function (require, exports, Event_1) {
+define(["require", "exports", "./Event", "./Filename"], function (require, exports, Event_1, Filename_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     function uploadAttachment(element, file, abortController) {
-        const payload = { abortController, file };
+        const payload = { abortController, file: (0, Filename_1.normalizePastedFilename)(file) };
         (0, Event_1.dispatchToCkeditor)(element).uploadAttachment(payload);
         return new Promise((resolve, reject) => {
             void payload

@@ -40,12 +40,12 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-define(["require", "exports", "./Event"], function (require, exports, Event_1) {
+define(["require", "exports", "./Event", "./Filename"], function (require, exports, Event_1, Filename_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     function uploadMedia(element, file, abortController) {
-        const payload = { abortController, file };
+        const payload = { abortController, file: (0, Filename_1.normalizePastedFilename)(file) };
         (0, Event_1.dispatchToCkeditor)(element).uploadMedia(payload);
         // The media system works differently compared to the
         // attachments, because uploading a file will offer

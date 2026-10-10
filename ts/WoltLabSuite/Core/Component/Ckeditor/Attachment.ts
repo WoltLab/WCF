@@ -9,6 +9,7 @@
  */
 
 import { dispatchToCkeditor, listenToCkeditor } from "./Event";
+import { normalizePastedFilename } from "./Filename";
 
 import type { CKEditor } from "../Ckeditor";
 
@@ -31,7 +32,7 @@ export type UploadAttachmentEventPayload = {
 };
 
 function uploadAttachment(element: HTMLElement, file: File, abortController?: AbortController): Promise<UploadResult> {
-  const payload: UploadAttachmentEventPayload = { abortController, file };
+  const payload: UploadAttachmentEventPayload = { abortController, file: normalizePastedFilename(file) };
 
   dispatchToCkeditor(element).uploadAttachment(payload);
 

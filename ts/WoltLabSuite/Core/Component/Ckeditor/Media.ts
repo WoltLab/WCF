@@ -9,6 +9,7 @@
  */
 
 import { dispatchToCkeditor, listenToCkeditor } from "./Event";
+import { normalizePastedFilename } from "./Filename";
 
 type UploadResult = {
   [key: string]: unknown;
@@ -30,7 +31,7 @@ export type UploadMediaEventPayload = {
 };
 
 function uploadMedia(element: HTMLElement, file: File, abortController?: AbortController): Promise<UploadResult> {
-  const payload: UploadMediaEventPayload = { abortController, file };
+  const payload: UploadMediaEventPayload = { abortController, file: normalizePastedFilename(file) };
 
   dispatchToCkeditor(element).uploadMedia(payload);
 
