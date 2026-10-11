@@ -114,6 +114,7 @@
 		<file>lib/system/condition/UserOptionsCondition.class.php</file>
 		<file>lib/acp/form/UserContentRevertChangesForm.class.php</file>
 		<file>lib/acp/form/UserAssignToGroupForm.class.php</file>
+		<file>lib/acp/form/UserEmailAddressExportForm.class.php</file>
 
 		<file>icon/font-awesome/v6/brands/42-group.svg</file>
 		<file>icon/font-awesome/v6/brands/500px.svg</file>

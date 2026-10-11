@@ -5,8 +5,8 @@ namespace wcf\system\interaction\bulk\admin;
 use wcf\acp\action\UserAssignToGroupAction;
 use wcf\acp\action\UserContentRemoveAction;
 use wcf\acp\action\UserContentRevertChangesAction;
+use wcf\acp\action\UserEmailAddressExportAction;
 use wcf\acp\action\UserMergeAction;
-use wcf\acp\form\UserEmailAddressExportForm;
 use wcf\acp\form\UserMailForm;
 use wcf\action\UserBanAction;
 use wcf\data\user\User;
@@ -104,12 +104,27 @@ final class UserBulkInteractions extends AbstractBulkInteractionProvider
                 'wcf.acp.user.action.sendMail',
                 static fn(User $user) => $user->canMail()
             ),
-            new BulkLinkInteraction(
+            new class(
                 'export-mail-address',
-                UserEmailAddressExportForm::class,
+                UserEmailAddressExportAction::class,
                 'wcf.acp.user.action.exportMailAddress',
                 static fn() => WCF::getSession()->hasPermission('admin.user.canEditMailAddress')
-            ),
+            ) extends BulkFormBuilderDialogInteraction {
+                #[\Override]
+                public function renderInitialization(string $containerId): string
+                {
+                    $identifier = StringUtil::encodeJS($this->getIdentifier());
+                    $containerId = StringUtil::encodeJS($containerId);
+
+                    return <<<HTML
+                        <script data-relocate="true">
+                            require(['WoltLabSuite/Core/Acp/Component/User/EmailAddressExport'], ({ setupBulk }) => {
+                                setupBulk('{$identifier}', document.getElementById('{$containerId}'));
+                            });
+                        </script>
+                        HTML;
+                }
+            },
             new BulkRpcInteraction(
                 'send-new-password',
                 'core/users/%s/send-new-password',

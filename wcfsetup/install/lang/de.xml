@@ -3054,8 +3054,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.exportEmailAddress.fileType"><![CDATA[Exportformat]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.csv"><![CDATA[CSV (<em>Character Separated Values</em>)]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.xml"><![CDATA[XML (<em>Extensible Markup Language</em>)]]></item>
-		<item name="wcf.acp.user.exportEmailAddress.format"><![CDATA[Exporteinstellungen]]></item>
-		<item name="wcf.acp.user.exportEmailAddress.markedUsers"><![CDATA[E-Mail-Adressen von folgenden Benutzern exportieren]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.separator"><![CDATA[Trennzeichen]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.textSeparator"><![CDATA[Texttrenner]]></item>
 		<item name="wcf.acp.user.groups"><![CDATA[Benutzergruppe(n)]]></item>
@@ -5830,5 +5828,7 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.revertChanges.markedUsers"/>
 	<item name="wcf.acp.user.assignToGroup.markedUsers"/>
 	<item name="wcf.acp.user.assignToGroup.success"/>
+	<item name="wcf.acp.user.exportEmailAddress.markedUsers"/>
+	<item name="wcf.acp.user.exportEmailAddress.format"/>
 </delete>
 </language>
