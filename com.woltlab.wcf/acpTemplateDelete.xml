@@ -159,5 +159,6 @@
 		<template>contactSettings</template>
 		<template>removeUserContentDialog</template>
 		<template>userSearch</template>
+		<template>userMerge</template>
 	</delete>
 </data>

@@ -49,6 +49,11 @@ return new class {
         );
 
         $eventHandler->register(
+            \wcf\event\user\UsersMerging::class,
+            \wcf\acp\form\UserMergeForm::fireLegacyEvent(...)
+        );
+
+        $eventHandler->register(
             \wcf\event\user\RegistrationSpamChecking::class,
             \wcf\system\event\listener\RegistrationSpamCheckingSfsListener::class
         );

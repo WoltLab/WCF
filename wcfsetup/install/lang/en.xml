@@ -2998,7 +2998,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.merge"><![CDATA[Merge Users]]></item>
 		<item name="wcf.acp.user.merge.destination"><![CDATA[Destination]]></item>
 		<item name="wcf.acp.user.merge.destination.description"><![CDATA[The selected users will be merged into this user account.]]></item>
-		<item name="wcf.acp.user.merge.markedUsers"><![CDATA[Merge the following users]]></item>
 		<item name="wcf.acp.user.merge.warning"><![CDATA[The process to merge users does not update all counters and references due to technical limitations. You’re required to manually run the <a href="{link controller='RebuildData'}{/link}">rebuild data</a> tasks in the maintenance section afterwards in order to solve any conflicts or inconsistencies.]]></item>
 		<item name="wcf.acp.user.revertChanges"><![CDATA[Revert Changes To Contents]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe"><![CDATA[Time Period]]></item>
@@ -5832,5 +5831,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.pip.userOption.options.messageObjectType"/>
 	<item name="wcf.acp.pip.userOption.options.messageObjectType.description"/>
 	<item name="wcf.user.condition.conditionGroup.userOptions"/>
+	<item name="wcf.acp.user.merge.markedUsers"/>
 </delete>
 </language>

@@ -2,129 +2,67 @@
 
 namespace wcf\acp\form;
 
-use wcf\command\user\MergeUsers;
 use wcf\data\user\User;
-use wcf\form\AbstractForm;
-use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\UserInputException;
-use wcf\system\WCF;
+use wcf\event\user\UsersMerging;
+use wcf\system\event\EventHandler;
 
 /**
- * Shows the user merge form.
+ * Provides the legacy `save` event of the former user merge form for event
+ * listeners that are registered for this class.
+ *
+ * The constructor is private to prevent this class from being resolved as a
+ * controller.
  *
  * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Listen for the `UsersMerging` event instead.
  */
-class UserMergeForm extends AbstractForm
+final class UserMergeForm
 {
-    use TMultipleUsersForm;
-
-    /**
-     * @inheritDoc
-     */
-    public $neededPermissions = ['admin.user.canEditUser'];
-
-    /**
-     * @inheritDoc
-     */
-    public $activeMenuItem = 'wcf.acp.menu.link.user.list';
-
     /**
      * ids of the relevant users
      * @var int[]
      */
-    public $userIDs = [];
-
-    /**
-     * relevant users
-     * @var User[]
-     */
-    public $users = [];
-
-    /**
-     * destination user id
-     * @var int
-     */
-    public $destinationUserID = 0;
+    public array $userIDs;
 
     /**
      * ids of merge users (without destination user)
      * @var int[]
      */
-    public $mergedUserIDs = [];
+    public array $mergedUserIDs;
 
-    #[\Override]
-    public function readParameters()
+    /**
+     * destination user id
+     */
+    public int $destinationUserID;
+
+    /**
+     * relevant users
+     * @var array<int, User>
+     */
+    public array $users = [];
+
+    private function __construct(UsersMerging $event)
     {
-        parent::readParameters();
+        $this->destinationUserID = $event->destinationUser->userID;
+        $this->users[$this->destinationUserID] = $event->destinationUser;
+        foreach ($event->mergedUsers as $user) {
+            $this->users[$user->userID] = $user;
+        }
 
-        $this->users = $this->readUsersFromRequest();
-        if (\count($this->users) < 2) {
-            throw new IllegalLinkException();
-        }
-        foreach ($this->users as $user) {
-            if (!$user->canEdit()) {
-                throw new PermissionDeniedException();
-            }
-        }
         $this->userIDs = \array_keys($this->users);
+        $this->mergedUserIDs = \array_values(\array_map(
+            static fn(User $user) => $user->userID,
+            $event->mergedUsers
+        ));
     }
 
-    #[\Override]
-    public function readFormParameters()
+    /**
+     * Fires the legacy `save` event.
+     */
+    public static function fireLegacyEvent(UsersMerging $event): void
     {
-        parent::readFormParameters();
-
-        if (isset($_POST['destinationUserID'])) {
-            $this->destinationUserID = \intval($_POST['destinationUserID']);
-        }
-    }
-
-    #[\Override]
-    public function validate()
-    {
-        parent::validate();
-
-        if (!isset($this->users[$this->destinationUserID])) {
-            throw new UserInputException('destinationUserID');
-        }
-    }
-
-    #[\Override]
-    public function save()
-    {
-        $mergedUsers = [];
-        foreach ($this->users as $userID => $user) {
-            if ($userID !== $this->destinationUserID) {
-                $mergedUsers[] = $user;
-                $this->mergedUserIDs[] = $userID;
-            }
-        }
-
-        parent::save();
-
-        new MergeUsers($this->users[$this->destinationUserID], $mergedUsers)();
-
-        $this->saved();
-
-        // show success message
-        WCF::getTPL()->assign('message', 'wcf.global.success');
-        WCF::getTPL()->display('success');
-
-        exit;
-    }
-
-    #[\Override]
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'users' => $this->users,
-            'userIDs' => $this->userIDs,
-            'destinationUserID' => $this->destinationUserID,
-        ]);
+        EventHandler::getInstance()->fireAction(new self($event), 'save');
     }
 }

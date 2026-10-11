@@ -3069,7 +3069,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.merge"><![CDATA[Benutzer zusammenfügen]]></item>
 		<item name="wcf.acp.user.merge.destination"><![CDATA[Ziel]]></item>
 		<item name="wcf.acp.user.merge.destination.description"><![CDATA[Die ausgewählten Benutzer werden in dieses Benutzerkonto zusammengefügt.]]></item>
-		<item name="wcf.acp.user.merge.markedUsers"><![CDATA[Folgende Benutzer zusammenfügen]]></item>
 		<item name="wcf.acp.user.merge.warning"><![CDATA[Das Zusammenfügen von Benutzern aktualisiert aus technischen Gründen nicht alle Verweise, Anzeigen und Zähler. Es ist daher notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nach der Durchführung die entsprechenden Wartungsaufgaben ausführen {if LANGUAGE_USE_INFORMAL_VARIANT}lässt{else}lassen{/if}, um die <a href="{link controller='RebuildData'}{/link}">Anzeigen zu aktualisieren</a>.]]></item>
 		<item name="wcf.acp.user.revertChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe"><![CDATA[Zeitraum]]></item>
@@ -5830,5 +5829,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.pip.userOption.options.messageObjectType"/>
 	<item name="wcf.acp.pip.userOption.options.messageObjectType.description"/>
 	<item name="wcf.user.condition.conditionGroup.userOptions"/>
+	<item name="wcf.acp.user.merge.markedUsers"/>
 </delete>
 </language>

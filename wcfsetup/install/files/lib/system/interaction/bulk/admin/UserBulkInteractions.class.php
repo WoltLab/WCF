@@ -3,11 +3,11 @@
 namespace wcf\system\interaction\bulk\admin;
 
 use wcf\acp\action\UserContentRemoveAction;
+use wcf\acp\action\UserMergeAction;
 use wcf\acp\form\UserAssignToGroupForm;
 use wcf\acp\form\UserContentRevertChangesForm;
 use wcf\acp\form\UserEmailAddressExportForm;
 use wcf\acp\form\UserMailForm;
-use wcf\acp\form\UserMergeForm;
 use wcf\action\UserBanAction;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
@@ -82,9 +82,9 @@ final class UserBulkInteractions extends AbstractBulkInteractionProvider
                 'wcf.acp.user.action.assignToGroup',
                 static fn(User $user) => $user->canEdit()
             ),
-            new BulkLinkInteraction(
+            new BulkFormBuilderDialogInteraction(
                 'merge',
-                UserMergeForm::class,
+                UserMergeAction::class,
                 'wcf.acp.user.action.merge',
                 static fn(User $user) => $user->canEdit()
             ),
