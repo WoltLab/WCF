@@ -53,6 +53,7 @@ class UserProfileAction extends UserAction
      * Validates parameters for signature preview.
      *
      * @return void
+     * @deprecated 6.3 use `wcf\system\endpoint\controller\core\users\RenderSignaturePreview` instead
      */
     public function validateGetMessagePreview()
     {
@@ -64,6 +65,7 @@ class UserProfileAction extends UserAction
      *
      * @return array{message: string, raw: string}
      * @throws UserInputException
+     * @deprecated 6.3 use `wcf\system\endpoint\controller\core\users\RenderSignaturePreview` instead
      */
     public function getMessagePreview()
     {
