@@ -683,8 +683,9 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
             $this->readObjects();
         }
 
+        $sendNotification = !(bool)($this->parameters['skipNotification'] ?? false);
         foreach ($this->getObjects() as $userEditor) {
-            (new ConfirmUserEmail($userEditor->getDecoratedObject()))();
+            (new ConfirmUserEmail($userEditor->getDecoratedObject(), $sendNotification))();
         }
     }
 
