@@ -36,7 +36,7 @@ final class UserContentRemoveAction implements RequestHandlerInterface
     {
         $users = $this->getUsers($request);
 
-        $form = $this->getForm();
+        $form = $this->getForm($users);
 
         if ($request->getMethod() === 'GET') {
             return $form->toResponse();
@@ -98,7 +98,10 @@ final class UserContentRemoveAction implements RequestHandlerInterface
         return $users;
     }
 
-    private function getForm(): Psr15DialogForm
+    /**
+     * @param array<int, User> $users
+     */
+    private function getForm(array $users): Psr15DialogForm
     {
         $contentProviders = \array_filter(
             ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'),
@@ -122,7 +125,10 @@ final class UserContentRemoveAction implements RequestHandlerInterface
                 ->languageItem('wcf.acp.content.provider.removeContentWarning'),
             MultipleSelectionFormField::create('contentProviders')
                 ->label('wcf.acp.content.provider.removeContentSectionTitle')
-                ->description('wcf.acp.content.provider.removeContentInfo')
+                ->description('wcf.acp.content.provider.removeContentInfo', [
+                    'users' => $users,
+                    'user' => \reset($users),
+                ])
                 ->options($options, false, false)
                 ->value(\array_keys($options))
                 ->required(),
