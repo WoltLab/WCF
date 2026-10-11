@@ -2,6 +2,7 @@
 
 namespace wcf\form;
 
+use wcf\command\user\SetSpecialTrophies;
 use wcf\command\user\UpdateUser;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\language\Language;
@@ -14,7 +15,6 @@ use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\user\User;
 use wcf\data\user\UserBuilder;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\MultipleSelectionFormField;
@@ -309,10 +309,10 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
 
         $specialTrophies = $this->form->getFormField('specialTrophies');
         if ($specialTrophies !== null) {
-            $userProfileAction = new UserProfileAction([$this->object->userID], 'updateSpecialTrophies', [
-                'trophyIDs' => \array_map(\intval(...), $specialTrophies->getValue() ?? []),
-            ]);
-            $userProfileAction->executeAction();
+            (new SetSpecialTrophies(
+                $this->object,
+                \array_values(\array_map(\intval(...), $specialTrophies->getValue() ?? []))
+            ))();
         }
     }
 

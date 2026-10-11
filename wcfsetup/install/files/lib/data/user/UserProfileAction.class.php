@@ -4,6 +4,7 @@ namespace wcf\data\user;
 
 use wcf\command\user\RefreshUserOnlineMarkings;
 use wcf\command\user\RefreshUserRanks;
+use wcf\command\user\SetSpecialTrophies;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
@@ -14,7 +15,6 @@ use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\upload\UploadFile;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
@@ -219,6 +219,7 @@ class UserProfileAction extends UserAction
      * Updates the special trophies.
      *
      * @return void
+     * @deprecated 6.3 use the `SetSpecialTrophies` command instead.
      */
     public function updateSpecialTrophies()
     {
@@ -226,33 +227,9 @@ class UserProfileAction extends UserAction
             $this->readObjects();
         }
 
-        $sql = "DELETE FROM wcf1_user_special_trophy
-                WHERE userID = ?";
-        $deleteStatement = WCF::getDB()->prepare($sql);
-
-        $sql = "INSERT INTO wcf1_user_special_trophy
-                            (userID, trophyID)
-                VALUES      (?, ?)";
-        $insertStatement = WCF::getDB()->prepare($sql);
-
+        $trophyIDs = \array_values(\array_map(\intval(...), $this->parameters['trophyIDs'] ?? []));
         foreach ($this->getObjects() as $user) {
-            WCF::getDB()->beginTransaction();
-
-            // delete all user special trophies for the user
-            $deleteStatement->execute([$user->userID]);
-
-            if (!empty($this->parameters['trophyIDs'])) {
-                foreach ($this->parameters['trophyIDs'] as $trophyID) {
-                    $insertStatement->execute([
-                        $user->userID,
-                        $trophyID,
-                    ]);
-                }
-            }
-
-            WCF::getDB()->commitTransaction();
-
-            UserStorageHandler::getInstance()->reset([$user->userID], 'specialTrophies');
+            (new SetSpecialTrophies($user->getDecoratedObject(), $trophyIDs))();
         }
     }
 }
