@@ -3,7 +3,8 @@
 namespace wcf\command\user\option\category;
 
 use wcf\data\user\option\category\UserOptionCategory;
-use wcf\data\user\option\category\UserOptionCategoryAction;
+use wcf\data\user\option\category\UserOptionCategoryBuilder;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 
 /**
  * Deletes a user option category.
@@ -21,7 +22,8 @@ final class DeleteOptionCategory
 
     public function __invoke(): void
     {
-        $action = new UserOptionCategoryAction([$this->category], 'delete');
-        $action->executeAction();
+        UserOptionCategoryBuilder::delete($this->category);
+
+        UserOptionCacheBuilder::getInstance()->reset();
     }
 }
