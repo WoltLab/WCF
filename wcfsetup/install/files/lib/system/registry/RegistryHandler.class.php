@@ -62,12 +62,26 @@ final class RegistryHandler extends SingletonFactory
                 {$conditions}";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
+
+        // Packages without any stored fields must be cached too, otherwise `get()` queries
+        // them again and values written by `set()` remain invisible until the next request.
+        foreach ($tmp as $packageID) {
+            $this->cache[$packageID] = [];
+        }
+
         while ($row = $statement->fetchArray()) {
-            if (!isset($this->cache[$row['packageID']])) {
-                $this->cache[$row['packageID']] = [];
+            $this->cache[$row['packageID']][$row['field']] = $row['fieldValue'];
+        }
+
+        // Changes made before the storage was loaded are only written on shutdown.
+        foreach ($tmp as $packageID) {
+            foreach ($this->updateFields[$packageID] ?? [] as $field => $fieldValue) {
+                $this->cache[$packageID][$field] = $fieldValue;
             }
 
-            $this->cache[$row['packageID']][$row['field']] = $row['fieldValue'];
+            foreach ($this->resetFields[$packageID] ?? [] as $field) {
+                unset($this->cache[$packageID][$field]);
+            }
         }
     }
 
@@ -98,6 +112,9 @@ final class RegistryHandler extends SingletonFactory
         }
         $this->updateFields[$packageID][$field] = $fieldValue;
 
+        // The last call for a field wins, see `delete()`.
+        unset($this->resetFields[$packageID][$field]);
+
         // update data cache for given package
         if (isset($this->cache[$packageID])) {
             $this->cache[$packageID][$field] = $fieldValue;
@@ -114,7 +131,15 @@ final class RegistryHandler extends SingletonFactory
         if (!isset($this->resetFields[$packageID])) {
             $this->resetFields[$packageID] = [];
         }
-        $this->resetFields[$packageID][] = $field;
+        // Keyed by field to deduplicate, read through the values because PHP turns numeric keys into ints.
+        $this->resetFields[$packageID][$field] = $field;
+
+        // The last call for a field wins, see `set()`.
+        unset($this->updateFields[$packageID][$field]);
+        if (($this->updateFields[$packageID] ?? []) === []) {
+            // `shutdown()` would otherwise prepare an INSERT without any rows to write.
+            unset($this->updateFields[$packageID]);
+        }
 
         if (isset($this->cache[$packageID][$field])) {
             unset($this->cache[$packageID][$field]);
@@ -152,21 +177,6 @@ final class RegistryHandler extends SingletonFactory
         }
 
         \ksort($toReset);
-
-        // exclude values which should be reset
-        foreach ($this->updateFields as $packageID => $fieldValues) {
-            if (isset($this->resetFields[$packageID])) {
-                foreach ($fieldValues as $field => $fieldValue) {
-                    if (\in_array($field, $this->resetFields[$packageID])) {
-                        unset($this->updateFields[$packageID][$field]);
-                    }
-                }
-
-                if (empty($this->updateFields[$packageID])) {
-                    unset($this->updateFields[$packageID]);
-                }
-            }
-        }
         \ksort($this->updateFields);
 
         $i = 0;
