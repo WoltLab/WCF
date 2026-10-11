@@ -2,6 +2,7 @@
 
 namespace wcf\system\interaction\bulk\admin;
 
+use wcf\acp\action\UserContentRemoveAction;
 use wcf\acp\form\UserAssignToGroupForm;
 use wcf\acp\form\UserContentRevertChangesForm;
 use wcf\acp\form\UserEmailAddressExportForm;
@@ -19,6 +20,7 @@ use wcf\system\interaction\bulk\BulkLinkInteraction;
 use wcf\system\interaction\bulk\BulkRpcInteraction;
 use wcf\system\interaction\InteractionConfirmationType;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Bulk interaction provider for the user administration.
@@ -117,7 +119,27 @@ final class UserBulkInteractions extends AbstractBulkInteractionProvider
                 'core/users/%s',
                 static fn(User $user) => $user->canDelete()
             ),
-            new UserContentRemoveBulkInteraction(),
+            new class(
+                'remove-content',
+                UserContentRemoveAction::class,
+                'wcf.acp.content.removeContent',
+                static fn(User $user) => $user->canDelete()
+            ) extends BulkFormBuilderDialogInteraction {
+                #[\Override]
+                public function renderInitialization(string $containerId): string
+                {
+                    $identifier = StringUtil::encodeJS($this->getIdentifier());
+                    $containerId = StringUtil::encodeJS($containerId);
+
+                    return <<<HTML
+                        <script data-relocate="true">
+                            require(['WoltLabSuite/Core/Acp/Component/User/RemoveContent'], ({ setupBulk }) => {
+                                setupBulk('{$identifier}', document.getElementById('{$containerId}'));
+                            });
+                        </script>
+                        HTML;
+                }
+            },
         ]);
 
         EventHandler::getInstance()->fire(
