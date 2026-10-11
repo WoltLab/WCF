@@ -160,5 +160,6 @@
 		<template>removeUserContentDialog</template>
 		<template>userSearch</template>
 		<template>userMerge</template>
+		<template>userContentRevertChanges</template>
 	</delete>
 </data>

@@ -3072,8 +3072,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.merge.warning"><![CDATA[Das Zusammenfügen von Benutzern aktualisiert aus technischen Gründen nicht alle Verweise, Anzeigen und Zähler. Es ist daher notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nach der Durchführung die entsprechenden Wartungsaufgaben ausführen {if LANGUAGE_USE_INFORMAL_VARIANT}lässt{else}lassen{/if}, um die <a href="{link controller='RebuildData'}{/link}">Anzeigen zu aktualisieren</a>.]]></item>
 		<item name="wcf.acp.user.revertChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe"><![CDATA[Zeitraum]]></item>
-		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Zeitraum in dem Änderungen des Benutzers zurückgesetzt werden sollen. Inhalte werden auf die neuste Version, welche entweder älter als der angegebene Zeitraum ist oder welche von einem anderen Nutzer stammt, zurückgesetzt. [Zeitraum in Tagen]]]></item>
-		<item name="wcf.acp.user.revertChanges.markedUsers"><![CDATA[Änderungen folgender Nutzer zurücksetzen]]></item>
+		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Zeitraum in dem Änderungen des Benutzers zurückgesetzt werden sollen. Inhalte werden auf die neuste Version, welche entweder älter als der angegebene Zeitraum ist oder welche von einem anderen Nutzer stammt, zurückgesetzt.]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Benutzer suchen]]></item>
 		<item name="wcf.acp.user.sendMail"><![CDATA[E-Mail an Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail an alle Benutzer senden]]></item>
@@ -5830,5 +5829,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.pip.userOption.options.messageObjectType.description"/>
 	<item name="wcf.user.condition.conditionGroup.userOptions"/>
 	<item name="wcf.acp.user.merge.markedUsers"/>
+	<item name="wcf.acp.user.revertChanges.markedUsers"/>
 </delete>
 </language>

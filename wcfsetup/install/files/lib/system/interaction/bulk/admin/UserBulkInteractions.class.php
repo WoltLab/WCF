@@ -3,9 +3,9 @@
 namespace wcf\system\interaction\bulk\admin;
 
 use wcf\acp\action\UserContentRemoveAction;
+use wcf\acp\action\UserContentRevertChangesAction;
 use wcf\acp\action\UserMergeAction;
 use wcf\acp\form\UserAssignToGroupForm;
-use wcf\acp\form\UserContentRevertChangesForm;
 use wcf\acp\form\UserEmailAddressExportForm;
 use wcf\acp\form\UserMailForm;
 use wcf\action\UserBanAction;
@@ -118,9 +118,9 @@ final class UserBulkInteractions extends AbstractBulkInteractionProvider
                 'wcf.acp.user.action.sendNewPassword.confirmMessage.bulk',
                 static fn(User $user) => $user->canSendNewPassword()
             ),
-            new BulkLinkInteraction(
+            new BulkFormBuilderDialogInteraction(
                 'revert-content-changes',
-                UserContentRevertChangesForm::class,
+                UserContentRevertChangesAction::class,
                 'wcf.acp.user.action.revertContentChanges',
                 static fn() => \MODULE_EDIT_HISTORY !== 0
                     && WCF::getSession()->hasPermission('admin.content.canBulkRevertContentChanges')
