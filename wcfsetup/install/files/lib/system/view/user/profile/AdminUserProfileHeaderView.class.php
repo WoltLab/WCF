@@ -51,7 +51,7 @@ final class AdminUserProfileHeaderView implements \Stringable
     #[\Override]
     public function __toString(): string
     {
-        return WCF::getTPL()->render('wcf', 'userProfileHeader', [
+        return WCF::getTPL()->render('wcf', 'shared_adminUserProfileHeader', [
             'view' => $this,
         ]);
     }

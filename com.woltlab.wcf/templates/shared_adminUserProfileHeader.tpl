@@ -147,3 +147,9 @@
 		</div>
 	</div>
 </header>
+
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Acp/Component/User/ProfileHeader'], ({ setup }) => {
+		setup(document.querySelector('.userProfileHeader[data-object-id="{$view->user->userID}"]'));
+	});
+</script>
