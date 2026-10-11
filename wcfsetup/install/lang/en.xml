@@ -3245,6 +3245,7 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 		<item name="wcf.article.button.unpublish"><![CDATA[Withdraw Publication]]></item>
 		<item name="wcf.article.button.setCategory"><![CDATA[Set category]]></item>
 		<item name="wcf.article.unreadArticles"><![CDATA[Unread Articles]]></item>
+		<item name="wcf.article.userArticles"><![CDATA[Articles by {$user->username}]]></item>
 		<item name="wcf.article.watchedArticles"><![CDATA[Subscribed Articles]]></item>
 	</category>
 	<category name="wcf.attachment">
@@ -4339,6 +4340,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Article"><![CDATA[Article <a href="{$article->getLink()}">{$article->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.CategoryArticleList"><![CDATA[Article category <a href="{$category->getLink()}">{$category->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[User profile of <a href="{link controller='User' object=$user}{/link}" class="userLink" data-object-id="{$user->userID}">{$user->username}</a>]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.UserArticleList"><![CDATA[<a href="{link controller='UserArticleList' object=$user}{/link}">Articles by {$user->username}</a>]]></item>
 		<item name="wcf.page.availableUpdates"><![CDATA[There are <a href="{link controller='PackageUpdate' isACP=true}{/link}">updates available</a> for installed packages.]]></item>
 		<item name="wcf.page.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
 		<item name="wcf.page.error.permissionDenied.title"><![CDATA[Access Denied]]></item>
@@ -4357,10 +4359,12 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.page.pageObjectID.com.woltlab.wcf.Article"><![CDATA[ID of the Article]]></item>
 		<item name="wcf.page.pageObjectID.com.woltlab.wcf.CategoryArticleList"><![CDATA[ID of the Category]]></item>
 		<item name="wcf.page.pageObjectID.com.woltlab.wcf.User"><![CDATA[ID of the User]]></item>
+		<item name="wcf.page.pageObjectID.com.woltlab.wcf.UserArticleList"><![CDATA[ID of the User]]></item>
 		<item name="wcf.page.pageObjectID.search"><![CDATA[Search ID]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.Article"><![CDATA[Search Article Titles]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.CategoryArticleList"><![CDATA[Search Category Titles]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.User"><![CDATA[Search Usernames]]></item>
+		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.UserArticleList"><![CDATA[Search Usernames]]></item>
 		<item name="wcf.page.pageObjectID.search.noResults"><![CDATA[The search returned no results.]]></item>
 		<item name="wcf.page.pageObjectID.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.page.pageObjectID.search.terms"><![CDATA[Search]]></item>

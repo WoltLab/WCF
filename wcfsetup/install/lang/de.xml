@@ -3320,6 +3320,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.button.unpublish"><![CDATA[Veröffentlichung zurückziehen]]></item>
 		<item name="wcf.article.button.setCategory"><![CDATA[Kategorie ändern]]></item>
 		<item name="wcf.article.unreadArticles"><![CDATA[Ungelesene Artikel]]></item>
+		<item name="wcf.article.userArticles"><![CDATA[Artikel von {$user->username}]]></item>
 		<item name="wcf.article.watchedArticles"><![CDATA[Abonnierte Artikel]]></item>
 	</category>
 	<category name="wcf.attachment">
@@ -4393,6 +4394,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Article"><![CDATA[Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.CategoryArticleList"><![CDATA[Artikel-Kategorie <a href="{$category->getLink()}">{$category->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-object-id="{$user->userID}">{$user->username}</a>]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.UserArticleList"><![CDATA[<a href="{link controller='UserArticleList' object=$user}{/link}">Artikel von {$user->username}</a>]]></item>
 		<item name="wcf.page.availableUpdates"><![CDATA[Es sind <a href="{link controller='PackageUpdate' isACP=true}{/link}">Aktualisierungen für installierte Pakete</a> verfügbar.]]></item>
 		<item name="wcf.page.error.permissionDenied"><![CDATA[Der Zutritt zu dieser Seite ist {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} leider verwehrt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du besitzt{else}Sie besitzen{/if} nicht die notwendigen Zugriffsrechte, um diese Seite aufrufen zu können.]]></item>
 		<item name="wcf.page.error.permissionDenied.title"><![CDATA[Zugriff verweigert]]></item>
@@ -4411,10 +4413,12 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.page.pageObjectID.com.woltlab.wcf.Article"><![CDATA[ID des Artikels]]></item>
 		<item name="wcf.page.pageObjectID.com.woltlab.wcf.CategoryArticleList"><![CDATA[ID der Kategorie]]></item>
 		<item name="wcf.page.pageObjectID.com.woltlab.wcf.User"><![CDATA[ID des Benutzers]]></item>
+		<item name="wcf.page.pageObjectID.com.woltlab.wcf.UserArticleList"><![CDATA[ID des Benutzers]]></item>
 		<item name="wcf.page.pageObjectID.search"><![CDATA[ID suchen]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.Article"><![CDATA[Artikeltitel durchsuchen]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.CategoryArticleList"><![CDATA[Kategorietitel durchsuchen]]></item>
 		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.User"><![CDATA[Benutzernamen durchsuchen]]></item>
+		<item name="wcf.page.pageObjectID.search.com.woltlab.wcf.UserArticleList"><![CDATA[Benutzernamen durchsuchen]]></item>
 		<item name="wcf.page.pageObjectID.search.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>
 		<item name="wcf.page.pageObjectID.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.page.pageObjectID.search.terms"><![CDATA[Durchsuchen]]></item>

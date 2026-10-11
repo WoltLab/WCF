@@ -7,6 +7,7 @@ use wcf\data\user\UserProfile;
 use wcf\event\user\profile\UserProfileHeaderSearchContentLinkCollecting;
 use wcf\event\user\profile\UserProfileStatItemCollecting;
 use wcf\page\MembersListPage;
+use wcf\page\UserArticleListPage;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
@@ -129,9 +130,19 @@ final class UserProfileHeaderView implements \Stringable
 
     private function initSearchContentLinks(): void
     {
+        if (\MODULE_ARTICLE !== 0 && $this->user->articles !== 0) {
+            $this->searchContentLinks[] = new UserProfileHeaderViewSearchContentLink(
+                WCF::getLanguage()->get('wcf.article.articles'),
+                LinkHandler::getInstance()->getControllerLink(
+                    UserArticleListPage::class,
+                    ['object' => $this->user]
+                )
+            );
+        }
+
         $event = new UserProfileHeaderSearchContentLinkCollecting($this->user);
         EventHandler::getInstance()->fire($event);
-        $this->searchContentLinks = $event->getLinks();
+        $this->searchContentLinks = [...$this->searchContentLinks, ...$event->getLinks()];
     }
 
     private function initInteractionContextMenu(): void
