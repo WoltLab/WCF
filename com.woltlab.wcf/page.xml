@@ -605,6 +605,16 @@
 			<allowSpidersToIndex>1</allowSpidersToIndex>
 			<requireObjectID>1</requireObjectID>
 		</page>
+		<page identifier="com.woltlab.wcf.UserArticleList">
+			<pageType>system</pageType>
+			<controller>wcf\page\UserArticleListPage</controller>
+			<name language="de">Artikel eines bestimmten Benutzers</name>
+			<name language="en">Articles of Certain User</name>
+			<handler>wcf\system\page\handler\UserArticleListPageHandler</handler>
+			<parent>com.woltlab.wcf.ArticleList</parent>
+			<options>module_article</options>
+			<requireObjectID>1</requireObjectID>
+		</page>
 		<page identifier="com.woltlab.wcf.Article">
 			<pageType>system</pageType>
 			<controller>wcf\page\ArticlePage</controller>
