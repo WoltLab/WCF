@@ -2,7 +2,7 @@
 
 namespace wcf\system\option\user;
 
-use wcf\data\option\category\OptionCategory;
+use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\UserOption;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 
@@ -75,7 +75,17 @@ trait TUserOptionsByCategory
         return $options;
     }
 
-    private function isAccessibleUserOptionCategory(OptionCategory $category): bool
+    /**
+     * Returns the localized title of the user option category with the given name.
+     */
+    protected function getUserOptionCategoryTitle(string $categoryName): string
+    {
+        $categories = UserOptionCacheBuilder::getInstance()->getData([], 'categories');
+
+        return ($categories[$categoryName] ?? null)?->getTitle() ?? $categoryName;
+    }
+
+    private function isAccessibleUserOptionCategory(UserOptionCategory $category): bool
     {
         return $category->categoryName !== 'hidden'
             && $category->validateOptions()

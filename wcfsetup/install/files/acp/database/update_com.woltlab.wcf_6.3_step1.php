@@ -105,6 +105,39 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    PartialDatabaseTable::create('wcf1_user_option_category')
+        ->columns([
+            VarcharDatabaseTableColumn::create('l10nIdentifier')
+                ->length(255),
+        ]),
+    DatabaseTable::create('wcf1_user_option_category_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('categoryID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            TinyintDatabaseTableColumn::create('isPristine')
+                ->notNull()
+                ->defaultValue(1),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('categoryID')
+                ->columns(['categoryID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['categoryID'])
+                ->referencedTable('wcf1_user_option_category')
+                ->referencedColumns(['categoryID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
     PartialDatabaseTable::create('wcf1_smiley')
         ->columns([
             NotNullVarchar255DatabaseTableColumn::create('emoji')

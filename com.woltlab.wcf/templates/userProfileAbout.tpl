@@ -4,7 +4,7 @@
 
 		{foreach from=$view->getOptionValuesOutput() key=categoryName item=userOptions}
 			<section class="section">
-				<h2 class="sectionTitle">{lang}wcf.user.option.category.{$categoryName}{/lang}</h2>
+				<h2 class="sectionTitle">{$view->getCategoryTitle($categoryName)}</h2>
 
 				{foreach from=$userOptions item=userOption}
 					<dl data-option-id="{$userOption[object]->optionID}">

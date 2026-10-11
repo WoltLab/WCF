@@ -3,9 +3,7 @@
 namespace wcf\acp\form;
 
 use wcf\data\user\option\category\UserOptionCategory;
-use wcf\form\AbstractFormBuilderForm;
 use wcf\http\Helper;
-use wcf\system\language\I18nHandler;
 
 /**
  * Shows the form for editing user option categories.
@@ -24,7 +22,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm
     /**
      * @inheritDoc
      */
-    public $formAction = 'edit';
+    public string $formAction = 'edit';
 
     #[\Override]
     public function readParameters()
@@ -32,18 +30,6 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm
         parent::readParameters();
 
         $this->formObject = Helper::fetchObjectFromQueryParameter(UserOptionCategory::class);
-    }
-
-    #[\Override]
-    public function saved()
-    {
-        I18nHandler::getInstance()->save(
-            'categoryName',
-            'wcf.user.option.category.' . $this->formObject->categoryName,
-            'wcf.user.option'
-        );
-
-        AbstractFormBuilderForm::saved();
     }
 
     #[\Override]

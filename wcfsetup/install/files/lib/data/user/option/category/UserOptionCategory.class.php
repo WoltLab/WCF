@@ -2,8 +2,12 @@
 
 namespace wcf\data\user\option\category;
 
-use wcf\data\DatabaseObject;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\ITitledObject;
+use wcf\data\TDatabaseObjectOptions;
+use wcf\data\TDatabaseObjectPermissions;
+use wcf\system\l10n\L10nDefinition;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
 
 /**
@@ -20,9 +24,16 @@ use wcf\system\WCF;
  * @property-read   int     $showOrder          position of the user option category in relation to its siblings
  * @property-read   ?string $permissions        comma separated list of user group permissions of which the active user needs to have at least one to see the user option category
  * @property-read   ?string $options            comma separated list of options of which at least one needs to be enabled for the user option category to be shown
+ * @property-read   ?string $l10nIdentifier     base name of the language variable the localized title is derived from, `null` for categories created by an administrator
+ *
+ * @phpstan-import-type L10nValue from L10nStorage
+ * @extends CollectionDatabaseObject<UserOptionCategoryCollection>
  */
-class UserOptionCategory extends DatabaseObject implements ITitledObject, \Stringable
+class UserOptionCategory extends CollectionDatabaseObject implements ITitledObject, \Stringable
 {
+    use TDatabaseObjectOptions;
+    use TDatabaseObjectPermissions;
+
     /**
      * Returns the title of this category.
      */
@@ -35,7 +46,39 @@ class UserOptionCategory extends DatabaseObject implements ITitledObject, \Strin
     #[\Override]
     public function getTitle(): string
     {
-        return WCF::getLanguage()->get('wcf.user.option.category.' . $this->categoryName);
+        return $this->getCollection()->getResolvedL10nValue($this, 'title');
+    }
+
+    /**
+     * Returns the localized values of the given column as a
+     * `languageID => value` map (see `L10nStorage`).
+     *
+     * @return L10nValue
+     * @since 6.3
+     */
+    public function getL10nValues(string $columnName): array
+    {
+        if ($columnName !== 'title') {
+            throw new \InvalidArgumentException("Invalid column name given.");
+        }
+
+        return $this->getCollection()->getL10nValues($this, $columnName);
+    }
+
+    /**
+     * @since 6.3
+     */
+    public static function getL10nDefinition(): L10nDefinition
+    {
+        return new L10nDefinition(
+            'wcf1_user_option_category',
+            'wcf1_user_option_category_l10n',
+            'categoryID',
+            ['title'],
+            'l10nIdentifier',
+            ['title' => ''],
+            ['title' => 255],
+        );
     }
 
     /**

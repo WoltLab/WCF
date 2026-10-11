@@ -2,7 +2,6 @@
 
 namespace wcf\system\package\plugin;
 
-use wcf\data\option\category\OptionCategory;
 use wcf\data\package\Package;
 use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryBuilder;
@@ -279,6 +278,11 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                 ->setPackageID($this->installation->getPackageID())
                 ->setCategoryName($category['categoryName']);
         }
+
+        // The localized title is shipped as a `wcf.user.option.category.*`
+        // language variable and synchronized into the l10n storage at the end
+        // of the installation, see `SyncL10nLanguageItems`.
+        $builder->setL10nIdentifier('wcf.user.option.category.' . $category['categoryName']);
 
         $builder
             ->setParentCategoryName($category['parentCategoryName'] ?? '')
@@ -780,7 +784,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
      * Returns the categories of this package and the packages it requires in
      * the order of the category tree, with array keys being the category names.
      *
-     * @return array<string, array{category: OptionCategory, depth: int}>
+     * @return array<string, array{category: UserOptionCategory, depth: int}>
      */
     public function getSortedCategories(): array
     {

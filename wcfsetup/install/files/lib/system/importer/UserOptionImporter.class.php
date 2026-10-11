@@ -2,7 +2,7 @@
 
 namespace wcf\system\importer;
 
-use wcf\data\user\option\category\UserOptionCategoryEditor;
+use wcf\data\user\option\category\UserOptionCategoryBuilder;
 use wcf\data\user\option\category\UserOptionCategoryList;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionBuilder;
@@ -111,12 +111,14 @@ class UserOptionImporter extends AbstractImporter
         }
 
         if (!\in_array($name, $this->categoryCache, true)) {
-            // create category
-            UserOptionCategoryEditor::create([
-                'packageID' => 1,
-                'categoryName' => $name,
-                'parentCategoryName' => 'profile',
-            ]);
+            // Imported categories are owned by the administrator and use their
+            // name as the monolingual title.
+            UserOptionCategoryBuilder::forCreate()
+                ->setPackageID(1)
+                ->setCategoryName($name)
+                ->setParentCategoryName('profile')
+                ->setL10nTitle([L10nStorage::MONOLINGUAL => $name])
+                ->create();
 
             $this->categoryCache[] = $name;
         }

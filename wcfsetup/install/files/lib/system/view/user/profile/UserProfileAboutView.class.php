@@ -49,6 +49,14 @@ final class UserProfileAboutView
     }
 
     /**
+     * Returns the localized title of the category with the given name.
+     */
+    public function getCategoryTitle(string $categoryName): string
+    {
+        return $this->getUserOptionCategoryTitle($categoryName);
+    }
+
+    /**
      * Returns the formatted values of the options grouped by the name of their
      * category, options without a value and categories without any formatted
      * value are skipped.

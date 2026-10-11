@@ -43,7 +43,7 @@ trait TUserOptionFormFields
         $containers = [];
         foreach ($optionsByCategory as $categoryName => $options) {
             $containers[] = FormContainer::create('optionCategory' . $categories[$categoryName]->categoryID)
-                ->label('wcf.user.option.category.' . $categoryName)
+                ->label($categories[$categoryName]->getTitle())
                 ->appendChildren(\array_map($this->getUserOptionFormField(...), $options));
         }
 

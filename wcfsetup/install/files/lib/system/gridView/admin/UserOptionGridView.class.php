@@ -8,6 +8,7 @@ use wcf\data\user\option\L10nUserOptionList;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionList;
 use wcf\event\gridView\admin\UserOptionGridViewInitialized;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
@@ -55,9 +56,9 @@ final class UserOptionGridView extends AbstractGridView
                         {
                             \assert($row instanceof UserOption);
 
-                            return StringUtil::encodeHTML(
-                                WCF::getLanguage()->get('wcf.user.option.category.' . $row->categoryName)
-                            );
+                            $category = UserOptionCacheBuilder::getInstance()->getData([], 'categories')[$row->categoryName] ?? null;
+
+                            return StringUtil::encodeHTML($category?->getTitle() ?? $row->categoryName);
                         }
                     }
                 ]),

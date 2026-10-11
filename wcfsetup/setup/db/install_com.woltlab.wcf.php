@@ -4878,6 +4878,8 @@ return [
                 ->defaultValue(0),
             TextDatabaseTableColumn::create('permissions'),
             TextDatabaseTableColumn::create('options'),
+            VarcharDatabaseTableColumn::create('l10nIdentifier')
+                ->length(255),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -4891,6 +4893,34 @@ return [
                 ->columns(['packageID'])
                 ->referencedTable('wcf1_package')
                 ->referencedColumns(['packageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_user_option_category_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('categoryID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            TinyintDatabaseTableColumn::create('isPristine')
+                ->notNull()
+                ->defaultValue(1),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('categoryID')
+                ->columns(['categoryID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['categoryID'])
+                ->referencedTable('wcf1_user_option_category')
+                ->referencedColumns(['categoryID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),

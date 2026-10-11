@@ -3,21 +3,18 @@
 namespace wcf\system\gridView\admin;
 
 use wcf\acp\form\UserOptionCategoryEditForm;
-use wcf\data\DatabaseObject;
+use wcf\data\user\option\category\L10nUserOptionCategoryList;
 use wcf\data\user\option\category\UserOptionCategory;
-use wcf\data\user\option\category\UserOptionCategoryList;
 use wcf\event\gridView\admin\UserOptionCategoryGridViewInitialized;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
-use wcf\system\gridView\renderer\DefaultColumnRenderer;
 use wcf\system\gridView\renderer\NumberColumnRenderer;
 use wcf\system\gridView\renderer\ObjectIdColumnRenderer;
 use wcf\system\interaction\admin\UserOptionCategoryInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Grid view for the list of user option categories.
@@ -27,7 +24,7 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  *
- * @extends AbstractGridView<UserOptionCategory, UserOptionCategoryList>
+ * @extends AbstractGridView<UserOptionCategory, L10nUserOptionCategoryList>
  */
 final class UserOptionCategoryGridView extends AbstractGridView
 {
@@ -38,21 +35,10 @@ final class UserOptionCategoryGridView extends AbstractGridView
                 ->label('wcf.global.objectID')
                 ->renderer(new ObjectIdColumnRenderer())
                 ->sortable(),
-            GridViewColumn::for('categoryName')
+            GridViewColumn::for('title')
                 ->label('wcf.global.name')
                 ->titleColumn()
-                ->sortable()
-                ->renderer([
-                    new class extends DefaultColumnRenderer {
-                        #[\Override]
-                        public function render(mixed $value, DatabaseObject $row): string
-                        {
-                            \assert($row instanceof UserOptionCategory);
-
-                            return StringUtil::encodeHTML($row->getTitle());
-                        }
-                    }
-                ]),
+                ->sortable(sortByDatabaseColumn: 'title'),
             GridViewColumn::for('userOptions')
                 ->label('wcf.acp.user.option.category.options')
                 ->renderer(new NumberColumnRenderer())
@@ -80,9 +66,9 @@ final class UserOptionCategoryGridView extends AbstractGridView
     }
 
     #[\Override]
-    protected function createObjectList(): UserOptionCategoryList
+    protected function createObjectList(): L10nUserOptionCategoryList
     {
-        $list = new UserOptionCategoryList();
+        $list = new L10nUserOptionCategoryList();
         if ($list->sqlSelects !== '') {
             $list->sqlSelects .= ', ';
         }

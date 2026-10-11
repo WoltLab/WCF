@@ -87,6 +87,7 @@
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_contactRecipientL10n.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_paidSubscriptionL10n.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_userOptionL10n.php</instruction>
+	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_userOptionCategoryL10n.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_captchaQuestionL10n.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_userOptionConfiguration.php</instruction>
 	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.3_step3.php</instruction>
