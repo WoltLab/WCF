@@ -108,6 +108,7 @@ class UserProfileAction extends UserAction
      *
      * @return void
      * @throws UserInputException
+     * @deprecated 6.3 use `wcf\system\endpoint\controller\core\users\GetUserActivityPointList` instead
      */
     public function validateGetDetailedActivityPointList()
     {
@@ -136,6 +137,7 @@ class UserProfileAction extends UserAction
      * Returns detailed activity point list.
      *
      * @return array{template: string, userID: int}
+     * @deprecated 6.3 use `wcf\system\endpoint\controller\core\users\GetUserActivityPointList` instead
      */
     public function getDetailedActivityPointList()
     {
