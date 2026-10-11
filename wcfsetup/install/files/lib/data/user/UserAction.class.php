@@ -7,6 +7,8 @@ use wcf\command\user\BanUser;
 use wcf\command\user\ConfirmUserEmail;
 use wcf\command\user\DisableUser;
 use wcf\command\user\EnableUser;
+use wcf\command\user\RefreshUserOnlineMarkings;
+use wcf\command\user\RefreshUserRanks;
 use wcf\command\user\ResendActivationMail;
 use wcf\command\user\UnbanUser;
 use wcf\command\user\UnconfirmUserEmail;
@@ -284,12 +286,10 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
 
             // update user rank
             if (\MODULE_USER_RANK !== 0) {
-                $action = new UserProfileAction([$userEditor], 'updateUserRank');
-                $action->executeAction();
+                (new RefreshUserRanks([$user]))();
             }
             // update user online marking
-            $action = new UserProfileAction([$userEditor], 'updateUserOnlineMarking');
-            $action->executeAction();
+            (new RefreshUserOnlineMarkings([$user]))();
         }
 
         return $user;
@@ -434,13 +434,15 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         UserEditor::resetCache();
         $this->readObjects();
 
+        $users = \array_values(\array_map(
+            static fn (UserEditor $editor) => $editor->getDecoratedObject(),
+            $this->getObjects()
+        ));
         if (\MODULE_USER_RANK !== 0) {
-            $action = new UserProfileAction($this->objects, 'updateUserRank');
-            $action->executeAction();
+            (new RefreshUserRanks($users))();
         }
         if (\MODULE_USERS_ONLINE !== 0) {
-            $action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
-            $action->executeAction();
+            (new RefreshUserOnlineMarkings($users))();
         }
     }
 
@@ -479,13 +481,15 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         UserEditor::resetCache();
         $this->readObjects();
 
+        $users = \array_values(\array_map(
+            static fn (UserEditor $editor) => $editor->getDecoratedObject(),
+            $this->getObjects()
+        ));
         if (\MODULE_USER_RANK !== 0) {
-            $action = new UserProfileAction($this->objects, 'updateUserRank');
-            $action->executeAction();
+            (new RefreshUserRanks($users))();
         }
         if (\MODULE_USERS_ONLINE !== 0) {
-            $action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
-            $action->executeAction();
+            (new RefreshUserOnlineMarkings($users))();
         }
     }
 
