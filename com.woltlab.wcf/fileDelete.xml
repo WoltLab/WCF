@@ -27,6 +27,7 @@
 		<file>js/WoltLabSuite/Core/Ui/User/Editor.js</file>
 		<file>lib/acp/action/UserQuickSearchAction.class.php</file>
 		<file>lib/acp/form/UserSearchForm.class.php</file>
+		<file>lib/data/user/UserContentAction.class.php</file>
 		<file>lib/system/clipboard/action/UserClipboardAction.class.php</file>
 		<file>lib/system/clipboard/action/UserContentClipboardAction.class.php</file>
 		<file>lib/system/listView/user/UserSearchResultsListView.class.php</file>
