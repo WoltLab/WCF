@@ -82,12 +82,22 @@ final class UserBulkInteractions extends AbstractBulkInteractionProvider
                 'wcf.acp.user.action.assignToGroup',
                 static fn(User $user) => $user->canEdit()
             ),
-            new BulkFormBuilderDialogInteraction(
+            new class(
                 'merge',
                 UserMergeAction::class,
                 'wcf.acp.user.action.merge',
                 static fn(User $user) => $user->canEdit()
-            ),
+            ) extends BulkFormBuilderDialogInteraction {
+                #[\Override]
+                public function render(array $objects): string
+                {
+                    if (\count($objects) < 2) {
+                        return '';
+                    }
+
+                    return parent::render($objects);
+                }
+            },
             new BulkLinkInteraction(
                 'send-mail',
                 UserMailForm::class,
