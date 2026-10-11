@@ -5,8 +5,10 @@ namespace wcf\data\user;
 use ParagonIE\ConstantTime\Hex;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
+use wcf\data\user\group\UserGroup;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\language\LanguageFactory;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\user\authentication\password\algorithm\Invalid as InvalidPasswordAlgorithm;
 use wcf\system\user\authentication\password\PasswordAlgorithmManager;
@@ -406,14 +408,12 @@ final class UserBuilder extends DatabaseObjectBuilder
     protected function afterCreate(DatabaseObject $object): void
     {
         $this->createUserOptions($object);
-
-        $editor = new UserEditor($object);
-        if ($this->groupIDs === null) {
-            $editor->addToGroups([], false, true);
-        } else {
-            $editor->addToGroups($this->groupIDs, false, false);
-        }
-        $editor->addToLanguages($this->languageIDs ?? [], false);
+        $this->saveGroupIDs(
+            $object,
+            $this->groupIDs ?? UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::USERS]),
+            false
+        );
+        $this->saveLanguageIDs($object, $this->languageIDs ?? [], false);
 
         if (isset($this->signatureHtmlInputProcessor)) {
             $this->registerSignatureEmbeddedObjects($object);
@@ -438,18 +438,16 @@ final class UserBuilder extends DatabaseObjectBuilder
     #[\Override]
     protected function afterUpdate(DatabaseObject $object): void
     {
-        $editor = new UserEditor($object);
-
         if ($this->userOptions !== null) {
-            $editor->updateUserOptions($this->userOptions);
+            $this->updateUserOptions($object);
         }
 
         if ($this->groupIDs !== null) {
-            $editor->addToGroups($this->groupIDs, true, false);
+            $this->saveGroupIDs($object, $this->groupIDs, true);
         }
 
         if ($this->languageIDs !== null) {
-            $editor->addToLanguages($this->languageIDs, true);
+            $this->saveLanguageIDs($object, $this->languageIDs, true);
         }
 
         if (isset($this->signatureHtmlInputProcessor)) {
@@ -498,6 +496,72 @@ final class UserBuilder extends DatabaseObjectBuilder
                 VALUES      (?" . $placeholders . ")";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($statementParameters);
+    }
+
+    private function updateUserOptions(User $user): void
+    {
+        $columns = [];
+        $statementParameters = [];
+        foreach ($this->userOptions as $optionID => $value) {
+            $columns[] = 'userOption' . $optionID . ' = ?';
+            $statementParameters[] = $value;
+        }
+        $statementParameters[] = $user->userID;
+
+        $sql = "UPDATE  wcf1_user_option_value
+                SET     " . \implode(', ', $columns) . "
+                WHERE   userID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($statementParameters);
+    }
+
+    /**
+     * @param list<int> $groupIDs
+     */
+    private function saveGroupIDs(User $user, array $groupIDs, bool $replace): void
+    {
+        if ($replace) {
+            $sql = "DELETE FROM wcf1_user_to_group
+                    WHERE       userID = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([$user->userID]);
+        }
+
+        $sql = "INSERT IGNORE INTO  wcf1_user_to_group
+                                    (userID, groupID)
+                VALUES              (?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+        foreach ($groupIDs as $groupID) {
+            $statement->execute([$user->userID, $groupID]);
+        }
+    }
+
+    /**
+     * Saves the content languages of the user, an empty list falls back to the
+     * default language.
+     *
+     * @param list<int> $languageIDs
+     */
+    private function saveLanguageIDs(User $user, array $languageIDs, bool $replace): void
+    {
+        if ($replace) {
+            $sql = "DELETE FROM wcf1_user_to_language
+                    WHERE       userID = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([$user->userID]);
+        }
+
+        if ($languageIDs === []) {
+            $languageIDs = [LanguageFactory::getInstance()->getDefaultLanguageID()];
+        }
+
+        $sql = "INSERT IGNORE INTO  wcf1_user_to_language
+                                    (userID, languageID)
+                VALUES              (?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+        foreach ($languageIDs as $languageID) {
+            $statement->execute([$user->userID, $languageID]);
+        }
     }
 
     private static function getPasswordHash(
