@@ -20,19 +20,4 @@ class UserOptionAction extends AbstractDatabaseObjectAction
      * @inheritDoc
      */
     protected $className = UserOptionEditor::class;
-
-    /**
-     * @inheritDoc
-     */
-    protected $permissionsCreate = ['admin.user.canManageUserOption'];
-
-    /**
-     * @inheritDoc
-     */
-    protected $permissionsUpdate = ['admin.user.canManageUserOption'];
-
-    /**
-     * @inheritDoc
-     */
-    protected $requireACP = ['create', 'update'];
 }
