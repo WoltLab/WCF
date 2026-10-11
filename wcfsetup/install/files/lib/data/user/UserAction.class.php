@@ -183,6 +183,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Validates the ban action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateBan()
     {
@@ -196,6 +198,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Validates the unban action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateUnban()
     {
@@ -208,6 +212,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Bans users.
      *
      * @return string
+     *
+     * @deprecated 6.3 Use the `BanUser` command instead.
      */
     public function ban()
     {
@@ -238,6 +244,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Unbans users.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `UnbanUser` command instead.
      */
     public function unban()
     {
@@ -635,6 +643,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Validates the enable action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateEnable()
     {
@@ -647,6 +657,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Validates the disable action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateDisable()
     {
@@ -658,6 +670,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      *
      * @return void
      * @since       5.3
+     *
+     * @deprecated 6.3
      */
     public function validateConfirmEmail()
     {
@@ -669,6 +683,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      *
      * @return void
      * @since       5.3
+     *
+     * @deprecated 6.3
      */
     public function validateUnconfirmEmail()
     {
@@ -680,6 +696,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      *
      * @return void
      * @since       5.3
+     *
+     * @deprecated 6.3 Use the `ConfirmUserEmail` command instead.
      */
     public function confirmEmail()
     {
@@ -698,6 +716,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      *
      * @return void
      * @since       5.3
+     *
+     * @deprecated 6.3 Use the `UnconfirmUserEmail` command instead.
      */
     public function unconfirmEmail()
     {
@@ -714,6 +734,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Enables users.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `EnableUser` command instead.
      */
     public function enable()
     {
@@ -731,6 +753,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Disables users.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `DisableUser` command instead.
      */
     public function disable()
     {
@@ -771,6 +795,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Validates the 'disableSignature' action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateDisableSignature()
     {
@@ -784,6 +810,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Disables the signature of the handled users.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `DisableUserSignature` command instead.
      */
     public function disableSignature()
     {
@@ -811,6 +839,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Validates the 'enableSignature' action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateEnableSignature()
     {
@@ -831,6 +861,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Enables the signature of the handled users.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `EnableUserSignature` command instead.
      */
     public function enableSignature()
     {
@@ -849,6 +881,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Validates the 'disableAvatar' action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateDisableAvatar()
     {
@@ -862,6 +896,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Disables the avatar of the handled users.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `DisableUserAvatar` command instead.
      */
     public function disableAvatar()
     {
@@ -890,6 +926,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      *
      * @return void
      * @since   5.2
+     *
+     * @deprecated 6.3
      */
     public function validateDisableCoverPhoto()
     {
@@ -904,6 +942,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      *
      * @return void
      * @since   5.2
+     *
+     * @deprecated 6.3 Use the `DisableUserCoverPhoto` command instead.
      */
     public function disableCoverPhoto()
     {
@@ -931,6 +971,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Validates the 'enableAvatar' action.
      *
      * @return void
+     *
+     * @deprecated 6.3
      */
     public function validateEnableAvatar()
     {
@@ -951,6 +993,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Enables the avatar of the handled users.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `EnableUserAvatar` command instead.
      */
     public function enableAvatar()
     {
@@ -970,6 +1014,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      *
      * @return void
      * @since   5.2
+     *
+     * @deprecated 6.3
      */
     public function validateEnableCoverPhoto()
     {
@@ -991,6 +1037,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      *
      * @return void
      * @since   5.2
+     *
+     * @deprecated 6.3 Use the `EnableUserCoverPhoto` command instead.
      */
     public function enableCoverPhoto()
     {
@@ -1031,6 +1079,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * @throws  PermissionDeniedException
      * @throws  UserInputException
      * @since   5.2
+     *
+     * @deprecated 6.3
      */
     public function validateResendActivationMail()
     {
@@ -1056,6 +1106,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      *
      * @return void
      * @since   5.2
+     *
+     * @deprecated 6.3 Use the `ResendActivationMail` command instead.
      */
     public function resendActivationMail()
     {

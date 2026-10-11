@@ -2,6 +2,7 @@
 
 namespace wcf\form;
 
+use wcf\command\user\ConfirmUserEmail;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\exception\IllegalLinkException;
@@ -143,8 +144,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
 
         // confirm email
         if (!$this->user->isEmailConfirmed() && $this->user->blacklistMatches === '') {
-            $this->objectAction = new UserAction([$this->user], 'confirmEmail');
-            $this->objectAction->executeAction();
+            (new ConfirmUserEmail($this->user))();
         }
         $this->saved();
 
