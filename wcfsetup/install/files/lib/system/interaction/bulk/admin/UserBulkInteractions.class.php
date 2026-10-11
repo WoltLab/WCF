@@ -2,10 +2,10 @@
 
 namespace wcf\system\interaction\bulk\admin;
 
+use wcf\acp\action\UserAssignToGroupAction;
 use wcf\acp\action\UserContentRemoveAction;
 use wcf\acp\action\UserContentRevertChangesAction;
 use wcf\acp\action\UserMergeAction;
-use wcf\acp\form\UserAssignToGroupForm;
 use wcf\acp\form\UserEmailAddressExportForm;
 use wcf\acp\form\UserMailForm;
 use wcf\action\UserBanAction;
@@ -76,9 +76,9 @@ final class UserBulkInteractions extends AbstractBulkInteractionProvider
                 isAvailableCallback: static fn(User $user) => $user->banned === 1
                     && $user->canBan()
             ),
-            new BulkLinkInteraction(
+            new BulkFormBuilderDialogInteraction(
                 'assign-to-group',
-                UserAssignToGroupForm::class,
+                UserAssignToGroupAction::class,
                 'wcf.acp.user.action.assignToGroup',
                 static fn(User $user) => $user->canEdit()
             ),

@@ -161,5 +161,6 @@
 		<template>userSearch</template>
 		<template>userMerge</template>
 		<template>userContentRevertChanges</template>
+		<template>userAssignToGroup</template>
 	</delete>
 </data>

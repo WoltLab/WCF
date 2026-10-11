@@ -2970,8 +2970,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Add User]]></item>
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Add to User Group]]></item>
-		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Adding the following users to the user groups selected below]]></item>
-		<item name="wcf.acp.user.assignToGroup.success"><![CDATA[The user{if $users|count > 1}s have{else} has{/if} successfully been added to the selected user group{if $groupIDs|count > 1}s{/if}.]]></item>
 		<item name="wcf.acp.user.banReason"><![CDATA[Reason]]></item>
 		<item name="wcf.acp.user.banReason.description"><![CDATA[The reason for the ban will be displayed for the affected users.]]></item>
 		<item name="wcf.acp.user.ban.expires"><![CDATA[Unbanning]]></item>
@@ -5832,5 +5830,7 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.condition.conditionGroup.userOptions"/>
 	<item name="wcf.acp.user.merge.markedUsers"/>
 	<item name="wcf.acp.user.revertChanges.markedUsers"/>
+	<item name="wcf.acp.user.assignToGroup.markedUsers"/>
+	<item name="wcf.acp.user.assignToGroup.success"/>
 </delete>
 </language>
