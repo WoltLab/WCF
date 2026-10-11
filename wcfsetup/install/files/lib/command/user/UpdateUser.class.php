@@ -4,7 +4,6 @@ namespace wcf\command\user;
 
 use wcf\data\user\User;
 use wcf\data\user\UserBuilder;
-use wcf\data\user\UserProfileAction;
 use wcf\event\user\UserRenamed;
 use wcf\event\user\UserUpdated;
 use wcf\system\event\EventHandler;
@@ -71,8 +70,7 @@ final class UpdateUser
         }
 
         if ($groupsChanged && \MODULE_USERS_ONLINE !== 0) {
-            $action = new UserProfileAction([$user], 'updateUserOnlineMarking');
-            $action->executeAction();
+            (new RefreshUserOnlineMarkings([$user]))();
         }
 
         EventHandler::getInstance()->fire(new UserUpdated($user, $this->builder));

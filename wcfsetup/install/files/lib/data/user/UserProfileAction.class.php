@@ -2,9 +2,9 @@
 
 namespace wcf\data\user;
 
+use wcf\command\user\RefreshUserOnlineMarkings;
 use wcf\command\user\RefreshUserRanks;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\group\UserGroup;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -198,6 +198,7 @@ class UserProfileAction extends UserAction
      * Updates user online markings.
      *
      * @return void
+     * @deprecated 6.3 use the `RefreshUserOnlineMarkings` command instead.
      */
     public function updateUserOnlineMarking()
     {
@@ -205,112 +206,11 @@ class UserProfileAction extends UserAction
             $this->readObjects();
         }
 
-        $fixUserGroupIDs = $userToGroup = $removeFromGroupIDs = [];
-        $newGroupIDs = [];
-        foreach ($this->getObjects() as $user) {
-            $groupIDs = $user->getGroupIDs();
-            if (!\in_array(UserGroup::EVERYONE, $groupIDs, true)) {
-                $fixUserGroupIDs[$user->userID] = [UserGroup::EVERYONE];
-                $groupIDs[] = UserGroup::EVERYONE;
-            }
-            if ($user->pendingActivation()) {
-                if (!\in_array(UserGroup::GUESTS, $groupIDs, true)) {
-                    if (!isset($fixUserGroupIDs[$user->userID])) {
-                        $fixUserGroupIDs[$user->userID] = [];
-                    }
-                    $fixUserGroupIDs[$user->userID][] = UserGroup::GUESTS;
-                    $groupIDs[] = UserGroup::GUESTS;
-                }
-
-                if (\in_array(UserGroup::USERS, $groupIDs, true)) {
-                    if (!isset($removeFromGroupIDs[$user->userID])) {
-                        $removeFromGroupIDs[$user->userID] = [];
-                    }
-
-                    $removeFromGroupIDs[$user->userID][] = UserGroup::USERS;
-                }
-            } else {
-                if (!\in_array(UserGroup::USERS, $groupIDs, true)) {
-                    if (!isset($fixUserGroupIDs[$user->userID])) {
-                        $fixUserGroupIDs[$user->userID] = [];
-                    }
-                    $fixUserGroupIDs[$user->userID][] = UserGroup::USERS;
-                    $groupIDs[] = UserGroup::USERS;
-                }
-
-                if (\in_array(UserGroup::GUESTS, $groupIDs, true)) {
-                    if (!isset($removeFromGroupIDs[$user->userID])) {
-                        $removeFromGroupIDs[$user->userID] = [];
-                    }
-
-                    $removeFromGroupIDs[$user->userID][] = UserGroup::GUESTS;
-                }
-            }
-            $newGroupIDs[$user->userID] = $groupIDs;
-
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('groupID IN (?)', [$groupIDs]);
-
-            $sql = "SELECT      groupID
-                    FROM        wcf1_user_group
-                    " . $conditionBuilder . "
-                    ORDER BY    priority DESC";
-            $statement = WCF::getDB()->prepare($sql, 1);
-            $statement->execute($conditionBuilder->getParameters());
-            $row = $statement->fetchArray();
-            if ($row['groupID'] !== $user->userOnlineGroupID) {
-                $userToGroup[$user->userID] = $row['groupID'];
-            }
-        }
-
-        // add users to missing default user groups
-        if ($fixUserGroupIDs !== []) {
-            $sql = "INSERT INTO wcf1_user_to_group
-                                (userID, groupID)
-                    VALUES      (?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
-
-            WCF::getDB()->beginTransaction();
-            foreach ($fixUserGroupIDs as $userID => $groupIDs) {
-                foreach ($groupIDs as $groupID) {
-                    $statement->execute([$userID, $groupID]);
-                }
-
-                UserStorageHandler::getInstance()->update($userID, 'groupIDs', \serialize($newGroupIDs[$userID]));
-            }
-            WCF::getDB()->commitTransaction();
-        }
-
-        if ($removeFromGroupIDs !== []) {
-            $sql = "DELETE FROM wcf1_user_to_group
-                    WHERE       userID = ?
-                            AND groupID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-
-            WCF::getDB()->beginTransaction();
-            foreach ($removeFromGroupIDs as $userID => $groupIDs) {
-                foreach ($groupIDs as $groupID) {
-                    $statement->execute([$userID, $groupID]);
-                }
-            }
-            WCF::getDB()->commitTransaction();
-        }
-
-        if ($userToGroup !== []) {
-            $sql = "UPDATE  wcf1_user
-                    SET     userOnlineGroupID = ?
-                    WHERE   userID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-
-            WCF::getDB()->beginTransaction();
-            foreach ($userToGroup as $userID => $groupID) {
-                $statement->execute([
-                    $groupID,
-                    $userID,
-                ]);
-            }
-            WCF::getDB()->commitTransaction();
-        }
+        $users = \array_map(
+            static fn (UserEditor $editor) => $editor->getDecoratedObject(),
+            $this->getObjects()
+        );
+        (new RefreshUserOnlineMarkings(\array_values($users)))();
     }
 
     /**

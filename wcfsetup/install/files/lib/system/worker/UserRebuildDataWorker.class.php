@@ -3,6 +3,7 @@
 namespace wcf\system\worker;
 
 use wcf\command\file\CreateFileFromExistingFile;
+use wcf\command\user\RefreshUserOnlineMarkings;
 use wcf\data\file\FileBuilder;
 use wcf\data\file\FileList;
 use wcf\data\reaction\type\ReactionTypeCache;
@@ -13,7 +14,6 @@ use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileAction;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -72,11 +72,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
             $userIDs[] = $user->userID;
         }
 
-        // update user ranks
-        if ($users !== []) {
-            $action = new UserProfileAction($users, 'updateUserOnlineMarking');
-            $action->executeAction();
-        }
+        (new RefreshUserOnlineMarkings(\array_values($this->getObjectList()->getObjects())))();
 
         $this->updateUserOnlineStatus($users);
 

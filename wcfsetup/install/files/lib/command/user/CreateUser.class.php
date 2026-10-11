@@ -4,7 +4,6 @@ namespace wcf\command\user;
 
 use wcf\data\user\User;
 use wcf\data\user\UserBuilder;
-use wcf\data\user\UserProfileAction;
 use wcf\event\user\UserCreated;
 use wcf\system\event\EventHandler;
 
@@ -30,8 +29,7 @@ final class CreateUser
         if (\MODULE_USER_RANK !== 0) {
             (new RefreshUserRanks([$user]))();
         }
-        $action = new UserProfileAction([$user], 'updateUserOnlineMarking');
-        $action->executeAction();
+        (new RefreshUserOnlineMarkings([$user]))();
 
         EventHandler::getInstance()->fire(new UserCreated($user, $this->builder));
 
