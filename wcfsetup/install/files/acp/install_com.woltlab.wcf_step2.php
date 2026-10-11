@@ -1,6 +1,7 @@
 <?php
 
 use wcf\command\file\CreateFileFromExistingFile;
+use wcf\command\user\RefreshUserRanks;
 use wcf\data\category\CategoryEditor;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\type\ReactionTypeBuilder;
@@ -47,8 +48,7 @@ foreach ([
 
 // update administrator user rank and user online marking
 $editor = new UserEditor(WCF::getUser());
-$action = new UserProfileAction([$editor], 'updateUserRank');
-$action->executeAction();
+(new RefreshUserRanks([WCF::getUser()]))();
 $action = new UserProfileAction([$editor], 'updateUserOnlineMarking');
 $action->executeAction();
 

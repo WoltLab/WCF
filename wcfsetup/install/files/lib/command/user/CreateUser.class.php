@@ -28,8 +28,7 @@ final class CreateUser
         $user = new User($this->builder->create()->userID);
 
         if (\MODULE_USER_RANK !== 0) {
-            $action = new UserProfileAction([$user], 'updateUserRank');
-            $action->executeAction();
+            (new RefreshUserRanks([$user]))();
         }
         $action = new UserProfileAction([$user], 'updateUserOnlineMarking');
         $action->executeAction();

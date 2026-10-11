@@ -66,8 +66,7 @@ final class UpdateUser
             UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
 
             if (\MODULE_USER_RANK !== 0) {
-                $action = new UserProfileAction([$user], 'updateUserRank');
-                $action->executeAction();
+                (new RefreshUserRanks([$user]))();
             }
         }
 
