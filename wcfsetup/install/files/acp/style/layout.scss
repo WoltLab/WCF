@@ -1083,3 +1083,14 @@ html[data-color-scheme="dark"] {
 		text-decoration: underline;
 	}
 }
+
+/* user profile header on user edit page */
+.contentHeader + .userProfileHeader {
+	margin-top: 20px;
+}
+
+.userProfileHeader__coverPhoto {
+	@include screen-md-up {
+		height: 150px;
+	}
+}
