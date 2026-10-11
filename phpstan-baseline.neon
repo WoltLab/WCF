@@ -1466,12 +1466,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/email/mime/RecipientAwareTextMimePart.class.php
 
 		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 3
-			path: wcfsetup/install/files/lib/system/event/listener/AbstractUserMergeListener.class.php
-
-		-
 			message: '#^Constructor of class wcf\\system\\exception\\ErrorException has an unused parameter \$filename\.$#'
 			identifier: constructor.unusedParameter
 			count: 1

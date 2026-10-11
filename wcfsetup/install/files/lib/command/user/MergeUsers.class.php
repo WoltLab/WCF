@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\event\user\UsersMerging;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
+use wcf\system\user\merge\UserColumn;
 use wcf\system\WCF;
 
 /**
@@ -47,29 +48,17 @@ final class MergeUsers
             return;
         }
 
-        $this->updateUserID('wcf1_poll_option_vote', ignore: true);
-        $this->updateUserID('wcf1_comment');
-        $this->updateUserID('wcf1_comment_response');
+        foreach ($this->getUserColumns() as $column) {
+            $this->reassign($column);
+        }
         $this->updateProfileComments();
-        $this->updateUserID('wcf1_like', ignore: true);
-        $this->updateUserID('wcf1_like', 'objectUserID');
-        $this->updateUserID('wcf1_like_object', 'objectUserID');
-        $this->updateUserID('wcf1_user_follow', ignore: true, excludedColumnName: 'followUserID');
-        $this->updateUserID('wcf1_user_follow', 'followUserID', true, 'userID');
-        $this->updateUserID('wcf1_user_ignore', ignore: true, excludedColumnName: 'ignoreUserID');
-        $this->updateUserID('wcf1_user_ignore', 'ignoreUserID', true, 'userID');
-        $this->updateUserID('wcf1_user_object_watch', ignore: true);
-        $this->updateUserID('wcf1_user_activity_event');
-        $this->updateUserID('wcf1_attachment');
-        $this->updateUserID('wcf1_modification_log');
-        $this->updateUserID('wcf1_user_notification_author', 'authorID', true);
-        $this->updateUserID('wcf1_article');
-        $this->updateUserID('wcf1_moderation_queue');
-        $this->updateUserID('wcf1_edit_history_entry');
 
-        EventHandler::getInstance()->fire(
-            new UsersMerging($this->destinationUser, $this->mergedUsers)
-        );
+        $event = new UsersMerging($this->destinationUser, $this->mergedUsers);
+        EventHandler::getInstance()->fire($event);
+
+        foreach ($event->getUserColumns() as $column) {
+            $this->reassign($column);
+        }
 
         foreach ($this->mergedUsers as $user) {
             new DeleteUser($user)();
@@ -77,29 +66,35 @@ final class MergeUsers
     }
 
     /**
-     * Replaces the ids of the merged users in the given column with the id of
-     * the destination user.
-     *
-     * Rows whose `$excludedColumnName` references the destination user are
-     * skipped, e.g. to prevent the destination user from following themselves.
+     * @return list<UserColumn>
      */
-    private function updateUserID(
-        string $tableName,
-        string $columnName = 'userID',
-        bool $ignore = false,
-        ?string $excludedColumnName = null
-    ): void {
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("{$columnName} IN (?)", [$this->mergedUserIDs]);
-        if ($excludedColumnName !== null) {
-            $conditions->add("{$excludedColumnName} <> ?", [$this->destinationUser->userID]);
-        }
+    private function getUserColumns(): array
+    {
+        return [
+            new UserColumn('wcf1_poll_option_vote', ignore: true),
+            new UserColumn('wcf1_comment', usernameColumn: 'username'),
+            new UserColumn('wcf1_comment_response', usernameColumn: 'username'),
+            new UserColumn('wcf1_like', ignore: true),
+            new UserColumn('wcf1_like', 'objectUserID'),
+            new UserColumn('wcf1_like_object', 'objectUserID'),
+            new UserColumn('wcf1_user_follow', ignore: true, excludedColumn: 'followUserID'),
+            new UserColumn('wcf1_user_follow', 'followUserID', ignore: true, excludedColumn: 'userID'),
+            new UserColumn('wcf1_user_ignore', ignore: true, excludedColumn: 'ignoreUserID'),
+            new UserColumn('wcf1_user_ignore', 'ignoreUserID', ignore: true, excludedColumn: 'userID'),
+            new UserColumn('wcf1_user_object_watch', ignore: true),
+            new UserColumn('wcf1_user_activity_event', usernameColumn: 'username'),
+            new UserColumn('wcf1_attachment'),
+            new UserColumn('wcf1_modification_log', usernameColumn: 'username'),
+            new UserColumn('wcf1_user_notification_author', 'authorID', ignore: true),
+            new UserColumn('wcf1_article', usernameColumn: 'username'),
+            new UserColumn('wcf1_moderation_queue'),
+            new UserColumn('wcf1_edit_history_entry', usernameColumn: 'username'),
+        ];
+    }
 
-        $sql = "UPDATE" . ($ignore ? " IGNORE" : "") . " {$tableName}
-                SET     {$columnName} = ?
-                " . $conditions;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute(\array_merge([$this->destinationUser->userID], $conditions->getParameters()));
+    private function reassign(UserColumn $column): void
+    {
+        (new ReassignUserColumn($column, $this->destinationUser, $this->mergedUserIDs))();
     }
 
     private function updateProfileComments(): void
