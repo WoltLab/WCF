@@ -5,9 +5,8 @@ namespace wcf\system\bulk\processing\user;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\UserEditor;
+use wcf\data\user\User;
 use wcf\system\exception\UserInputException;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
@@ -54,15 +53,8 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
     {
         $users = $this->getAccessibleUsers($objectList);
 
-        if ($users !== []) {
-            WCF::getDB()->beginTransaction();
-            foreach ($users as $user) {
-                $user = new UserEditor($user);
-                $this->executeUserAction($user);
-            }
-            WCF::getDB()->commitTransaction();
-
-            UserStorageHandler::getInstance()->reset(\array_keys($users), 'groupIDs');
+        foreach ($users as $user) {
+            $this->executeUserAction($user);
         }
     }
 
@@ -71,7 +63,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
      *
      * @return void
      */
-    abstract protected function executeUserAction(UserEditor $user);
+    abstract protected function executeUserAction(User $user);
 
     #[\Override]
     public function getHTML()

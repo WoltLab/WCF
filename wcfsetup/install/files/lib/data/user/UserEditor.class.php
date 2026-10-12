@@ -22,6 +22,7 @@ use wcf\system\WCF;
  * @mixin   User
  * @extends DatabaseObjectEditor<User>
  * @implements IEditableCachedObject<User>
+ * @deprecated 6.3 Use `UserBuilder` instead.
  */
 class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {

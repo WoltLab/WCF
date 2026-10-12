@@ -2,7 +2,8 @@
 
 namespace wcf\system\bulk\processing\user;
 
-use wcf\data\user\UserEditor;
+use wcf\command\user\RemoveUserFromGroups;
+use wcf\data\user\User;
 use wcf\system\WCF;
 
 /**
@@ -20,9 +21,9 @@ class RemoveFromUserGroupsUserBulkProcessingAction extends AbstractUserGroupsUse
     public $inputName = 'removeFromUserGroupIDs';
 
     #[\Override]
-    protected function executeUserAction(UserEditor $user)
+    protected function executeUserAction(User $user)
     {
-        $user->removeFromGroups($this->userGroupIDs);
+        (new RemoveUserFromGroups($user, $this->userGroupIDs))();
     }
 
     #[\Override]

@@ -181,10 +181,9 @@ final class User extends CollectionDatabaseObject implements IPopoverObject, IRo
 
         $defaultAlgorithm = $manager->getDefaultAlgorithm();
         if (\get_class($algorithm) !== \get_class($defaultAlgorithm) || $algorithm->needsRehash($hash)) {
-            $userEditor = new UserEditor($this);
-            $userEditor->update([
-                'password' => $password,
-            ]);
+            UserBuilder::forUpdate($this)
+                ->setPassword($password)
+                ->update();
         }
 
         // $isValid is always true at this point. However we intentionally use a variable

@@ -3,7 +3,7 @@
 namespace wcf\form;
 
 use wcf\data\object\type\ObjectType;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\page\AccountSecurityPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -229,10 +229,9 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
         //
         // Use the saved@MultifactorDisableForm event if you need to run
         // logic in response to a user disabling MFA.
-        $editor = new UserEditor(WCF::getUser());
-        $editor->update([
-            'multifactorActive' => 0,
-        ]);
+        UserBuilder::forUpdate(WCF::getUser())
+            ->setMultifactorActive(false)
+            ->update();
     }
 
     #[\Override]

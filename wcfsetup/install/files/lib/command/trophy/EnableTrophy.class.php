@@ -5,7 +5,7 @@ namespace wcf\command\trophy;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyEditor;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\event\trophy\TrophyEnabled;
 use wcf\system\event\EventHandler;
 use wcf\system\user\storage\UserStorageHandler;
@@ -48,9 +48,9 @@ final class EnableTrophy
         $statement->execute([$trophyID]);
 
         foreach ($statement->fetchMap('userID', 'count') as $userID => $count) {
-            (new UserEditor(new User(null, ['userID' => $userID])))->updateCounters([
-                'trophyPoints' => $count,
-            ]);
+            UserBuilder::forUpdate(new User(null, ['userID' => $userID]))
+                ->incrementTrophyPoints($count)
+                ->update();
         }
     }
 

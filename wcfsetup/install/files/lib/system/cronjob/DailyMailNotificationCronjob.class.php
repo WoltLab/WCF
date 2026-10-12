@@ -6,8 +6,7 @@ use ParagonIE\ConstantTime\Hex;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\user\notification\event\UserNotificationEventList;
 use wcf\data\user\notification\UserNotification;
-use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfile;
 use wcf\form\NotificationUnsubscribeForm;
@@ -221,12 +220,9 @@ class DailyMailNotificationCronjob extends AbstractCronjob
 
             // generate token if not present
             if ($user->notificationMailToken === '') {
-                $token = Hex::encode(\random_bytes(10));
-                $editor = new UserEditor($user);
-                $editor->update(['notificationMailToken' => $token]);
-
-                // reload user
-                $user = new User($user->userID);
+                $user = UserBuilder::forUpdate($user)
+                    ->setNotificationMailToken(Hex::encode(\random_bytes(10)))
+                    ->update();
             }
 
             $email = new Email();

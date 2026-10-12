@@ -3,7 +3,7 @@
 namespace wcf\system\file\processor;
 
 use wcf\data\file\File;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -222,9 +222,9 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
         // The relative path to the avatar is stored in a denormalized form in
         // the user table. This path may be outdated if either the avatar is
         // later converted to WebP or during the upload.
-        (new UserEditor($user->getDecoratedObject()))->update([
-            'avatarPathname' => $pathname,
-        ]);
+        UserBuilder::forUpdate($user->getDecoratedObject())
+            ->setAvatarPathname($pathname)
+            ->update();
     }
 
     /**

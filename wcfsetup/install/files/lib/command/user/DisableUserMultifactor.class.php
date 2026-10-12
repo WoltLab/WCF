@@ -3,7 +3,7 @@
 namespace wcf\command\user;
 
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\system\user\multifactor\Setup;
 use wcf\system\WCF;
 
@@ -31,9 +31,9 @@ final class DisableUserMultifactor
             $setup->delete();
         }
 
-        (new UserEditor($this->user))->update([
-            'multifactorActive' => 0,
-        ]);
+        UserBuilder::forUpdate($this->user)
+            ->setMultifactorActive(false)
+            ->update();
         WCF::getDB()->commitTransaction();
     }
 }

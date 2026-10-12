@@ -7,7 +7,7 @@ use wcf\data\like\LikeList;
 use wcf\data\like\object\LikeObjectEditor;
 use wcf\data\like\object\LikeObjectList;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
@@ -61,10 +61,9 @@ final class DeleteObjectReactions
         }
 
         foreach ($users as $userID => $reactionData) {
-            $userEditor = new UserEditor(new User(null, ['userID' => $userID]));
-            $userEditor->updateCounters([
-                'likesReceived' => $reactionData,
-            ]);
+            UserBuilder::forUpdate(new User(null, ['userID' => $userID]))
+                ->incrementLikesReceived($reactionData)
+                ->update();
         }
 
         // get like ids

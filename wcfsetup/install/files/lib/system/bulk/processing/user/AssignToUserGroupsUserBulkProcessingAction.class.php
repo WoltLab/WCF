@@ -2,7 +2,8 @@
 
 namespace wcf\system\bulk\processing\user;
 
-use wcf\data\user\UserEditor;
+use wcf\command\user\AddUserToGroups;
+use wcf\data\user\User;
 
 /**
  * Bulk processing action implementation for assigning users to user groups.
@@ -19,8 +20,8 @@ class AssignToUserGroupsUserBulkProcessingAction extends AbstractUserGroupsUserB
     public $inputName = 'assignToUserGroupIDs';
 
     #[\Override]
-    protected function executeUserAction(UserEditor $user)
+    protected function executeUserAction(User $user)
     {
-        $user->addToGroups($this->userGroupIDs, false, false);
+        (new AddUserToGroups($user, $this->userGroupIDs))();
     }
 }

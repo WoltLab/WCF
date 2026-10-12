@@ -1068,10 +1068,9 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      */
     public function saveUserConsent()
     {
-        $userEditor = new UserEditor(WCF::getUser());
-        $userEditor->updateUserOptions([
-            User::getUserOptionID('enableEmbeddedMedia') => 1,
-        ]);
+        (new UpdateUser(
+            UserBuilder::forUpdate(WCF::getUser())->setUserOption(User::getUserOptionID('enableEmbeddedMedia'), '1')
+        ))();
     }
 
     /**
@@ -1144,9 +1143,9 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      */
     public function devtoolsSetLanguage()
     {
-        (new UserEditor(WCF::getUser()))->update([
-            'languageID' => $this->parameters['languageID'],
-        ]);
+        (new UpdateUser(
+            UserBuilder::forUpdate(WCF::getUser())->setLanguageID((int)$this->parameters['languageID'])
+        ))();
     }
 
     /**

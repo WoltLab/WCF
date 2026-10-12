@@ -5,7 +5,7 @@ namespace wcf\command\user;
 use wcf\command\file\DeleteFile;
 use wcf\data\file\File;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\event\user\CoverPhotoChanged;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\event\EventHandler;
@@ -31,12 +31,9 @@ final class SetCoverPhoto
             new DeleteFile(new File($this->user->coverPhotoFileID))();
         }
 
-        (new UserEditor($this->user))->update([
-            'coverPhotoFileID' => $this->file?->fileID,
-            'coverPhotoHash' => null,
-            'coverPhotoExtension' => '',
-            'coverPhotoHasWebP' => 0,
-        ]);
+        UserBuilder::forUpdate($this->user)
+            ->setCoverPhotoFileID($this->file?->fileID)
+            ->update();
         UserProfileRuntimeCache::getInstance()->removeObject($this->user->userID);
 
         EventHandler::getInstance()->fire(new CoverPhotoChanged($this->user, $this->file));

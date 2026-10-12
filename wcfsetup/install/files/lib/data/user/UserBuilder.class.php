@@ -317,6 +317,74 @@ final class UserBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    public function incrementLikesReceived(int $likesReceived): static
+    {
+        $this->incrementProperties['likesReceived'] = $likesReceived;
+
+        return $this;
+    }
+
+    /**
+     * Sets the id of the file used as avatar, `null` removes the avatar. The
+     * legacy avatar is removed in any case.
+     */
+    public function setAvatarFileID(?int $avatarFileID): static
+    {
+        $this->properties['avatarFileID'] = $avatarFileID;
+        $this->properties['avatarID'] = null;
+
+        return $this;
+    }
+
+    /**
+     * Sets the relative path to the avatar, which is stored in a denormalized
+     * form alongside the id of the file.
+     */
+    public function setAvatarPathname(?string $avatarPathname): static
+    {
+        $this->properties['avatarPathname'] = $avatarPathname;
+
+        return $this;
+    }
+
+    /**
+     * Sets the id of the file used as cover photo, `null` removes the cover
+     * photo. The legacy cover photo is removed in any case.
+     */
+    public function setCoverPhotoFileID(?int $coverPhotoFileID): static
+    {
+        $this->properties['coverPhotoFileID'] = $coverPhotoFileID;
+        $this->properties['coverPhotoHash'] = null;
+        $this->properties['coverPhotoExtension'] = '';
+        $this->properties['coverPhotoHasWebP'] = 0;
+
+        return $this;
+    }
+
+    public function setMultifactorActive(bool $multifactorActive): static
+    {
+        $this->properties['multifactorActive'] = (int)$multifactorActive;
+
+        return $this;
+    }
+
+    /**
+     * Sets the token used to authenticate links in notification emails.
+     */
+    public function setNotificationMailToken(string $notificationMailToken): static
+    {
+        $this->properties['notificationMailToken'] = $notificationMailToken;
+
+        return $this;
+    }
+
+    public function setLastActivityTime(int $lastActivityTime): static
+    {
+        $this->properties['lastActivityTime'] = $lastActivityTime;
+
+        return $this;
+    }
+
     public function setLastUsernameChange(int $lastUsernameChange): static
     {
         $this->properties['lastUsernameChange'] = $lastUsernameChange;
