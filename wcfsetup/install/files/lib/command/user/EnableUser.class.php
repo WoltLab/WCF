@@ -9,6 +9,7 @@ use wcf\system\email\Email;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\UserMailbox;
+use wcf\system\user\notification\UserNotificationHandler;
 
 /**
  * Enables a user that is awaiting activation and moves it from the guests
@@ -39,6 +40,8 @@ final class EnableUser
 
         $user = (new UpdateUser($builder))();
 
+        $this->markNotificationsAsConfirmed($user);
+
         if ($this->sendNotification) {
             $this->sendNotification($user);
         }
@@ -60,6 +63,20 @@ final class EnableUser
             $groupIDs,
             UserGroup::getGroupIDsByType([UserGroup::USERS])
         )));
+    }
+
+    /**
+     * Marks the notifications about this user awaiting activation as
+     * confirmed for all recipients, as no further action is required.
+     */
+    private function markNotificationsAsConfirmed(User $user): void
+    {
+        UserNotificationHandler::getInstance()->markAsConfirmed(
+            'needActivation',
+            'com.woltlab.wcf.user.registration.notification',
+            [],
+            [$user->userID]
+        );
     }
 
     private function sendNotification(User $user): void

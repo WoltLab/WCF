@@ -10,6 +10,7 @@ use wcf\event\user\UserDeleted;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\event\EventHandler;
+use wcf\system\user\notification\UserNotificationHandler;
 
 /**
  * Deletes a user.
@@ -51,6 +52,11 @@ final class DeleteUser
 
         AttachmentHandler::removeAttachments(
             'com.woltlab.wcf.user.signature',
+            [$user->userID]
+        );
+
+        UserNotificationHandler::getInstance()->removeNotifications(
+            'com.woltlab.wcf.user.registration.notification',
             [$user->userID]
         );
     }
