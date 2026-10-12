@@ -38,6 +38,7 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `UserBuilder` and commands instead.
  *
  * @extends AbstractDatabaseObjectAction<User, UserEditor>
  */
@@ -495,6 +496,9 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         }
     }
 
+    /**
+     * @deprecated 6.3 It's still in use by legacy JS, which will be modernized at a later date.
+     */
     #[\Override]
     public function validateGetSearchResultList()
     {
@@ -514,6 +518,9 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         }
     }
 
+    /**
+     * @deprecated 6.3 It's still in use by legacy JS, which will be modernized at a later date.
+     */
     #[\Override]
     public function getSearchResultList()
     {
