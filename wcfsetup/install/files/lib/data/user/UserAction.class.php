@@ -126,6 +126,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
 
     /**
      * Validates permissions and parameters.
+     *
+     * @deprecated 6.3
      */
     #[\Override]
     public function validateDelete()
@@ -136,6 +138,9 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         $this->__validateAccessibleGroups();
     }
 
+    /**
+     * @deprecated 6.3 Use the `DeleteUser` command instead.
+     */
     #[\Override]
     public function delete()
     {
@@ -443,7 +448,7 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         $this->readObjects();
 
         $users = \array_values(\array_map(
-            static fn (UserEditor $editor) => $editor->getDecoratedObject(),
+            static fn(UserEditor $editor) => $editor->getDecoratedObject(),
             $this->getObjects()
         ));
         if (\MODULE_USER_RANK !== 0) {
@@ -490,7 +495,7 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         $this->readObjects();
 
         $users = \array_values(\array_map(
-            static fn (UserEditor $editor) => $editor->getDecoratedObject(),
+            static fn(UserEditor $editor) => $editor->getDecoratedObject(),
             $this->getObjects()
         ));
         if (\MODULE_USER_RANK !== 0) {
