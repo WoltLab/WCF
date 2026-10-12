@@ -2,10 +2,10 @@
 
 namespace wcf\command\paid\subscription;
 
+use wcf\command\user\RemoveUserFromGroups;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
 
 /**
  * Removes user groups from a user based on the paid subscription's associated group IDs.
@@ -30,9 +30,7 @@ final class RemoveGroupMembership
             return;
         }
 
-        (new UserAction([$this->user], 'removeFromGroups', [
-            'groups' => $groupIDs,
-        ]))->executeAction();
+        (new RemoveUserFromGroups($this->user, $groupIDs))();
     }
 
     /**

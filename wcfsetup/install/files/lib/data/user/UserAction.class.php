@@ -9,6 +9,7 @@ use wcf\command\user\DisableUser;
 use wcf\command\user\EnableUser;
 use wcf\command\user\RefreshUserOnlineMarkings;
 use wcf\command\user\RefreshUserRanks;
+use wcf\command\user\RemoveUserFromGroups;
 use wcf\command\user\ResendActivationMail;
 use wcf\command\user\UnbanUser;
 use wcf\command\user\UnconfirmUserEmail;
@@ -429,6 +430,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Remove users from given groups.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `RemoveUserFromGroups` command instead.
      */
     public function removeFromGroups()
     {
@@ -436,26 +439,11 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
             $this->readObjects();
         }
 
-        $groupIDs = $this->parameters['groups'];
-
         foreach ($this->getObjects() as $userEditor) {
-            $userEditor->removeFromGroups($groupIDs);
-        }
-
-        //reread objects
-        $this->objects = [];
-        UserEditor::resetCache();
-        $this->readObjects();
-
-        $users = \array_values(\array_map(
-            static fn(UserEditor $editor) => $editor->getDecoratedObject(),
-            $this->getObjects()
-        ));
-        if (\MODULE_USER_RANK !== 0) {
-            (new RefreshUserRanks($users))();
-        }
-        if (\MODULE_USERS_ONLINE !== 0) {
-            (new RefreshUserOnlineMarkings($users))();
+            (new RemoveUserFromGroups(
+                $userEditor->getDecoratedObject(),
+                \array_values(\array_map(static fn($groupID) => (int)$groupID, $this->parameters['groups']))
+            ))();
         }
     }
 
