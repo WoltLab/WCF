@@ -11,6 +11,7 @@ use wcf\data\user\avatar\AvatarDecorator;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\rank\UserRank;
+use wcf\event\user\UserEmailConfirmationChecking;
 use wcf\event\user\UserPrivacySettingChecking;
 use wcf\page\UserPage;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
@@ -597,8 +598,7 @@ final class User extends CollectionDatabaseObject implements IPopoverObject, IRo
     }
 
     /**
-     * Returns true if the active user can enable or disable this user and
-     * confirm or unconfirm the email address of this user.
+     * Returns true if the active user can enable or disable this user.
      *
      * @since 6.3
      */
@@ -606,6 +606,20 @@ final class User extends CollectionDatabaseObject implements IPopoverObject, IRo
     {
         return WCF::getSession()->hasPermission('admin.user.canEnableUser')
             && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can confirm or unconfirm the email
+     * address of this user.
+     *
+     * @since 6.3
+     */
+    public function canConfirmEmail(): bool
+    {
+        $event = new UserEmailConfirmationChecking($this, $this->canEnable());
+        EventHandler::getInstance()->fire($event);
+
+        return $event->isAllowed();
     }
 
     /**

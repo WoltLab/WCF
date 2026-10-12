@@ -27,7 +27,7 @@ final class ConfirmUserEmail implements IController
     {
         $user = Helper::fetchObjectFromRequestParameter($variables['id'], User::class);
 
-        if (!$user->canEnable()) {
+        if (!$user->canConfirmEmail()) {
             throw new PermissionDeniedException();
         }
 

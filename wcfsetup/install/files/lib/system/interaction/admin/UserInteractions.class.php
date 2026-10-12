@@ -61,14 +61,14 @@ final class UserInteractions extends AbstractInteractionProvider
                 'core/users/%s/confirm-email',
                 'wcf.acp.user.action.confirmEmail',
                 isAvailableCallback: static fn(User $user) => !$user->isEmailConfirmed()
-                    && $user->canEnable()
+                    && $user->canConfirmEmail()
             ),
             new RpcInteraction(
                 'unconfirm-email',
                 'core/users/%s/unconfirm-email',
                 'wcf.acp.user.action.unconfirmEmail',
                 isAvailableCallback: static fn(User $user) => $user->isEmailConfirmed()
-                    && $user->canEnable()
+                    && $user->canConfirmEmail()
             ),
             new RpcInteraction(
                 'resend-activation-mail',
