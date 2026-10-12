@@ -15,6 +15,7 @@ use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionBuilder;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 // The social media profiles of the core, which were text options with a custom output.
 $socialMediaProfiles = [
@@ -28,7 +29,7 @@ $socialMediaProfiles = [
     ],
 ];
 
-$sql = "SELECT  optionID, optionName, optionType, selectOptions, required, validationPattern, labeledUrl
+$sql = "SELECT  optionID, optionName, optionType, defaultValue, selectOptions, required, validationPattern, labeledUrl
         FROM    wcf1_user_option";
 $statement = WCF::getDB()->prepare($sql);
 $statement->execute();
@@ -65,17 +66,27 @@ while ($row = $statement->fetchArray()) {
         ), \JSON_THROW_ON_ERROR);
     }
 
+    $hasNewlineSeparatedValues = $row['optionType'] === 'checkboxes' || $row['optionType'] === 'multiSelect';
+
+    // The default value uses the same format as the values, see below.
+    $defaultValue = $row['defaultValue'];
+    if ($hasNewlineSeparatedValues && $defaultValue !== null) {
+        $defaultValue = \str_replace("\n", ',', StringUtil::unifyNewlines($defaultValue));
+    }
+
     $options[$row['optionID']] = [
         'configuration' => $configuration,
         'optionType' => $optionType,
+        'defaultValue' => $defaultValue,
         'validationPattern' => $validationPattern,
-        'hasNewlineSeparatedValues' => $row['optionType'] === 'checkboxes' || $row['optionType'] === 'multiSelect',
+        'hasNewlineSeparatedValues' => $hasNewlineSeparatedValues,
     ];
 }
 
 $sql = "UPDATE  wcf1_user_option
         SET     configuration = ?,
                 optionType = ?,
+                defaultValue = ?,
                 validationPattern = ?
         WHERE   optionID = ?";
 $statement = WCF::getDB()->prepare($sql);
@@ -85,6 +96,7 @@ foreach ($options as $optionID => $option) {
     $statement->execute([
         $option['configuration'],
         $option['optionType'],
+        $option['defaultValue'],
         $option['validationPattern'],
         $optionID,
     ]);

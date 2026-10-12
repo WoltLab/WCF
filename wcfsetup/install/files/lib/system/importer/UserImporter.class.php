@@ -9,6 +9,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Imports users.
@@ -147,7 +148,14 @@ class UserImporter extends AbstractImporter
                         $optionValue = \floatval($optionValue);
                         break;
 
+                    case 'checkboxes':
+                        // The legacy multiple selection option types separate the selected
+                        // values by newlines, the `checkboxes` form option separates them by commas.
+                        $optionValue = \str_replace("\n", ',', StringUtil::unifyNewlines((string)$optionValue));
+                        break;
+
                     case 'textarea':
+                    case 'wysiwyg':
                         if (\strlen($optionValue) > 16777215) {
                             $optionValue = \substr($optionValue, 0, 16777215);
                         }
