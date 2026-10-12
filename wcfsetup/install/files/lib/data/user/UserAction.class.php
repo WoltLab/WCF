@@ -1151,6 +1151,7 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
 
     /**
      * @since   5.5
+     * @deprecated 6.3
      */
     public function cancelLostPasswordRequest(): void
     {

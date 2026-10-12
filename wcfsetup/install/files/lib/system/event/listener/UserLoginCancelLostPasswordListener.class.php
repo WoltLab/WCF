@@ -2,7 +2,7 @@
 
 namespace wcf\system\event\listener;
 
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\event\user\authentication\UserLoggedIn;
 
 /**
@@ -22,6 +22,9 @@ final class UserLoginCancelLostPasswordListener
             return;
         }
 
-        (new UserAction([$user], 'cancelLostPasswordRequest'))->executeAction();
+        UserBuilder::forUpdate($user)
+            ->setLostPasswordKey('')
+            ->setLastLostPasswordRequestTime(0)
+            ->update();
     }
 }
