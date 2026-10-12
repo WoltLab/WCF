@@ -265,6 +265,9 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         }
     }
 
+    /**
+     * @deprecated 6.3 Use the `CreateUser` command instead.
+     */
     #[\Override]
     public function create()
     {

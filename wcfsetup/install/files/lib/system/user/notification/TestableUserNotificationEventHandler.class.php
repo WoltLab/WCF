@@ -3,11 +3,12 @@
 namespace wcf\system\user\notification;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\command\user\CreateUser;
 use wcf\data\language\Language;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
 use wcf\system\cache\builder\AbstractLegacyCacheBuilder;
@@ -77,15 +78,14 @@ class TestableUserNotificationEventHandler extends SingletonFactory
             while ($count < self::MAX_AUTHOR_COUNT) {
                 $username = \substr(StringUtil::getRandomID(), 0, 10);
 
-                (new UserAction([], 'create', [
-                    'data' => [
-                        'email' => $username . '@example.com',
-                        'languageID' => $languages[\array_rand($languages)]->languageID,
-                        'password' => Hex::encode(\random_bytes(16)),
-                        'registrationDate' => \TIME_NOW - 24 * 3600 * \random_int(10, 1000),
-                        'username' => $username,
-                    ],
-                ]))->executeAction()['returnValues'];
+                (new CreateUser(
+                    UserBuilder::forCreate()
+                        ->setUsername($username)
+                        ->setEmail($username . '@example.com')
+                        ->setPassword(Hex::encode(\random_bytes(16)))
+                        ->setLanguageID($languages[\array_rand($languages)]->languageID)
+                        ->setRegistrationDate(\TIME_NOW - 24 * 3600 * \random_int(10, 1000))
+                ))();
 
                 $count++;
             }

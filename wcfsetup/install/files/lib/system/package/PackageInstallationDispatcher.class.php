@@ -11,11 +11,12 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\event\package\PackageListChanged;
 use wcf\system\application\ApplicationHandler;
 use wcf\command\cache\ClearCache;
 use wcf\command\package\SetLastUpdateTime;
+use wcf\command\user\CreateUser;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\Environment;
@@ -328,17 +329,13 @@ class PackageInstallationDispatcher
 
         foreach (DevtoolsSetup::getInstance()->getUsers() as $newUser) {
             try {
-                (new UserAction([], 'create', [
-                    'data' => [
-                        'email' => $newUser['email'],
-                        'password' => $newUser['password'],
-                        'username' => $newUser['username'],
-                    ],
-                    'groups' => [
-                        1,
-                        3,
-                    ],
-                ]))->executeAction();
+                (new CreateUser(
+                    UserBuilder::forCreate()
+                        ->setUsername($newUser['username'])
+                        ->setEmail($newUser['email'])
+                        ->setPassword($newUser['password'])
+                        ->setRegistrationDate(\TIME_NOW)
+                ))();
             } catch (\LogicException $e) {
                 // ignore errors due to event listeners missing at this
                 // point during installation
