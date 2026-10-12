@@ -4,7 +4,8 @@
 			<img
 				class="userCard__header__background__image"
 				src="{$user->getCoverPhoto()->getThumbnailURL()}"
-				alt="">
+				alt=""
+				loading="lazy">
 		</div>
 		<div class="userCard__header__avatar">
 			{unsafe:$user->getAvatar()->getImageTag(64)}
