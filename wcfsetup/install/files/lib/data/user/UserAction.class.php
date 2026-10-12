@@ -1105,6 +1105,7 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
     /**
      * @return void
      * @since   5.2
+     * @deprecated 6.3
      */
     public function validateDevtoolsSetLanguage()
     {
@@ -1122,6 +1123,7 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
     /**
      * @return void
      * @since   5.2
+     * @deprecated 6.3 Use the `wcf\system\endpoint\controller\core\devtools\SetLanguage` endpoint instead.
      */
     public function devtoolsSetLanguage()
     {
