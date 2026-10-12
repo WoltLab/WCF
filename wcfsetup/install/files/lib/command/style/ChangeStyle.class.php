@@ -2,8 +2,9 @@
 
 namespace wcf\command\style;
 
+use wcf\command\user\UpdateUser;
 use wcf\data\style\Style;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\event\style\StyleChanged;
 use wcf\system\event\EventHandler;
 use wcf\system\style\StyleHandler;
@@ -43,11 +44,9 @@ final class ChangeStyle
 
     private function saveUserStyle(int $styleID, bool $isDefaultStyle): void
     {
-        (new UserAction([WCF::getUser()], 'update', [
-            'data' => [
-                'styleID' => $isDefaultStyle ? 0 : $styleID,
-            ],
-        ]))->executeAction();
+        (new UpdateUser(
+            UserBuilder::forUpdate(WCF::getUser())->setStyleID($isDefaultStyle ? 0 : $styleID)
+        ))();
     }
 
     private function saveGuestStyle(int $styleID, bool $isDefaultStyle): void

@@ -3,8 +3,9 @@
 namespace wcf\form;
 
 use ParagonIE\ConstantTime\Hex;
+use wcf\command\user\UpdateUser;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\system\email\Email;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
@@ -159,16 +160,13 @@ final class LostPasswordForm extends AbstractFormBuilderForm
         $lostPasswordKey = Hex::encode(\random_bytes(20));
 
         // save hashed key and request time in database
-        $this->objectAction = new UserAction([$this->user], 'update', [
-            'data' => \array_merge($this->additionalFields, [
-                'lostPasswordKey' => \hash('sha256', $lostPasswordKey),
-                'lastLostPasswordRequestTime' => \TIME_NOW,
-            ]),
-        ]);
-        $this->objectAction->executeAction();
-
-        // reload object
-        $this->user = new User($this->user->userID);
+        $builder = UserBuilder::forUpdate($this->user)
+            ->setLostPasswordKey(\hash('sha256', $lostPasswordKey))
+            ->setLastLostPasswordRequestTime(\TIME_NOW);
+        foreach ($this->additionalFields as $name => $value) {
+            $builder->setCustomProperty($name, $value);
+        }
+        $this->user = (new UpdateUser($builder))();
 
         $email = new Email();
         $email->addRecipient(new UserMailbox($this->user));

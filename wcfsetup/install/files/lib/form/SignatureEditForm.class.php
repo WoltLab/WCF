@@ -2,12 +2,11 @@
 
 namespace wcf\form;
 
-use wcf\data\user\User;
-use wcf\data\user\UserAction;
+use wcf\command\user\UpdateUser;
+use wcf\data\user\UserBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\menu\user\UserMenu;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\WCF;
 
@@ -129,18 +128,15 @@ class SignatureEditForm extends MessageForm
     public function save()
     {
         parent::save();
-        $this->htmlInputProcessor->setObjectID(WCF::getUser()->userID);
-        MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor);
 
-        $this->objectAction = new UserAction([WCF::getUser()], 'update', [
-            'data' => \array_merge($this->additionalFields, [
-                'signature' => $this->htmlInputProcessor->getHtml(),
-                'signatureEnableHtml' => 1,
-            ]),
-            'signatureAttachmentHandler' => $this->attachmentHandler,
-        ]);
-        $this->objectAction->executeAction();
-        SignatureCache::getInstance()->getSignature(new User(WCF::getUser()->userID));
+        $builder = UserBuilder::forUpdate(WCF::getUser())
+            ->setSignatureHtmlInputProcessor($this->htmlInputProcessor)
+            ->setSignatureEnableHtml(true);
+        foreach ($this->additionalFields as $name => $value) {
+            $builder->setCustomProperty($name, $value);
+        }
+        $user = (new UpdateUser($builder))();
+        SignatureCache::getInstance()->getSignature($user);
         $this->saved();
 
         // show success message

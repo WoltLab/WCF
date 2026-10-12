@@ -52,6 +52,10 @@ return new class {
             \wcf\event\user\UsersMerging::class,
             \wcf\acp\form\UserMergeForm::fireLegacyEvent(...)
         );
+        $eventHandler->register(
+            \wcf\event\user\UserRenamed::class,
+            \wcf\data\user\UserAction::fireLegacyRenameEvent(...)
+        );
 
         $eventHandler->register(
             \wcf\event\user\RegistrationSpamChecking::class,

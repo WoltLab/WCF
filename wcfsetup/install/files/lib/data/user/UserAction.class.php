@@ -19,6 +19,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\file\File;
 use wcf\data\ISearchAction;
 use wcf\data\user\group\UserGroup;
+use wcf\event\user\UserRenamed;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -313,6 +314,9 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         return $user;
     }
 
+    /**
+     * @deprecated 6.3 Use the `UpdateUser` command instead.
+     */
     #[\Override]
     public function update()
     {
@@ -424,7 +428,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
 
                 WCF::getDB()->commitTransaction();
 
-                // fire event to handle other database tables
+                // fire event to handle other database tables, must be removed
+                // once this method uses `UpdateUser`, see `fireLegacyRenameEvent()`
                 EventHandler::getInstance()->fireAction($this, 'rename');
             }
         }
@@ -1153,5 +1158,23 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
                 'lostPasswordKey' => '',
             ]);
         }
+    }
+
+    /**
+     * Fires the legacy `rename` event for event listeners that are registered
+     * for this class. The action is only used as the event object and is never
+     * executed.
+     *
+     * @since 6.3
+     * @deprecated 6.3 Listen for the `UserRenamed` event instead.
+     */
+    public static function fireLegacyRenameEvent(UserRenamed $event): void
+    {
+        $action = new self([$event->user], 'update', [
+            'data' => [
+                'username' => $event->user->username,
+            ],
+        ]);
+        EventHandler::getInstance()->fireAction($action, 'rename');
     }
 }

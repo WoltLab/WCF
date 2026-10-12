@@ -3,8 +3,10 @@
 namespace wcf\data\user\trophy;
 
 use wcf\command\user\SetSpecialTrophies;
+use wcf\command\user\UpdateUser;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\user\UserAction;
+use wcf\data\user\User;
+use wcf\data\user\UserBuilder;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -50,12 +52,9 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
         $userTrophy = parent::create();
 
         if (!$userTrophy->getTrophy()->isDisabled()) {
-            $userAction = new UserAction([$userTrophy->userID], 'update', [
-                'counters' => [
-                    'trophyPoints' => 1,
-                ],
-            ]);
-            $userAction->executeAction();
+            (new UpdateUser(
+                UserBuilder::forUpdate($userTrophy->getUserProfile()->getDecoratedObject())->incrementTrophyPoints(1)
+            ))();
 
             // checks if the user still has space to add special trophies
             if (\count($userTrophy->getUserProfile()->getSpecialTrophies()) < $userTrophy->getUserProfile()->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
@@ -165,12 +164,9 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
             }
 
             foreach ($updateUserTrophies as $userID => $count) {
-                $userAction = new UserAction([$userID], 'update', [
-                    'counters' => [
-                        'trophyPoints' => $count,
-                    ],
-                ]);
-                $userAction->executeAction();
+                (new UpdateUser(
+                    UserBuilder::forUpdate(new User($userID))->incrementTrophyPoints($count)
+                ))();
             }
         }
 

@@ -2,8 +2,9 @@
 
 namespace wcf\form;
 
+use wcf\command\user\UpdateUser;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
@@ -156,14 +157,14 @@ final class NewPasswordForm extends AbstractFormBuilderForm
     private function updateUser(): void
     {
         $formData = $this->form->getData()['data'];
-        $this->objectAction = new UserAction([$this->user], 'update', [
-            'data' => \array_merge($this->additionalFields, [
-                'password' => $formData['newPassword'],
-                'lastLostPasswordRequestTime' => 0,
-                'lostPasswordKey' => '',
-            ]),
-        ]);
-        $this->objectAction->executeAction();
+        $builder = UserBuilder::forUpdate($this->user)
+            ->setPassword($formData['newPassword'])
+            ->setLastLostPasswordRequestTime(0)
+            ->setLostPasswordKey('');
+        foreach ($this->additionalFields as $name => $value) {
+            $builder->setCustomProperty($name, $value);
+        }
+        (new UpdateUser($builder))();
     }
 
     private function forwardToIndexPage(): void

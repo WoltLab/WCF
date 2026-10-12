@@ -2,8 +2,9 @@
 
 namespace wcf\form;
 
+use wcf\command\user\UpdateUser;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\data\user\UserList;
 use wcf\system\email\Email;
 use wcf\system\email\mime\MimePartFacade;
@@ -332,16 +333,17 @@ class AccountManagementForm extends AbstractForm
         parent::save();
 
         $success = [];
-        $updateParameters = [];
+        $builder = UserBuilder::forUpdate(WCF::getUser());
+        $needsReactivation = false;
 
         // quit
         if (WCF::getUser()->quitStarted !== 0 || WCF::getSession()->hasPermission('user.profile.canQuit')) {
             if (WCF::getUser()->quitStarted === 0 && $this->quit === 1) {
-                $updateParameters['quitStarted'] = \TIME_NOW;
+                $builder->setQuitStarted(\TIME_NOW);
                 $this->quitStarted = \TIME_NOW;
                 $success[] = 'wcf.user.quit.success';
             } elseif (WCF::getUser()->quitStarted !== 0 && $this->cancelQuit === 1) {
-                $updateParameters['quitStarted'] = 0;
+                $builder->setQuitStarted(0);
                 $this->quitStarted = 0;
                 $success[] = 'wcf.user.quit.cancel.success';
             }
@@ -350,10 +352,11 @@ class AccountManagementForm extends AbstractForm
         // user name
         if (WCF::getSession()->hasPermission('user.profile.canRename') && $this->username !== WCF::getUser()->username) {
             if (\mb_strtolower($this->username) !== \mb_strtolower(WCF::getUser()->username)) {
-                $updateParameters['lastUsernameChange'] = \TIME_NOW;
-                $updateParameters['oldUsername'] = WCF::getUser()->username;
+                $builder
+                    ->setLastUsernameChange(\TIME_NOW)
+                    ->setOldUsername(WCF::getUser()->username);
             }
-            $updateParameters['username'] = $this->username;
+            $builder->setUsername($this->username);
             $success[] = 'wcf.user.changeUsername.success';
         }
 
@@ -365,15 +368,17 @@ class AccountManagementForm extends AbstractForm
         ) {
             if (((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) === 0) {
                 // update email
-                $updateParameters['email'] = $this->email;
+                $builder->setEmail($this->email);
                 $success[] = 'wcf.user.changeEmail.success';
             } else {
                 // get reactivation code
                 $activationCode = UserRegistrationUtil::getActivationCode();
 
                 // save as new email
-                $updateParameters['reactivationCode'] = $activationCode;
-                $updateParameters['newEmail'] = $this->email;
+                $builder
+                    ->setReactivationCode($activationCode)
+                    ->setNewEmail($this->email);
+                $needsReactivation = true;
 
                 $success[] = 'wcf.user.changeEmail.needReactivation';
             }
@@ -382,7 +387,7 @@ class AccountManagementForm extends AbstractForm
         // password
         if (WCF::getUser()->authData === '') {
             if (!empty($this->newPassword)) {
-                $updateParameters['password'] = $this->newPassword;
+                $builder->setPassword($this->newPassword);
                 $success[] = 'wcf.user.changePassword.success';
             }
         }
@@ -394,8 +399,9 @@ class AccountManagementForm extends AbstractForm
                 && WCF::getSession()->getVar('__3rdPartyProvider') === 'github'
                 && ($oauthUser = WCF::getSession()->getVar('__oauthUser')) !== null
             ) {
-                $updateParameters['authData'] = 'github:' . $oauthUser->getId();
-                $updateParameters['password'] = null;
+                $builder
+                    ->setAuthData('github:' . $oauthUser->getId())
+                    ->setPassword(null);
                 $success[] = 'wcf.user.3rdparty.github.connect.success';
 
                 WCF::getSession()->unregister('__3rdPartyProvider');
@@ -403,7 +409,7 @@ class AccountManagementForm extends AbstractForm
             }
         }
         if ($this->githubDisconnect !== 0 && \str_starts_with(WCF::getUser()->authData, 'github:')) {
-            $updateParameters['authData'] = '';
+            $builder->setAuthData('');
             $success[] = 'wcf.user.3rdparty.github.disconnect.success';
         }
         if (\TWITTER_PUBLIC_KEY !== '' && \TWITTER_PRIVATE_KEY !== '') {
@@ -412,8 +418,9 @@ class AccountManagementForm extends AbstractForm
                 && WCF::getSession()->getVar('__3rdPartyProvider') === 'twitter'
                 && ($oauthUser = WCF::getSession()->getVar('__oauthUser')) !== null
             ) {
-                $updateParameters['authData'] = 'twitter:' . $oauthUser->getId();
-                $updateParameters['password'] = null;
+                $builder
+                    ->setAuthData('twitter:' . $oauthUser->getId())
+                    ->setPassword(null);
                 $success[] = 'wcf.user.3rdparty.twitter.connect.success';
 
                 WCF::getSession()->unregister('__3rdPartyProvider');
@@ -421,7 +428,7 @@ class AccountManagementForm extends AbstractForm
             }
         }
         if ($this->twitterDisconnect !== 0 && \str_starts_with(WCF::getUser()->authData, 'twitter:')) {
-            $updateParameters['authData'] = '';
+            $builder->setAuthData('');
             $success[] = 'wcf.user.3rdparty.twitter.disconnect.success';
         }
         if (\FACEBOOK_PUBLIC_KEY !== '' && \FACEBOOK_PRIVATE_KEY !== '') {
@@ -430,8 +437,9 @@ class AccountManagementForm extends AbstractForm
                 && WCF::getSession()->getVar('__3rdPartyProvider') === 'facebook'
                 && ($oauthUser = WCF::getSession()->getVar('__oauthUser')) !== null
             ) {
-                $updateParameters['authData'] = 'facebook:' . $oauthUser->getId();
-                $updateParameters['password'] = null;
+                $builder
+                    ->setAuthData('facebook:' . $oauthUser->getId())
+                    ->setPassword(null);
                 $success[] = 'wcf.user.3rdparty.facebook.connect.success';
 
                 WCF::getSession()->unregister('__3rdPartyProvider');
@@ -439,7 +447,7 @@ class AccountManagementForm extends AbstractForm
             }
         }
         if ($this->facebookDisconnect !== 0 && \str_starts_with(WCF::getUser()->authData, 'facebook:')) {
-            $updateParameters['authData'] = '';
+            $builder->setAuthData('');
             $success[] = 'wcf.user.3rdparty.facebook.disconnect.success';
         }
         if (\GOOGLE_PUBLIC_KEY !== '' && \GOOGLE_PRIVATE_KEY !== '') {
@@ -448,8 +456,9 @@ class AccountManagementForm extends AbstractForm
                 && WCF::getSession()->getVar('__3rdPartyProvider') === 'google'
                 && ($oauthUser = WCF::getSession()->getVar('__oauthUser')) !== null
             ) {
-                $updateParameters['authData'] = 'google:' . $oauthUser->getId();
-                $updateParameters['password'] = null;
+                $builder
+                    ->setAuthData('google:' . $oauthUser->getId())
+                    ->setPassword(null);
                 $success[] = 'wcf.user.3rdparty.google.connect.success';
 
                 WCF::getSession()->unregister('__3rdPartyProvider');
@@ -457,19 +466,17 @@ class AccountManagementForm extends AbstractForm
             }
         }
         if ($this->googleDisconnect !== 0 && \str_starts_with(WCF::getUser()->authData, 'google:')) {
-            $updateParameters['authData'] = '';
+            $builder->setAuthData('');
             $success[] = 'wcf.user.3rdparty.google.disconnect.success';
         }
 
-        $data = [];
-        if ($updateParameters !== [] || $this->additionalFields !== []) {
-            $data['data'] = \array_merge($this->additionalFields, $updateParameters);
+        foreach ($this->additionalFields as $name => $value) {
+            $builder->setCustomProperty($name, $value);
         }
 
-        $this->objectAction = new UserAction([WCF::getUser()], 'update', $data);
-        $this->objectAction->executeAction();
-        // @phpstan-ignore isset.offset
-        if (isset($updateParameters['newEmail']) && isset($updateParameters['reactivationCode'])) {
+        (new UpdateUser($builder))();
+
+        if ($needsReactivation) {
             // Use user list to allow overriding of the fields without duplicating logic
             $userList = new UserList();
             $userList->useQualifiedShorthand = false;

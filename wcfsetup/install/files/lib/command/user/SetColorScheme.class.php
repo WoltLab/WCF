@@ -3,7 +3,7 @@
 namespace wcf\command\user;
 
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 
 /**
  * Sets the preferred color scheme of a user.
@@ -22,11 +22,9 @@ final class SetColorScheme
 
     public function __invoke(): void
     {
-        $userAction = new UserAction([$this->user], 'update', [
-            'options' => [
-                User::getUserOptionID('colorScheme') => $this->colorScheme,
-            ],
-        ]);
-        $userAction->executeAction();
+        (new UpdateUser(
+            UserBuilder::forUpdate($this->user)
+                ->setUserOption(User::getUserOptionID('colorScheme'), $this->colorScheme)
+        ))();
     }
 }

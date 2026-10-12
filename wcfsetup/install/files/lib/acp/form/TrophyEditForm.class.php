@@ -3,9 +3,11 @@
 namespace wcf\acp\form;
 
 use wcf\acp\page\TrophyListPage;
+use wcf\command\user\UpdateUser;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyAction;
-use wcf\data\user\UserAction;
+use wcf\data\user\User;
+use wcf\data\user\UserBuilder;
 use wcf\http\Helper;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -211,12 +213,10 @@ class TrophyEditForm extends TrophyAddForm
             $statement->execute($conditionBuilder->getParameters());
 
             while ($row = $statement->fetchArray()) {
-                $userAction = new UserAction([$row['userID']], 'update', [
-                    'counters' => [
-                        'trophyPoints' => $row['count'] * ($this->isDisabled !== 0 ? -1 : 1),
-                    ],
-                ]);
-                $userAction->executeAction();
+                (new UpdateUser(
+                    UserBuilder::forUpdate(new User($row['userID']))
+                        ->incrementTrophyPoints($row['count'] * ($this->isDisabled !== 0 ? -1 : 1))
+                ))();
             }
         }
 

@@ -339,6 +339,18 @@ abstract class DatabaseObjectBuilder
     }
 
     /**
+     * Increases or decreases the value of a custom property by the given
+     * value when the object is persisted, for example a counter that has
+     * been added by a plugin.
+     */
+    final public function incrementCustomProperty(string $name, int|float $value): static
+    {
+        $this->incrementProperties[$name] = $value;
+
+        return $this;
+    }
+
+    /**
      * This method is called after the properties have been validated.
      * It can be overriden to handle additional tasks that are not handled by the default implementation.
      * You SHOULD NOT modify any properties in this method.

@@ -277,6 +277,46 @@ final class UserBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    /**
+     * Sets the new email address that has to be confirmed by the user, an
+     * empty string discards a pending change.
+     */
+    public function setNewEmail(string $newEmail): static
+    {
+        $this->properties['newEmail'] = $newEmail;
+
+        return $this;
+    }
+
+    /**
+     * Sets the code to confirm the new email address, `0` discards a pending
+     * change.
+     */
+    public function setReactivationCode(int $reactivationCode): static
+    {
+        $this->properties['reactivationCode'] = $reactivationCode;
+
+        return $this;
+    }
+
+    /**
+     * Sets the timestamp at which the user terminated their account, `0`
+     * cancels the termination.
+     */
+    public function setQuitStarted(int $quitStarted): static
+    {
+        $this->properties['quitStarted'] = $quitStarted;
+
+        return $this;
+    }
+
+    public function incrementTrophyPoints(int $trophyPoints): static
+    {
+        $this->incrementProperties['trophyPoints'] = $trophyPoints;
+
+        return $this;
+    }
+
     public function setLastUsernameChange(int $lastUsernameChange): static
     {
         $this->properties['lastUsernameChange'] = $lastUsernameChange;
