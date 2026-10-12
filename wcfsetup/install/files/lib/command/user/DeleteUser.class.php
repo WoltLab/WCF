@@ -55,6 +55,10 @@ final class DeleteUser
             [$user->userID]
         );
 
+        // Must run before the deletion, the author entries of notifications
+        // are removed by a foreign key on deletion.
+        (new MarkActivationNotificationsAsConfirmed($user))();
+
         UserNotificationHandler::getInstance()->removeNotifications(
             'com.woltlab.wcf.user.registration.notification',
             [$user->userID]
