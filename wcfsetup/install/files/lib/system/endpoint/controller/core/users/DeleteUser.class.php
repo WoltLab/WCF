@@ -6,7 +6,6 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -32,9 +31,7 @@ final class DeleteUser implements IController
             throw new PermissionDeniedException();
         }
 
-        // Plugins clean up their data through the events of `UserAction`.
-        $action = new UserAction([$user], 'delete');
-        $action->executeAction();
+        new \wcf\command\user\DeleteUser($user)();
 
         return new JsonResponse([]);
     }

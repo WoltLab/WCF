@@ -2,8 +2,9 @@
 
 namespace wcf\system\cronjob;
 
+use wcf\command\user\DeleteUser;
 use wcf\data\cronjob\Cronjob;
-use wcf\data\user\UserAction;
+use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\WCF;
 
 /**
@@ -31,9 +32,8 @@ class UserQuitCronjob extends AbstractCronjob
         ]);
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-        if ($userIDs !== []) {
-            $action = new UserAction($userIDs, 'delete');
-            $action->executeAction();
+        foreach (UserRuntimeCache::getInstance()->getObjects($userIDs) as $user) {
+            new DeleteUser($user)();
         }
     }
 }
