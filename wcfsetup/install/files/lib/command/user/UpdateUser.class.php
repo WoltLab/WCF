@@ -10,6 +10,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\session\SessionHandler;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
+use wcf\system\user\rename\UsernameColumn;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
@@ -100,19 +101,27 @@ final class UpdateUser
      */
     private function rename(User $user, string $oldUsername): void
     {
+        $event = new UserRenamed($user, $oldUsername);
+        EventHandler::getInstance()->fire($event);
+
         WCF::getDB()->beginTransaction();
-        foreach (['wcf1_article', 'wcf1_comment', 'wcf1_comment_response', 'wcf1_media', 'wcf1_modification_log'] as $tableName) {
-            $sql = "UPDATE  {$tableName}
-                    SET     username = ?
-                    WHERE   userID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                $user->username,
-                $user->userID,
-            ]);
+        foreach ([...$this->getUsernameColumns(), ...$event->getUsernameColumns()] as $column) {
+            (new UpdateUsernameColumn($column, $user))();
         }
         WCF::getDB()->commitTransaction();
+    }
 
-        EventHandler::getInstance()->fire(new UserRenamed($user, $oldUsername));
+    /**
+     * @return list<UsernameColumn>
+     */
+    private function getUsernameColumns(): array
+    {
+        return [
+            new UsernameColumn('wcf1_article'),
+            new UsernameColumn('wcf1_comment'),
+            new UsernameColumn('wcf1_comment_response'),
+            new UsernameColumn('wcf1_media'),
+            new UsernameColumn('wcf1_modification_log'),
+        ];
     }
 }
