@@ -7,9 +7,9 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use wcf\command\user\AddUserToGroups;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
 use wcf\data\user\UserList;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
@@ -43,16 +43,14 @@ final class UserAssignToGroupAction implements RequestHandlerInterface
                 return $response;
             }
 
-            $groupIDs = \array_map(
+            $groupIDs = \array_values(\array_map(
                 static fn($groupID) => (int)$groupID,
                 $form->getData()['data']['groupIDs']
-            );
+            ));
 
-            (new UserAction(\array_values($users), 'addToGroups', [
-                'groups' => $groupIDs,
-                'deleteOldGroups' => false,
-                'addDefaultGroups' => false,
-            ]))->executeAction();
+            foreach ($users as $user) {
+                (new AddUserToGroups($user, $groupIDs))();
+            }
 
             return new JsonResponse([]);
         } else {

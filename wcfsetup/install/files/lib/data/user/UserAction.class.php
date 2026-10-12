@@ -3,6 +3,7 @@
 namespace wcf\data\user;
 
 use wcf\command\file\DeleteFiles;
+use wcf\command\user\AddUserToGroups;
 use wcf\command\user\BanUser;
 use wcf\command\user\ConfirmUserEmail;
 use wcf\command\user\DisableUser;
@@ -13,6 +14,7 @@ use wcf\command\user\RemoveUserFromGroups;
 use wcf\command\user\ResendActivationMail;
 use wcf\command\user\UnbanUser;
 use wcf\command\user\UnconfirmUserEmail;
+use wcf\command\user\UpdateUser;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\file\File;
 use wcf\data\ISearchAction;
@@ -27,7 +29,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\style\FontAwesomeIcon;
-use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 
 /**
@@ -451,6 +452,8 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      * Add users to given groups.
      *
      * @return void
+     *
+     * @deprecated 6.3 Use the `AddUserToGroups` command instead.
      */
     public function addToGroups()
     {
@@ -458,39 +461,29 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
             $this->readObjects();
         }
 
-        $groupIDs = $this->parameters['groups'];
-        $deleteOldGroups = $addDefaultGroups = true;
-        if (isset($this->parameters['deleteOldGroups'])) {
-            $deleteOldGroups = $this->parameters['deleteOldGroups'];
-        }
-        if (isset($this->parameters['addDefaultGroups'])) {
-            $addDefaultGroups = $this->parameters['addDefaultGroups'];
-        }
+        $deleteOldGroups = (bool)($this->parameters['deleteOldGroups'] ?? true);
+        $addDefaultGroups = (bool)($this->parameters['addDefaultGroups'] ?? true);
+        $ignoreUserGroupAssignments = (bool)($this->parameters['ignoreUserGroupAssignments'] ?? false);
 
-        $userIDs = [];
+        $groupIDs = \array_map(static fn($groupID) => (int)$groupID, $this->parameters['groups']);
+        if ($addDefaultGroups) {
+            $groupIDs = \array_merge($groupIDs, UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::USERS]));
+        }
+        $groupIDs = \array_values(\array_unique($groupIDs));
+
         foreach ($this->getObjects() as $userEditor) {
-            $userIDs[] = $userEditor->userID;
-            $userEditor->addToGroups($groupIDs, $deleteOldGroups, $addDefaultGroups);
-        }
-
-        if (empty($this->parameters['ignoreUserGroupAssignments'])) {
-            UserGroupAssignmentHandler::getInstance()->checkUsers($userIDs);
-        }
-
-        // reread objects
-        $this->objects = [];
-        UserEditor::resetCache();
-        $this->readObjects();
-
-        $users = \array_values(\array_map(
-            static fn(UserEditor $editor) => $editor->getDecoratedObject(),
-            $this->getObjects()
-        ));
-        if (\MODULE_USER_RANK !== 0) {
-            (new RefreshUserRanks($users))();
-        }
-        if (\MODULE_USERS_ONLINE !== 0) {
-            (new RefreshUserOnlineMarkings($users))();
+            if ($deleteOldGroups) {
+                (new UpdateUser(
+                    UserBuilder::forUpdate($userEditor->getDecoratedObject())->setGroupIDs($groupIDs),
+                    $ignoreUserGroupAssignments
+                ))();
+            } else {
+                (new AddUserToGroups(
+                    $userEditor->getDecoratedObject(),
+                    $groupIDs,
+                    $ignoreUserGroupAssignments
+                ))();
+            }
         }
     }
 

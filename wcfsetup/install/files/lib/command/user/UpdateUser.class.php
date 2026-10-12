@@ -25,6 +25,7 @@ final class UpdateUser
 {
     public function __construct(
         private readonly UserBuilder $builder,
+        private readonly bool $ignoreUserGroupAssignments = false,
     ) {}
 
     public function __invoke(): User
@@ -62,7 +63,9 @@ final class UpdateUser
 
         // The automatic group assignments and the user rank can depend on user options.
         if ($groupsChanged || $this->builder->getUserOptions() !== null) {
-            UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
+            if (!$this->ignoreUserGroupAssignments) {
+                UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
+            }
 
             if (\MODULE_USER_RANK !== 0) {
                 (new RefreshUserRanks([$user]))();
