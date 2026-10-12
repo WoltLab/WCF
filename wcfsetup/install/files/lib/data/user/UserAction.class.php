@@ -1042,12 +1042,14 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
     /**
      * @return void
      * @since 5.3
+     * @deprecated 6.3
      */
     public function validateSaveUserConsent() {}
 
     /**
      * @return void
      * @since 5.3
+     * @deprecated 6.3 Use the `wcf\system\endpoint\controller\core\users\SaveUserConsent` endpoint instead.
      */
     public function saveUserConsent()
     {

@@ -7,7 +7,7 @@
  */
 
 import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
-import * as Ajax from "../../Ajax";
+import { saveUserConsent } from "../../Api/Users/SaveUserConsent";
 import * as Core from "../../Core";
 import DomChangeListener from "../../Dom/Change/Listener";
 import DomUtil from "../../Dom/Util";
@@ -51,13 +51,8 @@ class UserConsent {
     this.enableAllExternalMedia();
 
     if (User.userId) {
-      Ajax.apiOnce({
-        data: {
-          actionName: "saveUserConsent",
-          className: "wcf\\data\\user\\UserAction",
-        },
-        silent: true,
-      });
+      // The consent is only a convenience, errors are silently ignored.
+      void saveUserConsent();
     } else {
       window.sessionStorage.setItem(`${Core.getStoragePrefix()}user-consent`, "all");
     }
