@@ -91,6 +91,10 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
     #[\Override]
     public function getImageTag(?int $size = null, bool $lazyLoading = true)
     {
+        if ($size === null) {
+            $size = self::AVATAR_SIZE;
+        }
+
         return \sprintf(
             '<img src="%s" width="%d" height="%d" alt="" class="userAvatarImage" loading="%s">',
             StringUtil::encodeHTML($this->getURL($size)),
@@ -103,7 +107,16 @@ class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvata
     #[\Override]
     public function getSafeImageTag(?int $size = null): string
     {
-        return '<img src="' . StringUtil::encodeHTML($this->getSafeURL($size)) . '" width="' . $size . '" height="' . $size . '" alt="" class="userAvatarImage">';
+        if ($size === null) {
+            $size = self::AVATAR_SIZE;
+        }
+
+        return \sprintf(
+            '<img src="%s" width="%d" height="%d" alt="" class="userAvatarImage">',
+            StringUtil::encodeHTML($this->getSafeURL($size)),
+            $size,
+            $size
+        );
     }
 
     #[\Override]

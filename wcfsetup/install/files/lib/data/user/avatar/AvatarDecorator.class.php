@@ -38,12 +38,22 @@ final class AvatarDecorator implements IUserAvatar, ISafeFormatAvatar
     public function getSafeImageTag(?int $size = null): string
     {
         if ($this->avatar instanceof File) {
-            return $this->getImageTag($size);
+            if ($size === null) {
+                $size = UserAvatarFileProcessor::AVATAR_SIZE;
+            }
+
+            return \sprintf(
+                '<img src="%s" width="%d" height="%d" alt="" class="userAvatarImage">',
+                StringUtil::encodeHTML($this->getSafeURL($size)),
+                $size,
+                $size
+            );
         } elseif ($this->avatar instanceof ISafeFormatAvatar) {
             return $this->avatar->getSafeImageTag($size);
         }
 
-        return $this->avatar->getImageTag($size);
+        // @phpstan-ignore arguments.count
+        return $this->avatar->getImageTag($size, false);
     }
 
     #[\Override]
@@ -66,9 +76,13 @@ final class AvatarDecorator implements IUserAvatar, ISafeFormatAvatar
     public function getImageTag(?int $size = null, bool $lazyLoading = true)
     {
         if ($this->avatar instanceof File) {
+            if ($size === null) {
+                $size = UserAvatarFileProcessor::AVATAR_SIZE;
+            }
+
             return \sprintf(
                 '<img src="%s" width="%d" height="%d" alt="" class="userAvatarImage" loading="%s">',
-                StringUtil::encodeHTML($this->getSafeURL($size)),
+                StringUtil::encodeHTML($this->getURL($size)),
                 $size,
                 $size,
                 $lazyLoading ? 'lazy' : 'eager'

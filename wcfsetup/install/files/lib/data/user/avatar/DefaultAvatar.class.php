@@ -75,7 +75,16 @@ SVG;
     #[\Override]
     public function getSafeImageTag(?int $size = null): string
     {
-        return '<img src="' . StringUtil::encodeHTML($this->getSafeURL($size)) . '" width="' . $size . '" height="' . $size . '" alt="" class="userAvatarImage">';
+        if ($size === null) {
+            $size = $this->size;
+        }
+
+        return \sprintf(
+            '<img src="%s" width="%d" height="%d" alt="" class="userAvatarImage">',
+            StringUtil::encodeHTML($this->getSafeURL($size)),
+            $size,
+            $size
+        );
     }
 
     #[\Override]
