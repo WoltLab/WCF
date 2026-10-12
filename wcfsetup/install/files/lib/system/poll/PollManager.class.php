@@ -27,6 +27,16 @@ use wcf\util\StringUtil;
  */
 class PollManager extends SingletonFactory
 {
+    private const DEFAULT_POLL_DATA = [
+        'endTime' => 0,
+        'isChangeable' => 0,
+        'isPublic' => 0,
+        'maxVotes' => 1,
+        'question' => '',
+        'resultsRequireVote' => 0,
+        'sortByVotes' => 0,
+    ];
+
     /**
      * list of object types
      * @var ObjectType[]
@@ -55,15 +65,7 @@ class PollManager extends SingletonFactory
      * poll data
      * @var mixed[]
      */
-    protected $pollData = [
-        'endTime' => '',
-        'isChangeable' => 0,
-        'isPublic' => 0,
-        'maxVotes' => 1,
-        'question' => '',
-        'resultsRequireVote' => 0,
-        'sortByVotes' => 0,
-    ];
+    protected $pollData = self::DEFAULT_POLL_DATA;
 
     /**
      * poll id
@@ -173,7 +175,8 @@ class PollManager extends SingletonFactory
         }
 
         // reset poll data and options prior to reading form input
-        $this->pollData = $this->pollOptions = [];
+        $this->pollData = self::DEFAULT_POLL_DATA;
+        $this->pollOptions = [];
 
         // poll data
         if (isset($postData['pollEndTime'])) {
