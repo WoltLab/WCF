@@ -6,14 +6,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\IStorableObject;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
-use wcf\system\form\builder\field\BooleanFormField;
-use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
-use wcf\system\form\builder\field\IFormField;
-use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\IFormDocument;
-use wcf\system\form\builder\IFormNode;
-use wcf\system\form\option\FormOptionHandler;
-use wcf\system\form\option\SharedConfigurationFormFields;
 
 /**
  * Default implementation for a form that adds custom options based on the form option system.
@@ -28,6 +21,8 @@ use wcf\system\form\option\SharedConfigurationFormFields;
  */
 abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
 {
+    use TFormOptionAddForm;
+
     #[\Override]
     public function finalizeForm()
     {
@@ -66,84 +61,5 @@ abstract class AbstractFormOptionAddForm extends AbstractFormBuilderForm
                 }
             )
         );
-    }
-
-    /**
-     * Returns whether the given value of a configuration form field is considered
-     * to be set and therefore has to be stored. Values that represent the default
-     * state of a form field, for example an empty text or a disabled checkbox, are
-     * not stored.
-     */
-    private function isConfigurationValueSet(?IFormNode $formField, mixed $value): bool
-    {
-        // `BooleanFormField::getSaveValue()` returns `0` or `1` instead of a
-        // boolean, therefore a disabled checkbox has to be recognized explicitly.
-        if ($formField instanceof BooleanFormField && $value === 0) {
-            return false;
-        }
-
-        return $value !== null
-            && $value !== ''
-            && $value !== false
-            && $value !== [];
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getConfigurationFormFieldIds(): array
-    {
-        $ids = [];
-
-        foreach (FormOptionHandler::getInstance()->getOptions() as $option) {
-            foreach ($option->getConfigurationFormFields() as $formFieldId) {
-                $ids[] = $formFieldId;
-            }
-        }
-
-        return \array_unique($ids);
-    }
-
-    /**
-     * @return list<IFormField>
-     */
-    protected function getSharedConfigurationFormFields(): array
-    {
-        $sharedConfigurationFormFields = new SharedConfigurationFormFields();
-        $matrix = [];
-
-        foreach (FormOptionHandler::getInstance()->getOptions() as $option) {
-            foreach ($option->getConfigurationFormFields() as $formFieldId) {
-                if (!isset($matrix[$formFieldId])) {
-                    $matrix[$formFieldId] = [];
-                }
-
-                $matrix[$formFieldId][] = $option->getId();
-            }
-        }
-
-        $formFields = [];
-
-        foreach ($matrix as $formFieldId => $dependencies) {
-            $formField = $sharedConfigurationFormFields->getFormField($formFieldId);
-            \assert($formField !== null);
-            $formField->addDependency(
-                ValueFormFieldDependency::create($formFieldId . 'OptionTypeDependency')
-                    ->fieldId('optionType')
-                    ->values($dependencies)
-            );
-            $formFields[] = $formField;
-        }
-
-        return $formFields;
-    }
-
-    protected function getOptionTypeFormField(): SelectFormField
-    {
-        return SelectFormField::create('optionType')
-            ->label('wcf.form.option.optionType')
-            ->immutable($this->formAction !== 'create')
-            ->options(FormOptionHandler::getInstance()->getSortedOptionTypes())
-            ->required();
     }
 }

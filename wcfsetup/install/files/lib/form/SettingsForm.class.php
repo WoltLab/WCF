@@ -2,110 +2,93 @@
 
 namespace wcf\form;
 
+use wcf\command\user\SetSpecialTrophies;
+use wcf\command\user\UpdateUser;
+use wcf\data\DatabaseObjectBuilder;
 use wcf\data\language\Language;
 use wcf\data\style\Style;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
 use wcf\data\user\option\category\UserOptionCategory;
+use wcf\data\user\option\UserOption;
 use wcf\data\user\trophy\UserTrophyList;
-use wcf\data\user\UserAction;
+use wcf\data\user\User;
+use wcf\data\user\UserBuilder;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileAction;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\MultipleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\option\user\TUserOptionFormFields;
 use wcf\system\language\LanguageFactory;
 use wcf\system\menu\user\UserMenu;
-use wcf\system\option\user\UserOptionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
-use wcf\command\user\SetColorScheme;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
+use wcf\util\StringUtil;
 
 /**
  * Shows the dynamic options edit form.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk, Alexander Ebert
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @extends AbstractDatabaseObjectBuilderForm<User, UserBuilder>
  */
-class SettingsForm extends AbstractForm
+final class SettingsForm extends AbstractDatabaseObjectBuilderForm
 {
+    use TUserOptionFormFields;
+
     /**
      * @inheritDoc
      */
     public $loginRequired = true;
 
     /**
-     * user option handler
-     * @var ?UserOptionHandler
-     */
-    public $optionHandler;
-
-    /**
      * @inheritDoc
      */
-    public $errorType = [];
+    public string $formAction = 'edit';
 
     /**
      * option category
-     * @var string
      */
-    public $category = 'general';
+    public string $category = 'general';
 
     /**
      * list of available content languages
      * @var Language[]
      */
-    public $availableContentLanguages = [];
+    public array $availableContentLanguages = [];
 
     /**
      * list of available languages
      * @var Language[]
      */
-    public $availableLanguages = [];
+    public array $availableLanguages = [];
 
     /**
      * list of available styles
      * @var Style[]
      */
-    public $availableStyles = [];
+    public array $availableStyles = [];
 
     /**
      * list of available trophies
      * @var Trophy[]
      */
-    public $availableTrophies = [];
+    public array $availableTrophies = [];
 
     /**
-     * list of content language ids
-     * @var int[]
+     * editable options grouped by the name of their category
+     * @var array<string, UserOption[]>
      */
-    public $contentLanguageIDs = [];
-
-    /**
-     * language id
-     * @var int
-     */
-    public $languageID = 0;
-
-    /**
-     * style id
-     * @var int
-     */
-    public $styleID = 0;
-
-    /**
-     * special trophies
-     * @var int[]
-     */
-    public $specialTrophies = [];
-
-    public string $colorScheme = 'system';
+    protected array $options = [];
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
@@ -118,8 +101,13 @@ class SettingsForm extends AbstractForm
             }
         }
 
-        $this->optionHandler = new UserOptionHandler(false, '', 'settings.' . $this->category);
-        $this->optionHandler->setUser(WCF::getUser());
+        $this->formObject = new User(WCF::getUser()->userID);
+        $this->options = $this->getUserOptionsByCategory(
+            'settings.' . $this->category,
+            static fn(UserOption $option) => $option->validateOptions()
+                && $option->validatePermissions()
+                && $option->isEditable()
+        );
 
         if ($this->category === 'general') {
             $this->availableContentLanguages = LanguageFactory::getInstance()->getContentLanguages();
@@ -134,193 +122,212 @@ class SettingsForm extends AbstractForm
             $this->availableTrophies = TrophyCache::getInstance()->getTrophiesByID($trophyIDs);
 
             Trophy::sort($this->availableTrophies, 'showOrder');
-        } elseif ($this->optionHandler->countCategoryOptions('settings.' . $this->category) === 0) {
+        } elseif ($this->options === []) {
             throw new IllegalLinkException();
         }
     }
 
     #[\Override]
-    public function readFormParameters()
+    protected function getDatabaseObjectBuilder(): UserBuilder
     {
-        parent::readFormParameters();
+        return UserBuilder::forUpdate($this->formObject);
+    }
 
-        $this->optionHandler->readUserInput($_POST);
+    #[\Override]
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
+    {
+        return new UpdateUser($builder);
+    }
 
-        // static options
+    #[\Override]
+    protected function createForm(): void
+    {
+        parent::createForm();
+
         if ($this->category === 'general') {
-            if (isset($_POST['contentLanguageIDs']) && \is_array($_POST['contentLanguageIDs'])) {
-                $this->contentLanguageIDs = ArrayUtil::toIntegerArray($_POST['contentLanguageIDs']);
+            $this->form->appendChildren($this->getGeneralFormContainers());
+        }
+
+        $this->form->appendChildren($this->getUserOptionFormContainers($this->options));
+    }
+
+    /**
+     * Returns the form containers for the static options of the general category.
+     *
+     * @return FormContainer[]
+     */
+    protected function getGeneralFormContainers(): array
+    {
+        $containers = [];
+
+        if (\count($this->availableLanguages) > 1) {
+            $languageContainer = FormContainer::create('languageSection')
+                ->label('wcf.user.language')
+                ->appendChild(
+                    SelectFormField::create('languageID')
+                        ->label('wcf.user.language.description')
+                        ->options(\array_map(
+                            static fn(Language $language) => StringUtil::encodeHTML($language->languageName),
+                            $this->availableLanguages
+                        ))
+                        ->required()
+                        ->ignoreInvalidValues()
+                        ->defaultValue(LanguageFactory::getInstance()->getDefaultLanguageID())
+                        ->saveValueCallback(static function (UserBuilder $builder, SelectFormField $field) {
+                            $builder->setLanguageID((int)$field->getSaveValue());
+                        })
+                );
+
+            if ($this->availableContentLanguages !== []) {
+                $languageContainer->appendChild(
+                    MultipleSelectionFormField::create('contentLanguageIDs')
+                        ->label('wcf.user.visibleLanguages')
+                        ->description('wcf.user.visibleLanguages.description')
+                        ->options(\array_map(
+                            static fn(Language $language) => StringUtil::encodeHTML($language->languageName),
+                            $this->availableContentLanguages
+                        ))
+                        ->ignoreInvalidValues()
+                        ->loadValueCallback(static function (User $user, MultipleSelectionFormField $field) {
+                            $field->value($user->getLanguageIDs());
+                        })
+                        ->saveValueCallback(function (UserBuilder $builder, MultipleSelectionFormField $field) {
+                            $languageIDs = \array_map(\intval(...), $field->getValue() ?? []);
+                            if ($languageIDs === []) {
+                                $languageID = (int)$field->getDocument()->getFormField('languageID')?->getSaveValue();
+                                if (isset($this->availableContentLanguages[$languageID])) {
+                                    $languageIDs[] = $languageID;
+                                }
+                            }
+
+                            $builder->setLanguageIDs($languageIDs);
+                        })
+                );
             }
-            if (isset($_POST['languageID'])) {
-                $this->languageID = \intval($_POST['languageID']);
+
+            $containers[] = $languageContainer;
+        }
+
+        $styleContainer = FormContainer::create('styleSection')
+            ->label('wcf.user.styles');
+        if (\count($this->availableStyles) > 1) {
+            $styles = [0 => 'wcf.global.defaultValue'];
+            foreach ($this->availableStyles as $style) {
+                $styles[$style->styleID] = StringUtil::encodeHTML($style->styleName);
             }
-            if (isset($_POST['styleID'])) {
-                $this->styleID = \intval($_POST['styleID']);
+
+            $styleContainer->appendChild(
+                SelectFormField::create('styleID')
+                    ->label('wcf.user.style')
+                    ->description('wcf.user.style.description')
+                    ->options($styles)
+                    ->required()
+                    ->ignoreInvalidValues()
+                    ->defaultValue(0)
+                    ->saveValueCallback(static function (UserBuilder $builder, SelectFormField $field) {
+                        $builder->setStyleID((int)$field->getSaveValue());
+                    })
+            );
+        }
+        $styleContainer->appendChild(
+            SelectFormField::create('colorScheme')
+                ->label('wcf.user.style.colorScheme')
+                ->description('wcf.user.style.colorScheme.description')
+                ->options([
+                    'system' => 'wcf.style.setColorScheme.system',
+                    'light' => 'wcf.style.setColorScheme.light',
+                    'dark' => 'wcf.style.setColorScheme.dark',
+                ])
+                ->required()
+                ->ignoreInvalidValues()
+                ->defaultValue('system')
+                ->loadValueCallback(static function (User $user, SelectFormField $field) {
+                    $field->value($user->getUserOption('colorScheme') ?? 'system');
+                })
+                ->saveValueCallback(static function (UserBuilder $builder, SelectFormField $field) {
+                    $optionID = User::getUserOptionID('colorScheme');
+                    if ($optionID !== null) {
+                        $builder->setUserOption($optionID, (string)$field->getSaveValue());
+                    }
+                })
+        );
+        $containers[] = $styleContainer;
+
+        $maxSpecialTrophies = (int)WCF::getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies');
+        if (\MODULE_TROPHY !== 0 && $maxSpecialTrophies !== 0 && $this->availableTrophies !== []) {
+            $trophies = [];
+            foreach ($this->availableTrophies as $trophy) {
+                $trophies[$trophy->trophyID] = $trophy->renderTrophy(32) . ' ' . StringUtil::encodeHTML($trophy->getTitle());
             }
-            if (isset($_POST['specialTrophies'])) {
-                $this->specialTrophies = ArrayUtil::toIntegerArray($_POST['specialTrophies']);
-            }
-            if (isset($_POST['colorScheme'])) {
-                $this->colorScheme = $_POST['colorScheme'];
-            }
+
+            $containers[] = FormContainer::create('trophySection')
+                ->label('wcf.user.trophy.trophies')
+                ->appendChild(
+                    MultipleSelectionFormField::create('specialTrophies')
+                        ->label('wcf.user.trophy.specialTrophies')
+                        ->description('wcf.user.trophy.specialTrophies.description')
+                        ->options($trophies)
+                        ->addValidator(new FormFieldValidator(
+                            'maximumMultiples',
+                            static function (MultipleSelectionFormField $formField) use ($maxSpecialTrophies) {
+                                if (\count($formField->getValue() ?? []) > $maxSpecialTrophies) {
+                                    $formField->addValidationError(new FormFieldValidationError(
+                                        'tooMany',
+                                        'wcf.user.trophy.specialTrophies.error.tooMany'
+                                    ));
+                                }
+                            }
+                        ))
+                        ->ignoreInvalidValues()
+                        ->loadValueCallback(static function (User $user, MultipleSelectionFormField $field) {
+                            $field->value(\array_values(\array_unique(\array_map(
+                                static fn(Trophy $trophy) => $trophy->trophyID,
+                                (new UserProfile($user))->getSpecialTrophies()
+                            ))));
+                        })
+                );
+        }
+
+        return $containers;
+    }
+
+    #[\Override]
+    protected function setFormAction(): void
+    {
+        $parameters = [];
+        if ($this->category !== 'general') {
+            $parameters['category'] = $this->category;
+        }
+
+        $this->form->action(LinkHandler::getInstance()->getControllerLink(static::class, $parameters));
+    }
+
+    #[\Override]
+    protected function afterSave(): void
+    {
+        parent::afterSave();
+
+        $specialTrophies = $this->form->getFormField('specialTrophies');
+        if ($specialTrophies !== null) {
+            (new SetSpecialTrophies(
+                $this->object,
+                \array_values(\array_map(\intval(...), $specialTrophies->getValue() ?? []))
+            ))();
         }
     }
 
     #[\Override]
-    public function validate()
-    {
-        parent::validate();
-
-        // dynamic options
-        $optionErrors = $this->optionHandler->validate();
-        if ($optionErrors !== []) {
-            $this->errorType = $optionErrors;
-            throw new UserInputException('options', $this->errorType);
-        }
-
-        // static options
-        if ($this->category === 'general') {
-            // validate language id
-            if (!isset($this->availableLanguages[$this->languageID])) {
-                $this->languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
-            }
-
-            // validate content language ids
-            foreach ($this->contentLanguageIDs as $key => $languageID) {
-                if (!isset($this->availableContentLanguages[$languageID])) {
-                    unset($this->contentLanguageIDs[$key]);
-                }
-            }
-
-            if ($this->contentLanguageIDs === [] && isset($this->availableContentLanguages[$this->languageID])) {
-                $this->contentLanguageIDs[] = $this->languageID;
-            }
-
-            // validate style id
-            if (!isset($this->availableStyles[$this->styleID])) {
-                $this->styleID = 0;
-            }
-
-            // validate special trophies
-            if (\count($this->specialTrophies) > WCF::getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
-                throw new UserInputException('specialTrophies', 'tooMany');
-            }
-
-            foreach ($this->specialTrophies as $trophyID) {
-                if (
-                    !\in_array($trophyID, \array_map(static function ($trophy) {
-                        return $trophy->trophyID;
-                    }, $this->availableTrophies), true)
-                ) {
-                    throw new UserInputException('specialTrophies', 'invalid');
-                }
-            }
-
-            if ($this->colorScheme !== 'light' && $this->colorScheme !== 'dark') {
-                $this->colorScheme = 'system';
-            }
-        }
-    }
-
-    #[\Override]
-    public function readData()
-    {
-        parent::readData();
-
-        // default values
-        if ($_POST === []) {
-            // static options
-            if ($this->category === 'general') {
-                $this->contentLanguageIDs = WCF::getUser()->getLanguageIDs();
-                if (isset($this->availableLanguages[WCF::getUser()->languageID])) {
-                    $this->languageID = WCF::getUser()->languageID;
-                }
-                $this->styleID = WCF::getUser()->styleID;
-
-                $this->specialTrophies = \array_unique(\array_map(static function ($trophy) {
-                    return $trophy->trophyID;
-                }, (new UserProfile(WCF::getUser()))->getSpecialTrophies()));
-
-                $this->colorScheme = WCF::getUser()->getUserOption('colorScheme') ?? 'system';
-            }
-        }
-    }
-
-    #[\Override]
-    public function save()
-    {
-        parent::save();
-
-        $saveOptions = $this->optionHandler->save();
-        $parameters = ['options' => $saveOptions];
-        // static options
-        if ($this->category === 'general') {
-            $parameters['data'] = \array_merge($this->additionalFields, [
-                'languageID' => $this->languageID,
-                'styleID' => $this->styleID,
-            ]);
-            $parameters['languageIDs'] = $this->contentLanguageIDs;
-        }
-
-        $this->objectAction = new UserAction([WCF::getUser()], 'update', $parameters);
-        $this->objectAction->executeAction();
-
-        // static options
-        if ($this->category === 'general') {
-            // reset user language ids cache
-            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'languageIDs');
-
-            $userProfileAction = new UserProfileAction([WCF::getUser()->userID], 'updateSpecialTrophies', [
-                'trophyIDs' => $this->specialTrophies,
-            ]);
-            $userProfileAction->executeAction();
-
-            if (WCF::getUser()->getUserOption('colorScheme') !== $this->colorScheme) {
-                new SetColorScheme(WCF::getUser(), $this->colorScheme)();
-            }
-        }
-        $this->saved();
-
-        WCF::getTPL()->assign('success', true);
-    }
-
-    #[\Override]
-    public function assignVariables()
+    public function assignVariables(): void
     {
         parent::assignVariables();
 
-        $formActionParameters = [];
-        if ($this->category !== 'general') {
-            $formActionParameters['category'] = $this->category;
-        }
-
         WCF::getTPL()->assign([
-            'optionTree' => $this->optionHandler->getOptionTree(),
             'category' => $this->category,
-            'formAction' => LinkHandler::getInstance()->getControllerLink(
-                static::class,
-                $formActionParameters
-            ),
         ]);
-
-        // static options
-        if ($this->category === 'general') {
-            WCF::getTPL()->assign([
-                'availableContentLanguages' => $this->availableContentLanguages,
-                'availableLanguages' => $this->availableLanguages,
-                'availableStyles' => $this->availableStyles,
-                'availableTrophies' => $this->availableTrophies,
-                'contentLanguageIDs' => $this->contentLanguageIDs,
-                'languageID' => $this->languageID,
-                'styleID' => $this->styleID,
-                'specialTrophies' => $this->specialTrophies,
-                'colorScheme' => $this->colorScheme,
-            ]);
-        }
     }
 
     #[\Override]
-    public function show()
+    public function show(): void
     {
         // set active tab
         UserMenu::getInstance()->setActiveMenuItem('wcf.user.option.category.settings.' . $this->category);

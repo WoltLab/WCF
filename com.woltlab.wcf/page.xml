@@ -59,21 +59,6 @@
 				<title>Team</title>
 			</content>
 		</page>
-		<page identifier="com.woltlab.wcf.UserSearch">
-			<pageType>system</pageType>
-			<controller>wcf\form\UserSearchForm</controller>
-			<name language="de">Benutzer suchen</name>
-			<name language="en">Search Users</name>
-			<parent>com.woltlab.wcf.MembersList</parent>
-			<options>module_members_list</options>
-			<permissions>user.profile.canViewMembersList</permissions>
-			<content language="en">
-				<title>Search Users</title>
-			</content>
-			<content language="de">
-				<title>Benutzer suchen</title>
-			</content>
-		</page>
 		<page identifier="com.woltlab.wcf.AccountManagement">
 			<pageType>system</pageType>
 			<controller>wcf\form\AccountManagementForm</controller>
@@ -915,5 +900,7 @@ E-Mail: [E-Mail-Adresse der verantwortlichen Stelle]</p><p>Verantwortliche Stell
 		<page identifier="com.woltlab.wcf.AvatarEdit"/>
 		<!-- The notification list is no longer part of the user menu. -->
 		<page identifier="com.woltlab.wcf.NotificationList"/>
+		<!-- The members list offers filters instead. -->
+		<page identifier="com.woltlab.wcf.UserSearch"/>
 	</delete>
 </data>

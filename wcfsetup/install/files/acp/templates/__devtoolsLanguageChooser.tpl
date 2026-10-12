@@ -1,6 +1,6 @@
 {if ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && !$__wcf->user->isGuest() && $__isLogin|empty}
 	<script data-relocate="true">
-		require(['Ajax', 'WoltLabSuite/Core/Language/Chooser'], function(Ajax, LanguageChooser) {
+		require(['WoltLabSuite/Core/Api/Devtools/SetLanguage', 'WoltLabSuite/Core/Language/Chooser'], function(SetLanguage, LanguageChooser) {
 			var item = elCreate('li');
 			item.id = 'pageLanguageContainer';
 			var userPanelItems = elBySel('.userPanelItems');
@@ -17,17 +17,8 @@
 			};
 			
 			var callback = function(listItem) {
-				Ajax.apiOnce({
-					data: {
-						actionName: 'devtoolsSetLanguage',
-						className: 'wcf\\data\\user\\UserAction',
-						parameters: {
-							languageID: elData(listItem, 'language-id')
-						}
-					},
-					success: function() {
-						window.location.reload();
-					}
+				SetLanguage.setLanguage(parseInt(elData(listItem, 'language-id'), 10)).then(function() {
+					window.location.reload();
 				});
 			};
 			

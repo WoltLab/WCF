@@ -2,11 +2,11 @@
 
 namespace wcf\system\user\group\assignment;
 
+use wcf\command\user\AddUserToGroups;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
 use wcf\data\user\UserList;
 use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
 use wcf\system\object\filter\builder\UserGroupAssignmentObjectFilterBuilder;
@@ -69,13 +69,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
             }
 
             if ($newGroupIDs !== []) {
-                $userAction = new UserAction([$user], 'addToGroups', [
-                    'addDefaultGroups' => false,
-                    'deleteOldGroups' => false,
-                    'groups' => $newGroupIDs,
-                    'ignoreUserGroupAssignments' => true,
-                ]);
-                $userAction->executeAction();
+                (new AddUserToGroups($user, $newGroupIDs, ignoreUserGroupAssignments: true))();
             }
         }
     }
@@ -111,7 +105,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
             $userList->sqlLimit = $maxUsers;
         }
 
-        (new UserGroupAssignmentObjectFilterBuilder())->applyFilters($assignment, $userList->getConditionBuilder());
+        (new UserGroupAssignmentObjectFilterBuilder())->applyFilters($assignment, $userList);
 
         $userList->readObjects();
 

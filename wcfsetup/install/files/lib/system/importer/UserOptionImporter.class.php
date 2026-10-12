@@ -2,11 +2,12 @@
 
 namespace wcf\system\importer;
 
-use wcf\data\user\option\category\UserOptionCategoryEditor;
+use wcf\data\user\option\category\UserOptionCategoryBuilder;
 use wcf\data\user\option\category\UserOptionCategoryList;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionBuilder;
 use wcf\system\l10n\L10nStorage;
+use wcf\util\StringUtil;
 
 /**
  * Imports user options.
@@ -46,13 +47,68 @@ class UserOptionImporter extends AbstractImporter
         $builder = UserOptionBuilder::forCreate()
             ->setGenericOptionName()
             ->setPackageID(1)
-            ->setOptionType($data['optionType'])
+            ->setOptionType(UserOption::LEGACY_OPTION_TYPES[$data['optionType']] ?? $data['optionType'])
             ->setCategoryName($data['categoryName'])
             ->setL10nTitle([L10nStorage::MONOLINGUAL => (string)$additionalData['name']])
             ->setL10nDescription([L10nStorage::MONOLINGUAL => (string)($additionalData['description'] ?? '')]);
 
-        // carry over the remaining columns of the imported option
-        $handledColumns = ['optionName', 'packageID', 'optionType', 'categoryName', 'l10nIdentifier'];
+        // The select options and the required flag are converted into the
+        // form option configuration.
+        if (isset($data['selectOptions'])) {
+            $builder->setSelectOptions((string)$data['selectOptions']);
+        }
+        if (isset($data['required'])) {
+            $builder->setRequired((bool)$data['required']);
+        }
+
+        // Options of the legacy type `labeledUrl` become social media profiles,
+        // the name pattern replaces the validation pattern.
+        if ($data['optionType'] === 'labeledUrl') {
+            $configuration = UserOptionBuilder::buildConfiguration(
+                (string)($data['selectOptions'] ?? ''),
+                (bool)($data['required'] ?? false)
+            );
+            $configuration = $configuration !== '' ? \json_decode($configuration, true, flags: \JSON_THROW_ON_ERROR) : [];
+            $configuration['profileUrlPattern'] = (string)($data['labeledUrl'] ?? '');
+            if (($data['validationPattern'] ?? '') !== '') {
+                $configuration['profileNamePattern'] = $data['validationPattern'];
+            }
+
+            $builder->setConfiguration($configuration);
+            unset($data['validationPattern']);
+        }
+
+        // Options of a source with form options provide their configuration,
+        // which takes precedence over the legacy select options and required flag.
+        if (($data['configuration'] ?? '') !== '') {
+            $builder->setConfiguration(\json_decode($data['configuration'], true, flags: \JSON_THROW_ON_ERROR));
+        }
+
+        // The legacy multiple selection option types separate the selected
+        // values by newlines, the `checkboxes` form option separates them by commas.
+        if (
+            (UserOption::LEGACY_OPTION_TYPES[$data['optionType']] ?? null) === 'checkboxes'
+            && isset($data['defaultValue'])
+        ) {
+            $data['defaultValue'] = \str_replace("\n", ',', StringUtil::unifyNewlines((string)$data['defaultValue']));
+        }
+
+        // carry over the remaining columns of the imported option, skipping
+        // columns of the legacy option system that no longer exist
+        $handledColumns = [
+            'optionName',
+            'packageID',
+            'optionType',
+            'categoryName',
+            'l10nIdentifier',
+            'selectOptions',
+            'required',
+            'outputClass',
+            'enableOptions',
+            'labeledUrl',
+            'additionalData',
+            'configuration',
+        ];
         foreach ($data as $key => $value) {
             if (\in_array($key, $handledColumns, true)) {
                 continue;
@@ -89,12 +145,14 @@ class UserOptionImporter extends AbstractImporter
         }
 
         if (!\in_array($name, $this->categoryCache, true)) {
-            // create category
-            UserOptionCategoryEditor::create([
-                'packageID' => 1,
-                'categoryName' => $name,
-                'parentCategoryName' => 'profile',
-            ]);
+            // Imported categories are owned by the administrator and use their
+            // name as the monolingual title.
+            UserOptionCategoryBuilder::forCreate()
+                ->setPackageID(1)
+                ->setCategoryName($name)
+                ->setParentCategoryName('profile')
+                ->setL10nTitle([L10nStorage::MONOLINGUAL => $name])
+                ->create();
 
             $this->categoryCache[] = $name;
         }

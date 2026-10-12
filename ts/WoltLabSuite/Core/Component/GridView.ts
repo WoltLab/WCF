@@ -37,6 +37,7 @@ export class GridView {
     defaultSortOrder = "ASC",
     bulkInteractionProviderClassName: string,
     gridViewParameters?: Map<string, string>,
+    visibleColumns?: string[],
   ) {
     this.#gridClassName = gridClassName;
     this.#table = document.getElementById(`${gridId}_table`) as HTMLTableElement;
@@ -45,11 +46,20 @@ export class GridView {
     this.#gridViewParameters = gridViewParameters;
 
     this.#initInteractions();
-    this.#state = this.#setupState(gridId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
+    this.#state = this.#setupState(
+      gridId,
+      pageNo,
+      baseUrl,
+      sortField,
+      sortOrder,
+      defaultSortField,
+      defaultSortOrder,
+      visibleColumns,
+    );
     this.#initEventListeners();
   }
 
-  async #loadRows(cause: StateChangeCause): Promise<void> {
+  async #loadRows(cause: StateChangeCause, includeHeader = false): Promise<void> {
     const response = await getRows(
       this.#gridClassName,
       this.#state.getPageNo(),
@@ -57,7 +67,12 @@ export class GridView {
       this.#state.getSortOrder(),
       this.#state.getActiveFilters(),
       this.#gridViewParameters,
+      this.#state.getVisibleColumns(),
+      includeHeader,
     );
+    if (response.header !== undefined) {
+      this.#replaceHeaderColumns(response.header);
+    }
     DomUtil.setInnerHtml(this.#table.querySelector("tbody")!, response.template);
 
     this.#table.hidden = response.totalRows == 0;
@@ -73,12 +88,23 @@ export class GridView {
       row.dataset.objectId!,
       this.#state.getActiveFilters(),
       this.#gridViewParameters,
+      this.#state.getVisibleColumns(),
     );
 
     row.replaceWith(DomUtil.createFragmentFromHtml(template));
     this.#state.refreshSelection();
     DomChangeListener.trigger();
     this.#checkEmptyTable();
+  }
+
+  #replaceHeaderColumns(html: string): void {
+    const headerRow = this.#table.querySelector<HTMLTableRowElement>("thead .gridView__headerRow")!;
+    headerRow.querySelectorAll("th[data-id]").forEach((element) => element.remove());
+
+    // The selection and action columns are not part of the configurable
+    // columns and must be preserved.
+    const actionColumn = headerRow.querySelector(".gridView__actionColumn");
+    headerRow.insertBefore(DomUtil.createFragmentFromHtml(html), actionColumn);
   }
 
   #initInteractions(): void {
@@ -149,6 +175,7 @@ export class GridView {
     sortOrder: string,
     defaultSortField: string,
     defaultSortOrder: string,
+    visibleColumns?: string[],
   ): State {
     const state = new State(
       gridId,
@@ -159,9 +186,10 @@ export class GridView {
       sortOrder,
       defaultSortField,
       defaultSortOrder,
+      visibleColumns,
     );
     state.addEventListener("grid-view:change", (event) => {
-      void this.#loadRows(event.detail.source);
+      void this.#loadRows(event.detail.source, event.detail.includeHeader);
     });
     state.addEventListener(
       "grid-view:get-bulk-interactions",

@@ -3,8 +3,8 @@
 namespace wcf\system\object\filter\user;
 
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 use wcf\data\user\User;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\language\LanguageFactory;
 use wcf\system\object\filter\AbstractMultipleSelectionObjectFilter;
@@ -63,9 +63,9 @@ final class UserLanguageObjectFilter extends AbstractMultipleSelectionObjectFilt
     }
 
     #[\Override]
-    public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void
+    public function applyFilter(DatabaseObjectList $list, mixed $value): void
     {
-        $conditions->add('languageID IN (?)', [$value]);
+        $list->getConditionBuilder()->add('languageID IN (?)', [$value]);
     }
 
     #[\Override]

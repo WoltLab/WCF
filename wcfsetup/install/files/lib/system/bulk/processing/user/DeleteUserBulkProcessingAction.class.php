@@ -2,8 +2,8 @@
 
 namespace wcf\system\bulk\processing\user;
 
+use wcf\command\user\DeleteUser;
 use wcf\data\DatabaseObjectList;
-use wcf\data\user\UserAction;
 use wcf\system\WCF;
 
 /**
@@ -20,9 +20,8 @@ class DeleteUserBulkProcessingAction extends AbstractUserBulkProcessingAction
     {
         $users = $this->getAccessibleUsers($objectList);
 
-        if ($users !== []) {
-            $userAction = new UserAction($users, 'delete');
-            $userAction->executeAction();
+        foreach ($users as $user) {
+            new DeleteUser($user)();
         }
     }
 

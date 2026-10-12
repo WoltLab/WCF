@@ -7,7 +7,7 @@ use wcf\data\like\LikeEditor;
 use wcf\data\like\object\ILikeObject;
 use wcf\data\like\object\LikeObjectEditor;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\event\reaction\ReactionReverted;
 use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\database\exception\DatabaseQueryException;
@@ -79,8 +79,9 @@ final class RevertReaction
             [$likeable->getUserID() => 1]
         );
 
-        $userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
-        $userEditor->updateCounters(['likesReceived' => -1]);
+        UserBuilder::forUpdate(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()))
+            ->incrementLikesReceived(-1)
+            ->update();
     }
 
     private function deleteUserActivityEvent(

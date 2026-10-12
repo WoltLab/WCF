@@ -3,7 +3,7 @@
 namespace wcf\system\object\filter;
 
 use wcf\data\DatabaseObject;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\data\DatabaseObjectList;
 
 /**
  * Object filter that can additionally be expressed as an SQL condition,
@@ -22,9 +22,11 @@ interface IObjectListFilter extends IObjectFilter
 {
     /**
      * Adds the SQL condition that matches the objects satisfying the given
-     * value to the conditions of an object list.
+     * value to the given object list. Filters may add conditions and the joins
+     * required by them, but must not change anything else.
      *
+     * @param DatabaseObjectList<TDatabaseObject> $list
      * @param TValueType $value
      */
-    public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void;
+    public function applyFilter(DatabaseObjectList $list, mixed $value): void;
 }

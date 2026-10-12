@@ -44,6 +44,10 @@ final class GetRow implements IController
             $view->setActiveFilters($parameters->filters);
         }
 
+        if ($parameters->columns !== []) {
+            $view->setVisibleColumnIDs($parameters->columns);
+        }
+
         $view->setObjectIDFilter($parameters->objectID);
 
         return new JsonResponse([
@@ -63,5 +67,7 @@ final class GetRowParameters
         public readonly array $filters,
         /** @var array<string, string|string[]> */
         public readonly array $gridViewParameters,
+        /** @var list<string> */
+        public readonly array $columns = [],
     ) {}
 }

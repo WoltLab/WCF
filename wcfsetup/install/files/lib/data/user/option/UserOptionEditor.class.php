@@ -17,6 +17,7 @@ use wcf\system\WCF;
  * @mixin   UserOption
  * @extends DatabaseObjectEditor<UserOption>
  * @implements IEditableCachedObject<UserOption>
+ * @deprecated 6.3 use `UserOptionBuilder` instead.
  */
 class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {
@@ -28,6 +29,13 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
     #[\Override]
     public static function create(array $parameters = [])
     {
+        if (!\array_key_exists('configuration', $parameters)) {
+            $parameters['configuration'] = UserOptionBuilder::buildConfiguration(
+                $parameters['selectOptions'] ?? '',
+                (bool)($parameters['required'] ?? false)
+            );
+        }
+
         /** @var UserOption $userOption */
         $userOption = parent::create($parameters);
 
@@ -52,6 +60,16 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
     #[\Override]
     public function update(array $parameters = [])
     {
+        if (
+            !\array_key_exists('configuration', $parameters)
+            && (\array_key_exists('selectOptions', $parameters) || \array_key_exists('required', $parameters))
+        ) {
+            $parameters['configuration'] = UserOptionBuilder::buildConfiguration(
+                $parameters['selectOptions'] ?? $this->selectOptions ?? '',
+                (bool)($parameters['required'] ?? $this->required)
+            );
+        }
+
         parent::update($parameters);
 
         // alter the table "wcf1_user_option_value" with this new option
@@ -92,6 +110,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
      * Disables this option.
      *
      * @return void
+     * @deprecated 6.3 use the `DisableOption` command instead.
      */
     public function disable()
     {
@@ -102,6 +121,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
      * Enables this option.
      *
      * @return void
+     * @deprecated 6.3 use the `EnableOption` command instead.
      */
     public function enable(bool $enable = true)
     {

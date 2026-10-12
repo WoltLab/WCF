@@ -1132,7 +1132,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.menu.link.user.mail"><![CDATA[E-Mail an alle Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
-		<item name="wcf.acp.menu.link.user.search"><![CDATA[Benutzer suchen]]></item>
 		<item name="wcf.acp.menu.link.user.option"><![CDATA[Profilfelder]]></item>
 		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[Profilfelder]]></item>
 		<item name="wcf.acp.menu.link.user.option.add"><![CDATA[Profilfeld hinzufügen]]></item>
@@ -2276,17 +2275,11 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.userOption.options.searchable"><![CDATA[Benutzereinstellung ist durchsuchbar]]></item>
 		<item name="wcf.acp.pip.userOption.options.required.description"><![CDATA[Benutzer müssen das Feld der Einstellung ausfüllen.]]></item>
 		<item name="wcf.acp.pip.userOption.options.required"><![CDATA[Muss angegeben werden]]></item>
-		<item name="wcf.acp.pip.userOption.options.outputClass"><![CDATA[PHP-Klasse für ein spezielles Ausgabegabeformat]]></item>
 		<item name="wcf.acp.pip.userOption.options.optionType.description"><![CDATA[Der Optionstyp bestimmt die Art und Weise, wie der Wert der Benutzereinstellung angegeben werden kann und welche (Arten von) Werte die Einstellung haben kann.]]></item>
-		<item name="wcf.acp.pip.userOption.options.messageObjectType.description"><![CDATA[Der Nachrichten-Objekttyp wird dem <kbd>wcf\system\html\input\HtmlInputProcessor</kbd>-Objekt übergeben, dass den Wert der Benutzereinstellung verarbeitet.]]></item>
-		<item name="wcf.acp.pip.userOption.options.messageObjectType"><![CDATA[Nachrichten-Objekttyp]]></item>
 		<item name="wcf.acp.pip.userOption.options.isDisabled.description"><![CDATA[Die Benutzereinstellung ist nicht sichbar und Ihr Wert kann nicht gesetzt werden.]]></item>
 		<item name="wcf.acp.pip.userOption.options.isDisabled"><![CDATA[Benutzereinstellung deaktivieren]]></item>
 		<item name="wcf.acp.pip.userOption.options.editable.description"><![CDATA[Der Wert der Benutzereinstellung kann nur von der ausgewählte Gruppe an Benutzern bearbeitet werden.]]></item>
 		<item name="wcf.acp.pip.userOption.options.editable"><![CDATA[Wer darf den Inhalt verändern?]]></item>
-		<item name="wcf.acp.pip.userOption.options.contentPattern.error.invalid"><![CDATA[Der angegebene reguläre Ausdruck ist ungültig.]]></item>
-		<item name="wcf.acp.pip.userOption.options.contentPattern.description"><![CDATA[Der angegebene reguläre Ausdruch wird dafür verwendet spezielle Teile des vom Benutzern angegebenen Wertes zu extrahieren und diese Werte zu speichern.]]></item>
-		<item name="wcf.acp.pip.userOption.options.contentPattern"><![CDATA[Regulärer Asudruck für den Inhalt]]></item>
 		<item name="wcf.acp.pip.userOption.options.askDuringRegistration.description"><![CDATA[Die Einstellung wird während der Registrierung angezeigt.]]></item>
 		<item name="wcf.acp.pip.userOption.options.askDuringRegistration"><![CDATA[Verfügbar während der Registrierung]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.presetMailNotificationType.description"><![CDATA[Wenn eine Benachrichtigungsart ausgewählt wird, wird dieser Wert als Standardwert für die Email-Einstellung der Benutzer für dieses Event verwendet.]]></item>
@@ -3048,10 +3041,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Benutzer hinzufügen]]></item>
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
-		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Folgende Benutzer den unten ausgewählten Benutzergruppen zuweisen]]></item>
-		<item name="wcf.acp.user.assignToGroup.success"><![CDATA[{if $users|count > 1}Die{else}Der{/if} Benutzer wurde{if $users|count > 1}n{/if} erfolgreich {if $groupIDs|count > 1}den ausgewählten Benutzergruppen{else}der ausgewählten Benutzergruppe{/if} zugeordnet.]]></item>
-		<item name="wcf.acp.user.banUser"><![CDATA[Benutzer sperren]]></item>
-		<item name="wcf.acp.user.banUser.description"><![CDATA[Der Benutzer wird dauerhaft von der Nutzung aller Funktionen ausgeschlossen und erhält beim Aufruf der Seite eine entsprechende Fehlermeldung.]]></item>
 		<item name="wcf.acp.user.banReason"><![CDATA[Begründung]]></item>
 		<item name="wcf.acp.user.banReason.description"><![CDATA[Die Begründung wird dem gesperrten Benutzer beim Aufruf der Seite angezeigt.]]></item>
 		<item name="wcf.acp.user.ban"><![CDATA[Sperren]]></item>
@@ -3059,18 +3048,16 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.ban.expires"><![CDATA[Entsperrung]]></item>
 		<item name="wcf.acp.user.ban.expires.description"><![CDATA[Der Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.ban.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
-		<item name="wcf.acp.user.ban.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den/die Benutzer wirklich sperren?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bearbeitest dein{else}Sie bearbeiten Ihr{/if} eigenes Benutzerkonto. Änderungen an den Mitgliedschaften in Benutzergruppen können womöglich dazu führen, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} aus der Administrationsoberfläche ausgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}wirst{else}werden{/if}. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}sei{else}seien Sie{/if} entsprechend vorsichtig!]]></item>
 		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType"><![CDATA[Exportformat]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.csv"><![CDATA[CSV (<em>Character Separated Values</em>)]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.xml"><![CDATA[XML (<em>Extensible Markup Language</em>)]]></item>
-		<item name="wcf.acp.user.exportEmailAddress.format"><![CDATA[Exporteinstellungen]]></item>
-		<item name="wcf.acp.user.exportEmailAddress.markedUsers"><![CDATA[E-Mail-Adressen von folgenden Benutzern exportieren]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.separator"><![CDATA[Trennzeichen]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.textSeparator"><![CDATA[Texttrenner]]></item>
 		<item name="wcf.acp.user.groups"><![CDATA[Benutzergruppe(n)]]></item>
+		<item name="wcf.acp.user.groups.error.ownerGroup"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dich{else}Sie können sich{/if} nicht selbst aus der Besitzer-Gruppe entfernen.]]></item>
 		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Finde Benutzer, die nicht Mitglied der ausgewählten Benutzergruppen sind.]]></item>
 		<item name="wcf.acp.user.list"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[Alle Benutzer]]></item>
@@ -3078,22 +3065,11 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.merge"><![CDATA[Benutzer zusammenfügen]]></item>
 		<item name="wcf.acp.user.merge.destination"><![CDATA[Ziel]]></item>
 		<item name="wcf.acp.user.merge.destination.description"><![CDATA[Die ausgewählten Benutzer werden in dieses Benutzerkonto zusammengefügt.]]></item>
-		<item name="wcf.acp.user.merge.markedUsers"><![CDATA[Folgende Benutzer zusammenfügen]]></item>
 		<item name="wcf.acp.user.merge.warning"><![CDATA[Das Zusammenfügen von Benutzern aktualisiert aus technischen Gründen nicht alle Verweise, Anzeigen und Zähler. Es ist daher notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nach der Durchführung die entsprechenden Wartungsaufgaben ausführen {if LANGUAGE_USE_INFORMAL_VARIANT}lässt{else}lassen{/if}, um die <a href="{link controller='RebuildData'}{/link}">Anzeigen zu aktualisieren</a>.]]></item>
 		<item name="wcf.acp.user.revertChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe"><![CDATA[Zeitraum]]></item>
-		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Zeitraum in dem Änderungen des Benutzers zurückgesetzt werden sollen. Inhalte werden auf die neuste Version, welche entweder älter als der angegebene Zeitraum ist oder welche von einem anderen Nutzer stammt, zurückgesetzt. [Zeitraum in Tagen]]]></item>
-		<item name="wcf.acp.user.revertChanges.markedUsers"><![CDATA[Änderungen folgender Nutzer zurücksetzen]]></item>
+		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Zeitraum in dem Änderungen des Benutzers zurückgesetzt werden sollen. Inhalte werden auf die neuste Version, welche entweder älter als der angegebene Zeitraum ist oder welche von einem anderen Nutzer stammt, zurückgesetzt.]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Benutzer suchen]]></item>
-		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profil]]></item>
-		<item name="wcf.acp.user.search.display"><![CDATA[Darstellung]]></item>
-		<item name="wcf.acp.user.search.display.columns"><![CDATA[Spalten]]></item>
-		<item name="wcf.acp.user.search.display.columns.other"><![CDATA[Sonstiges]]></item>
-		<item name="wcf.acp.user.search.display.columns.profile"><![CDATA[Profil]]></item>
-		<item name="wcf.acp.user.search.display.general"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.user.search.display.itemsPerPage"><![CDATA[Benutzer pro Seite]]></item>
-		<item name="wcf.acp.user.search.display.sort"><![CDATA[Sortierung]]></item>
-		<item name="wcf.acp.user.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Benutzer gefunden.]]></item>
 		<item name="wcf.acp.user.sendMail"><![CDATA[E-Mail an Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail an alle Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[E-Mail als HTML versenden]]></item>
@@ -3105,7 +3081,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.sendMail.description"><![CDATA[<kbd>{literal}{$username}{/literal}</kbd> sowie <kbd>{literal}{$email}{/literal}</kbd> können als Platzhalter verwendet werden, um den Benutzernamen bzw. die E-Mail-Adresse des jeweiligen Empfängers einzufügen.]]></item>
 		<item name="wcf.acp.user.quickSearch"><![CDATA[Schnellsuche]]></item>
 		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[Gesperrte Benutzer]]></item>
-		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[Neueste Benutzer]]></item>
 		<item name="wcf.acp.user.option.access"><![CDATA[Zugriff]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Benutzerprofilfeld hinzufügen]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Felder]]></item>
@@ -3118,18 +3093,10 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.option.editable.2"><![CDATA[Administrator]]></item>
 		<item name="wcf.acp.user.option.editable.3"><![CDATA[Eigentümer und Administrator]]></item>
 		<item name="wcf.acp.user.option.editable.6"><![CDATA[Eigentümer bei Erstanmeldung und Administrator]]></item>
-		<item name="wcf.acp.user.option.labeledUrl"><![CDATA[URL]]></item>
-		<item name="wcf.acp.user.option.labeledUrl.description"><![CDATA[Wenn der Feldtyp „labeledUrl“ ist, muss hier die URL hinterlegt werden, auf die verlinkt werden soll. {if LANGUAGE_USE_INFORMAL_VARIANT}Nutze{else}Nutzen Sie{/if} <span class="inlineCode">%s</span> als Platzhalter für die Eingabe des Benutzers.]]></item>
-		<item name="wcf.acp.user.option.labeledUrl.error.invalid"><![CDATA[Der Platzhalter <span class="inlineCode">%s</span> fehlt in der URL.]]></item>
-		<item name="wcf.acp.user.option.labeledUrl.error.invalidScheme"><![CDATA[Die URL muss mit <span class="inlineCode">http://</span> oder <span class="inlineCode">https://</span> beginnen.]]></item>
 		<item name="wcf.acp.user.option.optionType"><![CDATA[Feldtyp]]></item>
-		<item name="wcf.acp.user.option.optionType.description"><![CDATA[Die Namen entsprechen in der Regel den HTML-Elementen, die benötigt werden, um so ein Feld beim Benutzer abzufragen.]]></item>
 		<item name="wcf.acp.user.option.askDuringRegistration"><![CDATA[Das Feld wird im Registrierungs-Formular angezeigt.]]></item>
-		<item name="wcf.acp.user.option.required"><![CDATA[Das Feld muss zwingend durch den Eigentümer ausgefüllt werden.]]></item>
 		<item name="wcf.acp.user.option.searchable"><![CDATA[Das Feld kann über die Mitgliedersuche durchsucht werden.]]></item>
 		<item name="wcf.acp.user.option.showOnUserCard"><![CDATA[Feld in der Mitgliederliste anzeigen]]></item>
-		<item name="wcf.acp.user.option.selectOptions"><![CDATA[Auswahloptionen]]></item>
-		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} pro Zeile Auswahloptionen eintragen, beispielsweise bei einer Select-Box. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass bei der Verwendung des Doppelpunktes der linke Teil der Zeile als interner Bezeichner verwendet wird. Dieser erlaubt es den Text zu ändern, ohne dass die Auswahl von Benutzern verloren geht.]]></item>
 		<item name="wcf.acp.user.option.setDefaults"><![CDATA[Benutzerprofil-Einstellungen verwalten]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Die hier eingestellten Änderungen der Vorgabewerte für Benutzerprofil-Einstellungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.<br><br>Hinweis: Es werden nur die Einstellungen überschrieben, die mit dem Absenden des Formulars geändert werden. Unveränderte Voreinstellungen werden nicht berücksichtigt.]]></item>
@@ -3144,14 +3111,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.option.visible.7"><![CDATA[Registrierte Benutzer]]></item>
 		<item name="wcf.acp.user.option.visible.15"><![CDATA[Jeder]]></item>
 		<item name="wcf.acp.user.option.typeData"><![CDATA[Eigenschaften]]></item>
-		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP-Klasse für Ausgabe]]></item>
-		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Erlaubt die Angabe einer speziellen PHP-Klasse für die Ausgabeformatierung bei der Anzeige des Feldes.]]></item>
-		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 		<item name="wcf.acp.user.option.error.noCategories"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein Benutzerprofilfeld hinzufügen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} eine <a href="{link controller='UserOptionCategoryAdd'}{/link}">Benutzerprofilfeld-Kategorie hinzufügen</a>.]]></item>
-		<item name="wcf.acp.user.search.conditions"><![CDATA[Bedingungen]]></item>
-		<item name="wcf.acp.user.search.conditions.states"><![CDATA[Zustände]]></item>
-		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Gesperrt]]></item>
-		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Nicht gesperrt]]></item>
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Aktivitätspunkte]]></item>
 		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Punkte pro Aktivität aktualisieren]]></item>
 		<item name="wcf.acp.user.delete"><![CDATA[Benutzer löschen]]></item>
@@ -3186,7 +3146,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.disableCoverPhoto.expires"><![CDATA[Entsperrung]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.expires.description"><![CDATA[Das Titelbild des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.disableCoverPhoto.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
-		<item name="wcf.acp.user.deleteCoverPhoto"><![CDATA[Titelbild löschen]]></item>
 		<item name="wcf.acp.user.disableSignature.expires"><![CDATA[Entsperrung]]></item>
 		<item name="wcf.acp.user.disableSignature.expires.description"><![CDATA[Die Signatur des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.disableSignature.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
@@ -3196,8 +3155,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.user.quickSearch.pendingActivation"><![CDATA[Benutzer die auf Freischaltung warten]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledAvatars"><![CDATA[Gesperrte Avatare]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Gesperrte Signaturen]]></item>
-		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Aktiviert]]></item>
-		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Nicht aktiviert]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[Neues Kennwort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|phrase}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
@@ -3255,17 +3212,30 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <strong>ohne zusätzliche Sicherheitsabfrage</strong> bei allen Benutzern aus, die unter die eingestellten Bedingungen fallen.]]></item>
 		<item name="wcf.acp.user.profileMenu.sort"><![CDATA[Benutzerprofil-Menü Sortierung]]></item>
 		<item name="wcf.acp.user.action.sendMail"><![CDATA[E-Mail senden]]></item>
+		<item name="wcf.acp.user.action.viewProfile"><![CDATA[Profil anzeigen]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Neues Kennwort zusenden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesem Benutzer wirklich ein neues Kennwort zusenden?]]></item>
+		<item name="wcf.acp.user.action.disconnectThirdPartyLogin"><![CDATA[Verknüpfung mit Drittanbieter trennen]]></item>
+		<item name="wcf.acp.user.action.disconnectThirdPartyLogin.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Verknüpfung dieses Benutzers mit {"wcf.user.3rdparty."|concat:$user->getAuthProvider()|language} wirklich trennen? Der Benutzer kann sich anschließend nur noch mit einem Kennwort anmelden.]]></item>
+		<item name="wcf.acp.user.action.disableMultifactor"><![CDATA[Mehrfaktor-Authentifizierung deaktivieren]]></item>
+		<item name="wcf.acp.user.action.disableMultifactor.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Mehrfaktor-Authentifizierung für „{$user->username}“ wirklich vollständig deaktivieren? Der Benutzer muss sie anschließend erneut einrichten. {if LANGUAGE_USE_INFORMAL_VARIANT}Stelle sicher, dass du den Benutzer zuvor ausreichend authentifiziert hast.{else}Stellen Sie sicher, dass Sie den Benutzer zuvor ausreichend authentifiziert haben.{/if}]]></item>
 		<item name="wcf.acp.user.action.confirmEmail"><![CDATA[E-Mail-Adresse bestätigen]]></item>
 		<item name="wcf.acp.user.action.unconfirmEmail"><![CDATA[Bestätigung der E-Mail-Adresse widerrufen]]></item>
+		<item name="wcf.acp.user.action.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
+		<item name="wcf.acp.user.action.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
+		<item name="wcf.acp.user.action.merge"><![CDATA[Zusammenfügen]]></item>
+		<item name="wcf.acp.user.action.resendActivationMail"><![CDATA[Neuen Aktivierungscode versenden]]></item>
+		<item name="wcf.acp.user.action.revertContentChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
+		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage.bulk"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den ausgewählten Benutzern wirklich ein neues Kennwort zusenden?]]></item>
+		<item name="wcf.acp.user.filter.banned"><![CDATA[Gesperrt]]></item>
+		<item name="wcf.acp.user.filter.disableAvatar"><![CDATA[Avatar gesperrt]]></item>
+		<item name="wcf.acp.user.filter.disableSignature"><![CDATA[Signatur gesperrt]]></item>
+		<item name="wcf.acp.user.filter.emailConfirmed"><![CDATA[E-Mail-Adresse]]></item>
+		<item name="wcf.acp.user.filter.emailConfirmed.no"><![CDATA[Nicht bestätigt]]></item>
+		<item name="wcf.acp.user.filter.emailConfirmed.yes"><![CDATA[Bestätigt]]></item>
+		<item name="wcf.acp.user.filter.isDisabled"><![CDATA[Nicht aktiviert]]></item>
+		<item name="wcf.acp.user.filter.pendingActivation"><![CDATA[Wartet auf Freischaltung]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Persönliche Daten exportieren (DSGVO)]]></item>
-		<item name="wcf.acp.user.security.multifactor"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
-		<item name="wcf.acp.user.security.multifactor.active"><![CDATA[Aktiv]]></item>
-		<item name="wcf.acp.user.security.multifactor.active.description"><![CDATA[Dieses Benutzerkonto wird durch einen zweiten Faktor geschützt.]]></item>
-		<item name="wcf.acp.user.security.multifactor.disable"><![CDATA[Mehrfaktor-Authentifizierung vollständig deaktivieren]]></item>
-		<item name="wcf.acp.user.security.multifactor.disable.description"><![CDATA[Deaktiviert die Mehrfaktor-Authentifizierung für das Benutzerkonto <strong>{$user->username}</strong> vollständig. Der Benutzer muss die Mehrfaktor-Authentifizierung anschließend erneut einrichten.<br>
-<strong>Achtung:</strong> Die Mehrfaktor-Authentifizierung wird von Benutzern aktiv eingerichtet, um das eigene Benutzerkonto besser zu schützen. {if LANGUAGE_USE_INFORMAL_VARIANT}Stelle sicher, dass du den Benutzer ausreichend authentifizierst, bevor du die Mehrfaktor-Authentifizierung deaktivierst.{else}Stellen Sie sicher, dass Sie den Benutzer ausreichend authentifizieren, bevor Sie die Mehrfaktor-Authentifizierung deaktivieren.{/if}]]></item>
 	</category>
 	<category name="wcf.acp.worker">
 		<item name="wcf.acp.worker.abort.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Ausführung wirklich abbrechen?]]></item>
@@ -3435,21 +3405,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}eine Datei{else}{#$count} Dateien{/if} löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.insert"><![CDATA[Einfügen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.setCategory"><![CDATA[Kategorie bearbeiten ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[Sperren ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Löschen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einen{else}{#$count}{/if} Benutzer löschen?]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Aktivieren]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Zusammenfügen]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.resendActivationMail"><![CDATA[Neuen Aktivierungscode versenden ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[E-Mail senden]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Neues Kennwort senden ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einem Benutzer{else}{#$count} Benutzern{/if} ein neues Kennwort zusenden?]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse bestätigen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"><![CDATA[Bestätigung der E-Mail-Adresse widerrufen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.deleteUserContent"><![CDATA[Inhalte der Benutzer löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}Eine Datei{else}{#$count} Dateien{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer]]></item>
 	</category>
@@ -3501,6 +3456,8 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.objectFilter.user.activated"><![CDATA[Benutzerkonto aktiviert]]></item>
 		<item name="wcf.objectFilter.user.activated.summary.no"><![CDATA[Benutzerkonto ist nicht aktiviert]]></item>
 		<item name="wcf.objectFilter.user.activated.summary.yes"><![CDATA[Benutzerkonto ist aktiviert]]></item>
+		<item name="wcf.objectFilter.user.age"><![CDATA[Alter]]></item>
+		<item name="wcf.objectFilter.user.age.summary"><![CDATA[Alter: {if $from !== null && $to !== null}zwischen {#$from} und {#$to}{elseif $from !== null}mindestens {#$from}{else}höchstens {#$to}{/if}]]></item>
 		<item name="wcf.objectFilter.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.objectFilter.user.avatar.summary.no"><![CDATA[Hat keinen Avatar]]></item>
 		<item name="wcf.objectFilter.user.avatar.summary.yes"><![CDATA[Hat einen Avatar]]></item>
@@ -3533,6 +3490,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.objectFilter.user.noTrophy.summary"><![CDATA[Hat die Trophäe „{$value}“ nicht erhalten]]></item>
 		<item name="wcf.objectFilter.user.notInGroup"><![CDATA[Kein Mitglied der Benutzergruppe]]></item>
 		<item name="wcf.objectFilter.user.notInGroup.summary"><![CDATA[Ist kein Mitglied der Benutzergruppe „{$value}“]]></item>
+		<item name="wcf.objectFilter.user.option.summary"><![CDATA[{$title}: {$value}]]></item>
 		<item name="wcf.objectFilter.user.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.objectFilter.user.registrationDate.summary"><![CDATA[Registriert {if $from !== null && $to !== null}zwischen dem {$from} und dem {$to}{elseif $from !== null}am oder nach dem {$from}{else}am oder vor dem {$to}{/if}]]></item>
 		<item name="wcf.objectFilter.user.registrationDays"><![CDATA[Tage seit Registrierung]]></item>
@@ -3956,6 +3914,7 @@ Dateianhänge:
 		<item name="wcf.global.worker.completed"><![CDATA[Aufgabe abgeschlossen]]></item>
 		<item name="wcf.global.worker.executing"><![CDATA[Aufgaben werden ausgeführt …]]></item>
 		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
+		<item name="wcf.global.gridView.columns"><![CDATA[Spalten]]></item>
 		<item name="wcf.global.noItems"><![CDATA[Es wurden keine Einträge gefunden.]]></item>
 		<item name="wcf.global.button.showAll"><![CDATA[Alle anzeigen]]></item>
 		<item name="wcf.global.reason"><![CDATA[Begründung]]></item>
@@ -4099,7 +4058,10 @@ Dateianhänge:
 		<item name="wcf.form.option.select"><![CDATA[Auswahlmöglichkeit]]></item>
 		<item name="wcf.form.option.text"><![CDATA[Text]]></item>
 		<item name="wcf.form.option.textarea"><![CDATA[Mehrzeiliger Text]]></item>
+		<item name="wcf.form.option.timezone"><![CDATA[Zeitzone]]></item>
 		<item name="wcf.form.option.sourceCode"><![CDATA[Quellcode]]></item>
+		<item name="wcf.form.option.socialMedia"><![CDATA[Social-Media-Profil]]></item>
+		<item name="wcf.form.option.socialMedia.error.profileName"><![CDATA[Der eingegebene Profilname ist ungültig.]]></item>
 		<item name="wcf.form.option.url"><![CDATA[Link]]></item>
 		<item name="wcf.form.option.wysiwyg"><![CDATA[WYSIWYG]]></item>
 		<item name="wcf.form.option.shared.currency"><![CDATA[Währung]]></item>
@@ -4114,6 +4076,13 @@ Dateianhänge:
 		<item name="wcf.form.option.shared.sourceCodeLanguage.description"><![CDATA[Wird keine Sprache ausgewählt, wird sie automatisch anhand des eingegebenen Quellcodes erkannt.]]></item>
 		<item name="wcf.form.option.shared.unit"><![CDATA[Einheit]]></item>
 		<item name="wcf.form.option.shared.urlLinkText"><![CDATA[Linktext]]></item>
+		<item name="wcf.form.option.shared.profileNamePattern"><![CDATA[Muster für den Profilnamen]]></item>
+		<item name="wcf.form.option.shared.profileNamePattern.description"><![CDATA[Regulärer Ausdruck ohne Begrenzer, dem der Profilname entsprechen muss, z. B. <span class="inlineCode">^[A-Za-z0-9_]+$</span>.]]></item>
+		<item name="wcf.form.option.shared.profileNamePattern.error.invalid"><![CDATA[Der reguläre Ausdruck ist ungültig.]]></item>
+		<item name="wcf.form.option.shared.profileUrlPattern"><![CDATA[Link zum Profil]]></item>
+		<item name="wcf.form.option.shared.profileUrlPattern.description"><![CDATA[Link zum Profil mit <span class="inlineCode">%s</span> als Platzhalter für den Profilnamen, z. B. <span class="inlineCode">https://www.facebook.com/%s</span>. Gibt ein Benutzer den Link anstelle des Profilnamens ein, wird nur der Profilname gespeichert.]]></item>
+		<item name="wcf.form.option.shared.profileUrlPattern.error.invalid"><![CDATA[Der Platzhalter <span class="inlineCode">%s</span> muss genau einmal im Link enthalten sein.]]></item>
+		<item name="wcf.form.option.shared.profileUrlPattern.error.invalidScheme"><![CDATA[Der Link muss mit <span class="inlineCode">http://</span> oder <span class="inlineCode">https://</span> beginnen.]]></item>
 		<item name="wcf.form.option.optionType"><![CDATA[Feldtyp]]></item>
 	</category>
 	<category name="wcf.image">
@@ -4772,44 +4741,23 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.following.noUsers"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du folgst{else}Sie folgen{/if} derzeit keinen Benutzern.]]></item>
 		<item name="wcf.user.userTitle"><![CDATA[Individueller Benutzertitel]]></item>
 		<item name="wcf.user.userTitle.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dir{else}Sie können sich{/if} einen individuellen Benutzertitel geben.]]></item>
-		<item name="wcf.user.userTitle.error.tooLong"><![CDATA[Der eingegebene Titel ist zu lang. Die maximal zulässige Gesamtlänge beträgt {#USER_TITLE_MAX_LENGTH} Zeichen.]]></item>
 		<item name="wcf.user.userTitle.error.forbidden"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Benutzertitel eingegeben.]]></item>
 		<item name="wcf.user.birthday.age"><![CDATA[Alter]]></item>
 		<item name="wcf.user.birthday.age.from"><![CDATA[von]]></item>
 		<item name="wcf.user.birthday.age.to"><![CDATA[bis]]></item>
-		<item name="wcf.user.search"><![CDATA[Mitgliedersuche]]></item>
-		<item name="wcf.user.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Mitglied gefunden.]]></item>
 		<item name="wcf.user.newestMember"><![CDATA[Neuestes Mitglied]]></item>
-		<item name="wcf.user.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Erhaltene Reaktionen]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Inhalte suchen]]></item>
 		<item name="wcf.user.author"><![CDATA[Autor]]></item>
 		<item name="wcf.user.moderate"><![CDATA[Benutzer moderieren]]></item>
 		<item name="wcf.user.ban"><![CDATA[Benutzer sperren]]></item>
-		<item name="wcf.user.ban.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Benutzer wirklich sperren?]]></item>
-		<item name="wcf.user.ban.expires"><![CDATA[Entsperrung]]></item>
-		<item name="wcf.user.ban.expires.description"><![CDATA[Der Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
-		<item name="wcf.user.ban.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
-		<item name="wcf.user.ban.reason.description"><![CDATA[Die Begründung wird dem gesperrten Benutzer beim Aufruf der Seite angezeigt.]]></item>
 		<item name="wcf.user.unban"><![CDATA[Benutzer entsperren]]></item>
 		<item name="wcf.user.disableAvatar"><![CDATA[Avatar sperren]]></item>
-		<item name="wcf.user.disableAvatar.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Avatar des Benutzers wirklich sperren?]]></item>
-		<item name="wcf.user.disableAvatar.expires"><![CDATA[Entsperrung]]></item>
-		<item name="wcf.user.disableAvatar.expires.description"><![CDATA[Der Avatar des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
-		<item name="wcf.user.disableAvatar.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
 		<item name="wcf.user.enableAvatar"><![CDATA[Avatar entsperren]]></item>
 		<item name="wcf.user.disableCoverPhoto"><![CDATA[Titelbild sperren]]></item>
-		<item name="wcf.user.disableCoverPhoto.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Titelbild des Benutzers wirklich sperren?]]></item>
-		<item name="wcf.user.disableCoverPhoto.expires"><![CDATA[Entsperrung]]></item>
-		<item name="wcf.user.disableCoverPhoto.expires.description"><![CDATA[Das Titelbild des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
-		<item name="wcf.user.disableCoverPhoto.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
 		<item name="wcf.user.enableCoverPhoto"><![CDATA[Titelbild entsperren]]></item>
 		<item name="wcf.user.disableSignature"><![CDATA[Signatur sperren]]></item>
-		<item name="wcf.user.disableSignature.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Signatur des Benutzers wirklich sperren?]]></item>
-		<item name="wcf.user.disableSignature.expires"><![CDATA[Entsperrung]]></item>
-		<item name="wcf.user.disableSignature.expires.description"><![CDATA[Die Signatur des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
-		<item name="wcf.user.disableSignature.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
 		<item name="wcf.user.enableSignature"><![CDATA[Signatur entsperren]]></item>
 		<item name="wcf.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
 		<item name="wcf.user.birthdayToday"><![CDATA[Hat heute Geburtstag]]></item>
@@ -4826,7 +4774,6 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.sortField.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.user.articles"><![CDATA[Artikel]]></item>
-		<item name="wcf.user.status.banned"><![CDATA[Der Benutzer ist gesperrt.]]></item>
 		<item name="wcf.user.status.isDisabled"><![CDATA[Der Benutzer ist nicht freigeschaltet.]]></item>
 		<item name="wcf.user.status.blacklistMatches"><![CDATA[Der Benutzer wurde aufgrund eines Treffers in der Datenbank von „Stop Forum Spam“ automatisch deaktiviert (Übereinstimmungen: {implode glue=', ' from=$user->getBlacklistMatchesTitle() item=matchLabel}{$matchLabel}{/implode}).]]></item>
 		<item name="wcf.user.reauthentication"><![CDATA[Erneute Authentifizierung]]></item>
@@ -5178,7 +5125,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Google-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.google.disconnect"><![CDATA[Verknüpfung mit Google trennen]]></item>
 		<item name="wcf.user.3rdparty.google.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Google-Konto wurde erfolgreich getrennt.]]></item>
-		<item name="wcf.user.3rdparty.connect.info"><![CDATA[Der Benutzer ist mit {"wcf.user.3rdparty."|concat:$user->getAuthProvider()|language} verknüpft.]]></item>
 	</category>
 	<category name="wcf.user.avatar">
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
@@ -5193,7 +5139,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.condition.avatar.noAvatar"><![CDATA[Kein Avatar]]></item>
 		<item name="wcf.user.condition.conditionGroup.contents"><![CDATA[Inhalte]]></item>
 		<item name="wcf.user.condition.conditionGroup.general"><![CDATA[Allgemeine Daten]]></item>
-		<item name="wcf.user.condition.conditionGroup.userOptions"><![CDATA[Persönliche Daten]]></item>
 		<item name="wcf.user.condition.groupIDs"><![CDATA[in Benutzergruppen]]></item>
 		<item name="wcf.user.condition.groupIDs.description"><![CDATA[Benutzer müssen in allen ausgewählten Benutzergruppen Mitglied sein.]]></item>
 		<item name="wcf.user.condition.languages"><![CDATA[Sprachen]]></item>
@@ -5243,7 +5188,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.coverPhoto"><![CDATA[Titelbild]]></item>
 		<item name="wcf.user.coverPhoto.edit"><![CDATA[Titelbild bearbeiten]]></item>
 		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->coverPhotoFileID} {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} derzeitiges Titelbild gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Titelbild-Funktion {if !$__wcf->user->disableCoverPhotoReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableCoverPhotoReason}{/if}]]></item>
-		<item name="wcf.user.coverPhoto.noImage"><![CDATA[Der Benutzer hat noch kein Titelbild hochgeladen.]]></item>
 		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width} × {$coverPhotoDimensions.min.height} Pixel<br>
 Maximale Bildgröße: {$coverPhotoDimensions.max.width} × {$coverPhotoDimensions.max.height} Pixel<br>
 Maximale Dateigröße: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}<br>
@@ -5561,6 +5505,7 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.modificationLog.time.beforeDate"/>
 	<item name="wcf.acp.modificationLog.unsupportedObjectTypes"/>
 	<item name="wcf.acp.option.google_maps_zoom.description"/>
+	<item name="wcf.acp.pip.userOption.options.outputClass"/>
 	<item name="wcf.acp.reactionType.showOrder.description"/>
 	<item name="wcf.acp.reactionType.type"/>
 	<item name="wcf.acp.smiley.category.add"/>
@@ -5571,6 +5516,13 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.option.category.add"/>
 	<item name="wcf.acp.user.option.category.edit"/>
 	<item name="wcf.acp.user.option.category.list"/>
+	<item name="wcf.acp.user.option.optionType.description"/>
+	<item name="wcf.acp.user.option.outputClass"/>
+	<item name="wcf.acp.user.option.outputClass.description"/>
+	<item name="wcf.acp.user.option.outputClass.error.doesNotExist"/>
+	<item name="wcf.acp.user.option.required"/>
+	<item name="wcf.acp.user.option.selectOptions"/>
+	<item name="wcf.acp.user.option.selectOptions.description"/>
 	<item name="wcf.article.showArticlesWritten"/>
 	<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete"/>
 	<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"/>
@@ -5797,5 +5749,86 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.article.setCategory"/>
 	<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"/>
 	<item name="wcf.acp.sitemap.cliInfo"/>
+	<item name="wcf.user.search"/>
+	<item name="wcf.user.search.error.noMatches"/>
+	<item name="wcf.user.search.results"/>
+	<item name="wcf.acp.menu.link.user.search"/>
+	<item name="wcf.acp.user.ban.sure"/>
+	<item name="wcf.acp.user.search.conditions"/>
+	<item name="wcf.acp.user.search.conditions.profile"/>
+	<item name="wcf.acp.user.search.conditions.state.banned"/>
+	<item name="wcf.acp.user.search.conditions.state.disabled"/>
+	<item name="wcf.acp.user.search.conditions.state.enabled"/>
+	<item name="wcf.acp.user.search.conditions.state.notBanned"/>
+	<item name="wcf.acp.user.search.conditions.states"/>
+	<item name="wcf.acp.user.search.display"/>
+	<item name="wcf.acp.user.search.display.columns"/>
+	<item name="wcf.acp.user.search.display.columns.other"/>
+	<item name="wcf.acp.user.search.display.columns.profile"/>
+	<item name="wcf.acp.user.search.display.general"/>
+	<item name="wcf.acp.user.search.display.itemsPerPage"/>
+	<item name="wcf.acp.user.search.display.sort"/>
+	<item name="wcf.acp.user.search.error.noMatches"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.confirmEmail"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.deleteUserContent"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.resendActivationMail"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"/>
+	<item name="wcf.acp.user.quickSearch.newest"/>
+	<item name="wcf.user.status.banned"/>
+	<item name="wcf.acp.user.banUser"/>
+	<item name="wcf.acp.user.banUser.description"/>
+	<item name="wcf.user.ban.confirmMessage"/>
+	<item name="wcf.user.ban.expires"/>
+	<item name="wcf.user.ban.expires.description"/>
+	<item name="wcf.user.ban.neverExpires"/>
+	<item name="wcf.user.ban.reason.description"/>
+	<item name="wcf.user.disableAvatar.confirmMessage"/>
+	<item name="wcf.user.disableAvatar.expires"/>
+	<item name="wcf.user.disableAvatar.expires.description"/>
+	<item name="wcf.user.disableAvatar.neverExpires"/>
+	<item name="wcf.user.disableCoverPhoto.confirmMessage"/>
+	<item name="wcf.user.disableCoverPhoto.expires"/>
+	<item name="wcf.user.disableCoverPhoto.expires.description"/>
+	<item name="wcf.user.disableCoverPhoto.neverExpires"/>
+	<item name="wcf.user.disableSignature.confirmMessage"/>
+	<item name="wcf.user.disableSignature.expires"/>
+	<item name="wcf.user.disableSignature.expires.description"/>
+	<item name="wcf.user.disableSignature.neverExpires"/>
+	<item name="wcf.user.coverPhoto.noImage"/>
+	<item name="wcf.user.3rdparty.connect.info"/>
+	<item name="wcf.acp.user.security.multifactor"/>
+	<item name="wcf.acp.user.security.multifactor.active"/>
+	<item name="wcf.acp.user.security.multifactor.active.description"/>
+	<item name="wcf.acp.user.security.multifactor.disable"/>
+	<item name="wcf.acp.user.security.multifactor.disable.description"/>
+	<item name="wcf.user.userTitle.error.tooLong"/>
+	<item name="wcf.acp.user.deleteCoverPhoto"/>
+	<item name="wcf.acp.user.option.labeledUrl"/>
+	<item name="wcf.acp.user.option.labeledUrl.description"/>
+	<item name="wcf.acp.user.option.labeledUrl.error.invalid"/>
+	<item name="wcf.acp.user.option.labeledUrl.error.invalidScheme"/>
+	<item name="wcf.acp.pip.userOption.options.contentPattern"/>
+	<item name="wcf.acp.pip.userOption.options.contentPattern.description"/>
+	<item name="wcf.acp.pip.userOption.options.contentPattern.error.invalid"/>
+	<item name="wcf.acp.pip.userOption.options.messageObjectType"/>
+	<item name="wcf.acp.pip.userOption.options.messageObjectType.description"/>
+	<item name="wcf.user.condition.conditionGroup.userOptions"/>
+	<item name="wcf.acp.user.merge.markedUsers"/>
+	<item name="wcf.acp.user.revertChanges.markedUsers"/>
+	<item name="wcf.acp.user.assignToGroup.markedUsers"/>
+	<item name="wcf.acp.user.assignToGroup.success"/>
+	<item name="wcf.acp.user.exportEmailAddress.markedUsers"/>
+	<item name="wcf.acp.user.exportEmailAddress.format"/>
 </delete>
 </language>

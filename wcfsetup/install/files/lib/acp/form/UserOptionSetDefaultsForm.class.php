@@ -2,20 +2,31 @@
 
 namespace wcf\acp\form;
 
+use wcf\data\user\option\UserOption;
 use wcf\form\AbstractForm;
+use wcf\form\AbstractFormBuilderForm;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
-use wcf\system\option\user\UserOptionHandler;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\AbstractFormField;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\option\user\TUserOptionFormFields;
 use wcf\system\WCF;
 
 /**
  * Provides functions to set the default values of user options.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @extends AbstractFormBuilderForm<null>
  */
-class UserOptionSetDefaultsForm extends AbstractForm
+class UserOptionSetDefaultsForm extends AbstractFormBuilderForm
 {
+    use TUserOptionFormFields {
+        getUserOptionFormField as getDefaultUserOptionFormField;
+    }
+
     /**
      * @inheritDoc
      */
@@ -27,95 +38,56 @@ class UserOptionSetDefaultsForm extends AbstractForm
     public $neededPermissions = ['admin.user.canManageUserOption'];
 
     /**
-     * user option handler
-     * @var ?UserOptionHandler
+     * editable options of the settings grouped by the name of their category
+     * @var array<string, UserOption[]>
      */
-    public $optionHandler;
-
-    /**
-     * true to apply change to existing users
-     * @var int
-     */
-    public $applyChangesToExistingUsers = 0;
+    protected array $options = [];
 
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        $this->optionHandler = new UserOptionHandler(false, '', 'settings');
-        $this->optionHandler->init();
+        $this->readOptions();
+    }
+
+    /**
+     * Reads the options whose default values can be set.
+     */
+    protected function readOptions(): void
+    {
+        $this->options = $this->getUserOptionsByCategory(
+            'settings',
+            static fn(UserOption $option) => $option->validateOptions()
+                && $option->validatePermissions()
+                && $option->isEditable()
+        );
     }
 
     #[\Override]
-    public function readFormParameters()
+    protected function createForm()
     {
-        parent::readFormParameters();
+        parent::createForm();
 
-        $this->optionHandler->readUserInput($_POST);
+        $this->form->appendChild(
+            FormContainer::create('general')
+                ->appendChild(
+                    BooleanFormField::create('applyChangesToExistingUsers')
+                        ->label('wcf.acp.user.option.setDefaults.applyChangesToExistingUsers')
+                        ->description('wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description')
+                )
+        );
 
-        if (isset($_POST['applyChangesToExistingUsers'])) {
-            $this->applyChangesToExistingUsers = \intval($_POST['applyChangesToExistingUsers']);
-        }
+        $this->form->appendChildren($this->getUserOptionFormContainers($this->options));
     }
 
-    #[\Override]
-    public function validate()
+    /**
+     * Returns the form field for the given user option, a default value is
+     * never required.
+     */
+    protected function getUserOptionFormField(UserOption $option): AbstractFormField
     {
-        parent::validate();
-
-        $this->optionHandler->validate();
-    }
-
-    #[\Override]
-    public function save()
-    {
-        parent::save();
-
-        // get new values
-        $saveOptions = $this->optionHandler->save();
-
-        // apply changes
-        if ($this->applyChangesToExistingUsers !== 0) {
-            $optionIDs = \array_keys($saveOptions);
-
-            // get changed options
-            $sql = "SELECT  optionID, defaultValue
-                    FROM    wcf1_user_option
-                    WHERE   optionID IN (?" . \str_repeat(', ?', \count($optionIDs) - 1) . ")";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($optionIDs);
-            $optionIDs = $optionValues = [];
-            while ($row = $statement->fetchArray()) {
-                // @phpstan-ignore notEqual.notAllowed (values from the database are always strings)
-                if ($row['defaultValue'] != $saveOptions[$row['optionID']]) {
-                    $optionIDs[] = $row['optionID'];
-                    $optionValues[] = $saveOptions[$row['optionID']];
-                }
-            }
-
-            if ($optionIDs !== []) {
-                $sql = "UPDATE  wcf1_user_option_value
-                        SET     userOption" . \implode(' = ?, userOption', $optionIDs) . " = ?";
-                $statement = WCF::getDB()->prepare($sql);
-                $statement->execute(\array_merge($optionValues));
-            }
-        }
-
-        // save values
-        $sql = "UPDATE  wcf1_user_option
-                SET     defaultValue = ?
-                WHERE   optionID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        foreach ($saveOptions as $optionID => $value) {
-            $statement->execute([$value, $optionID]);
-        }
-
-        // reset cache
-        UserOptionCacheBuilder::getInstance()->reset();
-        $this->saved();
-
-        WCF::getTPL()->assign('success', true);
+        return $this->getDefaultUserOptionFormField($option)->required(false);
     }
 
     #[\Override]
@@ -123,9 +95,99 @@ class UserOptionSetDefaultsForm extends AbstractForm
     {
         parent::readData();
 
-        if ($_POST === []) {
-            $this->optionHandler->readData();
+        if ($_POST === [] || $this->form->showsSuccessMessage()) {
+            $this->loadDefaultValues();
         }
+    }
+
+    /**
+     * Sets the current default values of the options as the values of the form fields.
+     */
+    protected function loadDefaultValues(): void
+    {
+        foreach ($this->getOptions() as $option) {
+            $value = $option->defaultValue;
+            if ($value === null || $value === '0000-00-00') {
+                continue;
+            }
+
+            $this->form->getFormField($option->getIdentifier())
+                ?->value($option->getFormOption()->unserializeValue($value));
+        }
+    }
+
+    #[\Override]
+    public function save()
+    {
+        AbstractForm::save();
+
+        $defaultValues = [];
+        foreach ($this->getOptions() as $option) {
+            $formField = $this->form->getFormField($option->getIdentifier());
+            if ($formField === null) {
+                continue;
+            }
+
+            $value = $formField->getSaveValue();
+            $defaultValues[$option->optionID] = [
+                'option' => $option,
+                'value' => $value !== null ? $option->getFormOption()->serializeValue($value) : null,
+            ];
+        }
+
+        if ($this->form->getFormField('applyChangesToExistingUsers')?->getSaveValue() === true) {
+            $this->applyChangesToExistingUsers($defaultValues);
+        }
+
+        $sql = "UPDATE  wcf1_user_option
+                SET     defaultValue = ?
+                WHERE   optionID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        foreach ($defaultValues as $optionID => ['value' => $value]) {
+            $statement->execute([$value, $optionID]);
+        }
+
+        UserOptionCacheBuilder::getInstance()->reset();
+
+        // The form is rebuilt after saving, which requires the updated options.
+        $this->readOptions();
+        $this->saved();
+    }
+
+    /**
+     * Sets the changed default values as the values of all existing users.
+     * Options without a default value are skipped.
+     *
+     * @param array<int, array{option: UserOption, value: ?string}> $defaultValues
+     */
+    protected function applyChangesToExistingUsers(array $defaultValues): void
+    {
+        $columns = $values = [];
+        foreach ($defaultValues as ['option' => $option, 'value' => $value]) {
+            if ($value === null || $value === $option->defaultValue) {
+                continue;
+            }
+
+            $columns[] = $option->getIdentifier() . ' = ?';
+            $values[] = $value;
+        }
+
+        if ($columns === []) {
+            return;
+        }
+
+        $sql = "UPDATE  wcf1_user_option_value
+                SET     " . \implode(', ', $columns);
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($values);
+    }
+
+    /**
+     * @return UserOption[]
+     */
+    protected function getOptions(): array
+    {
+        return \array_merge(...\array_values($this->options));
     }
 
     #[\Override]
@@ -134,8 +196,7 @@ class UserOptionSetDefaultsForm extends AbstractForm
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'optionTree' => $this->optionHandler->getOptionTree(),
-            'applyChangesToExistingUsers' => $this->applyChangesToExistingUsers,
+            'hasOptions' => $this->options !== [],
         ]);
     }
 }

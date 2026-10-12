@@ -3,8 +3,8 @@
 namespace wcf\system\object\filter\user;
 
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 use wcf\data\user\User;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\object\filter\AbstractSelectionObjectFilter;
 use wcf\system\object\filter\IObjectListFilter;
 
@@ -40,9 +40,9 @@ final class UserNoTrophyObjectFilter extends AbstractSelectionObjectFilter imple
     }
 
     #[\Override]
-    public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void
+    public function applyFilter(DatabaseObjectList $list, mixed $value): void
     {
-        $conditions->add(
+        $list->getConditionBuilder()->add(
             'user_table.userID NOT IN (
                 SELECT  userID
                 FROM    wcf1_user_trophy

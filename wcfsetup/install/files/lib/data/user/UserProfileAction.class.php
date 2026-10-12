@@ -2,8 +2,10 @@
 
 namespace wcf\data\user;
 
+use wcf\command\user\RefreshUserOnlineMarkings;
+use wcf\command\user\RefreshUserRanks;
+use wcf\command\user\SetSpecialTrophies;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\group\UserGroup;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -12,14 +14,9 @@ use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
-use wcf\system\option\user\UserOptionHandler;
 use wcf\system\upload\UploadFile;
-use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\MessageUtil;
-use wcf\util\StringUtil;
 
 /**
  * Executes user profile-related actions.
@@ -27,6 +24,7 @@ use wcf\util\StringUtil;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `UserBuilder` and commands instead.
  */
 class UserProfileAction extends UserAction
 {
@@ -56,6 +54,7 @@ class UserProfileAction extends UserAction
      * Validates parameters for signature preview.
      *
      * @return void
+     * @deprecated 6.3 use `wcf\system\endpoint\controller\core\users\RenderSignaturePreview` instead
      */
     public function validateGetMessagePreview()
     {
@@ -67,6 +66,7 @@ class UserProfileAction extends UserAction
      *
      * @return array{message: string, raw: string}
      * @throws UserInputException
+     * @deprecated 6.3 use `wcf\system\endpoint\controller\core\users\RenderSignaturePreview` instead
      */
     public function getMessagePreview()
     {
@@ -111,6 +111,7 @@ class UserProfileAction extends UserAction
      *
      * @return void
      * @throws UserInputException
+     * @deprecated 6.3 use `wcf\system\endpoint\controller\core\users\GetUserActivityPointList` instead
      */
     public function validateGetDetailedActivityPointList()
     {
@@ -139,6 +140,7 @@ class UserProfileAction extends UserAction
      * Returns detailed activity point list.
      *
      * @return array{template: string, userID: int}
+     * @deprecated 6.3 use `wcf\system\endpoint\controller\core\users\GetUserActivityPointList` instead
      */
     public function getDetailedActivityPointList()
     {
@@ -179,164 +181,10 @@ class UserProfileAction extends UserAction
     }
 
     /**
-     * Validates parameters to begin profile inline editing.
-     *
-     * @return void
-     * @throws PermissionDeniedException
-     * @throws UserInputException
-     */
-    public function validateBeginEdit()
-    {
-        if ($this->objectIDs !== [] && \count($this->objectIDs) === 1) {
-            $userID = \reset($this->objectIDs);
-            $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
-        }
-
-        if ($this->userProfile === null || $this->userProfile->isGuest()) {
-            throw new UserInputException('objectIDs');
-        }
-
-        if ($this->userProfile->userID !== WCF::getUser()->userID) {
-            if (!$this->userProfile->canEdit()) {
-                throw new PermissionDeniedException();
-            }
-        } elseif (!$this->userProfile->canEditOwnProfile()) {
-            throw new PermissionDeniedException();
-        }
-    }
-
-    /**
-     * Begins profile inline editing.
-     *
-     * @return array{template: string}
-     */
-    public function beginEdit()
-    {
-        $optionTree = $this->getOptionHandler($this->userProfile->getDecoratedObject())->getOptionTree();
-
-        return [
-            'template' => WCF::getTPL()->render('wcf', 'userProfileAboutEditable', [
-                'errorType' => [],
-                'optionTree' => $optionTree,
-                '__userTitle' => $this->userProfile->userTitle,
-            ]),
-        ];
-    }
-
-    /**
-     * Validates parameters to save changes to user profile.
-     *
-     * @return void
-     * @throws PermissionDeniedException
-     */
-    public function validateSave()
-    {
-        $this->validateBeginEdit();
-
-        if (!isset($this->parameters['values']) || !\is_array($this->parameters['values'])) {
-            $this->parameters['values'] = [];
-        }
-
-        if (
-            isset($this->parameters['values']['__userTitle'])
-            && !WCF::getSession()->hasPermission('user.profile.canEditUserTitle')
-        ) {
-            throw new PermissionDeniedException();
-        }
-    }
-
-    /**
-     * Saves changes to user profile.
-     *
-     * @return array{success: bool, template: string}
-     */
-    public function save()
-    {
-        $userTitle = null;
-        if (isset($this->parameters['values']['__userTitle'])) {
-            $userTitle = StringUtil::trim(MessageUtil::stripCrap($this->parameters['values']['__userTitle']));
-            unset($this->parameters['values']['__userTitle']);
-        }
-
-        $optionHandler = $this->getOptionHandler($this->userProfile->getDecoratedObject());
-        $optionHandler->readUserInput($this->parameters);
-
-        $errors = $optionHandler->validate();
-
-        // validate user title
-        if ($userTitle !== null) {
-            try {
-                if (\mb_strlen($userTitle) > \USER_TITLE_MAX_LENGTH) {
-                    throw new UserInputException('__userTitle', 'tooLong');
-                }
-                if (!StringUtil::executeWordFilter($userTitle, \USER_FORBIDDEN_TITLES)) {
-                    throw new UserInputException('__userTitle', 'forbidden');
-                }
-            } catch (UserInputException $e) {
-                $errors[$e->getField()] = $e->getType();
-            }
-        }
-
-        // validation was successful
-        if ($errors === []) {
-            $saveOptions = $optionHandler->save();
-            $data = [
-                'options' => $saveOptions,
-            ];
-
-            // save user title
-            if ($userTitle !== null) {
-                $data['data'] = [
-                    'userTitle' => $userTitle,
-                ];
-            }
-
-            $userAction = new UserAction([$this->userProfile->userID], 'update', $data);
-            $userAction->executeAction();
-
-            // check if the user will be automatically added to new
-            // user groups because of the changed user options
-            UserGroupAssignmentHandler::getInstance()->checkUsers([$this->userProfile->userID]);
-
-            // reload user object to get updated data
-            $user = new User($this->userProfile->userID);
-
-            // update user rank
-            if (\MODULE_USER_RANK !== 0) {
-                $action = new self([new UserEditor($user)], 'updateUserRank');
-                $action->executeAction();
-            }
-
-            // reload option handler
-            $optionHandler = $this->getOptionHandler($user, false);
-
-            // return parsed template
-            $options = $optionHandler->getOptionTree();
-
-            return [
-                'success' => true,
-                'template' => WCF::getTPL()->render('wcf', 'userProfileAbout', [
-                    'options' => $options,
-                    'userID' => $this->userProfile->userID,
-                ]),
-            ];
-        } else {
-            // validation failed
-            return [
-                'success' => false,
-                'template' => WCF::getTPL()->render('wcf', 'userProfileAboutEditable', [
-                    'errorType' => $errors,
-                    'optionTree' => $optionHandler->getOptionTree(),
-                    '__userTitle' => $userTitle !== null ? $userTitle : $this->userProfile->userTitle,
-                ]),
-            ];
-        }
-    }
-
-    /**
      * Updates user ranks.
      *
      * @return void
+     * @deprecated 6.3 use the `RefreshUserRanks` command instead.
      */
     public function updateUserRank()
     {
@@ -344,58 +192,18 @@ class UserProfileAction extends UserAction
             $this->readObjects();
         }
 
-        $userToRank = [];
-        foreach ($this->getObjects() as $user) {
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('user_rank.groupID IN (?)', [$user->getGroupIDs()]);
-            $conditionBuilder->add('user_rank.requiredPoints <= ?', [$user->activityPoints]);
-            if ((int)$user->gender !== 0) {
-                $conditionBuilder->add('user_rank.requiredGender IN (?)', [[0, $user->gender]]);
-            } else {
-                $conditionBuilder->add('user_rank.requiredGender = ?', [0]);
-            }
-
-            $sql = "SELECT      user_rank.rankID
-                    FROM        wcf1_user_rank user_rank
-                    LEFT JOIN   wcf1_user_group user_group
-                    ON          user_group.groupID = user_rank.groupID
-                    " . $conditionBuilder . "
-                    ORDER BY    user_group.priority DESC, user_rank.requiredPoints DESC, user_rank.requiredGender DESC";
-            $statement = WCF::getDB()->prepare($sql, 1);
-            $statement->execute($conditionBuilder->getParameters());
-            $row = $statement->fetchArray();
-            if ($row === false) {
-                if ($user->rankID !== null) {
-                    $userToRank[$user->userID] = null;
-                }
-            } else {
-                if ($row['rankID'] !== $user->rankID) {
-                    $userToRank[$user->userID] = $row['rankID'];
-                }
-            }
-        }
-
-        if ($userToRank !== []) {
-            $sql = "UPDATE  wcf1_user
-                    SET     rankID = ?
-                    WHERE   userID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-
-            WCF::getDB()->beginTransaction();
-            foreach ($userToRank as $userID => $rankID) {
-                $statement->execute([
-                    $rankID,
-                    $userID,
-                ]);
-            }
-            WCF::getDB()->commitTransaction();
-        }
+        $users = \array_map(
+            static fn (UserEditor $editor) => $editor->getDecoratedObject(),
+            $this->getObjects()
+        );
+        (new RefreshUserRanks(\array_values($users)))();
     }
 
     /**
      * Updates user online markings.
      *
      * @return void
+     * @deprecated 6.3 use the `RefreshUserOnlineMarkings` command instead.
      */
     public function updateUserOnlineMarking()
     {
@@ -403,118 +211,18 @@ class UserProfileAction extends UserAction
             $this->readObjects();
         }
 
-        $fixUserGroupIDs = $userToGroup = $removeFromGroupIDs = [];
-        $newGroupIDs = [];
-        foreach ($this->getObjects() as $user) {
-            $groupIDs = $user->getGroupIDs();
-            if (!\in_array(UserGroup::EVERYONE, $groupIDs, true)) {
-                $fixUserGroupIDs[$user->userID] = [UserGroup::EVERYONE];
-                $groupIDs[] = UserGroup::EVERYONE;
-            }
-            if ($user->pendingActivation()) {
-                if (!\in_array(UserGroup::GUESTS, $groupIDs, true)) {
-                    if (!isset($fixUserGroupIDs[$user->userID])) {
-                        $fixUserGroupIDs[$user->userID] = [];
-                    }
-                    $fixUserGroupIDs[$user->userID][] = UserGroup::GUESTS;
-                    $groupIDs[] = UserGroup::GUESTS;
-                }
-
-                if (\in_array(UserGroup::USERS, $groupIDs, true)) {
-                    if (!isset($removeFromGroupIDs[$user->userID])) {
-                        $removeFromGroupIDs[$user->userID] = [];
-                    }
-
-                    $removeFromGroupIDs[$user->userID][] = UserGroup::USERS;
-                }
-            } else {
-                if (!\in_array(UserGroup::USERS, $groupIDs, true)) {
-                    if (!isset($fixUserGroupIDs[$user->userID])) {
-                        $fixUserGroupIDs[$user->userID] = [];
-                    }
-                    $fixUserGroupIDs[$user->userID][] = UserGroup::USERS;
-                    $groupIDs[] = UserGroup::USERS;
-                }
-
-                if (\in_array(UserGroup::GUESTS, $groupIDs, true)) {
-                    if (!isset($removeFromGroupIDs[$user->userID])) {
-                        $removeFromGroupIDs[$user->userID] = [];
-                    }
-
-                    $removeFromGroupIDs[$user->userID][] = UserGroup::GUESTS;
-                }
-            }
-            $newGroupIDs[$user->userID] = $groupIDs;
-
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('groupID IN (?)', [$groupIDs]);
-
-            $sql = "SELECT      groupID
-                    FROM        wcf1_user_group
-                    " . $conditionBuilder . "
-                    ORDER BY    priority DESC";
-            $statement = WCF::getDB()->prepare($sql, 1);
-            $statement->execute($conditionBuilder->getParameters());
-            $row = $statement->fetchArray();
-            if ($row['groupID'] !== $user->userOnlineGroupID) {
-                $userToGroup[$user->userID] = $row['groupID'];
-            }
-        }
-
-        // add users to missing default user groups
-        if ($fixUserGroupIDs !== []) {
-            $sql = "INSERT INTO wcf1_user_to_group
-                                (userID, groupID)
-                    VALUES      (?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
-
-            WCF::getDB()->beginTransaction();
-            foreach ($fixUserGroupIDs as $userID => $groupIDs) {
-                foreach ($groupIDs as $groupID) {
-                    $statement->execute([$userID, $groupID]);
-                }
-
-                UserStorageHandler::getInstance()->update($userID, 'groupIDs', \serialize($newGroupIDs[$userID]));
-            }
-            WCF::getDB()->commitTransaction();
-        }
-
-        if ($removeFromGroupIDs !== []) {
-            $sql = "DELETE FROM wcf1_user_to_group
-                    WHERE       userID = ?
-                            AND groupID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-
-            WCF::getDB()->beginTransaction();
-            foreach ($removeFromGroupIDs as $userID => $groupIDs) {
-                foreach ($groupIDs as $groupID) {
-                    $statement->execute([$userID, $groupID]);
-                }
-            }
-            WCF::getDB()->commitTransaction();
-        }
-
-        if ($userToGroup !== []) {
-            $sql = "UPDATE  wcf1_user
-                    SET     userOnlineGroupID = ?
-                    WHERE   userID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-
-            WCF::getDB()->beginTransaction();
-            foreach ($userToGroup as $userID => $groupID) {
-                $statement->execute([
-                    $groupID,
-                    $userID,
-                ]);
-            }
-            WCF::getDB()->commitTransaction();
-        }
+        $users = \array_map(
+            static fn (UserEditor $editor) => $editor->getDecoratedObject(),
+            $this->getObjects()
+        );
+        (new RefreshUserOnlineMarkings(\array_values($users)))();
     }
 
     /**
      * Updates the special trophies.
      *
      * @return void
+     * @deprecated 6.3 use the `SetSpecialTrophies` command instead.
      */
     public function updateSpecialTrophies()
     {
@@ -522,50 +230,9 @@ class UserProfileAction extends UserAction
             $this->readObjects();
         }
 
-        $sql = "DELETE FROM wcf1_user_special_trophy
-                WHERE userID = ?";
-        $deleteStatement = WCF::getDB()->prepare($sql);
-
-        $sql = "INSERT INTO wcf1_user_special_trophy
-                            (userID, trophyID)
-                VALUES      (?, ?)";
-        $insertStatement = WCF::getDB()->prepare($sql);
-
+        $trophyIDs = \array_values(\array_map(\intval(...), $this->parameters['trophyIDs'] ?? []));
         foreach ($this->getObjects() as $user) {
-            WCF::getDB()->beginTransaction();
-
-            // delete all user special trophies for the user
-            $deleteStatement->execute([$user->userID]);
-
-            if (!empty($this->parameters['trophyIDs'])) {
-                foreach ($this->parameters['trophyIDs'] as $trophyID) {
-                    $insertStatement->execute([
-                        $user->userID,
-                        $trophyID,
-                    ]);
-                }
-            }
-
-            WCF::getDB()->commitTransaction();
-
-            UserStorageHandler::getInstance()->reset([$user->userID], 'specialTrophies');
+            (new SetSpecialTrophies($user->getDecoratedObject(), $trophyIDs))();
         }
-    }
-
-    /**
-     * Returns the user option handler object.
-     *
-     * @return UserOptionHandler
-     */
-    protected function getOptionHandler(User $user, bool $editMode = true)
-    {
-        $optionHandler = new UserOptionHandler(false, '', 'profile');
-        if (!$editMode) {
-            $optionHandler->showEmptyOptions(false);
-            $optionHandler->enableEditMode(false);
-        }
-        $optionHandler->setUser($user);
-
-        return $optionHandler;
     }
 }

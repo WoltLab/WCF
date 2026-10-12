@@ -5,12 +5,11 @@
  * @copyright   2001-2020 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../User"], function (require, exports, tslib_1, Selector_1, Ajax, Core, Listener_1, Util_1, User_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "../../Api/Users/SaveUserConsent", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../User"], function (require, exports, tslib_1, Selector_1, SaveUserConsent_1, Core, Listener_1, Util_1, User_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
     exports.allExternalMediaEnabled = allExternalMediaEnabled;
-    Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -46,13 +45,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "../
             enableAll = true;
             this.enableAllExternalMedia();
             if (User_1.default.userId) {
-                Ajax.apiOnce({
-                    data: {
-                        actionName: "saveUserConsent",
-                        className: "wcf\\data\\user\\UserAction",
-                    },
-                    silent: true,
-                });
+                // The consent is only a convenience, errors are silently ignored.
+                void (0, SaveUserConsent_1.saveUserConsent)();
             }
             else {
                 window.sessionStorage.setItem(`${Core.getStoragePrefix()}user-consent`, "all");

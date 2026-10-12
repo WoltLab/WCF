@@ -2,10 +2,10 @@
 
 namespace wcf\command\paid\subscription;
 
+use wcf\command\user\AddUserToGroups;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
 
 /**
  * Adds user groups to a user based on the paid subscription's associated group IDs.
@@ -30,11 +30,7 @@ final class AddGroupMembership
             return;
         }
 
-        (new UserAction([$this->user], 'addToGroups', [
-            'groups' => $groupIDs,
-            'deleteOldGroups' => false,
-            'addDefaultGroups' => false,
-        ]))->executeAction();
+        (new AddUserToGroups($this->user, $groupIDs))();
     }
 
     /**

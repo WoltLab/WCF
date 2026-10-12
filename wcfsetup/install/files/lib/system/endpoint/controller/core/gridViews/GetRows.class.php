@@ -52,12 +52,22 @@ final class GetRows implements IController
             $view->setActiveFilters($parameters->filters);
         }
 
-        return new JsonResponse([
+        if ($parameters->columns !== []) {
+            $view->setVisibleColumnIDs($parameters->columns);
+        }
+
+        $response = [
             'template' => $view->renderRows(),
             'pages' => $view->countPages(),
             'totalRows' => $view->countRows(),
             'filterLabels' => $this->getFilterLabels($view, \array_keys($parameters->filters)),
-        ]);
+        ];
+
+        if ($parameters->includeHeader) {
+            $response['header'] = $view->renderHeaderColumns();
+        }
+
+        return new JsonResponse($response);
     }
 
     /**
@@ -89,5 +99,8 @@ final class GetRowsParameters
         public readonly array $filters,
         /** @var array<string, string|string[]> */
         public readonly array $gridViewParameters,
+        /** @var list<string> */
+        public readonly array $columns = [],
+        public readonly bool $includeHeader = false,
     ) {}
 }

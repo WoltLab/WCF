@@ -5,7 +5,7 @@ namespace wcf\acp\form;
 use wcf\acp\page\UserOptionListPage;
 use wcf\data\user\option\UserOption;
 use wcf\http\Helper;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\interaction\admin\UserOptionInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
@@ -43,13 +43,18 @@ class UserOptionEditForm extends UserOptionAddForm
     {
         parent::createForm();
 
-        if ($this->formObject->optionName === 'aboutMe') {
-            $optionType = $this->form->getNodeById('optionType');
-            \assert($optionType instanceof SingleSelectionFormField);
+        // Options with a type that is not selectable, such as a legacy type without
+        // an equivalent form option or a reserved type, keep their type, which must
+        // be available to display the immutable field.
+        $optionType = $this->form->getNodeById('optionType');
+        \assert($optionType instanceof SelectFormField);
+
+        if (!isset($optionType->getOptions()[$this->formObject->optionType])) {
+            $formOption = $this->getAvailableFormOptions()[$this->formObject->optionType] ?? null;
 
             $optionType->options([
                 ...$optionType->getOptions(),
-                'aboutMe' => 'aboutMe',
+                $this->formObject->optionType => $formOption?->getTitle() ?? $this->formObject->optionType,
             ]);
         }
     }

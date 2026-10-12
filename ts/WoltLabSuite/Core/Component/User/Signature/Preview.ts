@@ -8,24 +8,26 @@
  */
 
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
-import { dboAction } from "WoltLabSuite/Core/Ajax";
+import { renderSignaturePreview } from "WoltLabSuite/Core/Api/Users/RenderSignaturePreview";
 import { listenToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
-
-type ResponseGetMessagePreview = {
-  message: string;
-  raw: string;
-};
+import type { CKEditor } from "WoltLabSuite/Core/Component/Ckeditor";
+import { innerError } from "WoltLabSuite/Core/Dom/Util";
 
 let previewContainer: HTMLElement;
 
-async function loadPreview(message: string): Promise<void> {
-  const response = (await dboAction("getMessagePreview", "wcf\\data\\user\\UserProfileAction")
-    .payload({
-      data: {
-        message,
-      },
-    })
-    .dispatch()) as ResponseGetMessagePreview;
+async function loadPreview(ckeditor: CKEditor): Promise<void> {
+  const response = await renderSignaturePreview(ckeditor.getHtml());
+  if (!response.ok) {
+    const validationError = response.error.getValidationError();
+    if (validationError === undefined) {
+      throw new Error("Unexpected validation error", { cause: response.error });
+    }
+
+    innerError(ckeditor.element, validationError.code);
+    return;
+  }
+
+  innerError(ckeditor.element, false);
 
   if (previewContainer === undefined) {
     const template = document.getElementById("previewTemplate") as HTMLTemplateElement;
@@ -36,14 +38,14 @@ async function loadPreview(message: string): Promise<void> {
     previewContainer = document.getElementById("previewContainer")!;
   }
 
-  previewContainer.innerHTML = response.message;
+  previewContainer.innerHTML = response.value.message;
 }
 
 export function setup(): void {
   listenToCkeditor(document.getElementById("text")!).ready(({ ckeditor }) => {
     document.getElementById("previewButton")?.addEventListener(
       "click",
-      promiseMutex(() => loadPreview(ckeditor.getHtml())),
+      promiseMutex(() => loadPreview(ckeditor)),
     );
   });
 }

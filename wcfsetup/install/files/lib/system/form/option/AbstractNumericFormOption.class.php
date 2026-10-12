@@ -86,4 +86,29 @@ abstract class AbstractNumericFormOption extends AbstractFormOption
     {
         return '';
     }
+
+    #[\Override]
+    public function matchesFilterValue(string $optionValue, string $filterValue, array $configuration = []): bool
+    {
+        $values = $this->parseFilterValue($filterValue);
+
+        return $this->isInFilterRange((float)$optionValue, $values['from'], $values['to']);
+    }
+
+    /**
+     * Returns `true` if the value is within the given bounds, a bound of `0`
+     * is unbounded, mirroring the condition of `applyFilter()`.
+     */
+    protected function isInFilterRange(float $value, int $from, int $to): bool
+    {
+        if ($from === 0 && $to === 0) {
+            return true;
+        }
+
+        if ($value < $from) {
+            return false;
+        }
+
+        return $to === 0 || $value <= $to;
+    }
 }

@@ -6,13 +6,14 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import { dboAction } from "WoltLabSuite/Core/Ajax";
 import * as EventHandler from "WoltLabSuite/Core/Event/Handler";
 import { insertHtml } from "WoltLabSuite/Core/Dom/Util";
 import { trigger as triggerDomChange } from "WoltLabSuite/Core/Dom/Change/Listener";
 import { getTabMenu } from "WoltLabSuite/Core/Ui/TabMenu";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
+import { renderUserProfileMenuContent } from "WoltLabSuite/Core/Api/Users/RenderUserProfileMenuContent";
+import { setup as setupProfileEditor } from "WoltLabSuite/Core/Component/User/Profile/Editor";
 
 function setupUserList(userId: number, buttonId: string, className: string): void {
   const button = document.getElementById(buttonId) as HTMLElement;
@@ -62,23 +63,12 @@ function setupTabMenu(userId: number): void {
   });
 }
 
-type ResponseGetTabContent = {
-  template: string;
-};
-
 async function loadTabMenuContent(userId: number, tabName: string): Promise<void> {
   if (tabContentLoaded.has(tabName)) {
     return;
   }
 
-  const response = (await dboAction("getContent", "wcf\\data\\user\\profile\\menu\\item\\UserProfileMenuItemAction")
-    .payload({
-      data: {
-        menuItem: tabName,
-        userID: userId,
-      },
-    })
-    .dispatch()) as ResponseGetTabContent;
+  const response = await renderUserProfileMenuContent(userId, tabName);
 
   tabContentLoaded.set(tabName, true);
 
@@ -86,9 +76,39 @@ async function loadTabMenuContent(userId: number, tabName: string): Promise<void
   triggerDomChange();
 }
 
-export function setup(userId: number): void {
+/**
+ * Replaces the content of the given tab with its current content.
+ */
+async function reloadTabMenuContent(userId: number, tabName: string): Promise<void> {
+  const container = document.querySelector<HTMLElement>('.tabMenuContent[data-name="' + tabName + '"]');
+  if (container === null) {
+    return;
+  }
+
+  tabContentLoaded.delete(tabName);
+  container.innerHTML = "";
+
+  await loadTabMenuContent(userId, tabName);
+}
+
+function setupEditor(userId: number, editOnInit: boolean): void {
+  const button = document.querySelector<HTMLElement>(".jsButtonEditProfile");
+  if (button === null) {
+    return;
+  }
+
+  setupProfileEditor(button, editOnInit, async () => {
+    // Reload the tab before selecting it, otherwise the select event would load
+    // the content of a tab that has not been loaded yet a second time.
+    await reloadTabMenuContent(userId, "about");
+    getTabMenu("profileContent")?.select("about");
+  });
+}
+
+export function setup(userId: number, editOnInit: boolean = false): void {
   setupFollowingList(userId);
   setupFollowerList(userId);
   setupVisitorList(userId);
   setupTabMenu(userId);
+  setupEditor(userId, editOnInit);
 }

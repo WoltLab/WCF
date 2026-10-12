@@ -20,7 +20,6 @@ use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentEditor;
 use wcf\data\language\Language;
 use wcf\system\attachment\AttachmentHandler;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -668,13 +667,6 @@ class ArticleAction extends AbstractDatabaseObjectAction
     public function validateSetCategory()
     {
         WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
-
-        $this->readBoolean('useMarkedArticles', true);
-
-        // if no object ids are given, use clipboard handler
-        if ($this->objectIDs === [] && $this->parameters['useMarkedArticles'] === true) {
-            $this->objectIDs = \array_keys(ClipboardHandler::getInstance()->getMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article')));
-        }
 
         if ($this->objects === []) {
             $this->readObjects();

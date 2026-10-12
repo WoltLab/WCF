@@ -8,9 +8,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\follow\UserFollowerList;
 use wcf\data\user\follow\UserFollowingList;
-use wcf\data\user\group\UserGroup;
 use wcf\data\user\profile\visitor\UserProfileVisitorList;
-use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
@@ -184,7 +182,6 @@ class UserPage extends AbstractPage
             'followingCount' => $this->followingList->countObjects(),
             'visitors' => $this->visitorList !== null ? $this->visitorList->getObjects() : [],
             'visitorCount' => $this->visitorList !== null ? $this->visitorList->countObjects() : 0,
-            'isAccessible' => UserGroup::isAccessibleGroup($this->user->getGroupIDs()),
             'coverPhotoDimensions' => UserCoverPhoto::getCoverPhotoDimensions(),
             'specialTrophyCount' => (\MODULE_TROPHY !== 0 ? \count($this->user->getSpecialTrophies()) : 0),
             'userProfileHeaderView' => new UserProfileHeaderView($this->user),

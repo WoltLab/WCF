@@ -6,18 +6,10 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
+import { validateEmail as validateEmailAddress } from "WoltLabSuite/Core/Api/Users/ValidateEmail";
+import { validateUsername as validateUsernameValue } from "WoltLabSuite/Core/Api/Users/ValidateUsername";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import DomUtil from "../../Dom/Util";
-
-type ValidationResult =
-  | {
-      ok: true;
-    }
-  | {
-      ok: false;
-      error: string;
-    };
 
 type UsernameOptions = {
   minlength: number;
@@ -37,11 +29,7 @@ async function validateUsername(username: HTMLInputElement, options: UsernameOpt
     return;
   }
 
-  const result = (await prepareRequest(username.dataset.validationEndpoint!)
-    .post({
-      username: value,
-    })
-    .fetchAsJson()) as ValidationResult;
+  const result = await validateUsernameValue(value);
   if (!result.ok) {
     showErrorMessage(username, `wcf.user.username.error.${result.error}`);
     return;
@@ -58,11 +46,7 @@ async function validateEmail(email: HTMLInputElement): Promise<void> {
     return;
   }
 
-  const result = (await prepareRequest(email.dataset.validationEndpoint!)
-    .post({
-      email: value,
-    })
-    .fetchAsJson()) as ValidationResult;
+  const result = await validateEmailAddress(value);
   if (!result.ok) {
     showErrorMessage(email, `wcf.user.email.error.${result.error}`);
     return;

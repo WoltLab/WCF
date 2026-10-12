@@ -4,7 +4,7 @@ namespace wcf\system\object\filter;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use wcf\data\DatabaseObject;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\data\DatabaseObjectList;
 
 /**
  * Evaluates stored filter values that consist exclusively of list filters,
@@ -31,18 +31,19 @@ final class ObjectListFilterHandler extends ObjectFilterHandler
     }
 
     /**
-     * Adds the SQL conditions of all stored filter values to the given
-     * conditions of an object list. Values of unknown filters are ignored.
+     * Adds the SQL conditions of all stored filter values to the given object
+     * list. Values of unknown filters are ignored.
      *
      * Adds a condition that matches no objects if there are no active filters.
      *
+     * @param DatabaseObjectList<TDatabaseObject> $list
      * @throws MappingError if the stored filter values are malformed
      */
-    public function applyFilters(PreparedStatementConditionBuilder $conditions, ?string $json): void
+    public function applyFilters(DatabaseObjectList $list, ?string $json): void
     {
         $values = $this->unserializeValues($json);
         if ($values === []) {
-            $conditions->add('1=0');
+            $list->getConditionBuilder()->add('1=0');
 
             return;
         }
@@ -59,14 +60,14 @@ final class ObjectListFilterHandler extends ObjectFilterHandler
             \assert($filter instanceof IObjectListFilter);
 
             $filter->applyFilter(
-                $conditions,
+                $list,
                 $filter->unserializeValue($serializedValue),
             );
             $hasActiveFilters = true;
         }
 
         if (!$hasActiveFilters) {
-            $conditions->add('1=0');
+            $list->getConditionBuilder()->add('1=0');
         }
     }
 }

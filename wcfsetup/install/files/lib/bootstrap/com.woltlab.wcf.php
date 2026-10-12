@@ -49,6 +49,15 @@ return new class {
         );
 
         $eventHandler->register(
+            \wcf\event\user\UsersMerging::class,
+            \wcf\acp\form\UserMergeForm::fireLegacyEvent(...)
+        );
+        $eventHandler->register(
+            \wcf\event\user\UserRenamed::class,
+            \wcf\data\user\UserAction::fireLegacyRenameEvent(...)
+        );
+
+        $eventHandler->register(
             \wcf\event\user\RegistrationSpamChecking::class,
             \wcf\system\event\listener\RegistrationSpamCheckingSfsListener::class
         );
@@ -74,6 +83,7 @@ return new class {
             \wcf\event\l10n\L10nDefinitionCollecting::class,
             static function (\wcf\event\l10n\L10nDefinitionCollecting $event) {
                 $event->register(\wcf\data\user\option\UserOption::getL10nDefinition());
+                $event->register(\wcf\data\user\option\category\UserOptionCategory::getL10nDefinition());
                 $event->register(\wcf\data\reaction\type\ReactionType::getL10nDefinition());
                 $event->register(\wcf\data\user\rank\UserRank::getL10nDefinition());
                 $event->register(\wcf\data\contact\recipient\ContactRecipient::getL10nDefinition());

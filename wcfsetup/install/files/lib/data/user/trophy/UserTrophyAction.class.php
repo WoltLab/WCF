@@ -2,10 +2,12 @@
 
 namespace wcf\data\user\trophy;
 
+use wcf\command\user\SetSpecialTrophies;
+use wcf\command\user\UpdateUser;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\user\UserAction;
+use wcf\data\user\User;
+use wcf\data\user\UserBuilder;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileAction;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
@@ -50,12 +52,9 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
         $userTrophy = parent::create();
 
         if (!$userTrophy->getTrophy()->isDisabled()) {
-            $userAction = new UserAction([$userTrophy->userID], 'update', [
-                'counters' => [
-                    'trophyPoints' => 1,
-                ],
-            ]);
-            $userAction->executeAction();
+            (new UpdateUser(
+                UserBuilder::forUpdate($userTrophy->getUserProfile()->getDecoratedObject())->incrementTrophyPoints(1)
+            ))();
 
             // checks if the user still has space to add special trophies
             if (\count($userTrophy->getUserProfile()->getSpecialTrophies()) < $userTrophy->getUserProfile()->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
@@ -68,16 +67,16 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
                 }
 
                 if (!$hasTrophy) {
-                    $userProfileAction = new UserProfileAction(
-                        [$userTrophy->getUserProfile()->getDecoratedObject()],
-                        'updateSpecialTrophies',
-                        [
-                            'trophyIDs' => \array_unique(\array_merge(\array_map(static function ($trophy) {
-                                return $trophy->trophyID;
-                            }, $userTrophy->getUserProfile()->getSpecialTrophies()), [$userTrophy->trophyID])),
-                        ]
+                    $trophyIDs = \array_map(
+                        static fn ($trophy) => $trophy->trophyID,
+                        $userTrophy->getUserProfile()->getSpecialTrophies()
                     );
-                    $userProfileAction->executeAction();
+                    $trophyIDs[] = $userTrophy->trophyID;
+
+                    (new SetSpecialTrophies(
+                        $userTrophy->getUserProfile()->getDecoratedObject(),
+                        \array_values(\array_unique($trophyIDs))
+                    ))();
                 }
             }
         }
@@ -165,12 +164,9 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
             }
 
             foreach ($updateUserTrophies as $userID => $count) {
-                $userAction = new UserAction([$userID], 'update', [
-                    'counters' => [
-                        'trophyPoints' => $count,
-                    ],
-                ]);
-                $userAction->executeAction();
+                (new UpdateUser(
+                    UserBuilder::forUpdate(new User($userID))->incrementTrophyPoints($count)
+                ))();
             }
         }
 

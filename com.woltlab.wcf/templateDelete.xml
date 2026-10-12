@@ -118,5 +118,16 @@
 		<template>email_notification_userRegistration</template>
 		<template>imageViewer</template>
 		<template>avatarEdit</template>
+		<template>userProfileAboutEditable</template>
+		<template>userProfileOptionFieldList</template>
+		<template>userSearch</template>
+		<template>userOptionFieldList</template>
+		<template>birthdaySearchableOptionType</template>
+		<template>multiSelectSearchableOptionType</template>
+		<template>selectSearchableOptionType</template>
+		<template>textSearchableOptionType</template>
+		<template>textareaSearchableOptionType</template>
+		<template>messageUserOptionOutput</template>
+		<template>shared_userOptionsCondition</template>
 	</delete>
 </data>

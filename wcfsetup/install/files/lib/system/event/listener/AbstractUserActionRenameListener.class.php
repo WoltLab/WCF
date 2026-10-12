@@ -2,16 +2,20 @@
 
 namespace wcf\system\event\listener;
 
+use wcf\command\user\UpdateUsernameColumn;
+use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\system\user\rename\UsernameColumn;
 use wcf\system\WCF;
 
 /**
  * Abstract implementation of an event listener updating database tables during
  * a user rename.
  *
- * @author  Matthias Schmidt
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Matthias Schmidt, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Listen for the `UserRenamed` event and use `UserRenamed::updateUsernameColumn()` instead.
  */
 abstract class AbstractUserActionRenameListener implements IParameterizedEventListener
 {
@@ -22,7 +26,6 @@ abstract class AbstractUserActionRenameListener implements IParameterizedEventLi
      * (database table name), `userID` and `username` (names of the database
      * table columns containing the id and name of the user)
      * `{WCF_N}` will be automatically replaced with the number of the WCF installation
-     * (only with PHP 5.6 string concatenation is possible in property declarations)
      * @var array<string|array{name: string, userID?: string, username?: string}>
      */
     protected $databaseTables = [];
@@ -30,10 +33,10 @@ abstract class AbstractUserActionRenameListener implements IParameterizedEventLi
     #[\Override]
     public function execute(mixed $eventObj, string $className, string $eventName, array &$parameters)
     {
-        /** @var UserAction $eventObj */
+        \assert($eventObj instanceof UserAction);
 
-        $userID = $eventObj->getObjects()[0]->userID;
-        $username = $eventObj->getParameters()['data']['username'];
+        // The objects of the action can still contain the old username.
+        $user = new User($eventObj->getObjects()[0]->userID);
 
         WCF::getDB()->beginTransaction();
 
@@ -41,18 +44,14 @@ abstract class AbstractUserActionRenameListener implements IParameterizedEventLi
             if (!\is_array($databaseTable)) {
                 $databaseTable = ['name' => $databaseTable];
             }
-            if (!isset($databaseTable['userID'])) {
-                $databaseTable['userID'] = 'userID';
-            }
-            if (!isset($databaseTable['username'])) {
-                $databaseTable['username'] = 'username';
-            }
 
-            $sql = "UPDATE  " . \str_replace('{WCF_N}', '1', $databaseTable['name']) . "
-                    SET     " . $databaseTable['username'] . " = ?
-                    WHERE   " . $databaseTable['userID'] . " = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$username, $userID]);
+            $column = new UsernameColumn(
+                \str_replace('{WCF_N}', '1', $databaseTable['name']),
+                $databaseTable['userID'] ?? 'userID',
+                $databaseTable['username'] ?? 'username',
+            );
+
+            (new UpdateUsernameColumn($column, $user))();
         }
 
         WCF::getDB()->commitTransaction();

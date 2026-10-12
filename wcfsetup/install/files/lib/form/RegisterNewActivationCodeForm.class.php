@@ -2,8 +2,9 @@
 
 namespace wcf\form;
 
+use wcf\command\user\UpdateUser;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\system\email\Email;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
@@ -159,17 +160,15 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
     private function updateUser(): void
     {
         $formData = $this->form->getData()['data'];
-        $parameters = ['emailConfirmed' => \bin2hex(\random_bytes(20))];
+        $builder = UserBuilder::forUpdate($this->user)
+            ->setEmailConfirmed(\bin2hex(\random_bytes(20)));
         if ((string)($formData['email'] ?? '') !== '') {
-            $parameters['email'] = $formData['email'];
+            $builder->setEmail($formData['email']);
         }
-        $this->objectAction = new UserAction([$this->user], 'update', [
-            'data' => \array_merge($this->additionalFields, $parameters),
-        ]);
-        $this->objectAction->executeAction();
-
-        // Reload user to reflect changes.
-        $this->user = new User($this->user->userID);
+        foreach ($this->additionalFields as $name => $value) {
+            $builder->setCustomProperty($name, $value);
+        }
+        $this->user = (new UpdateUser($builder))();
     }
 
     private function sendActivationMail(): void

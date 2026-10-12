@@ -3,8 +3,8 @@
 namespace wcf\system\object\filter\user;
 
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 use wcf\data\user\User;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\NumericRangeFormField;
 use wcf\system\object\filter\AbstractRangeObjectFilter;
 use wcf\system\object\filter\IObjectListFilter;
@@ -52,15 +52,15 @@ final class UserRegistrationDaysObjectFilter extends AbstractRangeObjectFilter i
     }
 
     #[\Override]
-    public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void
+    public function applyFilter(DatabaseObjectList $list, mixed $value): void
     {
         [$from, $to] = $value;
 
         if ($from !== null) {
-            $conditions->add('registrationDate <= ?', [\TIME_NOW - $from * 86400]);
+            $list->getConditionBuilder()->add('registrationDate <= ?', [\TIME_NOW - $from * 86400]);
         }
         if ($to !== null) {
-            $conditions->add('registrationDate >= ?', [\TIME_NOW - $to * 86400]);
+            $list->getConditionBuilder()->add('registrationDate >= ?', [\TIME_NOW - $to * 86400]);
         }
     }
 

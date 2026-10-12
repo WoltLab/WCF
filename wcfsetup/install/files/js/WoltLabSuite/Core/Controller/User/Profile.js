@@ -5,7 +5,7 @@
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Ui/TabMenu", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Component/Dialog"], function (require, exports, tslib_1, Ajax_1, EventHandler, Util_1, Listener_1, TabMenu_1, PromiseMutex_1, Dialog_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Ui/TabMenu", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Api/Users/RenderUserProfileMenuContent", "WoltLabSuite/Core/Component/User/Profile/Editor"], function (require, exports, tslib_1, EventHandler, Util_1, Listener_1, TabMenu_1, PromiseMutex_1, Dialog_1, RenderUserProfileMenuContent_1, Editor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -49,22 +49,40 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
         if (tabContentLoaded.has(tabName)) {
             return;
         }
-        const response = (await (0, Ajax_1.dboAction)("getContent", "wcf\\data\\user\\profile\\menu\\item\\UserProfileMenuItemAction")
-            .payload({
-            data: {
-                menuItem: tabName,
-                userID: userId,
-            },
-        })
-            .dispatch());
+        const response = await (0, RenderUserProfileMenuContent_1.renderUserProfileMenuContent)(userId, tabName);
         tabContentLoaded.set(tabName, true);
         (0, Util_1.insertHtml)(response.template, document.querySelector('.tabMenuContent[data-name="' + tabName + '"]'), "append");
         (0, Listener_1.trigger)();
     }
-    function setup(userId) {
+    /**
+     * Replaces the content of the given tab with its current content.
+     */
+    async function reloadTabMenuContent(userId, tabName) {
+        const container = document.querySelector('.tabMenuContent[data-name="' + tabName + '"]');
+        if (container === null) {
+            return;
+        }
+        tabContentLoaded.delete(tabName);
+        container.innerHTML = "";
+        await loadTabMenuContent(userId, tabName);
+    }
+    function setupEditor(userId, editOnInit) {
+        const button = document.querySelector(".jsButtonEditProfile");
+        if (button === null) {
+            return;
+        }
+        (0, Editor_1.setup)(button, editOnInit, async () => {
+            // Reload the tab before selecting it, otherwise the select event would load
+            // the content of a tab that has not been loaded yet a second time.
+            await reloadTabMenuContent(userId, "about");
+            (0, TabMenu_1.getTabMenu)("profileContent")?.select("about");
+        });
+    }
+    function setup(userId, editOnInit = false) {
         setupFollowingList(userId);
         setupFollowerList(userId);
         setupVisitorList(userId);
         setupTabMenu(userId);
+        setupEditor(userId, editOnInit);
     }
 });

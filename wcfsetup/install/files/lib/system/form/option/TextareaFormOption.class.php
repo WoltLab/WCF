@@ -61,4 +61,10 @@ class TextareaFormOption extends AbstractFormOption
     {
         $list->getConditionBuilder()->add("{$columnName} LIKE ?", ['%' . WCF::getDB()->escapeLikeValue($value) . '%']);
     }
+
+    #[\Override]
+    public function matchesFilterValue(string $optionValue, string $filterValue, array $configuration = []): bool
+    {
+        return \mb_stripos($optionValue, $filterValue) !== false;
+    }
 }

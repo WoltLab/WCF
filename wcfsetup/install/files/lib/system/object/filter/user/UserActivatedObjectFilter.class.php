@@ -3,8 +3,8 @@
 namespace wcf\system\object\filter\user;
 
 use wcf\data\DatabaseObject;
+use wcf\data\DatabaseObjectList;
 use wcf\data\user\User;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\object\filter\AbstractBooleanObjectFilter;
 use wcf\system\object\filter\IObjectListFilter;
 
@@ -34,12 +34,12 @@ final class UserActivatedObjectFilter extends AbstractBooleanObjectFilter implem
     }
 
     #[\Override]
-    public function applyFilter(PreparedStatementConditionBuilder $conditions, mixed $value): void
+    public function applyFilter(DatabaseObjectList $list, mixed $value): void
     {
         if ($value) {
-            $conditions->add('activationCode = 0');
+            $list->getConditionBuilder()->add('activationCode = 0');
         } else {
-            $conditions->add('activationCode <> 0');
+            $list->getConditionBuilder()->add('activationCode <> 0');
         }
     }
 

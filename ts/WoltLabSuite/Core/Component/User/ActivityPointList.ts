@@ -7,22 +7,16 @@
  * @since 6.2
  */
 
-import { dboAction } from "WoltLabSuite/Core/Ajax";
+import { getUserActivityPointList } from "WoltLabSuite/Core/Api/Users/GetUserActivityPointList";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 
-type ResponseGetDetailedActivityPointList = {
-  template: string;
-};
-
 async function showDialog(userId: number): Promise<void> {
-  const response = (await dboAction("getDetailedActivityPointList", "wcf\\data\\user\\UserProfileAction")
-    .objectIds([userId])
-    .dispatch()) as ResponseGetDetailedActivityPointList;
+  const { template } = await getUserActivityPointList(userId);
 
-  const dialog = dialogFactory().fromHtml(response.template).withoutControls();
+  const dialog = dialogFactory().fromHtml(template).withoutControls();
   dialog.show(getPhrase("wcf.user.activityPoint"));
 }
 

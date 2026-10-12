@@ -44,9 +44,11 @@ class UserBirthdayListView extends AbstractSimpleUserListView
             );
 
             foreach ($userProfiles as $user) {
-                $birthdayUserOption->setUser($user->getDecoratedObject());
-
-                if (!$user->isProtected() && $birthdayUserOption->isVisible() && $user->getAge($year) >= 0) {
+                if (
+                    !$user->isProtected()
+                    && $birthdayUserOption->isVisible($user->getDecoratedObject())
+                    && $user->getAge($year) >= 0
+                ) {
                     $userIDs[] = $user->userID;
                 }
             }

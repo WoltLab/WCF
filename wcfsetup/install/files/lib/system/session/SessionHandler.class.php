@@ -7,7 +7,7 @@ use ParagonIE\ConstantTime\Hex;
 use wcf\data\session\Session as LegacySession;
 use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\event\session\PreserveVariablesCollecting;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\database\exception\DatabaseQueryExecutionException;
@@ -1575,8 +1575,9 @@ final class SessionHandler extends SingletonFactory
             self::resetSessions([$this->user->userID]);
 
             // update last activity time
-            $editor = new UserEditor($this->user);
-            $editor->update(['lastActivityTime' => \TIME_NOW]);
+            UserBuilder::forUpdate($this->user)
+                ->setLastActivityTime(\TIME_NOW)
+                ->update();
         }
 
         if ($this->isPersisted) {

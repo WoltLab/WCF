@@ -8,7 +8,6 @@
  * @since     6.3
  */
 
-import { dboAction } from "../Ajax";
 import User from "../User";
 
 function switchLanguage(languageId: string, languageCode: string): void {
@@ -50,9 +49,8 @@ async function switchLanguageDevtools(languageId: string, languageCode: string):
     }
   }
 
-  await dboAction("devtoolsSetLanguage", "wcf\\data\\user\\UserAction")
-    .payload({ languageID: parseInt(languageId, 10) })
-    .dispatch();
+  const { setLanguage } = await import("../Api/Devtools/SetLanguage");
+  await setLanguage(parseInt(languageId, 10));
 
   window.location.reload();
 }

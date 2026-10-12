@@ -2,8 +2,9 @@
 
 namespace wcf\form;
 
+use wcf\command\user\UpdateUser;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\data\user\UserList;
 use wcf\system\email\Email;
 use wcf\system\email\mime\MimePartFacade;
@@ -125,12 +126,12 @@ final class EmailNewActivationCodeForm extends AbstractFormBuilderForm
 
     private function updateUser(): void
     {
-        $this->objectAction = new UserAction([$this->user], 'update', [
-            'data' => \array_merge($this->additionalFields, [
-                'reactivationCode' => UserRegistrationUtil::getActivationCode(),
-            ]),
-        ]);
-        $this->objectAction->executeAction();
+        $builder = UserBuilder::forUpdate($this->user)
+            ->setReactivationCode(UserRegistrationUtil::getActivationCode());
+        foreach ($this->additionalFields as $name => $value) {
+            $builder->setCustomProperty($name, $value);
+        }
+        (new UpdateUser($builder))();
 
         // Use user list to allow overriding of the fields without duplicating logic.
         $userList = new UserList();

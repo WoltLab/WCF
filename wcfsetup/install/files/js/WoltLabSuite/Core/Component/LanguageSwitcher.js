@@ -7,7 +7,7 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since     6.3
  */
-define(["require", "exports", "tslib", "../Ajax", "../User"], function (require, exports, tslib_1, Ajax_1, User_1) {
+define(["require", "exports", "tslib", "../User"], function (require, exports, tslib_1, User_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -42,9 +42,8 @@ define(["require", "exports", "tslib", "../Ajax", "../User"], function (require,
                 return;
             }
         }
-        await (0, Ajax_1.dboAction)("devtoolsSetLanguage", "wcf\\data\\user\\UserAction")
-            .payload({ languageID: parseInt(languageId, 10) })
-            .dispatch();
+        const { setLanguage } = await new Promise((resolve_1, reject_1) => { require(["../Api/Devtools/SetLanguage"], resolve_1, reject_1); }).then(tslib_1.__importStar);
+        await setLanguage(parseInt(languageId, 10));
         window.location.reload();
     }
     function setup() {

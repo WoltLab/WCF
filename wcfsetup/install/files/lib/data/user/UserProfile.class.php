@@ -8,9 +8,6 @@ use wcf\data\ITitledLinkObject;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
 use wcf\data\user\avatar\AvatarDecorator;
-use wcf\data\user\avatar\DefaultAvatar;
-use wcf\data\user\avatar\IUserAvatar;
-use wcf\data\user\avatar\StaticAvatar;
 use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
 use wcf\data\user\cover\photo\GeneratedUserCoverPhoto;
 use wcf\data\user\cover\photo\IUserCoverPhoto;
@@ -18,7 +15,7 @@ use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\ignore\UserIgnore;
 use wcf\data\user\online\UserOnline;
-use wcf\data\user\option\ViewableUserOption;
+use wcf\data\user\option\UserOption;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\data\user\rank\UserRank;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
@@ -27,8 +24,6 @@ use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\email\Mailbox;
-use wcf\system\event\EventHandler;
-use wcf\system\exception\ImplementationException;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\user\UserProfileHandler;
@@ -122,13 +117,13 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
 
     const GENDER_OTHER = 3;
 
-    const ACCESS_EVERYONE = 0;
+    const ACCESS_EVERYONE = User::ACCESS_EVERYONE;
 
-    const ACCESS_REGISTERED = 1;
+    const ACCESS_REGISTERED = User::ACCESS_REGISTERED;
 
-    const ACCESS_FOLLOWING = 2;
+    const ACCESS_FOLLOWING = User::ACCESS_FOLLOWING;
 
-    const ACCESS_NOBODY = 3;
+    const ACCESS_NOBODY = User::ACCESS_NOBODY;
 
     #[\Override]
     public function __toString(): string
@@ -358,42 +353,14 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function getAvatar()
     {
-        if ($this->avatar === null) {
-            $avatar = null;
-            if ($this->disableAvatar === 0) {
-                if ($this->canSeeAvatar()) {
-                    if ($this->avatarPathname !== null) {
-                        $avatar = new StaticAvatar($this->avatarPathname);
-                    } else {
-                        $parameters = ['avatar' => null];
-                        EventHandler::getInstance()->fireAction($this, 'getAvatar', $parameters);
-
-                        $avatar = $parameters['avatar'];
-                        if ($avatar !== null && !($avatar instanceof IUserAvatar)) {
-                            throw new ImplementationException(
-                                \get_class($avatar),
-                                IUserAvatar::class
-                            );
-                        }
-                    }
-                }
-            }
-
-            // use default avatar
-            if ($avatar === null) {
-                $avatar = new DefaultAvatar($this->username ?: '');
-            }
-
-            $this->avatar = new AvatarDecorator($avatar);
-        }
-
-        return $this->avatar;
+        return $this->getDecoratedObject()->getAvatar();
     }
 
     /**
      * Sets the user's avatar.
      *
      * @since 6.2
+     * @deprecated 6.3
      */
     public function setFileAvatar(File $file): void
     {
@@ -478,11 +445,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function isOnline()
     {
-        if ($this->getLastActivityTime() > (\TIME_NOW - \USER_ONLINE_TIMEOUT) && $this->canViewOnlineStatus()) {
-            return true;
-        }
-
-        return false;
+        return $this->getDecoratedObject()->isOnline();
     }
 
     /**
@@ -760,41 +723,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function isAccessible(string $name, ?int $userID = null): bool
     {
-        if ($userID === null) {
-            $userID = WCF::getUser()->userID;
-        }
-        $data = ['result' => true, 'name' => $name, 'userID' => $userID];
-
-        switch ($this->{$name}) {
-            case self::ACCESS_EVERYONE:
-                $data['result'] = true;
-                break;
-
-            case self::ACCESS_REGISTERED:
-                $data['result'] = ($userID !== 0 ? true : false);
-                break;
-
-            case self::ACCESS_FOLLOWING:
-                $result = false;
-                if ($userID !== 0) {
-                    if ($userID === $this->userID) {
-                        $result = true;
-                    } elseif ($this->isFollowing($userID)) {
-                        $result = true;
-                    }
-                }
-
-                $data['result'] = $result;
-                break;
-
-            case self::ACCESS_NOBODY:
-                $data['result'] = false;
-                break;
-        }
-
-        EventHandler::getInstance()->fireAction($this, 'isAccessible', $data);
-
-        return $data['result'];
+        return $this->getDecoratedObject()->isAccessible($name, $userID);
     }
 
     /**
@@ -949,14 +878,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function getUserTitle()
     {
-        if ($this->userTitle !== '') {
-            return $this->userTitle;
-        }
-        if ($this->getRank() !== null && $this->getRank()->showTitle()) {
-            return $this->getRank()->getTitle();
-        }
-
-        return '';
+        return $this->getDecoratedObject()->getUserTitle();
     }
 
     public function getRank(): ?UserRank
@@ -1114,25 +1036,19 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
     }
 
     /**
-     * Returns the formatted value of the user option with the given name.
+     * Returns the formatted value of the user option with the given name or
+     * an empty string if the option is empty or not visible to the active user.
      *
-     * @return mixed
+     * @return string
      */
     public function getFormattedUserOption(string $name)
     {
-        // get value
-        $value = $this->getUserOption($name);
-        if (empty($value)) {
+        $option = $this->getVisibleUserOption($name);
+        if ($option === null) {
             return '';
         }
 
-        $option = ViewableUserOption::getUserOption($name);
-        if (!$option->isVisible()) {
-            return '';
-        }
-        $option->setOptionValue($this->getDecoratedObject());
-
-        return $option->optionValue;
+        return $this->formatUserOptionValue($option);
     }
 
     /**
@@ -1142,7 +1058,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function getUserOptionTitle(string $name): string
     {
-        return ViewableUserOption::getUserOption($name)->getTitle();
+        $option = UserOptionCacheBuilder::getInstance()->getData([], 'options')[$name] ?? null;
+
+        return $option?->getTitle() ?? '';
     }
 
     /**
@@ -1152,15 +1070,14 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function isVisibleOption(string $name)
     {
-        $option = ViewableUserOption::getUserOption($name);
-
-        return $option->isVisible();
+        return $this->getVisibleUserOption($name) !== null;
     }
 
     /**
-     * Returns the list of user options that should be displayed on the user card.
+     * Returns the titles and formatted values of the user options that should be
+     * displayed on the user card.
      *
-     * @return ViewableUserOption[]
+     * @return list<array{title: string, value: string}>
      * @since 6.3
      */
     public function getUserCardOptions(): array
@@ -1173,26 +1090,51 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
                 continue;
             }
 
-            $rawValue = $this->getUserOption($option->optionName);
-            if ($rawValue === null || $rawValue === '') {
+            $option = $this->getVisibleUserOption($option->optionName);
+            if ($option === null) {
                 continue;
             }
 
-            $viewableOption = ViewableUserOption::getUserOption($option->optionName);
-            $viewableOption->setUser($this->getDecoratedObject());
-            if (!$viewableOption->isVisible()) {
+            $value = $this->formatUserOptionValue($option);
+            if ($value === '') {
                 continue;
             }
 
-            $viewableOption->setOptionValue($this->getDecoratedObject());
-            if ($viewableOption->optionValue === '' || $viewableOption->optionValue === null) {
-                continue;
-            }
-
-            $result[] = $viewableOption;
+            $result[] = [
+                'title' => $option->getTitle(),
+                'value' => $value,
+            ];
         }
 
         return $result;
+    }
+
+    /**
+     * Returns the user option with the given name if it is visible to the active user.
+     */
+    private function getVisibleUserOption(string $name): ?UserOption
+    {
+        $option = UserOptionCacheBuilder::getInstance()->getData([], 'options')[$name] ?? null;
+        if ($option === null) {
+            return null;
+        }
+
+        return $option->isVisible($this->getDecoratedObject()) ? $option : null;
+    }
+
+    /**
+     * Returns the formatted value of the given user option or an empty string
+     * if the value is empty.
+     */
+    private function formatUserOptionValue(UserOption $option): string
+    {
+        // Like the profile, values such as `0` are considered empty.
+        $value = (string)($this->getUserOption($option->optionName) ?? '');
+        if (!(bool)$value || $value === '0000-00-00') {
+            return '';
+        }
+
+        return $option->getFormattedValue($value, $this->getDecoratedObject());
     }
 
     /**

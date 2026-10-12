@@ -299,12 +299,6 @@ final class AcpMenuItemCollectingListener
                 parentMenuItem: 'wcf.acp.menu.link.user.management',
                 link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\page\UserListPage::class),
             ));
-            $event->register(new AcpMenuItem(
-                'wcf.acp.menu.link.user.search',
-                parentMenuItem: 'wcf.acp.menu.link.user.list',
-                link: LinkHandler::getInstance()->getControllerLink(\wcf\acp\form\UserSearchForm::class),
-                icon: FontAwesomeIcon::fromValues('magnifying-glass')
-            ));
             if (WCF::getSession()->hasPermission('admin.user.canAddUser')) {
                 $event->register(new AcpMenuItem(
                     'wcf.acp.menu.link.user.add',

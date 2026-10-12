@@ -4,7 +4,7 @@ namespace wcf\form;
 
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\database\exception\DatabaseException;
 use wcf\system\email\SimpleEmail;
@@ -238,10 +238,9 @@ class MultifactorManageForm extends AbstractFormBuilderForm
         //
         // Use the saved@MultifactorManageForm event if you need to run
         // logic in response to a user enabling MFA.
-        $editor = new UserEditor(WCF::getUser());
-        $editor->update([
-            'multifactorActive' => 1,
-        ]);
+        UserBuilder::forUpdate(WCF::getUser())
+            ->setMultifactorActive(true)
+            ->update();
     }
 
     /**

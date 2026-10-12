@@ -3,15 +3,15 @@
 namespace wcf\form;
 
 use ParagonIE\ConstantTime\Hex;
-use wcf\acp\form\UserAddForm;
-use wcf\action\EmailValidationAction;
-use wcf\action\UsernameValidationAction;
-use wcf\data\object\type\ObjectType;
+use wcf\command\user\CreateRegistrationNotification;
+use wcf\command\user\CreateUser;
+use wcf\data\DatabaseObjectBuilder;
+use wcf\data\language\Language;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\option\UserOption;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\event\user\RegistrationSpamChecking;
-use wcf\system\captcha\CaptchaHandler;
 use wcf\system\email\Email;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
@@ -19,14 +19,27 @@ use wcf\system\email\UserMailbox;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\AbstractFormField;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\CaptchaFormField;
+use wcf\system\form\builder\field\EmailFormField;
+use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\MultipleSelectionFormField;
+use wcf\system\form\builder\field\PasswordFormField;
+use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\form\builder\field\user\UsernameFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\option\user\TUserOptionFormFields;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\configuration\UserAuthenticationConfigurationFactory;
 use wcf\system\user\authentication\LoginRedirect;
-use wcf\command\user\CreateRegistrationNotification;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
+use wcf\util\DateUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\HtmlString;
 use wcf\util\StringUtil;
@@ -36,89 +49,53 @@ use wcf\util\UserUtil;
 /**
  * Shows the user registration form.
  *
- * @author  Marcel Werk
- * @copyright   2001-2020 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @extends AbstractDatabaseObjectBuilderForm<User, UserBuilder>
  */
-class RegisterForm extends UserAddForm
+final class RegisterForm extends AbstractDatabaseObjectBuilderForm
 {
-    /**
-     * true if external authentication is used
-     * @var bool
-     */
-    public $isExternalAuthentication = false;
-
-    /**
-     * @inheritDoc
-     */
-    public $neededPermissions = [];
-
-    /**
-     * holds a language variable with information about the registration process
-     * e.g. if you need to activate your account
-     * @var string
-     */
-    public $message = '';
-
-    /**
-     * captcha object type object
-     * @var ?ObjectType
-     */
-    public $captchaObjectType;
-
-    /**
-     * name of the captcha object type; if empty, captcha is disabled
-     * @var string
-     */
-    public $captchaObjectTypeName = \CAPTCHA_TYPE;
-
-    /**
-     * true if captcha is used
-     * @var bool
-     */
-    public $useCaptcha = \REGISTER_USE_CAPTCHA !== 0;
-
-    /**
-     * field names
-     * @var array<string, string>
-     */
-    public $randomFieldNames = [];
-
-    /**
-     * list of fields that have matches in the blacklist
-     * @var string[]
-     * @since 5.2
-     * @deprecated 6.1
-     */
-    public $blacklistMatches = [];
+    use TUserOptionFormFields {
+        getUserOptionFormField as getDefaultUserOptionFormField;
+    }
 
     /**
      * min number of seconds between form request and submit
-     * @var int
      */
-    public static $minRegistrationTime = 3;
+    public static int $minRegistrationTime = 3;
 
     /**
-     * @var mixed[]
+     * true if external authentication is used
      */
-    public $passwordStrengthVerdict = [];
+    public bool $isExternalAuthentication = false;
 
     /**
-     * @since 6.1
+     * name of the language item with information about the registration process,
+     * e.g. if the account needs to be activated
      */
-    public bool $termsConfirmed = false;
+    public string $message = '';
 
     /**
-     * @since 6.1
+     * true if the user registers with the email address provided by the external authentication
      */
+    private bool $registerVia3rdParty = false;
+
+    /**
+     * options that are asked during the registration grouped by the name of their category
+     * @var array<string, UserOption[]>
+     */
+    private array $options = [];
+
     private RegistrationSpamChecking $spamCheckEvent;
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
-        if (!empty($_REQUEST['url'])) {
+        if (isset($_REQUEST['url']) && $_REQUEST['url'] !== '') {
             LoginRedirect::setUrl(StringUtil::trim($_REQUEST['url']));
         }
 
@@ -137,70 +114,308 @@ class RegisterForm extends UserAddForm
         if (WCF::getSession()->getVar('__3rdPartyProvider') !== null) {
             $this->isExternalAuthentication = true;
         }
+
+        $this->options = $this->getUserOptionsByCategory(
+            'profile',
+            $this->isAskedDuringRegistration(...)
+        );
+
+        if ($_POST === []) {
+            WCF::getSession()->register('registrationStartTime', \TIME_NOW);
+        }
+    }
+
+    /**
+     * Returns true if the given option is asked during the registration.
+     */
+    private function isAskedDuringRegistration(UserOption $option): bool
+    {
+        if (!$option->validateOptions() || !$option->validatePermissions() || !$option->isEditable(true)) {
+            return false;
+        }
+
+        return $option->askDuringRegistration !== 0
+            || (bool)($option->getConfiguration()['required'] ?? false)
+            || ($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION) !== 0
+            || $this->isBirthdayWithMinimumAge($option);
+    }
+
+    private function isBirthdayWithMinimumAge(UserOption $option): bool
+    {
+        return $option->optionName === 'birthday' && \REGISTER_MIN_USER_AGE !== 0;
     }
 
     #[\Override]
-    public function readFormParameters()
+    protected function getDatabaseObjectBuilder(): UserBuilder
     {
-        parent::readFormParameters();
+        $builder = UserBuilder::forCreate()
+            ->setRegistrationDate(\TIME_NOW)
+            ->setLanguageID(WCF::getLanguage()->languageID)
+            ->setSignatureEnableHtml(true);
 
-        if (!empty($this->username) || !empty($this->email)) {
-            throw new PermissionDeniedException();
-        }
-
-        $this->randomFieldNames = WCF::getSession()->getVar('registrationRandomFieldNames');
-        if ($this->randomFieldNames === null) {
-            throw new PermissionDeniedException();
+        if (\LOG_IP_ADDRESS !== 0) {
+            $builder->setRegistrationIpAddress(UserUtil::getIpAddress());
         }
 
-        if (isset($_POST[$this->randomFieldNames['username']])) {
-            $this->username = StringUtil::trim($_POST[$this->randomFieldNames['username']]);
+        if ($this->isExternalAuthentication) {
+            $provider = WCF::getSession()->getVar('__3rdPartyProvider');
+            switch ($provider) {
+                case 'github':
+                case 'facebook':
+                case 'google':
+                case 'twitter':
+                    if (($oauthUser = WCF::getSession()->getVar('__oauthUser')) !== null) {
+                        $builder->setAuthData($provider . ':' . $oauthUser->getId());
+                    }
+                    break;
+            }
+
+            // Accounts connected to a 3rdParty login do not have passwords.
+            $builder->setPassword(null);
+
+            $email = WCF::getSession()->getVar('__email');
+            if ($email !== null && $email === $this->form->getFormField('email')?->getSaveValue()) {
+                $this->registerVia3rdParty = true;
+            }
         }
-        if (isset($_POST[$this->randomFieldNames['email']])) {
-            $this->email = StringUtil::trim($_POST[$this->randomFieldNames['email']]);
+
+        if ($this->spamCheckEvent->hasMatches()) {
+            $builder->setBlacklistMatches($this->spamCheckEvent->getMatches());
         }
-        if (isset($_POST[$this->randomFieldNames['password']])) {
-            $this->password = $_POST[$this->randomFieldNames['password']];
+
+        if ($this->requiresActivation()) {
+            $builder->setActivationCode(UserRegistrationUtil::getActivationCode());
+            if (!$this->registerVia3rdParty) {
+                $builder->setEmailConfirmed(Hex::encode(\random_bytes(20)));
+            }
+            $builder->setGroupIDs(UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::GUESTS]));
         }
-        if (isset($_POST[$this->randomFieldNames['password'] . '_passwordStrengthVerdict'])) {
-            try {
-                $this->passwordStrengthVerdict = \json_decode(
-                    $_POST[$this->randomFieldNames['password'] . '_passwordStrengthVerdict'],
-                    true,
-                    flags: \JSON_THROW_ON_ERROR
+
+        return $builder;
+    }
+
+    private function requiresActivation(): bool
+    {
+        return $this->spamCheckEvent->hasMatches()
+            || (
+                ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) !== 0
+                && !$this->registerVia3rdParty
+            )
+            || ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) !== 0;
+    }
+
+    #[\Override]
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
+    {
+        return new CreateUser($builder);
+    }
+
+    #[\Override]
+    protected function createForm(): void
+    {
+        parent::createForm();
+
+        $this->form->appendChild($this->getGeneralFormContainer());
+        $this->form->appendChildren($this->getUserOptionFormContainers($this->options));
+
+        if (
+            \REGISTER_USE_CAPTCHA !== 0
+            && WCF::getSession()->getVar('noRegistrationCaptcha') !== true
+        ) {
+            $this->form->appendChild(
+                CaptchaFormField::create()
+                    ->objectType(\CAPTCHA_TYPE)
+            );
+        }
+    }
+
+    #[\Override]
+    protected function finalizeForm(): void
+    {
+        parent::finalizeForm();
+
+        $this->form->getButton('submitButton')->label('wcf.user.button.register');
+    }
+
+    private function getGeneralFormContainer(): FormContainer
+    {
+        $container = FormContainer::create('general')
+            ->appendChildren([
+                UsernameFormField::create()
+                    ->required()
+                    ->minimumLength(\REGISTER_USERNAME_MIN_LENGTH)
+                    ->maximumLength(\REGISTER_USERNAME_MAX_LENGTH)
+                    ->autoComplete('username')
+                    ->description('wcf.user.username.description')
+                    ->value(WCF::getSession()->getVar('__username') ?? '')
+                    ->addValidator(new FormFieldValidator(
+                        'registrationUtil',
+                        static function (UsernameFormField $formField) {
+                            if (!UserRegistrationUtil::isValidUsername((string)$formField->getValue())) {
+                                $formField->addValidationError(new FormFieldValidationError(
+                                    'invalid',
+                                    'wcf.user.username.error.invalid'
+                                ));
+                            }
+                        }
+                    ))
+                    ->saveValueCallback(static function (UserBuilder $builder, UsernameFormField $field) {
+                        $builder->setUsername($field->getSaveValue());
+                    }),
+                EmailFormField::create('email')
+                    ->label('wcf.user.email')
+                    ->required()
+                    ->autoComplete('email')
+                    ->value(WCF::getSession()->getVar('__email') ?? '')
+                    ->addValidator(new FormFieldValidator(
+                        'registrationUtil',
+                        static function (EmailFormField $formField) {
+                            $email = (string)$formField->getValue();
+                            if (!UserRegistrationUtil::isValidEmail($email)) {
+                                $formField->addValidationError(new FormFieldValidationError(
+                                    'invalid',
+                                    'wcf.user.email.error.invalid'
+                                ));
+                            } elseif (!User::getUserByEmail($email)->isGuest()) {
+                                $formField->addValidationError(new FormFieldValidationError(
+                                    'notUnique',
+                                    'wcf.user.email.error.notUnique'
+                                ));
+                            }
+                        }
+                    ))
+                    ->saveValueCallback(static function (UserBuilder $builder, EmailFormField $field) {
+                        $builder->setEmail($field->getSaveValue());
+                    }),
+            ]);
+
+        if (!$this->isExternalAuthentication) {
+            $container->appendChild(
+                PasswordFormField::create('password')
+                    ->label('wcf.user.password')
+                    ->description('wcf.user.password.description')
+                    ->addClass('passwordFormField--stacked')
+                    ->required()
+                    ->autoComplete('new-password')
+                    ->fieldAttribute('passwordrules', UserRegistrationUtil::getPasswordRulesAttributeValue())
+                    ->passwordStrengthMeter()
+                    ->addMeterRelatedFieldId('username')
+                    ->addMeterRelatedFieldId('email')
+                    ->addValidator(new FormFieldValidator('passwordStrength', $this->validatePasswordStrength(...)))
+                    ->saveValueCallback(static function (UserBuilder $builder, PasswordFormField $field) {
+                        $builder->setPassword($field->getSaveValue());
+                    })
+            );
+        }
+
+        $availableLanguages = LanguageFactory::getInstance()->getLanguages();
+        if (\count($availableLanguages) > 1) {
+            $availableContentLanguages = LanguageFactory::getInstance()->getContentLanguages();
+
+            $container->appendChild(
+                SelectFormField::create('languageID')
+                    ->label('wcf.user.language')
+                    ->description('wcf.user.language.description')
+                    ->options(\array_map(
+                        static fn(Language $language) => StringUtil::encodeHTML($language->languageName),
+                        $availableLanguages
+                    ))
+                    ->required()
+                    ->ignoreInvalidValues()
+                    ->defaultValue(LanguageFactory::getInstance()->getDefaultLanguageID())
+                    ->value(WCF::getLanguage()->languageID)
+                    ->saveValueCallback(static function (UserBuilder $builder, SelectFormField $field) {
+                        $builder->setLanguageID((int)$field->getSaveValue());
+                    })
+            );
+
+            if ($availableContentLanguages !== []) {
+                $container->appendChild(
+                    MultipleSelectionFormField::create('visibleLanguages')
+                        ->label('wcf.user.visibleLanguages')
+                        ->description('wcf.user.visibleLanguages.description')
+                        ->options(\array_map(
+                            static fn(Language $language) => StringUtil::encodeHTML($language->languageName),
+                            $availableContentLanguages
+                        ))
+                        ->ignoreInvalidValues()
+                        ->saveValueCallback(
+                            static function (UserBuilder $builder, MultipleSelectionFormField $field) use ($availableContentLanguages) {
+                                $languageIDs = \array_map(\intval(...), $field->getValue() ?? []);
+                                if ($languageIDs === []) {
+                                    $languageID = (int)$field->getDocument()->getFormField('languageID')?->getSaveValue();
+                                    if (isset($availableContentLanguages[$languageID])) {
+                                        $languageIDs[] = $languageID;
+                                    }
+                                }
+
+                                $builder->setLanguageIDs($languageIDs);
+                            }
+                        )
                 );
+            }
+        }
+
+        if (\REGISTER_ENABLE_DISCLAIMER !== 0) {
+            $container->appendChild(
+                BooleanFormField::create('termsConfirmed')
+                    ->label('wcf.user.register.confirmTerms')
+                    ->required()
+            );
+        }
+
+        return $container;
+    }
+
+    /**
+     * Returns the form field for the given user option, enforcing the minimum
+     * age for the birthday.
+     */
+    protected function getUserOptionFormField(UserOption $option): AbstractFormField
+    {
+        $formField = $this->getDefaultUserOptionFormField($option);
+
+        if ($this->isBirthdayWithMinimumAge($option)) {
+            $formField->required();
+            $formField->addValidator(new FormFieldValidator(
+                'minimumAge',
+                static function (IFormField $formField) {
+                    $value = $formField->getSaveValue();
+                    if ($value !== null && $value !== '' && DateUtil::getAge($value) < \REGISTER_MIN_USER_AGE) {
+                        $formField->addValidationError(new FormFieldValidationError(
+                            'birthdayTooYoung',
+                            'wcf.user.option.error.birthdayTooYoung'
+                        ));
+                    }
+                }
+            ));
+        }
+
+        return $formField;
+    }
+
+    private function validatePasswordStrength(PasswordFormField $formField): void
+    {
+        $verdict = [];
+        if (isset($_POST['password_passwordStrengthVerdict'])) {
+            try {
+                $verdict = \json_decode($_POST['password_passwordStrengthVerdict'], true, flags: \JSON_THROW_ON_ERROR);
             } catch (\JsonException) {
                 // ignore
             }
         }
-        if (!empty($_POST['termsConfirmed'])) {
-            $this->termsConfirmed = true;
-        }
 
-        $this->groupIDs = [];
-
-        if ($this->captchaObjectType !== null) {
-            $this->captchaObjectType->getProcessor()->readFormParameters();
+        if (($verdict['score'] ?? 4) < \PASSWORD_MIN_SCORE) {
+            $formField->addValidationError(new FormFieldValidationError(
+                'notSecure',
+                'wcf.user.password.error.notSecure'
+            ));
         }
     }
 
     #[\Override]
-    protected function initOptionHandler()
+    public function validate(): void
     {
-        $this->optionHandler->setInRegistration();
-        parent::initOptionHandler();
-    }
-
-    #[\Override]
-    public function validate()
-    {
-        // validate captcha first
-        $this->validateCaptcha();
-
-        if (\REGISTER_ENABLE_DISCLAIMER !== 0 && !$this->termsConfirmed) {
-            $this->errorType['termsConfirmed'] = 'empty';
-        }
-
         parent::validate();
 
         // validate registration time
@@ -211,10 +426,16 @@ class RegisterForm extends UserAddForm
                 || (\TIME_NOW - WCF::getSession()->getVar('registrationStartTime')) < self::$minRegistrationTime
             )
         ) {
-            throw new UserInputException('registrationStartTime', []);
+            $this->form->invalid();
+
+            throw new UserInputException($this->form->getPrefixedId());
         }
 
-        $this->spamCheckEvent = new RegistrationSpamChecking($this->username, $this->email, UserUtil::getIpAddress());
+        $this->spamCheckEvent = new RegistrationSpamChecking(
+            $this->form->getFormField('username')->getSaveValue(),
+            $this->form->getFormField('email')->getSaveValue(),
+            UserUtil::getIpAddress()
+        );
         EventHandler::getInstance()->fire($this->spamCheckEvent);
         if ($this->spamCheckEvent->hasMatches() && \REGISTER_ANTISPAM_ACTION === 'block') {
             throw new NamedUserException(HtmlString::fromSafeHtml(
@@ -224,274 +445,96 @@ class RegisterForm extends UserAddForm
     }
 
     #[\Override]
-    public function readData()
+    public function saved(): void
     {
-        if ($this->useCaptcha && $this->captchaObjectTypeName !== '') {
-            $this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName($this->captchaObjectTypeName);
-            if ($this->captchaObjectType === null) {
-                throw new SystemException("Unknown captcha object type with id '" . $this->captchaObjectTypeName . "'");
-            }
+        $user = $this->object;
+        \assert($user instanceof User);
 
-            if (!$this->captchaObjectType->getProcessor()->isAvailable()) {
-                $this->captchaObjectType = null;
-            }
-
-            if (WCF::getSession()->getVar('noRegistrationCaptcha') === true) {
-                $this->captchaObjectType = null;
-            }
-        }
-
-        parent::readData();
-
-        if ($_POST === []) {
-            $this->languageID = WCF::getLanguage()->languageID;
-
-            if (WCF::getSession()->getVar('__username') !== null) {
-                $this->username = WCF::getSession()->getVar('__username');
-            }
-            if (WCF::getSession()->getVar('__email') !== null) {
-                $this->email = WCF::getSession()->getVar('__email');
-            }
-
-            WCF::getSession()->register('registrationStartTime', \TIME_NOW);
-
-            // generate random field names
-            $this->randomFieldNames = [
-                'username' => UserRegistrationUtil::getRandomFieldName('username'),
-                'email' => UserRegistrationUtil::getRandomFieldName('email'),
-                'password' => UserRegistrationUtil::getRandomFieldName('password'),
-            ];
-
-            WCF::getSession()->register('registrationRandomFieldNames', $this->randomFieldNames);
-        }
-    }
-
-    /**
-     * Reads option tree on page init.
-     */
-    #[\Override]
-    protected function readOptionTree()
-    {
-        $this->optionTree = $this->optionHandler->getOptionTree('profile');
-    }
-
-    #[\Override]
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'captchaObjectType' => $this->captchaObjectType,
-            'isExternalAuthentication' => $this->isExternalAuthentication,
-            'randomFieldNames' => $this->randomFieldNames,
-            'passwordRulesAttributeValue' => UserRegistrationUtil::getPasswordRulesAttributeValue(),
-            'usernameValidationEndpoint' => LinkHandler::getInstance()->getControllerLink(UsernameValidationAction::class),
-            'emailValidationEndpoint' => LinkHandler::getInstance()->getControllerLink(EmailValidationAction::class),
-            'termsConfirmed' => $this->termsConfirmed,
-        ]);
-    }
-
-    #[\Override]
-    public function show()
-    {
-        AbstractForm::show();
-    }
-
-    /**
-     * @return void
-     */
-    protected function validateCaptcha()
-    {
-        if ($this->captchaObjectType !== null) {
-            try {
-                $this->captchaObjectType->getProcessor()->validate();
-            } catch (UserInputException $e) {
-                $this->errorType[$e->getField()] = $e->getType();
-            }
-        }
-    }
-
-    #[\Override]
-    protected function validateUsername(string $username)
-    {
-        parent::validateUsername($username);
-
-        // check for min-max length
-        if (!UserRegistrationUtil::isValidUsername($username)) {
-            throw new UserInputException('username', 'invalid');
-        }
-    }
-
-    #[\Override]
-    protected function validatePassword(
-        #[\SensitiveParameter]
-        string $password
-    ): void {
-        if (!$this->isExternalAuthentication) {
-            parent::validatePassword($password);
-
-            // check security of the given password
-            if (($this->passwordStrengthVerdict['score'] ?? 4) < \PASSWORD_MIN_SCORE) {
-                throw new UserInputException('password', 'notSecure');
-            }
-        }
-    }
-
-    #[\Override]
-    protected function validateEmail(string $email): void
-    {
-        parent::validateEmail($email);
-
-        if (!UserRegistrationUtil::isValidEmail($email)) {
-            throw new UserInputException('email', 'invalid');
-        }
-    }
-
-    #[\Override]
-    public function save()
-    {
-        AbstractForm::save();
-
-        // get options
-        $saveOptions = $this->optionHandler->save();
-        $registerVia3rdParty = false;
-
-        if ($this->isExternalAuthentication) {
-            $provider = WCF::getSession()->getVar('__3rdPartyProvider');
-            switch ($provider) {
-                case 'github':
-                case 'facebook':
-                case 'google':
-                case 'twitter':
-                    if (($oauthUser = WCF::getSession()->getVar('__oauthUser')) !== null) {
-                        $this->additionalFields['authData'] = $provider . ':' . $oauthUser->getId();
-                    }
-                    break;
-            }
-
-            // Accounts connected to a 3rdParty login do not have passwords.
-            $this->password = null;
-
-            if (WCF::getSession()->getVar('__email') !== null && WCF::getSession()->getVar('__email') === $this->email) {
-                $registerVia3rdParty = true;
-            }
-        }
-
-        $eventParameters = [
-            'saveOptions' => $saveOptions,
-            'registerVia3rdParty' => $registerVia3rdParty,
-        ];
-        EventHandler::getInstance()->fireAction($this, 'registerVia3rdParty', $eventParameters);
-        $saveOptions = $eventParameters['saveOptions'];
-        $registerVia3rdParty = $eventParameters['registerVia3rdParty'];
-
-        $this->additionalFields['languageID'] = $this->languageID;
-        if (\LOG_IP_ADDRESS !== 0) {
-            $this->additionalFields['registrationIpAddress'] = UserUtil::getIpAddress();
-        }
-
-        // generate activation code
-        $addDefaultGroups = true;
-        if (
-            $this->spamCheckEvent->hasMatches()
-            || (
-                ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) !== 0
-                && $registerVia3rdParty !== true
-            )
-            || ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) !== 0
-        ) {
-            $activationCode = UserRegistrationUtil::getActivationCode();
-            $this->additionalFields['activationCode'] = $activationCode;
-            if ($registerVia3rdParty !== true) {
-                $emailConfirmCode = Hex::encode(\random_bytes(20));
-                $this->additionalFields['emailConfirmed'] = $emailConfirmCode;
-            }
-            $addDefaultGroups = false;
-            $this->groupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::GUESTS]);
-        }
-
-        // create user
-        $data = [
-            'data' => \array_merge($this->additionalFields, [
-                'username' => $this->username,
-                'email' => $this->email,
-                'password' => $this->password,
-                'blacklistMatches' => $this->spamCheckEvent->hasMatches() ? \json_encode($this->spamCheckEvent->getMatches(), \JSON_THROW_ON_ERROR) : '',
-                'signatureEnableHtml' => 1,
-            ]),
-            'groups' => $this->groupIDs,
-            'languageIDs' => $this->visibleLanguages,
-            'options' => $saveOptions,
-            'addDefaultGroups' => $addDefaultGroups,
-        ];
-        $this->objectAction = new UserAction([], 'create', $data);
-        $result = $this->objectAction->executeAction();
-        /** @var User $user */
-        $user = $result['returnValues'];
-
-        // update session
         WCF::getSession()->changeUser($user);
 
-        // activation management
-        if ((int)\REGISTER_ACTIVATION_METHOD === User::REGISTER_ACTIVATION_NONE && !$this->spamCheckEvent->hasMatches()) {
-            $this->message = 'wcf.user.register.success';
-
-            UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
-        } elseif (
-            ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) !== 0
-            && !$this->spamCheckEvent->hasMatches()
-        ) {
-            // registering via 3rdParty leads to instant activation
-            if ($registerVia3rdParty === true) {
-                if (((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) !== 0) {
-                    $this->message = 'wcf.user.register.success.awaitActivation';
-                } else {
-                    $this->message = 'wcf.user.register.success';
-                }
-            } else {
-                $email = new Email();
-                $email->addRecipient(new UserMailbox(WCF::getUser()));
-                $email->setSubject(
-                    WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject')
-                );
-                $email->setBody(new MimePartFacade([
-                    new RecipientAwareTextMimePart('text/html', 'email_registerNeedActivation'),
-                    new RecipientAwareTextMimePart('text/plain', 'email_registerNeedActivation'),
-                ]));
-                $email->send();
-                $this->message = 'wcf.user.register.success.needActivation';
-            }
-        } elseif (
-            ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) !== 0
-            || $this->spamCheckEvent->hasMatches()
-        ) {
-            $this->message = 'wcf.user.register.success.awaitActivation';
-        }
+        $this->message = $this->handleActivation($user);
 
         new CreateRegistrationNotification($user)();
 
-        if ($this->captchaObjectType !== null) {
-            $this->captchaObjectType->getProcessor()->reset();
-        }
+        // The form is not rebuilt, because the user is redirected after the registration.
+        AbstractForm::saved();
+    }
 
-        if (WCF::getSession()->getVar('noRegistrationCaptcha') === true) {
-            WCF::getSession()->unregister('noRegistrationCaptcha');
-        }
+    #[\Override]
+    protected function afterSave(): void
+    {
+        parent::afterSave();
 
-        // login user
-        WCF::getSession()->unregister('registrationRandomFieldNames');
+        $this->form->cleanup();
+        WCF::getSession()->unregister('noRegistrationCaptcha');
         WCF::getSession()->unregister('registrationStartTime');
-        $this->saved();
 
-        // forward to index page
         HeaderUtil::delayedRedirect(
             LoginRedirect::getUrl(),
-            WCF::getLanguage()->getDynamicVariable($this->message, ['user' => $user]),
+            WCF::getLanguage()->getDynamicVariable($this->message, ['user' => $this->object]),
             15,
             'success',
             true
         );
 
         exit;
+    }
+
+    /**
+     * Handles the activation of the new user and returns the name of the
+     * language item with the message that is shown to the user.
+     */
+    private function handleActivation(User $user): string
+    {
+        if ((int)\REGISTER_ACTIVATION_METHOD === User::REGISTER_ACTIVATION_NONE && !$this->spamCheckEvent->hasMatches()) {
+            UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
+
+            return 'wcf.user.register.success';
+        }
+
+        if (
+            ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) !== 0
+            && !$this->spamCheckEvent->hasMatches()
+        ) {
+            // registering via 3rdParty leads to instant activation
+            if ($this->registerVia3rdParty) {
+                if (((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) !== 0) {
+                    return 'wcf.user.register.success.awaitActivation';
+                }
+
+                return 'wcf.user.register.success';
+            }
+
+            $email = new Email();
+            $email->addRecipient(new UserMailbox($user));
+            $email->setSubject(
+                WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject')
+            );
+            $email->setBody(new MimePartFacade([
+                new RecipientAwareTextMimePart('text/html', 'email_registerNeedActivation'),
+                new RecipientAwareTextMimePart('text/plain', 'email_registerNeedActivation'),
+            ]));
+            $email->send();
+
+            return 'wcf.user.register.success.needActivation';
+        }
+
+        return 'wcf.user.register.success.awaitActivation';
+    }
+
+    #[\Override]
+    protected function setFormAction(): void
+    {
+        $this->form->action(LinkHandler::getInstance()->getControllerLink(static::class));
+    }
+
+    #[\Override]
+    public function assignVariables(): void
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'isExternalAuthentication' => $this->isExternalAuthentication,
+        ]);
     }
 }

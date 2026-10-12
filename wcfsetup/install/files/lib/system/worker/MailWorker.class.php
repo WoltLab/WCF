@@ -5,7 +5,6 @@ namespace wcf\system\worker;
 use wcf\acp\page\UserListPage;
 use wcf\data\user\User;
 use wcf\system\background\BackgroundQueueHandler;
-use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
@@ -105,10 +104,6 @@ class MailWorker extends AbstractWorker
         $progress = parent::getProgress();
 
         if ($progress === 100) {
-            // clear markings
-            $typeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
-            ClipboardHandler::getInstance()->removeItems($typeID);
-
             // clear session
             $userMailData = WCF::getSession()->getVar('userMailData');
             unset($userMailData[$this->parameters['mailID']]);

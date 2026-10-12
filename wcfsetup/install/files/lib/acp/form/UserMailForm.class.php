@@ -5,8 +5,6 @@ namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
-use wcf\system\clipboard\ClipboardHandler;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\HiddenFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
@@ -126,13 +124,8 @@ class UserMailForm extends AbstractFormBuilderForm
             $userID = (int)($_GET['id'] ?? 0);
             if ($userID !== 0) {
                 $formField->value([$userID]);
-            } else {
-                $objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
-                $users = ClipboardHandler::getInstance()->getMarkedItems($objectTypeID);
-                if ($users === []) {
-                    throw new IllegalLinkException();
-                }
-                $formField->value(\array_keys($users));
+            } elseif (isset($_GET['ids']) && \is_array($_GET['ids'])) {
+                $formField->value(\array_values(\array_unique(\array_map('intval', $_GET['ids']))));
             }
         }
 

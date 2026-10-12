@@ -3,6 +3,7 @@
 namespace wcf\system\worker;
 
 use wcf\command\file\CreateFileFromExistingFile;
+use wcf\command\user\RefreshUserOnlineMarkings;
 use wcf\data\file\FileBuilder;
 use wcf\data\file\FileList;
 use wcf\data\reaction\type\ReactionTypeCache;
@@ -10,10 +11,9 @@ use wcf\data\user\avatar\UserAvatarEditor;
 use wcf\data\user\avatar\UserAvatarList;
 use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileAction;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -68,15 +68,11 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
 
         $users = $userIDs = [];
         foreach ($this->getObjectList() as $user) {
-            $users[] = new UserEditor($user);
+            $users[] = $user;
             $userIDs[] = $user->userID;
         }
 
-        // update user ranks
-        if ($users !== []) {
-            $action = new UserProfileAction($users, 'updateUserOnlineMarking');
-            $action->executeAction();
-        }
+        (new RefreshUserOnlineMarkings(\array_values($this->getObjectList()->getObjects())))();
 
         $this->updateUserOnlineStatus($users);
 
@@ -167,7 +163,6 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
 
             $htmlInputProcessor = new HtmlInputProcessor();
             WCF::getDB()->beginTransaction();
-            /** @var UserEditor $user */
             foreach ($users as $user) {
                 BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
                     ',',
@@ -187,13 +182,15 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                             true
                         );
 
-                        $user->update([
-                            'signature' => $htmlInputProcessor->getHtml(),
-                            'signatureEnableHtml' => 1,
-                        ]);
+                        UserBuilder::forUpdate($user)
+                            ->setSignature($htmlInputProcessor->getHtml())
+                            ->setSignatureEnableHtml(true)
+                            ->update();
                     } else {
                         $htmlInputProcessor->reprocess($user->signature, 'com.woltlab.wcf.user.signature', $user->userID);
-                        $user->update(['signature' => $htmlInputProcessor->getHtml()]);
+                        UserBuilder::forUpdate($user)
+                            ->setSignature($htmlInputProcessor->getHtml())
+                            ->update();
                     }
                 }
 
@@ -239,9 +236,9 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
                     $pathname = $file->getRelativePath() . $filename;
 
                     if ($user->avatarPathname !== $pathname) {
-                        $user->update([
-                            'avatarPathname' => $pathname,
-                        ]);
+                        UserBuilder::forUpdate($user)
+                            ->setAvatarPathname($pathname)
+                            ->update();
                     }
                 }
             }
@@ -393,7 +390,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
      * but has since lost the permission for it.
      * In this case, the visibility of the online status is automatically set to default.
      *
-     * @param UserEditor[] $users
+     * @param list<User> $users
      */
     private function updateUserOnlineStatus(array $users): void
     {
@@ -401,14 +398,14 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
             if ((int)$user->canViewOnlineStatus === UserProfile::ACCESS_EVERYONE) {
                 continue;
             }
-            $userProfile = new UserProfile($user->getDecoratedObject());
+            $userProfile = new UserProfile($user);
             if ($userProfile->hasPermission('user.profile.canHideOnlineStatus')) {
                 continue;
             }
 
-            $user->updateUserOptions([
-                User::getUserOptionID('canViewOnlineStatus') => UserProfile::ACCESS_EVERYONE,
-            ]);
+            UserBuilder::forUpdate($user)
+                ->setUserOption(User::getUserOptionID('canViewOnlineStatus'), (string)UserProfile::ACCESS_EVERYONE)
+                ->update();
         }
     }
 }

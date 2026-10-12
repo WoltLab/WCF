@@ -6,16 +6,18 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], function (require, exports, tslib_1, Filter_1, Selection_1, Sorting_1) {
+define(["require", "exports", "tslib", "./ColumnConfiguration", "./Filter", "./Selection", "./Sorting"], function (require, exports, tslib_1, ColumnConfiguration_1, Filter_1, Selection_1, Sorting_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.State = void 0;
+    ColumnConfiguration_1 = tslib_1.__importDefault(ColumnConfiguration_1);
     Filter_1 = tslib_1.__importDefault(Filter_1);
     Selection_1 = tslib_1.__importDefault(Selection_1);
     Sorting_1 = tslib_1.__importDefault(Sorting_1);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
     class State extends EventTarget {
         #baseUrl;
+        #columnConfiguration;
         #filter;
         #pagination;
         #selection;
@@ -23,7 +25,7 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
         #gridViewFooter;
         #lastUrl;
         #pageNo;
-        constructor(gridId, table, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {
+        constructor(gridId, table, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder, visibleColumns) {
             super();
             this.#baseUrl = baseUrl;
             this.#pageNo = pageNo;
@@ -35,6 +37,11 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             this.#filter = new Filter_1.default(gridId);
             this.#filter.addEventListener("grid-view:change", () => {
                 this.#switchPage(1, 0 /* StateChangeCause.Change */);
+            });
+            this.#columnConfiguration = new ColumnConfiguration_1.default(gridId, visibleColumns);
+            this.#columnConfiguration.addEventListener("grid-view:change", () => {
+                // Changing the visible columns does not affect the current page.
+                this.dispatchEvent(new CustomEvent("grid-view:change", { detail: { source: 0 /* StateChangeCause.Change */, includeHeader: true } }));
             });
             this.#sorting = new Sorting_1.default(table, sortField, sortOrder, defaultSortField, defaultSortOrder);
             this.#sorting.addEventListener("grid-view:change", () => {
@@ -68,6 +75,9 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
         getActiveFilters() {
             return this.#filter.getActiveFilters();
         }
+        getVisibleColumns() {
+            return this.#columnConfiguration.getVisibleColumns();
+        }
         getSelectedIds() {
             return this.#selection.getSelectedIds();
         }
@@ -82,10 +92,10 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             }
             this.#updateGridViewFooter();
         }
-        #switchPage(pageNo, source) {
+        #switchPage(pageNo, source, includeHeader = false) {
             this.#pagination.page = pageNo;
             this.#pageNo = pageNo;
-            this.dispatchEvent(new CustomEvent("grid-view:change", { detail: { source } }));
+            this.dispatchEvent(new CustomEvent("grid-view:change", { detail: { source, includeHeader } }));
         }
         #updateQueryString() {
             if (!this.#baseUrl) {
@@ -113,6 +123,9 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             for (const parameter of this.#filter.getQueryParameters()) {
                 parameters.push(parameter);
             }
+            for (const parameter of this.#columnConfiguration.getQueryParameters()) {
+                parameters.push(parameter);
+            }
             if (parameters.length > 0) {
                 url.search += url.search !== "" ? "&" : "?";
                 url.search += new URLSearchParams(parameters).toString();
@@ -134,7 +147,8 @@ define(["require", "exports", "tslib", "./Filter", "./Selection", "./Sorting"], 
             }
             this.#filter.updateFromSearchParams(url.searchParams);
             this.#sorting.updateFromSearchParams(url.searchParams);
-            this.#switchPage(pageNo, 1 /* StateChangeCause.History */);
+            const columnsChanged = this.#columnConfiguration.updateFromSearchParams(url.searchParams);
+            this.#switchPage(pageNo, 1 /* StateChangeCause.History */, columnsChanged);
         }
         #updateLastUrl() {
             if (!this.#baseUrl) {

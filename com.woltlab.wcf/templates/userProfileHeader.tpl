@@ -1,23 +1,6 @@
 <header
 	class="userProfileHeader"
 	data-object-id="{$view->user->userID}"
-	{if $view->isInAccessibleGroup()}
-		{if $__wcf->session->getPermission('admin.user.canBanUser')}
-			data-banned="{$view->user->banned}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
-			data-disable-avatar="{$view->user->disableAvatar}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
-			data-disable-signature="{$view->user->disableSignature}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}
-			data-disable-cover-photo="{$view->user->disableCoverPhoto}"
-		{/if}
-		{if $__wcf->session->getPermission('admin.user.canEnableUser')}
-			data-is-disabled="{if $view->user->activationCode}true{else}false{/if}"
-		{/if}
-	{/if}
 >
 	<div class="userProfileHeader__coverPhotoContainer">
 		<div class="userProfileHeader__coverPhoto">
@@ -46,7 +29,7 @@
 			{/if}
 
 			{if $view->canEditUser()}
-				<button type="button" class="jsButtonEditProfile button small">
+				<button type="button" class="jsButtonEditProfile button small" data-endpoint="{link controller='UserProfileEdit' id=$view->user->userID}{/link}">
 					{icon name='pencil'}
 					<span>{lang}wcf.user.editProfile{/lang}</span>
 				</button>
@@ -72,7 +55,7 @@
 
 				<div class="userProfileHeader__statusIcons">
 					{if $view->user->banned}
-						<span class="jsTooltip jsUserBanned" role="status" title="{lang}wcf.user.banned{/lang}">
+						<span class="jsTooltip jsUserBanned" role="status" title="{lang user=$view->user}wcf.user.banned{/lang}">
 							{icon name='lock'}
 						</span>
 					{/if}

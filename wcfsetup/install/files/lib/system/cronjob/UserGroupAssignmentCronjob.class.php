@@ -2,8 +2,8 @@
 
 namespace wcf\system\cronjob;
 
+use wcf\command\user\AddUserToGroups;
 use wcf\data\cronjob\Cronjob;
-use wcf\data\user\UserAction;
 use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 
@@ -42,14 +42,8 @@ class UserGroupAssignmentCronjob extends AbstractCronjob
         }
 
         foreach ($usersToGroup as $groupID => $users) {
-            if ($users !== []) {
-                $userAction = new UserAction(\array_unique($users), 'addToGroups', [
-                    'addDefaultGroups' => false,
-                    'deleteOldGroups' => false,
-                    'groups' => [$groupID],
-                    'ignoreUserGroupAssignments' => true,
-                ]);
-                $userAction->executeAction();
+            foreach ($users as $user) {
+                (new AddUserToGroups($user, [$groupID], ignoreUserGroupAssignments: true))();
             }
         }
     }

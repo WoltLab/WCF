@@ -5,7 +5,7 @@ namespace wcf\command\user;
 use wcf\command\file\DeleteFile;
 use wcf\data\file\File;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\event\user\AvatarChanged;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\event\EventHandler;
@@ -41,11 +41,10 @@ final class SetAvatar
             $pathname = $this->file->getRelativePath() . $filename;
         }
 
-        (new UserEditor($this->user))->update([
-            'avatarFileID' => $this->file?->fileID,
-            'avatarPathname' => $pathname,
-            'avatarID' => null,
-        ]);
+        UserBuilder::forUpdate($this->user)
+            ->setAvatarFileID($this->file?->fileID)
+            ->setAvatarPathname($pathname)
+            ->update();
 
         UserStorageHandler::getInstance()->reset([$this->user->userID], 'avatar');
         UserProfileRuntimeCache::getInstance()->removeObject($this->user->userID);

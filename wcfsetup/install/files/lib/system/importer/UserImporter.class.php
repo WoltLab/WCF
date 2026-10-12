@@ -6,9 +6,10 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionList;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Imports users.
@@ -23,12 +24,6 @@ class UserImporter extends AbstractImporter
      * @inheritDoc
      */
     protected $className = User::class;
-
-    /**
-     * ids of default notification events
-     * @var int[]
-     */
-    protected $eventIDs = [];
 
     /**
      * @since 5.4
@@ -54,14 +49,6 @@ class UserImporter extends AbstractImporter
 
     public function __construct()
     {
-        // get default notification events
-        $sql = "SELECT  eventID
-                FROM    wcf1_user_notification_event
-                WHERE   preset = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([1]);
-        $this->eventIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-
         $userOptionList = new UserOptionList();
         $userOptionList->readObjects();
         $this->userOptions = $userOptionList->getObjects();
@@ -161,7 +148,14 @@ class UserImporter extends AbstractImporter
                         $optionValue = \floatval($optionValue);
                         break;
 
+                    case 'checkboxes':
+                        // The legacy multiple selection option types separate the selected
+                        // values by newlines, the `checkboxes` form option separates them by commas.
+                        $optionValue = \str_replace("\n", ',', StringUtil::unifyNewlines((string)$optionValue));
+                        break;
+
                     case 'textarea':
+                    case 'wysiwyg':
                         if (\strlen($optionValue) > 16777215) {
                             $optionValue = \substr($optionValue, 0, 16777215);
                         }
@@ -195,16 +189,6 @@ class UserImporter extends AbstractImporter
             $languageIDs[] = LanguageFactory::getInstance()->getDefaultLanguageID();
         }
 
-        // assign an interface language
-        $data['languageID'] = \reset($languageIDs);
-
-        // create user
-        $user = UserEditor::create($data);
-        $userEditor = new UserEditor($user);
-
-        // updates user options
-        $userEditor->updateUserOptions($userOptions);
-
         // save user groups
         $groupIDs = [];
         if (isset($additionalData['groupIDs'])) {
@@ -216,48 +200,41 @@ class UserImporter extends AbstractImporter
             }
         }
 
+        $pendingActivation = (int)($data['activationCode'] ?? 0) !== 0;
         $groupIDs = \array_merge(
             $groupIDs,
-            $this->defaultGroups[$user->pendingActivation() ? 'notActivated' : 'activated']
+            $this->defaultGroups[$pendingActivation ? 'notActivated' : 'activated']
         );
-        $placeholders = '(?,?)' . \str_repeat(',(?,?)', \count($groupIDs) - 1);
-        $sql = "INSERT IGNORE INTO  wcf1_user_to_group
-                                    (userID, groupID)
-                VALUES              {$placeholders}";
-        $statement = WCF::getDB()->prepare($sql);
-        $parameters = [];
-        foreach ($groupIDs as $groupID) {
-            $parameters[] = $user->userID;
-            $parameters[] = $groupID;
-        }
-        $statement->execute($parameters);
 
-        // save languages
-        $sql = "INSERT IGNORE INTO  wcf1_user_to_language
-                                    (userID, languageID)
-                VALUES              (?, ?)";
-        $statement = WCF::getDB()->prepare($sql);
-        foreach ($languageIDs as $languageID) {
-            $statement->execute([
-                $user->userID,
-                $languageID,
-            ]);
+        // create user
+        $builder = UserBuilder::forCreate()
+            ->setUsername($data['username'])
+            ->setEmail($data['email'])
+            ->setPassword(($data['password'] ?? '') !== '' ? $data['password'] : null)
+            ->setRegistrationDate($data['registrationDate'] ?? \TIME_NOW)
+            ->setLanguageID(\reset($languageIDs))
+            ->setGroupIDs(\array_values(\array_unique($groupIDs)))
+            ->setLanguageIDs($languageIDs);
+        if (isset($data['userID'])) {
+            $builder->setID($data['userID']);
+        }
+        foreach ($userOptions as $optionID => $optionValue) {
+            $builder->setUserOption($optionID, (string)$optionValue);
         }
 
-        if ($this->eventIDs !== []) {
-            // save default user events
-            $placeholders = '(?,?)' . \str_repeat(',(?,?)', \count($this->eventIDs) - 1);
-            $sql = "INSERT IGNORE INTO  wcf1_user_notification_event_to_user
-                                        (userID, eventID)
-                    VALUES              {$placeholders}";
-            $statement = WCF::getDB()->prepare($sql);
-            $parameters = [];
-            foreach ($this->eventIDs as $eventID) {
-                $parameters[] = $user->userID;
-                $parameters[] = $eventID;
-            }
-            $statement->execute($parameters);
+        unset(
+            $data['userID'],
+            $data['username'],
+            $data['email'],
+            $data['password'],
+            $data['registrationDate'],
+            $data['languageID']
+        );
+        foreach ($data as $name => $value) {
+            $builder->setCustomProperty($name, $value);
         }
+
+        $user = $builder->create();
 
         // save mapping
         ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user', $oldID, $user->userID);

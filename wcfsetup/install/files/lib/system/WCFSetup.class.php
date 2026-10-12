@@ -9,7 +9,7 @@ use wcf\data\language\LanguageEditor;
 use wcf\data\language\SetupLanguage;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\system\cache\eager\LanguageCache;
 use wcf\system\database\Database;
 use wcf\system\database\exception\DatabaseException;
@@ -932,29 +932,20 @@ final class WCFSetup extends WCF
                     $languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
                 }
 
-                // create user
-                $data = [
-                    'data' => [
-                        'userID' => 1,
-                        'email' => $email,
-                        'languageID' => $languageID,
-                        'password' => $password,
-                        'username' => $username,
-                        'signature' => '',
-                        'signatureEnableHtml' => 1,
-                    ],
-                    'groups' => [
-                        1,
-                        3,
-                        4,
-                    ],
-                    'languages' => [
-                        $languageID,
-                    ],
-                ];
-
-                $userAction = new UserAction([], 'create', $data);
-                $userAction->executeAction();
+                // The `CreateUser` command cannot be used, because the options
+                // and event listeners are not available yet.
+                UserBuilder::forCreate()
+                    ->setID(1)
+                    ->setUsername($username)
+                    ->setEmail($email)
+                    ->setPassword($password)
+                    ->setLanguageID($languageID)
+                    ->setRegistrationDate(\TIME_NOW)
+                    ->setSignature('')
+                    ->setSignatureEnableHtml(true)
+                    ->setGroupIDs([1, 3, 4])
+                    ->setLanguageIDs([$languageID])
+                    ->create();
 
                 return $this->gotoNextStep('installPackages');
             } catch (UserInputException $e) {

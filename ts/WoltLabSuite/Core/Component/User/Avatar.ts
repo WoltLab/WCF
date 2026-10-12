@@ -49,8 +49,7 @@ export function setup(): void {
     },
   );
 
-  const avatarForm = document.getElementById("avatarForm");
-  if (avatarForm) {
+  if (document.body.classList.contains("wcfAcp")) {
     registerCallback("wcf\\action\\UserAvatarAction_avatarFileID", (fileId: number | undefined) => {
       let link = defaultAvatar;
       if (fileId !== undefined) {
@@ -61,7 +60,10 @@ export function setup(): void {
         link = file.link!;
       }
 
-      avatarForm.querySelector<HTMLImageElement>("img.userAvatarImage")!.src = link;
+      const headerAvatar = document.querySelector<HTMLImageElement>(".userProfileHeader__avatar img.userAvatarImage");
+      if (headerAvatar) {
+        headerAvatar.src = link;
+      }
 
       document
         .getElementById("wcf\\action\\UserAvatarAction_avatarFileIDContainer")

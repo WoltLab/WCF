@@ -3,21 +3,20 @@
 namespace wcf\system\menu\user\profile\content;
 
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
-use wcf\system\SingletonFactory;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\WCF;
 
 /**
  * Handles user activity events.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Alexander Ebert
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class RecentActivityUserProfileMenuContent extends SingletonFactory implements IUserProfileMenuContent
+final class RecentActivityUserProfileMenuContent implements IUserProfileMenuContent
 {
     #[\Override]
-    public function getContent(int $userID)
+    public function getContent(int $userID): string
     {
         $eventList = new ViewableUserActivityEventList();
 
@@ -41,7 +40,7 @@ class RecentActivityUserProfileMenuContent extends SingletonFactory implements I
     }
 
     #[\Override]
-    public function isVisible(int $userID)
+    public function isVisible(int $userID): bool
     {
         return true;
     }

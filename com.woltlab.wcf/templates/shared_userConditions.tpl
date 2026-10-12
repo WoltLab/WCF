@@ -11,18 +11,13 @@
 	
 	{foreach from=$groupedObjectTypes key='conditionGroup' item='conditionObjectTypes'}
 		<div id="user_{$conditionGroup}" class="tabMenuContent">
-			{if $conditionGroup != 'userOptions'}
-				<section class="section">
-					<h2 class="sectionTitle">{lang}wcf.user.condition.conditionGroup.{$conditionGroup}{/lang}</h2>
-			{/if}
-			
-			{foreach from=$conditionObjectTypes item='condition'}
-				{unsafe:$condition->getProcessor()->getHtml()}
-			{/foreach}
-			
-			{if $conditionGroup != 'userOptions'}
-				</section>
-			{/if}
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.user.condition.conditionGroup.{$conditionGroup}{/lang}</h2>
+				
+				{foreach from=$conditionObjectTypes item='condition'}
+					{unsafe:$condition->getProcessor()->getHtml()}
+				{/foreach}
+			</section>
 		</div>
 	{/foreach}
 </div>

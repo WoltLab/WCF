@@ -14,9 +14,6 @@ import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import * as FormBuilderManager from "WoltLabSuite/Core/Form/Builder/Manager";
 import { fire as fireEvent } from "WoltLabSuite/Core/Event/Handler";
-import { getPhrase } from "WoltLabSuite/Core/Language";
-import DomUtil from "WoltLabSuite/Core/Dom/Util";
-import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 import { registerCallback } from "WoltLabSuite/Core/Form/Builder/Field/Controller/FileProcessor";
 import WoltlabCoreFile from "WoltLabSuite/Core/Component/File/woltlab-core-file";
 import { showDefaultSuccessSnackbar } from "../Snackbar";
@@ -40,69 +37,41 @@ async function editCoverPhoto(button: HTMLElement): Promise<void> {
   dialog.show(json.title);
 }
 
-function getCoverPhotoElement(): HTMLElement | null {
-  return (
-    document.querySelector<HTMLElement>(".userProfileHeader__coverPhotoImage") ??
-    document.getElementById("coverPhotoPreview")
-  );
+function getDefaultCoverPhoto(): string {
+  return document.querySelector<HTMLElement>("[data-default-cover-photo]")?.dataset.defaultCoverPhoto ?? "";
 }
 
 export function setup(): void {
-  wheneverFirstSeen("[data-edit-cover-photo]", (button) => {
-    const defaultCoverPhoto = button.dataset.defaultCoverPhoto;
+  registerCallback("wcf\\action\\UserCoverPhotoAction_coverPhotoFileID", (fileId: number | undefined) => {
+    const headerImage = document.querySelector<HTMLImageElement>(".userProfileHeader__coverPhotoImage");
 
-    registerCallback("wcf\\action\\UserCoverPhotoAction_coverPhotoFileID", (fileId: number | undefined) => {
-      const coverPhotoElement = getCoverPhotoElement();
+    if (headerImage && parseInt(headerImage.dataset.objectId!) === fileId) {
+      // nothing changed
+      return;
+    }
 
-      if (coverPhotoElement && parseInt(coverPhotoElement.dataset.objectId!) === fileId) {
-        // nothing changed
-        return;
-      }
+    const file = document.querySelector<WoltlabCoreFile>(
+      `#wcf\\\\action\\\\UserCoverPhotoAction_coverPhotoFileIDContainer woltlab-core-file[file-id="${fileId}"]`,
+    );
+    const coverPhotoUrl = file?.link || getDefaultCoverPhoto();
 
-      const file = document.querySelector<WoltlabCoreFile>(
-        `#wcf\\\\action\\\\UserCoverPhotoAction_coverPhotoFileIDContainer woltlab-core-file[file-id="${fileId}"]`,
-      );
-      const coverPhotoNotice = document.getElementById("coverPhotoNotice");
-      const coverPhotoUrl = file?.link ?? defaultCoverPhoto ?? "";
-      const coverPhotoStyle = `url("${coverPhotoUrl}")`;
+    if (headerImage && coverPhotoUrl) {
+      headerImage.src = coverPhotoUrl;
+      headerImage.dataset.objectId = fileId?.toString() || "";
 
-      if (coverPhotoElement instanceof HTMLImageElement && coverPhotoUrl) {
-        coverPhotoElement.src = coverPhotoUrl;
+      document
+        .getElementById("wcf\\action\\UserCoverPhotoAction_coverPhotoFileIDContainer")
+        ?.closest("woltlab-core-dialog")
+        ?.close();
+    }
 
-        coverPhotoElement.dataset.objectId = fileId?.toString() || "";
-
-        document
-          .getElementById("wcf\\action\\UserCoverPhotoAction_coverPhotoFileIDContainer")
-          ?.closest("woltlab-core-dialog")
-          ?.close();
-      } else {
-        // ACP cover photo management
-        if (!coverPhotoElement && coverPhotoUrl) {
-          coverPhotoNotice!.parentElement!.appendChild(
-            DomUtil.createFragmentFromHtml(
-              `<div id="coverPhotoPreview" data-object-id="${fileId}" style="background-image: ${escapeHTML(coverPhotoStyle)};"></div>`,
-            ),
-          );
-          coverPhotoNotice!.remove();
-        } else if (coverPhotoElement && !coverPhotoUrl) {
-          coverPhotoElement.parentElement!.appendChild(
-            DomUtil.createFragmentFromHtml(
-              `<woltlab-core-notice id="coverPhotoNotice" type="info">${getPhrase("wcf.user.coverPhoto.noImage")}</woltlab-core-notice>`,
-            ),
-          );
-          coverPhotoElement.remove();
-        } else if (coverPhotoElement && coverPhotoUrl) {
-          coverPhotoElement.style.backgroundImage = coverPhotoStyle;
-          coverPhotoElement.dataset.objectId = fileId?.toString() || "";
-        }
-      }
-
-      showDefaultSuccessSnackbar();
-      fireEvent("com.woltlab.wcf.user", "coverPhoto", {
-        url: coverPhotoUrl,
-      });
+    showDefaultSuccessSnackbar();
+    fireEvent("com.woltlab.wcf.user", "coverPhoto", {
+      url: coverPhotoUrl,
     });
+  });
 
+  wheneverFirstSeen("[data-edit-cover-photo]", (button) => {
     button.addEventListener(
       "click",
       promiseMutex(() => editCoverPhoto(button)),

@@ -3,6 +3,7 @@
 namespace wcf\system\gridView;
 
 use wcf\action\ApiAction;
+use wcf\action\GridViewColumnConfigurationAction;
 use wcf\action\GridViewFilterAction;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
@@ -66,6 +67,12 @@ abstract class AbstractGridView
     private ?IBulkInteractionProvider $bulkInteractionProvider = null;
     private InteractionContextMenuComponent $interactionContextMenuComponent;
     private string $markAsReadEndpoint = '';
+    private bool $columnConfigurable = false;
+
+    /**
+     * @var ?list<string>
+     */
+    private ?array $visibleColumnIDs = null;
 
     /**
      * @var array<string, string|int>
@@ -174,7 +181,109 @@ abstract class AbstractGridView
      */
     public function getVisibleColumns(): array
     {
-        return \array_filter($this->getColumns(), fn($column) => !$column->isHidden());
+        return \array_filter($this->getColumns(), fn($column) => $this->isColumnVisible($column));
+    }
+
+    /**
+     * Returns true if the given column is visible. The title column is always
+     * visible, the visibility of the other columns can be configured by the
+     * user if this grid view is column configurable.
+     *
+     * @since 6.3
+     */
+    public function isColumnVisible(GridViewColumn $column): bool
+    {
+        if ($column->isTitleColumn()) {
+            return true;
+        }
+
+        if ($this->visibleColumnIDs !== null) {
+            return \in_array($column->getID(), $this->visibleColumnIDs, true);
+        }
+
+        return !$column->isHidden();
+    }
+
+    /**
+     * Returns all columns whose visibility can be configured by the user.
+     *
+     * @return GridViewColumn[]
+     * @since 6.3
+     */
+    public function getConfigurableColumns(): array
+    {
+        $this->init();
+
+        return \array_filter($this->getColumns(), static fn($column) => !$column->isTitleColumn());
+    }
+
+    /**
+     * Sets whether the user can configure the visible columns of this grid view.
+     *
+     * @since 6.3
+     */
+    public function setColumnConfigurable(bool $columnConfigurable = true): void
+    {
+        $this->columnConfigurable = $columnConfigurable;
+    }
+
+    /**
+     * Returns true if the user can configure the visible columns of this grid view.
+     *
+     * @since 6.3
+     */
+    public function isColumnConfigurable(): bool
+    {
+        return $this->columnConfigurable;
+    }
+
+    /**
+     * Sets the ids of the columns that are visible instead of the default
+     * visibility of the columns. Has no effect unless this grid view is
+     * column configurable.
+     *
+     * @param list<string> $columnIDs
+     * @since 6.3
+     */
+    public function setVisibleColumnIDs(array $columnIDs): void
+    {
+        if (!$this->isColumnConfigurable()) {
+            return;
+        }
+
+        $this->visibleColumnIDs = $columnIDs;
+    }
+
+    /**
+     * Returns the ids of the visible columns or null if the default
+     * visibility of the columns is used.
+     *
+     * @return ?list<string>
+     * @since 6.3
+     */
+    public function getVisibleColumnIDs(): ?array
+    {
+        if ($this->visibleColumnIDs === null) {
+            return null;
+        }
+
+        return \array_values(\array_map(
+            static fn($column) => $column->getID(),
+            $this->getVisibleColumns()
+        ));
+    }
+
+    /**
+     * Returns the endpoint for the column configuration action.
+     *
+     * @since 6.3
+     */
+    public function getColumnConfigurationEndpoint(): string
+    {
+        return LinkHandler::getInstance()->getControllerLink(
+            GridViewColumnConfigurationAction::class,
+            ['gridView' => \get_class($this), 'gridViewParameters' => $this->getParameters()]
+        );
     }
 
     /**
@@ -295,6 +404,18 @@ abstract class AbstractGridView
         $this->init();
 
         return WCF::getTPL()->render('wcf', 'shared_gridView', ['view' => $this]);
+    }
+
+    /**
+     * Renders the header columns and returns the HTML code.
+     *
+     * @since 6.3
+     */
+    public function renderHeaderColumns(): string
+    {
+        $this->init();
+
+        return WCF::getTPL()->render('wcf', 'shared_gridViewHeaderColumns', ['view' => $this]);
     }
 
     /**

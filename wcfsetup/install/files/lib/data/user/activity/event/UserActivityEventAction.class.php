@@ -2,10 +2,11 @@
 
 namespace wcf\data\user\activity\event;
 
+use wcf\command\user\UpdateUser;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\box\Box;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\system\box\RecentActivityListBoxController;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
@@ -175,11 +176,11 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
      */
     public function switchContext()
     {
-        $userAction = new UserAction([WCF::getUser()], 'update', [
-            'options' => [
-                User::getUserOptionID('recentActivitiesFilterByFollowing') => WCF::getUser()->recentActivitiesFilterByFollowing !== 0 ? 0 : 1,
-            ],
-        ]);
-        $userAction->executeAction();
+        (new UpdateUser(
+            UserBuilder::forUpdate(WCF::getUser())->setUserOption(
+                User::getUserOptionID('recentActivitiesFilterByFollowing'),
+                WCF::getUser()->recentActivitiesFilterByFollowing !== 0 ? '0' : '1'
+            )
+        ))();
     }
 }

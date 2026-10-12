@@ -16,6 +16,7 @@ use wcf\system\cache\builder\UserOptionCacheBuilder;
  * @mixin   UserOptionCategory
  * @extends DatabaseObjectEditor<UserOptionCategory>
  * @implements IEditableCachedObject<UserOptionCategory>
+ * @deprecated 6.3 use `UserOptionCategoryBuilder` instead.
  */
 class UserOptionCategoryEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {

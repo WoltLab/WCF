@@ -157,5 +157,11 @@
 		<template>imageViewer</template>
 		<template>tagSetAsSynonyms</template>
 		<template>contactSettings</template>
+		<template>removeUserContentDialog</template>
+		<template>userSearch</template>
+		<template>userMerge</template>
+		<template>userContentRevertChanges</template>
+		<template>userAssignToGroup</template>
+		<template>userEmailAddressExport</template>
 	</delete>
 </data>

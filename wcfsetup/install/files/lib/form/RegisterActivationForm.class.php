@@ -2,8 +2,9 @@
 
 namespace wcf\form;
 
+use wcf\command\user\ConfirmUserEmail;
+use wcf\command\user\CreateRegistrationNotification;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
@@ -139,8 +140,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
     {
         AbstractForm::save();
 
-        $this->objectAction = new UserAction([$this->user], 'confirmEmail', ['skipNotification' => true]);
-        $this->objectAction->executeAction();
+        $user = (new ConfirmUserEmail($this->user, false))();
         $this->saved();
 
         // forward to index page
@@ -151,8 +151,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
             $redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success');
         }
 
-        // User must be reloaded to get the correct activation status.
-        new \wcf\command\user\CreateRegistrationNotification(new User($this->user->userID))();
+        (new CreateRegistrationNotification($user))();
 
         HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), $redirectText, 10, 'success', true);
 

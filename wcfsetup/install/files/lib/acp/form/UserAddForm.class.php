@@ -2,35 +2,55 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\smiley\category\SmileyCategory;
-use wcf\data\smiley\Smiley;
-use wcf\data\smiley\SmileyCache;
+use wcf\command\user\CreateUser;
+use wcf\command\user\UpdateUser;
+use wcf\data\DatabaseObjectBuilder;
+use wcf\data\language\Language;
+use wcf\data\style\Style;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\option\UserOption;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
-use wcf\form\AbstractForm;
-use wcf\system\attachment\AttachmentHandler;
-use wcf\system\bbcode\BBCodeHandler;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\UserInputException;
-use wcf\system\html\input\HtmlInputProcessor;
+use wcf\data\user\UserBuilder;
+use wcf\data\user\UserProfile;
+use wcf\form\AbstractDatabaseObjectBuilderForm;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\container\TabFormContainer;
+use wcf\system\form\builder\container\TabMenuFormContainer;
+use wcf\system\form\builder\container\wysiwyg\WysiwygFormContainer;
+use wcf\system\form\builder\field\AbstractFormField;
+use wcf\system\form\builder\field\EmailFormField;
+use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\MultipleSelectionFormField;
+use wcf\system\form\builder\field\PasswordFormField;
+use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\user\UsernameFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\field\wysiwyg\WysiwygAttachmentFormField;
+use wcf\system\form\builder\field\wysiwyg\WysiwygFormField;
+use wcf\system\form\option\user\TUserOptionFormFields;
 use wcf\system\language\LanguageFactory;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
-use wcf\system\request\LinkHandler;
+use wcf\system\style\FontAwesomeIcon;
+use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
-use wcf\util\UserUtil;
 
 /**
  * Shows the user add form.
  *
- * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @extends AbstractDatabaseObjectBuilderForm<User, UserBuilder>
  */
-class UserAddForm extends UserOptionListForm
+class UserAddForm extends AbstractDatabaseObjectBuilderForm
 {
+    use TUserOptionFormFields {
+        getUserOptionFormField as getDefaultUserOptionFormField;
+    }
+
     /**
      * @inheritDoc
      */
@@ -42,452 +62,461 @@ class UserAddForm extends UserOptionListForm
     public $neededPermissions = ['admin.user.canAddUser'];
 
     /**
-     * username
-     * @var string
+     * @inheritDoc
      */
-    public $username = '';
+    public string $objectEditLinkController = UserEditForm::class;
 
     /**
-     * email address
-     * @var string
+     * editable options grouped by the name of the top-level category and the
+     * name of their category
+     * @var array<string, array<string, UserOption[]>>
      */
-    public $email = '';
-
-    /**
-     * user password
-     * @var ?string
-     */
-    public $password = '';
-
-    /**
-     * user group ids
-     * @var int[]
-     */
-    public $groupIDs = [];
-
-    /**
-     * @var ?HtmlInputProcessor
-     */
-    public $htmlInputProcessor;
-
-    /**
-     * language id
-     * @var int
-     */
-    public $languageID = 0;
-
-    /**
-     * visible languages
-     * @var int[]
-     */
-    public $visibleLanguages = [];
-
-    /**
-     * title of the user
-     * @var string
-     */
-    protected $userTitle = '';
-
-    /**
-     * signature text
-     * @var string
-     */
-    public $signature = '';
-
-    /**
-     * true to disable this signature
-     * @var int
-     */
-    public $disableSignature = 0;
-
-    /**
-     * reason
-     * @var string
-     */
-    public $disableSignatureReason = '';
-
-    /**
-     * date when the signature will be enabled again
-     * @var int
-     */
-    public $disableSignatureExpires = 0;
-
-    /**
-     * tree of available user options
-     * @var mixed[]
-     */
-    public $optionTree = [];
-
-    public AttachmentHandler $attachmentHandler;
-
-    public int $attachmentObjectID = 0;
-
-    public string $attachmentObjectType = 'com.woltlab.wcf.user.signature';
-
-    /**
-     * @var array<int, Smiley>
-     */
-    public array $defaultSmilies = [];
-
-    /**
-     * list of smiley categories
-     * @var array<int, SmileyCategory>
-     */
-    public array $smileyCategories = [];
-
-    public ?string $tmpHash = '';
+    protected array $options = [];
 
     #[\Override]
-    public function readParameters()
+    public function readParameters(): void
     {
         parent::readParameters();
 
-        if (isset($_REQUEST['tmpHash'])) {
-            $this->tmpHash = $_REQUEST['tmpHash'];
-        }
-        if (empty($this->tmpHash)) {
-            /** @deprecated 5.5 see QuickReplyManager::setTmpHash() */
-            $this->tmpHash = WCF::getSession()->getVar('__wcfAttachmentTmpHash');
-            if ($this->tmpHash === null) {
-                $this->tmpHash = StringUtil::getRandomID();
-            } else {
-                WCF::getSession()->unregister('__wcfAttachmentTmpHash');
-            }
+        foreach (['profile', 'settings'] as $categoryName) {
+            $this->options[$categoryName] = $this->getUserOptionsByCategory(
+                $categoryName,
+                $this->isEditableOption(...)
+            );
         }
     }
 
     #[\Override]
-    public function readFormParameters()
+    protected function getDatabaseObjectBuilder(): UserBuilder
     {
-        parent::readFormParameters();
-
-        if (isset($_POST['username'])) {
-            $this->username = StringUtil::trim($_POST['username']);
-        }
-        if (isset($_POST['email'])) {
-            $this->email = StringUtil::trim($_POST['email']);
-        }
-        if (isset($_POST['password'])) {
-            $this->password = $_POST['password'];
-        }
-        if (isset($_POST['groupIDs']) && \is_array($_POST['groupIDs'])) {
-            $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
-        }
-        if (isset($_POST['visibleLanguages']) && \is_array($_POST['visibleLanguages'])) {
-            $this->visibleLanguages = ArrayUtil::toIntegerArray($_POST['visibleLanguages']);
-        }
-        if (isset($_POST['languageID'])) {
-            $this->languageID = \intval($_POST['languageID']);
-        }
-        if (isset($_POST['userTitle'])) {
-            $this->userTitle = $_POST['userTitle'];
+        if ($this->formObject !== null) {
+            return UserBuilder::forUpdate($this->formObject);
         }
 
-        if (isset($_POST['signature'])) {
-            $this->signature = StringUtil::trim($_POST['signature']);
-        }
-
-        if (WCF::getSession()->hasPermission('admin.user.canDisableSignature')) {
-            if (isset($_POST['disableSignatureReason'])) {
-                $this->disableSignatureReason = StringUtil::trim($_POST['disableSignatureReason']);
-            }
-            if (!empty($_POST['disableSignature'])) {
-                $this->disableSignature = 1;
-            }
-            if ($this->disableSignature !== 0 && !isset($_POST['disableSignatureNeverExpires'])) {
-                if (isset($_POST['disableSignatureExpires'])) {
-                    $this->disableSignatureExpires = @\intval(@\strtotime(StringUtil::trim($_POST['disableSignatureExpires'])));
-                }
-            }
-        }
+        return UserBuilder::forCreate()
+            ->setRegistrationDate(\TIME_NOW);
     }
 
     #[\Override]
-    public function validate()
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
     {
-        // validate static user options
-        try {
-            $this->validateUsername($this->username);
-        } catch (UserInputException $e) {
-            $this->errorType[$e->getField()] = $e->getType();
+        if ($this->formObject !== null) {
+            return new UpdateUser($builder);
         }
 
-        try {
-            $this->validateEmail($this->email);
-        } catch (UserInputException $e) {
-            $this->errorType[$e->getField()] = $e->getType();
+        return new CreateUser($builder);
+    }
+
+    #[\Override]
+    protected function createForm(): void
+    {
+        parent::createForm();
+
+        $tabMenu = TabMenuFormContainer::create('userTabs');
+        $tabMenu->appendChild(
+            TabFormContainer::create('generalTab')
+                ->label('wcf.global.form.data')
+                ->appendChild($this->getGeneralFormContainer())
+        );
+
+        foreach ($this->options as $categoryName => $options) {
+            if ($options === []) {
+                continue;
+            }
+
+            $tabMenu->appendChild(
+                TabFormContainer::create($categoryName . 'Tab')
+                    ->label($this->getUserOptionCategoryTitle($categoryName))
+                    ->appendChildren($this->getUserOptionFormContainers($options))
+            );
         }
 
-        try {
-            $this->validatePassword($this->password);
-        } catch (UserInputException $e) {
-            $this->errorType[$e->getField()] = $e->getType();
+        if (\MODULE_USER_SIGNATURE !== 0) {
+            $tabMenu->appendChild(
+                TabFormContainer::create('signatureTab')
+                    ->label('wcf.user.signature')
+                    ->appendChild($this->getSignatureFormContainer())
+            );
         }
 
-        // validate user groups
-        if ($this->groupIDs !== []) {
-            $conditions = new PreparedStatementConditionBuilder();
-            $conditions->add("groupID IN (?)", [$this->groupIDs]);
-            $conditions->add("groupType NOT IN (?)", [[UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]]);
+        $this->form->appendChild($tabMenu);
+    }
 
-            $sql = "SELECT  groupID
-                    FROM    wcf1_user_group
-                    " . $conditions;
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditions->getParameters());
-            $this->groupIDs = [];
-            while ($row = $statement->fetchArray()) {
-                if (UserGroup::isAccessibleGroup([$row['groupID']])) {
-                    $this->groupIDs[] = $row['groupID'];
+    /**
+     * Returns the form container of the general tab.
+     */
+    protected function getGeneralFormContainer(): FormContainer
+    {
+        $container = FormContainer::create('general')
+            ->appendChildren(\array_values(\array_filter([
+                $this->getUsernameFormField(),
+                $this->getEmailFormField(),
+                $this->getPasswordFormField(),
+                $this->getUserTitleFormField(),
+                $this->getGroupsFormField(),
+            ])));
+
+        $availableLanguages = LanguageFactory::getInstance()->getLanguages();
+        if (\count($availableLanguages) > 1) {
+            $container->appendChildren($this->getLanguageFormFields($availableLanguages));
+        }
+
+        if ($this->formObject !== null) {
+            $container->appendChildren($this->getStyleFormFields());
+        }
+
+        return $container;
+    }
+
+    protected function getUsernameFormField(): UsernameFormField
+    {
+        return UsernameFormField::create()
+            ->required()
+            ->autoFocus()
+            ->exceptUser($this->formObject)
+            ->saveValueCallback(function (UserBuilder $builder, UsernameFormField $field) {
+                $username = $field->getSaveValue();
+                $builder->setUsername($username);
+
+                if (
+                    $this->formObject !== null
+                    && \mb_strtolower($username) !== \mb_strtolower($this->formObject->username)
+                ) {
+                    $builder->setOldUsername($this->formObject->username);
+                    $builder->setLastUsernameChange(\TIME_NOW);
                 }
-            }
-        }
+            });
+    }
 
-        // validate user language
-        $language = LanguageFactory::getInstance()->getLanguage($this->languageID);
-        if ($language === null) {
-            // use default language
-            $this->languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
-        }
+    protected function getEmailFormField(): EmailFormField
+    {
+        return EmailFormField::create('email')
+            ->label('wcf.user.email')
+            ->required()
+            ->available(
+                $this->formObject === null
+                    || WCF::getSession()->hasPermission('admin.user.canEditMailAddress')
+            )
+            ->addValidator(new FormFieldValidator('notUnique', function (EmailFormField $field) {
+                $email = (string)$field->getValue();
+                if (
+                    $this->formObject !== null
+                    && \mb_strtolower($email) === \mb_strtolower($this->formObject->email)
+                ) {
+                    return;
+                }
 
-        // validate visible languages
-        foreach ($this->visibleLanguages as $key => $visibleLanguage) {
-            $language = LanguageFactory::getInstance()->getLanguage($visibleLanguage);
-            if ($language === null || $language->hasContent === 0) {
-                unset($this->visibleLanguages[$key]);
-            }
-        }
+                if (!User::getUserByEmail($email)->isGuest()) {
+                    $field->addValidationError(new FormFieldValidationError(
+                        'notUnique',
+                        'wcf.user.email.error.notUnique'
+                    ));
+                }
+            }))
+            ->saveValueCallback(static function (UserBuilder $builder, EmailFormField $field) {
+                $builder->setEmail($field->getSaveValue());
+            });
+    }
+
+    protected function getPasswordFormField(): ?PasswordFormField
+    {
         if (
-            $this->visibleLanguages === []
-            && ($language = LanguageFactory::getInstance()->getLanguage($this->languageID)) !== null
-            && $language->hasContent !== 0
+            $this->formObject !== null
+            && (
+                !WCF::getSession()->hasPermission('admin.user.canEditPassword')
+                || $this->formObject->authData !== ''
+            )
         ) {
-            $this->visibleLanguages[] = $this->languageID;
+            return null;
         }
 
-        // validate user title
-        try {
-            if (\mb_strlen($this->userTitle) > \USER_TITLE_MAX_LENGTH) {
-                throw new UserInputException('userTitle', 'tooLong');
-            }
-            if (!StringUtil::executeWordFilter($this->userTitle, \USER_FORBIDDEN_TITLES)) {
-                throw new UserInputException('userTitle', 'forbidden');
-            }
-        } catch (UserInputException $e) {
-            $this->errorType[$e->getField()] = $e->getType();
+        $staticDictionary = [WCF::getUser()->username, WCF::getUser()->email];
+        if ($this->formObject !== null) {
+            $staticDictionary[] = $this->formObject->username;
+            $staticDictionary[] = $this->formObject->email;
         }
 
-        // validate signature
-        $this->htmlInputProcessor = new HtmlInputProcessor();
-        $this->htmlInputProcessor->process($this->signature, 'com.woltlab.wcf.user.signature', 0);
-
-        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
-            ',',
-            WCF::getSession()->getPermission('user.signature.disallowedBBCodes')
-        ));
-        $disallowedBBCodes = $this->htmlInputProcessor->validate();
-        if ($disallowedBBCodes !== []) {
-            WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
-            throw new UserInputException('signature', 'disallowedBBCodes');
-        }
-
-        // validate dynamic options
-        parent::validate();
+        return PasswordFormField::create('password')
+            ->label('wcf.user.password')
+            ->required($this->formObject === null)
+            ->autoComplete('new-password')
+            ->passwordStrengthMeter()
+            ->addMeterRelatedFieldId('username')
+            ->addMeterRelatedFieldId('email')
+            ->addStaticDictionary($staticDictionary)
+            ->loadValueCallback(static function (User $user, PasswordFormField $field) {
+                // The stored password hash must never be used as the value.
+            })
+            ->saveValueCallback(static function (UserBuilder $builder, PasswordFormField $field) {
+                $password = (string)$field->getSaveValue();
+                if ($password !== '') {
+                    $builder->setPassword($password);
+                }
+            });
     }
 
-    #[\Override]
-    public function save()
+    protected function getUserTitleFormField(): ?TextFormField
     {
-        AbstractForm::save();
+        if (\MODULE_USER_RANK === 0) {
+            return null;
+        }
 
-        // create
-        $saveOptions = $this->optionHandler->save();
-        $this->additionalFields['languageID'] = $this->languageID;
-        $data = [
-            'data' => \array_merge($this->additionalFields, [
-                'username' => $this->username,
-                'email' => $this->email,
-                'password' => $this->password,
-                'userTitle' => $this->userTitle,
-                'signature' => $this->htmlInputProcessor->getHtml(),
-                'signatureEnableHtml' => 1,
-            ]),
-            'groups' => $this->groupIDs,
-            'languageIDs' => $this->visibleLanguages,
-            'options' => $saveOptions,
-            'signatureAttachmentHandler' => $this->attachmentHandler,
+        return TextFormField::create('userTitle')
+            ->label('wcf.user.userTitle')
+            ->description('wcf.user.userTitle.description')
+            ->maximumLength(\USER_TITLE_MAX_LENGTH)
+            ->addValidator(new FormFieldValidator(
+                'forbidden',
+                static function (TextFormField $field) {
+                    $userTitle = StringUtil::trim((string)$field->getValue());
+                    if (!StringUtil::executeWordFilter($userTitle, \USER_FORBIDDEN_TITLES)) {
+                        $field->addValidationError(new FormFieldValidationError(
+                            'forbidden',
+                            'wcf.user.userTitle.error.forbidden'
+                        ));
+                    }
+                }
+            ))
+            ->saveValueCallback(static function (UserBuilder $builder, TextFormField $field) {
+                $builder->setUserTitle(StringUtil::trim((string)$field->getValue()));
+            });
+    }
+
+    protected function getGroupsFormField(): ?MultipleSelectionFormField
+    {
+        $availableGroups = UserGroup::getSortedAccessibleGroups(
+            [],
+            [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]
+        );
+        if ($availableGroups === []) {
+            return null;
+        }
+
+        $ownerGroupID = UserGroup::getOwnerGroupID();
+        $options = [];
+        foreach ($availableGroups as $group) {
+            $options[$group->groupID] = StringUtil::encodeHTML($group->getName());
+
+            if ($group->groupID === $ownerGroupID) {
+                $options[$group->groupID] .= ' ' . FontAwesomeIcon::fromValues('shield-halved')->toHtml(16);
+            }
+        }
+
+        return MultipleSelectionFormField::create('groupIDs')
+            ->label('wcf.acp.user.groups')
+            ->options($options, false, false)
+            ->ignoreInvalidValues()
+            ->loadValueCallback(static function (User $user, MultipleSelectionFormField $field) {
+                $field->value($user->getGroupIDs(true));
+            })
+            ->addValidator(new FormFieldValidator('ownerGroup', function (MultipleSelectionFormField $field) use ($ownerGroupID) {
+                if (
+                    $ownerGroupID !== null
+                    && $this->formObject?->userID === WCF::getUser()->userID
+                    && WCF::getUser()->hasOwnerAccess()
+                    && !\in_array($ownerGroupID, \array_map(\intval(...), $field->getValue() ?? []), true)
+                ) {
+                    // Members of the owner group cannot remove themselves.
+                    $field->addValidationError(new FormFieldValidationError(
+                        'ownerGroup',
+                        'wcf.acp.user.groups.error.ownerGroup'
+                    ));
+                }
+            }))
+            ->saveValueCallback(function (UserBuilder $builder, MultipleSelectionFormField $field) {
+                $builder->setGroupIDs($this->getGroupIDsWithDefaultGroups(
+                    \array_map(\intval(...), $field->getValue() ?? [])
+                ));
+            });
+    }
+
+    /**
+     * Adds the default groups to the selected groups, which cannot be selected
+     * explicitly.
+     *
+     * @param list<int> $groupIDs
+     * @return list<int>
+     */
+    protected function getGroupIDsWithDefaultGroups(array $groupIDs): array
+    {
+        if ($this->formObject === null) {
+            $defaultGroupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::USERS]);
+        } else {
+            $defaultGroups = UserGroup::getAccessibleGroups([UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
+            $defaultGroupIDs = \array_filter(
+                $this->formObject->getGroupIDs(true),
+                static fn(int $groupID) => isset($defaultGroups[$groupID])
+            );
+        }
+
+        return \array_values(\array_unique(\array_merge($groupIDs, $defaultGroupIDs)));
+    }
+
+    /**
+     * @param Language[] $availableLanguages
+     * @return IFormField[]
+     */
+    protected function getLanguageFormFields(array $availableLanguages): array
+    {
+        $fields = [
+            SelectFormField::create('languageID')
+                ->label('wcf.user.language')
+                ->description('wcf.user.language.description')
+                ->options(\array_map(
+                    static fn(Language $language) => StringUtil::encodeHTML($language->languageName),
+                    $availableLanguages
+                ))
+                ->required()
+                ->ignoreInvalidValues()
+                ->defaultValue(LanguageFactory::getInstance()->getDefaultLanguageID())
+                ->value(LanguageFactory::getInstance()->getDefaultLanguageID())
+                ->saveValueCallback(static function (UserBuilder $builder, SelectFormField $field) {
+                    $builder->setLanguageID((int)$field->getSaveValue());
+                }),
         ];
 
-        if (WCF::getSession()->hasPermission('admin.user.canDisableSignature')) {
-            $data['data']['disableSignature'] = $this->disableSignature;
-            $data['data']['disableSignatureReason'] = $this->disableSignatureReason;
-            $data['data']['disableSignatureExpires'] = $this->disableSignatureExpires;
+        $availableContentLanguages = LanguageFactory::getInstance()->getContentLanguages();
+        if ($availableContentLanguages !== []) {
+            $fields[] = MultipleSelectionFormField::create('visibleLanguages')
+                ->label('wcf.user.visibleLanguages')
+                ->description('wcf.user.visibleLanguages.description')
+                ->options(\array_map(
+                    static fn(Language $language) => StringUtil::encodeHTML($language->languageName),
+                    $availableContentLanguages
+                ))
+                ->ignoreInvalidValues()
+                ->loadValueCallback(static function (User $user, MultipleSelectionFormField $field) {
+                    $field->value($user->getLanguageIDs());
+                })
+                ->saveValueCallback(
+                    static function (UserBuilder $builder, MultipleSelectionFormField $field) use ($availableContentLanguages) {
+                        $languageIDs = \array_map(\intval(...), $field->getValue() ?? []);
+                        if ($languageIDs === []) {
+                            $languageID = (int)$field->getDocument()->getFormField('languageID')?->getSaveValue();
+                            if (isset($availableContentLanguages[$languageID])) {
+                                $languageIDs[] = $languageID;
+                            }
+                        }
+
+                        $builder->setLanguageIDs($languageIDs);
+                    }
+                );
         }
 
-        $this->objectAction = new UserAction([], 'create', $data);
-        $returnValues = $this->objectAction->executeAction();
-
-        $this->htmlInputProcessor->setObjectID($returnValues['returnValues']->userID);
-        MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor);
-        $this->attachmentHandler->updateObjectID($returnValues['returnValues']->userID);
-
-        $this->saved();
-
-        // show empty add form
-        WCF::getTPL()->assign([
-            'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                UserEditForm::class,
-                ['id' => $returnValues['returnValues']->userID]
-            ),
-        ]);
-
-        // reset values
-        $this->disableSignature = $this->disableSignatureExpires = 0;
-        $this->username = $this->email = $this->password = $this->userTitle = '';
-        $this->signature = $this->disableSignatureReason = '';
-        $this->groupIDs = [];
-        $this->languageID = $this->getDefaultFormLanguageID();
-        $this->optionHandler->resetOptionValues();
-        // Reload attachment handler to reset the uploaded attachments.
-        $this->attachmentHandler = new AttachmentHandler(
-            $this->attachmentObjectType,
-            $this->attachmentObjectID,
-            $this->tmpHash
-        );
+        return $fields;
     }
 
     /**
-     * Throws a UserInputException if the username is not unique or not valid.
+     * Returns the form fields for the style and the color scheme of an existing user.
      *
-     * @return void
-     * @throws UserInputException
+     * @return IFormField[]
      */
-    protected function validateUsername(string $username)
+    protected function getStyleFormFields(): array
     {
-        if (empty($username)) {
-            throw new UserInputException('username');
-        }
+        $fields = [];
 
-        // check for forbidden chars (e.g. the ",")
-        if (!UserUtil::isValidUsername($username)) {
-            throw new UserInputException('username', 'invalid');
-        }
-
-        // Check if username exists already.
-        if (!User::getUserByUsername($username)->isGuest()) {
-            throw new UserInputException('username', 'notUnique');
-        }
-    }
-
-    /**
-     * Throws a UserInputException if the email is not unique or not valid.
-     * @throws UserInputException
-     */
-    protected function validateEmail(string $email): void
-    {
-        if (empty($email)) {
-            throw new UserInputException('email');
-        }
-
-        // check for valid email (one @ etc.)
-        if (!UserUtil::isValidEmail($email)) {
-            throw new UserInputException('email', 'invalid');
-        }
-
-        // Check if email exists already.
-        if (!User::getUserByEmail($email)->isGuest()) {
-            throw new UserInputException('email', 'notUnique');
-        }
-    }
-
-    /**
-     * Throws a UserInputException if the password is not valid.
-     * @throws UserInputException
-     */
-    protected function validatePassword(
-        #[\SensitiveParameter]
-        string $password
-    ): void {
-        if (empty($password)) {
-            throw new UserInputException('password');
-        }
-    }
-
-    #[\Override]
-    public function readData()
-    {
-        $this->attachmentHandler = new AttachmentHandler(
-            $this->attachmentObjectType,
-            $this->attachmentObjectID,
-            $this->tmpHash,
-            0
+        // Disabled styles are only available if the edited user may use them.
+        $userProfile = new UserProfile($this->formObject);
+        $availableStyles = \array_filter(
+            StyleHandler::getInstance()->getStyles(),
+            static fn(Style $style) => $style->isDisabled === 0
+                || $userProfile->hasPermission('admin.style.canUseDisabledStyle')
         );
-
-        parent::readData();
-        // get default smilies
-        if (\MODULE_SMILEY !== 0) {
-            $this->smileyCategories = SmileyCache::getInstance()->getVisibleCategories();
-
-            $firstCategory = \reset($this->smileyCategories);
-            if ($firstCategory) {
-                $this->defaultSmilies = SmileyCache::getInstance()
-                    ->getCategorySmilies($firstCategory->categoryID ?: null);
+        if (\count($availableStyles) > 1) {
+            $styles = [0 => 'wcf.global.defaultValue'];
+            foreach ($availableStyles as $style) {
+                $styles[$style->styleID] = StringUtil::encodeHTML($style->styleName);
             }
+
+            $fields[] = SelectFormField::create('styleID')
+                ->label('wcf.user.style')
+                ->description('wcf.user.style.description')
+                ->options($styles)
+                ->required()
+                ->ignoreInvalidValues()
+                ->defaultValue(0)
+                ->saveValueCallback(static function (UserBuilder $builder, SelectFormField $field) {
+                    $builder->setStyleID((int)$field->getSaveValue());
+                });
         }
 
-        $this->readOptionTree();
+        $fields[] = SelectFormField::create('colorScheme')
+            ->label('wcf.user.style.colorScheme')
+            ->description('wcf.user.style.colorScheme.description')
+            ->options([
+                'system' => 'wcf.style.setColorScheme.system',
+                'light' => 'wcf.style.setColorScheme.light',
+                'dark' => 'wcf.style.setColorScheme.dark',
+            ])
+            ->required()
+            ->ignoreInvalidValues()
+            ->defaultValue('system')
+            ->loadValueCallback(static function (User $user, SelectFormField $field) {
+                $field->value($user->getUserOption('colorScheme') ?? 'system');
+            })
+            ->saveValueCallback(static function (UserBuilder $builder, SelectFormField $field) {
+                $optionID = User::getUserOptionID('colorScheme');
+                if ($optionID !== null) {
+                    $builder->setUserOption($optionID, (string)$field->getSaveValue());
+                }
+            });
+
+        return $fields;
+    }
+
+    protected function getSignatureFormContainer(): WysiwygFormContainer
+    {
+        $container = WysiwygFormContainer::create('signature')
+            ->label('wcf.user.signature')
+            ->messageObjectType('com.woltlab.wcf.user.signature')
+            ->attachmentData('com.woltlab.wcf.user.signature', objectID: $this->formObject->userID ?? 0);
+
+        $container->getWysiwygField()
+            ->loadValueCallback(static function (User $user, WysiwygFormField $field) {
+                $field->value($user->signature ?? '');
+            })
+            ->saveValueCallback(static function (UserBuilder $builder, WysiwygFormField $field) {
+                $builder
+                    ->setSignatureHtmlInputProcessor($field->getHtmlInputProcessor())
+                    ->setSignatureEnableHtml(true);
+            });
+        $container->getAttachmentField()->saveValueCallback(
+            static function (UserBuilder $builder, WysiwygAttachmentFormField $field) {
+                $attachmentHandler = $field->getAttachmentHandler();
+                if ($attachmentHandler !== null) {
+                    $builder->setSignatureAttachmentHandler($attachmentHandler);
+                }
+            }
+        );
+
+        return $container;
     }
 
     /**
-     * Reads option tree on page init.
-     *
-     * @return void
+     * Returns `true` if the active user can edit the given option of the
+     * edited user.
      */
-    protected function readOptionTree()
+    protected function isEditableOption(UserOption $option): bool
     {
-        $this->optionTree = $this->optionHandler->getOptionTree();
+        if (!$option->validateOptions() || !$option->validatePermissions()) {
+            return false;
+        }
+
+        return $option->isEditable(user: $this->formObject);
     }
 
-    #[\Override]
-    public function assignVariables()
+    /**
+     * Returns the form field for the given user option, administrators may
+     * leave required options empty when editing other users.
+     */
+    protected function getUserOptionFormField(UserOption $option): AbstractFormField
     {
-        parent::assignVariables();
+        $formField = $this->getDefaultUserOptionFormField($option);
 
-        WCF::getTPL()->assign([
-            'username' => $this->username,
-            'email' => $this->email,
-            'password' => $this->password,
-            'groupIDs' => $this->groupIDs,
-            'optionTree' => $this->optionTree,
-            'availableGroups' => $this->getAvailableGroups(),
-            'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
-            'languageID' => $this->languageID,
-            'visibleLanguages' => $this->visibleLanguages,
-            'availableContentLanguages' => LanguageFactory::getInstance()->getContentLanguages(),
-            'action' => 'add',
-            'userTitle' => $this->userTitle,
-            'signature' => $this->signature,
-            'disableSignature' => $this->disableSignature,
-            'disableSignatureReason' => $this->disableSignatureReason,
-            'disableSignatureExpires' => $this->disableSignatureExpires,
-            'attachmentHandler' => $this->attachmentHandler,
-            'attachmentObjectID' => $this->attachmentObjectID,
-            'attachmentObjectType' => $this->attachmentObjectType,
-            'attachmentParentObjectID' => 0,
-            'defaultSmilies' => $this->defaultSmilies,
-            'smileyCategories' => $this->smileyCategories,
-            'tmpHash' => $this->tmpHash,
-        ]);
-    }
+        if ($this->formObject !== null && $this->formObject->userID !== WCF::getUser()->userID) {
+            $formField->required(false);
+        }
 
-    #[\Override]
-    public function show()
-    {
-        // get the default language id
-        $this->languageID = $this->getDefaultFormLanguageID();
-
-        // show form
-        parent::show();
+        return $formField;
     }
 }

@@ -7,6 +7,7 @@
  * @since 6.2
  */
 
+import ColumnConfiguration from "./ColumnConfiguration";
 import Filter from "./Filter";
 import Selection from "./Selection";
 import Sorting from "./Sorting";
@@ -20,6 +21,7 @@ export const enum StateChangeCause {
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class State extends EventTarget {
   readonly #baseUrl: string;
+  readonly #columnConfiguration: ColumnConfiguration;
   readonly #filter: Filter;
   readonly #pagination: WoltlabCorePaginationElement;
   readonly #selection: Selection;
@@ -37,6 +39,7 @@ export class State extends EventTarget {
     sortOrder: string,
     defaultSortField: string,
     defaultSortOrder: string,
+    visibleColumns?: string[],
   ) {
     super();
 
@@ -53,6 +56,14 @@ export class State extends EventTarget {
     this.#filter = new Filter(gridId);
     this.#filter.addEventListener("grid-view:change", () => {
       this.#switchPage(1, StateChangeCause.Change);
+    });
+
+    this.#columnConfiguration = new ColumnConfiguration(gridId, visibleColumns);
+    this.#columnConfiguration.addEventListener("grid-view:change", () => {
+      // Changing the visible columns does not affect the current page.
+      this.dispatchEvent(
+        new CustomEvent("grid-view:change", { detail: { source: StateChangeCause.Change, includeHeader: true } }),
+      );
     });
 
     this.#sorting = new Sorting(table, sortField, sortOrder, defaultSortField, defaultSortOrder);
@@ -97,6 +108,10 @@ export class State extends EventTarget {
     return this.#filter.getActiveFilters();
   }
 
+  getVisibleColumns(): string[] | undefined {
+    return this.#columnConfiguration.getVisibleColumns();
+  }
+
   getSelectedIds(): number[] {
     return this.#selection.getSelectedIds();
   }
@@ -115,11 +130,11 @@ export class State extends EventTarget {
     this.#updateGridViewFooter();
   }
 
-  #switchPage(pageNo: number, source: StateChangeCause): void {
+  #switchPage(pageNo: number, source: StateChangeCause, includeHeader = false): void {
     this.#pagination.page = pageNo;
     this.#pageNo = pageNo;
 
-    this.dispatchEvent(new CustomEvent("grid-view:change", { detail: { source } }));
+    this.dispatchEvent(new CustomEvent("grid-view:change", { detail: { source, includeHeader } }));
   }
 
   #updateQueryString(): void {
@@ -156,6 +171,10 @@ export class State extends EventTarget {
       parameters.push(parameter);
     }
 
+    for (const parameter of this.#columnConfiguration.getQueryParameters()) {
+      parameters.push(parameter);
+    }
+
     if (parameters.length > 0) {
       url.search += url.search !== "" ? "&" : "?";
       url.search += new URLSearchParams(parameters).toString();
@@ -183,8 +202,9 @@ export class State extends EventTarget {
 
     this.#filter.updateFromSearchParams(url.searchParams);
     this.#sorting.updateFromSearchParams(url.searchParams);
+    const columnsChanged = this.#columnConfiguration.updateFromSearchParams(url.searchParams);
 
-    this.#switchPage(pageNo, StateChangeCause.History);
+    this.#switchPage(pageNo, StateChangeCause.History, columnsChanged);
   }
 
   #updateLastUrl(): void {
@@ -228,7 +248,7 @@ export class State extends EventTarget {
 }
 
 interface StateEventMap {
-  "grid-view:change": CustomEvent<{ source: StateChangeCause }>;
+  "grid-view:change": CustomEvent<{ source: StateChangeCause; includeHeader: boolean }>;
   "grid-view:get-bulk-interactions": CustomEvent<{ objectIds: number[] }>;
 }
 

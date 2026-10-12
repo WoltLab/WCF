@@ -8,13 +8,14 @@ use wcf\action\AbstractAction;
 use wcf\data\package\PackageCache;
 use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\option\UserOption;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\option\user\UserOptionHandler;
+use wcf\system\option\user\TUserOptionsByCategory;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\UserUtil;
@@ -33,6 +34,8 @@ use wcf\util\UserUtil;
  */
 final class UserExportGdprAction extends AbstractAction
 {
+    use TUserOptionsByCategory;
+
     /**
      * export data
      *
@@ -354,80 +357,62 @@ final class UserExportGdprAction extends AbstractAction
      */
     protected function exportUserOptions(): array
     {
-        $optionHandler = new UserOptionHandler(false, '', '');
-        $optionHandler->init();
-        $optionTree = $optionHandler->getOptionTree();
+        $optionsByCategory = $this->getUserOptionsByCategory('', static function (UserOption $option) {
+            return $option->validateOptions()
+                && $option->validatePermissions()
+                && $option->isVisible();
+        });
 
         $data = [];
-        foreach ($optionTree as $category) {
-            $this->exportUserOptionCategory($data, $category);
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param mixed[] &$data
-     * @param mixed[] $optionTree
-     * @return void
-     */
-    protected function exportUserOptionCategory(array &$data, array $optionTree): void
-    {
-        if (!empty($optionTree['options'])) {
-            foreach ($optionTree['options'] as $optionData) {
-                $option = $optionData['object'];
-
+        foreach ($optionsByCategory as $options) {
+            foreach ($options as $option) {
                 if (\in_array($option->optionName, $this->skipUserOptions, true)) {
                     // blacklisted option name
                     continue;
-                } else {
-                    if (\preg_match('~(?:^(?:admin|can)[A-Z]|PerPage$)~', $option->optionName)) {
-                        // ignore any option that begins with `admin*` and `can*`, or ends with `*perPage`
-                        continue;
-                    }
+                } elseif (\preg_match('~(?:^(?:admin|can)[A-Z]|PerPage$)~', $option->optionName)) {
+                    // ignore any option that begins with `admin*` and `can*`, or ends with `*perPage`
+                    continue;
                 }
 
                 $forceExport = \in_array($option->optionName, $this->exportUserOptionSettings, true);
 
                 // ignore settings unless they are explicitly white-listed
-                if (!$forceExport && \strpos($option->categoryName, 'settings.') === 0) {
-                    if (!\in_array($option->optionName, $this->exportUserOptionSettingsIfNotEmpty, true)) {
-                        continue;
-                    }
+                if (
+                    !$forceExport
+                    && \str_starts_with($option->categoryName, 'settings.')
+                    && !\in_array($option->optionName, $this->exportUserOptionSettingsIfNotEmpty, true)
+                ) {
+                    continue;
                 }
 
                 $optionValue = $this->user->getUserOption($option->optionName);
+                if (!$forceExport && $option->optionName === 'gender' && (string)$optionValue === '0') {
+                    // exclude the gender if there has been no selection
+                    continue;
+                }
+
                 if ($option->optionType === 'boolean') {
                     $optionValue = (bool)$optionValue;
-                } else {
-                    if ($option->optionType === 'select' || $option->optionType === 'timezone') {
-                        $formattedValue = $this->user->getFormattedUserOption($option->optionName);
-                        if ($formattedValue !== '') {
-                            $optionValue = $formattedValue;
-                        }
+                } elseif ($option->optionType === 'select' && (string)$optionValue !== '') {
+                    $formattedValue = $option->getFormOption()->getPlainTextFormatter()->format(
+                        (string)$optionValue,
+                        WCF::getLanguage()->languageID,
+                        $option->getConfiguration()
+                    );
+                    if ($formattedValue !== '') {
+                        $optionValue = $formattedValue;
                     }
                 }
 
                 // skip empty string values (but not values that resolve to `false` or `0`
-                if (!$forceExport) {
-                    if ($optionValue === '') {
-                        continue;
-                    } else {
-                        if ($option->optionName === 'gender' && $optionValue === '0') {
-                            // exclude the gender if there has been no selection
-                            continue;
-                        }
-                    }
+                if (!$forceExport && $optionValue === '') {
+                    continue;
                 }
 
                 $data[$option->optionName] = $optionValue;
             }
         }
 
-        if (!empty($optionTree['categories'])) {
-            foreach ($optionTree['categories'] as $category) {
-                $this->exportUserOptionCategory($data, $category);
-            }
-        }
+        return $data;
     }
 }

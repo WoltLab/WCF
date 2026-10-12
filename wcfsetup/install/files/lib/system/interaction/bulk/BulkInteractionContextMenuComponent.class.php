@@ -37,7 +37,12 @@ class BulkInteractionContextMenuComponent
                     $objects,
                     static fn(DatabaseObject $object) => $interaction->isAvailable($object)
                 );
-                $html .= '<li>' . $interaction->render($availableForObjects) . '</li>';
+                $option = $interaction->render($availableForObjects);
+                if ($option === '') {
+                    continue;
+                }
+
+                $html .= '<li>' . $option . '</li>';
             }
         }
 

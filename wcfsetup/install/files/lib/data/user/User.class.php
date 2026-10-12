@@ -2,14 +2,20 @@
 
 namespace wcf\data\user;
 
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\DatabaseObject;
 use wcf\data\IPopoverObject;
 use wcf\data\IUserContent;
 use wcf\data\language\Language;
+use wcf\data\user\avatar\AvatarDecorator;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\option\UserOption;
+use wcf\data\user\rank\UserRank;
+use wcf\event\user\UserEmailConfirmationChecking;
+use wcf\event\user\UserPrivacySettingChecking;
 use wcf\page\UserPage;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
@@ -76,8 +82,10 @@ use wcf\util\UserUtil;
  * @property-read   0|1     $multifactorActive      is `1` if the use has enabled a second factor, otherwise `0`
  * @property-read   int     $trophyPoints           total number of user's trophies in active categories
  * @property-read   ?string $timezone
+ *
+ * @extends CollectionDatabaseObject<UserCollection>
  */
-final class User extends DatabaseObject implements IPopoverObject, IRouteController, IUserContent, \Stringable
+final class User extends CollectionDatabaseObject implements IPopoverObject, IRouteController, IUserContent, \Stringable
 {
     /**
      * list of group ids
@@ -106,6 +114,15 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      * @var UserOption[]|null
      */
     protected static ?array $userOptions = null;
+
+    /**
+     * access levels of the privacy settings
+     * @since 6.3
+     */
+    public const ACCESS_EVERYONE = 0;
+    public const ACCESS_REGISTERED = 1;
+    public const ACCESS_FOLLOWING = 2;
+    public const ACCESS_NOBODY = 3;
 
     const REGISTER_ACTIVATION_NONE = 0;
 
@@ -165,10 +182,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
         $defaultAlgorithm = $manager->getDefaultAlgorithm();
         if (\get_class($algorithm) !== \get_class($defaultAlgorithm) || $algorithm->needsRehash($hash)) {
-            $userEditor = new UserEditor($this);
-            $userEditor->update([
-                'password' => $password,
-            ]);
+            UserBuilder::forUpdate($this)
+                ->setPassword($password)
+                ->update();
         }
 
         // $isValid is always true at this point. However we intentionally use a variable
@@ -260,6 +276,73 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         }
 
         return $this->languageIDs;
+    }
+
+    /**
+     * Returns the avatar of this user.
+     *
+     * @since 6.3
+     */
+    public function getAvatar(): AvatarDecorator
+    {
+        return $this->getCollection()->getAvatar($this);
+    }
+
+    /**
+     * Returns the rank of this user or null if they have no rank.
+     *
+     * @since 6.3
+     */
+    public function getRank(): ?UserRank
+    {
+        return $this->getCollection()->getRank($this);
+    }
+
+    /**
+     * Returns the custom user title or the title of the rank of this user.
+     *
+     * @since 6.3
+     */
+    public function getUserTitle(): string
+    {
+        return $this->getCollection()->getUserTitle($this);
+    }
+
+    /**
+     * Returns true if this user is online and the active user can see the
+     * online status.
+     *
+     * @since 6.3
+     */
+    public function isOnline(): bool
+    {
+        return $this->getCollection()->isOnline($this);
+    }
+
+    /**
+     * Returns true if the user with the given id can access the data protected
+     * by the privacy setting `$name` of this user. Checks the access of the
+     * active user if no user id is given.
+     *
+     * @since 6.3
+     */
+    public function isAccessible(string $name, ?int $userID = null): bool
+    {
+        $userID ??= WCF::getUser()->userID;
+
+        $accessible = match ((int)$this->{$name}) {
+            self::ACCESS_EVERYONE => true,
+            self::ACCESS_REGISTERED => $userID !== 0,
+            self::ACCESS_FOLLOWING => $userID !== 0
+                && ($userID === $this->userID || $this->getCollection()->isFollowing($this, $userID)),
+            self::ACCESS_NOBODY => false,
+            default => true,
+        };
+
+        $event = new UserPrivacySettingChecking($this, $name, $userID, $accessible);
+        EventHandler::getInstance()->fire($event);
+
+        return $event->isAccessible();
     }
 
     /**
@@ -497,6 +580,178 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     public function canEdit(): bool
     {
         return WCF::getSession()->hasPermission('admin.user.canEditUser') && UserGroup::isAccessibleGroup($this->getGroupIDs());
+    }
+
+    /**
+     * Returns true if all groups of this user are accessible to the active user
+     * and, unless `$allowSelf` is set, this user is not the active user.
+     *
+     * @since 6.3
+     */
+    public function isManageable(bool $allowSelf = false): bool
+    {
+        if (!$allowSelf && $this->userID === WCF::getUser()->userID) {
+            return false;
+        }
+
+        return UserGroup::isAccessibleGroup($this->getGroupIDs());
+    }
+
+    /**
+     * Returns true if the active user can enable or disable this user.
+     *
+     * @since 6.3
+     */
+    public function canEnable(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canEnableUser')
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can confirm or unconfirm the email
+     * address of this user.
+     *
+     * @since 6.3
+     */
+    public function canConfirmEmail(): bool
+    {
+        $event = new UserEmailConfirmationChecking($this, $this->canEnable());
+        EventHandler::getInstance()->fire($event);
+
+        return $event->isAllowed();
+    }
+
+    /**
+     * Returns true if the active user can ban or unban this user.
+     *
+     * @since 6.3
+     */
+    public function canBan(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canBanUser')
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can disable or enable the avatar of
+     * this user.
+     *
+     * @since 6.3
+     */
+    public function canDisableAvatar(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canDisableAvatar')
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can disable or enable the cover photo of
+     * this user.
+     *
+     * @since 6.3
+     */
+    public function canDisableCoverPhoto(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canDisableCoverPhoto')
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can disable or enable the signature of
+     * this user.
+     *
+     * @since 6.3
+     */
+    public function canDisableSignature(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canDisableSignature')
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can send a link to set a new password to
+     * this user, which is not possible for users that log in via a third party
+     * provider.
+     *
+     * @since 6.3
+     */
+    public function canSendNewPassword(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canEditPassword')
+            && $this->authData === ''
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can remove the connection of this user
+     * to a third party login provider.
+     *
+     * @since 6.3
+     */
+    public function canDisconnectThirdPartyLogin(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canEditPassword')
+            && $this->authData !== ''
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can completely disable the multi-factor
+     * authentication of this user.
+     *
+     * @since 6.3
+     */
+    public function canDisableMultifactor(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canEditPassword')
+            && $this->multifactorActive !== 0
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can resend the activation mail to this user.
+     *
+     * @since 6.3
+     */
+    public function canResendActivationMail(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canEnableUser')
+            && $this->canEmailConfirm()
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can delete this user and its content.
+     *
+     * @since 6.3
+     */
+    public function canDelete(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canDeleteUser')
+            && $this->isManageable();
+    }
+
+    /**
+     * Returns true if the active user can export the GDPR data of this user.
+     *
+     * @since 6.3
+     */
+    public function canExportGdpr(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canExportGdprData')
+            && $this->isManageable(true);
+    }
+
+    /**
+     * Returns true if the active user can send an email to this user.
+     *
+     * @since 6.3
+     */
+    public function canMail(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.user.canMailUser')
+            && $this->userID !== WCF::getUser()->userID;
     }
 
     /**

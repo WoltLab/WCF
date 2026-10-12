@@ -2,8 +2,10 @@
 
 namespace wcf\form;
 
+use wcf\command\user\ConfirmUserEmail;
+use wcf\command\user\UpdateUser;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
+use wcf\data\user\UserBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\form\builder\container\FormContainer;
@@ -129,22 +131,19 @@ final class EmailActivationForm extends AbstractFormBuilderForm
     {
         AbstractForm::save();
 
-        $data = [
-            'email' => $this->user->newEmail,
-            'newEmail' => '',
-            'reactivationCode' => 0,
-        ];
-
         // enable new email
-        $this->objectAction = new UserAction([$this->user], 'update', [
-            'data' => \array_merge($this->additionalFields, $data),
-        ]);
-        $this->objectAction->executeAction();
+        $builder = UserBuilder::forUpdate($this->user)
+            ->setEmail($this->user->newEmail)
+            ->setNewEmail('')
+            ->setReactivationCode(0);
+        foreach ($this->additionalFields as $name => $value) {
+            $builder->setCustomProperty($name, $value);
+        }
+        (new UpdateUser($builder))();
 
         // confirm email
         if (!$this->user->isEmailConfirmed() && $this->user->blacklistMatches === '') {
-            $this->objectAction = new UserAction([$this->user], 'confirmEmail');
-            $this->objectAction->executeAction();
+            (new ConfirmUserEmail($this->user))();
         }
         $this->saved();
 

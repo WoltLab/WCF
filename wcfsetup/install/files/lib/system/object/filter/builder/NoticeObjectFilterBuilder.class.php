@@ -28,6 +28,7 @@ use wcf\system\object\filter\user\UserMobileBrowserObjectFilter;
 use wcf\system\object\filter\user\UserMultifactorObjectFilter;
 use wcf\system\object\filter\user\UserNotInGroupObjectFilter;
 use wcf\system\object\filter\user\UserNoTrophyObjectFilter;
+use wcf\system\object\filter\user\UserOptionObjectFilterFactory;
 use wcf\system\object\filter\user\UserRegistrationDateObjectFilter;
 use wcf\system\object\filter\user\UserRegistrationDaysObjectFilter;
 use wcf\system\object\filter\user\UserSignatureObjectFilter;
@@ -79,6 +80,9 @@ final class NoticeObjectFilterBuilder extends AbstractObjectFilterBuilder
         $event->register(new UserIntegerPropertyObjectFilter('trophyPoints', 'wcf.user.condition.trophyPoints'));
         $event->register(new UserTrophyObjectFilter());
         $event->register(new UserNoTrophyObjectFilter());
+        foreach ((new UserOptionObjectFilterFactory())->getFilters() as $filter) {
+            $event->register($filter);
+        }
 
         EventHandler::getInstance()->fire($event);
 

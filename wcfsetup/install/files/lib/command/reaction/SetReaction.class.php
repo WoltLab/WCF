@@ -10,7 +10,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\object\IReactionObject;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\event\reaction\ReactionSet;
 use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\database\exception\DatabaseQueryException;
@@ -121,8 +121,9 @@ final class SetReaction
             $likeable->getUserID()
         );
 
-        $userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
-        $userEditor->updateCounters(['likesReceived' => 1]);
+        UserBuilder::forUpdate(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()))
+            ->incrementLikesReceived(1)
+            ->update();
     }
 
     private function updateUserActivityEvent(

@@ -16,7 +16,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -388,10 +388,9 @@ class ReactionAction extends AbstractDatabaseObjectAction
             $count = $statement->fetchSingleColumn();
 
             // update received likes
-            $userEditor = new UserEditor(new User($newLikeObject->objectUserID));
-            $userEditor->updateCounters([
-                'likesReceived' => $count,
-            ]);
+            UserBuilder::forUpdate(new User($newLikeObject->objectUserID))
+                ->incrementLikesReceived($count)
+                ->update();
 
             // add activity points
             UserActivityPointHandler::getInstance()->fireEvents(

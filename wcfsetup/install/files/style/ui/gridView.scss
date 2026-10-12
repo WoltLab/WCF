@@ -237,7 +237,9 @@ html.iOS {
 }
 
 .gridView__filterButton {
+	display: flex;
 	flex: 0 0 auto;
+	gap: 5px;
 }
 
 .gridView__footer {
@@ -358,4 +360,9 @@ html[data-color-scheme="dark"] .gridView__footer__container {
 	.gridView__filter__list {
 		grid-template-columns: 1fr;
 	}
+}
+
+.gridView__statusIcons {
+	position: relative;
+	z-index: 1;
 }

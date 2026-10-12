@@ -20,18 +20,21 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridVi
         #noItemsNotice;
         #bulkInteractionProviderClassName;
         #gridViewParameters;
-        constructor(gridId, gridClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC", defaultSortField = "", defaultSortOrder = "ASC", bulkInteractionProviderClassName, gridViewParameters) {
+        constructor(gridId, gridClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC", defaultSortField = "", defaultSortOrder = "ASC", bulkInteractionProviderClassName, gridViewParameters, visibleColumns) {
             this.#gridClassName = gridClassName;
             this.#table = document.getElementById(`${gridId}_table`);
             this.#noItemsNotice = document.getElementById(`${gridId}_noItemsNotice`);
             this.#bulkInteractionProviderClassName = bulkInteractionProviderClassName;
             this.#gridViewParameters = gridViewParameters;
             this.#initInteractions();
-            this.#state = this.#setupState(gridId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
+            this.#state = this.#setupState(gridId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder, visibleColumns);
             this.#initEventListeners();
         }
-        async #loadRows(cause) {
-            const response = await (0, GetRows_1.getRows)(this.#gridClassName, this.#state.getPageNo(), this.#state.getSortField(), this.#state.getSortOrder(), this.#state.getActiveFilters(), this.#gridViewParameters);
+        async #loadRows(cause, includeHeader = false) {
+            const response = await (0, GetRows_1.getRows)(this.#gridClassName, this.#state.getPageNo(), this.#state.getSortField(), this.#state.getSortOrder(), this.#state.getActiveFilters(), this.#gridViewParameters, this.#state.getVisibleColumns(), includeHeader);
+            if (response.header !== undefined) {
+                this.#replaceHeaderColumns(response.header);
+            }
             Util_1.default.setInnerHtml(this.#table.querySelector("tbody"), response.template);
             this.#table.hidden = response.totalRows == 0;
             this.#noItemsNotice.hidden = response.totalRows != 0;
@@ -39,11 +42,19 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridVi
             Listener_1.default.trigger();
         }
         async #refreshRow(row) {
-            const { template } = await (0, GetRow_1.getRow)(this.#gridClassName, row.dataset.objectId, this.#state.getActiveFilters(), this.#gridViewParameters);
+            const { template } = await (0, GetRow_1.getRow)(this.#gridClassName, row.dataset.objectId, this.#state.getActiveFilters(), this.#gridViewParameters, this.#state.getVisibleColumns());
             row.replaceWith(Util_1.default.createFragmentFromHtml(template));
             this.#state.refreshSelection();
             Listener_1.default.trigger();
             this.#checkEmptyTable();
+        }
+        #replaceHeaderColumns(html) {
+            const headerRow = this.#table.querySelector("thead .gridView__headerRow");
+            headerRow.querySelectorAll("th[data-id]").forEach((element) => element.remove());
+            // The selection and action columns are not part of the configurable
+            // columns and must be preserved.
+            const actionColumn = headerRow.querySelector(".gridView__actionColumn");
+            headerRow.insertBefore(Util_1.default.createFragmentFromHtml(html), actionColumn);
         }
         #initInteractions() {
             (0, Selector_1.wheneverFirstSeen)(`#${this.#table.id} tbody tr`, (row) => {
@@ -91,10 +102,10 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridVi
                 this.#checkEmptyTable();
             });
         }
-        #setupState(gridId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {
-            const state = new State_1.State(gridId, this.#table, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder);
+        #setupState(gridId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder, visibleColumns) {
+            const state = new State_1.State(gridId, this.#table, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder, visibleColumns);
             state.addEventListener("grid-view:change", (event) => {
-                void this.#loadRows(event.detail.source);
+                void this.#loadRows(event.detail.source, event.detail.includeHeader);
             });
             state.addEventListener("grid-view:get-bulk-interactions", (0, PromiseMutex_1.promiseMutex)((event) => this.#loadBulkInteractions(event.detail.objectIds)));
             return state;

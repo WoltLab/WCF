@@ -4800,8 +4800,6 @@ return [
             MediumtextDatabaseTableColumn::create('defaultValue'),
             TextDatabaseTableColumn::create('validationPattern'),
             MediumtextDatabaseTableColumn::create('selectOptions'),
-            MediumtextDatabaseTableColumn::create('enableOptions'),
-            MediumtextDatabaseTableColumn::create('labeledUrl'),
             DefaultFalseBooleanDatabaseTableColumn::create('required'),
             DefaultFalseBooleanDatabaseTableColumn::create('askDuringRegistration'),
             TinyintDatabaseTableColumn::create('editable')
@@ -4810,19 +4808,17 @@ return [
             TinyintDatabaseTableColumn::create('visible')
                 ->notNull()
                 ->defaultValue(0),
-            NotNullVarchar255DatabaseTableColumn::create('outputClass')
-                ->defaultValue(''),
             DefaultFalseBooleanDatabaseTableColumn::create('searchable'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             TextDatabaseTableColumn::create('permissions'),
             TextDatabaseTableColumn::create('options'),
-            MediumtextDatabaseTableColumn::create('additionalData'),
             DefaultFalseBooleanDatabaseTableColumn::create('originIsSystem'),
             DefaultFalseBooleanDatabaseTableColumn::create('showOnUserCard'),
             VarcharDatabaseTableColumn::create('l10nIdentifier')
                 ->length(255),
+            MediumtextDatabaseTableColumn::create('configuration'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -4882,6 +4878,8 @@ return [
                 ->defaultValue(0),
             TextDatabaseTableColumn::create('permissions'),
             TextDatabaseTableColumn::create('options'),
+            VarcharDatabaseTableColumn::create('l10nIdentifier')
+                ->length(255),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -4895,6 +4893,34 @@ return [
                 ->columns(['packageID'])
                 ->referencedTable('wcf1_package')
                 ->referencedColumns(['packageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_user_option_category_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('categoryID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            TinyintDatabaseTableColumn::create('isPristine')
+                ->notNull()
+                ->defaultValue(1),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('categoryID')
+                ->columns(['categoryID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['categoryID'])
+                ->referencedTable('wcf1_user_option_category')
+                ->referencedColumns(['categoryID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),

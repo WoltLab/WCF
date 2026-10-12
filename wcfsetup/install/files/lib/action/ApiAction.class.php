@@ -13,7 +13,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\event\endpoint\ControllerCollecting;
 use wcf\http\attribute\AllowHttpMethod;
+use wcf\http\middleware\CheckForForceLogin;
 use wcf\system\cache\builder\ApiEndpointCacheBuilder;
+use wcf\system\endpoint\AvailableDuringForceLogin;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\RequestFailure;
 use wcf\system\endpoint\RequestType;
@@ -105,6 +107,13 @@ final class ApiAction implements RequestHandlerInterface
             $controller = $result->handler;
         }
         \assert($controller instanceof IController);
+
+        if (
+            CheckForForceLogin::appliesToActiveUser()
+            && (new \ReflectionClass($controller))->getAttributes(AvailableDuringForceLogin::class) === []
+        ) {
+            return $this->toErrorResponse(RequestFailure::PermissionDenied, 'force_login');
+        }
 
         try {
             return $controller($request, $result->variables);

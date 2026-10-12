@@ -133,7 +133,6 @@ class TemplateEngine extends SingletonFactory
         'uploadFieldComponent' => 'shared_uploadFieldComponent',
         'userBBCodeTag' => 'shared_bbcode_user',
         'userConditions' => 'shared_userConditions',
-        'userOptionsCondition' => 'shared_userOptionsCondition',
         'worker' => 'shared_worker',
         'wysiwyg' => 'shared_wysiwyg',
         'groupBBCodeTag' => 'shared_bbcode_group',

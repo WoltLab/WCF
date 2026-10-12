@@ -29,7 +29,7 @@ final class UserProfileStatItemCollecting implements IPsr14Event
             $this->register(UserProfileStatItem::forLink(
                 WCF::getLanguage()->get('wcf.user.reactionsReceived'),
                 StringUtil::formatNumeric($this->user->likesReceived),
-                '#likes'
+                $this->user->getLink() . '#likes'
             ));
         }
 

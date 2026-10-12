@@ -8,6 +8,30 @@
 		<file>js/WoltLabSuite/Core/Ui/User/CoverPhoto/Delete.js</file>
 		<file>js/WoltLabSuite/Core/Ui/User/CoverPhoto/Upload.js</file>
 		<file>lib/form/AvatarEditForm.class.php</file>
+		<file>lib/form/UserSearchForm.class.php</file>
+		<file>lib/action/EmailValidationAction.class.php</file>
+		<file>lib/action/UsernameValidationAction.class.php</file>
+		<file>js/WoltLabSuite/Core/Acp/Controller/User/List.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Editor.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/Abstract.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/BanAction.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/DeleteAction.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/DisableAction.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/SendNewPasswordAction.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/ToggleConfirmEmailAction.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Ban.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Ban/Dialog.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Action/Handler/Delete.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Clipboard.js</file>
+		<file>js/WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler.js</file>
+		<file>js/WoltLabSuite/Core/Ui/User/Editor.js</file>
+		<file>lib/acp/action/UserQuickSearchAction.class.php</file>
+		<file>lib/acp/form/UserSearchForm.class.php</file>
+		<file>lib/data/user/UserContentAction.class.php</file>
+		<file>lib/data/user/UserRegistrationAction.class.php</file>
+		<file>lib/system/clipboard/action/UserClipboardAction.class.php</file>
+		<file>lib/system/clipboard/action/UserContentClipboardAction.class.php</file>
+		<file>lib/system/listView/user/UserSearchResultsListView.class.php</file>
 		<file>lib/system/api/cuyz/valinor/qa/PHPStan/Stubs/Psr/SimpleCache/CacheInterface.stub</file>
 		<file>lib/system/api/cuyz/valinor/src/Cache/ChainCache.php</file>
 		<file>lib/system/api/cuyz/valinor/src/Cache/WarmupCache.php</file>
@@ -76,6 +100,23 @@
 		<file>lib/system/upload/AvatarUploadFileValidationStrategy.class.php</file>
 		<file>lib/system/upload/UserCoverPhotoUploadFileSaveStrategy.class.php</file>
 		<file>lib/system/upload/UserCoverPhotoUploadFileValidationStrategy.class.php</file>
+		<file>lib/system/option/user/BirthdayUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/DateUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/FacebookUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/FloatUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/ImageUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/LabeledUrlUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/MessageUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/NewlineToBreakUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/SelectOptionsUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/TwitterUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/URLUserOptionOutput.class.php</file>
+		<file>lib/system/option/user/UserOptionHandler.class.php</file>
+		<file>lib/acp/form/UserOptionListForm.class.php</file>
+		<file>lib/system/condition/UserOptionsCondition.class.php</file>
+		<file>lib/acp/form/UserContentRevertChangesForm.class.php</file>
+		<file>lib/acp/form/UserAssignToGroupForm.class.php</file>
+		<file>lib/acp/form/UserEmailAddressExportForm.class.php</file>
 
 		<file>icon/font-awesome/v6/brands/42-group.svg</file>
 		<file>icon/font-awesome/v6/brands/500px.svg</file>

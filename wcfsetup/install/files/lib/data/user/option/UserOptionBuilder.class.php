@@ -4,6 +4,11 @@ namespace wcf\data\user\option;
 
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
+use wcf\data\package\PackageCache;
+use wcf\system\database\table\column\IDatabaseTableColumn;
+use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
+use wcf\system\database\table\DatabaseTableChangeProcessor;
+use wcf\system\database\table\PartialDatabaseTable;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -28,6 +33,12 @@ use wcf\util\StringUtil;
 final class UserOptionBuilder extends DatabaseObjectBuilder
 {
     private bool $isGenericOptionName = false;
+
+    /**
+     * Is `true` if the configuration has been set explicitly and must not be
+     * derived from the select options and the required flag.
+     */
+    private bool $hasExplicitConfiguration = false;
 
     /**
      * @var L10nValue
@@ -107,6 +118,10 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    /**
+     * Sets the legacy option type, see `UserOption::getFormOption()` for the
+     * mapping to form options.
+     */
     public function setOptionType(string $optionType): static
     {
         $this->properties['optionType'] = $optionType;
@@ -128,23 +143,13 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    /**
+     * Sets the select options in the legacy format, one `value:label` pair per line.
+     */
     public function setSelectOptions(string $selectOptions): static
     {
         $this->properties['selectOptions'] = $selectOptions;
-
-        return $this;
-    }
-
-    public function setEnableOptions(string $enableOptions): static
-    {
-        $this->properties['enableOptions'] = $enableOptions;
-
-        return $this;
-    }
-
-    public function setLabeledUrl(string $labeledUrl): static
-    {
-        $this->properties['labeledUrl'] = $labeledUrl;
+        $this->syncConfiguration();
 
         return $this;
     }
@@ -180,6 +185,7 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     public function setRequired(bool $required): static
     {
         $this->properties['required'] = $required ? 1 : 0;
+        $this->syncConfiguration();
 
         return $this;
     }
@@ -201,13 +207,6 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     public function setShowOnUserCard(bool $showOnUserCard): static
     {
         $this->properties['showOnUserCard'] = $showOnUserCard ? 1 : 0;
-
-        return $this;
-    }
-
-    public function setOutputClass(string $outputClass): static
-    {
-        $this->properties['outputClass'] = $outputClass;
 
         return $this;
     }
@@ -234,11 +233,17 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     }
 
     /**
-     * @param array<string, mixed> $additionalData
+     * Sets the form option configuration explicitly instead of deriving it
+     * from the select options and the required flag.
+     *
+     * @param array<string, mixed> $configuration
      */
-    public function setAdditionalData(array $additionalData): static
+    public function setConfiguration(array $configuration): static
     {
-        $this->properties['additionalData'] = \serialize($additionalData);
+        $this->hasExplicitConfiguration = true;
+        $this->properties['configuration'] = $configuration !== []
+            ? \json_encode($configuration, \JSON_THROW_ON_ERROR)
+            : '';
 
         return $this;
     }
@@ -253,11 +258,9 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     protected function afterCreate(DatabaseObject $object): void
     {
         // add the dynamic value column for this option
-        WCF::getDB()->getEditor()->addColumn(
-            'wcf1_user_option_value',
-            'userOption' . $object->optionID,
-            UserOptionEditor::getColumnDefinition($object->optionType)
-        );
+        self::applyColumnChanges([
+            $object->getFormOption()->getDatabaseTableColumn($object->getIdentifier()),
+        ]);
 
         // apply the default value to all existing rows
         if ($object->defaultValue !== null) {
@@ -282,12 +285,9 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     {
         // re-type the value column if the option type changed
         if ($object->optionType !== $this->getObject()->optionType) {
-            WCF::getDB()->getEditor()->alterColumn(
-                'wcf1_user_option_value',
-                'userOption' . $object->optionID,
-                'userOption' . $object->optionID,
-                UserOptionEditor::getColumnDefinition($object->optionType)
-            );
+            self::applyColumnChanges([
+                $object->getFormOption()->getDatabaseTableColumn($object->getIdentifier()),
+            ]);
         }
 
         $this->saveL10nValues($object);
@@ -321,8 +321,85 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     #[\Override]
     protected static function beforeDeleteAll(array $objectIDs): void
     {
-        foreach ($objectIDs as $objectID) {
-            WCF::getDB()->getEditor()->dropColumn('wcf1_user_option_value', 'userOption' . $objectID);
+        // the column type is irrelevant for dropping a column, only its name is used
+        self::applyColumnChanges(\array_map(
+            static fn($objectID) => MediumtextDatabaseTableColumn::create('userOption' . $objectID)->drop(),
+            $objectIDs
+        ));
+    }
+
+    /**
+     * Applies the given column changes to the `wcf1_user_option_value` table.
+     *
+     * The columns are owned by `com.woltlab.wcf` regardless of the package
+     * that provides the option, matching the ownership of the table itself.
+     *
+     * @param list<IDatabaseTableColumn> $columns
+     */
+    private static function applyColumnChanges(array $columns): void
+    {
+        $tables = [
+            PartialDatabaseTable::create('wcf1_user_option_value')
+                ->columns($columns),
+        ];
+
+        $processor = new DatabaseTableChangeProcessor(
+            PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf'),
+            null,
+            WCF::getDB()->getEditor(),
+        );
+        while ($processor->process($tables)) {
         }
+    }
+
+    /**
+     * Derives the configuration from the select options and the required flag,
+     * falling back to the values of the updated option for the missing one.
+     */
+    private function syncConfiguration(): void
+    {
+        if ($this->hasExplicitConfiguration) {
+            return;
+        }
+
+        $this->properties['configuration'] = self::buildConfiguration(
+            (string)($this->properties['selectOptions'] ?? ($this->isUpdate() ? $this->getObject()->selectOptions : '')),
+            (bool)($this->properties['required'] ?? ($this->isUpdate() ? $this->getObject()->required : false))
+        );
+    }
+
+    /**
+     * Builds the JSON-encoded form option configuration from the legacy option data.
+     */
+    public static function buildConfiguration(string $selectOptions, bool $required): string
+    {
+        $configuration = [];
+        if ($required) {
+            $configuration['required'] = 1;
+        }
+
+        $selectOptions = StringUtil::trim(StringUtil::unifyNewlines($selectOptions));
+        if ($selectOptions !== '') {
+            $options = [];
+            foreach (\explode("\n", $selectOptions) as $selectOption) {
+                $key = $value = $selectOption;
+                if (\str_contains($selectOption, ':')) {
+                    [$key, $value] = \explode(':', $selectOption, 2);
+                }
+
+                $options[] = [
+                    'key' => $key,
+                    'value' => [0 => $value],
+                ];
+            }
+
+            $configuration['selectOptions'] = \json_encode($options, \JSON_THROW_ON_ERROR);
+        }
+
+        if ($configuration === []) {
+            return '';
+        }
+
+        return \json_encode($configuration, \JSON_THROW_ON_ERROR);
     }
 }

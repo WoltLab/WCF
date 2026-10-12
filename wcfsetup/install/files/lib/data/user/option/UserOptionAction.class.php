@@ -12,6 +12,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<UserOption, UserOptionEditor>
+ * @deprecated 6.3 use `UserOptionBuilder` instead.
  */
 class UserOptionAction extends AbstractDatabaseObjectAction
 {
@@ -19,19 +20,4 @@ class UserOptionAction extends AbstractDatabaseObjectAction
      * @inheritDoc
      */
     protected $className = UserOptionEditor::class;
-
-    /**
-     * @inheritDoc
-     */
-    protected $permissionsCreate = ['admin.user.canManageUserOption'];
-
-    /**
-     * @inheritDoc
-     */
-    protected $permissionsUpdate = ['admin.user.canManageUserOption'];
-
-    /**
-     * @inheritDoc
-     */
-    protected $requireACP = ['create', 'update'];
 }
