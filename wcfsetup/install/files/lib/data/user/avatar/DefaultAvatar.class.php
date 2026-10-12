@@ -85,13 +85,19 @@ SVG;
     }
 
     #[\Override]
-    public function getImageTag(?int $size = null)
+    public function getImageTag(?int $size = null, bool $lazyLoading = true)
     {
         if ($size === null) {
             $size = $this->size;
         }
 
-        return '<img src="' . StringUtil::encodeHTML($this->getURL($size)) . '" width="' . $size . '" height="' . $size . '" alt="" class="userAvatarImage">';
+        return \sprintf(
+            '<img src="%s" width="%d" height="%d" alt="" class="userAvatarImage" loading="%s">',
+            StringUtil::encodeHTML($this->getURL($size)),
+            $size,
+            $size,
+            $lazyLoading ? 'lazy' : 'eager'
+        );
     }
 
     #[\Override]
