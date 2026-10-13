@@ -52,7 +52,12 @@ class UrlFormField extends TextFormField
         if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '')) {
             $this->addValidationError(new FormFieldValidationError('empty'));
         } elseif ($this->getValue() !== null && $this->getValue() !== '') {
-            if (!Url::is($text)) {
+            // `FILTER_VALIDATE_URL` accepts arbitrary schemes, including
+            // `javascript://`, therefore only `http` and `https` are allowed.
+            if (
+                !Url::is($text)
+                || !\in_array(\strtolower(Url::parse($text)['scheme']), ['http', 'https'], true)
+            ) {
                 $this->addValidationError(new FormFieldValidationError(
                     'invalid',
                     'wcf.form.field.url.error.invalid',
