@@ -55,7 +55,14 @@ class UrlFormField extends TextFormField
             $this->addValidationError(new FormFieldValidationError('empty'));
         } elseif ($this->getValue() !== null && $this->getValue() !== '') {
             try {
-                new Uri($text);
+                $uri = new Uri($text);
+
+                // `Uri` only accepts `http` and `https` but also permits relative
+                // URLs, which browsers may interpret differently, for example
+                // `java\tscript:` is treated as `javascript:`.
+                if ($uri->getScheme() === '') {
+                    throw new InvalidArgumentException();
+                }
             } catch (InvalidArgumentException) {
                 $this->addValidationError(new FormFieldValidationError(
                     'invalid',
