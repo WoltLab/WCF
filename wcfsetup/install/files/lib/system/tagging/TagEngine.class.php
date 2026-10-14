@@ -305,25 +305,10 @@ class TagEngine extends SingletonFactory
      */
     public function getSubselectForObjectsByTags($objectType, array $tags)
     {
-        $parameters = [$this->getObjectTypeID($objectType)];
-        $tagIDs = \implode(',', \array_map(static function (Tag $tag) use (&$parameters) {
-            $parameters[] = $tag->tagID;
-
-            return '?';
-        }, $tags));
-        $parameters[] = \count($tags);
-
-        $sql = "SELECT      objectID
-                FROM        wcf1_tag_to_object
-                WHERE       objectTypeID = ?
-                        AND tagID IN (" . $tagIDs . ")
-                GROUP BY    objectID
-                HAVING  COUNT(objectID) = ?";
-
-        return [
-            'sql' => $sql,
-            'parameters' => $parameters,
-        ];
+        return $this->getSubselectForObjectsByTagIDs(
+            $objectType,
+            \array_map(static fn(Tag $tag) => $tag->tagID, $tags)
+        );
     }
 
     /**
@@ -336,16 +321,28 @@ class TagEngine extends SingletonFactory
      */
     public function getSubselectForObjectsByTagIDs(string $objectType, array $tagIDs): array
     {
-        $parameters = \array_merge([$this->getObjectTypeID($objectType)], $tagIDs);
-        $parameters[] = \count($tagIDs);
-        $placeholders = \implode(',', \array_map(static fn(int $tagID) => '?', $tagIDs));
+        // Joining once per additional tag instead of using `GROUP BY … HAVING`
+        // keeps the subselect eligible for a semijoin, allowing MySQL to drive
+        // the outer query from the (few) tagged objects.
+        $tagIDs = \array_values($tagIDs);
+        $joins = '';
+        $parameters = [];
+        for ($i = 1, $length = \count($tagIDs); $i < $length; $i++) {
+            $joins .= "
+                INNER JOIN  wcf1_tag_to_object tag_to_object{$i}
+                ON          tag_to_object{$i}.objectTypeID = tag_to_object0.objectTypeID
+                        AND tag_to_object{$i}.objectID = tag_to_object0.objectID
+                        AND tag_to_object{$i}.tagID = ?";
+            $parameters[] = $tagIDs[$i];
+        }
+        $parameters[] = $this->getObjectTypeID($objectType);
+        $parameters[] = $tagIDs[0];
 
-        $sql = "SELECT      objectID
-                FROM        wcf1_tag_to_object
-                WHERE       objectTypeID = ?
-                        AND tagID IN (" . $placeholders . ")
-                GROUP BY    objectID
-                HAVING  COUNT(objectID) = ?";
+        $sql = "SELECT      tag_to_object0.objectID
+                FROM        wcf1_tag_to_object tag_to_object0
+                {$joins}
+                WHERE       tag_to_object0.objectTypeID = ?
+                        AND tag_to_object0.tagID = ?";
 
         return [
             'sql' => $sql,
