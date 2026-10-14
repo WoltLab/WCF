@@ -76,10 +76,8 @@ final class EmailActivationForm extends AbstractFormBuilderForm
             return;
         }
 
-        if ($this->user->reactivationCode == 0) {
-            throw new NamedUserException(HtmlString::fromSafeHtml(
-                WCF::getLanguage()->get('wcf.user.registerActivation.error.userAlreadyEnabled')
-            ));
+        if ($this->user->reactivationCode === 0) {
+            return;
         }
 
         // Check whether the new email isn't unique anymore.
@@ -131,24 +129,28 @@ final class EmailActivationForm extends AbstractFormBuilderForm
     {
         AbstractForm::save();
 
-        $data = [
-            'email' => $this->user->newEmail,
-            'newEmail' => '',
-            'reactivationCode' => 0,
-        ];
+        // Link scanners of mail providers may have consumed the activation link
+        // before the user follows it, which must look like a regular activation.
+        if ($this->user->reactivationCode !== 0) {
+            $data = [
+                'email' => $this->user->newEmail,
+                'newEmail' => '',
+                'reactivationCode' => 0,
+            ];
 
-        // enable new email
-        $this->objectAction = new UserAction([$this->user], 'update', [
-            'data' => \array_merge($this->additionalFields, $data),
-        ]);
-        $this->objectAction->executeAction();
-
-        // confirm email
-        if (!$this->user->isEmailConfirmed() && empty($this->user->blacklistMatches)) {
-            $this->objectAction = new UserAction([$this->user], 'confirmEmail');
+            // enable new email
+            $this->objectAction = new UserAction([$this->user], 'update', [
+                'data' => \array_merge($this->additionalFields, $data),
+            ]);
             $this->objectAction->executeAction();
+
+            // confirm email
+            if (!$this->user->isEmailConfirmed() && empty($this->user->blacklistMatches)) {
+                $this->objectAction = new UserAction([$this->user], 'confirmEmail');
+                $this->objectAction->executeAction();
+            }
+            $this->saved();
         }
-        $this->saved();
 
         // forward to index page
         HeaderUtil::delayedRedirect(

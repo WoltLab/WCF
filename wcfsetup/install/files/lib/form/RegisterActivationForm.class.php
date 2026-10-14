@@ -5,7 +5,6 @@ namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\TextFormField;
@@ -14,7 +13,6 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
-use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 
 /**
@@ -81,9 +79,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
         }
 
         if ($this->user->isEmailConfirmed()) {
-            throw new NamedUserException(HtmlString::fromSafeHtml(
-                WCF::getLanguage()->get('wcf.user.registerActivation.error.userAlreadyEnabled')
-            ));
+            return;
         }
 
         if (!empty($this->user->getBlacklistMatches())) {
@@ -137,9 +133,17 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
     {
         AbstractForm::save();
 
-        $this->objectAction = new UserAction([$this->user], 'confirmEmail', ['skipNotification' => true]);
-        $this->objectAction->executeAction();
-        $this->saved();
+        // Link scanners of mail providers may have consumed the activation link
+        // before the user follows it, which must look like a regular activation.
+        if (!$this->user->isEmailConfirmed()) {
+            $this->objectAction = new UserAction([$this->user], 'confirmEmail', ['skipNotification' => true]);
+            $this->objectAction->executeAction();
+            $this->saved();
+
+            // User must be reloaded to get the correct activation status.
+            $command = new \wcf\command\user\CreateRegistrationNotification(new User($this->user->userID));
+            $command();
+        }
 
         // forward to index page
         if ($this->user->requiresAdminActivation()) {
@@ -148,10 +152,6 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
         } else {
             $redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success');
         }
-
-        // User must be reloaded to get the correct activation status.
-        $command = new \wcf\command\user\CreateRegistrationNotification(new User($this->user->userID));
-        $command();
 
         HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), $redirectText, 10, 'success', true);
 
