@@ -294,20 +294,28 @@ class TagEngine extends SingletonFactory
      */
     public function getSubselectForObjectsByTags($objectType, array $tags)
     {
-        $parameters = [$this->getObjectTypeID($objectType)];
-        $tagIDs = \implode(',', \array_map(static function (Tag $tag) use (&$parameters) {
-            $parameters[] = $tag->tagID;
+        // Joining once per additional tag instead of using `GROUP BY … HAVING`
+        // keeps the subselect eligible for a semijoin, allowing MySQL to drive
+        // the outer query from the (few) tagged objects.
+        $tags = \array_values($tags);
+        $joins = '';
+        $parameters = [];
+        for ($i = 1, $length = \count($tags); $i < $length; $i++) {
+            $joins .= "
+                INNER JOIN  wcf" . WCF_N . "_tag_to_object tag_to_object{$i}
+                ON          tag_to_object{$i}.objectTypeID = tag_to_object0.objectTypeID
+                        AND tag_to_object{$i}.objectID = tag_to_object0.objectID
+                        AND tag_to_object{$i}.tagID = ?";
+            $parameters[] = $tags[$i]->tagID;
+        }
+        $parameters[] = $this->getObjectTypeID($objectType);
+        $parameters[] = $tags[0]->tagID;
 
-            return '?';
-        }, $tags));
-        $parameters[] = \count($tags);
-
-        $sql = "SELECT      objectID
-                FROM        wcf" . WCF_N . "_tag_to_object
-                WHERE       objectTypeID = ?
-                        AND tagID IN (" . $tagIDs . ")
-                GROUP BY    objectID
-                HAVING  COUNT(objectID) = ?";
+        $sql = "SELECT      tag_to_object0.objectID
+                FROM        wcf" . WCF_N . "_tag_to_object tag_to_object0
+                {$joins}
+                WHERE       tag_to_object0.objectTypeID = ?
+                        AND tag_to_object0.tagID = ?";
 
         return [
             'sql' => $sql,
