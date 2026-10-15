@@ -208,7 +208,8 @@ class Option extends CollectionDatabaseObject
      */
     public function isVisible()
     {
-        return $this->hidden === 0;
+        // `hidden` does not exist for every option type, e.g. user group options
+        return (int)$this->hidden === 0;
     }
 
     #[\Override]
