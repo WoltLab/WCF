@@ -3,7 +3,7 @@
 namespace wcf\system\file\processor;
 
 use wcf\data\file\File;
-use wcf\data\user\rank\UserRankEditor;
+use wcf\system\cache\builder\UserRankCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -101,7 +101,7 @@ final class UserRankImageFileProcessor extends AbstractFileProcessor
         $statement->execute([null, ...$conditionBuilder->getParameters()]);
 
         if ($statement->getAffectedRows() > 0) {
-            UserRankEditor::resetCache();
+            UserRankCacheBuilder::getInstance()->reset();
         }
     }
 
@@ -110,7 +110,7 @@ final class UserRankImageFileProcessor extends AbstractFileProcessor
     {
         // The rank cache holds the file and therefore its pathname.
         if ($this->getRankIDByFile($file) !== null) {
-            UserRankEditor::resetCache();
+            UserRankCacheBuilder::getInstance()->reset();
         }
     }
 

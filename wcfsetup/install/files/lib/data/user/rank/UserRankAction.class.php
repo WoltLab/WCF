@@ -8,13 +8,10 @@ use wcf\data\AbstractDatabaseObjectAction;
 /**
  * Executes user rank-related actions.
  *
- * User ranks should be created, updated and deleted through the
- * `CreateUserRank`, `UpdateUserRank` and `DeleteUserRank` commands, the
- * `create`, `update` and `delete` actions are `@deprecated 6.3`.
- *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `UserRankBuilder` and commands instead.
  *
  * @extends AbstractDatabaseObjectAction<UserRank, UserRankEditor>
  */
