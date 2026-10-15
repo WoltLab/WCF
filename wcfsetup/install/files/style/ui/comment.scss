@@ -244,6 +244,10 @@
 	margin-left: 20px;
 }
 
+.comment__responses:has(.commentLoadNextResponses) + .commentResponseAdd {
+	margin-top: 10px;
+}
+
 .commentResponseAdd__avatar {
 	grid-area: avatar;
 }
