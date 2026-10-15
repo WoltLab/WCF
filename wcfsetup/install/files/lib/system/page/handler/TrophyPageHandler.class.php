@@ -3,7 +3,7 @@
 namespace wcf\system\page\handler;
 
 use wcf\data\trophy\TrophyCache;
-use wcf\data\trophy\TrophyList;
+use wcf\data\trophy\L10nTrophyList;
 use wcf\system\WCF;
 
 /**
@@ -36,16 +36,18 @@ class TrophyPageHandler extends AbstractLookupPageHandler
     #[\Override]
     public function lookup(string $searchString)
     {
-        $trophyList = new TrophyList();
-        if (!empty($trophyList->sqlJoins)) {
-            $trophyList->sqlJoins .= ', ';
-        }
-        $trophyList->sqlJoins = "
-            LEFT JOIN   wcf1_language_item language_item
-            ON          language_item.languageItem = trophy.title";
+        $trophyList = new L10nTrophyList();
         $trophyList->getConditionBuilder()->add(
-            '(trophy.title LIKE ? OR language_item.languageItemValue LIKE ?)',
-            ['%' . WCF::getDB()->escapeLikeValue($searchString) . '%', '%' . WCF::getDB()->escapeLikeValue($searchString) . '%']
+            "trophy.trophyID IN (
+                SELECT  trophyID
+                FROM    wcf1_trophy_l10n
+                WHERE   (languageID = ? OR languageID IS NULL)
+                    AND title LIKE ?
+            )",
+            [
+                WCF::getLanguage()->languageID,
+                '%' . WCF::getDB()->escapeLikeValue($searchString) . '%',
+            ]
         );
         $trophyList->sqlLimit = 10;
         $trophyList->sqlOrderBy = 'title';

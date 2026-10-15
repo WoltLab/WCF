@@ -35,17 +35,18 @@ final class ObjectListFilterHandler extends ObjectFilterHandler
      * list. Values of unknown filters are ignored.
      *
      * Adds a condition that matches no objects if there are no active filters.
+     * Returns whether any active filter has been applied.
      *
      * @param DatabaseObjectList<TDatabaseObject> $list
      * @throws MappingError if the stored filter values are malformed
      */
-    public function applyFilters(DatabaseObjectList $list, ?string $json): void
+    public function applyFilters(DatabaseObjectList $list, ?string $json): bool
     {
         $values = $this->unserializeValues($json);
         if ($values === []) {
             $list->getConditionBuilder()->add('1=0');
 
-            return;
+            return false;
         }
 
         $filters = $this->getFiltersByIdentifier();
@@ -69,5 +70,7 @@ final class ObjectListFilterHandler extends ObjectFilterHandler
         if (!$hasActiveFilters) {
             $list->getConditionBuilder()->add('1=0');
         }
+
+        return $hasActiveFilters;
     }
 }

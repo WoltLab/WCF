@@ -3,7 +3,7 @@
 namespace wcf\command\trophy;
 
 use wcf\data\trophy\Trophy;
-use wcf\data\trophy\TrophyEditor;
+use wcf\data\trophy\TrophyBuilder;
 use wcf\data\user\User;
 use wcf\data\user\UserBuilder;
 use wcf\event\trophy\TrophyDisabled;
@@ -14,8 +14,8 @@ use wcf\system\WCF;
 /**
  * Disables a trophy.
  *
- * @author Olaf Braun
- * @copyright 2001-2025 WoltLab GmbH
+ * @author Olaf Braun, Marcel Werk
+ * @copyright 2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
@@ -25,11 +25,11 @@ final class DisableTrophy
 
     public function __invoke(): void
     {
-        (new TrophyEditor($this->trophy))->update([
-            'isDisabled' => 1,
-        ]);
+        TrophyBuilder::forUpdate($this->trophy)
+            ->setIsDisabled(true)
+            ->update();
 
-        TrophyEditor::resetCache();
+        TrophyBuilder::resetCache();
 
         $this->deleteSpecialTrophies($this->trophy->trophyID);
         $this->updateTrophyPoints($this->trophy->trophyID);

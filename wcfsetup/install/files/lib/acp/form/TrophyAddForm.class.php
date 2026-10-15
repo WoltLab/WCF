@@ -2,29 +2,41 @@
 
 namespace wcf\acp\form;
 
-use wcf\data\object\type\ObjectType;
-use wcf\data\trophy\category\TrophyCategory;
+use wcf\command\trophy\CreateTrophy;
+use wcf\command\trophy\UpdateTrophy;
+use wcf\data\DatabaseObjectBuilder;
 use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\Trophy;
-use wcf\data\trophy\TrophyAction;
-use wcf\data\trophy\TrophyEditor;
-use wcf\system\condition\ConditionHandler;
-use wcf\system\exception\UserInputException;
-use wcf\system\language\I18nValue;
-use wcf\system\request\LinkHandler;
-use wcf\system\style\FontAwesomeIcon;
-use wcf\system\trophy\condition\TrophyConditionHandler;
+use wcf\data\trophy\TrophyBuilder;
+use wcf\form\AbstractDatabaseObjectBuilderForm;
+use wcf\system\exception\NamedUserException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\FileProcessorFormField;
+use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\MultilineTextFormField;
+use wcf\system\form\builder\field\ObjectFilterFormField;
+use wcf\system\form\builder\field\RadioButtonFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TitleFormField;
+use wcf\system\form\builder\field\trophy\TrophyBadgeFormField;
+use wcf\system\object\filter\builder\TrophyObjectFilterBuilder;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
+use wcf\util\HtmlString;
 
 /**
  * Represents the trophy add form.
  *
- * @author  Joshua Ruesweg
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Joshua Ruesweg, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @extends AbstractDatabaseObjectBuilderForm<Trophy, TrophyBuilder>
  */
-class TrophyAddForm extends AbstractAcpForm
+class TrophyAddForm extends AbstractDatabaseObjectBuilderForm
 {
     /**
      * @inheritDoc
@@ -42,367 +54,227 @@ class TrophyAddForm extends AbstractAcpForm
     public $neededModules = ['MODULE_TROPHY'];
 
     /**
-     * category id for the trophy.
-     * @var int
+     * @inheritDoc
      */
-    public $categoryID = 0;
-
-    /**
-     * Category object.
-     * @var ?TrophyCategory
-     */
-    public $category;
-
-    /**
-     * Trophy description.
-     * @var string
-     */
-    public $description = '';
-
-    /**
-     * Trophy title.
-     * @var string
-     */
-    public $title = '';
-
-    /**
-     * All available trophy types.
-     * @var array<int, string>
-     */
-    public $availableTypes = [
-        Trophy::TYPE_IMAGE => 'imageUpload',
-        Trophy::TYPE_BADGE => 'badge',
-    ];
-
-    /**
-     * Type of the trophy (whether this is an image or not)
-     * @var int
-     */
-    public $type = Trophy::TYPE_BADGE;
-
-    /**
-     * temporary hash for image icon
-     * @var string
-     */
-    public $tmpHash = '';
-
-    /**
-     * the url for the uploaded image
-     * @var string
-     */
-    public $uploadedImageURL = '';
-
-    /**
-     * the icon name for CSS icons (FA-Icon)
-     * @var string
-     */
-    public $iconName = "trophy;false";
-
-    /**
-     * The icon color (rgba format with rgba prefix)
-     * @var string
-     */
-    public $iconColor = 'rgba(255, 255, 255, 1)';
-
-    /**
-     * The badge color (rgba format with rgba prefix)
-     * @var string
-     */
-    public $badgeColor = 'rgba(50, 92, 132, 1)';
-
-    /**
-     * `1` if the trophy is disabled.
-     * @var int
-     */
-    public $isDisabled = 0;
-
-    /**
-     * `1` if the trophy has conditions to reward automatically trophies.
-     * @var int
-     */
-    public $awardAutomatically = 0;
-
-    /**
-     * `1` if the trophy should be automatically revoked once the conditions are no longer met.
-     * @var int
-     */
-    public $revokeAutomatically = 0;
-
-    /**
-     * `1` if the trophy contains html in the description
-     * @var int
-     */
-    public $trophyUseHtml = 0;
-
-    /**
-     * list of grouped user group assignment condition object types
-     * @var (ObjectType|ObjectType[])[][]
-     */
-    public $conditions = [];
-
-    /**
-     * the showOrder value of the trophy
-     * @var int
-     */
-    public $showOrder = 0;
-
-    #[\Override]
-    public function readData()
-    {
-        $this->conditions = TrophyConditionHandler::getInstance()->getGroupedObjectTypes();
-
-        parent::readData();
-    }
+    public string $objectEditLinkController = TrophyEditForm::class;
 
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        $titleI18n = new I18nValue('title');
-        $titleI18n->setLanguageItem('wcf.user.trophy.title', 'wcf.user.trophy', 'com.woltlab.wcf');
-        $this->registerI18nValue($titleI18n);
-
-        $descriptionI18n = new I18nValue('description');
-        $descriptionI18n->setLanguageItem('wcf.user.trophy.description', 'wcf.user.trophy', 'com.woltlab.wcf');
-        $descriptionI18n->setFlags(I18nValue::ALLOW_EMPTY);
-        $this->registerI18nValue($descriptionI18n);
-
-        if (isset($_POST['tmpHash'])) {
-            $this->tmpHash = StringUtil::trim($_POST['tmpHash']);
-        }
-
-        if (empty($this->tmpHash)) {
-            $this->tmpHash = StringUtil::getRandomID();
+        if (TrophyCategoryCache::getInstance()->getCategories() === []) {
+            throw new NamedUserException(HtmlString::fromSafeHtml(
+                WCF::getLanguage()->getDynamicVariable('wcf.acp.trophy.error.noCategories')
+            ));
         }
     }
 
     #[\Override]
-    public function readFormParameters()
+    protected function getDatabaseObjectBuilder(): TrophyBuilder
     {
-        parent::readFormParameters();
-
-        if (isset($_POST['categoryID'])) {
-            $this->categoryID = \intval($_POST['categoryID']);
-        }
-        if (isset($_POST['type'])) {
-            $this->type = \intval($_POST['type']);
-        }
-        if (isset($_POST['isDisabled'])) {
-            $this->isDisabled = \intval($_POST['isDisabled']);
-        }
-        if (isset($_POST['iconName'])) {
-            $this->iconName = StringUtil::trim($_POST['iconName']);
-        }
-        if (isset($_POST['iconColor'])) {
-            $this->iconColor = $_POST['iconColor'];
-        }
-        if (isset($_POST['badgeColor'])) {
-            $this->badgeColor = $_POST['badgeColor'];
-        }
-        if (isset($_POST['awardAutomatically'])) {
-            $this->awardAutomatically = 1;
-        }
-        if (isset($_POST['revokeAutomatically']) && $this->awardAutomatically !== 0) {
-            $this->revokeAutomatically = 1;
-        }
-        if (isset($_POST['trophyUseHtml'])) {
-            $this->trophyUseHtml = 1;
-        }
-        if (isset($_POST['showOrder'])) {
-            $this->showOrder = \intval($_POST['showOrder']);
+        if ($this->formObject !== null) {
+            return TrophyBuilder::forUpdate($this->formObject);
         }
 
-        // read file upload
-        $fileExtension = WCF::getSession()->getVar('trophyImage-' . $this->tmpHash);
-
-        if ($fileExtension !== null && \file_exists(\WCF_DIR . 'images/trophy/tmp_' . $this->tmpHash . '.' . $fileExtension)) {
-            $this->uploadedImageURL = WCF::getPath() . 'images/trophy/tmp_' . $this->tmpHash . '.' . $fileExtension;
-        }
-
-        $this->category = TrophyCategoryCache::getInstance()->getCategoryByID($this->categoryID);
-
-        foreach ($this->conditions as $conditions) {
-            /** @var ObjectType $condition */
-            foreach ($conditions as $condition) {
-                $condition->getProcessor()->readFormParameters();
-            }
-        }
+        return TrophyBuilder::forCreate();
     }
 
     #[\Override]
-    public function validate()
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
     {
-        parent::validate();
-
-        if (!\in_array($this->type, \array_keys($this->availableTypes), true)) {
-            throw new UserInputException('type');
+        if ($this->formObject !== null) {
+            return new UpdateTrophy($builder);
         }
 
-        if ($this->categoryID === 0) {
-            throw new UserInputException('categoryID');
-        }
+        return new CreateTrophy($builder);
+    }
 
-        if ($this->category->isNil()) {
-            throw new UserInputException('categoryID');
-        }
+    #[\Override]
+    protected function createForm(): void
+    {
+        parent::createForm();
 
-        $this->validateType();
+        $this->form->appendChildren([
+            FormContainer::create('data')
+                ->appendChildren([
+                    TitleFormField::create()
+                        ->l10n()
+                        ->required()
+                        ->autoFocus()
+                        ->maximumLength(255)
+                        ->saveValueCallback(static function (TrophyBuilder $builder, TitleFormField $field): void {
+                            $builder->setTitle($field->getL10nValues());
+                        })
+                        ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
+                            $field->value($object->getL10nValues('title'));
+                        }),
+                    MultilineTextFormField::create('description')
+                        ->label('wcf.acp.trophy.description')
+                        ->l10n()
+                        ->saveValueCallback(static function (TrophyBuilder $builder, MultilineTextFormField $field): void {
+                            $builder->setDescription($field->getL10nValues());
+                        })
+                        ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
+                            $field->value($object->getL10nValues('description'));
+                        }),
+                    BooleanFormField::create('trophyUseHtml')
+                        ->label('wcf.acp.trophy.trophyUseHtml')
+                        ->saveValueCallback(static function (TrophyBuilder $builder, BooleanFormField $field): void {
+                            $builder->setTrophyUseHtml((bool)$field->getSaveValue());
+                        })
+                        ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
+                            $field->value($object->trophyUseHtml);
+                        }),
+                    SingleSelectionFormField::create('categoryID')
+                        ->label('wcf.global.category')
+                        ->options($this->getCategories(), labelLanguageItems: false)
+                        ->required()
+                        ->saveValueCallback(static function (TrophyBuilder $builder, SingleSelectionFormField $field): void {
+                            $builder->setCategoryID((int)$field->getSaveValue());
+                        })
+                        ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
+                            $field->value($object->categoryID);
+                        }),
+                    IntegerFormField::create('showOrder')
+                        ->label('wcf.global.showOrder')
+                        ->description('wcf.acp.trophy.showOrder.description')
+                        ->minimum(0)
+                        ->value(0)
+                        ->saveValueCallback(static function (TrophyBuilder $builder, IntegerFormField $field): void {
+                            $builder->setShowOrder($field->getSaveValue());
+                        })
+                        ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
+                            $field->value($object->showOrder);
+                        }),
+                    BooleanFormField::create('isDisabled')
+                        ->label('wcf.acp.trophy.isDisabled')
+                        ->saveValueCallback(static function (TrophyBuilder $builder, BooleanFormField $field): void {
+                            $builder->setIsDisabled((bool)$field->getSaveValue());
+                        })
+                        ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
+                            $field->value($object->isDisabled);
+                        }),
+                    BooleanFormField::create('awardAutomatically')
+                        ->label('wcf.acp.trophy.awardAutomatically')
+                        ->saveValueCallback(static function (TrophyBuilder $builder, BooleanFormField $field): void {
+                            $awardAutomatically = (bool)$field->getSaveValue();
+                            $builder->setAwardAutomatically($awardAutomatically);
 
-        if ($this->awardAutomatically !== 0) {
-            $hasData = false;
-            foreach ($this->conditions as $conditions) {
-                foreach ($conditions as $condition) {
-                    $condition->getProcessor()->validate();
-
-                    if (!$hasData && $condition->getProcessor()->getData() !== null) {
-                        $hasData = true;
-                    }
-                }
-            }
-
-            if (!$hasData) {
-                throw new UserInputException('conditions');
-            }
-        }
+                            // The dependent fields are not saved if the trophy is
+                            // no longer awarded automatically.
+                            if (!$awardAutomatically) {
+                                $builder->setRevokeAutomatically(false);
+                                $builder->setConditions(null);
+                            }
+                        })
+                        ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
+                            $field->value($object->awardAutomatically);
+                        }),
+                    BooleanFormField::create('revokeAutomatically')
+                        ->label('wcf.acp.trophy.revokeAutomatically')
+                        ->saveValueCallback(static function (TrophyBuilder $builder, BooleanFormField $field): void {
+                            $builder->setRevokeAutomatically((bool)$field->getSaveValue());
+                        })
+                        ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
+                            $field->value($object->revokeAutomatically);
+                        })
+                        ->addDependency(
+                            NonEmptyFormFieldDependency::create('awardAutomatically')
+                                ->fieldId('awardAutomatically')
+                        ),
+                    RadioButtonFormField::create('type')
+                        ->label('wcf.acp.trophy.type')
+                        ->options([
+                            Trophy::TYPE_BADGE => 'wcf.acp.trophy.type.badge',
+                            Trophy::TYPE_IMAGE => 'wcf.acp.trophy.type.imageUpload',
+                        ])
+                        ->value(Trophy::TYPE_BADGE)
+                        ->required()
+                        ->saveValueCallback(static function (TrophyBuilder $builder, RadioButtonFormField $field): void {
+                            $builder->setType((int)$field->getSaveValue());
+                        })
+                        ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
+                            $field->value($object->type);
+                        }),
+                ]),
+            FormContainer::create('badgeContainer')
+                ->label('wcf.acp.trophy.type.badge')
+                ->appendChild(
+                    TrophyBadgeFormField::create('badge')
+                        ->label('wcf.acp.trophy.type.badge')
+                        ->required()
+                        ->saveValueCallback(static function (TrophyBuilder $builder, TrophyBadgeFormField $field): void {
+                            $builder->setBadge($field->getIconName(), $field->getIconColor(), $field->getBadgeColor());
+                        })
+                        ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
+                            // Image trophies keep the default badge.
+                            if ($object->type === Trophy::TYPE_BADGE) {
+                                $field->value([
+                                    'iconName' => $object->iconName,
+                                    'iconColor' => $object->iconColor,
+                                    'badgeColor' => $object->badgeColor,
+                                ]);
+                            }
+                        })
+                )
+                ->addDependency(
+                    ValueFormFieldDependency::create('type')
+                        ->fieldId('type')
+                        ->values([Trophy::TYPE_BADGE])
+                ),
+            FormContainer::create('imageContainer')
+                ->label('wcf.acp.trophy.type.imageUpload')
+                ->appendChild(
+                    FileProcessorFormField::create('iconFileID')
+                        ->objectType('com.woltlab.wcf.trophy.image')
+                        ->label('wcf.acp.trophy.type.imageUpload')
+                        ->description('wcf.acp.trophy.type.imageUpload.description')
+                        ->singleFileUpload()
+                        ->bigPreview()
+                        ->required()
+                        ->saveValueCallback(static function (TrophyBuilder $builder, FileProcessorFormField $field): void {
+                            $builder->setIconFileID($field->getSaveValue());
+                        })
+                        ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
+                            if ($object->iconFileID !== null) {
+                                $field->value($object->iconFileID);
+                            }
+                        })
+                )
+                ->addDependency(
+                    ValueFormFieldDependency::create('type')
+                        ->fieldId('type')
+                        ->values([Trophy::TYPE_IMAGE])
+                ),
+            FormContainer::create('conditionsContainer')
+                ->label('wcf.acp.trophy.conditions')
+                ->description('wcf.acp.trophy.conditions.description')
+                ->appendChild(
+                    ObjectFilterFormField::create('conditions')
+                        ->builder(new TrophyObjectFilterBuilder())
+                        ->required()
+                        ->saveValueCallback(static function (TrophyBuilder $builder, ObjectFilterFormField $field): void {
+                            $builder->setConditions($field->getSaveValue());
+                        })
+                )
+                ->addDependency(
+                    NonEmptyFormFieldDependency::create('awardAutomatically')
+                        ->fieldId('awardAutomatically')
+                ),
+        ]);
     }
 
     /**
-     * Validates the trophy type.
-     *
-     * @return void
+     * @return array<int, string>
      */
-    protected function validateType()
+    private function getCategories(): array
     {
-        switch ($this->type) {
-            case Trophy::TYPE_IMAGE:
-                $fileExtension = WCF::getSession()->getVar('trophyImage-' . $this->tmpHash);
-
-                if ($fileExtension === null) {
-                    throw new UserInputException('imageUpload');
-                }
-
-                if (!\file_exists(\WCF_DIR . 'images/trophy/tmp_' . $this->tmpHash . '.' . $fileExtension)) {
-                    throw new UserInputException('imageUpload');
-                }
-                break;
-
-            case Trophy::TYPE_BADGE:
-                if (empty($this->iconName)) {
-                    throw new UserInputException('iconName');
-                }
-
-                if (!FontAwesomeIcon::isValidString($this->iconName)) {
-                    throw new UserInputException('iconName');
-                }
-
-                if (empty($this->iconColor)) {
-                    throw new UserInputException('iconColor');
-                }
-
-                if (empty($this->badgeColor)) {
-                    throw new UserInputException('badgeColor');
-                }
-                break;
-        }
-    }
-
-    #[\Override]
-    public function save()
-    {
-        parent::save();
-
-        $data = [];
-        if ($this->type === Trophy::TYPE_BADGE) {
-            $data['iconName'] = $this->iconName;
-            $data['iconColor'] = $this->iconColor;
-            $data['badgeColor'] = $this->badgeColor;
+        $categories = [];
+        foreach (TrophyCategoryCache::getInstance()->getCategories() as $category) {
+            $categories[$category->categoryID] = $category->getTitle();
         }
 
-        $this->objectAction = new TrophyAction([], 'create', [
-            'data' => \array_merge($this->additionalFields, $data, [
-                'title' => $this->title,
-                'description' => $this->description,
-                'categoryID' => $this->categoryID,
-                'type' => $this->type,
-                'isDisabled' => $this->isDisabled,
-                'awardAutomatically' => $this->awardAutomatically,
-                'revokeAutomatically' => $this->revokeAutomatically,
-                'trophyUseHtml' => $this->trophyUseHtml,
-                'showOrder' => $this->showOrder,
-            ]),
-            'tmpHash' => $this->tmpHash,
-        ]);
-        $returnValues = $this->objectAction->executeAction();
-
-        $this->saveI18n($returnValues['returnValues'], TrophyEditor::class);
-
-        // transform conditions array into one-dimensional array
-        $conditions = [];
-        foreach ($this->conditions as $groupedObjectTypes) {
-            foreach ($groupedObjectTypes as $objectTypes) {
-                if (\is_array($objectTypes)) {
-                    $conditions = \array_merge($conditions, $objectTypes);
-                } else {
-                    $conditions[] = $objectTypes;
-                }
-            }
-        }
-
-        ConditionHandler::getInstance()->createConditions($returnValues['returnValues']->trophyID, $conditions);
-
-        $this->reset();
-
-        WCF::getTPL()->assign([
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
-                TrophyEditForm::class,
-                ['id' => $returnValues['returnValues']->trophyID]
-            ),
-        ]);
-    }
-
-    #[\Override]
-    public function reset()
-    {
-        parent::reset();
-
-        $this->isDisabled = $this->awardAutomatically = $this->categoryID = $this->trophyUseHtml = $this->showOrder = $this->revokeAutomatically = 0;
-        $this->type = Trophy::TYPE_BADGE;
-        $this->iconName = $this->uploadedImageURL = '';
-        $this->iconColor = 'rgba(255, 255, 255, 1)';
-        $this->badgeColor = 'rgba(50, 92, 132, 1)';
-        $this->iconName = 'trophy;false';
-        $this->tmpHash = StringUtil::getRandomID();
-
-        foreach ($this->conditions as $conditions) {
-            foreach ($conditions as $condition) {
-                $condition->getProcessor()->reset();
-            }
-        }
-    }
-
-    #[\Override]
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'categoryID' => $this->categoryID,
-            'type' => $this->type,
-            'isDisabled' => $this->isDisabled,
-            'iconName' => $this->iconName,
-            'iconColor' => $this->iconColor,
-            'badgeColor' => $this->badgeColor,
-            'icon' => FontAwesomeIcon::fromString($this->iconName),
-            'trophyCategories' => TrophyCategoryCache::getInstance()->getCategories(),
-            'groupedObjectTypes' => $this->conditions,
-            'awardAutomatically' => $this->awardAutomatically,
-            'revokeAutomatically' => $this->revokeAutomatically,
-            'availableTypes' => $this->availableTypes,
-            'tmpHash' => $this->tmpHash,
-            'uploadedImageURL' => $this->uploadedImageURL,
-            'trophyUseHtml' => $this->trophyUseHtml,
-            'showOrder' => $this->showOrder,
-        ]);
+        return $categories;
     }
 }

@@ -575,98 +575,6 @@
 			<categoryname>com.woltlab.wcf.user</categoryname>
 		</type>
 		<!-- /stat handlers -->
-		<!-- trophy conditions -->
-		<type>
-			<name>com.woltlab.wcf.username</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserUsernameCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.email</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserEmailCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userGroup</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserGroupCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.languages</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserLanguageCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.registrationDate</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserRegistrationDateCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.registrationDateInterval</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserRegistrationDateIntervalCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.avatar</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserAvatarCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.signature</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserSignatureCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.coverPhoto</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserCoverPhotoCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.state</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserStateCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.activityPoints</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>activityPoints</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.likesReceived</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>likesReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userTrophyCondition</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserTrophyCondition</classname>
-			<conditiongroup>general</conditiongroup>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.trophyPoints</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>trophyPoints</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<!-- /trophy conditions -->
 		<!-- ad locations -->
 		<type>
 			<name>com.woltlab.wcf.logo</name>
@@ -1263,6 +1171,11 @@
 			<definitionname>com.woltlab.wcf.file</definitionname>
 			<classname>wcf\system\file\processor\ReactionTypeIconFileProcessor</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.trophy.image</name>
+			<definitionname>com.woltlab.wcf.file</definitionname>
+			<classname>wcf\system\file\processor\TrophyImageFileProcessor</classname>
+		</type>
 	</import>
 	<delete>
 		<!-- sitemap objects are registered through `wcf\event\sitemap\SitemapObjectCollecting` since 6.3 -->
@@ -1323,7 +1236,7 @@
 		<type name="com.woltlab.wcf.moderation.queue">
 			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
 		</type>
-		<!-- legacy conditions of notices, ads and user group assignments are replaced by object filters since 6.3 -->
+		<!-- legacy conditions of notices, ads, user group assignments and trophies are replaced by object filters since 6.3 -->
 		<type name="com.woltlab.wcf.username">
 			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
 		</type>
@@ -1368,6 +1281,51 @@
 		</type>
 		<type name="com.woltlab.wcf.trophyPoints">
 			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.username">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.email">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.userGroup">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.languages">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.registrationDate">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.registrationDateInterval">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.avatar">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.signature">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.coverPhoto">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.state">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.activityPoints">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.likesReceived">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.userTrophyCondition">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.trophyPoints">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.userOptions">
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
 		</type>
 		<type name="com.woltlab.wcf.page">
 			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
@@ -1541,10 +1499,7 @@
 		<type name="com.woltlab.wcf.user.multifactor">
 			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
 		</type>
-		<!-- user option conditions are not supported until trophies and the bulk processing use object filters -->
-		<type name="com.woltlab.wcf.userOptions">
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-		</type>
+		<!-- user option conditions are not supported until the bulk processing uses object filters -->
 		<type name="com.woltlab.wcf.userOptions">
 			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
 		</type>

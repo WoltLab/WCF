@@ -107,11 +107,12 @@ class TrophyPage extends MultipleLinkPage
             );
         }
 
-        if ($this->trophy->type === Trophy::TYPE_IMAGE) {
+        $iconFile = $this->trophy->type === Trophy::TYPE_IMAGE ? $this->trophy->getIconFile() : null;
+        if ($iconFile !== null) {
             MetaTagHandler::getInstance()->addTag(
                 'og:image',
                 'og:image',
-                WCF::getPath() . 'images/trophy/' . $this->trophy->iconFile,
+                $iconFile->getFullSizeImageSource() ?? $iconFile->getLink(),
                 true
             );
         }

@@ -153,18 +153,6 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 4
-			path: wcfsetup/install/files/lib/acp/form/TrophyAddForm.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 4
-			path: wcfsetup/install/files/lib/acp/form/TrophyEditForm.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/acp/form/UserGroupAddForm.class.php
 
@@ -587,12 +575,6 @@ parameters:
 			identifier: empty.notAllowed
 			count: 2
 			path: wcfsetup/install/files/lib/data/tag/TagAction.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/data/trophy/TrophyAction.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
@@ -2415,12 +2397,6 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/system/page/handler/TrophyPageHandler.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
 			count: 7
 			path: wcfsetup/install/files/lib/system/poll/PollManager.class.php
 
@@ -2429,18 +2405,6 @@ parameters:
 			identifier: empty.notAllowed
 			count: 1
 			path: wcfsetup/install/files/lib/system/reaction/ReactionHandler.class.php
-
-		-
-			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
-			identifier: function.strict
-			count: 1
-			path: wcfsetup/install/files/lib/system/registry/RegistryHandler.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/system/registry/RegistryHandler.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'

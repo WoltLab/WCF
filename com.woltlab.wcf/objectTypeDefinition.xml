@@ -122,6 +122,7 @@
 			<name>com.woltlab.wcf.condition.userGroupAssignment</name>
 			<interfacename>wcf\system\condition\IUserCondition</interfacename>
 		</definition>
+		<!-- deprecated since 6.3, only kept for the migration of legacy conditions to object filters -->
 		<definition>
 			<name>com.woltlab.wcf.condition.trophy</name>
 			<interfacename>wcf\system\condition\IUserCondition</interfacename>
