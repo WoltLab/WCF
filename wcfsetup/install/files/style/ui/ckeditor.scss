@@ -21,45 +21,44 @@
 	--marker-info: #0000ff;
 	--marker-success: #008000;
 	--marker-warning: #ffff00;
+}
 
+/* CKEditor derives its tokens on `:root`, overrides on descendants do not reach them. */
+:root {
 	--ck-color-base-background: var(--wcfContentContainerBackground);
-	--ck-border-radius: var(--wcfBorderRadius);
+	--ck-radius-base: var(--wcfBorderRadius);
 	--ck-color-base-border: var(--wcfContentBorderInner);
-	--ck-color-text: var(--wcfContentText);
+	--ck-color-text-primary: var(--wcfContentText);
 
-	--ck-color-toolbar-border: var(--wcfContentBorderInner);
-	--ck-color-toolbar-background: var(--wcfContentContainerBackground);
+	--ck-toolbar-border-color: var(--wcfContentBorderInner);
+	--ck-toolbar-background-color: var(--wcfContentContainerBackground);
 
-	--ck-color-dropdown-panel-background: var(--wcfDropdownBackground);
-	--ck-color-dropdown-panel-border: var(--wcfDropdownBorderInner);
-	--ck-color-panel-background: var(--wcfDropdownBackground);
-	--ck-color-panel-border: var(--wcfDropdownBorderInner);
+	--ck-dropdown-panel-background-color: var(--wcfDropdownBackground);
+	--ck-dropdown-panel-border-color: var(--wcfDropdownBorderInner);
+	--ck-balloon-panel-background-color: var(--wcfDropdownBackground);
+	--ck-balloon-panel-border-color: var(--wcfDropdownBorderInner);
 
-	--ck-color-input-background: var(--wcfInputBackground);
-	--ck-color-input-border: var(--wcfInputBorder);
-	--ck-color-input-error-border: var(--ck-color-base-error);
-	--ck-color-input-text: var(--wcfInputText);
-	--ck-color-input-disabled-background: var(--wcfInputDisabledBackground);
-	--ck-color-input-disabled-border: var(--wcfInputDisabledBorder);
-	--ck-color-input-disabled-text: var(--wcfInputDisabledText);
+	--ck-input-background-color: var(--wcfInputBackground);
+	--ck-input-border-color: var(--wcfInputBorder);
+	--ck-input-error-border-color: var(--ck-color-base-error);
+	--ck-input-text-color: var(--wcfInputText);
+	--ck-input-disabled-background-color: var(--wcfInputDisabledBackground);
+	--ck-input-disabled-border-color: var(--wcfInputDisabledBorder);
+	--ck-input-disabled-text-color: var(--wcfInputDisabledText);
 
-	--ck-color-list-background: var(--wcfDropdownBackground);
-	--ck-color-list-button-hover-background: var(--wcfDropdownBackgroundActive);
-	--ck-color-list-button-on-background: var(--wcfDropdownBackgroundActive);
-	--ck-color-list-button-on-background-focus: var(--wcfDropdownBackgroundActive);
-	--ck-color-list-button-on-text: var(--wcfDropdownLink);
+	--ck-list-background-color: var(--wcfDropdownBackground);
+	--ck-list-button-hover-background-color: var(--wcfDropdownBackgroundActive);
+	--ck-list-button-on-background-color: var(--wcfDropdownBackgroundActive);
+	--ck-list-button-on-text-color: var(--wcfDropdownLink);
 
 	--ck-color-link-default: var(--wcfContentLink);
 
-	--ck-font-face: var(--wcfFontFamily);
-	--ck-font-size-normal: var(--wcfFontSizeDefault);
-	--ck-font-size-small: var(--wcfFontSizeSmall);
-	--ck-font-size-tiny: var(--wcfFontSizeSmall);
+	--ck-font-family: var(--wcfFontFamily);
+	--ck-font-size-sm: var(--wcfFontSizeSmall);
+	--ck-font-size-xs: var(--wcfFontSizeSmall);
 
-	--ck-focus-outer-shadow: var(--ck-focus-outer-shadow-geometry) var(--ck-color-focus-outer-shadow);
-	--ck-color-widget-editable-focus-background: var(--ck-color-base-background);
-	--ck-color-widget-drag-handler-icon-color: var(--ck-color-base-background);
-	--ck-color-widget-type-around-button-hover: var(--ck-color-widget-hover-border);
+	/* Derived from the base background, which is dark in the dark mode. */
+	--ck-tooltip-text-color: #fff;
 }
 
 .ck.ck-content {
@@ -402,8 +401,8 @@ a.ck.ck-button.ck-link-toolbar__preview:focus {
 
 /* Increase the width of the splitbutton arrows. */
 .ck.ck-toolbar__items .ck.ck-splitbutton > .ck-splitbutton__arrow {
-	padding-left: var(--ck-spacing-medium);
-	padding-right: var(--ck-spacing-medium);
+	padding-left: var(--ck-spacing-base);
+	padding-right: var(--ck-spacing-base);
 }
 /* Add a visual indicator for the split button functionality. */
 .ck.ck-splitbutton:not(:hover, .ck-splitbutton_open) > .ck-splitbutton__arrow::before {
@@ -441,16 +440,8 @@ a.ck.ck-button.ck-link-toolbar__preview:focus {
 }
 
 html[data-color-scheme="dark"] {
-	.ck.ck-editor,
-	.ck.ck-body {
-		--ck-color-focus-outer-shadow: #0a2c66;
-		--ck-focus-outer-shadow: var(--ck-focus-outer-shadow-geometry) var(--ck-color-focus-outer-shadow);
-
-		--ck-color-widget-hover-border: #124f81;
-		--ck-color-widget-editable-focus-background: var(--ck-color-base-background);
-		--ck-color-widget-drag-handler-icon-color: var(--ck-color-base-background);
-		--ck-color-widget-type-around-button-hover: var(--ck-color-widget-hover-border);
-	}
+	--ck-color-interactive-focus-shadow: #0a2c66;
+	--ck-color-widget-hover-border: #124f81;
 
 	.ck.ck-reset.ck-dropdown__panel,
 	.ck.ck-balloon-panel {
