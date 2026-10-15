@@ -2,17 +2,18 @@
 
 namespace wcf\system\importer;
 
+use wcf\command\file\CreateFileFromExistingFile;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\trophy\Trophy;
-use wcf\data\trophy\TrophyEditor;
+use wcf\data\trophy\TrophyBuilder;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Represents a trophy importer.
  *
- * @author  Joshua Ruesweg
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Joshua Ruesweg, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class TrophyImporter extends AbstractImporter
@@ -40,64 +41,71 @@ class TrophyImporter extends AbstractImporter
             $data['categoryID'] = $this->getImportCategoryID();
         }
 
-        if ((int)$data['type'] === Trophy::TYPE_IMAGE) {
-            if (!@\file_exists($additionalData['fileLocation'])) {
+        $type = (int)$data['type'];
+        $builder = TrophyBuilder::forCreate()
+            ->setCategoryID((int)$data['categoryID'])
+            ->setType($type)
+            ->setTitle($this->getL10nValues('title', $data, $additionalData))
+            ->setDescription($this->getL10nValues('description', $data, $additionalData));
+
+        if ($type === Trophy::TYPE_IMAGE) {
+            if (!isset($additionalData['fileLocation']) || !@\file_exists($additionalData['fileLocation'])) {
                 return 0;
             }
 
-            $filename = \basename($additionalData['fileLocation']);
-            while (\file_exists(\WCF_DIR . 'images/trophy/' . $filename)) {
-                $filename = \substr(StringUtil::getRandomID(), 0, 5) . '_' . \basename($additionalData['fileLocation']);
-            }
-
-            if (!@\copy($additionalData['fileLocation'], \WCF_DIR . 'images/trophy/' . $filename)) {
+            $file = new CreateFileFromExistingFile(
+                $additionalData['fileLocation'],
+                \basename($additionalData['fileLocation']),
+                'com.woltlab.wcf.trophy.image',
+                copy: true,
+            )();
+            if ($file === null) {
                 return 0;
             }
 
-            $data['iconFile'] = $filename;
+            $builder->setIconFileID($file->fileID);
         }
 
-        /** @var Trophy $trophy */
-        $trophy = TrophyEditor::create($data);
-
-        if (!empty($additionalData['i18n'])) {
-            $values = [];
-
-            foreach (['title', 'description'] as $property) {
-                if (isset($additionalData['i18n'][$property])) {
-                    $values[$property] = $additionalData['i18n'][$property];
-                }
+        // The show order is imported as is to keep the order of the other trophies.
+        $handledColumns = ['trophyID', 'categoryID', 'type', 'title', 'description', 'iconFile', 'iconFileID'];
+        foreach ($data as $key => $value) {
+            if (\in_array($key, $handledColumns, true)) {
+                continue;
+            }
+            if ($value !== null && !\is_string($value) && !\is_int($value) && !\is_float($value)) {
+                continue;
             }
 
-            if ($values !== []) {
-                $updateData = [];
-                if (isset($values['title'])) {
-                    $updateData['title'] = 'wcf.user.trophy.title' . $trophy->trophyID;
-                }
-                if (isset($values['description'])) {
-                    $updateData['description'] = 'wcf.user.trophy.description' . $trophy->trophyID;
-                }
-
-                $items = [];
-                foreach ($values as $property => $propertyValues) {
-                    foreach ($propertyValues as $languageID => $languageItemValue) {
-                        $items[] = [
-                            'languageID' => $languageID,
-                            'languageItem' => 'wcf.user.trophy.' . $property . $trophy->trophyID,
-                            'languageItemValue' => $languageItemValue,
-                        ];
-                    }
-                }
-
-                $this->importI18nValues($items, 'wcf.user.trophy', 'com.woltlab.wcf');
-
-                (new TrophyEditor($trophy))->update($updateData);
-            }
+            $builder->setCustomProperty($key, $value);
         }
+
+        $trophy = $builder->create();
 
         ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.trophy', $oldID, $trophy->trophyID);
 
         return $trophy->trophyID;
+    }
+
+    /**
+     * Returns the localized values of the given property, which are either
+     * provided per language or as a monolingual value.
+     *
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $additionalData
+     * @return array<int, string>
+     */
+    private function getL10nValues(string $property, array $data, array $additionalData): array
+    {
+        if (!empty($additionalData['i18n'][$property]) && \is_array($additionalData['i18n'][$property])) {
+            $values = [];
+            foreach ($additionalData['i18n'][$property] as $languageID => $value) {
+                $values[(int)$languageID] = (string)$value;
+            }
+
+            return $values;
+        }
+
+        return [L10nStorage::MONOLINGUAL => (string)($data[$property] ?? '')];
     }
 
     /**

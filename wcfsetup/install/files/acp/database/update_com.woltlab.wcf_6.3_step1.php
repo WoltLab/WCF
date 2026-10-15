@@ -49,10 +49,45 @@ return [
         ]),
     PartialDatabaseTable::create('wcf1_trophy')
         ->columns([
-            NotNullVarchar255DatabaseTableColumn::create('title'),
             SmallintDatabaseTableColumn::create('type')
                 ->notNull()
                 ->defaultValue(1),
+            IntDatabaseTableColumn::create('iconFileID'),
+            JsonDatabaseTableColumn::create('conditions'),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['iconFileID'])
+                ->referencedTable('wcf1_file')
+                ->referencedColumns(['fileID'])
+                ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_trophy_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('trophyID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            MediumtextDatabaseTableColumn::create('description'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('trophyID')
+                ->columns(['trophyID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['trophyID'])
+                ->referencedTable('wcf1_trophy')
+                ->referencedColumns(['trophyID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
         ]),
     PartialDatabaseTable::create('wcf1_like_object')
         ->columns([

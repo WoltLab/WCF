@@ -16,6 +16,7 @@ use wcf\system\WCF;
  * @mixin   Trophy
  * @extends DatabaseObjectEditor<Trophy>
  * @implements IEditableCachedObject<Trophy>
+ * @deprecated 6.3 use `TrophyBuilder` instead.
  */
 class TrophyEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {
@@ -28,6 +29,7 @@ class TrophyEditor extends DatabaseObjectEditor implements IEditableCachedObject
      * Sets the show order of the trophy.
      *
      * @return void
+     * @deprecated 6.3 Use `TrophyBuilder::setShowOrder()` instead.
      */
     public function setShowOrder(int $showOrder = 0)
     {

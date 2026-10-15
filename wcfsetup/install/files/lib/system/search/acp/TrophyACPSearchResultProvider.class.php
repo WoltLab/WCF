@@ -3,16 +3,15 @@
 namespace wcf\system\search\acp;
 
 use wcf\acp\form\TrophyEditForm;
-use wcf\data\trophy\Trophy;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\data\trophy\L10nTrophyList;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
  * ACP search result provider implementation for trophies.
  *
- * @author  Joshua Ruesweg
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Joshua Ruesweg, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class TrophyACPSearchResultProvider implements IACPSearchResultProvider
@@ -24,40 +23,24 @@ class TrophyACPSearchResultProvider implements IACPSearchResultProvider
             return [];
         }
 
+        $trophyList = new L10nTrophyList();
+        $trophyList->getConditionBuilder()->add(
+            "trophy.trophyID IN (
+                SELECT  trophyID
+                FROM    wcf1_trophy_l10n
+                WHERE   (languageID = ? OR languageID IS NULL)
+                    AND title LIKE ?
+            )",
+            [
+                WCF::getLanguage()->languageID,
+                '%' . WCF::getDB()->escapeLikeValue($query) . '%',
+            ]
+        );
+        $trophyList->sqlOrderBy = 'title';
+        $trophyList->readObjects();
+
         $results = [];
-
-        // search by language item
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("languageID = ?", [WCF::getLanguage()->languageID]);
-        $conditions->add("languageItem LIKE ?", ['wcf.user.trophy.title%']);
-        $conditions->add("languageItemValue LIKE ?", ['%' . WCF::getDB()->escapeLikeValue($query) . '%']);
-
-        $sql = "SELECT  languageItem
-                FROM    wcf1_language_item
-                " . $conditions;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-
-        $trophyIDs = [];
-        while ($row = $statement->fetchArray()) {
-            $trophyIDs[] = \str_replace('wcf.user.trophy.title', '', $row['languageItem']);
-        }
-
-        $conditions = new PreparedStatementConditionBuilder(false);
-        if ($trophyIDs !== []) {
-            $conditions->add("trophyID IN (?)", [$trophyIDs]);
-        }
-
-        $sql = "SELECT  *
-                FROM    wcf1_trophy
-                WHERE   title LIKE ?
-                    " . ($conditions->getParameters() !== [] ? "OR " . $conditions : "");
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute(\array_merge([
-            '%' . WCF::getDB()->escapeLikeValue($query) . '%',
-        ], $conditions->getParameters()));
-
-        while ($trophy = $statement->fetchObject(Trophy::class)) {
+        foreach ($trophyList as $trophy) {
             $results[] = new ACPSearchResult($trophy->getTitle(), LinkHandler::getInstance()->getControllerLink(TrophyEditForm::class, [
                 'id' => $trophy->trophyID,
             ]));

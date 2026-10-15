@@ -87,6 +87,7 @@ return new class {
                 $event->register(\wcf\data\reaction\type\ReactionType::getL10nDefinition());
                 $event->register(\wcf\data\user\rank\UserRank::getL10nDefinition());
                 $event->register(\wcf\data\contact\recipient\ContactRecipient::getL10nDefinition());
+                $event->register(\wcf\data\trophy\Trophy::getL10nDefinition());
             }
         );
         $eventHandler->register(
@@ -206,6 +207,7 @@ return new class {
             static function (\wcf\event\object\filter\ObjectFilterBuilderCollecting $event) {
                 $event->register(new \wcf\system\object\filter\builder\AdObjectFilterBuilder());
                 $event->register(new \wcf\system\object\filter\builder\NoticeObjectFilterBuilder());
+                $event->register(new \wcf\system\object\filter\builder\TrophyObjectFilterBuilder());
                 $event->register(new \wcf\system\object\filter\builder\UserGroupAssignmentObjectFilterBuilder());
             }
         );

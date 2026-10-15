@@ -60,6 +60,15 @@ return [
             TextDatabaseTableColumn::create('description')
                 ->drop(),
         ]),
+    PartialDatabaseTable::create('wcf1_trophy')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('title')
+                ->drop(),
+            MediumtextDatabaseTableColumn::create('description')
+                ->drop(),
+            MediumtextDatabaseTableColumn::create('iconFile')
+                ->drop(),
+        ]),
     PartialDatabaseTable::create('wcf1_captcha_question')
         ->columns([
             NotNullVarchar255DatabaseTableColumn::create('question')

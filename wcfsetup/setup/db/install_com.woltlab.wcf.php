@@ -3857,13 +3857,11 @@ return [
     DatabaseTable::create('wcf1_trophy')
         ->columns([
             ObjectIdDatabaseTableColumn::create('trophyID'),
-            NotNullVarchar255DatabaseTableColumn::create('title'),
-            MediumtextDatabaseTableColumn::create('description'),
             NotNullInt10DatabaseTableColumn::create('categoryID'),
             SmallintDatabaseTableColumn::create('type')
                 ->notNull()
                 ->defaultValue(1),
-            MediumtextDatabaseTableColumn::create('iconFile'),
+            IntDatabaseTableColumn::create('iconFileID'),
             VarcharDatabaseTableColumn::create('iconName')
                 ->length(255),
             VarcharDatabaseTableColumn::create('iconColor')
@@ -3876,6 +3874,7 @@ return [
             DefaultFalseBooleanDatabaseTableColumn::create('trophyUseHtml'),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
+            JsonDatabaseTableColumn::create('conditions'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
@@ -3886,6 +3885,38 @@ return [
                 ->columns(['categoryID'])
                 ->referencedTable('wcf1_category')
                 ->referencedColumns(['categoryID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['iconFileID'])
+                ->referencedTable('wcf1_file')
+                ->referencedColumns(['fileID'])
+                ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_trophy_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('trophyID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            MediumtextDatabaseTableColumn::create('description'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('trophyID')
+                ->columns(['trophyID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['trophyID'])
+                ->referencedTable('wcf1_trophy')
+                ->referencedColumns(['trophyID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),

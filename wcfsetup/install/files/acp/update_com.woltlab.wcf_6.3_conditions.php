@@ -1,9 +1,10 @@
 <?php
 
 /**
- * Migrates the legacy conditions of notices, ads and user group assignments
- * into object filters. Conditions that cannot be converted, e.g. those of apps,
- * are kept and the affected notices, ads and assignments are disabled.
+ * Migrates the legacy conditions of notices, ads, user group assignments and
+ * trophies into object filters. Conditions that cannot be converted, e.g. those
+ * of apps, are kept and the affected notices, ads, assignments and trophies are
+ * disabled.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
@@ -327,26 +328,27 @@ $converters = [
 (new LegacyConditionMigration('com.woltlab.wcf.condition.userGroupAssignment', 'wcf1_user_group_assignment', 'assignmentID'))
     ->migrate($converters);
 
-// The user option conditions of trophies are removed together with their object
-// type, the affected trophies are disabled to prevent them from being awarded to
-// users that do not meet the original conditions.
-$sql = "UPDATE  wcf1_trophy
-        SET     isDisabled = ?
-        WHERE   awardAutomatically = ?
-            AND trophyID IN (
-                    SELECT      condition_table.objectID
-                    FROM        wcf1_condition condition_table
-                    INNER JOIN  wcf1_object_type object_type
-                    ON          object_type.objectTypeID = condition_table.objectTypeID
-                    INNER JOIN  wcf1_object_type_definition definition
-                    ON          definition.definitionID = object_type.definitionID
-                    WHERE       object_type.objectType = ?
-                            AND definition.definitionName = ?
-                )";
+// The legacy form stored the conditions of trophies regardless of whether they
+// are awarded automatically. Those conditions were never evaluated and must not
+// cause the migration to disable the trophies.
+$sql = "DELETE FROM wcf1_condition
+        WHERE       objectID IN (
+                        SELECT  trophyID
+                        FROM    wcf1_trophy
+                        WHERE   awardAutomatically = ?
+                    )
+                AND objectTypeID IN (
+                        SELECT      object_type.objectTypeID
+                        FROM        wcf1_object_type object_type
+                        INNER JOIN  wcf1_object_type_definition definition
+                        ON          definition.definitionID = object_type.definitionID
+                        WHERE       definition.definitionName = ?
+                    )";
 $statement = WCF::getDB()->prepare($sql);
 $statement->execute([
-    1,
-    1,
-    'com.woltlab.wcf.userOptions',
+    0,
     'com.woltlab.wcf.condition.trophy',
 ]);
+
+(new LegacyConditionMigration('com.woltlab.wcf.condition.trophy', 'wcf1_trophy', 'trophyID'))
+    ->migrate($converters);

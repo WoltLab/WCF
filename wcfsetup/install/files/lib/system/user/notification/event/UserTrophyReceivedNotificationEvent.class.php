@@ -5,7 +5,7 @@ namespace wcf\system\user\notification\event;
 use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\Trophy;
-use wcf\data\trophy\TrophyAction;
+use wcf\data\trophy\TrophyBuilder;
 use wcf\data\trophy\TrophyCache;
 use wcf\data\user\trophy\UserTrophy;
 use wcf\data\user\trophy\UserTrophyAction;
@@ -13,6 +13,7 @@ use wcf\data\user\UserProfile;
 use wcf\system\cache\builder\TrophyCacheBuilder;
 use wcf\system\cache\eager\CategoryCache;
 use wcf\system\category\CategoryHandler;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\user\notification\object\UserTrophyNotificationObject;
 use wcf\system\user\notification\TestableUserNotificationEventHandler;
@@ -71,20 +72,17 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
     #[\Override]
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {
-        /** @var Trophy $trophy */
-        $trophy = (new TrophyAction([], 'create', [
-            'data' => [
-                'title' => 'Trophy Title',
-                'description' => 'Trophy Description',
-                'categoryID' => self::createTestCategory(TrophyCategory::OBJECT_TYPE_NAME)->categoryID,
-                'type' => Trophy::TYPE_BADGE,
-                'isDisabled' => 0,
-                'awardAutomatically' => 0,
-                'iconName' => FontAwesomeIcon::fromString('trophy;false')->__toString(),
-                'iconColor' => 'rgba(255, 255, 255, 1)',
-                'badgeColor' => 'rgba(50, 92, 132, 1)',
-            ],
-        ]))->executeAction()['returnValues'];
+        $trophy = TrophyBuilder::forCreate()
+            ->setTitle([L10nStorage::MONOLINGUAL => 'Trophy Title'])
+            ->setDescription([L10nStorage::MONOLINGUAL => 'Trophy Description'])
+            ->setCategoryID(self::createTestCategory(TrophyCategory::OBJECT_TYPE_NAME)->categoryID)
+            ->setType(Trophy::TYPE_BADGE)
+            ->setBadge(
+                FontAwesomeIcon::fromString('trophy;false')->__toString(),
+                'rgba(255, 255, 255, 1)',
+                'rgba(50, 92, 132, 1)'
+            )
+            ->create();
 
         TestableUserNotificationEventHandler::getInstance()->resetCacheBuilder(TrophyCacheBuilder::getInstance());
         TrophyCache::getInstance()->clearCache();
