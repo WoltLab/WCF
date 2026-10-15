@@ -4,7 +4,7 @@ namespace wcf\system\package\plugin;
 
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\notification\event\UserNotificationEvent;
-use wcf\data\user\notification\event\UserNotificationEventEditor;
+use wcf\data\user\notification\event\UserNotificationEventBuilder;
 use wcf\data\user\notification\event\UserNotificationEventList;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
@@ -35,11 +35,6 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     IGuiPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
-
-    /**
-     * @inheritDoc
-     */
-    public $className = UserNotificationEventEditor::class;
 
     /**
      * @inheritDoc
@@ -93,14 +88,40 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
         ];
     }
 
+    /**
+     * @param array<string, mixed> $row
+     * @param array<string, mixed> $data
+     */
     #[\Override]
-    protected function import(array $row, array $data): UserNotificationEvent|UserNotificationEventEditor
+    protected function import(array $row, array $data): UserNotificationEvent
     {
-        /** @var UserNotificationEvent|UserNotificationEventEditor $event */
-        $event = parent::import($row, $data);
+        if ($row === []) {
+            $this->prepareCreate($data);
 
-        if ($row === [] && $data['preset'] === 1) {
-            $this->presetEventIDs[$event->eventID] = $data['presetMailNotificationType'];
+            // The preset can be changed by the administrator and is
+            // therefore only set when the event is installed.
+            $builder = UserNotificationEventBuilder::forCreate()
+                ->setPackageID($data['packageID'])
+                ->setPreset($data['preset'] === 1)
+                ->setPresetMailNotificationType($data['presetMailNotificationType']);
+        } else {
+            $builder = UserNotificationEventBuilder::forUpdate(new UserNotificationEvent(null, $row));
+        }
+
+        $builder
+            ->setEventName($data['eventName'])
+            ->setClassName($data['className'])
+            ->setObjectTypeID($data['objectTypeID'])
+            ->setPermissions($data['permissions'])
+            ->setOptions($data['options']);
+
+        if ($builder->isUpdate()) {
+            return $builder->update();
+        }
+
+        $event = $builder->create();
+        if ($event->preset === 1) {
+            $this->presetEventIDs[$event->eventID] = $event->presetMailNotificationType;
         }
 
         return $event;

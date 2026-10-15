@@ -16,6 +16,7 @@ use wcf\system\WCF;
  * @author  Marcel Werk, Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `UserNotificationEventBuilder`, the `SetUserNotificationEventPreset` command and the `TestNotificationEvent` RPC endpoint instead.
  *
  * @extends AbstractDatabaseObjectAction<UserNotificationEvent, UserNotificationEventEditor>
  */
@@ -179,7 +180,7 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction
 
         WCF::setLanguage($originalLanguage->languageID);
 
-        $template = WCF::getTPL()->render('wcf', 'devtoolsNotificationTestDialog', [
+        $template = WCF::getTPL()->render('wcf', 'shared_devtoolsNotificationTestDialog', [
             'events' => $events,
             'errors' => $errors,
             'hasEmailSupport' => $hasEmailSupport,

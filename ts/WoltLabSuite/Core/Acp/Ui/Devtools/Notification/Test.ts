@@ -6,21 +6,13 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import * as Ajax from "../../../../Ajax";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../../../../Ui/Dialog";
-import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../../Ajax/Data";
 import { DialogCallbackObject, DialogCallbackSetup } from "../../../../Ui/Dialog/Data";
 import DomUtil from "../../../../Dom/Util";
+import { testNotificationEvent } from "WoltLabSuite/Core/Api/Devtools/Notifications/TestNotificationEvent";
 
-interface AjaxResponse {
-  returnValues: {
-    eventID: number;
-    template: string;
-  };
-}
-
-class AcpUiDevtoolsNotificationTest implements AjaxCallbackObject, DialogCallbackObject {
+class AcpUiDevtoolsNotificationTest implements DialogCallbackObject {
   private readonly buttons: HTMLButtonElement[];
   private readonly titles = new Map<number, string>();
 
@@ -40,23 +32,11 @@ class AcpUiDevtoolsNotificationTest implements AjaxCallbackObject, DialogCallbac
   }
 
   /**
-   * Returns the data used to setup the AJAX request object.
+   * Shows the rendered test results of the event.
    */
-  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
-    return {
-      data: {
-        actionName: "testEvent",
-        className: "wcf\\data\\user\\notification\\event\\UserNotificationEventAction",
-      },
-    };
-  }
-
-  /**
-   * Handles successful AJAX request.
-   */
-  _ajaxSuccess(data: AjaxResponse): void {
-    UiDialog.open(this, data.returnValues.template);
-    UiDialog.setTitle(this, this.titles.get(~~data.returnValues.eventID)!);
+  private showResults(eventId: number, template: string): void {
+    UiDialog.open(this, template);
+    UiDialog.setTitle(this, this.titles.get(eventId)!);
 
     const dialog = UiDialog.getDialog(this)!.dialog;
 
@@ -76,12 +56,6 @@ class AcpUiDevtoolsNotificationTest implements AjaxCallbackObject, DialogCallbac
     });
 
     document.getElementById("notificationTestDialog")!.parentElement!.scrollTop = 0;
-
-    // restore buttons
-    this.buttons.forEach((button) => {
-      button.innerHTML = getPhrase("wcf.acp.devtools.notificationTest.button.test");
-      button.disabled = false;
-    });
   }
 
   /**
@@ -116,18 +90,23 @@ class AcpUiDevtoolsNotificationTest implements AjaxCallbackObject, DialogCallbac
   /**
    * Executes a test after clicking on a test button.
    */
-  private test(event: MouseEvent): void {
+  private async test(event: MouseEvent): Promise<void> {
     const button = event.currentTarget as HTMLButtonElement;
+    const eventId = ~~button.dataset.eventId!;
 
     button.innerHTML = '<fa-icon name="spinner" solid></fa-icon>';
 
     this.buttons.forEach((button) => (button.disabled = true));
 
-    Ajax.api(this, {
-      parameters: {
-        eventID: ~~button.dataset.eventId!,
-      },
-    });
+    try {
+      const { template } = await testNotificationEvent(eventId);
+      this.showResults(eventId, template);
+    } finally {
+      this.buttons.forEach((button) => {
+        button.innerHTML = getPhrase("wcf.acp.devtools.notificationTest.button.test");
+        button.disabled = false;
+      });
+    }
   }
 }
 

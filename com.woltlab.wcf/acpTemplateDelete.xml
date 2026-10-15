@@ -163,5 +163,6 @@
 		<template>userContentRevertChanges</template>
 		<template>userAssignToGroup</template>
 		<template>userEmailAddressExport</template>
+		<template>devtoolsNotificationTestDialog</template>
 	</delete>
 </data>

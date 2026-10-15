@@ -5,11 +5,10 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/Language", "../../../../Ui/Dialog", "../../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Language_1, Dialog_1, Util_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../../../../Ui/Dialog", "../../../../Dom/Util", "WoltLabSuite/Core/Api/Devtools/Notifications/TestNotificationEvent"], function (require, exports, tslib_1, Language_1, Dialog_1, Util_1, TestNotificationEvent_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
-    Ajax = tslib_1.__importStar(Ajax);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Util_1 = tslib_1.__importDefault(Util_1);
     class AcpUiDevtoolsNotificationTest {
@@ -28,22 +27,11 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
             });
         }
         /**
-         * Returns the data used to setup the AJAX request object.
+         * Shows the rendered test results of the event.
          */
-        _ajaxSetup() {
-            return {
-                data: {
-                    actionName: "testEvent",
-                    className: "wcf\\data\\user\\notification\\event\\UserNotificationEventAction",
-                },
-            };
-        }
-        /**
-         * Handles successful AJAX request.
-         */
-        _ajaxSuccess(data) {
-            Dialog_1.default.open(this, data.returnValues.template);
-            Dialog_1.default.setTitle(this, this.titles.get(~~data.returnValues.eventID));
+        showResults(eventId, template) {
+            Dialog_1.default.open(this, template);
+            Dialog_1.default.setTitle(this, this.titles.get(eventId));
             const dialog = Dialog_1.default.getDialog(this).dialog;
             dialog.querySelectorAll(".formSubmit button").forEach((button) => {
                 button.addEventListener("click", (ev) => this.changeView(ev));
@@ -58,11 +46,6 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
                 section.style.setProperty("margin-top", "0px");
             });
             document.getElementById("notificationTestDialog").parentElement.scrollTop = 0;
-            // restore buttons
-            this.buttons.forEach((button) => {
-                button.innerHTML = (0, Language_1.getPhrase)("wcf.acp.devtools.notificationTest.button.test");
-                button.disabled = false;
-            });
         }
         /**
          * Changes the view after clicking on one of the buttons.
@@ -90,15 +73,21 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
         /**
          * Executes a test after clicking on a test button.
          */
-        test(event) {
+        async test(event) {
             const button = event.currentTarget;
+            const eventId = ~~button.dataset.eventId;
             button.innerHTML = '<fa-icon name="spinner" solid></fa-icon>';
             this.buttons.forEach((button) => (button.disabled = true));
-            Ajax.api(this, {
-                parameters: {
-                    eventID: ~~button.dataset.eventId,
-                },
-            });
+            try {
+                const { template } = await (0, TestNotificationEvent_1.testNotificationEvent)(eventId);
+                this.showResults(eventId, template);
+            }
+            finally {
+                this.buttons.forEach((button) => {
+                    button.innerHTML = (0, Language_1.getPhrase)("wcf.acp.devtools.notificationTest.button.test");
+                    button.disabled = false;
+                });
+            }
         }
     }
     let acpUiDevtoolsNotificationTest;

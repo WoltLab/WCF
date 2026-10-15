@@ -2,11 +2,10 @@
 
 namespace wcf\acp\form;
 
+use wcf\command\user\notification\event\SetUserNotificationEventPreset;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\notification\event\UserNotificationEvent;
-use wcf\data\user\notification\event\UserNotificationEventEditor;
 use wcf\form\AbstractForm;
-use wcf\system\cache\builder\UserNotificationEventCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
@@ -185,34 +184,15 @@ class NotificationPresetSettingsForm extends AbstractForm
                 }
 
                 if ($event->preset !== $preset || $event->presetMailNotificationType !== $presetMailNotificationType) {
-                    $editor = new UserNotificationEventEditor(new UserNotificationEvent(
-                        null,
-                        ['eventID' => $event->eventID]
-                    ));
-                    $editor->update([
-                        'preset' => $preset,
-                        'presetMailNotificationType' => $presetMailNotificationType,
-                    ]);
-
-                    if ($this->applyChangesToExistingUsers !== 0) {
-                        if ($preset === 0) {
-                            $sql = "DELETE FROM wcf1_user_notification_event_to_user
-                                    WHERE       eventID = ?";
-                            $statement = WCF::getDB()->prepare($sql);
-                            $statement->execute([$event->eventID]);
-                        } else {
-                            $sql = "REPLACE INTO    wcf1_user_notification_event_to_user
-                                                    (userID, eventID, mailNotificationType)
-                                    SELECT          userID, ?, ?
-                                    FROM            wcf1_user";
-                            $statement = WCF::getDB()->prepare($sql);
-                            $statement->execute([$event->eventID, $presetMailNotificationType]);
-                        }
-                    }
+                    (new SetUserNotificationEventPreset(
+                        new UserNotificationEvent($event->eventID),
+                        $preset === 1,
+                        $presetMailNotificationType,
+                        $this->applyChangesToExistingUsers !== 0
+                    ))();
                 }
             }
         }
-        UserNotificationEventCacheBuilder::getInstance()->reset();
         $this->saved();
 
         // show success message
