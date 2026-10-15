@@ -20,14 +20,7 @@ abstract class AbstractCategoriesBoxController extends AbstractBoxController imp
     /**
      * @inheritDoc
      */
-    protected static $supportedPositions = [
-        'footerBoxes',
-        'sidebarLeft',
-        'sidebarRight',
-        'contentTop',
-        'contentBottom',
-        'footer',
-    ];
+    protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
 
     protected bool $showChildCategories = false;
 
