@@ -2,6 +2,7 @@
 	*}id="{$field->getPrefixedId()}" {*
 	*}name="{$field->getPrefixedId()}" {*
 	*}value="{$field->getValue()}"{*
+	*}{if $field->isImmutable()} disabled{/if}{*
 *}>
 <template id="{$field->getPrefixedId()}_template">
 	<span class="selectOptionsListItem__handle">{icon name='up-down'}</span>
