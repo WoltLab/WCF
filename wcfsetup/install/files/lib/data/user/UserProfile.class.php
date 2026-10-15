@@ -41,7 +41,7 @@ use wcf\util\StringUtil;
  * @mixin   User
  * @property-read   int $sessionLastActivityTime
  * @property-read   bool $birthdayShowYear
- * @property-read   string $birthday
+ * @property-read   ?string $birthday
  * @extends DatabaseObjectDecorator<User>
  */
 class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, \Stringable
@@ -748,7 +748,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         if ($year !== null) {
             if ($showYear) {
                 $birthdayYear = 0;
-                $value = \explode('-', $this->birthday);
+                $value = \explode('-', (string)$this->birthday);
                 $birthdayYear = \intval($value[0]);
                 if ($birthdayYear !== 0) {
                     return $year - $birthdayYear;
@@ -758,8 +758,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
             return 0;
         } else {
             if ($this->__age === null) {
-                if ($this->birthday !== '' && $showYear) {
-                    $this->__age = DateUtil::getAge($this->birthday);
+                $birthday = (string)$this->birthday;
+                if ($birthday !== '' && $showYear) {
+                    $this->__age = DateUtil::getAge($birthday);
                 } else {
                     $this->__age = 0;
                 }
@@ -778,7 +779,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
     {
         // split date
         $birthdayYear = $month = $day = 0;
-        $value = \explode('-', $this->birthday);
+        $value = \explode('-', (string)$this->birthday);
         $birthdayYear = \intval($value[0]);
         if (isset($value[1])) {
             $month = \intval($value[1]);
