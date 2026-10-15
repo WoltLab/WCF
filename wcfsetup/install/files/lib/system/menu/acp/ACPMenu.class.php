@@ -7,6 +7,8 @@ use wcf\system\cache\builder\ACPMenuCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
+use wcf\system\request\LinkHandler;
+use wcf\system\request\RequestHandler;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 
@@ -116,7 +118,8 @@ class ACPMenu extends TreeMenu
     /**
      * Returns the breadcrumb items for the active menu path, ordered from the
      * top-level section down to the immediate parent of the current page. The
-     * current page itself is omitted.
+     * active menu item is omitted if it represents the current page, but kept
+     * otherwise, e.g. for edit forms that use the menu item of the list page.
      *
      * @return AcpMenuItem[]
      * @since 6.3
@@ -128,7 +131,7 @@ class ACPMenu extends TreeMenu
         }
 
         $names = \array_reverse($this->activeMenuItems);
-        \array_pop($names);
+        $activeMenuItem = \array_pop($names);
 
         $breadcrumbs = [];
         foreach ($names as $name) {
@@ -138,6 +141,38 @@ class ACPMenu extends TreeMenu
             }
         }
 
+        if (isset($this->menuItemList[$activeMenuItem])) {
+            \assert($this->menuItemList[$activeMenuItem] instanceof AcpMenuItem);
+            if (!$this->isActiveRequest($this->menuItemList[$activeMenuItem])) {
+                $breadcrumbs[] = $this->menuItemList[$activeMenuItem];
+            }
+        }
+
         return $breadcrumbs;
+    }
+
+    /**
+     * Returns true if the given menu item links to the controller of the
+     * active request. Menu items without a link are treated as the current
+     * page.
+     */
+    private function isActiveRequest(AcpMenuItem $menuItem): bool
+    {
+        $link = $menuItem->getLink();
+        if ($link === '') {
+            return true;
+        }
+
+        $request = RequestHandler::getInstance()->getActiveRequest();
+        if ($request === null) {
+            return true;
+        }
+
+        // Controller links always end with a separator, which prevents false
+        // positives for controllers sharing the same prefix.
+        return \str_starts_with(
+            $link,
+            LinkHandler::getInstance()->getControllerLink($request->getClassName())
+        );
     }
 }
