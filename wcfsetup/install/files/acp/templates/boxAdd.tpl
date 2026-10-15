@@ -65,7 +65,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.box.add{/lang}{else}{lang}wcf.acp.box.edit{/lang}{/if}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.box.{$action}{/lang}{if $action == 'edit'}: {$box->name}{/if}</h1>
 	</div>
 
 	<nav class="contentHeaderNavigation">

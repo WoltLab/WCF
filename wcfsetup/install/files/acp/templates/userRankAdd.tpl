@@ -2,7 +2,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.user.rank.{$action}{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.user.rank.{$action}{/lang}{if $action == 'edit'}: {$formObject->getTitle()}{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">

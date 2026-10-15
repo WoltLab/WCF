@@ -2,7 +2,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.language.{$action}{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.language.{$action}{/lang}{if $action == 'edit'}: {$formObject->languageName}{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">

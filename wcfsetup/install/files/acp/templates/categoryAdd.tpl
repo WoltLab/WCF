@@ -17,7 +17,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{@$objectType->getProcessor()->getLanguageVariable($action)}</h1>
+		<h1 class="contentTitle">{@$objectType->getProcessor()->getLanguageVariable($action)}{if $action == 'edit'}: {$category->getTitle()}{/if}</h1>
 	</div>
 	
 	{hascontent}

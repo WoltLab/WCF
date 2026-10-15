@@ -10,12 +10,8 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.user.{$action}{/lang}</h1>
-		{if $action == 'add'}
-			<p class="contentHeaderDescription">{$subscription->getTitle()}</p>
-		{else}
-			<p class="contentHeaderDescription">{$subscriptionUser->getUser()->username}</p>
-		{/if}
+		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.user.{$action}{/lang}{if $action == 'edit'}: {$subscriptionUser->getUser()->username}{/if}</h1>
+		<p class="contentHeaderDescription">{$subscription->getTitle()}</p>
 	</div>
 	
 	<nav class="contentHeaderNavigation">

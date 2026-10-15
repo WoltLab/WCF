@@ -31,8 +31,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.style.{$action}{/lang}</h1>
-		{if $action == 'edit'}<p class="contentHeaderDescription">{$styleName}</p>{/if}
+		<h1 class="contentTitle">{lang}wcf.acp.style.{$action}{/lang}{if $action == 'edit'}: {$style->styleName}{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">

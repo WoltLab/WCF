@@ -2,7 +2,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.cronjob.{$action}{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.cronjob.{$action}{/lang}{if $action == 'edit'}: {$formObject->getDescription()}{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">

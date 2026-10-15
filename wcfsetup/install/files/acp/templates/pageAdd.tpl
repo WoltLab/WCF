@@ -42,7 +42,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.page.add{/lang}{else}{lang}wcf.acp.page.edit{/lang}{/if}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.page.{$action}{/lang}{if $action == 'edit'}: {$page->name}{/if}</h1>
 	</div>
 
 	<nav class="contentHeaderNavigation">
