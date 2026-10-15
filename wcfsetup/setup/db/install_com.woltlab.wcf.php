@@ -3868,6 +3868,8 @@ return [
                 ->length(255),
             VarcharDatabaseTableColumn::create('badgeColor')
                 ->length(255),
+            VarcharDatabaseTableColumn::create('borderColor')
+                ->length(255),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             DefaultFalseBooleanDatabaseTableColumn::create('awardAutomatically'),
             DefaultFalseBooleanDatabaseTableColumn::create('revokeAutomatically'),

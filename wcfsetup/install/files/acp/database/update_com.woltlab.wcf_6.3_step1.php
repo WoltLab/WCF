@@ -53,6 +53,8 @@ return [
                 ->notNull()
                 ->defaultValue(1),
             IntDatabaseTableColumn::create('iconFileID'),
+            VarcharDatabaseTableColumn::create('borderColor')
+                ->length(255),
             JsonDatabaseTableColumn::create('conditions'),
         ])
         ->foreignKeys([

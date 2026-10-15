@@ -205,7 +205,12 @@ class TrophyAddForm extends AbstractDatabaseObjectBuilderForm
                         ->label('wcf.acp.trophy.type.badge')
                         ->required()
                         ->saveValueCallback(static function (TrophyBuilder $builder, TrophyBadgeFormField $field): void {
-                            $builder->setBadge($field->getIconName(), $field->getIconColor(), $field->getBadgeColor());
+                            $builder->setBadge(
+                                $field->getIconName(),
+                                $field->getIconColor(),
+                                $field->getBadgeColor(),
+                                $field->getBorderColor()
+                            );
                         })
                         ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
                             // Image trophies keep the default badge.
@@ -214,6 +219,7 @@ class TrophyAddForm extends AbstractDatabaseObjectBuilderForm
                                     'iconName' => $object->iconName,
                                     'iconColor' => $object->iconColor,
                                     'badgeColor' => $object->badgeColor,
+                                    'borderColor' => $object->borderColor,
                                 ]);
                             }
                         })

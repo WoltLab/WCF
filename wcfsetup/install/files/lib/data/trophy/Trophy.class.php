@@ -36,6 +36,7 @@ use wcf\util\StringUtil;
  * @property-read   ?string $iconName
  * @property-read   ?string $iconColor
  * @property-read   ?string $badgeColor
+ * @property-read   ?string $borderColor
  * @property-read   0|1     $isDisabled             `1` if the trophy is disabled, otherwise `0`
  * @property-read   0|1     $awardAutomatically     `1` if the trophy is awarded automatically, otherwise `0`
  * @property-read   0|1     $revokeAutomatically    `1` if the trophy should be automatically revoked once the conditions are no longer met, otherwise `0`

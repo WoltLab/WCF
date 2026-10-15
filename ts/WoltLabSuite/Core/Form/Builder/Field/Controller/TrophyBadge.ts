@@ -1,6 +1,6 @@
 /**
- * Enables editing of the icon, the icon color and the background color of a
- * badge trophy.
+ * Enables editing of the icon, the icon color, the background color and the
+ * border color of a badge trophy.
  *
  * @author    Alexander Ebert, Marcel Werk
  * @copyright 2001-2026 WoltLab GmbH
@@ -56,7 +56,7 @@ function setupColorPicker(
   button: HTMLButtonElement,
   preview: HTMLElement,
   input: HTMLInputElement,
-  property: "color" | "background-color",
+  property: "color" | "background-color" | "--trophy-border-color",
 ): void {
   button.dataset.store = input.id;
 
@@ -82,5 +82,11 @@ export function setup(fieldId: string): void {
     preview,
     getInput(fieldId, "badgeColor"),
     "background-color",
+  );
+  setupColorPicker(
+    getButton(container, "border-color"),
+    preview,
+    getInput(fieldId, "borderColor"),
+    "--trophy-border-color",
   );
 }

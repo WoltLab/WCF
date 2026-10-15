@@ -1,6 +1,6 @@
 /**
- * Enables editing of the icon, the icon color and the background color of a
- * badge trophy.
+ * Enables editing of the icon, the icon color, the background color and the
+ * border color of a badge trophy.
  *
  * @author    Alexander Ebert, Marcel Werk
  * @copyright 2001-2026 WoltLab GmbH
@@ -63,5 +63,6 @@ define(["require", "exports", "tslib", "../../../../Ui/Style/FontAwesome", "../.
         setupChangeIcon(container, preview, getInput(fieldId, "iconName"));
         setupColorPicker(getButton(container, "color"), preview, getInput(fieldId, "iconColor"), "color");
         setupColorPicker(getButton(container, "background-color"), preview, getInput(fieldId, "badgeColor"), "background-color");
+        setupColorPicker(getButton(container, "border-color"), preview, getInput(fieldId, "borderColor"), "--trophy-border-color");
     }
 });

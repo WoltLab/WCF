@@ -80,6 +80,7 @@ final class TrophyBuilder extends DatabaseObjectBuilder
             $this->properties['iconName'] = '';
             $this->properties['iconColor'] = '';
             $this->properties['badgeColor'] = '';
+            $this->properties['borderColor'] = '';
         } elseif ($type === Trophy::TYPE_BADGE) {
             $this->properties['iconFileID'] = null;
         }
@@ -100,11 +101,12 @@ final class TrophyBuilder extends DatabaseObjectBuilder
     /**
      * Sets the icon and the colors of a badge trophy.
      */
-    public function setBadge(string $iconName, string $iconColor, string $badgeColor): static
+    public function setBadge(string $iconName, string $iconColor, string $badgeColor, string $borderColor): static
     {
         $this->properties['iconName'] = $iconName;
         $this->properties['iconColor'] = $iconColor;
         $this->properties['badgeColor'] = $badgeColor;
+        $this->properties['borderColor'] = $borderColor;
 
         return $this;
     }

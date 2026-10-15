@@ -26,6 +26,7 @@
 	align-self: flex-start;
 	display: inline-block;
 	border-radius: 50%;
+	box-shadow: inset 0 0 0 2px var(--trophy-border-color, transparent);
 
 	fa-icon {
 		transform: scale(0.5625);
