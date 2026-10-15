@@ -2,7 +2,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.template.{$action}{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.template.{$action}{/lang}{if $action == 'edit'}: {$formObject->templateName}{/if}</h1>
 		{if $action == 'edit'}<p class="contentHeaderDescription">{$formObject->getPath()}</p>{/if}
 	</div>
 	

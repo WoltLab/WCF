@@ -23,7 +23,8 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.menu.link.userTrophy.{$action}{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.menu.link.userTrophy.{$action}{/lang}{if $action == 'edit'}: {$userTrophy->getTrophy()->getTitle()}{/if}</h1>
+		{if $action == 'edit'}<p class="contentHeaderDescription">{$userTrophy->getUserProfile()->getUsername()}</p>{/if}
 	</div>
 	
 	<nav class="contentHeaderNavigation">

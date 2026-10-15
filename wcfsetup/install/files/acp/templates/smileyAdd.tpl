@@ -2,7 +2,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.smiley.{$action}{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.smiley.{$action}{/lang}{if $action == 'edit'}: {$smiley->getTitle()}{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">

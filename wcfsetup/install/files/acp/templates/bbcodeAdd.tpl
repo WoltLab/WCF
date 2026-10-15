@@ -87,7 +87,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.bbcode.{$action}{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.bbcode.{$action}{/lang}{if $action == 'edit'}: {$bbcode->bbcodeTag}{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">

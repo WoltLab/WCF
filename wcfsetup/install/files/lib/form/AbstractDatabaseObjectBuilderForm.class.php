@@ -96,7 +96,8 @@ abstract class AbstractDatabaseObjectBuilderForm extends AbstractForm
         WCF::getTPL()->assign([
             'action' => $this->formAction === 'create' ? 'add' : 'edit',
             'form' => $this->form,
-            'formObject' => $this->formObject,
+            // show the updated object after it has been saved
+            'formObject' => $this->formAction === 'edit' ? ($this->object ?? $this->formObject) : $this->formObject,
         ]);
     }
 

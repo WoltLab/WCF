@@ -2,7 +2,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{unsafe:$objectType->getProcessor()->getLanguageVariable($action)}</h1>
+		<h1 class="contentTitle">{unsafe:$objectType->getProcessor()->getLanguageVariable($action)}{if $action == 'edit'}: {$formObject->getTitle()}{/if}</h1>
 	</div>
 
 	{hascontent}

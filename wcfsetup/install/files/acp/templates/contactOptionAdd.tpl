@@ -4,7 +4,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}{$pageTitle}{/lang}</h1>
+		<h1 class="contentTitle">{lang}{$pageTitle}{/lang}{if $action == 'edit'}: {$formObject->getTitle()}{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">

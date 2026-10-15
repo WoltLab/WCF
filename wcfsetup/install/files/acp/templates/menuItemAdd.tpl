@@ -2,7 +2,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.menu.item.{$action}{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.menu.item.{$action}{/lang}{if $action == 'edit'}: {$formObject->getTitle()}{/if}</h1>
 		<p class="contentHeaderDescription">{lang}wcf.acp.menu.item.action.description{/lang}</p>
 	</div>
 	
