@@ -9,10 +9,11 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\style\FontAwesomeIcon;
 
 /**
- * Form field to configure the icon, the icon color and the background color of
- * a badge trophy.
+ * Form field to configure the icon, the icon color, the background color and the
+ * border color of a badge trophy.
  *
- * The value is an array with the keys `iconName`, `iconColor` and `badgeColor`.
+ * The value is an array with the keys `iconName`, `iconColor`, `badgeColor` and
+ * `borderColor`.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
@@ -28,6 +29,8 @@ final class TrophyBadgeFormField extends AbstractFormField implements IImmutable
     public const DEFAULT_ICON_COLOR = 'rgba(255, 255, 255, 1)';
 
     public const DEFAULT_BADGE_COLOR = 'rgba(50, 92, 132, 1)';
+
+    public const DEFAULT_BORDER_COLOR = 'rgba(0, 0, 0, 0)';
 
     private const COLOR_PATTERN = '~^rgba\(\d{1,3}, ?\d{1,3}, ?\d{1,3}, ?(1|1\.00?|0|0?\.[0-9]{1,2})\)$~';
 
@@ -48,6 +51,7 @@ final class TrophyBadgeFormField extends AbstractFormField implements IImmutable
         'iconName' => self::DEFAULT_ICON_NAME,
         'iconColor' => self::DEFAULT_ICON_COLOR,
         'badgeColor' => self::DEFAULT_BADGE_COLOR,
+        'borderColor' => self::DEFAULT_BORDER_COLOR,
     ];
 
     /**
@@ -76,6 +80,7 @@ final class TrophyBadgeFormField extends AbstractFormField implements IImmutable
                     'iconName' => (string)($value['iconName'] ?? ''),
                     'iconColor' => (string)($value['iconColor'] ?? ''),
                     'badgeColor' => (string)($value['badgeColor'] ?? ''),
+                    'borderColor' => (string)($value['borderColor'] ?? ''),
                 ];
             }
         }
@@ -96,6 +101,7 @@ final class TrophyBadgeFormField extends AbstractFormField implements IImmutable
             'iconName' => (string)($value['iconName'] ?? self::DEFAULT_ICON_NAME),
             'iconColor' => (string)($value['iconColor'] ?? self::DEFAULT_ICON_COLOR),
             'badgeColor' => (string)($value['badgeColor'] ?? self::DEFAULT_BADGE_COLOR),
+            'borderColor' => (string)($value['borderColor'] ?? self::DEFAULT_BORDER_COLOR),
         ];
 
         return $this;
@@ -126,6 +132,7 @@ final class TrophyBadgeFormField extends AbstractFormField implements IImmutable
         if (
             \preg_match(self::COLOR_PATTERN, $this->getIconColor()) !== 1
             || \preg_match(self::COLOR_PATTERN, $this->getBadgeColor()) !== 1
+            || \preg_match(self::COLOR_PATTERN, $this->getBorderColor()) !== 1
         ) {
             $this->addValidationError(new FormFieldValidationError(
                 'invalidValue',
@@ -147,6 +154,11 @@ final class TrophyBadgeFormField extends AbstractFormField implements IImmutable
     public function getBadgeColor(): string
     {
         return $this->value['badgeColor'];
+    }
+
+    public function getBorderColor(): string
+    {
+        return $this->value['borderColor'];
     }
 
     /**

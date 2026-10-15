@@ -80,7 +80,8 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
             ->setBadge(
                 FontAwesomeIcon::fromString('trophy;false')->__toString(),
                 'rgba(255, 255, 255, 1)',
-                'rgba(50, 92, 132, 1)'
+                'rgba(50, 92, 132, 1)',
+                'rgba(0, 0, 0, 0)'
             )
             ->create();
 

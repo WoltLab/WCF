@@ -8,6 +8,7 @@ define(["require", "exports", "tslib", "./Field"], function (require, exports, t
                     iconName: this.#getValue("iconName"),
                     iconColor: this.#getValue("iconColor"),
                     badgeColor: this.#getValue("badgeColor"),
+                    borderColor: this.#getValue("borderColor"),
                 },
             };
         }

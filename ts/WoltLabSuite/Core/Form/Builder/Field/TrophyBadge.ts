@@ -16,6 +16,7 @@ class TrophyBadge extends Field {
         iconName: this.#getValue("iconName"),
         iconColor: this.#getValue("iconColor"),
         badgeColor: this.#getValue("badgeColor"),
+        borderColor: this.#getValue("borderColor"),
       },
     };
   }
