@@ -92,6 +92,40 @@ $getUserOptionTypes = static function (): array {
     return $optionTypes;
 };
 
+/**
+ * Returns a converter for the user state, the banned state is dropped if there
+ * is no matching filter.
+ *
+ * @return \Closure(array<string, mixed>): ?list<array{0: string, 1: string}>
+ */
+$userState = static function (bool $includeBanned) use ($boolean): \Closure {
+    $identifiers = [
+        'userIsEnabled' => 'com.woltlab.wcf.userActivated',
+        'userIsEmailConfirmed' => 'com.woltlab.wcf.userEmailConfirmed',
+    ];
+    if ($includeBanned) {
+        $identifiers['userIsBanned'] = 'com.woltlab.wcf.userBanned';
+    }
+
+    return static function (array $data) use ($boolean, $identifiers): ?array {
+        $filters = [];
+        foreach ($identifiers as $key => $identifier) {
+            if (!isset($data[$key])) {
+                continue;
+            }
+
+            $filter = $boolean($identifier, $data[$key]);
+            if ($filter === null) {
+                return null;
+            }
+
+            \array_push($filters, ...$filter);
+        }
+
+        return $filters;
+    };
+};
+
 $converters = [
     MultiPageCondition::class => static function (array $data) use ($idList): ?array {
         $pageIDs = $idList($data['pageIDs'] ?? null);
@@ -202,29 +236,7 @@ $converters = [
     UserCoverPhotoCondition::class => static function (array $data) use ($boolean): ?array {
         return $boolean('com.woltlab.wcf.userCoverPhoto', $data['userCoverPhoto'] ?? null);
     },
-    UserStateCondition::class => static function (array $data) use ($boolean): ?array {
-        $filters = [];
-        foreach (
-            [
-                'userIsBanned' => 'com.woltlab.wcf.userBanned',
-                'userIsEnabled' => 'com.woltlab.wcf.userActivated',
-                'userIsEmailConfirmed' => 'com.woltlab.wcf.userEmailConfirmed',
-            ] as $key => $identifier
-        ) {
-            if (!isset($data[$key])) {
-                continue;
-            }
-
-            $filter = $boolean($identifier, $data[$key]);
-            if ($filter === null) {
-                return null;
-            }
-
-            \array_push($filters, ...$filter);
-        }
-
-        return $filters;
-    },
+    UserStateCondition::class => $userState(includeBanned: true),
     UserMobileBrowserCondition::class => static function (array $data) use ($boolean): ?array {
         return $boolean('com.woltlab.wcf.userMobileBrowser', $data['usesMobileBrowser'] ?? null);
     },
@@ -321,8 +333,12 @@ $converters = [
     },
 ];
 
+// Notices do not provide a filter for banned users, who cannot access the site anyway.
 (new LegacyConditionMigration('com.woltlab.wcf.condition.notice', 'wcf1_notice', 'noticeID'))
-    ->migrate($converters);
+    ->migrate([
+        ...$converters,
+        UserStateCondition::class => $userState(includeBanned: false),
+    ]);
 (new LegacyConditionMigration('com.woltlab.wcf.condition.ad', 'wcf1_ad', 'adID'))
     ->migrate($converters);
 (new LegacyConditionMigration('com.woltlab.wcf.condition.userGroupAssignment', 'wcf1_user_group_assignment', 'assignmentID'))

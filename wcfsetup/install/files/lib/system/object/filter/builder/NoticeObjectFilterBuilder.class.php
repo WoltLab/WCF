@@ -16,7 +16,6 @@ use wcf\system\object\filter\user\DaysOfWeekObjectFilter;
 use wcf\system\object\filter\user\TimeRangeObjectFilter;
 use wcf\system\object\filter\user\UserActivatedObjectFilter;
 use wcf\system\object\filter\user\UserAvatarObjectFilter;
-use wcf\system\object\filter\user\UserBannedObjectFilter;
 use wcf\system\object\filter\user\UserBirthdayObjectFilter;
 use wcf\system\object\filter\user\UserCoverPhotoObjectFilter;
 use wcf\system\object\filter\user\UserEmailConfirmedObjectFilter;
@@ -69,7 +68,6 @@ final class NoticeObjectFilterBuilder extends AbstractObjectFilterBuilder
         $event->register(new UserAvatarObjectFilter());
         $event->register(new UserSignatureObjectFilter());
         $event->register(new UserCoverPhotoObjectFilter());
-        $event->register(new UserBannedObjectFilter());
         $event->register(new UserActivatedObjectFilter());
         $event->register(new UserEmailConfirmedObjectFilter());
         $event->register(new UserMultifactorObjectFilter());
