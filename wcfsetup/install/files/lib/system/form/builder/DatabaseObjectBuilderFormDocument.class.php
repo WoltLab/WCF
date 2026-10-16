@@ -39,6 +39,11 @@ class DatabaseObjectBuilderFormDocument extends FormDocument
             throw new \BadMethodCallException("Applying values to a builder is only possible after calling 'readValues()'.");
         }
 
+        // Runs the data processors for their side effects only (e.g. removing used
+        // quotes or processing removed uploads), the returned parameters are not
+        // used because the values are written into the builder instead.
+        $this->getData();
+
         $this->applyNodeValues($this, $builder);
     }
 
