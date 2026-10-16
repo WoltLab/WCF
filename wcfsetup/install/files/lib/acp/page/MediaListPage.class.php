@@ -4,9 +4,11 @@ namespace wcf\acp\page;
 
 use wcf\data\category\CategoryNode;
 use wcf\data\category\CategoryNodeTree;
-use wcf\data\media\ViewableMediaList;
+use wcf\data\media\Media;
+use wcf\data\media\MediaList;
 use wcf\page\SortablePage;
 use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -18,7 +20,7 @@ use wcf\util\StringUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @extends SortablePage<ViewableMediaList>
+ * @extends SortablePage<MediaList>
  */
 class MediaListPage extends SortablePage
 {
@@ -68,7 +70,7 @@ class MediaListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public $objectListClassName = ViewableMediaList::class;
+    public $objectListClassName = MediaList::class;
 
     /**
      * name of the user who uploaded the searched media files
@@ -107,6 +109,10 @@ class MediaListPage extends SortablePage
     protected function initObjectList()
     {
         parent::initObjectList();
+
+        // required to sort by the localized title
+        $this->objectList->sqlSelects = (new L10nStorage(Media::getL10nDefinition()))
+            ->getSubSelect('title', 'media') . ' AS title';
 
         if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             $this->objectList->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);

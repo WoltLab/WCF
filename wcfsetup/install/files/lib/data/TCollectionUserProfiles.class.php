@@ -43,8 +43,6 @@ trait TCollectionUserProfiles
 
         $userIDs = [];
         foreach ($this->getObjects() as $object) {
-            \assert($object instanceof DatabaseObject);
-
             if ($object->{$userIdProperty}) {
                 $userIDs[] = $object->{$userIdProperty};
             }

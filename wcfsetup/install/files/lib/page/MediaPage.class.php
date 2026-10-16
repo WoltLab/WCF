@@ -4,7 +4,7 @@ namespace wcf\page;
 
 use Laminas\Diactoros\Response\EmptyResponse;
 use wcf\data\media\Media;
-use wcf\data\media\MediaEditor;
+use wcf\data\media\MediaBuilder;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -143,10 +143,9 @@ class MediaPage extends AbstractPage
 
         if ($this->thumbnail === '') {
             // update download count
-            (new MediaEditor($this->media))->update([
-                'downloads' => $this->media->downloads + 1,
-                'lastDownloadTime' => \TIME_NOW,
-            ]);
+            MediaBuilder::forUpdate($this->media)
+                ->trackDownload(\TIME_NOW)
+                ->update();
         }
 
         // send file to client

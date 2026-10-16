@@ -34,14 +34,17 @@ class MediaList extends DatabaseObjectList
 
         $searchString = '%' . \addcslashes($searchString, '_%') . '%';
 
-        $this->sqlConditionJoins .= '
-            LEFT JOIN   wcf1_media_content media_content
-            ON          media_content.mediaID = media.mediaID';
-
         $conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
-        $conditionBuilder->add('media_content.title LIKE ?', [$searchString]);
-        $conditionBuilder->add('media_content.caption LIKE ?', [$searchString]);
-        $conditionBuilder->add('media_content.altText LIKE ?', [$searchString]);
+        $conditionBuilder->add(
+            'media.mediaID IN (
+                SELECT  mediaID
+                FROM    wcf1_media_l10n
+                WHERE   title LIKE ?
+                    OR  caption LIKE ?
+                    OR  altText LIKE ?
+            )',
+            [$searchString, $searchString, $searchString]
+        );
         $conditionBuilder->add('media.filename LIKE ?', [$searchString]);
         $this->getConditionBuilder()->add('(' . $conditionBuilder->__toString() . ')', $conditionBuilder->getParameters());
     }

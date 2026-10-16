@@ -2043,18 +2043,18 @@ return [
                 ->onDelete('SET NULL')
                 ->onUpdate('NO ACTION'),
         ]),
-    DatabaseTable::create('wcf1_media_content')
+    DatabaseTable::create('wcf1_media_l10n')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('mediaID'),
             IntDatabaseTableColumn::create('languageID'),
-            NotNullVarchar255DatabaseTableColumn::create('title'),
-            TextDatabaseTableColumn::create('caption'),
-            NotNullVarchar255DatabaseTableColumn::create('altText')
-                ->defaultValue(''),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            MediumtextDatabaseTableColumn::create('caption'),
+            VarcharDatabaseTableColumn::create('altText')
+                ->length(255),
         ])
         ->indices([
             DatabaseTableIndex::create('mediaID')
-                ->type(DatabaseTableIndex::UNIQUE_TYPE)
                 ->columns(['mediaID', 'languageID']),
         ])
         ->foreignKeys([

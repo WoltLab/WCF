@@ -8,7 +8,7 @@ use wcf\data\CollectionDatabaseObject;
 use wcf\data\IMessage;
 use wcf\data\ITitledLinkObject;
 use wcf\data\language\Language;
-use wcf\data\media\ViewableMedia;
+use wcf\data\media\Media;
 use wcf\page\ArticlePage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\html\output\HtmlOutputProcessor;
@@ -294,18 +294,13 @@ class ArticleContent extends CollectionDatabaseObject implements IMessage, ITitl
      *
      * @since 6.3
      */
-    public function getImage(): ?ViewableMedia
+    public function getImage(): ?Media
     {
         if ($this->imageID === null) {
             return null;
         }
 
-        $image = $this->getCollection()->getImage($this->imageID);
-        if ($image === null || !$image->isAccessible()) {
-            return null;
-        }
-
-        return $image;
+        return $this->getAccessibleImage($this->imageID);
     }
 
     /**
@@ -313,15 +308,28 @@ class ArticleContent extends CollectionDatabaseObject implements IMessage, ITitl
      *
      * @since 6.3
      */
-    public function getTeaserImage(): ?ViewableMedia
+    public function getTeaserImage(): ?Media
     {
         if ($this->teaserImageID === null) {
             return $this->getImage();
         }
 
-        $image = $this->getCollection()->getImage($this->teaserImageID);
+        return $this->getAccessibleImage($this->teaserImageID);
+    }
+
+    /**
+     * Returns the image with the given id localized for the language of
+     * this content if the active user can access it.
+     */
+    private function getAccessibleImage(int $mediaID): ?Media
+    {
+        $image = $this->getCollection()->getImage($mediaID);
         if ($image === null || !$image->isAccessible()) {
             return null;
+        }
+
+        if ($this->languageID !== null) {
+            return $image->getLocalizedVersion($this->languageID);
         }
 
         return $image;

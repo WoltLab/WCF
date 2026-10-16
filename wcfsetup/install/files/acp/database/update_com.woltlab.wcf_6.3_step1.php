@@ -115,6 +115,34 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    DatabaseTable::create('wcf1_media_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('mediaID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('title')
+                ->length(255),
+            MediumtextDatabaseTableColumn::create('caption'),
+            VarcharDatabaseTableColumn::create('altText')
+                ->length(255),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('mediaID')
+                ->columns(['mediaID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['mediaID'])
+                ->referencedTable('wcf1_media')
+                ->referencedColumns(['mediaID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
     PartialDatabaseTable::create('wcf1_like_object')
         ->columns([
             TextDatabaseTableColumn::create('cachedUsers')

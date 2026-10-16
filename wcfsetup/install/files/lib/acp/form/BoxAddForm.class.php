@@ -8,7 +8,7 @@ use wcf\data\box\Box;
 use wcf\data\box\BoxAction;
 use wcf\data\box\BoxEditor;
 use wcf\data\media\Media;
-use wcf\data\media\ViewableMediaList;
+use wcf\data\media\MediaList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\Page;
@@ -428,7 +428,7 @@ class BoxAddForm extends AbstractForm
             return;
         }
 
-        $mediaList = new ViewableMediaList();
+        $mediaList = new MediaList();
         $mediaList->setObjectIDs(\array_values($imageIDs));
         $mediaList->readObjects();
 

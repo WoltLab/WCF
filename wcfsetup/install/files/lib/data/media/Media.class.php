@@ -2,23 +2,31 @@
 
 namespace wcf\data\media;
 
-use wcf\data\DatabaseObject;
+use wcf\data\CollectionDatabaseObject;
 use wcf\data\ILinkableObject;
 use wcf\data\IThumbnailFile;
+use wcf\data\user\UserProfile;
 use wcf\page\MediaPage;
 use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\file\processor\IImageDataProvider;
 use wcf\system\file\processor\ImageData;
+use wcf\system\l10n\L10nDefinition;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Represents a media file.
  *
- * @author  Matthias Schmidt
- * @copyright   2001-2019 WoltLab GmbH
+ * The localized title, caption and alternative text are stored in the
+ * `wcf1_media_l10n` table.
+ *
+ * @author  Matthias Schmidt, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @property-read   int     $mediaID                unique id of the media file
@@ -55,14 +63,31 @@ use wcf\util\FileUtil;
  * @property-read   int     $largeThumbnailHeight   height of the large thumbnail file for the media file if `$isImage` is `1`, otherwise `0`
  * @property-read   int     $downloads              number of times the media file has been downloaded
  * @property-read   int     $lastDownloadTime       timestamp at which the media file has been downloaded the last time
+ * @property-read   string  $title                  localized title of the media file
+ * @property-read   string  $caption                localized caption of the media file
+ * @property-read   string  $altText                localized alternative text of the media file
+ *
+ * @extends CollectionDatabaseObject<MediaCollection>
+ *
+ * @phpstan-import-type L10nValue from L10nStorage
  */
-class Media extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile, IImageDataProvider
+class Media extends CollectionDatabaseObject implements
+    ILinkableObject,
+    IRouteController,
+    IThumbnailFile,
+    IImageDataProvider,
+    \Stringable
 {
     /**
-     * i18n media data grouped by language id for all language
-     * @var string[][]|null
+     * names of the localized columns that are exposed as properties
      */
-    protected $i18nData;
+    private const L10N_COLUMNS = ['title', 'caption', 'altText'];
+
+    /**
+     * language id used to resolve the localized values instead of the active
+     * user's language, see `getLocalizedVersion()`
+     */
+    private ?int $forcedLanguageID = null;
 
     /**
      * data of the different thumbnail sizes
@@ -178,10 +203,90 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
         ) . '/' . $this->mediaID . '-' . $size . '-' . $this->fileHash;
     }
 
+    /**
+     * Returns the localized title of the media file or its filename if it has
+     * no title.
+     */
     #[\Override]
     public function getTitle(): string
     {
+        $title = $this->getL10nValue('title');
+        if ($title !== '') {
+            return $title;
+        }
+
         return $this->filename;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getCaption(): string
+    {
+        return $this->getL10nValue('caption');
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getAltText(): string
+    {
+        return $this->getL10nValue('altText');
+    }
+
+    /**
+     * Returns the localized values of the given column as a
+     * `languageID => value` map (see `L10nStorage`).
+     *
+     * @return L10nValue
+     * @since 6.3
+     */
+    public function getL10nValues(string $columnName): array
+    {
+        if (!\in_array($columnName, self::L10N_COLUMNS, true)) {
+            throw new \InvalidArgumentException("Invalid column name given.");
+        }
+
+        return $this->getCollection()->getL10nValues($this, $columnName);
+    }
+
+    /**
+     * Returns a copy of this media file that resolves its localized values
+     * for the given language instead of the active user's language.
+     *
+     * @since 6.3
+     */
+    public function getLocalizedVersion(int $languageID): static
+    {
+        $media = clone $this;
+        $media->forcedLanguageID = $languageID;
+
+        return $media;
+    }
+
+    private function getL10nValue(string $columnName): string
+    {
+        return L10nStorage::resolveValue($this->getL10nValues($columnName), $this->forcedLanguageID);
+    }
+
+    #[\Override]
+    public function __get(string $name)
+    {
+        if (\in_array($name, self::L10N_COLUMNS, true)) {
+            return $this->getL10nValue($name);
+        }
+
+        return parent::__get($name);
+    }
+
+    #[\Override]
+    public function __isset(string $name)
+    {
+        if (\in_array($name, self::L10N_COLUMNS, true)) {
+            return true;
+        }
+
+        return parent::__isset($name);
     }
 
     /**
@@ -202,30 +307,16 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
      * Returns the i18n media data grouped by language id for all language.
      *
      * @return  string[][]
+     * @deprecated 6.3 Use `getL10nValues()` instead.
      */
     public function getI18nData()
     {
-        if ($this->i18nData === null) {
-            $this->i18nData = [
-                'altText' => [],
-                'caption' => [],
-                'title' => [],
-            ];
-
-            $sql = "SELECT  *
-                    FROM    wcf1_media_content
-                    WHERE   mediaID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->mediaID]);
-
-            while ($row = $statement->fetchArray()) {
-                $this->i18nData['altText'][$row['languageID']] = $row['altText'];
-                $this->i18nData['caption'][$row['languageID']] = $row['caption'];
-                $this->i18nData['title'][$row['languageID']] = $row['title'];
-            }
+        $i18nData = [];
+        foreach (self::L10N_COLUMNS as $columnName) {
+            $i18nData[$columnName] = $this->getL10nValues($columnName);
         }
 
-        return $this->i18nData;
+        return $i18nData;
     }
 
     /**
@@ -300,6 +391,146 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
     }
 
     /**
+     * Returns the user profile of the user who uploaded the media file.
+     *
+     * @since 6.3
+     */
+    public function getUserProfile(): UserProfile
+    {
+        return $this->getCollection()->getUserProfile($this);
+    }
+
+    /**
+     * Returns a textual representation of the media file to be used in templates.
+     *
+     * @since 6.3
+     */
+    #[\Override]
+    public function __toString(): string
+    {
+        if ($this->isImage !== 0) {
+            return \sprintf(
+                '<img src="%s" alt="%s" %s/>',
+                StringUtil::encodeHTML($this->getLink()),
+                StringUtil::encodeHTML($this->getAltText()),
+                $this->getTitleAttribute(),
+            );
+        }
+
+        return \sprintf(
+            '<a href="%s">%s</a>',
+            StringUtil::encodeHTML($this->getLink()),
+            StringUtil::encodeHTML($this->getTitle()),
+        );
+    }
+
+    /**
+     * Returns a tag to display the media element in a square box of the given
+     * size.
+     *
+     * @since 6.3
+     */
+    public function getElementTag(int $size): string
+    {
+        if ($this->isImage === 0) {
+            return FontAwesomeIcon::fromValues($this->getIconName(), false)->toHtml($size);
+        }
+
+        $width = $size;
+        $height = $size;
+        $link = null;
+        $marginTop = 0;
+
+        if ($this->tinyThumbnailType !== '') {
+            $link = $this->getThumbnailLink('tiny');
+
+            if ($size <= $this->tinyThumbnailWidth && $size <= $this->tinyThumbnailHeight) {
+                if ($this->tinyThumbnailHeight < $this->tinyThumbnailWidth) {
+                    $height = \round($this->tinyThumbnailHeight / $this->tinyThumbnailWidth * $size);
+                } else {
+                    $width = \round($this->tinyThumbnailWidth / $this->tinyThumbnailHeight * $size);
+                }
+            } elseif ($size <= $this->tinyThumbnailWidth) {
+                $height = \round($this->tinyThumbnailHeight / $this->tinyThumbnailWidth * $size);
+            } elseif ($size <= $this->tinyThumbnailHeight) {
+                $width = \round($this->tinyThumbnailWidth / $this->tinyThumbnailHeight * $size);
+            } else {
+                $link = null;
+            }
+
+            $marginTop = \floor(($size - $height) / 2);
+        }
+
+        if ($link === null) {
+            $link = $this->getLink();
+
+            if ($size <= $this->width && $size <= $this->height) {
+                if ($this->height < $this->width) {
+                    $height = \round($this->height / $this->width * $size);
+                } else {
+                    $width = \round($this->width / $this->height * $size);
+                }
+            } elseif ($size <= $this->width) {
+                $height = \round($this->height / $this->width * $size);
+            } elseif ($size <= $this->height) {
+                $width = \round($this->width / $this->height * $size);
+            } else {
+                $width = $this->width;
+                $height = $this->height;
+            }
+
+            $marginTop = \floor(($size - $height) / 2);
+        }
+
+        return \sprintf(
+            '<span style="display: inline-block; text-align: center; width: %1$dpx; height: %1$dpx;">'
+                . '<img src="%2$s" alt="%3$s" %4$sstyle="margin-top: %5$dpx;" height="%6$d" width="%7$d" loading="lazy">'
+                . '</span>',
+            $size,
+            StringUtil::encodeHTML($link),
+            StringUtil::encodeHTML($this->getAltText()),
+            $this->getTitleAttribute(),
+            $marginTop,
+            $height,
+            $width,
+        );
+    }
+
+    /**
+     * Returns a tag to display the thumbnail with the given size.
+     *
+     * @since 6.3
+     */
+    public function getThumbnailTag(string $size = 'tiny'): string
+    {
+        if (!isset(self::$thumbnailSizes[$size])) {
+            throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
+        }
+
+        return \sprintf(
+            '<img src="%s" alt="%s" width="%d" height="%d" loading="lazy" %s>',
+            StringUtil::encodeHTML($this->getThumbnailLink($size)),
+            StringUtil::encodeHTML($this->getAltText()),
+            $this->getThumbnailWidth($size),
+            $this->getThumbnailHeight($size),
+            $this->getTitleAttribute()
+        );
+    }
+
+    /**
+     * Returns the `title` attribute of the media file or an empty string if it has no title.
+     */
+    private function getTitleAttribute(): string
+    {
+        $title = $this->getL10nValue('title');
+        if ($title === '') {
+            return '';
+        }
+
+        return 'title="' . StringUtil::encodeHTML($title) . '" ';
+    }
+
+    /**
      * Returns the storage path of the media files.
      *
      * @return  string
@@ -347,5 +578,19 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
         }
 
         return new ImageData($this->getLink(), $this->width, $this->height);
+    }
+
+    /**
+     * @since 6.3
+     */
+    public static function getL10nDefinition(): L10nDefinition
+    {
+        return new L10nDefinition(
+            'wcf1_media',
+            'wcf1_media_l10n',
+            'mediaID',
+            ['title', 'caption', 'altText'],
+            maximumLengths: ['title' => 255, 'altText' => 255],
+        );
     }
 }

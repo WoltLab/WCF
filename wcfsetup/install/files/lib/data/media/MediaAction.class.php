@@ -2,6 +2,8 @@
 
 namespace wcf\data\media;
 
+use wcf\command\media\DeleteMedia;
+use wcf\command\media\UpdateMedia;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\ISearchAction;
@@ -9,11 +11,11 @@ use wcf\data\IUploadAction;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\category\CategoryHandler;
 use wcf\system\clipboard\ClipboardHandler;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\upload\DefaultUploadFileSaveStrategy;
@@ -29,6 +31,7 @@ use wcf\util\FileUtil;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `MediaBuilder` and commands instead.
  *
  * @extends AbstractDatabaseObjectAction<Media, MediaEditor>
  */
@@ -89,7 +92,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             }
 
             // fetch media objects from database
-            $mediaList = new ViewableMediaList();
+            $mediaList = new MediaList();
             $mediaList->setObjectIDs($mediaIDs);
             $mediaList->readObjects();
 
@@ -138,15 +141,15 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
      *
      * @return mixed[]
      */
-    protected function getMediaData(Media|ViewableMedia $media)
+    protected function getMediaData(Media $media)
     {
         return [
-            'altText' => $media instanceof ViewableMedia ? $media->altText : [],
-            'caption' => $media instanceof ViewableMedia ? $media->caption : [],
+            'altText' => $media->getAltText(),
+            'caption' => $media->getCaption(),
             'captionEnableHtml' => $media->captionEnableHtml,
             'categoryID' => $media->categoryID,
-            'elementTag' => $media instanceof ViewableMedia ? $media->getElementTag($this->parameters['elementTagSize'] ?? 144) : '',
-            'elementTag48' => $media instanceof ViewableMedia ? $media->getElementTag(48) : '',
+            'elementTag' => $media->getElementTag($this->parameters['elementTagSize'] ?? 144),
+            'elementTag48' => $media->getElementTag(48),
             'fileHash' => $media->fileHash,
             'filename' => $media->filename,
             'filesize' => $media->filesize,
@@ -181,17 +184,17 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             'tinyThumbnailLink' => $media->tinyThumbnailType !== '' ? $media->getThumbnailLink('tiny') : '',
             'tinyThumbnailType' => $media->tinyThumbnailType,
             'tinyThumbnailWidth' => $media->tinyThumbnailWidth,
-            'title' => $media instanceof ViewableMedia ? $media->title : [],
+            'title' => $media->getL10nValues('title') !== [] ? $media->title : '',
             'uploadTime' => $media->uploadTime,
             'userID' => $media->userID,
             'userLink' => $media->userID !== null ? LinkHandler::getInstance()->getLink('User', [
                 'id' => $media->userID,
                 'title' => $media->username,
             ]) : '',
-            'userLinkElement' => $media instanceof ViewableMedia ? WCF::getTPL()->fetchString(
+            'userLinkElement' => WCF::getTPL()->fetchString(
                 WCF::getTPL()->getCompiler()->compileString('userLink', '{user object=$userProfile}')['template'],
                 ['userProfile' => $media->getUserProfile()]
-            ) : '',
+            ),
             'username' => $media->username,
             'width' => $media->width,
         ];
@@ -223,7 +226,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
      */
     public function getManagementDialog()
     {
-        $mediaList = new ViewableMediaList();
+        $mediaList = new MediaList();
         if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             $mediaList->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);
         }
@@ -260,37 +263,23 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             return [];
         }
 
-        $conditionBuilder = new PreparedStatementConditionBuilder();
-        $conditionBuilder->add('mediaID IN (?)', [$mediaList->getObjectIDs()]);
-
-        $sql = "SELECT  *
-                FROM    wcf1_media_content
-                " . $conditionBuilder;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditionBuilder->getParameters());
-
-        $mediaData = [];
-        while ($row = $statement->fetchArray()) {
-            if (!isset($mediaData[$row['mediaID']])) {
-                $mediaData[$row['mediaID']] = [
-                    'altText' => [],
-                    'caption' => [],
-                    'title' => [],
-                ];
-            }
-
-            $mediaData[$row['mediaID']]['altText'][\intval($row['languageID'])] = $row['altText'];
-            $mediaData[$row['mediaID']]['caption'][\intval($row['languageID'])] = $row['caption'];
-            $mediaData[$row['mediaID']]['title'][\intval($row['languageID'])] = $row['title'];
-        }
-
         $i18nMediaData = [];
         foreach ($mediaList as $media) {
-            if (!isset($mediaData[$media->mediaID])) {
-                $mediaData[$media->mediaID] = [];
+            $mediaData = [];
+            foreach (['altText', 'caption', 'title'] as $columnName) {
+                $values = $media->getL10nValues($columnName);
+
+                // The legacy editor expects the monolingual value for the language of the media file.
+                if (isset($values[L10nStorage::MONOLINGUAL])) {
+                    $values = [
+                        ($media->languageID ?: WCF::getLanguage()->languageID) => $values[L10nStorage::MONOLINGUAL],
+                    ];
+                }
+
+                $mediaData[$columnName] = $values;
             }
 
-            $i18nMediaData[$media->mediaID] = \array_merge($this->getMediaData($media), $mediaData[$media->mediaID]);
+            $i18nMediaData[$media->mediaID] = \array_merge($this->getMediaData($media), $mediaData);
         }
 
         return $i18nMediaData;
@@ -319,7 +308,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
      */
     public function getEditorDialog()
     {
-        $mediaList = new ViewableMediaList();
+        $mediaList = new MediaList();
         $mediaList->setObjectIDs([$this->getSingleObject()->mediaID]);
         $mediaList->readObjects();
         $media = $mediaList->search($this->getSingleObject()->mediaID);
@@ -414,88 +403,92 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     #[\Override]
     public function update()
     {
-        if (isset($this->parameters['data']['categoryID']) && $this->parameters['data']['categoryID'] === 0) {
-            $this->parameters['data']['categoryID'] = null;
-        }
-
         if ($this->objects === []) {
             $this->readObjects();
         }
 
-        parent::update();
+        $data = $this->parameters['data'] ?? [];
 
-        if (\count($this->objects) === 1 && (isset($this->parameters['title']) || isset($this->parameters['caption']) || isset($this->parameters['altText']))) {
-            $media = \reset($this->objects);
+        foreach ($this->getObjects() as $mediaEditor) {
+            $media = $mediaEditor->getDecoratedObject();
+            $builder = MediaBuilder::forUpdate($media);
 
-            $isMultilingual = $media->isMultilingual;
-            if (isset($this->parameters['data']['isMultilingual'])) {
-                $isMultilingual = $this->parameters['data']['isMultilingual'];
+            if (\array_key_exists('categoryID', $data)) {
+                $builder->setCategoryID($data['categoryID'] ?: null);
+            }
+            if (isset($data['captionEnableHtml'])) {
+                $builder->setCaptionEnableHtml((bool)$data['captionEnableHtml']);
             }
 
-            $sql = "DELETE FROM wcf1_media_content
-                    WHERE       mediaID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$media->mediaID]);
+            $isMultilingual = $data['isMultilingual'] ?? $media->isMultilingual;
+            $languageID = \array_key_exists('languageID', $data) ? $data['languageID'] : $media->languageID;
+            if (isset($data['isMultilingual'])) {
+                $builder->setCustomProperty('isMultilingual', $isMultilingual);
+            }
+            if (\array_key_exists('languageID', $data)) {
+                $builder->setCustomProperty('languageID', $languageID);
+            }
 
-            $sql = "INSERT INTO wcf1_media_content
-                                (mediaID, languageID, title, caption, altText)
-                    VALUES      (?, ?, ?, ?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
-
-            if ($isMultilingual === 0) {
-                $languageID = $media->languageID;
-                if (isset($this->parameters['data']['languageID'])) {
-                    $languageID = $this->parameters['data']['languageID'];
-                }
-                $statement->execute([
-                    $media->mediaID,
-                    $languageID,
-                    isset($this->parameters['title'][$languageID]) ? \mb_substr(
-                        $this->parameters['title'][$languageID],
-                        0,
-                        255
-                    ) : '',
-                    $this->parameters['caption'][$languageID] ?? '',
-                    isset($this->parameters['altText'][$languageID]) ? \mb_substr(
-                        $this->parameters['altText'][$languageID],
-                        0,
-                        255
-                    ) : '',
-                ]);
-            } else {
-                $languages = LanguageFactory::getInstance()->getLanguages();
-                foreach ($languages as $language) {
-                    $title = $caption = $altText = '';
-                    foreach (['title', 'caption', 'altText'] as $type) {
-                        if (isset($this->parameters[$type])) {
-                            if (\is_array($this->parameters[$type])) {
-                                if (isset($this->parameters[$type][$language->languageID])) {
-                                    ${$type} = $this->parameters[$type][$language->languageID];
-                                }
-                            } else {
-                                ${$type} = $this->parameters[$type];
-                            }
-                        }
+            if (\count($this->objects) === 1) {
+                foreach (['title', 'caption', 'altText'] as $columnName) {
+                    if (!isset($this->parameters[$columnName])) {
+                        continue;
                     }
 
-                    $statement->execute([
-                        $media->mediaID,
-                        $language->languageID,
-                        \mb_substr($title, 0, 255),
-                        $caption,
-                        \mb_substr($altText, 0, 255),
+                    $values = $this->getL10nValuesFromParameter(
+                        $this->parameters[$columnName],
+                        $isMultilingual ? null : $languageID,
+                        $columnName === 'caption' ? null : 255
+                    );
+
+                    match ($columnName) {
+                        'title' => $builder->setTitle($values),
+                        'caption' => $builder->setCaption($values),
+                        'altText' => $builder->setAltText($values),
+                    };
+                }
+
+                if (!empty($this->parameters['aclValues'])) {
+                    $builder->setAclValues([
+                        'allowAll' => (bool)($this->parameters['aclValues']['allowAll'] ?? true),
+                        'user' => \array_map(\intval(...), $this->parameters['aclValues']['user'] ?? []),
+                        'group' => \array_map(\intval(...), $this->parameters['aclValues']['group'] ?? []),
                     ]);
                 }
             }
 
-            if (!empty($this->parameters['aclValues'])) {
-                SimpleAclHandler::getInstance()->setValues(
-                    'com.woltlab.wcf.media',
-                    $media->mediaID,
-                    $this->parameters['aclValues']
-                );
-            }
+            (new UpdateMedia($builder))();
         }
+    }
+
+    /**
+     * Converts the values submitted by the legacy editor into l10n values.
+     *
+     * @param string|array<int, string> $parameter
+     * @return array<non-negative-int, string>
+     */
+    private function getL10nValuesFromParameter(
+        string|array $parameter,
+        ?int $monolingualLanguageID,
+        ?int $maximumLength
+    ): array {
+        $shorten = static fn(string $value): string => $maximumLength === null
+            ? $value
+            : \mb_substr($value, 0, $maximumLength);
+
+        if ($monolingualLanguageID !== null) {
+            $value = \is_array($parameter) ? ($parameter[$monolingualLanguageID] ?? '') : $parameter;
+
+            return [L10nStorage::MONOLINGUAL => $shorten($value)];
+        }
+
+        $values = [];
+        foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+            $value = \is_array($parameter) ? ($parameter[$language->languageID] ?? '') : $parameter;
+            $values[$language->languageID] = $shorten($value);
+        }
+
+        return $values;
     }
 
     #[\Override]
@@ -545,7 +538,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         $mediaList->sqlOrderBy = 'media.uploadTime DESC, media.mediaID DESC';
         $mediaList->sqlLimit = static::ITEMS_PER_MANAGER_DIALOG_PAGE;
         $mediaList->sqlOffset = ($this->parameters['pageNo'] - 1) * static::ITEMS_PER_MANAGER_DIALOG_PAGE;
-        $mediaList->readObjectIDs();
+        $mediaList->readObjects();
 
         if ($mediaList->getObjectIDs() === []) {
             // check if page is requested that might have existed but does not exist anymore due to deleted
@@ -563,16 +556,12 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             ];
         }
 
-        $viewableMediaList = new ViewableMediaList();
-        $viewableMediaList->setObjectIDs($mediaList->getObjectIDs());
-        $viewableMediaList->readObjects();
-
         return [
-            'media' => $this->getI18nMediaData($viewableMediaList),
+            'media' => $this->getI18nMediaData($mediaList),
             'pageCount' => \ceil($mediaList->countObjects() / static::ITEMS_PER_MANAGER_DIALOG_PAGE),
             'pageNo' => $this->parameters['pageNo'],
             'template' => WCF::getTPL()->render('wcf', 'mediaListItems', [
-                'mediaList' => $viewableMediaList,
+                'mediaList' => $mediaList,
                 'mode' => $this->parameters['mode'],
             ]),
         ];
@@ -607,15 +596,15 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             $this->readObjects();
         }
 
-        foreach ($this->getObjects() as $mediaEditor) {
-            $mediaEditor->deleteFiles();
-        }
-
-        $count = parent::delete();
+        $media = \array_map(
+            static fn(MediaEditor $mediaEditor) => $mediaEditor->getDecoratedObject(),
+            $this->getObjects()
+        );
+        (new DeleteMedia($media))();
 
         $this->unmarkItems();
 
-        return $count;
+        return \count($media);
     }
 
     /**
@@ -713,17 +702,16 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
      */
     public function setCategory()
     {
-        $conditionBuilder = new PreparedStatementConditionBuilder();
-        $conditionBuilder->add('mediaID IN (?)', [$this->objectIDs]);
+        if ($this->objects === []) {
+            $this->readObjects();
+        }
 
-        $sql = "UPDATE  wcf1_media
-                SET     categoryID = ?
-                " . $conditionBuilder;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute(\array_merge(
-            [$this->parameters['categoryID'] ?: null],
-            $conditionBuilder->getParameters()
-        ));
+        foreach ($this->getObjects() as $mediaEditor) {
+            (new UpdateMedia(
+                MediaBuilder::forUpdate($mediaEditor->getDecoratedObject())
+                    ->setCategoryID($this->parameters['categoryID'] ?: null)
+            ))();
+        }
 
         $this->unmarkItems();
     }
@@ -808,7 +796,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             }
 
             // fetch media objects from database
-            $mediaList = new ViewableMediaList();
+            $mediaList = new MediaList();
             $mediaList->setObjectIDs($mediaIDs);
             $mediaList->readObjects();
 

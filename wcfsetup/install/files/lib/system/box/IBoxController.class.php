@@ -3,6 +3,7 @@
 namespace wcf\system\box;
 
 use wcf\data\box\Box;
+use wcf\data\media\Media;
 use wcf\data\media\ViewableMedia;
 
 /**
@@ -33,7 +34,7 @@ interface IBoxController
      *
      * Note: The box itself checks if the active user can access the returned media file.
      *
-     * @return ?ViewableMedia
+     * @return Media|ViewableMedia|null
      */
     public function getImage();
 

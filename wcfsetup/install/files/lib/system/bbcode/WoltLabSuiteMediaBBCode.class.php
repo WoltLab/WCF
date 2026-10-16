@@ -2,7 +2,7 @@
 
 namespace wcf\system\bbcode;
 
-use wcf\data\media\ViewableMedia;
+use wcf\data\media\Media;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\view\ContentNotVisibleView;
 use wcf\system\WCF;
@@ -42,7 +42,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
             $removeLinks = true;
         }
 
-        /** @var ?ViewableMedia $media */
+        /** @var ?Media $media */
         $media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $mediaID);
         if ($media === null) {
             return ContentNotVisibleView::forNotAvailable();

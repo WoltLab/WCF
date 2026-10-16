@@ -3,7 +3,9 @@
 namespace wcf\data\box\content;
 
 use wcf\data\DatabaseObject;
+use wcf\data\media\Media;
 use wcf\data\media\ViewableMedia;
+use wcf\system\cache\runtime\MediaRuntimeCache;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\WCF;
@@ -37,7 +39,7 @@ class BoxContent extends DatabaseObject
 
     /**
      * image media object
-     * @var ?ViewableMedia
+     * @var Media|ViewableMedia|null
      */
     protected $image;
 
@@ -74,13 +76,13 @@ class BoxContent extends DatabaseObject
     /**
      * Returns the image of this box content.
      *
-     * @return  ViewableMedia|null
+     * @return  Media|ViewableMedia|null
      */
     public function getImage()
     {
         if ($this->image === null) {
             if ($this->imageID !== null) {
-                $this->image = ViewableMedia::getMedia($this->imageID);
+                $this->image = MediaRuntimeCache::getInstance()->getObject($this->imageID);
             }
         }
 
@@ -92,7 +94,7 @@ class BoxContent extends DatabaseObject
      *
      * @return void
      */
-    public function setImage(ViewableMedia $image)
+    public function setImage(Media|ViewableMedia $image)
     {
         $this->image = $image;
     }
