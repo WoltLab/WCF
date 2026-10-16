@@ -13,7 +13,6 @@
 			<actionclassname>wcf\system\clipboard\action\MediaClipboardAction</actionclassname>
 			<showorder>2</showorder>
 			<pages>
-				<page>wcf\acp\page\MediaListPage</page>
 				<page>menuManagerDialog-editor</page>
 				<page>menuManagerDialog-select</page>
 			</pages>
@@ -22,7 +21,6 @@
 			<actionclassname>wcf\system\clipboard\action\MediaClipboardAction</actionclassname>
 			<showorder>3</showorder>
 			<pages>
-				<page>wcf\acp\page\MediaListPage</page>
 				<page>menuManagerDialog-editor</page>
 				<page>menuManagerDialog-select</page>
 			</pages>

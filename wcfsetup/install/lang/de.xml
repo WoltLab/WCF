@@ -4158,6 +4158,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 	<category name="wcf.media">
 		<item name="wcf.media.altText"><![CDATA[Alternativ-Text]]></item>
 		<item name="wcf.media.button.insert"><![CDATA[Einfügen]]></item>
+		<item name="wcf.media.button.open"><![CDATA[Datei öffnen]]></item>
 		<item name="wcf.media.button.replaceFile"><![CDATA[Datei ersetzen]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Auswählen]]></item>
 		<item name="wcf.media.caption"><![CDATA[Bildunterschrift]]></item>
@@ -4177,6 +4178,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.insert.imageSize.medium"><![CDATA[Mittleres Vorschaubild]]></item>
 		<item name="wcf.media.insert.imageSize.original"><![CDATA[Original-Bild]]></item>
 		<item name="wcf.media.insert.imageSize.small"><![CDATA[Kleines Vorschaubild]]></item>
+		<item name="wcf.media.isImage"><![CDATA[Nur Bilder]]></item>
 		<item name="wcf.media.isMultilingual"><![CDATA[Mehrsprachigkeit aktivieren]]></item>
 		<item name="wcf.media.languageID"><![CDATA[Sprache]]></item>
 		<item name="wcf.media.manager"><![CDATA[Medien verwalten]]></item>

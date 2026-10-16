@@ -7,7 +7,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\command\media\UpdateMedia;
-use wcf\data\category\CategoryNodeTree;
 use wcf\data\file\File;
 use wcf\data\media\Media;
 use wcf\data\media\MediaBuilder;
@@ -21,8 +20,8 @@ use wcf\system\form\builder\field\acl\simple\SimpleAclFormField;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\FileProcessorFormField;
 use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\media\MediaCategoryFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -100,12 +99,9 @@ final class MediaEditAction implements RequestHandlerInterface
             FormContainer::create('general')
                 ->appendChildren([
                     $this->getFileFormField(),
-                    SingleSelectionFormField::create('categoryID')
-                        ->label('wcf.global.category')
-                        ->options($this->getCategoryOptions(), true)
-                        ->value(0)
-                        ->saveValueCallback(static function (MediaBuilder $builder, SingleSelectionFormField $field): void {
-                            $builder->setCategoryID((int)$field->getSaveValue() ?: null);
+                    MediaCategoryFormField::create()
+                        ->saveValueCallback(static function (MediaBuilder $builder, MediaCategoryFormField $field): void {
+                            $builder->setCategoryID($field->getCategoryID());
                         })
                         ->loadValueCallback(static function (Media $object, IFormField $field): void {
                             $field->value($object->categoryID ?? 0);
@@ -224,30 +220,6 @@ final class MediaEditAction implements RequestHandlerInterface
                     $field->value($object->fileID);
                 }
             });
-    }
-
-    /**
-     * @return list<array{depth: int, label: string, value: int}>
-     */
-    private function getCategoryOptions(): array
-    {
-        $options = [
-            [
-                'depth' => 0,
-                'label' => WCF::getLanguage()->get('wcf.global.noSelection'),
-                'value' => 0,
-            ],
-        ];
-
-        foreach (new CategoryNodeTree('com.woltlab.wcf.media.category') as $category) {
-            $options[] = [
-                'depth' => $category->getDepth() - 1,
-                'label' => $category->getTitle(),
-                'value' => $category->categoryID,
-            ];
-        }
-
-        return $options;
     }
 
     /**

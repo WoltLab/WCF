@@ -4104,6 +4104,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 	<category name="wcf.media">
 		<item name="wcf.media.altText"><![CDATA[Alternate Text]]></item>
 		<item name="wcf.media.button.insert"><![CDATA[Insert]]></item>
+		<item name="wcf.media.button.open"><![CDATA[Open File]]></item>
 		<item name="wcf.media.button.replaceFile"><![CDATA[Replace File]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Select]]></item>
 		<item name="wcf.media.caption"><![CDATA[Caption]]></item>
@@ -4123,6 +4124,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.insert.imageSize.medium"><![CDATA[Medium Thumbnail]]></item>
 		<item name="wcf.media.insert.imageSize.original"><![CDATA[Original Image]]></item>
 		<item name="wcf.media.insert.imageSize.small"><![CDATA[Small Thumbnail]]></item>
+		<item name="wcf.media.isImage"><![CDATA[Images only]]></item>
 		<item name="wcf.media.isMultilingual"><![CDATA[Enable Multilingualism]]></item>
 		<item name="wcf.media.languageID"><![CDATA[Language]]></item>
 		<item name="wcf.media.manager"><![CDATA[Manage Media]]></item>

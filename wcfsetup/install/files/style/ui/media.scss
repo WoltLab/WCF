@@ -206,3 +206,75 @@
 .button.jsMediaSelectButton + .button {
 	margin-left: 5px;
 }
+
+.mediaList {
+	display: grid;
+	gap: 20px;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.mediaList__item {
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: var(--wcfBorderRadius);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	position: relative;
+}
+
+.mediaList__item__preview {
+	align-items: center;
+	background-color: var(--wcfTabularBoxBackgroundActive);
+	display: flex;
+	height: 160px;
+	justify-content: center;
+}
+
+.mediaList__item__content {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: 10px;
+}
+
+.mediaList__item__title {
+	@include wcfFontBold;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mediaList__item__link {
+	color: inherit;
+
+	&:hover {
+		color: inherit;
+	}
+}
+
+@media (hover: hover) {
+	.mediaList__item__link:hover {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+}
+
+.mediaList__item__meta {
+	@include wcfFontSmall;
+	color: var(--wcfContentDimmedText);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mediaList__item__buttons {
+	align-items: center;
+	background-color: var(--wcfContentBackground);
+	border-radius: var(--wcfBorderRadius);
+	display: flex;
+	gap: 5px;
+	padding: 2px 5px;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
