@@ -9,7 +9,7 @@
  * `wcf.user.trophy.description<id>` phrases are removed, including those left
  * behind by previously deleted trophies. Imported descriptions of awarded
  * trophies use the same pattern (`wcf.user.trophy.description<userTrophyID>`)
- * and are kept.
+ * and are kept for `update_com.woltlab.wcf_6.3_userTrophyL10n.php`.
  *
  * IMPORTANT ordering constraints for package.xml:
  * - The database script `acp/database/update_com.woltlab.wcf_6.3_step1.php`

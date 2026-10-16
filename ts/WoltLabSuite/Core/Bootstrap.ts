@@ -191,6 +191,9 @@ export function setup(options: BoostrapOptions): void {
   whenFirstSeen(".activityPointsDisplay", () => {
     void import("./Component/User/ActivityPointList").then(({ setup }) => setup());
   });
+  whenFirstSeen(".userTrophyOverlayList", () => {
+    void import("./Component/User/TrophyList").then(({ setup }) => setup());
+  });
 
   whenFirstSeen("[data-fancybox]", () => {
     void import("./Component/Image/Viewer").then(({ setup }) => setup());

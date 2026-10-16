@@ -25,6 +25,7 @@
 		<file>js/WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Clipboard.js</file>
 		<file>js/WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler.js</file>
 		<file>js/WoltLabSuite/Core/Ui/User/Editor.js</file>
+		<file>js/WoltLabSuite/Core/Ui/User/Trophy/List.js</file>
 		<file>lib/acp/action/UserQuickSearchAction.class.php</file>
 		<file>lib/acp/form/UserSearchForm.class.php</file>
 		<file>lib/data/user/UserContentAction.class.php</file>

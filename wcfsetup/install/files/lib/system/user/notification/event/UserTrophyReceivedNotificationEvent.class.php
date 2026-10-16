@@ -7,8 +7,7 @@ use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyBuilder;
 use wcf\data\trophy\TrophyCache;
-use wcf\data\user\trophy\UserTrophy;
-use wcf\data\user\trophy\UserTrophyAction;
+use wcf\data\user\trophy\UserTrophyBuilder;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\builder\TrophyCacheBuilder;
 use wcf\system\cache\eager\CategoryCache;
@@ -93,16 +92,13 @@ class UserTrophyReceivedNotificationEvent extends AbstractUserNotificationEvent 
         CategoryHandler::getInstance()->reloadCache();
         TrophyCategoryCache::getInstance()->init();
 
-        /** @var UserTrophy $userTrophy */
-        $userTrophy = (new UserTrophyAction([], 'create', [
-            'data' => [
-                'trophyID' => $trophy->trophyID,
-                'userID' => $recipient->userID,
-                'description' => 'User Trophy Description',
-                'time' => \TIME_NOW,
-                'useCustomDescription' => 1,
-            ],
-        ]))->executeAction()['returnValues'];
+        $userTrophy = UserTrophyBuilder::forCreate()
+            ->setTrophyID($trophy->trophyID)
+            ->setUserID($recipient->userID)
+            ->setTime(\TIME_NOW)
+            ->setUseCustomDescription(true)
+            ->setDescription([L10nStorage::MONOLINGUAL => 'User Trophy Description'])
+            ->create();
 
         return [new UserTrophyNotificationObject($userTrophy)];
     }

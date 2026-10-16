@@ -5000,7 +5000,6 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>
 		<item name="wcf.user.trophy.showTrophies"><![CDATA[Trophäen von {$user->username} anzeigen]]></item>
 		<item name="wcf.user.trophy.noTrophies"><![CDATA[Der Benutzer hat noch keine Trophäen]]></item>
-		<item name="wcf.user.trophy.dialogTitle"><![CDATA[Trophäen von {$username}]]></item>
 		<item name="wcf.user.trophy.trophies"><![CDATA[Trophäen]]></item>
 		<item name="wcf.user.trophy.specialTrophies"><![CDATA[Besondere Trophäen]]></item>
 		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} {if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1}besonderen Trophäen{else}besondere Trophäe{/if} aus, welche im Profil und in der Nachrichten-Seitenleiste angezeigt {if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1}werden. Es können maximal {#$__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies')} Trophäen ausgewählt werden.{else}wird.{/if}]]></item>
@@ -5026,10 +5025,8 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.acp.trophy.conditions.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit die Trophäe vergeben wird.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gebe{else}Geben Sie{/if} hier die Benutzer an, welche die Trophäe erhalten sollen.]]></item>
-		<item name="wcf.acp.trophy.userTrophy.user.error.notFound"><![CDATA[Der Benutzername „{$errorData[username]}“ konnte nicht gefunden werden.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gebe{else}Geben Sie{/if} hier die Trophäe an, welche an die Benutzer vergeben werden soll. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} keine automatisch vergebene Trophäe manuell vergeben.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.useCustomDescription"><![CDATA[Benutzerdefinierte Trophäen-Beschreibung aktivieren]]></item>
-		<item name="wcf.acp.trophy.userTrophy.trophy.error.awardAutomatically"><![CDATA[Trophäen die automatisch vergeben werden können nicht manuell vergeben werden.]]></item>
 		<item name="wcf.acp.trophy.error.noCategories"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} eine Trophäe hinzufügen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst, musst du{else}können, müssen Sie{/if} eine <a href="{link controller='TrophyCategoryAdd'}{/link}">Kategorie hinzufügen</a>.]]></item>
 		<item name="wcf.acp.trophy.error.noSuitableTrophies"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} eine Trophäe vergeben {if LANGUAGE_USE_INFORMAL_VARIANT}kannst, musst du{else}können, müssen Sie{/if} eine <a href="{link controller='TrophyAdd'}{/link}">Trophäe hinzufügen</a>, welche nicht automatisch durch das System vergeben wird.]]></item>
 		<item name="wcf.acp.trophy.trophyUseHtml"><![CDATA[HTML in der Beschreibung verwenden]]></item>
@@ -5749,6 +5746,9 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"/>
 	<item name="wcf.acp.article.setCategory"/>
 	<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"/>
+	<item name="wcf.acp.trophy.userTrophy.user.error.notFound"/>
+	<item name="wcf.acp.trophy.userTrophy.trophy.error.awardAutomatically"/>
+	<item name="wcf.user.trophy.dialogTitle"/>
 	<item name="wcf.acp.sitemap.cliInfo"/>
 	<item name="wcf.user.search"/>
 	<item name="wcf.user.search.error.noMatches"/>

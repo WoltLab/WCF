@@ -39,19 +39,28 @@ final class L10nLanguageItemSync
      * removed afterwards. Objects linked to a language variable are seeded as
      * pristine, everything else is written as owned content (see `L10nStorage`).
      *
+     * `$conditions` optionally restricts the rows of the primary table that are
+     * read, which avoids loading large tables in full when only a few rows carry
+     * a localized value.
+     *
      * @param \Closure(array<string, mixed>): (array{sources: array<string, L10nLanguageItemSource>}|null) $rowMapper
      */
-    public static function migrate(L10nDefinition $definition, \Closure $rowMapper): void
-    {
+    public static function migrate(
+        L10nDefinition $definition,
+        \Closure $rowMapper,
+        ?PreparedStatementConditionBuilder $conditions = null
+    ): void {
         $storage = new L10nStorage($definition);
         $installedLanguageIDs = self::getInstalledLanguageIDs();
         $defaultLanguageID = LanguageFactory::getInstance()->getDefaultLanguageID();
         $fetchItems = self::createItemReader();
 
+        $conditions ??= new PreparedStatementConditionBuilder();
         $sql = "SELECT  *
-                FROM    {$definition->primaryTableName}";
+                FROM    {$definition->primaryTableName}
+                " . $conditions;
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute();
+        $statement->execute($conditions->getParameters());
         $rows = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
         $obsoleteItems = [];

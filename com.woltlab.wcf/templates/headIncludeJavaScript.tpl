@@ -178,12 +178,6 @@ button:not([type])::before {
 
 <script data-relocate="true">
 	$(function() {
-		{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies')}
-			require(['WoltLabSuite/Core/Ui/User/Trophy/List'], function (UserTrophyList) {
-				new UserTrophyList();
-			});
-		{/if}
-		
 		{event name='javascriptInit'}
 		
 		{if ENABLE_POLLING && !$__wcf->user->isGuest()}

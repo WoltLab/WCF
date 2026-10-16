@@ -154,18 +154,21 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
         (0, LazyLoader_1.whenFirstSeen)(".activityPointsDisplay", () => {
             void new Promise((resolve_11, reject_11) => { require(["./Component/User/ActivityPointList"], resolve_11, reject_11); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
+        (0, LazyLoader_1.whenFirstSeen)(".userTrophyOverlayList", () => {
+            void new Promise((resolve_12, reject_12) => { require(["./Component/User/TrophyList"], resolve_12, reject_12); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+        });
         (0, LazyLoader_1.whenFirstSeen)("[data-fancybox]", () => {
-            void new Promise((resolve_12, reject_12) => { require(["./Component/Image/Viewer"], resolve_12, reject_12); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_13, reject_13) => { require(["./Component/Image/Viewer"], resolve_13, reject_13); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)(".jsImageViewer", () => {
             console.warn("The class `jsImageViewer` is deprecated. Use the attribute `data-fancybox` instead.");
-            void new Promise((resolve_13, reject_13) => { require(["./Component/Image/Viewer"], resolve_13, reject_13); }).then(tslib_1.__importStar).then(({ setupLegacy }) => setupLegacy());
+            void new Promise((resolve_14, reject_14) => { require(["./Component/Image/Viewer"], resolve_14, reject_14); }).then(tslib_1.__importStar).then(({ setupLegacy }) => setupLegacy());
         });
         (0, LazyLoader_1.whenFirstSeen)(".jsEnablesOptions", () => {
-            void new Promise((resolve_14, reject_14) => { require(["./Component/Option/Enable"], resolve_14, reject_14); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_15, reject_15) => { require(["./Component/Option/Enable"], resolve_15, reject_15); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-edit-cover-photo]", () => {
-            void new Promise((resolve_15, reject_15) => { require(["./Component/User/CoverPhoto"], resolve_15, reject_15); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_16, reject_16) => { require(["./Component/User/CoverPhoto"], resolve_16, reject_16); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         // Move the reCAPTCHA widget overlay to the `pageOverlayContainer`
         // when widget form elements are placed in a dialog.

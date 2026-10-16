@@ -3,13 +3,14 @@
 namespace wcf\system\importer;
 
 use wcf\data\user\trophy\UserTrophy;
-use wcf\data\user\trophy\UserTrophyEditor;
+use wcf\data\user\trophy\UserTrophyBuilder;
+use wcf\system\l10n\L10nStorage;
 
 /**
  * Represents a user trophy importer.
  *
- * @author  Joshua Ruesweg
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Joshua Ruesweg, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class UserTrophyImporter extends AbstractImporter
@@ -34,30 +35,61 @@ class UserTrophyImporter extends AbstractImporter
             return 0;
         }
 
-        /** @var UserTrophy $userTrophy */
-        $userTrophy = UserTrophyEditor::create($data);
+        $builder = UserTrophyBuilder::forCreate()
+            ->setTrophyID((int)$data['trophyID'])
+            ->setUserID((int)$data['userID'])
+            ->setTime((int)($data['time'] ?? 0));
 
-        if (isset($additionalData['i18n']['description'])) {
-            $updateData = [
-                'description' => 'wcf.user.trophy.description' . $userTrophy->userTrophyID,
-            ];
+        $description = $this->getDescription($data, $additionalData);
+        if ($description !== null) {
+            $builder->setDescription($description);
+        }
 
-            $items = [];
-            foreach ($additionalData['i18n']['description'] as $languageID => $languageItemValue) {
-                $items[] = [
-                    'languageID' => $languageID,
-                    'languageItem' => 'wcf.user.trophy.description' . $userTrophy->userTrophyID,
-                    'languageItemValue' => $languageItemValue,
-                ];
+        $handledColumns = ['userTrophyID', 'trophyID', 'userID', 'time', 'description'];
+        foreach ($data as $key => $value) {
+            if (\in_array($key, $handledColumns, true)) {
+                continue;
+            }
+            if ($value !== null && !\is_string($value) && !\is_int($value) && !\is_float($value)) {
+                continue;
             }
 
-            $this->importI18nValues($items, 'wcf.user.trophy', 'com.woltlab.wcf');
-
-            (new UserTrophyEditor($userTrophy))->update($updateData);
+            $builder->setCustomProperty($key, $value);
         }
+
+        $userTrophy = $builder->create();
 
         ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.userTrophy', $oldID, $userTrophy->getObjectID());
 
         return $userTrophy->getObjectID();
+    }
+
+    /**
+     * Returns the localized values of the custom description, which are either
+     * provided per language or as a monolingual value, or `null` if there is
+     * no custom description.
+     *
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $additionalData
+     * @return ?array<int, string>
+     */
+    private function getDescription(array $data, array $additionalData): ?array
+    {
+        $i18nValues = $additionalData['i18n']['description'] ?? null;
+        if (\is_array($i18nValues) && $i18nValues !== []) {
+            $values = [];
+            foreach ($i18nValues as $languageID => $value) {
+                $values[(int)$languageID] = (string)$value;
+            }
+
+            return $values;
+        }
+
+        $description = (string)($data['description'] ?? '');
+        if ($description === '') {
+            return null;
+        }
+
+        return [L10nStorage::MONOLINGUAL => $description];
     }
 }

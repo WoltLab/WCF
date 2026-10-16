@@ -129,5 +129,6 @@
 		<template>textareaSearchableOptionType</template>
 		<template>messageUserOptionOutput</template>
 		<template>shared_userOptionsCondition</template>
+		<template>groupedUserTrophyList</template>
 	</delete>
 </data>

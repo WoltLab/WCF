@@ -4,8 +4,8 @@ namespace wcf\system\category;
 
 use wcf\acp\form\TrophyCategoryAddForm;
 use wcf\acp\form\TrophyCategoryEditForm;
+use wcf\command\user\trophy\DeleteUserTrophies;
 use wcf\data\category\CategoryEditor;
-use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\trophy\UserTrophyList;
 use wcf\system\WCF;
 
@@ -76,8 +76,7 @@ class TrophyCategoryType extends AbstractCategoryType
         $userTrophyList->getConditionBuilder()->add('category.categoryID = ?', [$categoryEditor->categoryID]);
         $userTrophyList->readObjects();
 
-        $userTrophyAction = new UserTrophyAction($userTrophyList->getObjects(), 'delete');
-        $userTrophyAction->executeAction();
+        new DeleteUserTrophies($userTrophyList->getObjects())();
     }
 
     /**

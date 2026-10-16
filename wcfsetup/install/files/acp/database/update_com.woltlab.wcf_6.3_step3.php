@@ -69,6 +69,11 @@ return [
             MediumtextDatabaseTableColumn::create('iconFile')
                 ->drop(),
         ]),
+    PartialDatabaseTable::create('wcf1_user_trophy')
+        ->columns([
+            MediumtextDatabaseTableColumn::create('description')
+                ->drop(),
+        ]),
     PartialDatabaseTable::create('wcf1_captcha_question')
         ->columns([
             NotNullVarchar255DatabaseTableColumn::create('question')

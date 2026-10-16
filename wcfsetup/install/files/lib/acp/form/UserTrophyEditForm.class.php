@@ -4,19 +4,18 @@ namespace wcf\acp\form;
 
 use wcf\acp\page\UserTrophyListPage;
 use wcf\data\user\trophy\UserTrophy;
-use wcf\data\user\trophy\UserTrophyAction;
+use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\interaction\admin\UserTrophyInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
-use wcf\system\language\I18nHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
  * Represents the user trophy edit form.
  *
- * @author  Joshua Ruesweg
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Joshua Ruesweg, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class UserTrophyEditForm extends UserTrophyAddForm
@@ -29,78 +28,19 @@ class UserTrophyEditForm extends UserTrophyAddForm
     /**
      * @inheritDoc
      */
-    public $action = 'edit';
-
-    /**
-     * user trophy id
-     * @var int
-     */
-    public $userTrophyID = 0;
-
-    /**
-     * user trophy object
-     * @var ?UserTrophy
-     */
-    public $userTrophy;
+    public string $formAction = 'edit';
 
     #[\Override]
     public function readParameters()
     {
-        if (!empty($_REQUEST['id'])) {
-            $this->userTrophyID = \intval($_REQUEST['id']);
-        }
-        $this->userTrophy = new UserTrophy($this->userTrophyID);
-
-        if ($this->userTrophy->isNil()) {
-            throw new IllegalLinkException();
-        }
-
-        if ($this->userTrophy->getTrophy()->awardAutomatically !== 0) {
-            throw new IllegalLinkException();
-        }
-
         parent::readParameters();
-    }
 
-    #[\Override]
-    public function readData()
-    {
-        // the user can't change these values
-        $this->trophyID = $this->userTrophy->trophyID;
-        $this->trophy = $this->userTrophy->getTrophy();
-        $this->userIDs = [$this->userTrophy->userID];
-        $this->user = $this->userTrophy->getUserProfile()->getUsername();
+        $this->formObject = Helper::fetchObjectFromQueryParameter(UserTrophy::class);
 
-        if ($_POST === []) {
-            $this->readDataI18n($this->userTrophy);
-
-            $this->useCustomDescription = $this->userTrophy->useCustomDescription;
-            $this->trophyUseHtml = $this->userTrophy->trophyUseHtml;
+        // The description of automatically awarded trophies cannot be changed.
+        if ($this->formObject->getTrophy()->awardAutomatically !== 0) {
+            throw new IllegalLinkException();
         }
-
-        parent::readData();
-    }
-
-    #[\Override]
-    public function save()
-    {
-        AbstractAcpForm::save();
-
-        $this->beforeSaveI18n($this->userTrophy);
-
-        $this->objectAction = new UserTrophyAction([$this->userTrophy], 'update', [
-            'data' => \array_merge($this->additionalFields, [
-                'useCustomDescription' => $this->useCustomDescription,
-                'description' => $this->description,
-                'trophyUseHtml' => $this->trophyUseHtml,
-            ]),
-        ]);
-        $this->objectAction->executeAction();
-
-        $this->saved();
-
-        // show success message
-        WCF::getTPL()->assign('success', true);
     }
 
     #[\Override]
@@ -108,13 +48,10 @@ class UserTrophyEditForm extends UserTrophyAddForm
     {
         parent::assignVariables();
 
-        I18nHandler::getInstance()->assignVariables($_POST !== []);
-
         WCF::getTPL()->assign([
-            'userTrophy' => $this->userTrophy,
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new UserTrophyInteractions(),
-                $this->userTrophy,
+                $this->formObject,
                 LinkHandler::getInstance()->getControllerLink(UserTrophyListPage::class)
             ),
         ]);

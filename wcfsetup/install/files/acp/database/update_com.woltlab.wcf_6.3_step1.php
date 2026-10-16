@@ -91,6 +91,30 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    DatabaseTable::create('wcf1_user_trophy_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('userTrophyID'),
+            IntDatabaseTableColumn::create('languageID'),
+            MediumtextDatabaseTableColumn::create('description'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('userTrophyID')
+                ->columns(['userTrophyID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['userTrophyID'])
+                ->referencedTable('wcf1_user_trophy')
+                ->referencedColumns(['userTrophyID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
     PartialDatabaseTable::create('wcf1_like_object')
         ->columns([
             TextDatabaseTableColumn::create('cachedUsers')

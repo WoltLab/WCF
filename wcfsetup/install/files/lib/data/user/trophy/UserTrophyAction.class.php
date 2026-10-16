@@ -2,22 +2,11 @@
 
 namespace wcf\data\user\trophy;
 
-use wcf\command\user\SetSpecialTrophies;
-use wcf\command\user\UpdateUser;
+use wcf\command\user\trophy\CreateUserTrophy;
+use wcf\command\user\trophy\DeleteUserTrophies;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\user\User;
-use wcf\data\user\UserBuilder;
-use wcf\data\user\UserProfile;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\UserInputException;
-use wcf\system\user\activity\event\UserActivityEventHandler;
-use wcf\system\user\notification\object\UserTrophyNotificationObject;
-use wcf\system\user\notification\UserNotificationHandler;
-use wcf\system\user\storage\UserStorageHandler;
-use wcf\system\WCF;
+use wcf\system\l10n\L10nStorage;
 
 /**
  * Provides user trophy actions.
@@ -25,6 +14,7 @@ use wcf\system\WCF;
  * @author  Joshua Ruesweg
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `UserTrophyBuilder` and commands instead.
  *
  * @extends AbstractDatabaseObjectAction<UserTrophy, UserTrophyEditor>
  */
@@ -36,70 +26,32 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
     protected $permissionsDelete = ['admin.trophy.canAwardTrophy'];
 
     /**
-     * @inheritDoc
+     * @deprecated 6.3 use the `CreateUserTrophy` command instead.
      */
-    protected $allowGuestAccess = ['getGroupedUserTrophyList'];
-
-    /**
-     * @var ?UserProfile
-     */
-    public $userProfile;
-
     #[\Override]
     public function create()
     {
-        /** @var UserTrophy $userTrophy */
-        $userTrophy = parent::create();
+        $data = $this->parameters['data'] ?? [];
 
-        if (!$userTrophy->getTrophy()->isDisabled()) {
-            (new UpdateUser(
-                UserBuilder::forUpdate($userTrophy->getUserProfile()->getDecoratedObject())->incrementTrophyPoints(1)
-            ))();
+        $builder = UserTrophyBuilder::forCreate()
+            ->setTrophyID((int)$data['trophyID'])
+            ->setUserID((int)$data['userID'])
+            ->setTime((int)($data['time'] ?? \TIME_NOW))
+            ->setUseCustomDescription((bool)($data['useCustomDescription'] ?? false))
+            ->setTrophyUseHtml((bool)($data['trophyUseHtml'] ?? false));
 
-            // checks if the user still has space to add special trophies
-            if (\count($userTrophy->getUserProfile()->getSpecialTrophies()) < $userTrophy->getUserProfile()->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
-                $hasTrophy = false;
-                foreach (UserTrophyList::getUserTrophies([$userTrophy->getUserProfile()->userID])[$userTrophy->getUserProfile()->userID] as $trophy) {
-                    if ($trophy->trophyID === $userTrophy->trophyID && $trophy->userTrophyID !== $userTrophy->userTrophyID) {
-                        $hasTrophy = true;
-                        break;
-                    }
-                }
+        if (isset($data['description']) && $data['description'] !== '') {
+            $builder->setDescription([L10nStorage::MONOLINGUAL => (string)$data['description']]);
+        }
 
-                if (!$hasTrophy) {
-                    $trophyIDs = \array_map(
-                        static fn ($trophy) => $trophy->trophyID,
-                        $userTrophy->getUserProfile()->getSpecialTrophies()
-                    );
-                    $trophyIDs[] = $userTrophy->trophyID;
-
-                    (new SetSpecialTrophies(
-                        $userTrophy->getUserProfile()->getDecoratedObject(),
-                        \array_values(\array_unique($trophyIDs))
-                    ))();
-                }
+        $handledColumns = ['userTrophyID', 'trophyID', 'userID', 'time', 'useCustomDescription', 'trophyUseHtml', 'description'];
+        foreach ($data as $key => $value) {
+            if (!\in_array($key, $handledColumns, true)) {
+                $builder->setCustomProperty($key, $value);
             }
         }
 
-        UserActivityEventHandler::getInstance()->fireEvent(
-            'com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived',
-            $userTrophy->getObjectID(),
-            null,
-            $userTrophy->userID
-        );
-
-        if ($userTrophy->userID !== WCF::getUser()->userID) {
-            UserNotificationHandler::getInstance()->fireEvent(
-                'received',
-                'com.woltlab.wcf.userTrophy.notification',
-                new UserTrophyNotificationObject($userTrophy),
-                [
-                    $userTrophy->userID,
-                ]
-            );
-        }
-
-        return $userTrophy;
+        return new CreateUserTrophy($builder)();
     }
 
     #[\Override]
@@ -114,6 +66,9 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
         }
     }
 
+    /**
+     * @deprecated 6.3 use the `DeleteUserTrophies` command instead.
+     */
     #[\Override]
     public function delete()
     {
@@ -121,134 +76,11 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        $trophyIDs = $userIDs = [];
-        foreach ($this->getObjects() as $object) {
-            $trophyIDs[] = $object->trophyID;
-            $userIDs[] = $object->userID;
-        }
+        new DeleteUserTrophies(\array_map(
+            static fn(UserTrophyEditor $editor) => $editor->getDecoratedObject(),
+            $this->objects
+        ))();
 
-        $returnValues = parent::delete();
-
-        if ($this->objects !== []) {
-            // update user special trophies trophies
-            $userTrophies = UserTrophyList::getUserTrophies($userIDs);
-
-            foreach ($userTrophies as $userID => $trophies) {
-                $userTrophyIDs = [];
-                foreach ($trophies as $trophy) {
-                    $userTrophyIDs[] = $trophy->trophyID;
-                }
-
-                $conditionBuilder = new PreparedStatementConditionBuilder();
-                if ($userTrophyIDs !== []) {
-                    $conditionBuilder->add('trophyID NOT IN (?)', [\array_unique($userTrophyIDs)]);
-                }
-                $conditionBuilder->add('userID = ?', [$userID]);
-
-                $sql = "DELETE FROM wcf1_user_special_trophy
-                        " . $conditionBuilder;
-                $statement = WCF::getDB()->prepare($sql);
-                $statement->execute($conditionBuilder->getParameters());
-
-                UserStorageHandler::getInstance()->reset([$userID], 'specialTrophies');
-            }
-
-            $updateUserTrophies = [];
-            foreach ($this->getObjects() as $object) {
-                if (!$object->getTrophy()->isDisabled()) {
-                    if (!isset($updateUserTrophies[$object->userID])) {
-                        $updateUserTrophies[$object->userID] = 0;
-                    }
-                    $updateUserTrophies[$object->userID]--;
-                }
-            }
-
-            foreach ($updateUserTrophies as $userID => $count) {
-                (new UpdateUser(
-                    UserBuilder::forUpdate(new User($userID))->incrementTrophyPoints($count)
-                ))();
-            }
-        }
-
-        return $returnValues;
-    }
-
-    /**
-     * Validates the getGroupedUserTrophyList method.
-     *
-     * @return void
-     */
-    public function validateGetGroupedUserTrophyList()
-    {
-        if (\MODULE_TROPHY === 0) {
-            throw new IllegalLinkException();
-        }
-
-        WCF::getSession()->checkPermissions(['user.profile.trophy.canSeeTrophies']);
-
-        $this->readInteger('pageNo');
-        $this->readInteger('userID');
-
-        $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
-        if ($this->userProfile === null) {
-            throw new UserInputException('userID');
-        }
-        if (!$this->userProfile->isAccessible('canViewTrophies') && $this->userProfile->userID !== WCF::getSession()->userID) {
-            throw new PermissionDeniedException();
-        }
-
-        if ($this->parameters['pageNo'] < 1) {
-            throw new UserInputException('pageNo');
-        }
-    }
-
-    /**
-     * Returns a viewable user trophy list for a specific user.
-     *
-     * @return array{pageCount: int, title: string, template: string}
-     */
-    public function getGroupedUserTrophyList()
-    {
-        $userTrophyList = new UserTrophyList();
-        $userTrophyList->getConditionBuilder()->add('userID = ?', [$this->parameters['userID']]);
-        if (!empty($userTrophyList->sqlJoins)) {
-            $userTrophyList->sqlJoins .= ' ';
-        }
-        if (!empty($userTrophyList->sqlConditionJoins)) {
-            $userTrophyList->sqlConditionJoins .= ' ';
-        }
-        $userTrophyList->sqlJoins .= '
-            LEFT JOIN   wcf1_trophy trophy
-            ON          user_trophy.trophyID = trophy.trophyID';
-        $userTrophyList->sqlConditionJoins .= '
-            LEFT JOIN   wcf1_trophy trophy
-            ON          user_trophy.trophyID = trophy.trophyID';
-
-        // trophy category join
-        $userTrophyList->sqlJoins .= '
-            LEFT JOIN   wcf1_category category
-            ON          trophy.categoryID = category.categoryID';
-        $userTrophyList->sqlConditionJoins .= '
-            LEFT JOIN   wcf1_category category
-            ON          trophy.categoryID = category.categoryID';
-
-        $userTrophyList->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);
-        $userTrophyList->getConditionBuilder()->add('category.isDisabled = ?', [0]);
-        $userTrophyList->sqlLimit = 10;
-        $userTrophyList->sqlOffset = ($this->parameters['pageNo'] - 1) * 10;
-        $userTrophyList->sqlOrderBy = 'time DESC';
-        $pageCount = (int)\ceil($userTrophyList->countObjects() / 10);
-        $userTrophyList->readObjects();
-
-        return [
-            'pageCount' => $pageCount,
-            'title' => WCF::getLanguage()->getDynamicVariable(
-                'wcf.user.trophy.dialogTitle',
-                ['username' => $this->userProfile->username]
-            ),
-            'template' => WCF::getTPL()->render('wcf', 'groupedUserTrophyList', [
-                'userTrophyList' => $userTrophyList,
-            ]),
-        ];
+        return \count($this->objects);
     }
 }

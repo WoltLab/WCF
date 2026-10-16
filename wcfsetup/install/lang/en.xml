@@ -4993,7 +4993,6 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>
 		<item name="wcf.user.trophy.showTrophies"><![CDATA[Display Trophies of {$user->username}]]></item>
 		<item name="wcf.user.trophy.noTrophies"><![CDATA[The user has no trophies]]></item>
-		<item name="wcf.user.trophy.dialogTitle"><![CDATA[Trophies of {$username}]]></item>
 		<item name="wcf.user.trophy.trophies"><![CDATA[Trophies]]></item>
 		<item name="wcf.user.trophy.specialTrophies"><![CDATA[Special Trophies]]></item>
 		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[Choose the special {if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1}trophies{else}trophy{/if} that you want to be shown in your profile and in the message sidebar.{if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1} You can select a maximum of {#$__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies')} trophies.{/if}]]></item>
@@ -5019,10 +5018,8 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.acp.trophy.conditions.description"><![CDATA[The users need to fulfill the following conditions to automatically be awarded with the trophy.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user.description"><![CDATA[Enter the names of the users who should be awarded the trophy.]]></item>
-		<item name="wcf.acp.trophy.userTrophy.user.error.notFound"><![CDATA[The username “{$errorData[username]}” does not exist.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.description"><![CDATA[Select the trophy that should be awarded to the users. You cannot select automatically awarded trophies.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.useCustomDescription"><![CDATA[Use custom trophy description]]></item>
-		<item name="wcf.acp.trophy.userTrophy.trophy.error.awardAutomatically"><![CDATA[Trophies that are awarded automatically cannot be awarded manually.]]></item>
 		<item name="wcf.acp.trophy.error.noCategories"><![CDATA[Please <a href="{link controller='TrophyCategoryAdd'}{/link}">add a category</a> before creating trophies.]]></item>
 		<item name="wcf.acp.trophy.error.noSuitableTrophies"><![CDATA[Please <a href="{link controller='TrophyAdd'}{/link}">add a trophy</a> that is not automatically awarded before you award trophies.]]></item>
 		<item name="wcf.acp.trophy.trophyUseHtml"><![CDATA[Enable HTML code in the description]]></item>
@@ -5751,6 +5748,9 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"/>
 	<item name="wcf.acp.article.setCategory"/>
 	<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"/>
+	<item name="wcf.acp.trophy.userTrophy.user.error.notFound"/>
+	<item name="wcf.acp.trophy.userTrophy.trophy.error.awardAutomatically"/>
+	<item name="wcf.user.trophy.dialogTitle"/>
 	<item name="wcf.acp.sitemap.cliInfo"/>
 	<item name="wcf.user.search"/>
 	<item name="wcf.user.search.error.noMatches"/>

@@ -181,6 +181,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.upload.validation.error.tooSmall');
 
         $event->preload('wcf.user.activityPoint');
+        $event->preload('wcf.user.trophy.trophies');
         $event->preload('wcf.user.language');
         $event->preload('wcf.user.panel.settings');
         $event->preload('wcf.user.panel.showAll');

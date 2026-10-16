@@ -2,27 +2,37 @@
 
 namespace wcf\acp\form;
 
+use wcf\command\user\trophy\CreateUserTrophy;
+use wcf\command\user\trophy\UpdateUserTrophy;
+use wcf\data\DatabaseObjectBuilder;
 use wcf\data\trophy\category\TrophyCategoryCache;
-use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
-use wcf\data\user\trophy\UserTrophyAction;
-use wcf\data\user\trophy\UserTrophyEditor;
-use wcf\data\user\UserProfile;
-use wcf\system\exception\UserInputException;
-use wcf\system\language\I18nHandler;
-use wcf\system\language\I18nValue;
+use wcf\data\user\trophy\UserTrophy;
+use wcf\data\user\trophy\UserTrophyBuilder;
+use wcf\form\AbstractDatabaseObjectBuilderForm;
+use wcf\system\exception\NamedUserException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
+use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\SelectFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\user\UserFormField;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
+use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 
 /**
  * User trophy add form.
  *
- * @author  Joshua Ruesweg
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Joshua Ruesweg, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @extends AbstractDatabaseObjectBuilderForm<UserTrophy, UserTrophyBuilder>
  */
-class UserTrophyAddForm extends AbstractAcpForm
+class UserTrophyAddForm extends AbstractDatabaseObjectBuilderForm
 {
     /**
      * @inheritDoc
@@ -39,195 +49,172 @@ class UserTrophyAddForm extends AbstractAcpForm
      */
     public $activeMenuItem = 'wcf.acp.menu.link.userTrophy.add';
 
-    /**
-     * usernames (comma separated)
-     * @var string
-     */
-    public $user = '';
-
-    /**
-     * List of user ids which earn the trophy.
-     * @var int[]
-     */
-    public $userIDs = [];
-
-    /**
-     * `1` if the user trophy should have a custom description
-     * @var int
-     */
-    public $useCustomDescription = 0;
-
-    /**
-     * custom trophy description
-     * @var ?string
-     */
-    public $description;
-
-    /**
-     * `1` if the trophy contains html in the description
-     * @var int
-     */
-    public $trophyUseHtml = 0;
-
-    /**
-     * @var int
-     */
-    public $trophyID = 0;
-
-    /**
-     * Rewarded trophy instance.
-     * @var ?Trophy
-     */
-    public $trophy;
-
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        $descriptionI18n = new I18nValue('description');
-        $descriptionI18n->setLanguageItem(
-            'wcf.user.trophy.userTrophy.description',
-            'wcf.user.trophy',
-            'com.woltlab.wcf'
-        );
-        $descriptionI18n->setFlags(I18nValue::ALLOW_EMPTY);
-        $this->registerI18nValue($descriptionI18n);
+        if ($this->formAction === 'create' && !$this->hasSuitableTrophy()) {
+            throw new NamedUserException(HtmlString::fromSafeHtml(
+                WCF::getLanguage()->getDynamicVariable('wcf.acp.trophy.error.noSuitableTrophies')
+            ));
+        }
     }
 
     #[\Override]
-    public function readFormParameters()
+    protected function getDatabaseObjectBuilder(): UserTrophyBuilder
     {
-        parent::readFormParameters();
-
-        if (isset($_POST['user'])) {
-            $this->user = StringUtil::trim($_POST['user']);
-        }
-        if (isset($_POST['trophyID'])) {
-            $this->trophyID = \intval($_POST['trophyID']);
-        }
-        if (isset($_POST['useCustomDescription'])) {
-            $this->useCustomDescription = 1;
-        }
-        if (isset($_POST['trophyUseHtml'])) {
-            $this->trophyUseHtml = 1;
+        if ($this->formObject !== null) {
+            return UserTrophyBuilder::forUpdate($this->formObject);
         }
 
-        $this->trophy = new Trophy($this->trophyID);
+        return UserTrophyBuilder::forCreate()
+            ->setTime(\TIME_NOW);
+    }
+
+    #[\Override]
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
+    {
+        if ($this->formObject !== null) {
+            return new UpdateUserTrophy($builder);
+        }
+
+        $field = $this->form->getNodeById('userIDs');
+        \assert($field instanceof UserFormField);
+        $userIDs = \array_column($field->getUsers(), 'userID');
+
+        return static function () use ($builder, $userIDs): UserTrophy {
+            // Each user receives a separate trophy, the builder is consumed by
+            // the creation and therefore copied for every user.
+            $userTrophy = null;
+            foreach ($userIDs as $userID) {
+                $userTrophy = new CreateUserTrophy((clone $builder)->setUserID($userID))();
+            }
+
+            \assert($userTrophy !== null);
+
+            return $userTrophy;
+        };
+    }
+
+    #[\Override]
+    protected function createForm(): void
+    {
+        parent::createForm();
+
+        $container = FormContainer::create('data');
+
+        if ($this->formObject === null) {
+            $container->appendChildren([
+                UserFormField::create('userIDs')
+                    ->label('wcf.acp.trophy.userTrophy.user')
+                    ->description('wcf.acp.trophy.userTrophy.user.description')
+                    ->multiple()
+                    ->maximumMultiples(25)
+                    ->required(),
+                SelectFormField::create('trophyID')
+                    ->label('wcf.acp.trophy')
+                    ->description('wcf.acp.trophy.userTrophy.description')
+                    ->options($this->getTrophyOptions(), true, false)
+                    ->required()
+                    ->saveValueCallback(static function (UserTrophyBuilder $builder, SelectFormField $field): void {
+                        $builder->setTrophyID((int)$field->getSaveValue());
+                    }),
+            ]);
+        }
+
+        $container->appendChildren([
+            BooleanFormField::create('useCustomDescription')
+                ->label('wcf.acp.trophy.userTrophy.useCustomDescription')
+                ->saveValueCallback(static function (UserTrophyBuilder $builder, BooleanFormField $field): void {
+                    $useCustomDescription = (bool)$field->getSaveValue();
+                    $builder->setUseCustomDescription($useCustomDescription);
+
+                    // The dependent fields are not saved if the custom
+                    // description is no longer used.
+                    if (!$useCustomDescription) {
+                        $builder->setTrophyUseHtml(false);
+                        if ($builder->isUpdate()) {
+                            $builder->setDescription([L10nStorage::MONOLINGUAL => '']);
+                        }
+                    }
+                })
+                ->loadValueCallback(static function (UserTrophy $object, IFormField $field): void {
+                    $field->value($object->useCustomDescription);
+                }),
+            TextFormField::create('description')
+                ->label('wcf.acp.trophy.description')
+                ->l10n()
+                ->required()
+                ->saveValueCallback(static function (UserTrophyBuilder $builder, TextFormField $field): void {
+                    $builder->setDescription($field->getL10nValues());
+                })
+                ->loadValueCallback(static function (UserTrophy $object, IFormField $field): void {
+                    $description = $object->getL10nValues('description');
+                    if ($description !== []) {
+                        $field->value($description);
+                    }
+                })
+                ->addDependency(
+                    NonEmptyFormFieldDependency::create('useCustomDescription')
+                        ->fieldId('useCustomDescription')
+                ),
+            BooleanFormField::create('trophyUseHtml')
+                ->label('wcf.acp.trophy.trophyUseHtml')
+                ->saveValueCallback(static function (UserTrophyBuilder $builder, BooleanFormField $field): void {
+                    $builder->setTrophyUseHtml((bool)$field->getSaveValue());
+                })
+                ->loadValueCallback(static function (UserTrophy $object, IFormField $field): void {
+                    $field->value($object->trophyUseHtml);
+                })
+                ->addDependency(
+                    NonEmptyFormFieldDependency::create('useCustomDescription')
+                        ->fieldId('useCustomDescription')
+                ),
+        ]);
+
+        $this->form->appendChild($container);
     }
 
     /**
-     * Validates the users.
+     * Returns the trophies grouped by their category, trophies that are awarded
+     * automatically cannot be selected.
      *
-     * @return void
-     * @throws UserInputException
+     * @return list<array{label: string, value: string|int, depth: int, isSelectable: bool}>
      */
-    protected function validateUser()
+    private function getTrophyOptions(): array
     {
-        // read userIDs
-        $userAsArray = ArrayUtil::trim(\explode(',', $this->user));
+        $options = [];
+        foreach (TrophyCategoryCache::getInstance()->getCategories() as $category) {
+            $trophies = $category->getTrophies(true);
+            if ($trophies === []) {
+                continue;
+            }
 
-        $userList = UserProfile::getUserProfilesByUsername($userAsArray);
+            $options[] = [
+                'label' => StringUtil::encodeHTML($category->getTitle()),
+                'value' => 'category' . $category->categoryID,
+                'depth' => 0,
+                'isSelectable' => false,
+            ];
 
-        $error = [];
-
-        foreach ($userList as $username => $user) {
-            if ($user === null) {
-                $error[] = [
-                    'type' => 'notFound',
-                    'username' => $username,
+            foreach ($trophies as $trophy) {
+                $options[] = [
+                    'label' => StringUtil::encodeHTML($trophy->getTitle()),
+                    'value' => $trophy->trophyID,
+                    'depth' => 1,
+                    'isSelectable' => $trophy->awardAutomatically === 0,
                 ];
-            } else {
-                $this->userIDs[] = $user->userID;
             }
         }
 
-        if ($error !== []) {
-            throw new UserInputException('user', $error);
-        }
-    }
-
-    #[\Override]
-    public function validate()
-    {
-        parent::validate();
-
-        if ($this->useCustomDescription !== 0) {
-            if (!I18nHandler::getInstance()->validateValue('description')) {
-                throw new UserInputException('description');
-            }
-        }
-
-        $this->validateUser();
-
-        if ($this->userIDs === []) {
-            throw new UserInputException('user');
-        }
-
-        if ($this->trophy->isNil()) {
-            throw new UserInputException('trophyID');
-        }
-
-        if ($this->trophy->awardAutomatically !== 0) {
-            throw new UserInputException('trophyID', 'awardAutomatically');
-        }
-    }
-
-    #[\Override]
-    public function save()
-    {
-        parent::save();
-
-        foreach ($this->userIDs as $user) {
-            $databaseObject = (new UserTrophyAction([], 'create', [
-                'data' => \array_merge($this->additionalFields, [
-                    'trophyID' => $this->trophy->trophyID,
-                    'userID' => $user,
-                    'description' => $this->useCustomDescription !== 0 ? $this->description : '',
-                    'time' => \TIME_NOW,
-                    'useCustomDescription' => $this->useCustomDescription,
-                    'trophyUseHtml' => $this->trophyUseHtml,
-                ]),
-            ]))->executeAction();
-
-            $this->saveI18n($databaseObject['returnValues'], UserTrophyEditor::class);
-        }
-
-        $this->reset();
-    }
-
-    #[\Override]
-    public function reset()
-    {
-        parent::reset();
-
-        $this->user = '';
-        $this->userIDs = [];
-        $this->trophyID = 0;
-        $this->useCustomDescription = $this->trophyUseHtml = 0;
-    }
-
-    #[\Override]
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'trophyID' => $this->trophyID,
-            'user' => $this->user,
-            'trophyCategories' => TrophyCategoryCache::getInstance()->getCategories(),
-            'useCustomDescription' => $this->useCustomDescription,
-            'hasSuitableTrophy' => $this->hasSuitableTrophy(),
-            'trophyUseHtml' => $this->trophyUseHtml,
-        ]);
+        return $options;
     }
 
     /**
      * Returns true if trophies exist that are not automatically awarded.
-     *
-     * @return bool
      */
-    private function hasSuitableTrophy()
+    private function hasSuitableTrophy(): bool
     {
         foreach (TrophyCache::getInstance()->getTrophies() as $trophy) {
             if ($trophy->awardAutomatically === 0) {

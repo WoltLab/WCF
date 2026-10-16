@@ -3,9 +3,9 @@
 namespace wcf\command\trophy;
 
 use wcf\command\file\DeleteFiles;
+use wcf\command\user\trophy\DeleteUserTrophies;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyBuilder;
-use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\trophy\UserTrophyList;
 use wcf\event\trophy\TrophyDeleted;
 use wcf\system\cache\runtime\FileRuntimeCache;
@@ -68,8 +68,6 @@ final class DeleteTrophy
         $userTrophyList->getConditionBuilder()->add('user_trophy.trophyID = ?', [$this->trophy->trophyID]);
         $userTrophyList->readObjects();
 
-        if ($userTrophyList->getObjects() !== []) {
-            (new UserTrophyAction($userTrophyList->getObjects(), 'delete'))->executeAction();
-        }
+        new DeleteUserTrophies($userTrophyList->getObjects())();
     }
 }

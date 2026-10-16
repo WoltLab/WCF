@@ -2,11 +2,14 @@
 
 namespace wcf\system\trophy\condition;
 
+use wcf\command\user\trophy\CreateUserTrophy;
+use wcf\command\user\trophy\DeleteUserTrophies;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyList;
-use wcf\data\user\trophy\UserTrophyAction;
+use wcf\data\user\trophy\UserTrophyBuilder;
+use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\user\UserList;
 use wcf\system\object\filter\builder\TrophyObjectFilterBuilder;
 use wcf\system\SingletonFactory;
@@ -80,14 +83,12 @@ final class TrophyConditionHandler extends SingletonFactory
             $userIDs = $this->getUserIDs($trophy, $maxAssigns - $i);
 
             foreach ($userIDs as $userID) {
-                (new UserTrophyAction([], 'create', [
-                    'data' => [
-                        'trophyID' => $trophy->trophyID,
-                        'userID' => $userID,
-                        'time' => \TIME_NOW,
-                        'description' => '',
-                    ],
-                ]))->executeAction();
+                new CreateUserTrophy(
+                    UserTrophyBuilder::forCreate()
+                        ->setTrophyID($trophy->trophyID)
+                        ->setUserID($userID)
+                        ->setTime(\TIME_NOW)
+                )();
 
                 if (++$i >= $maxAssigns) {
                     return;
@@ -114,7 +115,11 @@ final class TrophyConditionHandler extends SingletonFactory
             $i += \count($userTrophyIDs);
 
             if ($userTrophyIDs !== []) {
-                (new UserTrophyAction($userTrophyIDs, 'delete'))->executeAction();
+                $userTrophyList = new UserTrophyList();
+                $userTrophyList->setObjectIDs($userTrophyIDs);
+                $userTrophyList->readObjects();
+
+                new DeleteUserTrophies($userTrophyList->getObjects())();
             }
 
             if ($i >= $maxRevokes) {

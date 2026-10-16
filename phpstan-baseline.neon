@@ -159,12 +159,6 @@ parameters:
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 1
-			path: wcfsetup/install/files/lib/acp/form/UserTrophyEditForm.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
 			count: 2
 			path: wcfsetup/install/files/lib/acp/page/AbstractCategoryListPage.class.php
 
@@ -665,12 +659,6 @@ parameters:
 			identifier: instanceof.alwaysTrue
 			count: 1
 			path: wcfsetup/install/files/lib/data/user/profile/visitor/UserProfileVisitorCollection.class.php
-
-		-
-			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
-			identifier: empty.notAllowed
-			count: 2
-			path: wcfsetup/install/files/lib/data/user/trophy/UserTrophyAction.class.php
 
 		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'

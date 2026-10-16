@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\users\trophies;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\user\trophy\DeleteUserTrophies;
 use wcf\data\user\trophy\UserTrophy;
-use wcf\data\user\trophy\UserTrophyAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -32,7 +32,7 @@ class DeleteUserTrophy implements IController
 
         $this->assertUserTrophyCanBeDeleted($userTrophy);
 
-        (new UserTrophyAction([$userTrophy], 'delete'))->executeAction();
+        new DeleteUserTrophies([$userTrophy])();
 
         return new JsonResponse([]);
     }

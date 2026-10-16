@@ -110,3 +110,55 @@
 .sortableNodeLabel > .trophyIcon {
 	margin-right: 5px;
 }
+
+/* trophies of a user */
+.userTrophyList {
+	display: flex;
+	flex-direction: column;
+}
+
+.userTrophyList__item {
+	align-items: center;
+	display: flex;
+	column-gap: 10px;
+	padding: 10px;
+	border-radius: var(--wcfBorderRadius);
+}
+
+@media (hover: hover) {
+	.userTrophyList__item:hover {
+		background-color: var(--wcfTabularBoxBackgroundActive);
+	}
+}
+
+.userTrophyList__item__icon {
+	flex: 0 0 auto;
+}
+
+.userTrophyList__item__content {
+	flex: 1 1 auto;
+}
+
+.userTrophyList__item__title {
+	@include wcfFontBold;
+}
+
+.userTrophyList__item__link {
+	color: inherit;
+
+	&:hover {
+		color: inherit;
+	}
+}
+
+@media (hover: hover) {
+	.userTrophyList__item__link:hover {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+}
+
+.userTrophyList__item__description {
+	@include wcfFontSmall;
+	color: var(--wcfContentDimmedText);
+}
