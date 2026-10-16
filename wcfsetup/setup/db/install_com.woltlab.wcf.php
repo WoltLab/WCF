@@ -1950,6 +1950,7 @@ return [
         ->columns([
             ObjectIdDatabaseTableColumn::create('mediaID'),
             IntDatabaseTableColumn::create('categoryID'),
+            IntDatabaseTableColumn::create('fileID'),
             NotNullVarchar255DatabaseTableColumn::create('filename')
                 ->defaultValue(''),
             NotNullInt10DatabaseTableColumn::create('filesize')
@@ -2024,6 +2025,12 @@ return [
                 ->columns(['mediaID']),
         ])
         ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['fileID'])
+                ->referencedTable('wcf1_file')
+                ->referencedColumns(['fileID'])
+                ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
             DatabaseTableForeignKey::create()
                 ->columns(['categoryID'])
                 ->referencedTable('wcf1_category')

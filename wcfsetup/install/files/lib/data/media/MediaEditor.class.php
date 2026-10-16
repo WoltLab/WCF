@@ -29,13 +29,6 @@ class MediaEditor extends DatabaseObjectEditor
      */
     public function deleteFiles()
     {
-        @\unlink($this->getLocation());
-
-        // delete thumbnails
-        if ($this->isImage !== 0) {
-            foreach (Media::getThumbnailSizes() as $size => $data) {
-                @\unlink($this->getThumbnailLocation($size));
-            }
-        }
+        $this->getDecoratedObject()->deleteLegacyFiles();
     }
 }

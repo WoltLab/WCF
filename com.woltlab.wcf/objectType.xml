@@ -1176,6 +1176,11 @@
 			<definitionname>com.woltlab.wcf.file</definitionname>
 			<classname>wcf\system\file\processor\TrophyImageFileProcessor</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.media</name>
+			<definitionname>com.woltlab.wcf.file</definitionname>
+			<classname>wcf\system\file\processor\MediaFileProcessor</classname>
+		</type>
 	</import>
 	<delete>
 		<!-- sitemap objects are registered through `wcf\event\sitemap\SitemapObjectCollecting` since 6.3 -->

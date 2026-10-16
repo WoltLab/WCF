@@ -163,7 +163,10 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
             $width = "auto";
         }
 
-        if (
+        $mediaSize = $element->getAttribute('data-media-size');
+        if (\in_array($mediaSize, ['small', 'medium', 'large'], true)) {
+            $thumbnail = $mediaSize;
+        } elseif (
             \preg_match(
                 '~thumbnail=(?P<thumbnail>small|large|medium)\b~',
                 $element->getAttribute('src'),

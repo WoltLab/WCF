@@ -3,6 +3,7 @@
 namespace wcf\data\media;
 
 use wcf\data\DatabaseObjectCollection;
+use wcf\data\TCollectionFiles;
 use wcf\data\TCollectionL10n;
 use wcf\data\TCollectionUserProfiles;
 use wcf\system\l10n\L10nDefinition;
@@ -19,6 +20,7 @@ use wcf\system\l10n\L10nDefinition;
  */
 class MediaCollection extends DatabaseObjectCollection
 {
+    use TCollectionFiles;
     use TCollectionL10n;
     use TCollectionUserProfiles;
 

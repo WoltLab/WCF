@@ -2,12 +2,12 @@
 
 namespace wcf\system\importer;
 
+use wcf\command\file\CreateFileFromExistingFile;
 use wcf\command\media\CreateMedia;
 use wcf\data\media\Media;
 use wcf\data\media\MediaBuilder;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\language\LanguageFactory;
-use wcf\util\FileUtil;
 
 /**
  * Imports cms media.
@@ -31,21 +31,21 @@ class MediaImporter extends AbstractImporter
             return 0;
         }
 
-        // Extract metadata from the file ourselves, because the
-        // information pulled from the source database might not
-        // be reliable.
-        $imageData = @\getimagesize($additionalData['fileLocation']);
+        // The meta data is extracted from the file itself, because the
+        // information pulled from the source database might not be reliable.
+        $file = new CreateFileFromExistingFile(
+            $additionalData['fileLocation'],
+            $data['filename'],
+            'com.woltlab.wcf.media',
+            copy: true,
+            uploadTime: isset($data['uploadTime']) ? (int)$data['uploadTime'] : null,
+        )();
+        if ($file === null) {
+            return 0;
+        }
 
         $builder = MediaBuilder::forCreate()
-            ->setFileData(
-                $data['filename'],
-                \filesize($additionalData['fileLocation']),
-                FileUtil::getMimeType($additionalData['fileLocation']),
-                $imageData !== false,
-                $imageData !== false ? $imageData[0] : 0,
-                $imageData !== false ? $imageData[1] : 0,
-            )
-            ->setFileHash(\sha1_file($additionalData['fileLocation']))
+            ->setFile($file)
             ->setUser(
                 ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID'] ?? null),
                 $data['username'] ?? ''
@@ -89,21 +89,6 @@ class MediaImporter extends AbstractImporter
         }
 
         $media = (new CreateMedia($builder))();
-
-        // check media directory
-        // and create subdirectory if necessary
-        $dir = \dirname($media->getLocation());
-        if (!@\file_exists($dir)) {
-            @\mkdir($dir, 0777);
-        }
-
-        // copy file
-        if (!@\copy($additionalData['fileLocation'], $media->getLocation())) {
-            // copy failed; delete media
-            MediaBuilder::delete($media);
-
-            return 0;
-        }
 
         ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.media', $oldID, $media->mediaID);
 

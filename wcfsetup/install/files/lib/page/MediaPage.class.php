@@ -3,6 +3,7 @@
 namespace wcf\page;
 
 use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\media\Media;
 use wcf\data\media\MediaBuilder;
 use wcf\http\Helper;
@@ -47,6 +48,13 @@ class MediaPage extends AbstractPage
     public $thumbnail = '';
 
     /**
+     * link to the physical file of media files that have been migrated to
+     * the new upload API
+     * @since 6.3
+     */
+    protected string $fileLink = '';
+
+    /**
      * @inheritDoc
      */
     public $useTemplate = false;
@@ -69,6 +77,20 @@ class MediaPage extends AbstractPage
     public function readData()
     {
         parent::readData();
+
+        $file = $this->media->getFile();
+        if ($file !== null) {
+            if ($this->thumbnail !== '') {
+                $this->fileLink = $this->media->getThumbnailLink($this->thumbnail);
+            } elseif ($file->isStaticFile()) {
+                $this->fileLink = $this->media->getFullSizeImageSource();
+            } else {
+                // The download is tracked by the file processor.
+                $this->fileLink = $file->getLink();
+            }
+
+            return;
+        }
 
         // get file data
         if ($this->thumbnail !== '') {
@@ -124,7 +146,7 @@ class MediaPage extends AbstractPage
             throw new IllegalLinkException();
         }
 
-        if ($this->thumbnail !== '' && !$this->media->{$this->thumbnail . 'ThumbnailType'}) {
+        if ($this->thumbnail !== '' && $this->media->getFile() === null && !$this->media->{$this->thumbnail . 'ThumbnailType'}) {
             $this->thumbnail = '';
         }
     }
@@ -133,6 +155,12 @@ class MediaPage extends AbstractPage
     public function show()
     {
         parent::show();
+
+        if ($this->fileLink !== '') {
+            $this->setPsr7Response(new RedirectResponse($this->fileLink));
+
+            return;
+        }
 
         // etag caching
         if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === '"' . $this->eTag . '"') {

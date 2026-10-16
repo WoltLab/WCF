@@ -2,10 +2,13 @@
 
 namespace wcf\data\media;
 
+use wcf\command\file\DeleteFiles;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
+use wcf\data\file\File;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\acl\simple\SimpleAclResolver;
+use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
@@ -83,6 +86,25 @@ final class MediaBuilder extends DatabaseObjectBuilder
         $this->properties['fileUpdateTime'] = $fileUpdateTime;
 
         return $this;
+    }
+
+    /**
+     * Sets the physical file and the meta data that is denormalized for
+     * sorting and filtering. A previous file is deleted when the media file
+     * is updated.
+     */
+    public function setFile(File $file): static
+    {
+        $this->properties['fileID'] = $file->fileID;
+
+        return $this->setFileData(
+            $file->filename,
+            $file->fileSize,
+            $file->mimeType,
+            $file->isImage(),
+            $file->width ?? 0,
+            $file->height ?? 0,
+        );
     }
 
     /**
@@ -199,6 +221,7 @@ final class MediaBuilder extends DatabaseObjectBuilder
         }
 
         $this->saveAclValues($object);
+        $this->deleteReplacedFile($object);
     }
 
     #[\Override]
@@ -234,6 +257,30 @@ final class MediaBuilder extends DatabaseObjectBuilder
 
         // `L10nStorage::setValues()` replaces all rows of the media file.
         (new L10nStorage(Media::getL10nDefinition()))->setValues($media->mediaID, $values);
+    }
+
+    /**
+     * Deletes the previous physical file after it has been replaced. The file
+     * is deleted only after the update, because deleting a file cannot be
+     * rolled back.
+     */
+    private function deleteReplacedFile(Media $media): void
+    {
+        $oldMedia = $this->getObject();
+        if (!\array_key_exists('fileID', $this->properties) || $oldMedia->fileID === $media->fileID) {
+            return;
+        }
+
+        if ($oldMedia->fileID === null) {
+            $oldMedia->deleteLegacyFiles();
+
+            return;
+        }
+
+        $file = FileRuntimeCache::getInstance()->getObject($oldMedia->fileID);
+        if ($file !== null) {
+            new DeleteFiles([$file])();
+        }
     }
 
     private function saveAclValues(Media $media): void

@@ -32,11 +32,8 @@ final class WsmMetacodeUpcast extends AbstractImageMetacodeUpcast
         }
 
         $imgElement = $element->ownerDocument->createElement('img');
-        if ($thumbnail === 'original') {
-            $imgElement->setAttribute('src', StringUtil::decodeHTML($media->getLink()));
-        } else {
-            $imgElement->setAttribute('src', StringUtil::decodeHTML($media->getThumbnailLink($thumbnail)));
-        }
+        // The editor link is stable across a replacement of the physical file.
+        $imgElement->setAttribute('src', StringUtil::decodeHTML($media->getEditorLink($thumbnail)));
         if ($width !== 'auto') {
             $imgElement->setAttribute('width', (string)\intval($width));
             $imgElement->setAttribute('data-width', \intval($width) . 'px');

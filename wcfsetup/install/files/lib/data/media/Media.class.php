@@ -4,6 +4,8 @@ namespace wcf\data\media;
 
 use wcf\data\CollectionDatabaseObject;
 use wcf\data\ILinkableObject;
+use wcf\data\file\File;
+use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\data\IThumbnailFile;
 use wcf\data\user\UserProfile;
 use wcf\page\MediaPage;
@@ -31,10 +33,11 @@ use wcf\util\StringUtil;
  *
  * @property-read   int     $mediaID                unique id of the media file
  * @property-read   ?int    $categoryID             id of the category the media file belongs to or `null` if it belongs to no category
+ * @property-read   ?int    $fileID                 id of the physical file or `null` if the media file has not been migrated to the new upload API yet
  * @property-read   string  $filename               name of the physical media file
  * @property-read   int     $filesize               size of the physical media file
  * @property-read   string  $fileType               type of the physical media file
- * @property-read   string  $fileHash               hash of the physical media file
+ * @property-read   string  $fileHash               hash of the physical media file in the legacy storage
  * @property-read   int     $uploadTime             timestamp at which the media file has been uploaded
  * @property-read   int     $fileUpdateTime         timestamp at which the media file was updated the last or `0` if it has not been updated
  * @property-read   ?int    $userID                 id of the user who uploaded the media file or null if the user does not exist anymore
@@ -84,6 +87,21 @@ class Media extends CollectionDatabaseObject implements
     private const L10N_COLUMNS = ['title', 'caption', 'altText'];
 
     /**
+     * names of the columns that are resolved from the physical file of
+     * migrated media files, besides the thumbnail columns
+     */
+    private const FILE_COLUMNS = [
+        'downloads',
+        'lastDownloadTime',
+        'filename',
+        'filesize',
+        'fileType',
+        'isImage',
+        'width',
+        'height',
+    ];
+
+    /**
      * language id used to resolve the localized values instead of the active
      * user's language, see `getLocalizedVersion()`
      */
@@ -128,9 +146,74 @@ class Media extends CollectionDatabaseObject implements
         ]);
     }
 
+    /**
+     * Returns the link that is used to embed the media file in the editor,
+     * which is stable across a replacement of the physical file.
+     *
+     * @param string $size thumbnail size or `original`
+     * @since 6.3
+     */
+    public function getEditorLink(string $size): string
+    {
+        if ($size === 'original') {
+            return $this->getLink();
+        }
+
+        if (!isset(self::$thumbnailSizes[$size])) {
+            throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
+        }
+
+        return LinkHandler::getInstance()->getControllerLink(MediaPage::class, [
+            'object' => $this,
+            'thumbnail' => $size,
+        ]);
+    }
+
+    /**
+     * Returns the link to the full size image that can be served directly by
+     * the web server or the link to the media page otherwise.
+     *
+     * @since 6.3
+     */
+    public function getFullSizeImageSource(): string
+    {
+        return $this->getFile()?->getFullSizeImageSource() ?? $this->getLink();
+    }
+
+    /**
+     * Returns the physical file or `null` if the media file has not been
+     * migrated to the new upload API yet.
+     *
+     * @since 6.3
+     */
+    public function getFile(): ?File
+    {
+        if ($this->fileID === null) {
+            return null;
+        }
+
+        return $this->getCollection()->getFile($this);
+    }
+
+    /**
+     * Returns the thumbnail with the given size or `null` if the media file
+     * has no such thumbnail or has not been migrated to the new upload API yet.
+     *
+     * @since 6.3
+     */
+    private function getFileThumbnail(string $size): ?FileThumbnail
+    {
+        return $this->getFile()?->getThumbnail($size);
+    }
+
     #[\Override]
     public function getLocation()
     {
+        $file = $this->getFile();
+        if ($file !== null) {
+            return $file->getPathname();
+        }
+
         return self::getStorage() . \substr($this->fileHash, 0, 2) . '/' . $this->mediaID . '-' . $this->fileHash;
     }
 
@@ -141,14 +224,15 @@ class Media extends CollectionDatabaseObject implements
             throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
         }
 
+        if ($this->getFile() !== null) {
+            return $this->getFileThumbnail($size)?->getLink() ?? $this->getFullSizeImageSource();
+        }
+
         if (!$this->{$size . 'ThumbnailType'}) {
             return $this->getLink();
         }
 
-        return LinkHandler::getInstance()->getControllerLink(MediaPage::class, [
-            'object' => $this,
-            'thumbnail' => $size,
-        ]);
+        return $this->getEditorLink($size);
     }
 
     /**
@@ -194,6 +278,11 @@ class Media extends CollectionDatabaseObject implements
     {
         if (!isset(self::$thumbnailSizes[$size])) {
             throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
+        }
+
+        $file = $this->getFile();
+        if ($file !== null) {
+            return $this->getFileThumbnail($size)?->getPathname() ?? $file->getPathname();
         }
 
         return self::getStorage() . \substr(
@@ -276,7 +365,52 @@ class Media extends CollectionDatabaseObject implements
             return $this->getL10nValue($name);
         }
 
-        return parent::__get($name);
+        $isThumbnailColumn = \preg_match(
+            '~^(?<size>tiny|small|medium|large)Thumbnail(?<property>Type|Size|Width|Height)$~',
+            $name,
+            $matches
+        ) === 1;
+
+        // `getFile()` reads `fileID` itself, therefore all other columns must
+        // be resolved without it to not recurse into `__get()`.
+        if (!$isThumbnailColumn && !\in_array($name, self::FILE_COLUMNS, true)) {
+            return parent::__get($name);
+        }
+
+        $file = $this->getFile();
+        if ($file === null) {
+            return parent::__get($name);
+        }
+
+        if ($name === 'downloads' || $name === 'lastDownloadTime') {
+            // Static files are served by the web server directly, the stored
+            // value is suppressed because it would never be increased again.
+            if ($file->isStaticFile()) {
+                return 0;
+            }
+
+            return parent::__get($name);
+        }
+
+        if ($isThumbnailColumn) {
+            $thumbnail = $this->getFileThumbnail($matches['size']);
+
+            return match ($matches['property']) {
+                'Type' => $thumbnail?->getMimeType() ?? '',
+                'Size' => $thumbnail !== null ? (int)@\filesize($thumbnail->getPathname()) : 0,
+                'Width' => $thumbnail->width ?? 0,
+                'Height' => $thumbnail->height ?? 0,
+            };
+        }
+
+        return match ($name) {
+            'filename' => $file->filename,
+            'filesize' => $file->fileSize,
+            'fileType' => $file->mimeType,
+            'isImage' => $file->isImage() ? 1 : 0,
+            'width' => $file->width ?? 0,
+            'height' => $file->height ?? 0,
+        };
     }
 
     #[\Override]
@@ -411,7 +545,7 @@ class Media extends CollectionDatabaseObject implements
         if ($this->isImage !== 0) {
             return \sprintf(
                 '<img src="%s" alt="%s" %s/>',
-                StringUtil::encodeHTML($this->getLink()),
+                StringUtil::encodeHTML($this->getFullSizeImageSource()),
                 StringUtil::encodeHTML($this->getAltText()),
                 $this->getTitleAttribute(),
             );
@@ -462,7 +596,7 @@ class Media extends CollectionDatabaseObject implements
         }
 
         if ($link === null) {
-            $link = $this->getLink();
+            $link = $this->getFullSizeImageSource();
 
             if ($size <= $this->width && $size <= $this->height) {
                 if ($this->height < $this->width) {
@@ -531,9 +665,81 @@ class Media extends CollectionDatabaseObject implements
     }
 
     /**
+     * Returns the thumbnail sizes that can be embedded in the editor. The
+     * thumbnails of new files are generated asynchronously, therefore the
+     * availability is derived from the image dimensions.
+     *
+     * @return list<string>
+     * @since 6.3
+     */
+    public function getEmbeddableThumbnailSizes(): array
+    {
+        if ($this->isImage === 0) {
+            return [];
+        }
+
+        $sizes = [];
+        foreach (['small', 'medium', 'large'] as $size) {
+            if ($this->getFile() === null) {
+                if ($this->{$size . 'ThumbnailType'} !== '') {
+                    $sizes[] = $size;
+                }
+
+                continue;
+            }
+
+            // see `FileProcessor::generateThumbnails()`
+            $thumbnailSize = self::$thumbnailSizes[$size];
+            if ($thumbnailSize['width'] <= $this->width || $thumbnailSize['height'] <= $this->height) {
+                $sizes[] = $size;
+            }
+        }
+
+        return $sizes;
+    }
+
+    /**
+     * Deletes the physical file and the thumbnails in the legacy storage.
+     *
+     * @internal
+     * @since 6.3
+     */
+    public function deleteLegacyFiles(): void
+    {
+        if ($this->fileID !== null) {
+            return;
+        }
+
+        @\unlink($this->getLocation());
+
+        if ($this->isImage !== 0) {
+            foreach (\array_keys(self::$thumbnailSizes) as $size) {
+                @\unlink($this->getThumbnailLocation($size));
+            }
+        }
+    }
+
+    /**
+     * Returns the media file that uses the given file.
+     *
+     * @since 6.3
+     */
+    public static function findByFileID(int $fileID): ?self
+    {
+        $sql = "SELECT  *
+                FROM    wcf1_media
+                WHERE   fileID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$fileID]);
+
+        return $statement->fetchObject(self::class);
+    }
+
+    /**
      * Returns the storage path of the media files.
      *
      * @return  string
+     * @deprecated 6.3 Only required for media files that have not been migrated to the new upload API yet.
      */
     public static function getStorage()
     {
@@ -577,7 +783,7 @@ class Media extends CollectionDatabaseObject implements
             }
         }
 
-        return new ImageData($this->getLink(), $this->width, $this->height);
+        return new ImageData($this->getFullSizeImageSource(), $this->width, $this->height);
     }
 
     /**

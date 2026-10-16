@@ -68,7 +68,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                     $width = (!empty($openingTag['attributes'][3])) ? $openingTag['attributes'][3] : 'auto';
 
                     return WCF::getTPL()->render('wcf', 'shared_bbcode_wsm', [
-                        'mediaLink' => $media->getLink(),
+                        'mediaLink' => $media->getFullSizeImageSource(),
                         'removeLinks' => $removeLinks,
                         'thumbnailLink' => $thumbnailSize !== 'original' ? $media->getThumbnailLink(
                             $thumbnailSize

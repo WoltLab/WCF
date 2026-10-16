@@ -115,6 +115,18 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    PartialDatabaseTable::create('wcf1_media')
+        ->columns([
+            IntDatabaseTableColumn::create('fileID'),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['fileID'])
+                ->referencedTable('wcf1_file')
+                ->referencedColumns(['fileID'])
+                ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
+        ]),
     DatabaseTable::create('wcf1_media_l10n')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('mediaID'),

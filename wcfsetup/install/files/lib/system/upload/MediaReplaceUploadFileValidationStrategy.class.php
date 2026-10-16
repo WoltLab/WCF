@@ -11,6 +11,7 @@ use wcf\data\media\Media;
  * @copyright   2001-2020 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.3
+ * @deprecated  6.3 Use `MediaFileProcessor` instead.
  */
 class MediaReplaceUploadFileValidationStrategy extends MediaUploadFileValidationStrategy
 {

@@ -2,18 +2,24 @@
 
 namespace wcf\data\media;
 
+use wcf\command\file\CreateFileFromExistingFile;
+use wcf\command\media\CreateMedia;
 use wcf\command\media\DeleteMedia;
 use wcf\command\media\UpdateMedia;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\category\CategoryNodeTree;
+use wcf\data\file\File;
 use wcf\data\ISearchAction;
 use wcf\data\IUploadAction;
 use wcf\system\acl\simple\SimpleAclHandler;
+use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\category\CategoryHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\file\processor\exception\DamagedImage;
+use wcf\system\file\processor\FileProcessor;
 use wcf\system\language\I18nHandler;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\language\LanguageFactory;
@@ -24,6 +30,8 @@ use wcf\system\upload\MediaUploadFileValidationStrategy;
 use wcf\system\upload\UploadFile;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+
+use function wcf\functions\exception\logThrowable;
 
 /**
  * Executes media file-related actions.
@@ -63,63 +71,76 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     #[\Override]
     public function upload()
     {
-        $additionalData = ['username' => WCF::getUser()->username];
-        if ($this->parameters['categoryID'] !== 0) {
-            $additionalData['categoryID'] = $this->parameters['categoryID'];
-        }
-
-        // save files
-        $saveStrategy = new DefaultUploadFileSaveStrategy(self::class, [
-            'generateThumbnails' => true,
-            'rotateImages' => true,
-        ], $additionalData);
-
-        $this->parameters['__files']->saveFiles($saveStrategy);
-
-        /** @var Media[] $mediaFiles */
-        $mediaFiles = $saveStrategy->getObjects();
+        $categoryID = $this->parameters['categoryID'] ?: null;
 
         $result = [
             'errors' => [],
             'media' => [],
         ];
 
-        if ($mediaFiles !== []) {
-            $mediaIDs = $mediaToFileID = [];
-            foreach ($mediaFiles as $internalFileID => $media) {
-                $mediaIDs[] = $media->mediaID;
-                $mediaToFileID[$media->mediaID] = $internalFileID;
-            }
-
-            // fetch media objects from database
-            $mediaList = new MediaList();
-            $mediaList->setObjectIDs($mediaIDs);
-            $mediaList->readObjects();
-
-            foreach ($mediaList as $media) {
-                $result['media'][$mediaToFileID[$media->mediaID]] = $this->getMediaData($media);
-            }
-        }
-
         /** @var UploadFile[] $files */
         $files = $this->parameters['__files']->getFiles();
-        foreach ($files as $file) {
-            if ($file->getValidationErrorType() !== '') {
-                $result['errors'][$file->getInternalFileID()] = [
-                    'filename' => $file->getFilename(),
-                    'filesize' => $file->getFilesize(),
-                    'errorType' => $file->getValidationErrorType(),
-                ];
+        foreach ($files as $uploadFile) {
+            if ($uploadFile->getValidationErrorType() === '') {
+                $file = $this->createFileFromUpload($uploadFile);
+                if ($file !== null) {
+                    $media = (new CreateMedia(
+                        MediaBuilder::forCreate()
+                            ->setFile($file)
+                            ->setCategoryID($categoryID)
+                            ->setUser(WCF::getUser()->userID ?: null, WCF::getUser()->username)
+                            ->setUploadTime(\TIME_NOW)
+                    ))();
+
+                    $result['media'][$uploadFile->getInternalFileID()] = $this->getMediaData(new Media($media->mediaID));
+
+                    continue;
+                }
+
+                $uploadFile->setValidationErrorType('uploadFailed');
             }
+
+            $result['errors'][$uploadFile->getInternalFileID()] = [
+                'filename' => $uploadFile->getFilename(),
+                'filesize' => $uploadFile->getFilesize(),
+                'errorType' => $uploadFile->getValidationErrorType(),
+            ];
         }
 
         return $result;
     }
 
     /**
+     * Creates a file from the uploaded file and generates its thumbnails,
+     * because the legacy client does not request them.
+     */
+    private function createFileFromUpload(UploadFile $uploadFile): ?File
+    {
+        $file = (new CreateFileFromExistingFile(
+            $uploadFile->getLocation(),
+            $uploadFile->getFilename(),
+            'com.woltlab.wcf.media'
+        ))();
+        if ($file === null) {
+            return null;
+        }
+
+        try {
+            FileProcessor::getInstance()->generateThumbnails($file);
+        } catch (DamagedImage $e) {
+            logThrowable($e);
+        }
+
+        FileRuntimeCache::getInstance()->removeObject($file->fileID);
+
+        return $file;
+    }
+
+    /**
      * Generates thumbnails.
      *
      * @return void
+     * @deprecated 6.3 The thumbnails are generated by the `FileProcessor`.
      */
     public function generateThumbnails()
     {
@@ -130,8 +151,13 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         $saveStrategy = new DefaultUploadFileSaveStrategy(self::class);
 
         foreach ($this->getObjects() as $mediaEditor) {
-            if ($mediaEditor->getDecoratedObject()->isImage !== 0) {
-                $saveStrategy->generateThumbnails($mediaEditor->getDecoratedObject());
+            $media = $mediaEditor->getDecoratedObject();
+
+            $file = $media->getFile();
+            if ($file !== null) {
+                FileProcessor::getInstance()->generateThumbnails($file);
+            } elseif ($media->isImage !== 0) {
+                $saveStrategy->generateThumbnails($media);
             }
         }
     }
@@ -750,80 +776,39 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
      */
     public function replaceFile()
     {
-        $saveStrategy = new DefaultUploadFileSaveStrategy(static::class, [
-            'action' => 'update',
-            'generateThumbnails' => true,
-            'object' => $this->getSingleObject()->getDecoratedObject(),
-            'rotateImages' => true,
-        ], [
-            'fileUpdateTime' => \TIME_NOW,
-            'userID' => $this->getSingleObject()->userID,
-            'username' => $this->getSingleObject()->username,
-            // Reset thumbnail data in case the new file has no thumbnails.
-            'tinyThumbnailType' => '',
-            'tinyThumbnailSize' => 0,
-            'tinyThumbnailWidth' => 0,
-            'tinyThumbnailHeight' => 0,
-            'smallThumbnailType' => '',
-            'smallThumbnailSize' => 0,
-            'smallThumbnailWidth' => 0,
-            'smallThumbnailHeight' => 0,
-            'mediumThumbnailType' => '',
-            'mediumThumbnailSize' => 0,
-            'mediumThumbnailWidth' => 0,
-            'mediumThumbnailHeight' => 0,
-            'largeThumbnailType' => '',
-            'largeThumbnailSize' => 0,
-            'largeThumbnailWidth' => 0,
-            'largeThumbnailHeight' => 0,
-        ]);
-
-        $this->parameters['__files']->saveFiles($saveStrategy);
-
-        /** @var Media[] $mediaFiles */
-        $mediaFiles = $saveStrategy->getObjects();
+        $media = $this->getSingleObject()->getDecoratedObject();
 
         $result = [
             'errors' => [],
             'media' => [],
         ];
 
-        if ($mediaFiles !== []) {
-            $mediaIDs = $mediaToFileID = [];
-            foreach ($mediaFiles as $internalFileID => $media) {
-                $mediaIDs[] = $media->mediaID;
-                $mediaToFileID[$media->mediaID] = $internalFileID;
-            }
-
-            // fetch media objects from database
-            $mediaList = new MediaList();
-            $mediaList->setObjectIDs($mediaIDs);
-            $mediaList->readObjects();
-
-            foreach ($mediaList as $media) {
-                $result['media'][$mediaToFileID[$media->mediaID]] = $this->getMediaData($media);
-            }
-        }
-
         /** @var UploadFile[] $files */
         $files = $this->parameters['__files']->getFiles();
-        foreach ($files as $file) {
-            if ($file->getValidationErrorType() !== '') {
-                $result['errors'][$file->getInternalFileID()] = [
-                    'filename' => $file->getFilename(),
-                    'filesize' => $file->getFilesize(),
-                    'errorType' => $file->getValidationErrorType(),
-                ];
+        foreach ($files as $uploadFile) {
+            if ($uploadFile->getValidationErrorType() === '') {
+                $file = $this->createFileFromUpload($uploadFile);
+                if ($file !== null) {
+                    // The previous file is deleted by the builder.
+                    (new UpdateMedia(
+                        MediaBuilder::forUpdate($media)
+                            ->setFile($file)
+                            ->setFileUpdateTime(\TIME_NOW)
+                    ))();
+
+                    $result['media'][$uploadFile->getInternalFileID()] = $this->getMediaData(new Media($media->mediaID));
+
+                    continue;
+                }
+
+                $uploadFile->setValidationErrorType('uploadFailed');
             }
-        }
 
-        $outdatedMediaFile = $this->getSingleObject();
-        $updatedMediaFile = new Media($this->getSingleObject()->mediaID);
-
-        // Delete *old* files using the non-updated local media editor object if the new file is
-        // stored in a different location.
-        if ($result['errors'] === [] && $updatedMediaFile->getLocation() !== $outdatedMediaFile->getLocation()) {
-            $outdatedMediaFile->deleteFiles();
+            $result['errors'][$uploadFile->getInternalFileID()] = [
+                'filename' => $uploadFile->getFilename(),
+                'filesize' => $uploadFile->getFilesize(),
+                'errorType' => $uploadFile->getValidationErrorType(),
+            ];
         }
 
         return $result;

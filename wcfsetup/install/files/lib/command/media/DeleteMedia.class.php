@@ -2,6 +2,7 @@
 
 namespace wcf\command\media;
 
+use wcf\command\file\DeleteFiles;
 use wcf\data\media\Media;
 use wcf\data\media\MediaBuilder;
 use wcf\event\media\MediaDeleted;
@@ -30,26 +31,26 @@ final class DeleteMedia
             return;
         }
 
-        $mediaIDs = \array_values(\array_map(static fn(Media $media) => $media->mediaID, $this->media));
+        $mediaIDs = $files = [];
+        foreach ($this->media as $media) {
+            $mediaIDs[] = $media->mediaID;
+
+            $file = $media->getFile();
+            if ($file !== null) {
+                $files[] = $file;
+            }
+        }
 
         MediaBuilder::deleteAll($mediaIDs);
 
         // The files are deleted only after the media files, because deleting a file cannot be rolled back.
+        if ($files !== []) {
+            new DeleteFiles($files)();
+        }
         foreach ($this->media as $media) {
-            $this->deleteLegacyFiles($media);
+            $media->deleteLegacyFiles();
         }
 
         EventHandler::getInstance()->fire(new MediaDeleted($this->media));
-    }
-
-    private function deleteLegacyFiles(Media $media): void
-    {
-        @\unlink($media->getLocation());
-
-        if ($media->isImage !== 0) {
-            foreach (\array_keys(Media::getThumbnailSizes()) as $size) {
-                @\unlink($media->getThumbnailLocation($size));
-            }
-        }
     }
 }
