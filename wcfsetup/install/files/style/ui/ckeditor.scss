@@ -279,7 +279,7 @@ a.ck.ck-button-bold {
 
 .ck-body-wrapper {
 	.ck.ck-balloon-panel {
-		--ck-color-base-foreground: var(--ck-color-toolbar-background);
+		--ck-color-base-foreground: var(--ck-toolbar-background-color);
 
 		box-shadow: var(--wcfBoxShadow);
 
@@ -295,7 +295,7 @@ a.ck.ck-button-bold {
 		}
 
 		&:not(.ck-on) {
-			background-color: var(--ck-color-panel-background);
+			background-color: var(--ck-balloon-panel-background-color);
 			color: var(--wcfDropdownLink);
 		}
 
@@ -303,6 +303,12 @@ a.ck.ck-button-bold {
 			background-color: var(--wcfDropdownBackgroundActive);
 			color: var(--wcfDropdownLinkActive);
 		}
+	}
+
+	/* The mention list marks the item selected with the keyboard on the list item instead of `.ck-on`. */
+	.ck.ck-list__item.ck-mentions__item_focused > .ck-button {
+		background-color: var(--wcfDropdownBackgroundActive);
+		color: var(--wcfDropdownLinkActive);
 	}
 }
 
@@ -406,7 +412,7 @@ a.ck.ck-button.ck-link-toolbar__preview:focus {
 }
 /* Add a visual indicator for the split button functionality. */
 .ck.ck-splitbutton:not(:hover, .ck-splitbutton_open) > .ck-splitbutton__arrow::before {
-	border-left: 1px dashed var(--ck-color-toolbar-border);
+	border-left: 1px dashed var(--ck-toolbar-border-color);
 	content: "";
 	inset: var(--ck-spacing-small) auto var(--ck-spacing-small) -1px;
 	position: absolute;
