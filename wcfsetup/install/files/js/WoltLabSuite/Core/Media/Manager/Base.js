@@ -171,7 +171,7 @@ define(["require", "exports", "tslib", "../../Core", "WoltLabSuite/Core/Language
             }
             UiDialog.close(this);
             const target = event.currentTarget;
-            this._mediaEditor.edit(this._media.get(~~target.dataset.objectId));
+            void this._mediaEditor.edit(this._media.get(~~target.dataset.objectId));
         }
         /**
          * Re-opens the manager dialog after closing the editor dialog.
@@ -201,7 +201,10 @@ define(["require", "exports", "tslib", "../../Core", "WoltLabSuite/Core/Language
             this._media.set(~~media.mediaID, media);
             const listItem = this._listItems.get(~~media.mediaID);
             const p = listItem.querySelector(".mediaTitle");
-            if (media.isMultilingual) {
+            if (typeof media.title === "string") {
+                p.textContent = media.title || media.filename;
+            }
+            else if (media.isMultilingual) {
                 if (media.title && media.title[window.LANGUAGE_ID]) {
                     p.textContent = media.title[window.LANGUAGE_ID];
                 }
@@ -263,7 +266,7 @@ define(["require", "exports", "tslib", "../../Core", "WoltLabSuite/Core/Language
                 const keys = Object.keys(data.media);
                 if (keys.length) {
                     UiDialog.close(this);
-                    this._mediaEditor.edit(this._media.get(~~data.media[keys[0]].mediaID));
+                    void this._mediaEditor.edit(this._media.get(~~data.media[keys[0]].mediaID));
                 }
             }
         }

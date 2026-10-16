@@ -25,4 +25,10 @@
 		
 		Permission.add('admin.content.cms.canManageMedia', {if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}true{else}false{/if});
 	});
+
+	{if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}
+		require(['WoltLabSuite/Core/Media/Editor'], (MediaEditor) => {
+			MediaEditor.setEndpoint('{link controller='MediaEdit' forceFrontend=true encode=false}id=%s{/link}');
+		});
+	{/if}
 {/if}

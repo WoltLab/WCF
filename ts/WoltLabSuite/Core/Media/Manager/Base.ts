@@ -225,7 +225,7 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
 
     const target = event.currentTarget as HTMLElement;
 
-    this._mediaEditor!.edit(this._media.get(~~target.dataset.objectId!)!);
+    void this._mediaEditor!.edit(this._media.get(~~target.dataset.objectId!)!);
   }
 
   /**
@@ -264,7 +264,9 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
 
     const listItem = this._listItems.get(~~media.mediaID)!;
     const p = listItem.querySelector(".mediaTitle")!;
-    if (media.isMultilingual) {
+    if (typeof media.title === "string") {
+      p.textContent = media.title || media.filename;
+    } else if (media.isMultilingual) {
       if (media.title && media.title[window.LANGUAGE_ID]) {
         p.textContent = media.title[window.LANGUAGE_ID];
       } else {
@@ -330,7 +332,7 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
       if (keys.length) {
         UiDialog.close(this);
 
-        this._mediaEditor!.edit(this._media.get(~~data.media[keys[0]].mediaID)!);
+        void this._mediaEditor!.edit(this._media.get(~~data.media[keys[0]].mediaID)!);
       }
     }
   }

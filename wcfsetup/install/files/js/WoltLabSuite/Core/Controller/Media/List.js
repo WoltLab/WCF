@@ -53,7 +53,7 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
      * Is called when a media edit icon is clicked.
      */
     function edit(event) {
-        _mediaEditor.edit(~~event.currentTarget.dataset.objectId);
+        void _mediaEditor.edit(~~event.currentTarget.dataset.objectId);
     }
     /**
      * Opens the media editor after uploading a single file.
@@ -62,7 +62,7 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
         if (data.upload === _upload && !data.isMultiFileUpload && !_upload.hasPendingUploads()) {
             const keys = Object.keys(data.media);
             if (keys.length) {
-                _mediaEditor.edit(data.media[keys[0]]);
+                void _mediaEditor.edit(data.media[keys[0]]);
             }
         }
     }

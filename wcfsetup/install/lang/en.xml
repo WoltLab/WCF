@@ -4143,6 +4143,8 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.downloads"><![CDATA[Downloads]]></item>
 		<item name="wcf.media.lastDownloadTime"><![CDATA[Last Download]]></item>
 		<item name="wcf.media.file.info"><![CDATA[{$media->filesize|filesize} – {plural value=$media->downloads 1="1 Download" other="# Downloads"}]]></item>
+		<item name="wcf.media.file"><![CDATA[File]]></item>
+		<item name="wcf.media.file.description"><![CDATA[A new file replaces the current file, it must be of the same file type.]]></item>
 		<item name="wcf.media.file.title"><![CDATA[Download File “{$media->filename}”]]></item>
 	</category>
 	<category name="wcf.message">

@@ -67,7 +67,7 @@ function addButtonEventListeners(): void {
  * Is called when a media edit icon is clicked.
  */
 function edit(event: Event): void {
-  _mediaEditor.edit(~~(event.currentTarget as HTMLElement).dataset.objectId!);
+  void _mediaEditor.edit(~~(event.currentTarget as HTMLElement).dataset.objectId!);
 }
 
 /**
@@ -78,7 +78,7 @@ function openEditorAfterUpload(data: MediaUploadSuccessEventData) {
     const keys = Object.keys(data.media);
 
     if (keys.length) {
-      _mediaEditor.edit(data.media[keys[0]]);
+      void _mediaEditor.edit(data.media[keys[0]]);
     }
   }
 }
