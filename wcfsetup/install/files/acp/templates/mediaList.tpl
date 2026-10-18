@@ -21,7 +21,7 @@
 </div>
 
 <script data-relocate="true">
-	{jsphrase name='wcf.media.upload.success.multiple'}
+	WoltLabLanguage.registerPhrase('wcf.media.upload.success.multiple', '{jslang __literal=true}wcf.media.upload.success.multiple{/jslang}');
 
 	require(['WoltLabSuite/Core/Acp/Component/Media/List'], ({ setup }) => {
 		setup(

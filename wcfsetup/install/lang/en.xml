@@ -4128,6 +4128,10 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.isMultilingual"><![CDATA[Enable Multilingualism]]></item>
 		<item name="wcf.media.languageID"><![CDATA[Language]]></item>
 		<item name="wcf.media.manager"><![CDATA[Manage Media]]></item>
+		<item name="wcf.media.manager.dropZone"><![CDATA[Drag files here or]]></item>
+		<item name="wcf.media.manager.dropZone.select"><![CDATA[select from device]]></item>
+		<item name="wcf.media.manager.selection.multiple"><![CDATA[{#$count} files selected]]></item>
+		<item name="wcf.media.manager.selection.none"><![CDATA[No file selected]]></item>
 		<item name="wcf.media.media"><![CDATA[Media]]></item>
 		<item name="wcf.media.media.pageTitle"><![CDATA[{if $__wcf->session->getPermission('admin.content.cms.canOnlyAccessOwnMedia')}Own {/if}Media]]></item>
 		<item name="wcf.media.preview"><![CDATA[Preview]]></item>

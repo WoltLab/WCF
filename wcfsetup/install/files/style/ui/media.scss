@@ -2,96 +2,265 @@
 	margin-left: 5px;
 }
 
-.mediaList {
-	display: grid;
-	gap: 20px;
-	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+/* Media manager dialog */
+.dialog.dialog--mediaManager {
+	height: min(760px, calc(100vh - 140px), var(--dialog-max-height));
+	max-width: min(1080px, var(--dialog-max-width));
+	min-height: min(520px, var(--dialog-max-height));
+	width: 100%;
+
+	.dialog__document,
+	.dialog__form {
+		height: 100%;
+	}
+
+	.dialog__content {
+		flex: 1 1 auto;
+	}
+
+	.dialog__control {
+		border-top: 1px solid var(--wcfContentBorderInner);
+		margin-top: 0;
+		padding-top: 12px;
+	}
 }
 
-.mediaList__item {
-	border: 1px solid var(--wcfContentBorderInner);
-	border-radius: var(--wcfBorderRadius);
+.dialog--mediaManager .listView__header {
+	align-items: center;
+	background-color: var(--wcfContentBackground);
+	border-bottom: 1px solid var(--wcfContentBorderInner);
+	gap: 8px;
+	margin-bottom: 16px;
+	padding: 0 0 12px;
+	position: sticky;
+	top: 0;
+	z-index: 3;
+
+	.listView__header__additionalContent {
+		flex: 1 1 200px;
+	}
+
+	.button {
+		align-items: center;
+		display: inline-flex;
+		min-height: 36px;
+	}
+}
+
+.mediaManager__search {
+	align-items: center;
+	display: flex;
+	flex: 1 1 auto;
+	position: relative;
+
+	> fa-icon {
+		color: var(--wcfContentDimmedText);
+		left: 10px;
+		pointer-events: none;
+		position: absolute;
+	}
+}
+
+.mediaManager__searchInput {
+	min-height: 36px;
+	padding-left: 34px !important;
+	width: 100%;
+}
+
+/* Drop zone */
+.mediaManager__dropZone {
+	align-items: center;
+	border: 1.5px dashed var(--wcfContentBorderInner);
+	border-radius: 10px;
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+	margin-bottom: 16px;
+	padding: 14px;
+	text-align: center;
+	transition:
+		background-color 0.12s linear,
+		border-color 0.12s linear;
+}
+
+.mediaManager__dropZone:hover,
+.mediaManager--dragOver .mediaManager__dropZone {
+	background-color: color-mix(in srgb, var(--wcfContentLink) 8%, transparent);
+	border-color: var(--wcfContentLink);
+}
+
+.mediaManager--dragOver {
+	background-color: color-mix(in srgb, var(--wcfContentLink) 4%, transparent);
+}
+
+.mediaManager__dropZone__select {
+	color: var(--wcfContentLink);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+
+	&:hover {
+		color: var(--wcfContentLinkActive);
+	}
+}
+
+/* Grid */
+.mediaManager {
+	display: grid;
+	gap: 16px 14px;
+	grid-template-columns: repeat(auto-fill, minmax(152px, 1fr));
+}
+
+.mediaManager__tile {
+	cursor: pointer;
 	display: flex;
 	flex-direction: column;
+	gap: 8px;
+	min-width: 0;
+	outline: none;
+}
+
+.mediaManager__tile__thumbnail {
+	align-items: center;
+	aspect-ratio: 1;
+	background-color: var(--wcfTabularBoxBackgroundActive);
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: 10px;
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	justify-content: center;
 	overflow: hidden;
 	position: relative;
+	transition:
+		border-color 0.12s linear,
+		box-shadow 0.12s linear;
+	width: 100%;
+
+	> img {
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
+	}
 }
 
-.mediaList__item__preview {
-	align-items: center;
-	background-color: var(--wcfTabularBoxBackgroundActive);
-	display: flex;
-	height: 160px;
-	justify-content: center;
+.mediaManager__tile:hover .mediaManager__tile__thumbnail {
+	border-color: var(--wcfContentDimmedText);
 }
 
-.mediaList__item__content {
-	display: flex;
-	flex-direction: column;
-	gap: 2px;
-	padding: 10px;
+.mediaManager__tile--selected .mediaManager__tile__thumbnail,
+.mediaManager__tile:focus-visible .mediaManager__tile__thumbnail {
+	border-color: var(--wcfContentLink);
+	box-shadow: 0 0 0 2px var(--wcfContentLink);
 }
 
-.mediaList__item__title {
-	@include wcfFontBold;
+.mediaManager__tile__name {
+	color: var(--wcfContentText);
+	font-size: 13px;
+	font-weight: 500;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
-.mediaList__item__link {
-	color: inherit;
+.mediaManager__tile__meta {
+	color: var(--wcfContentDimmedText);
+	font-size: 12px;
+	margin-top: -6px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 
-	&:hover {
+/* Select indicator and context menu, only shown on hover or focus */
+.mediaManager__tile__indicator {
+	align-items: center;
+	background-color: rgb(0 0 0 / 35%);
+	border: 2px solid #fff;
+	border-radius: 50%;
+	color: #fff;
+	display: flex;
+	height: 22px;
+	justify-content: center;
+	left: 8px;
+	opacity: 0;
+	position: absolute;
+	top: 8px;
+	transition: opacity 0.12s linear;
+	width: 22px;
+
+	> fa-icon {
+		--icon-size: 12px;
+		visibility: hidden;
+	}
+}
+
+.mediaManager__tile--selected .mediaManager__tile__indicator {
+	background-color: var(--wcfButtonPrimaryBackground);
+	border-color: var(--wcfButtonPrimaryBackground);
+
+	> fa-icon {
+		visibility: visible;
+	}
+}
+
+.mediaManager__tile__menu {
+	opacity: 0;
+	position: absolute;
+	right: 6px;
+	top: 6px;
+	transition: opacity 0.12s linear;
+}
+
+.mediaManager__tile__menuButton {
+	align-items: center;
+	backdrop-filter: blur(4px);
+	background-color: rgb(0 0 0 / 55%);
+	border-radius: 6px;
+	color: #fff;
+	display: flex;
+	height: 28px;
+	justify-content: center;
+	width: 28px;
+
+	fa-icon {
 		color: inherit;
 	}
 }
 
-@media (hover: hover) {
-	.mediaList__item__link:hover {
-		text-decoration: underline;
-		text-underline-offset: 3px;
+.mediaManager__tile:hover,
+.mediaManager__tile:focus-within,
+.mediaManager__tile--selected {
+	.mediaManager__tile__indicator,
+	.mediaManager__tile__menu {
+		opacity: 1;
 	}
 }
 
-.mediaList__item__meta {
-	@include wcfFontSmall;
-	color: var(--wcfContentDimmedText);
+/* Selection info in the footer */
+.mediaManager__selectionInfo {
+	align-self: center;
+	color: var(--wcfContentText);
+	grid-area: extra;
+	min-width: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-}
 
-.mediaList__item__buttons {
-	align-items: center;
-	background-color: var(--wcfContentBackground);
-	border-radius: var(--wcfBorderRadius);
-	display: flex;
-	gap: 5px;
-	padding: 2px 5px;
-	position: absolute;
-	right: 5px;
-	top: 5px;
-}
-
-.mediaList__item__actions {
-	margin-top: 5px;
-}
-
-.mediaManager {
-	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-
-	/* The dialog adapts to the width of its content, which requires fixed columns. */
-	@include screen-lg {
-		grid-template-columns: repeat(4, minmax(180px, 1fr));
-	}
-
-	.mediaList__item__preview {
-		height: 140px;
+	strong {
+		color: var(--wcfContentHeadlineText);
+		font-weight: 500;
 	}
 }
 
-/* The upload element is triggered by the primary button of the media manager. */
-.listView__header__additionalContent:has(> .mediaManager__upload[hidden]:only-child) {
-	display: none;
+.mediaManager__selectionInfo--empty {
+	color: var(--wcfContentDimmedText);
+}
+
+.dialog__control--duo-stacked,
+.dialog__control--extra-stacked,
+.dialog__control--tripple-stacked {
+	.mediaManager__selectionInfo {
+		grid-area: auto;
+		grid-column: 1 / -1;
+	}
 }

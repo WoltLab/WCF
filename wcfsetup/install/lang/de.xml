@@ -4182,6 +4182,10 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.isMultilingual"><![CDATA[Mehrsprachigkeit aktivieren]]></item>
 		<item name="wcf.media.languageID"><![CDATA[Sprache]]></item>
 		<item name="wcf.media.manager"><![CDATA[Medien verwalten]]></item>
+		<item name="wcf.media.manager.dropZone"><![CDATA[Dateien hierher ziehen oder]]></item>
+		<item name="wcf.media.manager.dropZone.select"><![CDATA[vom Gerät auswählen]]></item>
+		<item name="wcf.media.manager.selection.multiple"><![CDATA[{#$count} Dateien ausgewählt]]></item>
+		<item name="wcf.media.manager.selection.none"><![CDATA[Keine Datei ausgewählt]]></item>
 		<item name="wcf.media.media"><![CDATA[Medien]]></item>
 		<item name="wcf.media.media.pageTitle"><![CDATA[{if $__wcf->session->getPermission('admin.content.cms.canOnlyAccessOwnMedia')}Eigene {/if}Medien]]></item>
 		<item name="wcf.media.preview"><![CDATA[Vorschau]]></item>

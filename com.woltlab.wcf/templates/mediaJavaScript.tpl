@@ -8,4 +8,10 @@
 	{jsphrase name='wcf.media.insert.imageSize.large'}
 	{jsphrase name='wcf.media.insert.imageSize.original'}
 	{jsphrase name='wcf.media.manager'}
+	{jsphrase name='wcf.media.manager.dropZone'}
+	{jsphrase name='wcf.media.manager.dropZone.select'}
+	{jsphrase name='wcf.media.manager.selection.none'}
+	{jsphrase name='wcf.media.button.select'}
+
+	WoltLabLanguage.registerPhrase('wcf.media.manager.selection.multiple', '{jslang __literal=true}wcf.media.manager.selection.multiple{/jslang}');
 {/if}

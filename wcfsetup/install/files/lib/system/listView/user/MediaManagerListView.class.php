@@ -4,14 +4,13 @@ namespace wcf\system\listView\user;
 
 use wcf\action\MediaEditAction;
 use wcf\data\category\CategoryNodeTree;
-use wcf\data\DatabaseObjectList;
 use wcf\data\media\Media;
 use wcf\data\media\MediaList;
 use wcf\event\listView\user\MediaManagerListViewInitialized;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\MediaFileProcessor;
 use wcf\system\interaction\admin\MediaInteractions;
-use wcf\system\interaction\bulk\user\MediaManagerBulkInteractions;
+use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\listView\AbstractListView;
 use wcf\system\listView\ListViewPrimaryButton;
@@ -19,7 +18,6 @@ use wcf\system\listView\ListViewSortField;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\view\filter\CategoryFilter;
-use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -42,6 +40,7 @@ class MediaManagerListView extends AbstractListView
     public function __construct(
         public readonly string $mode = self::MODE_EDITOR,
         public readonly int $imagesOnly = 0,
+        public readonly string $searchString = '',
     ) {
         if ($this->mode !== self::MODE_EDITOR && $this->mode !== self::MODE_SELECT) {
             throw new \InvalidArgumentException("Unknown mode '{$this->mode}'.");
@@ -54,17 +53,24 @@ class MediaManagerListView extends AbstractListView
         ]);
 
         $this->addAvailableFilters([
-            $this->getSearchFilter(),
             new CategoryFilter(
                 (new CategoryNodeTree('com.woltlab.wcf.media.category'))->getIterator(),
                 'categoryID'
             ),
         ]);
 
+        // The selection is handled by the media manager itself.
         $this->setInteractionProvider(new MediaInteractions());
-        if ($this->mode === self::MODE_EDITOR) {
-            $this->setBulkInteractionProvider(new MediaManagerBulkInteractions());
-        }
+        $this->setInteractionContextMenuComponentConfiguration(new InteractionContextMenuComponentConfiguration(
+            buttonCssClassName: 'mediaManager__tile__menuButton'
+        ));
+
+        $headerContent = \sprintf(
+            '<label class="mediaManager__search">%s<input type="search" class="mediaManager__searchInput" placeholder="%s" value="%s"></label>',
+            FontAwesomeIcon::fromValues('magnifying-glass')->toHtml(16),
+            StringUtil::encodeHTML(WCF::getLanguage()->get('wcf.media.search.placeholder')),
+            StringUtil::encodeHTML($this->searchString)
+        );
 
         if (WCF::getSession()->hasPermission('admin.content.cms.canManageMedia')) {
             $processor = FileProcessor::getInstance()->getProcessorByName('com.woltlab.wcf.media');
@@ -76,19 +82,21 @@ class MediaManagerListView extends AbstractListView
                 FontAwesomeIcon::fromValues('upload'),
                 'mediaManager__uploadButton'
             ));
-            $this->setAdditionalHeaderContent(\sprintf(
+            $headerContent .= \sprintf(
                 '<div class="mediaManager__upload" data-edit-endpoint="%s" hidden>%s</div>',
                 StringUtil::encodeHTML(
                     LinkHandler::getInstance()->getControllerLink(MediaEditAction::class, ['id' => '%s'])
                 ),
                 $processor->toHtmlElement(imagesOnly: $this->imagesOnly !== 0)
-            ));
+            );
         }
+
+        $this->setAdditionalHeaderContent($headerContent);
 
         $this->setItemsPerPage(30);
         $this->setDefaultSortField('uploadTime');
         $this->setDefaultSortOrder('DESC');
-        $this->setCssClassName('mediaList mediaManager');
+        $this->setCssClassName('mediaManager');
     }
 
     #[\Override]
@@ -108,6 +116,7 @@ class MediaManagerListView extends AbstractListView
         if ($this->imagesOnly !== 0) {
             $list->getConditionBuilder()->add('media.isImage = ?', [1]);
         }
+        $list->addSearchConditions($this->searchString);
 
         return $list;
     }
@@ -125,6 +134,7 @@ class MediaManagerListView extends AbstractListView
         return [
             'mode' => $this->mode,
             'imagesOnly' => $this->imagesOnly,
+            'searchString' => $this->searchString,
         ];
     }
 
@@ -132,19 +142,6 @@ class MediaManagerListView extends AbstractListView
     public function renderItems(): string
     {
         return WCF::getTPL()->render('wcf', 'shared_mediaManagerListItems', ['view' => $this]);
-    }
-
-    private function getSearchFilter(): TextFilter
-    {
-        return new class('search', 'wcf.global.search') extends TextFilter {
-            #[\Override]
-            public function applyFilter(DatabaseObjectList $list, string $value): void
-            {
-                \assert($list instanceof MediaList);
-
-                $list->addSearchConditions($value);
-            }
-        };
     }
 
     #[\Override]
