@@ -160,7 +160,7 @@ export class ListView {
         }
       }
 
-      void this.#loadItems(StateChangeCause.Change);
+      this.#state.resetPageNo();
     });
   }
 

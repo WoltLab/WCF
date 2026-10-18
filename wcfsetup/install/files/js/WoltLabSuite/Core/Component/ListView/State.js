@@ -67,6 +67,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
         getPageNo() {
             return this.#pageNo;
         }
+        /**
+         * Reloads the list starting from the first page, the previous page may
+         * no longer exist after the parameters of the list view have changed.
+         */
+        resetPageNo() {
+            this.#switchPage(1, 0 /* StateChangeCause.Change */);
+        }
         getSortField() {
             return this.#sorting.getSortField();
         }
