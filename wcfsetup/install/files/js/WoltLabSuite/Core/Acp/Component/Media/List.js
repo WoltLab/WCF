@@ -7,25 +7,16 @@
  * @since 6.3
  * @woltlabExcludeBundle all
  */
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "WoltLabSuite/Core/Component/Media/Upload"], function (require, exports, Upload_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     function setup(uploadButton, container) {
-        let pendingUploads = 0;
-        uploadButton.addEventListener("uploadStart", (event) => {
-            pendingUploads++;
-            void event.detail.ready
-                .catch(() => {
-                // The upload has failed, the error is shown by the upload button.
-            })
-                .finally(() => {
-                pendingUploads--;
-                // Reload the grid view only once after a batch of files has been uploaded.
-                if (pendingUploads === 0) {
-                    container.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
-                }
-            });
+        (0, Upload_1.setupMediaUpload)(uploadButton, {
+            // Reload the grid view only once after a batch of files has been uploaded.
+            allUploadsCompleted: () => {
+                container.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+            },
         });
     }
 });

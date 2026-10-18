@@ -8,25 +8,13 @@
  * @woltlabExcludeBundle all
  */
 
-import type WoltlabCoreFileElement from "WoltLabSuite/Core/Component/File/woltlab-core-file";
+import { setupMediaUpload } from "WoltLabSuite/Core/Component/Media/Upload";
 
 export function setup(uploadButton: HTMLElement, container: HTMLElement): void {
-  let pendingUploads = 0;
-
-  uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
-    pendingUploads++;
-
-    void event.detail.ready
-      .catch(() => {
-        // The upload has failed, the error is shown by the upload button.
-      })
-      .finally(() => {
-        pendingUploads--;
-
-        // Reload the grid view only once after a batch of files has been uploaded.
-        if (pendingUploads === 0) {
-          container.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
-        }
-      });
+  setupMediaUpload(uploadButton, {
+    // Reload the grid view only once after a batch of files has been uploaded.
+    allUploadsCompleted: () => {
+      container.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+    },
   });
 }

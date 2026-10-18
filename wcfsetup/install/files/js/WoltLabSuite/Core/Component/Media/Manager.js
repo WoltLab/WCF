@@ -7,7 +7,7 @@
  * @since 6.3
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Api/Media/GetMedia", "WoltLabSuite/Core/Language"], function (require, exports, Dialog_1, GetMedia_1, Language_1) {
+define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Api/Media/GetMedia", "WoltLabSuite/Core/Language", "./Upload"], function (require, exports, Dialog_1, GetMedia_1, Language_1, Upload_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.openMediaManager = openMediaManager;
@@ -47,7 +47,19 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                 }
             });
             if (uploadButton !== null) {
-                setupUpload(uploadButton, listViewItems, options.file !== undefined ? (mediaId) => complete([mediaId]) : null);
+                (0, Upload_1.setupMediaUpload)(uploadButton, {
+                    uploadCompleted: (mediaId) => {
+                        if (options.file !== undefined) {
+                            void complete([mediaId]);
+                        }
+                    },
+                    allUploadsCompleted: () => {
+                        // Reload the list only once after a batch of files has been uploaded.
+                        if (listViewItems.isConnected) {
+                            listViewItems.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+                        }
+                    },
+                });
                 const file = options.file;
                 if (file !== undefined) {
                     // The upload button is initialized by a mutation observer.
@@ -64,30 +76,6 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                 if (!completed) {
                     completed = true;
                     resolve([]);
-                }
-            });
-        });
-    }
-    function setupUpload(uploadButton, listViewItems, onUploadCompleted) {
-        let pendingUploads = 0;
-        uploadButton.addEventListener("uploadStart", (event) => {
-            pendingUploads++;
-            const fileElement = event.detail;
-            void fileElement.ready
-                .then(() => {
-                const mediaId = fileElement.data?.mediaID;
-                if (onUploadCompleted !== null && typeof mediaId === "number") {
-                    void onUploadCompleted(mediaId);
-                }
-            })
-                .catch(() => {
-                // The upload has failed, the error is shown by the upload button.
-            })
-                .finally(() => {
-                pendingUploads--;
-                // Reload the list only once after a batch of files has been uploaded.
-                if (pendingUploads === 0 && listViewItems.isConnected) {
-                    listViewItems.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
                 }
             });
         });
