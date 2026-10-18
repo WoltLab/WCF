@@ -4201,7 +4201,6 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.upload.success.multiple"><![CDATA[{#$count} Dateien wurden erfolgreich hochgeladen.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Hochgeladen von]]></item>
 		<item name="wcf.media.uploadTime"><![CDATA[Datum hochgeladen]]></item>
-		<item name="wcf.media.search.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>
 		<item name="wcf.media.search.info.searchStringThreshold"><![CDATA[Der Suchbegriff muss mindestens {#$minSearchLength} Zeichen lang sein.]]></item>
 		<item name="wcf.media.setCategory"><![CDATA[Kategorie bearbeiten]]></item>
 		<item name="wcf.media.downloads"><![CDATA[Downloads]]></item>
@@ -5848,5 +5847,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.exportEmailAddress.markedUsers"/>
 	<item name="wcf.acp.user.exportEmailAddress.format"/>
 	<item name="wcf.media.button.insert"/>
+	<item name="wcf.media.search.noResults"/>
 </delete>
 </language>

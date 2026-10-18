@@ -4147,7 +4147,6 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.upload.success.multiple"><![CDATA[{#$count} files have been uploaded successfully.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Uploaded By]]></item>
 		<item name="wcf.media.uploadTime"><![CDATA[Upload Date]]></item>
-		<item name="wcf.media.search.noResults"><![CDATA[The search returned no results.]]></item>
 		<item name="wcf.media.search.info.searchStringThreshold"><![CDATA[The search term must contain at least {#$minSearchLength} character{if $minSearchLength > 1}s{/if}.]]></item>
 		<item name="wcf.media.setCategory"><![CDATA[Edit Category]]></item>
 		<item name="wcf.media.downloads"><![CDATA[Downloads]]></item>
@@ -5850,5 +5849,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.exportEmailAddress.markedUsers"/>
 	<item name="wcf.acp.user.exportEmailAddress.format"/>
 	<item name="wcf.media.button.insert"/>
+	<item name="wcf.media.search.noResults"/>
 </delete>
 </language>
