@@ -41,10 +41,13 @@
 	}
 
 	.button {
-		align-items: center;
-		display: inline-flex;
 		min-height: 36px;
 	}
+}
+
+/* The selection is handled by the media manager, there is no edit mode. */
+.dialog--mediaManager .listView__header__button:has(> .listView__editMode__toggle) {
+	display: none;
 }
 
 .mediaManager__search {
