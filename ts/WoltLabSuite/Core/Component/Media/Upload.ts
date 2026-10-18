@@ -10,7 +10,8 @@
 
 import type WoltlabCoreFileElement from "WoltLabSuite/Core/Component/File/woltlab-core-file";
 import { getErrorMessageFromFile } from "WoltLabSuite/Core/Component/File/Helper";
-import { innerError } from "WoltLabSuite/Core/Dom/Util";
+import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
+import { getPhrase } from "WoltLabSuite/Core/Language";
 
 export type MediaUploadCallbacks = {
   /**
@@ -23,8 +24,21 @@ export type MediaUploadCallbacks = {
   allUploadsCompleted?: () => void;
 };
 
+function showError(message: string): void {
+  const dialog = dialogFactory().fromHtml(`<p>${message}</p>`).asAlert();
+  dialog.show(getPhrase("wcf.global.error.title"));
+}
+
 export function setupMediaUpload(uploadButton: HTMLElement, callbacks: MediaUploadCallbacks): void {
   let pendingUploads = 0;
+
+  // Errors that occur before the upload has started are shown in a dialog
+  // instead of below the upload button.
+  uploadButton.addEventListener("upload:error", (event: CustomEvent<{ message: string }>) => {
+    event.preventDefault();
+
+    showError(event.detail.message);
+  });
 
   uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
     pendingUploads++;
@@ -44,7 +58,7 @@ export function setupMediaUpload(uploadButton: HTMLElement, callbacks: MediaUplo
       })
       .catch(() => {
         if (file.apiError !== undefined) {
-          innerError(uploadButton, getErrorMessageFromFile(file));
+          showError(getErrorMessageFromFile(file));
         }
       })
       .finally(() => {

@@ -7,12 +7,22 @@
  * @since 6.3
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "WoltLabSuite/Core/Component/File/Helper", "WoltLabSuite/Core/Dom/Util"], function (require, exports, Helper_1, Util_1) {
+define(["require", "exports", "WoltLabSuite/Core/Component/File/Helper", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Language"], function (require, exports, Helper_1, Dialog_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setupMediaUpload = setupMediaUpload;
+    function showError(message) {
+        const dialog = (0, Dialog_1.dialogFactory)().fromHtml(`<p>${message}</p>`).asAlert();
+        dialog.show((0, Language_1.getPhrase)("wcf.global.error.title"));
+    }
     function setupMediaUpload(uploadButton, callbacks) {
         let pendingUploads = 0;
+        // Errors that occur before the upload has started are shown in a dialog
+        // instead of below the upload button.
+        uploadButton.addEventListener("upload:error", (event) => {
+            event.preventDefault();
+            showError(event.detail.message);
+        });
         uploadButton.addEventListener("uploadStart", (event) => {
             pendingUploads++;
             // The file element only tracks the state of the upload while it is part
@@ -29,7 +39,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/File/Helper", "WoltLa
             })
                 .catch(() => {
                 if (file.apiError !== undefined) {
-                    (0, Util_1.innerError)(uploadButton, (0, Helper_1.getErrorMessageFromFile)(file));
+                    showError((0, Helper_1.getErrorMessageFromFile)(file));
                 }
             })
                 .finally(() => {
