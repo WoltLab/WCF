@@ -79,6 +79,17 @@ export async function openMediaManager(options: MediaManagerOptions): Promise<Me
     });
 
     if (uploadButton !== null) {
+      // The upload element is hidden and triggered by the primary button of the list view.
+      const proxyButton = dialog.content.querySelector<HTMLButtonElement>(".mediaManager__uploadButton");
+      if (proxyButton !== null) {
+        proxyButton.addEventListener("click", () => {
+          uploadButton.click();
+        });
+        uploadButton.addEventListener("uploadStart", () => {
+          proxyButton.disabled = true;
+        });
+      }
+
       setupMediaUpload(uploadButton, {
         uploadCompleted: (mediaId) => {
           if (options.file !== undefined) {
@@ -86,6 +97,10 @@ export async function openMediaManager(options: MediaManagerOptions): Promise<Me
           }
         },
         allUploadsCompleted: async (mediaIds) => {
+          if (proxyButton !== null) {
+            proxyButton.disabled = false;
+          }
+
           if (!listViewItems.isConnected) {
             return;
           }

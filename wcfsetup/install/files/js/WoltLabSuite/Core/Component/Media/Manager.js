@@ -47,6 +47,16 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                 }
             });
             if (uploadButton !== null) {
+                // The upload element is hidden and triggered by the primary button of the list view.
+                const proxyButton = dialog.content.querySelector(".mediaManager__uploadButton");
+                if (proxyButton !== null) {
+                    proxyButton.addEventListener("click", () => {
+                        uploadButton.click();
+                    });
+                    uploadButton.addEventListener("uploadStart", () => {
+                        proxyButton.disabled = true;
+                    });
+                }
                 (0, Upload_1.setupMediaUpload)(uploadButton, {
                     uploadCompleted: (mediaId) => {
                         if (options.file !== undefined) {
@@ -54,6 +64,9 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                         }
                     },
                     allUploadsCompleted: async (mediaIds) => {
+                        if (proxyButton !== null) {
+                            proxyButton.disabled = false;
+                        }
                         if (!listViewItems.isConnected) {
                             return;
                         }

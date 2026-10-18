@@ -90,3 +90,8 @@
 		height: 140px;
 	}
 }
+
+/* The upload element is triggered by the primary button of the media manager. */
+.listView__header__additionalContent:has(> .mediaManager__upload[hidden]:only-child) {
+	display: none;
+}

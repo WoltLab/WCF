@@ -14,8 +14,10 @@ use wcf\system\interaction\admin\MediaInteractions;
 use wcf\system\interaction\bulk\user\MediaManagerBulkInteractions;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\listView\AbstractListView;
+use wcf\system\listView\ListViewPrimaryButton;
 use wcf\system\listView\ListViewSortField;
 use wcf\system\request\LinkHandler;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\view\filter\CategoryFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
@@ -68,8 +70,14 @@ class MediaManagerListView extends AbstractListView
             $processor = FileProcessor::getInstance()->getProcessorByName('com.woltlab.wcf.media');
             \assert($processor instanceof MediaFileProcessor);
 
+            // The upload element is hidden and triggered by the primary button.
+            $this->setPrimaryButton(ListViewPrimaryButton::forButton(
+                'wcf.global.button.upload',
+                FontAwesomeIcon::fromValues('upload'),
+                'mediaManager__uploadButton'
+            ));
             $this->setAdditionalHeaderContent(\sprintf(
-                '<div class="mediaManager__upload" data-edit-endpoint="%s">%s</div>',
+                '<div class="mediaManager__upload" data-edit-endpoint="%s" hidden>%s</div>',
                 StringUtil::encodeHTML(
                     LinkHandler::getInstance()->getControllerLink(MediaEditAction::class, ['id' => '%s'])
                 ),
