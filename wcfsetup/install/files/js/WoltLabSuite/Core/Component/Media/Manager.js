@@ -210,20 +210,19 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
     function waitForTiles(selection, listViewItems, mediaIds) {
         const getTiles = () => mediaIds.map((mediaId) => selection.getTile(mediaId)).filter((tile) => tile !== null);
         return new Promise((resolve) => {
-            // The new media files may not be part of the current page.
+            // The list view replaces all items at once, the new media files may not
+            // be part of the current page or match the current search though.
+            const observer = new MutationObserver(() => {
+                observer.disconnect();
+                window.clearTimeout(timeout);
+                resolve(getTiles());
+            });
+            observer.observe(listViewItems, { childList: true });
+            // An empty list that remains empty does not cause any mutation.
             const timeout = window.setTimeout(() => {
                 observer.disconnect();
                 resolve(getTiles());
             }, 5_000);
-            const observer = new MutationObserver(() => {
-                const tiles = getTiles();
-                if (tiles.length === mediaIds.length) {
-                    observer.disconnect();
-                    window.clearTimeout(timeout);
-                    resolve(tiles);
-                }
-            });
-            observer.observe(listViewItems, { childList: true });
         });
     }
     function scrollToTile(content, tile) {
