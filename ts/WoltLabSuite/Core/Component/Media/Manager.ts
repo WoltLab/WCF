@@ -413,7 +413,18 @@ export async function openMediaManager(options: MediaManagerOptions): Promise<Me
       }
       completed = true;
 
-      const media = await Promise.all(mediaIds.map((mediaId) => getMedia(mediaId)));
+      let media: MediaData[];
+      try {
+        media = await Promise.all(mediaIds.map((mediaId) => getMedia(mediaId)));
+      } catch (error) {
+        // Settle first, callers lock their buttons until the promise resolves.
+        if (dialog.isConnected) {
+          dialog.close();
+        }
+        resolve([]);
+
+        throw error;
+      }
 
       if (dialog.isConnected) {
         dialog.close();

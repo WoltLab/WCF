@@ -320,7 +320,18 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                     return;
                 }
                 completed = true;
-                const media = await Promise.all(mediaIds.map((mediaId) => (0, GetMedia_1.getMedia)(mediaId)));
+                let media;
+                try {
+                    media = await Promise.all(mediaIds.map((mediaId) => (0, GetMedia_1.getMedia)(mediaId)));
+                }
+                catch (error) {
+                    // Settle first, callers lock their buttons until the promise resolves.
+                    if (dialog.isConnected) {
+                        dialog.close();
+                    }
+                    resolve([]);
+                    throw error;
+                }
                 if (dialog.isConnected) {
                     dialog.close();
                 }
