@@ -59,7 +59,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
 
             if ($parser->getOutputType() === 'text/html') {
                 $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
-                $localizedMedia = MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID() !== 0
+                $localizedMedia = MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID() !== null
                     ? $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID())
                     : $media;
 
