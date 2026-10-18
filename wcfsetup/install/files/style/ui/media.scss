@@ -81,6 +81,11 @@
 .mediaManager {
 	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 
+	/* The dialog adapts to the width of its content, which requires fixed columns. */
+	@include screen-lg {
+		grid-template-columns: repeat(4, minmax(180px, 1fr));
+	}
+
 	.mediaList__item__preview {
 		height: 140px;
 	}
