@@ -13,6 +13,7 @@ import { getMedia, MediaData } from "WoltLabSuite/Core/Api/Media/GetMedia";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 import type WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-core-dialog";
+import { normalizePastedFilename } from "../Ckeditor/Filename";
 import { editMedia, setupMediaUpload } from "./Upload";
 
 export type MediaManagerMode = "editor" | "select";
@@ -302,6 +303,19 @@ function setupSearch(dialog: WoltlabCoreDialogElement, listViewItems: HTMLElemen
   });
 }
 
+function setupPaste(dialog: WoltlabCoreDialogElement, uploadButton: WoltlabCoreFileUploadElement): void {
+  dialog.addEventListener("paste", (event: ClipboardEvent) => {
+    const files = Array.from(event.clipboardData?.files ?? []);
+    if (files.length === 0) {
+      // Text is pasted as usual, e.g. into the search field.
+      return;
+    }
+
+    event.preventDefault();
+    uploadButton.uploadFiles(files.map((file) => normalizePastedFilename(file)));
+  });
+}
+
 function setupDropZone(dialog: WoltlabCoreDialogElement, uploadButton: WoltlabCoreFileUploadElement): void {
   const dropZone = document.createElement("div");
   dropZone.classList.add("mediaManager__dropZone");
@@ -413,6 +427,7 @@ export async function openMediaManager(options: MediaManagerOptions): Promise<Me
 
     if (uploadButton !== null) {
       setupDropZone(dialog, uploadButton);
+      setupPaste(dialog, uploadButton);
 
       // The upload element is hidden and triggered by the primary button of the list view.
       const proxyButton = dialog.content.querySelector<HTMLButtonElement>(".mediaManager__uploadButton");

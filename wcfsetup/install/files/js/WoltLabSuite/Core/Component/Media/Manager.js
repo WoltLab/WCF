@@ -7,7 +7,7 @@
  * @since 6.3
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Api/Media/GetMedia", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/StringUtil", "./Upload"], function (require, exports, Dialog_1, GetMedia_1, Language_1, StringUtil_1, Upload_1) {
+define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Api/Media/GetMedia", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/StringUtil", "../Ckeditor/Filename", "./Upload"], function (require, exports, Dialog_1, GetMedia_1, Language_1, StringUtil_1, Filename_1, Upload_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.openMediaManager = openMediaManager;
@@ -233,6 +233,17 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
             }, 200);
         });
     }
+    function setupPaste(dialog, uploadButton) {
+        dialog.addEventListener("paste", (event) => {
+            const files = Array.from(event.clipboardData?.files ?? []);
+            if (files.length === 0) {
+                // Text is pasted as usual, e.g. into the search field.
+                return;
+            }
+            event.preventDefault();
+            uploadButton.uploadFiles(files.map((file) => (0, Filename_1.normalizePastedFilename)(file)));
+        });
+    }
     function setupDropZone(dialog, uploadButton) {
         const dropZone = document.createElement("div");
         dropZone.classList.add("mediaManager__dropZone");
@@ -320,6 +331,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
             });
             if (uploadButton !== null) {
                 setupDropZone(dialog, uploadButton);
+                setupPaste(dialog, uploadButton);
                 // The upload element is hidden and triggered by the primary button of the list view.
                 const proxyButton = dialog.content.querySelector(".mediaManager__uploadButton");
                 if (proxyButton !== null) {
