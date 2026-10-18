@@ -1,5 +1,4 @@
 {if $__wcf->session->getPermission('admin.content.cms.canUseMedia') || $__wcf->session->getPermission('admin.content.cms.canManageMedia')}
-	{jsphrase name='wcf.global.button.insert'}
 	{jsphrase name='wcf.media.chooseFile'}
 	{jsphrase name='wcf.media.insert'}
 	{jsphrase name='wcf.media.insert.imageSize'}

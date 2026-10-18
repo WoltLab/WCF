@@ -3,7 +3,7 @@
 {event name='wysiwyg'}
 
 <script data-relocate="true">
-	{include file='mediaJavaScript'}
+	{include file='shared_mediaJavaScript'}
 </script>
 
 <script data-eager="true">

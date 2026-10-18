@@ -111,6 +111,7 @@ class TemplateEngine extends SingletonFactory
         'googleMapsElement' => 'shared_googleMapsElement',
         'languageChooser' => 'shared_languageChooser',
         'lineBreakSeparatedTextOptionType' => 'shared_lineBreakSeparatedTextOptionType',
+        'mediaJavaScript' => 'shared_mediaJavaScript',
         'messageFormAttachments' => 'shared_messageFormAttachments',
         'messageTableOfContents' => 'shared_messageTableOfContents',
         'messageUserConsent' => 'shared_messageUserConsent',

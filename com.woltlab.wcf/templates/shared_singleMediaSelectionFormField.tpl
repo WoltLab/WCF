@@ -26,7 +26,7 @@
 	<input type="hidden" name="{$field->getPrefixedId()}" id="{$field->getPrefixedId()}"{if $field->getValue()} value="{$field->getValue()}"{/if}>
 	
 	<script data-relocate="true">
-		{include file='mediaJavaScript'}
+		{include file='shared_mediaJavaScript'}
 		
 		require(['WoltLabSuite/Core/Component/Media/Select'], ({ setup }) => {
 			setup(document.querySelector('.jsMediaSelectButton_{unsafe:$field->getPrefixedId()|encodeJS}'), {

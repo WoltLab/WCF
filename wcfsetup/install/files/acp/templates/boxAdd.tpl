@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.box.'|concat:$action}
 
 <script data-relocate="true">
-	{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}{include file='mediaJavaScript'}{/if}
+	{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}{include file='shared_mediaJavaScript'}{/if}
 
 	{if $boxType == 'system'}
 		require(['WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler'], function(AcpUiBoxControllerHandler) {

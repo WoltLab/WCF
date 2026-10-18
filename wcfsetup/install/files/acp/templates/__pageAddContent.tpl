@@ -6,7 +6,7 @@
 		<li><button type="button" id="codemirror-{$__pageContentID}-page" class="jsTooltip" title="{lang}wcf.editor.button.page{/lang}">{icon name='file-lines'}</button></li>
 	</ul>
 	<script data-relocate="true">
-		{include file='mediaJavaScript'}
+		{include file='shared_mediaJavaScript'}
 		
 		require([
 			'WoltLabSuite/Core/Acp/Ui/CodeMirror/Media',
