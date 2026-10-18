@@ -15,14 +15,14 @@
 </header>
 
 <div class="section">
-	{unsafe:$listView->render()}
+	{unsafe:$gridView->render()}
 </div>
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Acp/Component/Media/List'], ({ setup }) => {
 		setup(
 			document.querySelector('#mediaUploadButton woltlab-core-file-upload'),
-			document.getElementById('{unsafe:$listView->getID()|encodeJS}_items'),
+			document.getElementById('{unsafe:$gridView->getID()|encodeJS}_table'),
 		);
 	});
 </script>

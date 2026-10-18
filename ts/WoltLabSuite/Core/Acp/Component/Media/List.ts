@@ -1,5 +1,5 @@
 /**
- * Reloads the list of media files after new files have been uploaded.
+ * Reloads the grid view of media files after new files have been uploaded.
  *
  * @author Marcel Werk
  * @copyright 2001-2026 WoltLab GmbH
@@ -10,7 +10,7 @@
 
 import type WoltlabCoreFileElement from "WoltLabSuite/Core/Component/File/woltlab-core-file";
 
-export function setup(uploadButton: HTMLElement, listViewItems: HTMLElement): void {
+export function setup(uploadButton: HTMLElement, container: HTMLElement): void {
   let pendingUploads = 0;
 
   uploadButton.addEventListener("uploadStart", (event: CustomEvent<WoltlabCoreFileElement>) => {
@@ -23,9 +23,9 @@ export function setup(uploadButton: HTMLElement, listViewItems: HTMLElement): vo
       .finally(() => {
         pendingUploads--;
 
-        // Reload the list only once after a batch of files has been uploaded.
+        // Reload the grid view only once after a batch of files has been uploaded.
         if (pendingUploads === 0) {
-          listViewItems.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+          container.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
         }
       });
   });

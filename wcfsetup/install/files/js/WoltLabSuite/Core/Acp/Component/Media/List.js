@@ -1,5 +1,5 @@
 /**
- * Reloads the list of media files after new files have been uploaded.
+ * Reloads the grid view of media files after new files have been uploaded.
  *
  * @author Marcel Werk
  * @copyright 2001-2026 WoltLab GmbH
@@ -11,7 +11,7 @@ define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
-    function setup(uploadButton, listViewItems) {
+    function setup(uploadButton, container) {
         let pendingUploads = 0;
         uploadButton.addEventListener("uploadStart", (event) => {
             pendingUploads++;
@@ -21,9 +21,9 @@ define(["require", "exports"], function (require, exports) {
             })
                 .finally(() => {
                 pendingUploads--;
-                // Reload the list only once after a batch of files has been uploaded.
+                // Reload the grid view only once after a batch of files has been uploaded.
                 if (pendingUploads === 0) {
-                    listViewItems.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+                    container.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
                 }
             });
         });

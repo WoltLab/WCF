@@ -4184,6 +4184,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.manager"><![CDATA[Medien verwalten]]></item>
 		<item name="wcf.media.media"><![CDATA[Medien]]></item>
 		<item name="wcf.media.media.pageTitle"><![CDATA[{if $__wcf->session->getPermission('admin.content.cms.canOnlyAccessOwnMedia')}Eigene {/if}Medien]]></item>
+		<item name="wcf.media.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.media.search.cancel"><![CDATA[Suche abbrechen]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Datei suchen]]></item>
 		<item name="wcf.media.upload.error.differentFileExtension"><![CDATA[Die neue Datei muss die gleiche Dateiendung haben wie die aktuelle Datei.]]></item>
