@@ -117,13 +117,7 @@ final class MediaEditAction implements RequestHandlerInterface
                         ->loadValueCallback(static function (Media $object, IFormField $field): void {
                             $field->value($object->categoryID ?? 0);
                         }),
-                ]),
-            FormContainer::create('content')
-                ->label('wcf.global.form.data')
-                ->appendChildren($this->getContentFormFields()),
-            FormContainer::create('access')
-                ->label('wcf.acl.access')
-                ->appendChild(
+                    ...$this->getContentFormFields(),
                     SimpleAclFormField::create('acl')
                         ->saveValueCallback(static function (MediaBuilder $builder, SimpleAclFormField $field): void {
                             $value = $field->getValue();
@@ -141,8 +135,8 @@ final class MediaEditAction implements RequestHandlerInterface
                             $field->value(
                                 SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.media', $object->mediaID)
                             );
-                        })
-                ),
+                        }),
+                ]),
         ]);
 
         $form->updatedObject($this->media);
