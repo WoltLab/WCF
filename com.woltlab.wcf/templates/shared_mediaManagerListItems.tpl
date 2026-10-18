@@ -9,7 +9,8 @@
 	>
 		<div class="mediaManager__tile__thumbnail">
 			{if $media->isImage}
-				<img src="{$media->getThumbnailLink('small')}" alt="{$media->getAltText()}" loading="lazy">
+				{* The image is cropped to a square, the medium thumbnail stays sharp on high resolution screens. *}
+				<img src="{$media->getThumbnailLink('medium')}" alt="{$media->getAltText()}" loading="lazy">
 			{else}
 				{icon size=48 name=$media->getIconName()}
 			{/if}
