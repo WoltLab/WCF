@@ -47,6 +47,9 @@ function createRemoveButton(button: HTMLElement, onRemove: () => void): HTMLElem
   const removeButton = document.createElement("button");
   removeButton.type = "button";
   removeButton.classList.add("button", "jsTooltip");
+  if (button.classList.contains("small")) {
+    removeButton.classList.add("small");
+  }
   removeButton.title = getPhrase("wcf.global.button.delete");
   removeButton.innerHTML = '<fa-icon name="xmark"></fa-icon>';
   removeButton.addEventListener("click", () => onRemove());

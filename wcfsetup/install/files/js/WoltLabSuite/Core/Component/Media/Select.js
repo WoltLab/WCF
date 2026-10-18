@@ -36,6 +36,9 @@ define(["require", "exports", "tslib", "./Manager", "WoltLabSuite/Core/Helper/Pr
         const removeButton = document.createElement("button");
         removeButton.type = "button";
         removeButton.classList.add("button", "jsTooltip");
+        if (button.classList.contains("small")) {
+            removeButton.classList.add("small");
+        }
         removeButton.title = (0, Language_1.getPhrase)("wcf.global.button.delete");
         removeButton.innerHTML = '<fa-icon name="xmark"></fa-icon>';
         removeButton.addEventListener("click", () => onRemove());
