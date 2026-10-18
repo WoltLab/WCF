@@ -7,6 +7,7 @@
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import WoltlabCoreDialog from "WoltLabSuite/Core/Element/woltlab-core-dialog";
+import type { PromptOptions } from "../Dialog/Controls";
 
 interface ResponseListView {
   listView: string;
@@ -21,6 +22,7 @@ export class ListViewSetup {
     sortField: string = "",
     sortOrder: string = "ASC",
     pageNo: number = 1,
+    promptOptions?: Partial<PromptOptions>,
   ): Promise<WoltlabCoreDialog> {
     const url = new URL(`${window.WSC_RPC_API_URL}core/list-views/render`);
     url.searchParams.set("listView", listViewClass);
@@ -42,7 +44,9 @@ export class ListViewSetup {
     // Prevents a circular dependency.
     const { dialogFactory } = await import("../Dialog");
 
-    const dialog = dialogFactory().fromHtml(json.listView).withoutControls();
+    // The dialog controls are only shown if the list view is used as a prompt.
+    const controls = dialogFactory().fromHtml(json.listView);
+    const dialog = promptOptions === undefined ? controls.withoutControls() : controls.asPrompt(promptOptions);
     dialog.show(title);
 
     return dialog;

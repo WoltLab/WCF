@@ -7,23 +7,10 @@
  * @since 6.3
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Api/Media/GetMedia", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/StringUtil", "./Upload"], function (require, exports, Backend_1, Dialog_1, GetMedia_1, Language_1, StringUtil_1, Upload_1) {
+define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Api/Media/GetMedia", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/StringUtil", "./Upload"], function (require, exports, Dialog_1, GetMedia_1, Language_1, StringUtil_1, Upload_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.openMediaManager = openMediaManager;
-    const LIST_VIEW_CLASS_NAME = "wcf\\system\\listView\\user\\MediaManagerListView";
-    async function renderListView(options) {
-        const url = new URL(`${window.WSC_RPC_API_URL}core/list-views/render`);
-        url.searchParams.set("listView", LIST_VIEW_CLASS_NAME);
-        url.searchParams.set("pageNo", "1");
-        url.searchParams.set("sortField", "uploadTime");
-        url.searchParams.set("sortOrder", "DESC");
-        url.searchParams.set("listViewParameters[mode]", options.mode);
-        url.searchParams.set("listViewParameters[imagesOnly]", options.imagesOnly ? "1" : "0");
-        url.searchParams.set("listViewParameters[searchString]", "");
-        const json = (await (0, Backend_1.prepareRequest)(url).get().fetchAsJson());
-        return json.listView;
-    }
     /**
      * Keeps track of the selected media files, which survives the reloading of
      * the list, and reflects it in the tiles and the footer of the dialog.
@@ -302,13 +289,15 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
      */
     async function openMediaManager(options) {
         const multiple = options.mode === "editor";
-        const dialog = (0, Dialog_1.dialogFactory)()
-            .fromHtml(await renderListView(options))
-            .asPrompt({
+        const dialog = await (0, Dialog_1.dialogFactory)()
+            .usingListView()
+            .fromPreset(options.title || (0, Language_1.getPhrase)(multiple ? "wcf.media.manager" : "wcf.media.chooseFile"), "wcf\\system\\listView\\user\\MediaManagerListView", new Map([
+            ["mode", options.mode],
+            ["imagesOnly", options.imagesOnly ? "1" : "0"],
+        ]), undefined, "uploadTime", "DESC", 1, {
             primary: (0, Language_1.getPhrase)(multiple ? "wcf.global.button.insert" : "wcf.media.button.select"),
         });
         dialog.dialog.classList.add("dialog--mediaManager");
-        dialog.show(options.title || (0, Language_1.getPhrase)(multiple ? "wcf.media.manager" : "wcf.media.chooseFile"));
         const listViewItems = dialog.content.querySelector(".listView__items");
         const uploadButton = dialog.content.querySelector("woltlab-core-file-upload");
         const selection = new MediaSelection(dialog, listViewItems, multiple);

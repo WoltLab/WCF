@@ -8,7 +8,6 @@
  * @woltlabExcludeBundle tiny
  */
 
-import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import { getMedia, MediaData } from "WoltLabSuite/Core/Api/Media/GetMedia";
 import { getPhrase } from "WoltLabSuite/Core/Language";
@@ -33,23 +32,6 @@ type SelectedMedia = {
   filename: string;
   details: string;
 };
-
-const LIST_VIEW_CLASS_NAME = "wcf\\system\\listView\\user\\MediaManagerListView";
-
-async function renderListView(options: MediaManagerOptions): Promise<string> {
-  const url = new URL(`${window.WSC_RPC_API_URL}core/list-views/render`);
-  url.searchParams.set("listView", LIST_VIEW_CLASS_NAME);
-  url.searchParams.set("pageNo", "1");
-  url.searchParams.set("sortField", "uploadTime");
-  url.searchParams.set("sortOrder", "DESC");
-  url.searchParams.set("listViewParameters[mode]", options.mode);
-  url.searchParams.set("listViewParameters[imagesOnly]", options.imagesOnly ? "1" : "0");
-  url.searchParams.set("listViewParameters[searchString]", "");
-
-  const json = (await prepareRequest(url).get().fetchAsJson()) as { listView: string };
-
-  return json.listView;
-}
 
 /**
  * Keeps track of the selected media files, which survives the reloading of
@@ -383,13 +365,24 @@ function setupDropZone(dialog: WoltlabCoreDialogElement, uploadButton: WoltlabCo
 export async function openMediaManager(options: MediaManagerOptions): Promise<MediaData[]> {
   const multiple = options.mode === "editor";
 
-  const dialog = dialogFactory()
-    .fromHtml(await renderListView(options))
-    .asPrompt({
-      primary: getPhrase(multiple ? "wcf.global.button.insert" : "wcf.media.button.select"),
-    });
+  const dialog = await dialogFactory()
+    .usingListView()
+    .fromPreset(
+      options.title || getPhrase(multiple ? "wcf.media.manager" : "wcf.media.chooseFile"),
+      "wcf\\system\\listView\\user\\MediaManagerListView",
+      new Map([
+        ["mode", options.mode],
+        ["imagesOnly", options.imagesOnly ? "1" : "0"],
+      ]),
+      undefined,
+      "uploadTime",
+      "DESC",
+      1,
+      {
+        primary: getPhrase(multiple ? "wcf.global.button.insert" : "wcf.media.button.select"),
+      },
+    );
   dialog.dialog.classList.add("dialog--mediaManager");
-  dialog.show(options.title || getPhrase(multiple ? "wcf.media.manager" : "wcf.media.chooseFile"));
 
   const listViewItems = dialog.content.querySelector<HTMLElement>(".listView__items")!;
   const uploadButton = dialog.content.querySelector<WoltlabCoreFileUploadElement>("woltlab-core-file-upload");

@@ -42,7 +42,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ListViewSetup = void 0;
     class ListViewSetup {
-        async fromPreset(title, listViewClass, listViewParameters, filters, sortField = "", sortOrder = "ASC", pageNo = 1) {
+        async fromPreset(title, listViewClass, listViewParameters, filters, sortField = "", sortOrder = "ASC", pageNo = 1, promptOptions) {
             const url = new URL(`${window.WSC_RPC_API_URL}core/list-views/render`);
             url.searchParams.set("listView", listViewClass);
             url.searchParams.set("pageNo", pageNo.toString());
@@ -61,7 +61,9 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
             const json = (await (0, Backend_1.prepareRequest)(url).get().fetchAsJson());
             // Prevents a circular dependency.
             const { dialogFactory } = await new Promise((resolve_1, reject_1) => { require(["../Dialog"], resolve_1, reject_1); }).then(__importStar);
-            const dialog = dialogFactory().fromHtml(json.listView).withoutControls();
+            // The dialog controls are only shown if the list view is used as a prompt.
+            const controls = dialogFactory().fromHtml(json.listView);
+            const dialog = promptOptions === undefined ? controls.withoutControls() : controls.asPrompt(promptOptions);
             dialog.show(title);
             return dialog;
         }
