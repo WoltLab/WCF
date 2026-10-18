@@ -46,11 +46,10 @@ final class MediaFileProcessor extends AbstractFileProcessor
             return [];
         }
 
+        // An image can only be replaced by another image.
         $media = $this->getMediaFromContext($parameters);
         if ($media !== null) {
-            $extension = \mb_strtolower(\pathinfo($media->filename, \PATHINFO_EXTENSION));
-
-            return [$extension !== '' ? $extension : '*'];
+            return $media->isImage !== 0 ? self::IMAGE_EXTENSIONS : ['*'];
         }
 
         if ($parameters->imagesOnly) {

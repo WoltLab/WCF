@@ -4136,6 +4136,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.media.search.cancel"><![CDATA[Cancel Search]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Search Files]]></item>
+		<item name="wcf.media.upload.error.differentKind"><![CDATA[An image can only be replaced by another image, other files only by files that are not images.]]></item>
 		<item name="wcf.media.upload.error.differentFileExtension"><![CDATA[The new file must have the same file extension as the current file.]]></item>
 		<item name="wcf.media.upload.error.differentFileType"><![CDATA[The new file must be of the same file type as the current file.]]></item>
 		<item name="wcf.media.upload.error.noImage"><![CDATA[The uploaded file is no image.]]></item>
@@ -4151,7 +4152,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.lastDownloadTime"><![CDATA[Last Download]]></item>
 		<item name="wcf.media.file.info"><![CDATA[{$media->filesize|filesize} – {plural value=$media->downloads 1="1 Download" other="# Downloads"}]]></item>
 		<item name="wcf.media.file"><![CDATA[File]]></item>
-		<item name="wcf.media.file.description"><![CDATA[A new file replaces the current file, it must be of the same file type.]]></item>
+		<item name="wcf.media.file.description"><![CDATA[A new file replaces the current file. Images can only be replaced by images.]]></item>
 		<item name="wcf.media.file.title"><![CDATA[Download File “{$media->filename}”]]></item>
 	</category>
 	<category name="wcf.message">

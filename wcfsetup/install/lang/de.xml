@@ -4190,6 +4190,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.media.search.cancel"><![CDATA[Suche abbrechen]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Datei suchen]]></item>
+		<item name="wcf.media.upload.error.differentKind"><![CDATA[Ein Bild kann nur durch ein anderes Bild ersetzt werden, andere Dateien nur durch Dateien, die keine Bilder sind.]]></item>
 		<item name="wcf.media.upload.error.differentFileExtension"><![CDATA[Die neue Datei muss die gleiche Dateiendung haben wie die aktuelle Datei.]]></item>
 		<item name="wcf.media.upload.error.differentFileType"><![CDATA[Die neue Datei muss vom gleichen Dateityp sein wie die aktuelle Datei.]]></item>
 		<item name="wcf.media.upload.error.noImage"><![CDATA[Die hochgeladene Datei ist kein Bild.]]></item>
@@ -4205,7 +4206,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.lastDownloadTime"><![CDATA[Letzter Download]]></item>
 		<item name="wcf.media.file.info"><![CDATA[{$media->filesize|filesize} – {plural value=$media->downloads 1="1 Download" other="# Downloads"}]]></item>
 		<item name="wcf.media.file"><![CDATA[Datei]]></item>
-		<item name="wcf.media.file.description"><![CDATA[Eine neue Datei ersetzt die aktuelle Datei, sie muss vom gleichen Dateityp sein.]]></item>
+		<item name="wcf.media.file.description"><![CDATA[Eine neue Datei ersetzt die aktuelle Datei. Bilder können nur durch Bilder ersetzt werden.]]></item>
 		<item name="wcf.media.file.title"><![CDATA[Datei „{$media->filename}“ herunterladen]]></item>
 	</category>
 	<category name="wcf.message">

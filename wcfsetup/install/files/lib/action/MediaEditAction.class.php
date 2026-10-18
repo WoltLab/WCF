@@ -295,17 +295,18 @@ final class MediaEditAction implements RequestHandlerInterface
             ->hideDeleteButton()
             ->context(['mediaID' => $media->mediaID])
             ->addValidator(new FormFieldValidator(
-                'sameFileType',
+                'sameKind',
                 static function (FileProcessorFormField $field) use ($media): void {
                     $file = $field->getFiles()[$field->getValue()] ?? null;
                     if ($file === null || $file->fileID === $media->fileID) {
                         return;
                     }
 
-                    if ($file->mimeType !== $media->fileType) {
+                    // Embedded media files and image fields rely on the media file staying an image.
+                    if ($file->isImage() !== ($media->isImage !== 0)) {
                         $field->addValidationError(new FormFieldValidationError(
-                            'differentFileType',
-                            'wcf.media.upload.error.differentFileType'
+                            'differentKind',
+                            'wcf.media.upload.error.differentKind'
                         ));
                     }
                 }
