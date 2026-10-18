@@ -7,6 +7,7 @@ use wcf\data\category\CategoryNodeTree;
 use wcf\data\media\Media;
 use wcf\data\media\MediaList;
 use wcf\event\listView\user\MediaManagerListViewInitialized;
+use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\MediaFileProcessor;
 use wcf\system\interaction\admin\MediaInteractions;
@@ -117,7 +118,54 @@ class MediaManagerListView extends AbstractListView
         }
         $list->addSearchConditions($this->searchString);
 
+        // Users who can manage media can access all listed media files, see `Media::isAccessible()`.
+        if (!WCF::getSession()->hasPermission('admin.content.cms.canManageMedia')) {
+            $this->addAclCondition($list);
+        }
+
         return $list;
+    }
+
+    /**
+     * Restricts the list to media files without simple ACL settings or that
+     * the active user or one of their groups is explicitly allowed to access.
+     */
+    private function addAclCondition(MediaList $list): void
+    {
+        $objectTypeID = SimpleAclHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.media');
+
+        $list->getConditionBuilder()->add(
+            '(
+                media.mediaID NOT IN (
+                    SELECT  objectID
+                    FROM    wcf1_acl_simple_to_group
+                    WHERE   objectTypeID = ?
+                    UNION
+                    SELECT  objectID
+                    FROM    wcf1_acl_simple_to_user
+                    WHERE   objectTypeID = ?
+                )
+                OR media.mediaID IN (
+                    SELECT  objectID
+                    FROM    wcf1_acl_simple_to_group
+                    WHERE   objectTypeID = ?
+                        AND groupID IN (?)
+                    UNION
+                    SELECT  objectID
+                    FROM    wcf1_acl_simple_to_user
+                    WHERE   objectTypeID = ?
+                        AND userID = ?
+                )
+            )',
+            [
+                $objectTypeID,
+                $objectTypeID,
+                $objectTypeID,
+                WCF::getUser()->getGroupIDs(),
+                $objectTypeID,
+                WCF::getUser()->userID,
+            ]
+        );
     }
 
     #[\Override]
