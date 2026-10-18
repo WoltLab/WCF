@@ -52,12 +52,11 @@ class MediaManagerListView extends AbstractListView
             new ListViewSortField('filename', 'wcf.media.filename'),
         ]);
 
-        $this->addAvailableFilters([
-            new CategoryFilter(
-                (new CategoryNodeTree('com.woltlab.wcf.media.category'))->getIterator(),
-                'categoryID'
-            ),
-        ]);
+        // The filter dialog would be empty without any categories.
+        $categories = (new CategoryNodeTree('com.woltlab.wcf.media.category'))->getIterator();
+        if (\iterator_count($categories) > 0) {
+            $this->addAvailableFilter(new CategoryFilter($categories, 'categoryID'));
+        }
 
         // The selection is handled by the media manager itself.
         $this->setInteractionProvider(new MediaInteractions());

@@ -127,14 +127,13 @@ final class MediaGridView extends AbstractGridView
                 ->sortable(defaultSortOrder: 'DESC'),
         ]);
 
-        $this->addAvailableFilters([
-            $this->getSearchFilter(),
-            new CategoryFilter(
-                (new CategoryNodeTree('com.woltlab.wcf.media.category'))->getIterator(),
-                'categoryID'
-            ),
-            new BooleanFilter('isImage', 'wcf.media.isImage'),
-        ]);
+        $this->addAvailableFilter($this->getSearchFilter());
+        // The category filter is unusable without any categories.
+        $categories = (new CategoryNodeTree('com.woltlab.wcf.media.category'))->getIterator();
+        if (\iterator_count($categories) > 0) {
+            $this->addAvailableFilter(new CategoryFilter($categories, 'categoryID'));
+        }
+        $this->addAvailableFilter(new BooleanFilter('isImage', 'wcf.media.isImage'));
 
         $this->setInteractionProvider(new MediaInteractions());
         $this->setBulkInteractionProvider(new MediaBulkInteractions());
