@@ -4191,10 +4191,6 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.search.cancel"><![CDATA[Suche abbrechen]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Datei suchen]]></item>
 		<item name="wcf.media.upload.error.differentKind"><![CDATA[Ein Bild kann nur durch ein anderes Bild ersetzt werden, andere Dateien nur durch Dateien, die keine Bilder sind.]]></item>
-		<item name="wcf.media.upload.error.differentFileExtension"><![CDATA[Die neue Datei muss die gleiche Dateiendung haben wie die aktuelle Datei.]]></item>
-		<item name="wcf.media.upload.error.differentFileType"><![CDATA[Die neue Datei muss vom gleichen Dateityp sein wie die aktuelle Datei.]]></item>
-		<item name="wcf.media.upload.error.noImage"><![CDATA[Die hochgeladene Datei ist kein Bild.]]></item>
-		<item name="wcf.media.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 		<item name="wcf.media.upload.success"><![CDATA[Die Datei wurde erfolgreich hochgeladen.]]></item>
 		<item name="wcf.media.upload.success.multiple"><![CDATA[{#$count} Dateien wurden erfolgreich hochgeladen.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Hochgeladen von]]></item>
@@ -5563,6 +5559,10 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.imageViewer.next"/>
 	<item name="wcf.imageViewer.previous"/>
 	<item name="wcf.imageViewer.seriesIndex"/>
+	<item name="wcf.media.upload.error.differentFileExtension"/>
+	<item name="wcf.media.upload.error.differentFileType"/>
+	<item name="wcf.media.upload.error.noImage"/>
+	<item name="wcf.media.upload.error.uploadFailed"/>
 	<item name="wcf.message.quote.insertSelectedQuotes"/>
 	<item name="wcf.message.quote.manageQuotes"/>
 	<item name="wcf.message.quote.removeAllQuotes"/>

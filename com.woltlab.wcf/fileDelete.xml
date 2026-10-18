@@ -35,6 +35,8 @@
 		<file>js/WoltLabSuite/Core/Media/Replace.js</file>
 		<file>js/WoltLabSuite/Core/Media/Upload.js</file>
 		<file>lib/system/clipboard/action/MediaClipboardAction.class.php</file>
+		<file>lib/system/upload/MediaReplaceUploadFileValidationStrategy.class.php</file>
+		<file>lib/system/upload/MediaUploadFileValidationStrategy.class.php</file>
 		<file>lib/acp/action/UserQuickSearchAction.class.php</file>
 		<file>lib/acp/form/UserSearchForm.class.php</file>
 		<file>lib/data/user/UserContentAction.class.php</file>

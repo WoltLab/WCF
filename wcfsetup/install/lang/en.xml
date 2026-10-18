@@ -4137,10 +4137,6 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.search.cancel"><![CDATA[Cancel Search]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Search Files]]></item>
 		<item name="wcf.media.upload.error.differentKind"><![CDATA[An image can only be replaced by another image, other files only by files that are not images.]]></item>
-		<item name="wcf.media.upload.error.differentFileExtension"><![CDATA[The new file must have the same file extension as the current file.]]></item>
-		<item name="wcf.media.upload.error.differentFileType"><![CDATA[The new file must be of the same file type as the current file.]]></item>
-		<item name="wcf.media.upload.error.noImage"><![CDATA[The uploaded file is no image.]]></item>
-		<item name="wcf.media.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 		<item name="wcf.media.upload.success"><![CDATA[The file has been successfully uploaded.]]></item>
 		<item name="wcf.media.upload.success.multiple"><![CDATA[{#$count} files have been uploaded successfully.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Uploaded By]]></item>
@@ -5558,6 +5554,10 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.imageViewer.next"/>
 	<item name="wcf.imageViewer.previous"/>
 	<item name="wcf.imageViewer.seriesIndex"/>
+	<item name="wcf.media.upload.error.differentFileExtension"/>
+	<item name="wcf.media.upload.error.differentFileType"/>
+	<item name="wcf.media.upload.error.noImage"/>
+	<item name="wcf.media.upload.error.uploadFailed"/>
 	<item name="wcf.message.quote.insertSelectedQuotes"/>
 	<item name="wcf.message.quote.manageQuotes"/>
 	<item name="wcf.message.quote.removeAllQuotes"/>
