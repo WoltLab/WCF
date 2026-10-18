@@ -4103,7 +4103,6 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 	</category>
 	<category name="wcf.media">
 		<item name="wcf.media.altText"><![CDATA[Alternate Text]]></item>
-		<item name="wcf.media.button.insert"><![CDATA[Insert]]></item>
 		<item name="wcf.media.button.open"><![CDATA[Open File]]></item>
 		<item name="wcf.media.button.replaceFile"><![CDATA[Replace File]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Select]]></item>
@@ -5843,5 +5842,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.assignToGroup.success"/>
 	<item name="wcf.acp.user.exportEmailAddress.markedUsers"/>
 	<item name="wcf.acp.user.exportEmailAddress.format"/>
+	<item name="wcf.media.button.insert"/>
 </delete>
 </language>

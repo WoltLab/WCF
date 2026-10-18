@@ -4157,7 +4157,6 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 	</category>
 	<category name="wcf.media">
 		<item name="wcf.media.altText"><![CDATA[Alternativ-Text]]></item>
-		<item name="wcf.media.button.insert"><![CDATA[Einfügen]]></item>
 		<item name="wcf.media.button.open"><![CDATA[Datei öffnen]]></item>
 		<item name="wcf.media.button.replaceFile"><![CDATA[Datei ersetzen]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Auswählen]]></item>
@@ -5841,5 +5840,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.assignToGroup.success"/>
 	<item name="wcf.acp.user.exportEmailAddress.markedUsers"/>
 	<item name="wcf.acp.user.exportEmailAddress.format"/>
+	<item name="wcf.media.button.insert"/>
 </delete>
 </language>
