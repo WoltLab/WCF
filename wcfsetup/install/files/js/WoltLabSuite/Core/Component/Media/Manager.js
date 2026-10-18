@@ -53,9 +53,18 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                             void complete([mediaId]);
                         }
                     },
-                    allUploadsCompleted: () => {
+                    allUploadsCompleted: async (mediaIds) => {
+                        if (!listViewItems.isConnected) {
+                            return;
+                        }
                         // Reload the list only once after a batch of files has been uploaded.
-                        if (listViewItems.isConnected) {
+                        listViewItems.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+                        // A single uploaded file is edited right away, unless it is inserted directly.
+                        const editEndpoint = uploadButton.closest(".mediaManager__upload")?.dataset.editEndpoint;
+                        if (options.file !== undefined || mediaIds.length !== 1 || editEndpoint === undefined) {
+                            return;
+                        }
+                        if ((await (0, Upload_1.editMedia)(editEndpoint, mediaIds[0])) && listViewItems.isConnected) {
                             listViewItems.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
                         }
                     },

@@ -2,10 +2,12 @@
 
 namespace wcf\acp\page;
 
+use wcf\action\MediaEditAction;
 use wcf\page\AbstractGridViewPage;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\MediaFileProcessor;
 use wcf\system\gridView\admin\MediaGridView;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -45,6 +47,7 @@ class MediaListPage extends AbstractGridViewPage
 
         WCF::getTPL()->assign([
             'uploadButton' => $processor->toHtmlElement(),
+            'editEndpoint' => LinkHandler::getInstance()->getControllerLink(MediaEditAction::class, ['id' => '%s']),
         ]);
     }
 }

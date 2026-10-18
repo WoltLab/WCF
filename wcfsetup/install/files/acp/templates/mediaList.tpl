@@ -25,6 +25,7 @@
 		setup(
 			document.querySelector('#mediaUploadButton woltlab-core-file-upload'),
 			document.getElementById('{unsafe:$gridView->getID()|encodeJS}_table'),
+			'{unsafe:$editEndpoint|encodeJS}',
 		);
 	});
 </script>

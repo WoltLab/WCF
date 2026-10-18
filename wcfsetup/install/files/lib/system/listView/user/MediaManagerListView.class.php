@@ -2,6 +2,7 @@
 
 namespace wcf\system\listView\user;
 
+use wcf\action\MediaEditAction;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\DatabaseObjectList;
 use wcf\data\media\Media;
@@ -14,9 +15,11 @@ use wcf\system\interaction\bulk\user\MediaManagerBulkInteractions;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\listView\AbstractListView;
 use wcf\system\listView\ListViewSortField;
+use wcf\system\request\LinkHandler;
 use wcf\system\view\filter\CategoryFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * List view of the media manager that is used to insert media files into
@@ -65,9 +68,13 @@ class MediaManagerListView extends AbstractListView
             $processor = FileProcessor::getInstance()->getProcessorByName('com.woltlab.wcf.media');
             \assert($processor instanceof MediaFileProcessor);
 
-            $this->setAdditionalHeaderContent(
-                '<div class="mediaManager__upload">' . $processor->toHtmlElement(imagesOnly: $this->imagesOnly !== 0) . '</div>'
-            );
+            $this->setAdditionalHeaderContent(\sprintf(
+                '<div class="mediaManager__upload" data-edit-endpoint="%s">%s</div>',
+                StringUtil::encodeHTML(
+                    LinkHandler::getInstance()->getControllerLink(MediaEditAction::class, ['id' => '%s'])
+                ),
+                $processor->toHtmlElement(imagesOnly: $this->imagesOnly !== 0)
+            ));
         }
 
         $this->setItemsPerPage(30);

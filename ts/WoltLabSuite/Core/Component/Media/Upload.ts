@@ -11,6 +11,7 @@
 import type WoltlabCoreFileElement from "WoltLabSuite/Core/Component/File/woltlab-core-file";
 import { getErrorMessageFromFile } from "WoltLabSuite/Core/Component/File/Helper";
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
+import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 
 export type MediaUploadCallbacks = {
@@ -19,9 +20,10 @@ export type MediaUploadCallbacks = {
    */
   uploadCompleted?: (mediaId: number) => void;
   /**
-   * Is called once there are no more pending uploads.
+   * Is called once there are no more pending uploads with the ids of the
+   * media files that have been created by these uploads.
    */
-  allUploadsCompleted?: () => void;
+  allUploadsCompleted?: (mediaIds: number[]) => void;
 };
 
 function showError(message: string): void {
@@ -29,8 +31,23 @@ function showError(message: string): void {
   dialog.show(getPhrase("wcf.global.error.title"));
 }
 
+/**
+ * Opens the dialog to edit the media file with the given id. The endpoint
+ * contains `%s` as the placeholder for the id.
+ */
+export async function editMedia(endpoint: string, mediaId: number): Promise<boolean> {
+  const { ok } = await dialogFactory().usingFormBuilder().fromEndpoint(endpoint.replace("%s", mediaId.toString()));
+
+  if (ok) {
+    showDefaultSuccessSnackbar();
+  }
+
+  return ok;
+}
+
 export function setupMediaUpload(uploadButton: HTMLElement, callbacks: MediaUploadCallbacks): void {
   let pendingUploads = 0;
+  let mediaIds: number[] = [];
 
   // Errors that occur before the upload has started are shown in a dialog
   // instead of below the upload button.
@@ -53,6 +70,7 @@ export function setupMediaUpload(uploadButton: HTMLElement, callbacks: MediaUplo
       .then(() => {
         const mediaId = file.data?.mediaID;
         if (typeof mediaId === "number") {
+          mediaIds.push(mediaId);
           callbacks.uploadCompleted?.(mediaId);
         }
       })
@@ -66,7 +84,11 @@ export function setupMediaUpload(uploadButton: HTMLElement, callbacks: MediaUplo
 
         pendingUploads--;
         if (pendingUploads === 0) {
-          callbacks.allUploadsCompleted?.();
+          // All files of a selection start uploading before the first one is completed.
+          const completedMediaIds = mediaIds;
+          mediaIds = [];
+
+          callbacks.allUploadsCompleted?.(completedMediaIds);
         }
       });
   });
