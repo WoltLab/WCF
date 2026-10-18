@@ -28,12 +28,11 @@
 	<script data-relocate="true">
 		{include file='mediaJavaScript'}
 		
-		require(['WoltLabSuite/Core/Media/Manager/Select'], function(MediaManagerSelect) {
-			new MediaManagerSelect({
-				buttonClass: 'jsMediaSelectButton_{unsafe:$field->getPrefixedId()|encodeJS}',
+		require(['WoltLabSuite/Core/Component/Media/Select'], ({ setup }) => {
+			setup(document.querySelector('.jsMediaSelectButton_{unsafe:$field->getPrefixedId()|encodeJS}'), {
 				{if $field->isImageOnly()}
-					dialogTitle: '{jslang}wcf.media.chooseImage{/jslang}',
-					imagesOnly: 1
+					title: '{jslang}wcf.media.chooseImage{/jslang}',
+					imagesOnly: true,
 				{/if}
 			});
 		});

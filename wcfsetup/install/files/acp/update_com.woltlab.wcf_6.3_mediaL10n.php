@@ -7,7 +7,8 @@
  * Monolingual media files (`isMultilingual = 0`) were displayed with the
  * content of their `languageID` in every language, which equals a monolingual
  * row (`languageID = NULL`). Multilingual media files keep their per-language
- * rows.
+ * rows. Afterwards, every media file is either assigned to a single language
+ * (`isMultilingual = 0`) or multilingual (`languageID = NULL`).
  *
  * IMPORTANT ordering constraints for package.xml:
  * - The database script `acp/database/update_com.woltlab.wcf_6.3_step1.php`
@@ -113,3 +114,22 @@ do {
     }
     WCF::getDB()->commitTransaction();
 } while (true);
+
+// Media files are either assigned to a single language or multilingual.
+$sql = "UPDATE  wcf1_media
+        SET     languageID = NULL
+        WHERE   isMultilingual = ?";
+$statement = WCF::getDB()->prepare($sql);
+$statement->execute([1]);
+
+// Media files that have never been edited or whose language has been deleted
+// have no language.
+$sql = "UPDATE  wcf1_media
+        SET     languageID = ?
+        WHERE   isMultilingual = ?
+            AND languageID IS NULL";
+$statement = WCF::getDB()->prepare($sql);
+$statement->execute([
+    $defaultLanguageID,
+    0,
+]);

@@ -141,6 +141,7 @@ final class MediaFileProcessor extends AbstractFileProcessor
             MediaBuilder::forCreate()
                 ->setFile($file)
                 ->setCategoryID($categoryID)
+                ->setLanguageID(WCF::getLanguage()->languageID)
                 ->setUser(WCF::getUser()->userID ?: null, WCF::getUser()->username)
                 ->setUploadTime(\TIME_NOW)
         )();

@@ -11,6 +11,7 @@ use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\l10n\L10nStorage;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
@@ -52,6 +53,30 @@ final class MediaBuilder extends DatabaseObjectBuilder
      * @var AclValues
      */
     private array $aclValues;
+
+    /**
+     * Assigns the media file to a single language, the title, caption and
+     * alternative text are stored as a single value.
+     */
+    public function setLanguageID(int $languageID): static
+    {
+        $this->properties['isMultilingual'] = 0;
+        $this->properties['languageID'] = $languageID;
+
+        return $this;
+    }
+
+    /**
+     * Marks the media file as multilingual, the title, caption and alternative
+     * text are stored per language.
+     */
+    public function setMultilingual(): static
+    {
+        $this->properties['isMultilingual'] = 1;
+        $this->properties['languageID'] = null;
+
+        return $this;
+    }
 
     public function setCategoryID(?int $categoryID): static
     {
@@ -203,7 +228,7 @@ final class MediaBuilder extends DatabaseObjectBuilder
     #[\Override]
     protected function getRequiredProperties(): array
     {
-        return ['filename', 'uploadTime', 'username'];
+        return ['filename', 'uploadTime', 'username', 'isMultilingual'];
     }
 
     #[\Override]
@@ -216,7 +241,12 @@ final class MediaBuilder extends DatabaseObjectBuilder
     #[\Override]
     protected function afterUpdate(DatabaseObject $object): void
     {
-        if (isset($this->title) || isset($this->caption) || isset($this->altText)) {
+        if (
+            isset($this->title)
+            || isset($this->caption)
+            || isset($this->altText)
+            || \array_key_exists('isMultilingual', $this->properties)
+        ) {
             $this->saveL10nValues($object);
         }
 
@@ -252,11 +282,42 @@ final class MediaBuilder extends DatabaseObjectBuilder
                 $value = $this->getObject()->getL10nValues($columnName);
             }
 
-            $values[$columnName] = $value ?: [L10nStorage::MONOLINGUAL => ''];
+            $values[$columnName] = self::normalizeL10nValue($value ?? [], $media->getLanguageID());
         }
 
         // `L10nStorage::setValues()` replaces all rows of the media file.
         (new L10nStorage(Media::getL10nDefinition()))->setValues($media->mediaID, $values);
+    }
+
+    /**
+     * Converts the given values to match the language of the media file: a
+     * single-language media file stores a monolingual value, a multilingual
+     * media file (`$languageID === null`) stores a value per language.
+     *
+     * @param L10nValue $values
+     * @return L10nValue
+     */
+    private static function normalizeL10nValue(array $values, ?int $languageID): array
+    {
+        if ($languageID !== null) {
+            if (isset($values[L10nStorage::MONOLINGUAL])) {
+                return [L10nStorage::MONOLINGUAL => $values[L10nStorage::MONOLINGUAL]];
+            }
+
+            return [L10nStorage::MONOLINGUAL => L10nStorage::resolveValue($values, $languageID)];
+        }
+
+        if ($values !== [] && !isset($values[L10nStorage::MONOLINGUAL])) {
+            return $values;
+        }
+
+        $value = $values[L10nStorage::MONOLINGUAL] ?? '';
+        $normalizedValues = [];
+        foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+            $normalizedValues[$language->languageID] = $value;
+        }
+
+        return $normalizedValues;
     }
 
     /**

@@ -18,16 +18,21 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\acl\simple\SimpleAclFormField;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\dependency\EmptyFormFieldDependency;
+use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\FileProcessorFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\media\MediaCategoryFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\Psr15BuilderDialogForm;
 use wcf\system\form\builder\TemplateFormNode;
+use wcf\system\l10n\L10nStorage;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
@@ -75,6 +80,12 @@ final class MediaEditAction implements RequestHandlerInterface
 
             $builder = MediaBuilder::forUpdate($this->media);
             $form->applyValuesToBuilder($builder);
+
+            // The language cannot be chosen if there is only one language.
+            if (!$this->isMultilingualismAvailable()) {
+                $builder->setLanguageID(LanguageFactory::getInstance()->getDefaultLanguageID());
+            }
+
             $media = (new UpdateMedia($builder))();
 
             return new JsonResponse([
@@ -109,44 +120,7 @@ final class MediaEditAction implements RequestHandlerInterface
                 ]),
             FormContainer::create('content')
                 ->label('wcf.global.form.data')
-                ->appendChildren([
-                    TitleFormField::create('title')
-                        ->l10n()
-                        ->maximumLength(255)
-                        ->saveValueCallback(static function (MediaBuilder $builder, TitleFormField $field): void {
-                            $builder->setTitle($field->getL10nValues());
-                        })
-                        ->loadValueCallback(static function (Media $object, IFormField $field): void {
-                            $field->value($object->getL10nValues('title'));
-                        }),
-                    MultilineTextFormField::create('caption')
-                        ->label('wcf.media.caption')
-                        ->l10n()
-                        ->saveValueCallback(static function (MediaBuilder $builder, MultilineTextFormField $field): void {
-                            $builder->setCaption($field->getL10nValues());
-                        })
-                        ->loadValueCallback(static function (Media $object, IFormField $field): void {
-                            $field->value($object->getL10nValues('caption'));
-                        }),
-                    BooleanFormField::create('captionEnableHtml')
-                        ->label('wcf.media.caption.enableHtml')
-                        ->saveValueCallback(static function (MediaBuilder $builder, BooleanFormField $field): void {
-                            $builder->setCaptionEnableHtml((bool)$field->getSaveValue());
-                        })
-                        ->loadValueCallback(static function (Media $object, IFormField $field): void {
-                            $field->value($object->captionEnableHtml);
-                        }),
-                    TextFormField::create('altText')
-                        ->label('wcf.media.altText')
-                        ->l10n()
-                        ->maximumLength(255)
-                        ->saveValueCallback(static function (MediaBuilder $builder, TextFormField $field): void {
-                            $builder->setAltText($field->getL10nValues());
-                        })
-                        ->loadValueCallback(static function (Media $object, IFormField $field): void {
-                            $field->value($object->getL10nValues('altText'));
-                        }),
-                ]),
+                ->appendChildren($this->getContentFormFields()),
             FormContainer::create('access')
                 ->label('wcf.acl.access')
                 ->appendChild(
@@ -175,6 +149,139 @@ final class MediaEditAction implements RequestHandlerInterface
         $form->build();
 
         return $form;
+    }
+
+    /**
+     * Returns the fields for the title, caption and alternative text. A media
+     * file is either assigned to a single language with a single value per
+     * field or it is multilingual with values for every language.
+     *
+     * @return list<IFormField>
+     */
+    private function getContentFormFields(): array
+    {
+        $multilingual = $this->isMultilingualismAvailable();
+
+        $fields = [];
+        if ($multilingual) {
+            $languages = [];
+            foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+                $languages[$language->languageID] = $language->languageName;
+            }
+
+            $fields[] = BooleanFormField::create('isMultilingual')
+                ->label('wcf.media.isMultilingual')
+                ->saveValueCallback(static function (MediaBuilder $builder, BooleanFormField $field): void {
+                    if ($field->getSaveValue() !== 0) {
+                        $builder->setMultilingual();
+                    }
+                })
+                ->loadValueCallback(static function (Media $object, IFormField $field): void {
+                    $field->value($object->isMultilingual);
+                });
+            $fields[] = SingleSelectionFormField::create('languageID')
+                ->label('wcf.media.languageID')
+                ->options($languages, labelLanguageItems: false)
+                ->value(WCF::getLanguage()->languageID)
+                ->saveValueCallback(static function (MediaBuilder $builder, SingleSelectionFormField $field): void {
+                    $builder->setLanguageID((int)$field->getSaveValue());
+                })
+                ->loadValueCallback(static function (Media $object, IFormField $field): void {
+                    $field->value($object->getLanguageID() ?? WCF::getLanguage()->languageID);
+                })
+                ->addDependency(
+                    EmptyFormFieldDependency::create('isMultilingual')
+                        ->fieldId('isMultilingual')
+                );
+        }
+
+        foreach ($this->getContentFields() as $columnName => $field) {
+            $field->saveValueCallback(static function (MediaBuilder $builder, IFormField $field) use ($columnName): void {
+                $value = [L10nStorage::MONOLINGUAL => (string)$field->getSaveValue()];
+
+                match ($columnName) {
+                    'title' => $builder->setTitle($value),
+                    'caption' => $builder->setCaption($value),
+                    'altText' => $builder->setAltText($value),
+                };
+            })->loadValueCallback(static function (Media $object, IFormField $field) use ($columnName): void {
+                $field->value(L10nStorage::resolveValue(
+                    $object->getL10nValues($columnName),
+                    $object->getLanguageID()
+                ));
+            });
+
+            if ($multilingual) {
+                $field->addDependency(
+                    EmptyFormFieldDependency::create('isMultilingual')
+                        ->fieldId('isMultilingual')
+                );
+            }
+
+            $fields[] = $field;
+        }
+
+        if (!$multilingual) {
+            return $fields;
+        }
+
+        foreach ($this->getContentFields('I18n') as $columnName => $field) {
+            $field->l10nRequired()
+                ->saveValueCallback(static function (MediaBuilder $builder, TextFormField $field) use ($columnName): void {
+                    $values = $field->getL10nValues();
+
+                    match ($columnName) {
+                        'title' => $builder->setTitle($values),
+                        'caption' => $builder->setCaption($values),
+                        'altText' => $builder->setAltText($values),
+                    };
+                })
+                ->loadValueCallback(static function (Media $object, IFormField $field) use ($columnName): void {
+                    $values = $object->getL10nValues($columnName);
+                    if (isset($values[L10nStorage::MONOLINGUAL])) {
+                        $value = $values[L10nStorage::MONOLINGUAL];
+
+                        $values = [];
+                        foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+                            $values[$language->languageID] = $value;
+                        }
+                    }
+
+                    $field->value($values);
+                })
+                ->addDependency(
+                    NonEmptyFormFieldDependency::create('isMultilingual')
+                        ->fieldId('isMultilingual')
+                );
+
+            $fields[] = $field;
+        }
+
+        return $fields;
+    }
+
+    /**
+     * Returns the fields for the title, caption and alternative text with the
+     * given id suffix.
+     *
+     * @return array<string, TextFormField>
+     */
+    private function getContentFields(string $idSuffix = ''): array
+    {
+        return [
+            'title' => TitleFormField::create('title' . $idSuffix)
+                ->maximumLength(255),
+            'caption' => MultilineTextFormField::create('caption' . $idSuffix)
+                ->label('wcf.media.caption'),
+            'altText' => TextFormField::create('altText' . $idSuffix)
+                ->label('wcf.media.altText')
+                ->maximumLength(255),
+        ];
+    }
+
+    private function isMultilingualismAvailable(): bool
+    {
+        return \count(LanguageFactory::getInstance()->getLanguages()) > 1;
     }
 
     private function getFileFormField(): FileProcessorFormField

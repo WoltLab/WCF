@@ -1,33 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/clipboardAction.xsd">
-	<import>
+	<delete>
 		<!-- com.woltlab.wcf.media -->
 		<action name="insert">
 			<actionclassname>wcf\system\clipboard\action\MediaClipboardAction</actionclassname>
-			<showorder>1</showorder>
-			<pages>
-				<page>menuManagerDialog-editor</page>
-			</pages>
 		</action>
 		<action name="delete">
 			<actionclassname>wcf\system\clipboard\action\MediaClipboardAction</actionclassname>
-			<showorder>2</showorder>
-			<pages>
-				<page>menuManagerDialog-editor</page>
-				<page>menuManagerDialog-select</page>
-			</pages>
 		</action>
 		<action name="setCategory">
 			<actionclassname>wcf\system\clipboard\action\MediaClipboardAction</actionclassname>
-			<showorder>3</showorder>
-			<pages>
-				<page>menuManagerDialog-editor</page>
-				<page>menuManagerDialog-select</page>
-			</pages>
 		</action>
 		<!-- /com.woltlab.wcf.media -->
-	</import>
-	<delete>
 		<!-- com.woltlab.wcf.user -->
 		<action name="assignToGroup">
 			<actionclassname>wcf\system\clipboard\action\UserClipboardAction</actionclassname>

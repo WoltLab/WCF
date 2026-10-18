@@ -34,10 +34,12 @@
 	});
 
 	{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
-		require(['WoltLabSuite/Core/Media/Manager/Select'], function(MediaManagerSelect) {
-			new MediaManagerSelect({
-				dialogTitle: '{jslang}wcf.media.chooseImage{/jslang}',
-				imagesOnly: 1
+		require(['WoltLabSuite/Core/Component/Media/Select'], ({ setup }) => {
+			document.querySelectorAll('.jsMediaSelectButton').forEach((button) => {
+				setup(button, {
+					title: '{jslang}wcf.media.chooseImage{/jslang}',
+					imagesOnly: true,
+				});
 			});
 		});
 	{/if}

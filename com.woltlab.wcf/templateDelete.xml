@@ -130,5 +130,9 @@
 		<template>messageUserOptionOutput</template>
 		<template>shared_userOptionsCondition</template>
 		<template>groupedUserTrophyList</template>
+		<template>mediaEditor</template>
+		<template>mediaListItems</template>
+		<template>shared_mediaManager</template>
+		<template>shared_mediaSetCategoryDialog</template>
 	</delete>
 </data>

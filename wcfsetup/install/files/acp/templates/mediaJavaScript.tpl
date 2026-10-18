@@ -1,7 +1,6 @@
-{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+{if $__wcf->session->getPermission('admin.content.cms.canUseMedia') || $__wcf->session->getPermission('admin.content.cms.canManageMedia')}
 	{jsphrase name='wcf.global.button.insert'}
-	{jsphrase name='wcf.media.button.replaceFile'}
-	{jsphrase name='wcf.media.button.select'}
+	{jsphrase name='wcf.media.chooseFile'}
 	{jsphrase name='wcf.media.insert'}
 	{jsphrase name='wcf.media.insert.imageSize'}
 	{jsphrase name='wcf.media.insert.imageSize.small'}
@@ -9,26 +8,4 @@
 	{jsphrase name='wcf.media.insert.imageSize.large'}
 	{jsphrase name='wcf.media.insert.imageSize.original'}
 	{jsphrase name='wcf.media.manager'}
-	{jsphrase name='wcf.media.edit'}
-	{jsphrase name='wcf.media.button.insert'}
-	{jsphrase name='wcf.media.search.noResults'}
-	{jsphrase name='wcf.media.upload.error.differentFileExtension'}
-	{jsphrase name='wcf.media.upload.error.differentFileType'}
-	{jsphrase name='wcf.media.upload.error.noImage'}
-	{jsphrase name='wcf.media.upload.error.uploadFailed'}
-	{jsphrase name='wcf.media.upload.success'}
-	{jsphrase name='wcf.media.setCategory'}
-
-	require(['Language', 'Permission'], function({ registerPhrase }, Permission) {
-		registerPhrase('wcf.media.delete.confirmMessage', '{jslang __encode=true __literal=true}wcf.media.delete.confirmMessage{/jslang}');
-		registerPhrase('wcf.media.search.info.searchStringThreshold', '{jslang __literal=true}wcf.media.search.info.searchStringThreshold{/jslang}');
-		
-		Permission.add('admin.content.cms.canManageMedia', {if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}true{else}false{/if});
-	});
-
-	{if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}
-		require(['WoltLabSuite/Core/Media/Editor'], (MediaEditor) => {
-			MediaEditor.setEndpoint('{link controller='MediaEdit' forceFrontend=true encode=false}id=%s{/link}');
-		});
-	{/if}
 {/if}

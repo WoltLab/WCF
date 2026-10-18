@@ -14,6 +14,7 @@ use wcf\system\file\processor\IImageDataProvider;
 use wcf\system\file\processor\ImageData;
 use wcf\system\l10n\L10nDefinition;
 use wcf\system\l10n\L10nStorage;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
@@ -25,7 +26,9 @@ use wcf\util\StringUtil;
  * Represents a media file.
  *
  * The localized title, caption and alternative text are stored in the
- * `wcf1_media_l10n` table.
+ * `wcf1_media_l10n` table. A media file is either assigned to a single language
+ * (`isMultilingual = 0`), storing a single monolingual value, or it is
+ * multilingual, storing a value per language.
  *
  * @author  Matthias Schmidt, Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
@@ -42,8 +45,8 @@ use wcf\util\StringUtil;
  * @property-read   int     $fileUpdateTime         timestamp at which the media file was updated the last or `0` if it has not been updated
  * @property-read   ?int    $userID                 id of the user who uploaded the media file or null if the user does not exist anymore
  * @property-read   string  $username               name of the user who uploaded the media file
- * @property-read   ?int    $languageID             id of the language associated with the media file or null if the media file is multilingual or if the language has been deleted
- * @property-read   0|1     $isMultilingual         is `1` if the media file's title, description and altText is available in multiple languages, otherwise `0`
+ * @property-read   ?int    $languageID             id of the language of a single-language media file, `null` for multilingual media files or if the language has been deleted
+ * @property-read   0|1     $isMultilingual         is `1` if the title, caption and alternative text are available in multiple languages, otherwise the media file belongs to the language `$languageID`
  * @property-read   0|1     $captionEnableHtml      is `1` if html code in caption is supported, otherwise `0`
  * @property-read   0|1     $isImage                is `1` if the media file is an image, otherwise `0`
  * @property-read   int     $width                  width of the media file if `$isImage` is `1`, otherwise `0`
@@ -506,6 +509,22 @@ class Media extends CollectionDatabaseObject implements
         }
 
         return false;
+    }
+
+    /**
+     * Returns the language of a single-language media file or `null` for
+     * multilingual media files. Media files whose language has been deleted
+     * belong to the default language.
+     *
+     * @since 6.3
+     */
+    public function getLanguageID(): ?int
+    {
+        if ($this->isMultilingual !== 0) {
+            return null;
+        }
+
+        return $this->languageID ?? LanguageFactory::getInstance()->getDefaultLanguageID();
     }
 
     /**

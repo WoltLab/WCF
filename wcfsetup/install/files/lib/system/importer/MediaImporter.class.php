@@ -63,15 +63,18 @@ class MediaImporter extends AbstractImporter
             $builder->setCustomProperty('lastDownloadTime', (int)$data['lastDownloadTime']);
         }
 
+        // Media files without an explicit language belong to the default language.
+        $languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
         $languageCode = (string)($additionalData['languageCode'] ?? '');
         if ($languageCode !== '') {
             $language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
             if ($language !== null) {
-                $builder->setCustomProperty('languageID', $language->languageID);
+                $languageID = $language->languageID;
             }
         }
+        $builder->setLanguageID($languageID);
 
-        $this->setContents($builder, $additionalData['contents'] ?? []);
+        $this->setContents($builder, $additionalData['contents'] ?? [], $languageCode === '');
 
         // check old id
         if (\ctype_digit((string)$oldID)) {
@@ -97,11 +100,13 @@ class MediaImporter extends AbstractImporter
 
     /**
      * Sets the localized title, caption and alternative text from the
-     * imported contents which are grouped by language code.
+     * imported contents which are grouped by language code. Multiple contents
+     * make the media file multilingual, a single content of a specific language
+     * assigns the media file to that language unless a language was given.
      *
      * @param array<string, array{title?: string, caption?: string, altText?: string}> $contents
      */
-    private function setContents(MediaBuilder $builder, array $contents): void
+    private function setContents(MediaBuilder $builder, array $contents, bool $adoptContentLanguage): void
     {
         $values = [];
         foreach ($contents as $languageCode => $contentData) {
@@ -122,13 +127,17 @@ class MediaImporter extends AbstractImporter
             return;
         }
 
-        // A single content is shown in every language.
         if (\count($values) === 1) {
+            $contentLanguageID = \array_key_first($values);
+            if ($adoptContentLanguage && $contentLanguageID !== L10nStorage::MONOLINGUAL) {
+                $builder->setLanguageID($contentLanguageID);
+            }
+
             $values = [L10nStorage::MONOLINGUAL => \reset($values)];
         } else {
             unset($values[L10nStorage::MONOLINGUAL]);
 
-            $builder->setCustomProperty('isMultilingual', 1);
+            $builder->setMultilingual();
         }
 
         foreach (['title', 'caption', 'altText'] as $columnName) {
