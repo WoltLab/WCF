@@ -21,6 +21,8 @@
 </div>
 
 <script data-relocate="true">
+	{jsphrase name='wcf.media.upload.success.multiple'}
+
 	require(['WoltLabSuite/Core/Acp/Component/Media/List'], ({ setup }) => {
 		setup(
 			document.querySelector('#mediaUploadButton woltlab-core-file-upload'),
