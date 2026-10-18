@@ -4171,7 +4171,7 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.filename"><![CDATA[Dateiname]]></item>
 		<item name="wcf.media.filesize"><![CDATA[Dateigröße]]></item>
 		<item name="wcf.media.imageDimensions"><![CDATA[Bildformat]]></item>
-		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$media->width} × {#$media->height}]]></item>
+		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$media->width} × {#$media->height} Pixel]]></item>
 		<item name="wcf.media.insert"><![CDATA[Datei einfügen]]></item>
 		<item name="wcf.media.insert.imageSize"><![CDATA[Bildgröße]]></item>
 		<item name="wcf.media.insert.imageSize.large"><![CDATA[Großes Vorschaubild]]></item>
