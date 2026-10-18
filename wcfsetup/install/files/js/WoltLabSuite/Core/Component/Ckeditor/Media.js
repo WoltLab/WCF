@@ -32,11 +32,11 @@ define(["require", "exports", "./Event", "./Filename", "../Media/Manager", "../M
         if (media.length === 0) {
             return;
         }
-        const size = await (0, Insert_1.chooseImageSize)(media);
-        if (size === undefined) {
+        const options = await (0, Insert_1.chooseInsertOptions)(media);
+        if (options === undefined) {
             return;
         }
-        (0, Insert_1.insertIntoCkeditor)(ckeditor, media, size);
+        (0, Insert_1.insertIntoCkeditor)(ckeditor, media, options.size, options.gallery);
     }
     function setup(element) {
         (0, Event_1.listenToCkeditor)(element)

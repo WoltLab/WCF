@@ -6,6 +6,9 @@
 	{jsphrase name='wcf.media.insert.imageSize.medium'}
 	{jsphrase name='wcf.media.insert.imageSize.large'}
 	{jsphrase name='wcf.media.insert.imageSize.original'}
+	{jsphrase name='wcf.media.insert.type'}
+	{jsphrase name='wcf.media.insert.type.gallery'}
+	{jsphrase name='wcf.media.insert.type.separate'}
 	{jsphrase name='wcf.media.manager'}
 	{jsphrase name='wcf.media.manager.dropZone'}
 	{jsphrase name='wcf.media.manager.dropZone.select'}

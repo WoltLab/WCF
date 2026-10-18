@@ -11,7 +11,7 @@
 import { dispatchToCkeditor, listenToCkeditor } from "./Event";
 import { normalizePastedFilename } from "./Filename";
 import { openMediaManager } from "../Media/Manager";
-import { chooseImageSize, insertIntoCkeditor } from "../Media/Insert";
+import { chooseInsertOptions, insertIntoCkeditor } from "../Media/Insert";
 import type { CKEditor } from "../Ckeditor";
 
 type UploadResult = {
@@ -61,12 +61,12 @@ async function insertMedia(ckeditor: CKEditor, file?: File): Promise<void> {
     return;
   }
 
-  const size = await chooseImageSize(media);
-  if (size === undefined) {
+  const options = await chooseInsertOptions(media);
+  if (options === undefined) {
     return;
   }
 
-  insertIntoCkeditor(ckeditor, media, size);
+  insertIntoCkeditor(ckeditor, media, options.size, options.gallery);
 }
 
 export function setup(element: HTMLElement): void {

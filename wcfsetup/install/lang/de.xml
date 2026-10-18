@@ -4169,6 +4169,9 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.edit"><![CDATA[Datei bearbeiten]]></item>
 		<item name="wcf.media.filename"><![CDATA[Dateiname]]></item>
 		<item name="wcf.media.filesize"><![CDATA[Dateigröße]]></item>
+		<item name="wcf.media.gallery"><![CDATA[Bildergalerie]]></item>
+		<item name="wcf.media.gallery.next"><![CDATA[Nächstes Bild]]></item>
+		<item name="wcf.media.gallery.previous"><![CDATA[Vorheriges Bild]]></item>
 		<item name="wcf.media.imageDimensions"><![CDATA[Bildformat]]></item>
 		<item name="wcf.media.imageDimensions.value"><![CDATA[{#$media->width} × {#$media->height} Pixel]]></item>
 		<item name="wcf.media.insert"><![CDATA[Datei einfügen]]></item>
@@ -4177,6 +4180,9 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.insert.imageSize.medium"><![CDATA[Mittleres Vorschaubild]]></item>
 		<item name="wcf.media.insert.imageSize.original"><![CDATA[Original-Bild]]></item>
 		<item name="wcf.media.insert.imageSize.small"><![CDATA[Kleines Vorschaubild]]></item>
+		<item name="wcf.media.insert.type"><![CDATA[Einfügen als]]></item>
+		<item name="wcf.media.insert.type.gallery"><![CDATA[Galerie]]></item>
+		<item name="wcf.media.insert.type.separate"><![CDATA[Einzelne Bilder]]></item>
 		<item name="wcf.media.isImage"><![CDATA[Nur Bilder]]></item>
 		<item name="wcf.media.isMultilingual"><![CDATA[Mehrsprachigkeit aktivieren]]></item>
 		<item name="wcf.media.languageID"><![CDATA[Sprache]]></item>

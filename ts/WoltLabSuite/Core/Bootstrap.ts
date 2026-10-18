@@ -195,6 +195,10 @@ export function setup(options: BoostrapOptions): void {
     void import("./Component/User/TrophyList").then(({ setup }) => setup());
   });
 
+  whenFirstSeen(".mediaGallery", () => {
+    void import("./Component/Media/Gallery").then(({ setup }) => setup());
+  });
+
   whenFirstSeen("[data-fancybox]", () => {
     void import("./Component/Image/Viewer").then(({ setup }) => setup());
   });
