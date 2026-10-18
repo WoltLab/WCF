@@ -29,6 +29,7 @@ use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\Psr15BuilderDialogForm;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\l10n\L10nStorage;
@@ -68,7 +69,7 @@ final class MediaEditAction implements RequestHandlerInterface
         }
         $this->media = $media;
 
-        $form = $this->getForm();
+        $form = $this->getForm($request->getMethod() === 'GET');
 
         if ($request->getMethod() === 'GET') {
             return $form->toResponse();
@@ -96,7 +97,7 @@ final class MediaEditAction implements RequestHandlerInterface
         }
     }
 
-    private function getForm(): Psr15BuilderDialogForm
+    private function getForm(bool $loadValues): Psr15BuilderDialogForm
     {
         $form = new Psr15BuilderDialogForm(
             static::class,
@@ -139,8 +140,11 @@ final class MediaEditAction implements RequestHandlerInterface
                 ]),
         ]);
 
-        $form->updatedObject($this->media);
+        // The values must be loaded after building the form, because the l10n
+        // fields reset their values when they are populated.
+        $form->formMode(IFormDocument::FORM_MODE_UPDATE);
         $form->build();
+        $form->updatedObject($this->media, $loadValues);
 
         return $form;
     }
