@@ -1,5 +1,7 @@
 {include file='header' pageTitle='wcf.media.media.pageTitle'}
 
+{include file='shared_imageViewer'}
+
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.media.media.pageTitle{/lang}</h1>

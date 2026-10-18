@@ -65,9 +65,18 @@ final class MediaGridView extends AbstractGridView
                         {
                             \assert($row instanceof Media);
 
+                            if ($row->isImage === 0) {
+                                return \sprintf(
+                                    '<a href="%s">%s</a>',
+                                    StringUtil::encodeHTML($row->getLink()),
+                                    $row->getElementTag(48)
+                                );
+                            }
+
                             return \sprintf(
-                                '<a href="%s">%s</a>',
-                                StringUtil::encodeHTML($row->getLink()),
+                                '<a href="%s" data-type="image" data-fancybox="media" data-caption="%s">%s</a>',
+                                StringUtil::encodeHTML($row->getFullSizeImageSource()),
+                                StringUtil::encodeHTML($row->getTitle()),
                                 $row->getElementTag(48)
                             );
                         }
