@@ -12,6 +12,20 @@ namespace wcf\util;
 final class StyleUtil
 {
     /**
+     * Matches one value of a shorthand. Whitespace inside a function belongs to the value,
+     * splitting `calc(1px * -1)` at it would break the declaration. Functions can be nested
+     * once, e.g. `max(12px, env(foo))`. The quantifiers are possessive, repeating per
+     * character exhausts the PCRE JIT stack on long values.
+     */
+    private const RTL_VALUE = '((?:[^\s;\}()]++|\((?:[^;\}()]++|\([^;\}()]*+\))*+\))++)';
+
+    /**
+     * Matches four values that make up the complete declaration.
+     */
+    private const RTL_FOUR_VALUES = self::RTL_VALUE . '\s+' . self::RTL_VALUE . '\s+' . self::RTL_VALUE . '\s+'
+        . self::RTL_VALUE . '(?=\s*(?:!important\s*)?[;\}])';
+
+    /**
      * Converts css code from LTR to RTL.
      */
     public static function convertCSSToRTL(string $contents): string
@@ -36,7 +50,7 @@ final class StyleUtil
 
         // border-width
         $contents = \preg_replace(
-            '/border-width:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/',
+            '/border-width:\s*' . self::RTL_FOUR_VALUES . '/',
             'border-width:\\1 \\4 \\3 \\2',
             $contents
         );
@@ -48,7 +62,7 @@ final class StyleUtil
 
         // border-style
         $contents = \preg_replace(
-            '/border-style:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/',
+            '/border-style:\s*' . self::RTL_FOUR_VALUES . '/',
             'border-style:\\1 \\4 \\3 \\2',
             $contents
         );
@@ -84,14 +98,14 @@ final class StyleUtil
 
         // margin
         $contents = \preg_replace(
-            '/margin:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/',
+            '/margin:\s*' . self::RTL_FOUR_VALUES . '/',
             'margin:\\1 \\4 \\3 \\2',
             $contents
         );
 
         // padding
         $contents = \preg_replace(
-            '/padding:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/',
+            '/padding:\s*' . self::RTL_FOUR_VALUES . '/',
             'padding:\\1 \\4 \\3 \\2',
             $contents
         );
@@ -106,7 +120,7 @@ final class StyleUtil
 
         // border-radius
         $contents = \preg_replace(
-            '/border-radius:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/',
+            '/border-radius:\s*' . self::RTL_FOUR_VALUES . '/',
             'border-radius:\\2 \\1 \\4 \\3',
             $contents
         );
