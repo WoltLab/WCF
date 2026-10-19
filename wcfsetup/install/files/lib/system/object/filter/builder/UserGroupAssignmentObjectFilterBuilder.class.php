@@ -94,13 +94,14 @@ final class UserGroupAssignmentObjectFilterBuilder extends AbstractObjectFilterB
     }
 
     /**
-     * Adds the filters of the assignment to the given user list.
+     * Adds the filters of the assignment to the given user list. Returns
+     * whether any active filter has been applied.
      *
      * An assignment without any active filters matches no users.
      */
-    public function applyFilters(UserGroupAssignment $assignment, UserList $userList): void
+    public function applyFilters(UserGroupAssignment $assignment, UserList $userList): bool
     {
-        $this->getHandler()->applyFilters(
+        return $this->getHandler()->applyFilters(
             $userList,
             $assignment->conditions,
         );

@@ -8,7 +8,8 @@ use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 
 /**
- * Executes automatic user group assignments.
+ * Executes automatic user group assignments and removes users who no longer
+ * fulfill the assignment of user groups with automatic revocation.
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
@@ -23,10 +24,14 @@ class UserGroupAssignmentCronjob extends AbstractCronjob
     {
         parent::execute($cronjob);
 
+        $assignmentCount = UserGroupAssignmentHandler::getInstance()->revokeUsers(self::MAXIMUM_ASSIGNMENTS);
+        if ($assignmentCount >= self::MAXIMUM_ASSIGNMENTS) {
+            return;
+        }
+
         $assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
         $usersToGroup = [];
 
-        $assignmentCount = 0;
         foreach ($assignments as $assignment) {
             if (!isset($usersToGroup[$assignment->groupID])) {
                 $usersToGroup[$assignment->groupID] = [];

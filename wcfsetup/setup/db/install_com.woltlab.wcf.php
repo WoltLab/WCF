@@ -4376,6 +4376,7 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('title'),
             DefaultFalseBooleanDatabaseTableColumn::create('isDisabled'),
             JsonDatabaseTableColumn::create('conditions'),
+            DefaultFalseBooleanDatabaseTableColumn::create('revokeAutomatically'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
