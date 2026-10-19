@@ -64,9 +64,6 @@ final class FileDownloadAction implements RequestHandlerInterface
             throw new PermissionDeniedException();
         }
 
-        $processor->trackDownload($file);
-        EventHandler::getInstance()->fire(new DownloadStarting($file));
-
         $filename = $file->getPathname();
         $response = new Response(
             new Stream($filename),
@@ -100,6 +97,14 @@ final class FileDownloadAction implements RequestHandlerInterface
                 ->withStatus(416)
                 ->withHeader('accept-ranges', 'bytes')
                 ->withHeader('content-range', "bytes */{$file->fileSize}");
+        }
+
+        // Media players and download managers request the remaining parts of
+        // a file through additional range requests, which must not be counted
+        // as separate downloads.
+        if ($startByte === 0) {
+            $processor->trackDownload($file);
+            EventHandler::getInstance()->fire(new DownloadStarting($file));
         }
 
         if ($startByte > 0 || $endByte < $file->fileSize - 1) {
