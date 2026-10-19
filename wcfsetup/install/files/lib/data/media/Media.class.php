@@ -209,14 +209,15 @@ class Media extends CollectionDatabaseObject implements
         return $this->getFile()?->getThumbnail($size);
     }
 
+    /**
+     * Returns the location of the physical file in the legacy storage. Migrated
+     * media files are stored as a `File` instead, see `getFile()`.
+     *
+     * @deprecated 6.3 Only required for media files that have not been migrated to the new upload API yet.
+     */
     #[\Override]
     public function getLocation()
     {
-        $file = $this->getFile();
-        if ($file !== null) {
-            return $file->getPathname();
-        }
-
         return self::getStorage() . \substr($this->fileHash, 0, 2) . '/' . $this->mediaID . '-' . $this->fileHash;
     }
 
@@ -276,16 +277,18 @@ class Media extends CollectionDatabaseObject implements
         return $this->height;
     }
 
+    /**
+     * Returns the location of the thumbnail file in the legacy storage. The
+     * thumbnails of migrated media files are stored as a `FileThumbnail`
+     * instead, see `getFile()`.
+     *
+     * @deprecated 6.3 Only required for media files that have not been migrated to the new upload API yet.
+     */
     #[\Override]
     public function getThumbnailLocation(string $size)
     {
         if (!isset(self::$thumbnailSizes[$size])) {
             throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
-        }
-
-        $file = $this->getFile();
-        if ($file !== null) {
-            return $this->getFileThumbnail($size)?->getPathname() ?? $file->getPathname();
         }
 
         return self::getStorage() . \substr(
