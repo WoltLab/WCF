@@ -365,6 +365,7 @@ return [
     PartialDatabaseTable::create('wcf1_user_group_assignment')
         ->columns([
             JsonDatabaseTableColumn::create('conditions'),
+            DefaultFalseBooleanDatabaseTableColumn::create('revokeAutomatically'),
         ]),
     PartialDatabaseTable::create('wcf1_notice')
         ->columns([

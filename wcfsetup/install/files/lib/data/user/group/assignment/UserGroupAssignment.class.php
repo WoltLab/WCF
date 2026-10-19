@@ -20,6 +20,7 @@ use wcf\system\request\IRouteController;
  * @property-read   string  $title          title of the automatic user group assignment
  * @property-read   0|1     $isDisabled     is `1` if the user group assignment is disabled and thus not checked for automatic assignments, otherwise `0`
  * @property-read   string  $conditions
+ * @property-read   0|1     $revokeAutomatically    is `1` if members of the user group are automatically removed once they no longer fulfill the conditions of this assignment, otherwise `0`
  */
 class UserGroupAssignment extends DatabaseObject implements IRouteController
 {

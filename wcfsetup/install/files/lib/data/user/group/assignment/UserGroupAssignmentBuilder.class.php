@@ -45,6 +45,17 @@ final class UserGroupAssignmentBuilder extends DatabaseObjectBuilder
     }
 
     /**
+     * Sets whether members of the user group are automatically removed once
+     * they no longer fulfill the conditions of this assignment.
+     */
+    public function setRevokeAutomatically(bool $revokeAutomatically): static
+    {
+        $this->properties['revokeAutomatically'] = (int)$revokeAutomatically;
+
+        return $this;
+    }
+
+    /**
      * Sets the serialized object filters that a user must match.
      */
     public function setConditions(?string $conditions): static

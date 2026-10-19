@@ -842,6 +842,12 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.assignment.edit"><![CDATA[Edit User Group Automatic Assignment]]></item>
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatic User Group Assignments]]></item>
 		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Disable automatic assignment]]></item>
+		<item name="wcf.acp.group.assignment.revokeAutomatically"><![CDATA[Remove users automatically if they no longer fulfill the conditions]]></item>
+		<item name="wcf.acp.group.assignment.revokeAutomatically.description"><![CDATA[Members of the user group who no longer fulfill the conditions are removed from the user group. This also affects members who have been added manually. Only available if there is no other automatic assignment for the user group.]]></item>
+		<item name="wcf.acp.group.assignment.revokeAutomatically.error.adminGroup"><![CDATA[Users cannot be removed automatically from user groups with administrative access.]]></item>
+		<item name="wcf.acp.group.assignment.revokeAutomatically.error.notInTargetGroup"><![CDATA[Users cannot be removed automatically if the conditions exclude members of the selected user group.]]></item>
+		<item name="wcf.acp.group.assignment.revokeAutomatically.error.otherAssignments"><![CDATA[Users can only be removed automatically if there is no other automatic assignment for the selected user group.]]></item>
+		<item name="wcf.acp.group.assignment.groupID.error.revokeAutomatically"><![CDATA[The selected user group already has an automatic assignment that removes users automatically. Further automatic assignments for this user group are not possible.]]></item>
 		<item name="wcf.acp.group.option.admin.notice.canManageNotice"><![CDATA[Can manage notices]]></item>
 		<item name="wcf.acp.group.option.admin.ad.canManageAd"><![CDATA[Can manage ads]]></item>
 		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximum About Me Length]]></item>

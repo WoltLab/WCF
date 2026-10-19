@@ -21,6 +21,7 @@ final class RemoveUserFromGroups
     public function __construct(
         private readonly User $user,
         private readonly array $groupIDs,
+        private readonly bool $ignoreUserGroupAssignments = false,
     ) {}
 
     public function __invoke(): void
@@ -33,7 +34,8 @@ final class RemoveUserFromGroups
         }
 
         new UpdateUser(
-            UserBuilder::forUpdate($this->user)->setGroupIDs($groupIDs)
+            UserBuilder::forUpdate($this->user)->setGroupIDs($groupIDs),
+            $this->ignoreUserGroupAssignments
         )();
     }
 }
