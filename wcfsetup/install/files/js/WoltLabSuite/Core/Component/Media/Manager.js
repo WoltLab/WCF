@@ -88,7 +88,11 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
             if (this.#selected.size === 0) {
                 return;
             }
-            this.#dialog.querySelector(".dialog__control__button--primary").click();
+            // The `disabled` state of the primary button is updated asynchronously
+            // when `incomplete` changes, `click()` would be a no-op immediately after
+            // selecting the first tile.
+            const button = this.#dialog.querySelector(".dialog__control__button--primary");
+            button.form.requestSubmit(button);
         }
         #renderSelectionInfo() {
             this.#selectionInfo.classList.toggle("mediaManager__selectionInfo--empty", this.#selected.size === 0);

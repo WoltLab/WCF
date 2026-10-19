@@ -128,7 +128,11 @@ class MediaSelection {
       return;
     }
 
-    this.#dialog.querySelector<HTMLButtonElement>(".dialog__control__button--primary")!.click();
+    // The `disabled` state of the primary button is updated asynchronously
+    // when `incomplete` changes, `click()` would be a no-op immediately after
+    // selecting the first tile.
+    const button = this.#dialog.querySelector<HTMLButtonElement>(".dialog__control__button--primary")!;
+    button.form!.requestSubmit(button);
   }
 
   #renderSelectionInfo(): void {
