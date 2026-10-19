@@ -101,7 +101,8 @@ export async function chooseInsertOptions(media: MediaData[], allowGallery = tru
         gallery: isGallery(),
       });
     });
-    dialog.addEventListener("cancel", () => {
+    // Covers cancel, Escape and backdrop clicks. No-op after `primary` resolved.
+    dialog.addEventListener("afterClose", () => {
       resolve(undefined);
     });
 

@@ -81,7 +81,8 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                     gallery: isGallery(),
                 });
             });
-            dialog.addEventListener("cancel", () => {
+            // Covers cancel, Escape and backdrop clicks. No-op after `primary` resolved.
+            dialog.addEventListener("afterClose", () => {
                 resolve(undefined);
             });
             dialog.show((0, Language_1.getPhrase)("wcf.media.insert"));
