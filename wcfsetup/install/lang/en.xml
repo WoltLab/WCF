@@ -2808,6 +2808,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.colors.linkColor"><![CDATA[Link Color]]></item>
 		<item name="wcf.acp.style.colors.linkHoverColor"><![CDATA[Link Color (hover)]]></item>
 		<item name="wcf.acp.style.colors.page"><![CDATA[Page]]></item>
+		<item name="wcf.acp.style.colors.pageFooterScope.classic"><![CDATA[Only used by the classic page footer.]]></item>
+		<item name="wcf.acp.style.colors.pageFooterScope.emails"><![CDATA[With the selected page footer layout, only used in emails.]]></item>
+		<item name="wcf.acp.style.colors.pageFooterScope.headerBoxes"><![CDATA[With the selected page footer layout, only used by the boxes in the “Header boxes” position.]]></item>
 		<item name="wcf.acp.style.colors.pageHeaderScope.classic"><![CDATA[Only used by the classic page header.]]></item>
 		<item name="wcf.acp.style.colors.pageHeaderScope.smallScreens"><![CDATA[With the selected page header layout, only used on small screens.]]></item>
 		<item name="wcf.acp.style.colors.primaryBackgroundColor"><![CDATA[Background Color (primary)]]></item>
