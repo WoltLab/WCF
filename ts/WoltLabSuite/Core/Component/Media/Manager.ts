@@ -305,6 +305,13 @@ function setupSearch(dialog: WoltlabCoreDialogElement, listViewItems: HTMLElemen
       );
     }, 200);
   });
+
+  // Prevent Enter from submitting the prompt form of the dialog.
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  });
 }
 
 function setupPaste(dialog: WoltlabCoreDialogElement, uploadButton: WoltlabCoreFileUploadElement): void {

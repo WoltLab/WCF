@@ -236,6 +236,12 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                 }));
             }, 200);
         });
+        // Prevent Enter from submitting the prompt form of the dialog.
+        input.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+            }
+        });
     }
     function setupPaste(dialog, uploadButton) {
         dialog.addEventListener("paste", (event) => {
