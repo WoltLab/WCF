@@ -7,7 +7,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\command\media\UpdateMedia;
-use wcf\data\file\File;
 use wcf\data\media\Media;
 use wcf\data\media\MediaBuilder;
 use wcf\http\Helper;
@@ -295,34 +294,23 @@ final class MediaEditAction implements RequestHandlerInterface
             ->hideDeleteButton()
             ->context(['mediaID' => $media->mediaID])
             ->addValidator(new FormFieldValidator(
-                'sameKind',
+                'assigned',
                 static function (FileProcessorFormField $field) use ($media): void {
                     $file = $field->getFiles()[$field->getValue()] ?? null;
                     if ($file === null || $file->fileID === $media->fileID) {
                         return;
                     }
 
-                    // Embedded media files and image fields rely on the media file staying an image.
-                    if ($file->isImage() !== ($media->isImage !== 0)) {
-                        $field->addValidationError(new FormFieldValidationError(
-                            'differentKind',
-                            'wcf.media.upload.error.differentKind'
-                        ));
-                    }
+                    // The upload assigns the replacement right away, see
+                    // `MediaFileProcessor::adopt()`. Any other file has not
+                    // been uploaded for this media file and must not be claimed.
+                    $field->addValidationError(new FormFieldValidationError(
+                        'adopt',
+                        'wcf.upload.error.adopt',
+                        ['filename' => $file->filename]
+                    ));
                 }
             ))
-            ->saveValueCallback(static function (MediaBuilder $builder, FileProcessorFormField $field) use ($media): void {
-                $file = $field->getFiles()[$field->getValue()] ?? null;
-                if (!($file instanceof File) || $file->fileID === $media->fileID) {
-                    return;
-                }
-
-                // The upload usually assigns the replacement already, see
-                // `MediaFileProcessor::adopt()`. The previous file is deleted
-                // by the builder.
-                $builder->setFile($file)
-                    ->setFileUpdateTime(\TIME_NOW);
-            })
             ->loadValueCallback(static function (Media $object, IFormField $field): void {
                 if ($object->fileID !== null) {
                     $field->value($object->fileID);

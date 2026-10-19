@@ -4196,7 +4196,6 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.media.search.cancel"><![CDATA[Suche abbrechen]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Datei suchen]]></item>
-		<item name="wcf.media.upload.error.differentKind"><![CDATA[Ein Bild kann nur durch ein anderes Bild ersetzt werden, andere Dateien nur durch Dateien, die keine Bilder sind.]]></item>
 		<item name="wcf.media.upload.success"><![CDATA[Die Datei wurde erfolgreich hochgeladen.]]></item>
 		<item name="wcf.media.upload.success.multiple"><![CDATA[{#$count} Dateien wurden erfolgreich hochgeladen.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Hochgeladen von]]></item>
