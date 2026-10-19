@@ -27,6 +27,8 @@ import { setup as setupLanguageSwitcher } from "./Component/LanguageSwitcher";
 import { setup as setupUserMenuDrawer } from "./Component/UserMenuDrawer";
 import { setup as setupPageHeaderSearch } from "./Component/PageHeaderSearch";
 import { setup as setupPageHeaderShadow } from "./Component/PageHeaderShadow";
+import { setup as setupColorSchemeSwitch } from "./Component/PageFooter/ColorSchemeSwitch";
+import { getStoredColorScheme } from "./Controller/Style/ColorScheme";
 
 interface BootstrapOptions {
   backgroundQueue: {
@@ -89,7 +91,8 @@ export function setup(options: BootstrapOptions): void {
   const hasSystemPageHeader = options.templateVariants.includes("pageHeader");
 
   Bootstrap.setup({
-    dynamicColorScheme: options.dynamicColorScheme,
+    // A color scheme picked by a guest is applied by the inline script in the page head already.
+    dynamicColorScheme: options.dynamicColorScheme && (User.userId !== 0 || getStoredColorScheme() === undefined),
     enableMobileMenu: !hasSystemPageHeader,
     enableSearch: !hasSystemPageHeader,
     pageMenuMainProvider: new UiPageMenuMainFrontend(),
@@ -117,6 +120,10 @@ export function setup(options: BootstrapOptions): void {
     setupPageHeaderShadow();
   } else {
     UiPageHeaderMenu.init();
+  }
+
+  if (options.templateVariants.includes("pageFooter")) {
+    setupColorSchemeSwitch();
   }
 
   if (options.styleChanger) {

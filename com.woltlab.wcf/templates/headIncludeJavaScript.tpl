@@ -26,7 +26,16 @@
 
 	{if $__wcf->getStyleHandler()->getColorScheme() === 'system'}
 	{
-		const colorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+		let colorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+		{if $__wcf->user->isGuest()}
+			{* Guests pick the color scheme in the page footer, see `WoltLabSuite/Core/Controller/Style/ColorScheme`. *}
+			try {
+				const value = localStorage.getItem("wsc_colorScheme");
+				if (value === "dark" || value === "light") {
+					colorScheme = value;
+				}
+			} catch {}
+		{/if}
 		document.documentElement.dataset.colorScheme = colorScheme;
 	}
 	{/if}

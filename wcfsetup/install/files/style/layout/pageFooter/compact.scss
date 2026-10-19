@@ -349,8 +349,89 @@
 	}
 }
 
+/* Native radios, the labels are visually hidden and repeated as the title. */
+.pageFooterScheme {
+	border: 1px solid rgba(var(--wcfContentText-rgb) / 0.22);
+	border-radius: 9px;
+	box-sizing: border-box;
+	display: inline-flex;
+	height: 36px;
+	margin: 0;
+	min-inline-size: 0;
+	padding: 0;
+
+	@include screen-md-down {
+		height: 44px;
+	}
+}
+
+.pageFooterScheme__option {
+	align-items: center;
+	color: var(--wcfContentText);
+	cursor: pointer;
+	display: inline-flex;
+	justify-content: center;
+	position: relative;
+	width: 36px;
+
+	@include screen-md-down {
+		width: 44px;
+	}
+}
+
+.pageFooterScheme__option::before {
+	border-radius: 6px;
+	content: "";
+	inset: 3px;
+	position: absolute;
+	transition: background-color 0.12s ease;
+}
+
+.pageFooterScheme__option > fa-icon {
+	position: relative;
+}
+
+.pageFooterScheme__input {
+	appearance: none;
+	cursor: pointer;
+	inset: 0;
+	margin: 0;
+	opacity: 0;
+	position: absolute;
+	z-index: 1;
+}
+
+/* Inverted text and background, so it passes whenever the footer text does. */
+.pageFooterScheme__option:has(:checked) {
+	color: var(--wcfContentBackground);
+}
+
+.pageFooterScheme__option:has(:checked)::before {
+	background-color: var(--wcfContentText);
+}
+
+/* Forced colors drop the background, a border survives. */
+@media (forced-colors: active) {
+	.pageFooterScheme__option:has(:checked)::before {
+		border: 2px solid CanvasText;
+	}
+}
+
+.pageFooterScheme__option:has(:focus-visible) {
+	border-radius: 7px;
+	outline: 2px solid var(--wcfContentLink);
+	outline-offset: -1px;
+}
+
+@media (hover: hover) {
+	.pageFooterScheme__option:not(:has(:checked)):hover::before {
+		background-color: rgba(var(--wcfContentText-rgb) / 0.1);
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
-	.pageFooterPreferences__button {
+	.pageFooterPreferences__button,
+	.pageFooterScheme__option::before {
 		transition: none;
 	}
 }
