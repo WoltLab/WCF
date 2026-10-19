@@ -3401,11 +3401,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.clipboard.item.mark"><![CDATA[Element markieren]]></item>
 		<item name="wcf.clipboard.button.numberOfSelectedItems"><![CDATA[{#$numberOfSelectedItems} ausgewählt]]></item>
 		<item name="wcf.clipboard.button.noInteractionsAvailable"><![CDATA[Keine Aktionen verfügbar]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete"><![CDATA[Löschen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}eine Datei{else}{#$count} Dateien{/if} löschen?]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.media.insert"><![CDATA[Einfügen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.media.setCategory"><![CDATA[Kategorie bearbeiten ({#$count})]]></item>
-		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}Eine Datei{else}{#$count} Dateien{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer]]></item>
 	</category>
 	<category name="wcf.comment">
@@ -4158,14 +4153,11 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 	<category name="wcf.media">
 		<item name="wcf.media.altText"><![CDATA[Alternativ-Text]]></item>
 		<item name="wcf.media.button.open"><![CDATA[Datei öffnen]]></item>
-		<item name="wcf.media.button.replaceFile"><![CDATA[Datei ersetzen]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Auswählen]]></item>
 		<item name="wcf.media.caption"><![CDATA[Bildunterschrift]]></item>
 		<item name="wcf.media.caption.enableHtml"><![CDATA[HTML in der Bildunterschrift verwenden]]></item>
-		<item name="wcf.media.category.choose.noCategory"><![CDATA[(keine Kategorie)]]></item>
 		<item name="wcf.media.chooseFile"><![CDATA[Datei auswählen]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Bild auswählen]]></item>
-		<item name="wcf.media.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} die Datei <span class="confirmationObject">{$title}</span> wirklich löschen?]]></item>
 		<item name="wcf.media.edit"><![CDATA[Datei bearbeiten]]></item>
 		<item name="wcf.media.filename"><![CDATA[Dateiname]]></item>
 		<item name="wcf.media.filesize"><![CDATA[Dateigröße]]></item>
@@ -4194,13 +4186,11 @@ Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.media"><![CDATA[Medien]]></item>
 		<item name="wcf.media.media.pageTitle"><![CDATA[{if $__wcf->session->getPermission('admin.content.cms.canOnlyAccessOwnMedia')}Eigene {/if}Medien]]></item>
 		<item name="wcf.media.preview"><![CDATA[Vorschau]]></item>
-		<item name="wcf.media.search.cancel"><![CDATA[Suche abbrechen]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Datei suchen]]></item>
 		<item name="wcf.media.upload.success"><![CDATA[Die Datei wurde erfolgreich hochgeladen.]]></item>
 		<item name="wcf.media.upload.success.multiple"><![CDATA[{#$count} Dateien wurden erfolgreich hochgeladen.]]></item>
 		<item name="wcf.media.uploader"><![CDATA[Hochgeladen von]]></item>
 		<item name="wcf.media.uploadTime"><![CDATA[Datum hochgeladen]]></item>
-		<item name="wcf.media.search.info.searchStringThreshold"><![CDATA[Der Suchbegriff muss mindestens {#$minSearchLength} Zeichen lang sein.]]></item>
 		<item name="wcf.media.setCategory"><![CDATA[Kategorie bearbeiten]]></item>
 		<item name="wcf.media.downloads"><![CDATA[Downloads]]></item>
 		<item name="wcf.media.lastDownloadTime"><![CDATA[Letzter Download]]></item>
@@ -5848,5 +5838,15 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.user.exportEmailAddress.format"/>
 	<item name="wcf.media.button.insert"/>
 	<item name="wcf.media.search.noResults"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.media.insert"/>
+	<item name="wcf.clipboard.item.com.woltlab.wcf.media.setCategory"/>
+	<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"/>
+	<item name="wcf.media.button.replaceFile"/>
+	<item name="wcf.media.category.choose.noCategory"/>
+	<item name="wcf.media.delete.confirmMessage"/>
+	<item name="wcf.media.search.cancel"/>
+	<item name="wcf.media.search.info.searchStringThreshold"/>
 </delete>
 </language>
