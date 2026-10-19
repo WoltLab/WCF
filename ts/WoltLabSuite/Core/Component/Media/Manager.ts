@@ -160,6 +160,14 @@ class MediaSelection {
       }
     });
 
+    // Deleted media files must not remain part of the selection.
+    this.#listViewItems.addEventListener("interaction:remove", (event) => {
+      const mediaId = parseInt((event.target as HTMLElement).dataset.objectId!);
+      if (this.#selected.delete(mediaId)) {
+        this.render();
+      }
+    });
+
     this.#listViewItems.addEventListener("dblclick", (event) => {
       const tile = this.#getTileFromEvent(event);
       if (tile !== null) {
@@ -424,23 +432,23 @@ export async function openMediaManager(options: MediaManagerOptions): Promise<Me
       }
       completed = true;
 
-      let media: MediaData[];
-      try {
-        media = await Promise.all(mediaIds.map((mediaId) => getMedia(mediaId)));
-      } catch (error) {
-        // Settle first, callers lock their buttons until the promise resolves.
-        if (dialog.isConnected) {
-          dialog.close();
-        }
-        resolve([]);
+      // Media files may have been deleted in the meantime, the remaining ones
+      // are still inserted.
+      const results = await Promise.allSettled(mediaIds.map((mediaId) => getMedia(mediaId)));
+      const media = results
+        .filter((result): result is PromiseFulfilledResult<MediaData> => result.status === "fulfilled")
+        .map((result) => result.value);
 
-        throw error;
-      }
-
+      // Settle first, callers lock their buttons until the promise resolves.
       if (dialog.isConnected) {
         dialog.close();
       }
       resolve(media);
+
+      const rejected = results.find((result): result is PromiseRejectedResult => result.status === "rejected");
+      if (media.length === 0 && rejected !== undefined) {
+        throw rejected.reason;
+      }
     };
 
     dialog.addEventListener("primary", () => {

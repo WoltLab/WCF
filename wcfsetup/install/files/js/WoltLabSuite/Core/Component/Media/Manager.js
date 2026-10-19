@@ -117,6 +117,13 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                     this.toggle(tile);
                 }
             });
+            // Deleted media files must not remain part of the selection.
+            this.#listViewItems.addEventListener("interaction:remove", (event) => {
+                const mediaId = parseInt(event.target.dataset.objectId);
+                if (this.#selected.delete(mediaId)) {
+                    this.render();
+                }
+            });
             this.#listViewItems.addEventListener("dblclick", (event) => {
                 const tile = this.#getTileFromEvent(event);
                 if (tile !== null) {
@@ -330,22 +337,21 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                     return;
                 }
                 completed = true;
-                let media;
-                try {
-                    media = await Promise.all(mediaIds.map((mediaId) => (0, GetMedia_1.getMedia)(mediaId)));
-                }
-                catch (error) {
-                    // Settle first, callers lock their buttons until the promise resolves.
-                    if (dialog.isConnected) {
-                        dialog.close();
-                    }
-                    resolve([]);
-                    throw error;
-                }
+                // Media files may have been deleted in the meantime, the remaining ones
+                // are still inserted.
+                const results = await Promise.allSettled(mediaIds.map((mediaId) => (0, GetMedia_1.getMedia)(mediaId)));
+                const media = results
+                    .filter((result) => result.status === "fulfilled")
+                    .map((result) => result.value);
+                // Settle first, callers lock their buttons until the promise resolves.
                 if (dialog.isConnected) {
                     dialog.close();
                 }
                 resolve(media);
+                const rejected = results.find((result) => result.status === "rejected");
+                if (media.length === 0 && rejected !== undefined) {
+                    throw rejected.reason;
+                }
             };
             dialog.addEventListener("primary", () => {
                 void complete(selection.getSelectedIds());
