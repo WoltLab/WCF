@@ -209,6 +209,7 @@ class Option extends CollectionDatabaseObject
     public function isVisible()
     {
         // `hidden` does not exist for every option type, e.g. user group options
+        // @phpstan-ignore cast.useless
         return (int)$this->hidden === 0;
     }
 
