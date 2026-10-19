@@ -275,6 +275,8 @@ final class MediaBuilder extends DatabaseObjectBuilder
 
     private function saveL10nValues(Media $media): void
     {
+        $definition = Media::getL10nDefinition();
+
         $values = [];
         foreach (['title', 'caption', 'altText'] as $columnName) {
             $value = $this->{$columnName} ?? null;
@@ -282,11 +284,14 @@ final class MediaBuilder extends DatabaseObjectBuilder
                 $value = $this->getObject()->getL10nValues($columnName);
             }
 
-            $values[$columnName] = self::normalizeL10nValue($value ?? [], $media->getLanguageID());
+            $values[$columnName] = \array_map(
+                static fn(string $localizedValue) => $definition->truncateValue($columnName, $localizedValue),
+                self::normalizeL10nValue($value ?? [], $media->getLanguageID())
+            );
         }
 
         // `L10nStorage::setValues()` replaces all rows of the media file.
-        (new L10nStorage(Media::getL10nDefinition()))->setValues($media->mediaID, $values);
+        (new L10nStorage($definition))->setValues($media->mediaID, $values);
     }
 
     /**
