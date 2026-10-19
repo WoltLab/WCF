@@ -12,6 +12,7 @@ import { dispatchToCkeditor, listenToCkeditor } from "./Event";
 import { normalizePastedFilename } from "./Filename";
 import { openMediaManager } from "../Media/Manager";
 import { chooseInsertOptions, insertIntoCkeditor } from "../Media/Insert";
+import { promiseMutex } from "../../Helper/PromiseMutex";
 import type { CKEditor } from "../Ckeditor";
 
 type UploadResult = {
@@ -87,12 +88,14 @@ export function setup(element: HTMLElement): void {
         return;
       }
 
+      // The media manager is loaded asynchronously, repeated clicks must not open it twice.
+      const openManager = promiseMutex(() => insertMedia(ckeditor));
       listenToCkeditor(ckeditor.sourceElement).bbcode(({ bbcode }) => {
         if (bbcode !== "media") {
           return false;
         }
 
-        void insertMedia(ckeditor);
+        openManager();
 
         return true;
       });

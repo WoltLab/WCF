@@ -7,7 +7,7 @@
  * @woltlabExcludeBundle tiny
  * @deprecated 6.3 Use `WoltLabSuite/Core/Component/Media/Manager` instead.
  */
-define(["require", "exports", "../../Component/Media/Manager", "../../Component/Media/Insert"], function (require, exports, Manager_1, Insert_1) {
+define(["require", "exports", "../../Component/Media/Manager", "../../Component/Media/Insert", "../../Helper/PromiseMutex"], function (require, exports, Manager_1, Insert_1, PromiseMutex_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.MediaManagerEditor = void 0;
@@ -20,9 +20,10 @@ define(["require", "exports", "../../Component/Media/Manager", "../../Component/
                 return;
             }
             if (typeof options.buttonClass === "string") {
+                const insert = (0, PromiseMutex_1.promiseMutex)(() => this.#insert());
                 document.querySelectorAll(`.${options.buttonClass}`).forEach((button) => {
                     button.addEventListener("click", () => {
-                        void this.#insert();
+                        insert();
                     });
                 });
             }

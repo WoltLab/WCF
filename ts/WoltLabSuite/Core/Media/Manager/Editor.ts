@@ -11,6 +11,7 @@
 import { Media, MediaInsertType, MediaManagerEditorOptions } from "../Data";
 import { openMediaManager } from "../../Component/Media/Manager";
 import { chooseImageSize } from "../../Component/Media/Insert";
+import { promiseMutex } from "../../Helper/PromiseMutex";
 
 export class MediaManagerEditor {
   readonly #options: Partial<MediaManagerEditorOptions>;
@@ -24,9 +25,10 @@ export class MediaManagerEditor {
     }
 
     if (typeof options.buttonClass === "string") {
+      const insert = promiseMutex(() => this.#insert());
       document.querySelectorAll<HTMLElement>(`.${options.buttonClass}`).forEach((button) => {
         button.addEventListener("click", () => {
-          void this.#insert();
+          insert();
         });
       });
     }

@@ -7,7 +7,7 @@
  * @since 6.0
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "./Event", "./Filename", "../Media/Manager", "../Media/Insert"], function (require, exports, Event_1, Filename_1, Manager_1, Insert_1) {
+define(["require", "exports", "./Event", "./Filename", "../Media/Manager", "../Media/Insert", "../../Helper/PromiseMutex"], function (require, exports, Event_1, Filename_1, Manager_1, Insert_1, PromiseMutex_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -54,11 +54,13 @@ define(["require", "exports", "./Event", "./Filename", "../Media/Manager", "../M
             if (!ckeditor.features.media) {
                 return;
             }
+            // The media manager is loaded asynchronously, repeated clicks must not open it twice.
+            const openManager = (0, PromiseMutex_1.promiseMutex)(() => insertMedia(ckeditor));
             (0, Event_1.listenToCkeditor)(ckeditor.sourceElement).bbcode(({ bbcode }) => {
                 if (bbcode !== "media") {
                     return false;
                 }
-                void insertMedia(ckeditor);
+                openManager();
                 return true;
             });
             if (!ckeditor.features.attachment) {
