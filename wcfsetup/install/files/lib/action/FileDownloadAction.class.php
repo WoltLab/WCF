@@ -118,8 +118,7 @@ final class FileDownloadAction implements RequestHandlerInterface
 
         // Prevent <script> execution in the context of the community's domain if
         // an attacker somehow bypasses 'content-disposition: attachment' for non-inline
-        // MIME-Types. One possibility might be a package extending $inlineMimeTypes
-        // in an unsafe fashion.
+        // MIME-Types.
         //
         // Allow style-src 'unsafe-inline', because otherwise the integrated PDF viewer
         // of Safari will fail to apply its own trusted stylesheet.

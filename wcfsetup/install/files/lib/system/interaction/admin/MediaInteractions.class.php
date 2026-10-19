@@ -5,13 +5,12 @@ namespace wcf\system\interaction\admin;
 use wcf\action\MediaEditAction;
 use wcf\data\media\Media;
 use wcf\event\interaction\admin\MediaInteractionCollecting;
-use wcf\page\MediaPage;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\FormBuilderDialogInteraction;
-use wcf\system\interaction\LinkInteraction;
+use wcf\system\interaction\LinkableObjectInteraction;
 use wcf\system\request\LinkHandler;
 
 /**
@@ -27,7 +26,11 @@ final class MediaInteractions extends AbstractInteractionProvider
     public function __construct()
     {
         $this->addInteractions([
-            new LinkInteraction('open', MediaPage::class, 'wcf.media.button.open'),
+            new LinkableObjectInteraction(
+                'open',
+                'wcf.media.button.open',
+                static fn(Media $media) => $media->getFile() !== null
+            ),
             new Divider(),
             new FormBuilderDialogInteraction(
                 'edit',

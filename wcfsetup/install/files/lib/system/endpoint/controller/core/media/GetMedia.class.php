@@ -41,9 +41,9 @@ final class GetMedia implements IController
             throw new PermissionDeniedException();
         }
 
-        $editorLinks = ['original' => $media->getEditorLink('original')];
+        $editorLinks = ['original' => $media->getLink()];
         foreach ($media->getEmbeddableThumbnailSizes() as $size) {
-            $editorLinks[$size] = $media->getEditorLink($size);
+            $editorLinks[$size] = $media->getThumbnailLink($size);
         }
 
         $thumbnailLinks = [];

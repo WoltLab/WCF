@@ -8,7 +8,6 @@ use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\data\IThumbnailFile;
 use wcf\data\user\UserProfile;
-use wcf\page\MediaPage;
 use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\file\processor\IImageDataProvider;
 use wcf\system\file\processor\ImageData;
@@ -16,7 +15,6 @@ use wcf\system\l10n\L10nDefinition;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
-use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -141,40 +139,25 @@ class Media extends CollectionDatabaseObject implements
         ],
     ];
 
+    /**
+     * Returns the link to the physical file, which is served directly by the
+     * web server for static images. Media files that have not been migrated to
+     * the new upload API yet have no link.
+     */
     #[\Override]
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getControllerLink(MediaPage::class, [
-            'object' => $this,
-        ]);
-    }
-
-    /**
-     * Returns the link that is used to embed the media file in the editor,
-     * which is stable across a replacement of the physical file.
-     *
-     * @param string $size thumbnail size or `original`
-     * @since 6.3
-     */
-    public function getEditorLink(string $size): string
-    {
-        if ($size === 'original') {
-            return $this->getLink();
+        $file = $this->getFile();
+        if ($file === null) {
+            return '';
         }
 
-        if (!isset(self::$thumbnailSizes[$size])) {
-            throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
-        }
-
-        return LinkHandler::getInstance()->getControllerLink(MediaPage::class, [
-            'object' => $this,
-            'thumbnail' => $size,
-        ]);
+        return $file->getFullSizeImageSource() ?? $file->getLink();
     }
 
     /**
      * Returns the link to the full size image that can be served directly by
-     * the web server or the link to the media page otherwise.
+     * the web server or the link to the physical file otherwise.
      *
      * @since 6.3
      */
@@ -228,15 +211,7 @@ class Media extends CollectionDatabaseObject implements
             throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
         }
 
-        if ($this->getFile() !== null) {
-            return $this->getFileThumbnail($size)?->getLink() ?? $this->getFullSizeImageSource();
-        }
-
-        if (!$this->{$size . 'ThumbnailType'}) {
-            return $this->getLink();
-        }
-
-        return $this->getEditorLink($size);
+        return $this->getFileThumbnail($size)?->getLink() ?? $this->getFullSizeImageSource();
     }
 
     /**

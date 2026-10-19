@@ -2,38 +2,29 @@
 
 namespace wcf\page;
 
-use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\media\Media;
-use wcf\data\media\MediaBuilder;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\util\FileReader;
 use wcf\util\StringUtil;
 
 /**
- * Shows a media file.
+ * Redirects to the physical file or a thumbnail of a media file. The link to
+ * this page remains stable even if the physical file of the media file is
+ * replaced.
  *
- * @author  Matthias Schmidt
- * @copyright   2001-2019 WoltLab GmbH
+ * Media files that have not been migrated to the new upload API yet cannot be
+ * accessed until the media files have been rebuilt.
+ *
+ * @author  Matthias Schmidt, Marcel Werk, Tim Düsterhus, Alexander Ebert
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Only kept to resolve existing links, use `Media::getLink()` or `Media::getThumbnailLink()` instead.
  */
 class MediaPage extends AbstractPage
 {
     const AVAILABLE_DURING_OFFLINE_MODE = true;
-
-    /**
-     * etag for the media file
-     * @var ?string
-     */
-    public $eTag;
-
-    /**
-     * file reader object
-     * @var ?FileReader
-     */
-    public $fileReader;
 
     /**
      * requested media file
@@ -48,8 +39,7 @@ class MediaPage extends AbstractPage
     public $thumbnail = '';
 
     /**
-     * link to the physical file of media files that have been migrated to
-     * the new upload API
+     * link to the physical file or the requested thumbnail
      * @since 6.3
      */
     protected string $fileLink = '';
@@ -59,69 +49,23 @@ class MediaPage extends AbstractPage
      */
     public $useTemplate = false;
 
-    /**
-     * list of mime types which belong to files that are displayed inline
-     * @var string[]
-     */
-    public static $inlineMimeTypes = [
-        'image/gif',
-        'image/jpeg',
-        'image/png',
-        'image/x-png',
-        'application/pdf',
-        'image/pjpeg',
-        'image/webp',
-    ];
-
     #[\Override]
     public function readData()
     {
         parent::readData();
 
         $file = $this->media->getFile();
-        if ($file !== null) {
-            if ($this->thumbnail !== '') {
-                $this->fileLink = $this->media->getThumbnailLink($this->thumbnail);
-            } elseif ($file->isStaticFile()) {
-                $this->fileLink = $this->media->getFullSizeImageSource();
-            } else {
-                // The download is tracked by the file processor.
-                $this->fileLink = $file->getLink();
-            }
-
-            return;
+        if ($file === null) {
+            throw new IllegalLinkException();
         }
 
-        // get file data
         if ($this->thumbnail !== '') {
-            $mimeType = $this->media->{$this->thumbnail . 'ThumbnailType'};
-            $filesize = $this->media->{$this->thumbnail . 'ThumbnailSize'};
-            $location = $this->media->getThumbnailLocation($this->thumbnail);
-            $this->eTag = \strtoupper($this->thumbnail) . '_' . $this->media->mediaID;
+            $this->fileLink = $this->media->getThumbnailLink($this->thumbnail);
+        } elseif ($file->isStaticFile()) {
+            $this->fileLink = $this->media->getFullSizeImageSource();
         } else {
-            $mimeType = $this->media->fileType;
-            $filesize = $this->media->filesize;
-            $location = $this->media->getLocation();
-            $this->eTag = (string)$this->media->mediaID;
-        }
-
-        $this->eTag .= '_' . $this->media->fileHash;
-
-        // init file reader
-        $maxAge = 3600;
-        $this->fileReader = new FileReader($location, [
-            'filename' => $this->media->filename,
-            'mimeType' => $mimeType,
-            'filesize' => $filesize,
-            'showInline' => \in_array($mimeType, self::$inlineMimeTypes, true),
-            'enableRangeSupport' => $this->thumbnail !== '',
-            'lastModificationTime' => $this->media->fileUpdateTime ?? $this->media->uploadTime,
-            'expirationDate' => \TIME_NOW + $maxAge,
-            'maxAge' => $maxAge,
-        ]);
-
-        if ($this->eTag !== null) {
-            $this->fileReader->addHeader('ETag', '"' . $this->eTag . '"');
+            // The download is tracked by the file processor.
+            $this->fileLink = $file->getLink();
         }
     }
 
@@ -145,10 +89,6 @@ class MediaPage extends AbstractPage
         if ($this->thumbnail !== '' && !isset(Media::getThumbnailSizes()[$this->thumbnail])) {
             throw new IllegalLinkException();
         }
-
-        if ($this->thumbnail !== '' && $this->media->getFile() === null && !$this->media->{$this->thumbnail . 'ThumbnailType'}) {
-            $this->thumbnail = '';
-        }
     }
 
     #[\Override]
@@ -156,29 +96,6 @@ class MediaPage extends AbstractPage
     {
         parent::show();
 
-        if ($this->fileLink !== '') {
-            $this->setPsr7Response(new RedirectResponse($this->fileLink));
-
-            return;
-        }
-
-        // etag caching
-        if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === '"' . $this->eTag . '"') {
-            $this->setPsr7Response(new EmptyResponse(304));
-
-            return;
-        }
-
-        if ($this->thumbnail === '') {
-            // update download count
-            MediaBuilder::forUpdate($this->media)
-                ->trackDownload(\TIME_NOW)
-                ->update();
-        }
-
-        // send file to client
-        $this->fileReader->send();
-
-        exit;
+        $this->setPsr7Response(new RedirectResponse($this->fileLink));
     }
 }

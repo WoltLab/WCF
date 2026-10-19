@@ -2644,7 +2644,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.rebuildData.wcf_system_worker_FileRebuildDataWorker"><![CDATA[Dateien aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_FileRebuildDataWorker.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker"><![CDATA[Medien aktualisieren]]></item>
-		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker.description"><![CDATA[Überträgt Medien in das neue Upload-System.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_StatDailyRebuildDataWorker"><![CDATA[Statistiken aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_StatDailyRebuildDataWorker.description"><![CDATA[Erzeugt die täglichen Statistiken neu]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_PollRebuildDataWorker"><![CDATA[Umfragen aktualisieren]]></item>

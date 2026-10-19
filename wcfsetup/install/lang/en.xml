@@ -2573,7 +2573,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.wcf_system_worker_FileRebuildDataWorker"><![CDATA[Rebuild Files]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_FileRebuildDataWorker.description"><![CDATA[Rebuilds the file preview images.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker"><![CDATA[Rebuild Media]]></item>
-		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker.description"><![CDATA[Rebuilds the media preview images.]]></item>
+		<item name="wcf.acp.rebuildData.wcf_system_worker_MediaRebuildDataWorker.description"><![CDATA[Migrates media files to the new upload system.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_StatDailyRebuildDataWorker"><![CDATA[Rebuild Statistics]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_StatDailyRebuildDataWorker.description"><![CDATA[Rebuilds the daily statistics.]]></item>
 		<item name="wcf.acp.rebuildData.wcf_system_worker_PollRebuildDataWorker"><![CDATA[Rebuild Polls]]></item>
