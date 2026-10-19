@@ -16,6 +16,8 @@ use wcf\system\WCF;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
+ * @deprecated 6.3 Register ACP menu items through the `wcf\event\acp\menu\item\ItemCollecting` event.
+ *
  * @property-read   int     $menuItemID         unique id of the ACP menu item
  * @property-read   int     $packageID          id of the package which delivers the ACP menu item
  * @property-read   string  $menuItem           textual identifier of the ACP menu item

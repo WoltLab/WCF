@@ -16,6 +16,7 @@ use wcf\system\cache\builder\ACPMenuCacheBuilder;
  * @mixin       ACPMenuItem
  * @extends DatabaseObjectEditor<ACPMenuItem>
  * @implements IEditableCachedObject<ACPMenuItem>
+ * @deprecated 6.3
  */
 class ACPMenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {

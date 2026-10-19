@@ -12,6 +12,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<ACPMenuItem, ACPMenuItemEditor>
+ * @deprecated 6.3
  */
 class ACPMenuItemAction extends AbstractDatabaseObjectAction
 {
