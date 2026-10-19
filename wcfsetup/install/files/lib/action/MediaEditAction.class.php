@@ -118,6 +118,7 @@ final class MediaEditAction implements RequestHandlerInterface
                             $field->value($object->categoryID ?? 0);
                         }),
                     ...$this->getContentFormFields(),
+                    ...($this->media->isImage !== 0 ? [$this->getCaptionEnableHtmlFormField()] : []),
                     SimpleAclFormField::create('acl')
                         ->saveValueCallback(static function (MediaBuilder $builder, SimpleAclFormField $field): void {
                             $value = $field->getValue();
@@ -259,21 +260,39 @@ final class MediaEditAction implements RequestHandlerInterface
 
     /**
      * Returns the fields for the title, caption and alternative text with the
-     * given id suffix.
+     * given id suffix. The caption and alternative text are only available
+     * for images.
      *
      * @return array<string, TextFormField>
      */
     private function getContentFields(string $idSuffix = ''): array
     {
-        return [
+        $fields = [
             'title' => TitleFormField::create('title' . $idSuffix)
                 ->maximumLength(255),
-            'caption' => MultilineTextFormField::create('caption' . $idSuffix)
-                ->label('wcf.media.caption'),
-            'altText' => TextFormField::create('altText' . $idSuffix)
-                ->label('wcf.media.altText')
-                ->maximumLength(255),
         ];
+
+        if ($this->media->isImage !== 0) {
+            $fields['caption'] = MultilineTextFormField::create('caption' . $idSuffix)
+                ->label('wcf.media.caption');
+            $fields['altText'] = TextFormField::create('altText' . $idSuffix)
+                ->label('wcf.media.altText')
+                ->maximumLength(255);
+        }
+
+        return $fields;
+    }
+
+    private function getCaptionEnableHtmlFormField(): BooleanFormField
+    {
+        return BooleanFormField::create('captionEnableHtml')
+            ->label('wcf.media.caption.enableHtml')
+            ->saveValueCallback(static function (MediaBuilder $builder, BooleanFormField $field): void {
+                $builder->setCaptionEnableHtml($field->getSaveValue() !== 0);
+            })
+            ->loadValueCallback(static function (Media $object, IFormField $field): void {
+                $field->value($object->captionEnableHtml);
+            });
     }
 
     private function isMultilingualismAvailable(): bool
