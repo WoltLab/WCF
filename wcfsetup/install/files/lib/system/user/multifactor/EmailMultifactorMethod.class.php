@@ -28,9 +28,9 @@ final class EmailMultifactorMethod implements IMultifactorMethod
 {
     private const LIFETIME = 10 * 60;
 
-    private const REFRESH_AFTER = 2 * 60;
+    private const REFRESH_AFTER = 3 * 60;
 
-    public const LENGTH = 8;
+    public const LENGTH = 6;
 
     private const USER_ATTEMPTS_PER_TEN_MINUTES = 5;
 
