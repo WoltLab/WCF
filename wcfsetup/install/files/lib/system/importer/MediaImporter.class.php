@@ -40,6 +40,9 @@ class MediaImporter extends AbstractImporter
             copy: true,
             uploadTime: isset($data['uploadTime']) ? (int)$data['uploadTime'] : null,
         )();
+
+        // Images whose dimensions cannot be read are considered to be broken
+        // and are skipped, matching the behavior of the attachment import.
         if ($file === null) {
             return 0;
         }
@@ -103,15 +106,17 @@ class MediaImporter extends AbstractImporter
      * imported contents which are grouped by language code. Multiple contents
      * make the media file multilingual, a single content of a specific language
      * assigns the media file to that language unless a language was given.
+     * Contents without a language code (`''` or `0`) are monolingual.
      *
-     * @param array<string, array{title?: string, caption?: string, altText?: string}> $contents
+     * @param array<int|string, array{title?: string, caption?: string, altText?: string}> $contents
      */
     private function setContents(MediaBuilder $builder, array $contents, bool $adoptContentLanguage): void
     {
         $values = [];
         foreach ($contents as $languageCode => $contentData) {
+            $languageCode = (string)$languageCode;
             $languageID = L10nStorage::MONOLINGUAL;
-            if ($languageCode !== '') {
+            if ($languageCode !== '' && $languageCode !== '0') {
                 $language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
                 if ($language === null) {
                     continue;

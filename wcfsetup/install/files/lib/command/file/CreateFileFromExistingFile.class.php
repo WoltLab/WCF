@@ -66,10 +66,19 @@ final class CreateFileFromExistingFile
         $width = $height = null;
         if ($isImage) {
             try {
-                [$width, $height] = \getimagesize($this->pathname);
+                $imageData = \getimagesize($this->pathname);
             } catch (\Throwable) {
+                $imageData = false;
+            }
+
+            // `getimagesize()` silently returns `false` for some corrupted
+            // images, which must not be accepted as an image with unknown
+            // dimensions.
+            if ($imageData === false) {
                 return null;
             }
+
+            [$width, $height] = $imageData;
 
             $imageWasModified = false;
             try {
