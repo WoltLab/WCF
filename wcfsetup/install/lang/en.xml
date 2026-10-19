@@ -4153,7 +4153,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.media.lastDownloadTime"><![CDATA[Last Download]]></item>
 		<item name="wcf.media.file.info"><![CDATA[{$media->filesize|filesize} – {plural value=$media->downloads 1="1 Download" other="# Downloads"}]]></item>
 		<item name="wcf.media.file"><![CDATA[File]]></item>
-		<item name="wcf.media.file.description"><![CDATA[A new file replaces the current file. Images can only be replaced by images.]]></item>
+		<item name="wcf.media.file.description"><![CDATA[A new file replaces the current file immediately. Images can only be replaced by images, other files only by files that are not images.]]></item>
 		<item name="wcf.media.file.title"><![CDATA[Download File “{$media->filename}”]]></item>
 	</category>
 	<category name="wcf.message">
@@ -5476,6 +5476,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.upload.error.image.tooSmall"><![CDATA[The image is too small. It must be at least {$width} x {$height} pixels in size.]]></item>
 		<item name="wcf.upload.error.delete.unknownError"><![CDATA[An unknown error occurred while deleting the file.]]></item>
 		<item name="wcf.upload.error.delete.permissionDenied"><![CDATA[The file cannot be deleted, use <strong>Replace</strong> instead to swap out the file.]]></item>
+		<item name="wcf.upload.validation.error.differentKind"><![CDATA[An image can only be replaced by another image, other files only by files that are not images.]]></item>
 		<item name="wcf.upload.validation.error.noImage"><![CDATA[The file is not an image.]]></item>
 		<item name="wcf.upload.validation.error.notSquare"><![CDATA[The file is not square.]]></item>
 		<item name="wcf.upload.validation.error.tooSmall"><![CDATA[The file is too small.]]></item>

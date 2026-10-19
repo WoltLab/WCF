@@ -317,7 +317,9 @@ final class MediaEditAction implements RequestHandlerInterface
                     return;
                 }
 
-                // The previous file is deleted by the builder.
+                // The upload usually assigns the replacement already, see
+                // `MediaFileProcessor::adopt()`. The previous file is deleted
+                // by the builder.
                 $builder->setFile($file)
                     ->setFileUpdateTime(\TIME_NOW);
             })

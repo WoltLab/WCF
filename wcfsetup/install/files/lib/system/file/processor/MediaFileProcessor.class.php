@@ -3,7 +3,9 @@
 namespace wcf\system\file\processor;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use wcf\command\file\DeleteFiles;
 use wcf\command\media\CreateMedia;
+use wcf\command\media\UpdateMedia;
 use wcf\data\file\File;
 use wcf\data\media\Media;
 use wcf\data\media\MediaBuilder;
@@ -13,6 +15,7 @@ use wcf\http\Helper;
 use wcf\system\cache\runtime\MediaRuntimeCache;
 use wcf\system\category\CategoryHandler;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -20,8 +23,8 @@ use wcf\util\FileUtil;
  * File processor for media files.
  *
  * Uploading a new file creates a media file, a file that replaces the file of
- * an existing media file (`mediaID` in the context) is assigned by the form
- * that edits the media file.
+ * an existing media file (`mediaID` in the context) is assigned to it right
+ * away, which deletes the previous file.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
@@ -80,6 +83,11 @@ final class MediaFileProcessor extends AbstractFileProcessor
             if (!$media->canManage()) {
                 return FileProcessorPreflightResult::InsufficientPermissions;
             }
+
+            // Other files cannot be replaced by an image.
+            if ($media->isImage === 0 && FileUtil::endsWithAllowedExtension($filename, self::IMAGE_EXTENSIONS)) {
+                return FileProcessorPreflightResult::FileExtensionNotPermitted;
+            }
         }
 
         if ($parameters->categoryID !== 0 && !self::isValidCategory($parameters->categoryID)) {
@@ -122,7 +130,8 @@ final class MediaFileProcessor extends AbstractFileProcessor
         }
 
         if ($parameters->mediaID !== 0) {
-            // The replacement is assigned when the form is saved.
+            $this->replaceFile($file, $parameters);
+
             return;
         }
 
@@ -257,6 +266,36 @@ final class MediaFileProcessor extends AbstractFileProcessor
             'categoryID' => $categoryID,
             'imagesOnly' => (int)$imagesOnly,
         ]);
+    }
+
+    /**
+     * Assigns the uploaded file to the media file immediately, so that the
+     * thumbnails can be generated and the previous file is deleted before the
+     * client attempts to delete it, which would delete the media file instead.
+     *
+     * @throws UserInputException if the kind of the file does not match the media file
+     */
+    private function replaceFile(File $file, MediaFileProcessorContext $parameters): void
+    {
+        $media = $this->getMediaFromContext($parameters);
+        if ($media === null || !$media->canManage()) {
+            return;
+        }
+
+        // Embedded media files and image fields rely on the media file staying an image.
+        // The upload must fail, otherwise the client deletes the previous file
+        // which is still assigned and would delete the media file instead.
+        if ($file->isImage() !== ($media->isImage !== 0)) {
+            new DeleteFiles([$file])();
+
+            throw new UserInputException('validation', 'differentKind');
+        }
+
+        new UpdateMedia(
+            MediaBuilder::forUpdate($media)
+                ->setFile($file)
+                ->setFileUpdateTime(\TIME_NOW)
+        )();
     }
 
     private static function isValidCategory(int $categoryID): bool
