@@ -1,0 +1,247 @@
+/* styling for boxes in <footerBoxes> position */
+.boxesFooterBoxes {
+	background-color: var(--wcfFooterBoxBackground);
+	color: var(--wcfFooterBoxText);
+
+	a {
+		color: var(--wcfFooterBoxLink);
+
+		&:hover {
+			color: var(--wcfFooterBoxLinkActive);
+		}
+	}
+
+	.boxContainer {
+		@include screen-sm-down {
+			display: flex;
+			flex-direction: column;
+			padding: 40px 0;
+			row-gap: 40px;
+		}
+
+		@include screen-md-up {
+			column-gap: 30px;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			padding: 60px 0;
+			row-gap: 60px;
+		}
+	}
+
+	@include screen-md-up {
+		.box.boxFullWidth {
+			grid-column: span 2;
+		}
+	}
+
+	.boxTitle {
+		color: var(--wcfFooterBoxHeadlineText);
+
+		a {
+			color: var(--wcfFooterBoxHeadlineLink);
+
+			&:hover {
+				color: var(--wcfFooterBoxHeadlineLinkActive);
+			}
+		}
+	}
+
+	.boxImage {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		margin-bottom: 20px;
+		max-height: 100px;
+		overflow: hidden;
+	}
+}
+
+/* styling for boxes in <footer> position */
+.boxesFooter {
+	background-color: var(--wcfFooterBackground);
+	color: var(--wcfFooterText);
+	padding: 20px 0;
+
+	.layoutBoundary {
+		position: relative;
+	}
+
+	a {
+		color: var(--wcfFooterLink);
+
+		&:hover {
+			color: var(--wcfFooterLinkActive);
+			text-decoration: underline;
+		}
+	}
+
+	.box {
+		&:not(:first-child) {
+			margin-top: 20px;
+		}
+	}
+
+	.boxTitle {
+		color: var(--wcfFooterHeadlineText);
+
+		a {
+			color: var(--wcfFooterHeadlineLink);
+
+			&:hover {
+				color: var(--wcfFooterHeadlineLinkActive);
+			}
+		}
+	}
+
+	@include screen-xs {
+		.boxImage {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+			margin-bottom: 20px;
+			max-height: 100px;
+			overflow: hidden;
+		}
+	}
+
+	@include screen-sm-up {
+		.boxWithImage {
+			@include clearfix;
+		}
+
+		.boxImage {
+			float: left;
+			width: 30%;
+		}
+	}
+
+	@include screen-sm-md {
+		.boxImage {
+			margin: 0 10px 10px 0;
+		}
+	}
+
+	@include screen-lg {
+		.boxImage {
+			margin: 0 20px 20px 0;
+		}
+	}
+
+	.boxMenuLinkGroup {
+		.boxMenu {
+			> li {
+				> ol {
+					a {
+						// use text color instead
+						color: var(--wcfFooterText);
+					}
+				}
+			}
+		}
+	}
+}
+
+.styleChanger {
+	position: absolute;
+	right: 20px;
+	z-index: 1;
+
+	button {
+		color: var(--wcfFooterLink);
+	}
+
+	@include screen-md-down {
+		right: 10px;
+	}
+}
+
+@media (hover: hover) {
+	.styleChanger button:hover {
+		color: var(--wcfFooterLinkActive);
+		text-decoration: underline;
+	}
+}
+
+.boxesFooter {
+	.boxMenu {
+		display: inline-flex;
+		flex-wrap: wrap;
+		margin-left: -10px;
+		margin-right: -10px;
+
+		> li {
+			flex: 0 0 auto;
+			padding-left: 10px;
+			padding-right: 10px;
+
+			@include screen-md-down {
+				margin-bottom: 10px;
+				margin-top: 10px;
+			}
+		}
+	}
+
+	.boxMenuLinkGroup {
+		&:not(:first-child) {
+			margin-top: 40px;
+		}
+
+		.boxMenu {
+			display: flex;
+			flex-wrap: wrap;
+			margin-bottom: -20px;
+
+			.boxMenuLink {
+				display: inline-block;
+			}
+
+			> li {
+				margin-bottom: 20px;
+
+				@include screen-md-up {
+					flex: 0 0 25%;
+					max-width: 25%;
+				}
+
+				@include screen-sm-down {
+					flex: 1 1 100%;
+				}
+
+				> .boxMenuLink {
+					margin-bottom: 10px;
+
+					@include wcfFontHeadline;
+				}
+			}
+		}
+	}
+}
+
+.pageFooterCopyright {
+	background-color: var(--wcfFooterCopyrightBackground);
+	color: var(--wcfFooterCopyrightText);
+	text-align: center;
+
+	@include screen-md-up {
+		padding: 20px 0;
+	}
+
+	@include screen-sm-down {
+		padding: 20px 0;
+
+		@include wcfFontSmall;
+	}
+
+	> .layoutBoundary > div:not(:first-child) {
+		margin-top: 10px;
+	}
+
+	a {
+		color: var(--wcfFooterCopyrightLink);
+
+		&:hover {
+			color: var(--wcfFooterCopyrightLinkActive);
+			text-decoration: underline;
+		}
+	}
+}
