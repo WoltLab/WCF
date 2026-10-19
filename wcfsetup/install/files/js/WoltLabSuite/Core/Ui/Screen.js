@@ -22,6 +22,7 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
     let _scrollDisableCounter = 0;
     let _scrollOffsetFrom;
     let _scrollTop = 0;
+    let _hasPageContainerOffset = false;
     let _pageOverlayCounter = 0;
     const _mqMap = new Map(Object.entries({
         "screen-xs": "(max-width: 544px)" /* smartphone */,
@@ -96,7 +97,8 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
                 _scrollOffsetFrom = "documentElement";
             }
             const pageContainer = document.getElementById("pageContainer");
-            if (is("screen-md-down")) {
+            _hasPageContainerOffset = is("screen-md-down");
+            if (_hasPageContainerOffset) {
                 pageContainer.style.setProperty("position", "relative", "");
                 pageContainer.style.setProperty("top", `-${_scrollTop}px`, "");
             }
@@ -112,10 +114,12 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
             _scrollDisableCounter--;
             if (_scrollDisableCounter === 0) {
                 document.documentElement.classList.remove("disableScrolling");
-                const pageContainer = document.getElementById("pageContainer");
-                if (is("screen-md-down")) {
+                // The screen size may have changed since, e.g. when closing an overlay on a media query change.
+                if (_hasPageContainerOffset) {
+                    const pageContainer = document.getElementById("pageContainer");
                     pageContainer.style.removeProperty("position");
                     pageContainer.style.removeProperty("top");
+                    _hasPageContainerOffset = false;
                 }
                 if (_scrollTop) {
                     document[_scrollOffsetFrom].scrollTop = ~~_scrollTop;

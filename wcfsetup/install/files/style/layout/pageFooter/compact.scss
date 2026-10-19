@@ -429,6 +429,182 @@
 	}
 }
 
+/* A dropdown that opens upwards on large screens, a sheet at the bottom of the screen on small ones. */
+.pageFooterLanguage {
+	position: relative;
+}
+
+.pageFooterLanguage .iconFlag {
+	border-radius: 2px;
+	display: block;
+	flex: 0 0 auto;
+	height: 15px;
+	object-fit: cover;
+	width: 20px;
+}
+
+.pageFooterLanguage__popover {
+	background-color: var(--wcfDropdownBackground);
+	border-radius: var(--wcfBorderRadius);
+	bottom: calc(100% + 6px);
+	box-shadow: var(--wcfBoxShadow);
+	box-sizing: border-box;
+	color: var(--wcfDropdownText);
+	inset-inline-end: 0;
+	max-height: min(360px, 70vh);
+	min-width: 220px;
+	overflow-y: auto;
+	padding: 4px;
+	position: absolute;
+	z-index: 450;
+
+	@include screen-md-down {
+		background-color: var(--wcfUserMenuBackground);
+		border-radius: 12px 12px 0 0;
+		bottom: 0;
+		color: var(--wcfUserMenuText);
+		inset-inline: 0;
+		max-height: 80vh;
+		min-width: 0;
+		padding: 0 0 max(12px, env(safe-area-inset-bottom));
+		position: fixed;
+	}
+}
+
+.pageFooterLanguage__popover:focus {
+	outline: none;
+}
+
+.pageFooterLanguage__popover[hidden],
+.pageFooterLanguage__backdrop {
+	display: none;
+}
+
+.pageFooterLanguage__backdrop:not([hidden]) {
+	@include screen-md-down {
+		background-color: rgba(var(--wcfTooltipBackground-rgb) / 0.34);
+		display: block;
+		inset: 0;
+		position: fixed;
+		z-index: 449;
+	}
+}
+
+.pageFooterLanguage__head {
+	display: none;
+
+	@include screen-md-down {
+		align-items: center;
+		background-color: var(--wcfUserMenuBackground);
+		border-bottom: 1px solid var(--wcfUserMenuBorder);
+		display: flex;
+		height: 56px;
+		justify-content: space-between;
+		padding-inline: 20px 6px;
+		position: sticky;
+		top: 0;
+	}
+}
+
+.pageFooterLanguage__title {
+	@include wcfFontBold;
+}
+
+.pageFooterLanguage__close {
+	align-items: center;
+	background-color: transparent;
+	border: 0;
+	border-radius: 50%;
+	color: var(--wcfUserMenuText);
+	cursor: pointer;
+	display: inline-flex;
+	height: 44px;
+	justify-content: center;
+	width: 44px;
+}
+
+.pageFooterLanguage__close:focus-visible {
+	outline: 2px solid var(--wcfUserMenuText);
+	outline-offset: -2px;
+}
+
+.pageFooterLanguage__list {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	@include screen-md-down {
+		padding: 8px 10px 0;
+	}
+}
+
+.pageFooterLanguage__item {
+	align-items: center;
+	background-color: transparent;
+	border: 0;
+	border-radius: var(--wcfBorderRadius);
+	box-sizing: border-box;
+	color: var(--wcfDropdownLink);
+	cursor: pointer;
+	display: flex;
+	font: inherit;
+	gap: 10px;
+	min-height: 34px;
+	padding: 0 8px;
+	text-align: start;
+	width: 100%;
+
+	@include screen-md-down {
+		color: var(--wcfUserMenuText);
+		gap: 12px;
+		min-height: 48px;
+		padding: 0 10px;
+	}
+}
+
+.pageFooterLanguage__item > span:not(.pageFooterLanguage__check) {
+	flex: 1 1 auto;
+}
+
+.pageFooterLanguage__check {
+	display: inline-flex;
+	visibility: hidden;
+}
+
+.pageFooterLanguage__item[aria-current="true"] .pageFooterLanguage__check {
+	visibility: visible;
+}
+
+.pageFooterLanguage__item[aria-current="true"] {
+	@include screen-md-down {
+		background-color: var(--wcfUserMenuBackgroundActive);
+		color: var(--wcfUserMenuTextActive);
+	}
+}
+
+.pageFooterLanguage__item:focus-visible {
+	outline: 2px solid var(--wcfDropdownLink);
+	outline-offset: -2px;
+
+	@include screen-md-down {
+		outline-color: var(--wcfUserMenuText);
+	}
+}
+
+@media (hover: hover) {
+	.pageFooterLanguage__item:hover {
+		background-color: var(--wcfDropdownBackgroundActive);
+		color: var(--wcfDropdownLinkActive);
+
+		@include screen-md-down {
+			background-color: var(--wcfUserMenuBackgroundActive);
+			color: var(--wcfUserMenuTextActive);
+		}
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.pageFooterPreferences__button,
 	.pageFooterScheme__option::before {

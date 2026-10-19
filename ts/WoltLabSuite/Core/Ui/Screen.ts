@@ -13,6 +13,7 @@ const _mql = new Map<string, MediaQueryData>();
 let _scrollDisableCounter = 0;
 let _scrollOffsetFrom: "body" | "documentElement";
 let _scrollTop = 0;
+let _hasPageContainerOffset = false;
 let _pageOverlayCounter = 0;
 
 const _mqMap = new Map<string, string>(
@@ -102,7 +103,8 @@ export function scrollDisable(): void {
 
     const pageContainer = document.getElementById("pageContainer")!;
 
-    if (is("screen-md-down")) {
+    _hasPageContainerOffset = is("screen-md-down");
+    if (_hasPageContainerOffset) {
       pageContainer.style.setProperty("position", "relative", "");
       pageContainer.style.setProperty("top", `-${_scrollTop}px`, "");
     }
@@ -123,10 +125,12 @@ export function scrollEnable(): void {
     if (_scrollDisableCounter === 0) {
       document.documentElement.classList.remove("disableScrolling");
 
-      const pageContainer = document.getElementById("pageContainer")!;
-      if (is("screen-md-down")) {
+      // The screen size may have changed since, e.g. when closing an overlay on a media query change.
+      if (_hasPageContainerOffset) {
+        const pageContainer = document.getElementById("pageContainer")!;
         pageContainer.style.removeProperty("position");
         pageContainer.style.removeProperty("top");
+        _hasPageContainerOffset = false;
       }
 
       if (_scrollTop) {

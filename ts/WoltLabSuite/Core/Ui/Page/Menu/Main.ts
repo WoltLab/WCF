@@ -152,20 +152,40 @@ export class PageMenuMain implements PageMenuProvider {
     }
   }
 
-  private buildLanguageMenu(): HTMLElement | null {
+  /**
+   * Returns the elements that switch to a language by their language code, the
+   * new page footers host them instead of the page header.
+   */
+  private getLanguageSwitches(): Map<string, HTMLElement> {
     const dropDownMenu = DropDownSimple.getDropdownMenu("pageLanguageContainer");
-    if (dropDownMenu === undefined) {
+    if (dropDownMenu !== undefined) {
+      return new Map(
+        Array.from(dropDownMenu.children, (listItem: HTMLElement) => [
+          listItem.dataset.languageCode!,
+          listItem.querySelector("a")!,
+        ]),
+      );
+    }
+
+    return new Map(
+      Array.from(document.querySelectorAll<HTMLElement>(".pageFooterLanguage__item"), (button) => [
+        button.dataset.languageCode!,
+        button,
+      ]),
+    );
+  }
+
+  private buildLanguageMenu(): HTMLElement | null {
+    const languageMapping = this.getLanguageSwitches();
+    if (languageMapping.size === 0) {
       return null;
     }
 
     const children: MenuItem[] = [];
-    const languageMapping = new Map<string, HTMLAnchorElement>();
-    Array.from(dropDownMenu.children).forEach((listItem: HTMLElement) => {
-      const identifier = listItem.dataset.languageCode!;
-      const title = listItem.querySelector("span")!.textContent.trim();
-      const icon = listItem.querySelector<HTMLImageElement>("img.iconFlag") || undefined;
-
-      languageMapping.set(identifier, listItem.querySelector("a")!);
+    languageMapping.forEach((element, identifier) => {
+      const title = element.querySelector("span")!.textContent.trim();
+      // The label takes the icon, the original must stay in place.
+      const icon = element.querySelector<HTMLImageElement>("img.iconFlag")?.cloneNode() as HTMLImageElement | undefined;
 
       children.push({
         active: false,

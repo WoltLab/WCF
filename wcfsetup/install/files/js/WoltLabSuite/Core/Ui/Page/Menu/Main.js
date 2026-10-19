@@ -118,18 +118,33 @@ define(["require", "exports", "tslib", "./Container", "WoltLabSuite/Core/Languag
                 }
             }
         }
-        buildLanguageMenu() {
+        /**
+         * Returns the elements that switch to a language by their language code, the
+         * new page footers host them instead of the page header.
+         */
+        getLanguageSwitches() {
             const dropDownMenu = DropDownSimple.getDropdownMenu("pageLanguageContainer");
-            if (dropDownMenu === undefined) {
+            if (dropDownMenu !== undefined) {
+                return new Map(Array.from(dropDownMenu.children, (listItem) => [
+                    listItem.dataset.languageCode,
+                    listItem.querySelector("a"),
+                ]));
+            }
+            return new Map(Array.from(document.querySelectorAll(".pageFooterLanguage__item"), (button) => [
+                button.dataset.languageCode,
+                button,
+            ]));
+        }
+        buildLanguageMenu() {
+            const languageMapping = this.getLanguageSwitches();
+            if (languageMapping.size === 0) {
                 return null;
             }
             const children = [];
-            const languageMapping = new Map();
-            Array.from(dropDownMenu.children).forEach((listItem) => {
-                const identifier = listItem.dataset.languageCode;
-                const title = listItem.querySelector("span").textContent.trim();
-                const icon = listItem.querySelector("img.iconFlag") || undefined;
-                languageMapping.set(identifier, listItem.querySelector("a"));
+            languageMapping.forEach((element, identifier) => {
+                const title = element.querySelector("span").textContent.trim();
+                // The label takes the icon, the original must stay in place.
+                const icon = element.querySelector("img.iconFlag")?.cloneNode();
                 children.push({
                     active: false,
                     children: [],

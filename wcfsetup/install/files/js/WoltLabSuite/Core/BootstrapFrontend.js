@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend", "./LazyLoader", "./Ajax/Backend", "./Notification/ServiceWorker", "./Api/Articles/GetArticlePopover", "./Api/Users/GetUserPopover", "./Component/Drawer", "./Component/MainMenu", "./Component/LanguageSwitcher", "./Component/UserMenuDrawer", "./Component/PageHeaderSearch", "./Component/PageHeaderShadow", "./Component/PageFooter/ColorSchemeSwitch", "./Controller/Style/ColorScheme"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, UiMessageShareDialog, Providers_1, UiFeedDialog, User_1, Frontend_1, LazyLoader_1, Backend_1, ServiceWorker_1, GetArticlePopover_1, GetUserPopover_1, Drawer_1, MainMenu_1, LanguageSwitcher_1, UserMenuDrawer_1, PageHeaderSearch_1, PageHeaderShadow_1, ColorSchemeSwitch_1, ColorScheme_1) {
+define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers", "./Ui/Feed/Dialog", "./User", "./Ui/Page/Menu/Main/Frontend", "./LazyLoader", "./Ajax/Backend", "./Notification/ServiceWorker", "./Api/Articles/GetArticlePopover", "./Api/Users/GetUserPopover", "./Component/Drawer", "./Component/MainMenu", "./Component/LanguageSwitcher", "./Component/UserMenuDrawer", "./Component/PageHeaderSearch", "./Component/PageHeaderShadow", "./Component/PageFooter/ColorSchemeSwitch", "./Component/PageFooter/LanguageSwitch", "./Controller/Style/ColorScheme"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, UiMessageShareDialog, Providers_1, UiFeedDialog, User_1, Frontend_1, LazyLoader_1, Backend_1, ServiceWorker_1, GetArticlePopover_1, GetUserPopover_1, Drawer_1, MainMenu_1, LanguageSwitcher_1, UserMenuDrawer_1, PageHeaderSearch_1, PageHeaderShadow_1, ColorSchemeSwitch_1, LanguageSwitch_1, ColorScheme_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -73,7 +73,6 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
         if (hasSystemPageHeader) {
             (0, Drawer_1.setup)();
             (0, MainMenu_1.setup)();
-            (0, LanguageSwitcher_1.setup)();
             (0, UserMenuDrawer_1.setup)();
             (0, PageHeaderSearch_1.setup)();
             (0, PageHeaderShadow_1.setup)();
@@ -81,8 +80,13 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
         else {
             UiPageHeaderMenu.init();
         }
-        if (options.templateVariants.includes("pageFooter")) {
+        const hasSystemPageFooter = options.templateVariants.includes("pageFooter");
+        if (hasSystemPageFooter) {
             (0, ColorSchemeSwitch_1.setup)();
+            (0, LanguageSwitch_1.setup)();
+        }
+        if (hasSystemPageHeader || hasSystemPageFooter) {
+            (0, LanguageSwitcher_1.setup)();
         }
         if (options.styleChanger) {
             void new Promise((resolve_5, reject_5) => { require(["./Controller/Style/Changer"], resolve_5, reject_5); }).then(tslib_1.__importStar).then((ControllerStyleChanger) => {

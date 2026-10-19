@@ -72,6 +72,50 @@
 			<span>{lang}wcf.style.changeStyle{/lang}</span>
 		</button>
 	{/if}
+
+	{* Members only switch the language through the developer tools. *}
+	{if $__wcf->getLanguage()->getLanguages()|count > 1 && ($__wcf->user->isGuest() || (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS))}
+		<div class="pageFooterLanguage jsOnly">
+			<button
+				type="button"
+				class="pageFooterPreferences__button pageFooterLanguage__toggle"
+				aria-haspopup="dialog"
+				aria-expanded="false"
+				aria-controls="pageFooterLanguageList"
+			>
+				<img src="{$__wcf->getLanguage()->getIconPath()}" alt="" class="iconFlag">
+				<span><span class="visuallyHidden">{lang}wcf.user.language{/lang} </span>{$__wcf->getLanguage()}</span>
+				{icon name='chevron-up'}
+			</button>
+			<div class="pageFooterLanguage__backdrop" hidden></div>
+			<div id="pageFooterLanguageList" class="pageFooterLanguage__popover" role="dialog" aria-label="{lang}wcf.user.language{/lang}" tabindex="-1" hidden>
+				<div class="pageFooterLanguage__head">
+					<span class="pageFooterLanguage__title">{lang}wcf.user.language{/lang}</span>
+					<button type="button" class="pageFooterLanguage__close" title="{lang}wcf.global.button.close{/lang}" aria-label="{lang}wcf.global.button.close{/lang}">
+						{icon name='xmark'}
+					</button>
+				</div>
+				<ul class="pageFooterLanguage__list">
+					{foreach from=$__wcf->getLanguage()->getLanguages() item=_language}
+						<li>
+							<button
+								type="button"
+								class="pageFooterLanguage__item"
+								data-switch-language="{$_language->languageID}"
+								data-language-code="{$_language->languageCode}"
+								lang="{$_language->languageCode}"
+								{if $_language->languageID === $__wcf->getLanguage()->languageID} aria-current="true"{/if}
+							>
+								<img src="{$_language->getIconPath()}" alt="" class="iconFlag">
+								<span>{$_language}</span>
+								<span class="pageFooterLanguage__check">{icon name='check'}</span>
+							</button>
+						</li>
+					{/foreach}
+				</ul>
+			</div>
+		</div>
+	{/if}
 {/capture}
 {assign var='__pageFooterPreferences' value=$__pageFooterPreferences|trim}
 

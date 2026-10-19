@@ -1,5 +1,5 @@
-{* The `system_pageHeader` renders this chooser on the server. *}
-{if ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && !$__wcf->user->isGuest() && $__wcf->getStyleHandler()->getStyle()->usesClassicPageHeader()}
+{* The `system_pageHeader` renders this chooser on the server, the new page footers host it instead. *}
+{if ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && !$__wcf->user->isGuest() && $__wcf->getStyleHandler()->getStyle()->usesClassicPageHeader() && $__wcf->getStyleHandler()->getStyle()->usesClassicPageFooter()}
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Api/Devtools/SetLanguage', 'WoltLabSuite/Core/Language/Chooser'], function(SetLanguage, LanguageChooser) {
 			var item = elCreate('li');
