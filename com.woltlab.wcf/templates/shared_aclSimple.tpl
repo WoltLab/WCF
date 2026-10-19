@@ -85,6 +85,6 @@
 		{jsphrase name='wcf.acl.access.granted'}
 		{jsphrase name='wcf.acl.access.denied'}
 
-		new UiAclSimple('{$__aclSimplePrefix}', '{unsafe:$__aclInputName|encodeJS}');
+		new UiAclSimple('{unsafe:$__aclSimplePrefix|encodeJS}', '{unsafe:$__aclInputName|encodeJS}');
 	});
 </script>

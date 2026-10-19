@@ -2,18 +2,18 @@
 
 namespace wcf\system\importer;
 
+use wcf\command\file\CreateFileFromExistingFile;
+use wcf\command\media\CreateMedia;
 use wcf\data\media\Media;
-use wcf\data\media\MediaEditor;
-use wcf\system\exception\SystemException;
+use wcf\data\media\MediaBuilder;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\language\LanguageFactory;
-use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Imports cms media.
  *
  * @author  Marcel Werk
- * @copyright   2001-2021 WoltLab GmbH
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class MediaImporter extends AbstractImporter
@@ -31,115 +31,131 @@ class MediaImporter extends AbstractImporter
             return 0;
         }
 
-        // Extract metadata from the file ourselves, because the
-        // information pulled from the source database might not
-        // be reliable.
-        $data['fileHash'] = \sha1_file($additionalData['fileLocation']);
-        $data['filesize'] = \filesize($additionalData['fileLocation']);
-        $data['fileType'] = FileUtil::getMimeType($additionalData['fileLocation']);
+        // The meta data is extracted from the file itself, because the
+        // information pulled from the source database might not be reliable.
+        $file = new CreateFileFromExistingFile(
+            $additionalData['fileLocation'],
+            $data['filename'],
+            'com.woltlab.wcf.media',
+            copy: true,
+            uploadTime: isset($data['uploadTime']) ? (int)$data['uploadTime'] : null,
+        )();
 
-        $imageData = @\getimagesize($additionalData['fileLocation']);
-        if ($imageData !== false) {
-            $data['isImage'] = 1;
-            $data['width'] = $imageData[0];
-            $data['height'] = $imageData[1];
-        } else {
-            $data['isImage'] = 0;
-            $data['width'] = 0;
-            $data['height'] = 0;
+        // Images whose dimensions cannot be read are considered to be broken
+        // and are skipped, matching the behavior of the attachment import.
+        if ($file === null) {
+            return 0;
         }
 
-        $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
+        $builder = MediaBuilder::forCreate()
+            ->setFile($file)
+            ->setUser(
+                ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID'] ?? null),
+                $data['username'] ?? ''
+            )
+            ->setUploadTime($data['uploadTime'] ?? \TIME_NOW)
+            ->setCaptionEnableHtml((bool)($data['captionEnableHtml'] ?? false));
 
-        $contents = [];
-        if (!empty($additionalData['contents'])) {
-            foreach ($additionalData['contents'] as $languageCode => $contentData) {
-                $languageID = 0;
-                if (!empty($languageCode)) {
-                    if (($language = LanguageFactory::getInstance()->getLanguageByCode($languageCode)) !== null) {
-                        $languageID = $language->languageID;
-                    } else {
-                        continue;
-                    }
-                }
-
-                $contents[$languageID] = [
-                    'title' => (!empty($contentData['title']) ? $contentData['title'] : ''),
-                    'caption' => (!empty($contentData['caption']) ? $contentData['caption'] : ''),
-                    'altText' => (!empty($contentData['altText']) ? $contentData['altText'] : ''),
-                ];
-            }
-            if (\count($contents) > 1) {
-                $data['isMultilingual'] = 1;
-            }
+        if (isset($data['fileUpdateTime'])) {
+            $builder->setFileUpdateTime((int)$data['fileUpdateTime']);
+        }
+        if (isset($data['downloads'])) {
+            $builder->setCustomProperty('downloads', (int)$data['downloads']);
+        }
+        if (isset($data['lastDownloadTime'])) {
+            $builder->setCustomProperty('lastDownloadTime', (int)$data['lastDownloadTime']);
         }
 
-        // handle language
-        if (!empty($additionalData['languageCode'])) {
-            if (($language = LanguageFactory::getInstance()->getLanguageByCode($additionalData['languageCode'])) !== null) {
-                $data['languageID'] = $language->languageID;
+        // Media files without an explicit language belong to the default language.
+        $languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+        $languageCode = (string)($additionalData['languageCode'] ?? '');
+        if ($languageCode !== '') {
+            $language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
+            if ($language !== null) {
+                $languageID = $language->languageID;
             }
         }
+        $builder->setLanguageID($languageID);
+
+        $this->setContents($builder, $additionalData['contents'] ?? [], $languageCode === '');
 
         // check old id
         if (\ctype_digit((string)$oldID)) {
             $media = new Media($oldID);
             if ($media->isNil()) {
-                $data['mediaID'] = $oldID;
+                $builder->setID($oldID);
             }
         }
 
         // category
-        $categoryID = null;
-        if (!empty($data['categoryID'])) {
-            $categoryID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.media.category', $data['categoryID']);
-        }
-        if ($categoryID !== null) {
-            $data['categoryID'] = $categoryID;
+        if (isset($data['categoryID'])) {
+            $builder->setCategoryID(
+                ImportHandler::getInstance()->getNewID('com.woltlab.wcf.media.category', $data['categoryID'])
+            );
         }
 
-        $data['captionEnableHtml'] ??= 0;
-
-        // save media
-        $media = MediaEditor::create($data);
-
-        // check media directory
-        // and create subdirectory if necessary
-        $dir = \dirname($media->getLocation());
-        if (!@\file_exists($dir)) {
-            @\mkdir($dir, 0777);
-        }
-
-        // copy file
-        try {
-            if (!\copy($additionalData['fileLocation'], $media->getLocation())) {
-                throw new SystemException();
-            }
-        } catch (SystemException $e) {
-            // copy failed; delete media
-            $editor = new MediaEditor($media);
-            $editor->delete();
-
-            return 0;
-        }
-
-        // save media content
-        $sql = "INSERT INTO wcf1_media_content
-                            (mediaID, languageID, title, caption, altText)
-                VALUES      (?, ?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepare($sql);
-        foreach ($contents as $languageID => $contentData) {
-            $statement->execute([
-                $media->mediaID,
-                $languageID ?: null,
-                $contentData['title'],
-                $contentData['caption'],
-                $contentData['altText'],
-            ]);
-        }
+        $media = (new CreateMedia($builder))();
 
         ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.media', $oldID, $media->mediaID);
 
         return $media->mediaID;
+    }
+
+    /**
+     * Sets the localized title, caption and alternative text from the
+     * imported contents which are grouped by language code. Multiple contents
+     * make the media file multilingual, a single content of a specific language
+     * assigns the media file to that language unless a language was given.
+     * Contents without a language code (`''` or `0`) are monolingual.
+     *
+     * @param array<int|string, array{title?: string, caption?: string, altText?: string}> $contents
+     */
+    private function setContents(MediaBuilder $builder, array $contents, bool $adoptContentLanguage): void
+    {
+        $values = [];
+        foreach ($contents as $languageCode => $contentData) {
+            $languageCode = (string)$languageCode;
+            $languageID = L10nStorage::MONOLINGUAL;
+            if ($languageCode !== '' && $languageCode !== '0') {
+                $language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
+                if ($language === null) {
+                    continue;
+                }
+
+                $languageID = $language->languageID;
+            }
+
+            $values[$languageID] = $contentData;
+        }
+
+        if ($values === []) {
+            return;
+        }
+
+        if (\count($values) === 1) {
+            $contentLanguageID = \array_key_first($values);
+            if ($adoptContentLanguage && $contentLanguageID !== L10nStorage::MONOLINGUAL) {
+                $builder->setLanguageID($contentLanguageID);
+            }
+
+            $values = [L10nStorage::MONOLINGUAL => \reset($values)];
+        } else {
+            unset($values[L10nStorage::MONOLINGUAL]);
+
+            $builder->setMultilingual();
+        }
+
+        foreach (['title', 'caption', 'altText'] as $columnName) {
+            $columnValues = \array_map(
+                static fn(array $contentData) => $contentData[$columnName] ?? '',
+                $values
+            );
+
+            match ($columnName) {
+                'title' => $builder->setTitle($columnValues),
+                'caption' => $builder->setCaption($columnValues),
+                'altText' => $builder->setAltText($columnValues),
+            };
+        }
     }
 }

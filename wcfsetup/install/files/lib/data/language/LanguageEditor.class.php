@@ -1076,13 +1076,18 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         }
 
         // media content
-        $sql = "INSERT IGNORE INTO  wcf1_media_content
-                                    (mediaID, languageID, title, caption, altText)
-                SELECT              mediaID, ?, title, caption, altText
-                FROM                wcf1_media_content
-                WHERE               languageID = ?";
+        $sql = "INSERT INTO wcf1_media_l10n
+                            (mediaID, languageID, title, caption, altText)
+                SELECT      mediaID, ?, title, caption, altText
+                FROM        wcf1_media_l10n
+                WHERE       languageID = ?
+                        AND mediaID NOT IN (
+                                SELECT  mediaID
+                                FROM    wcf1_media_l10n
+                                WHERE   languageID = ?
+                            )";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$destinationLanguageID, $sourceLanguageID]);
+        $statement->execute([$destinationLanguageID, $sourceLanguageID, $destinationLanguageID]);
 
         // page content
         $sql = "INSERT IGNORE INTO  wcf1_page_content

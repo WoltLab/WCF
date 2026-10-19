@@ -10,6 +10,7 @@ use wcf\data\DatabaseObjectEditor;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `MediaBuilder` instead.
  *
  * @mixin       Media
  * @extends DatabaseObjectEditor<Media>
@@ -28,13 +29,6 @@ class MediaEditor extends DatabaseObjectEditor
      */
     public function deleteFiles()
     {
-        @\unlink($this->getLocation());
-
-        // delete thumbnails
-        if ($this->isImage !== 0) {
-            foreach (Media::getThumbnailSizes() as $size => $data) {
-                @\unlink($this->getThumbnailLocation($size));
-            }
-        }
+        $this->getDecoratedObject()->deleteLegacyFiles();
     }
 }

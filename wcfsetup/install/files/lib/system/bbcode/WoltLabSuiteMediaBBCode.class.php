@@ -2,7 +2,7 @@
 
 namespace wcf\system\bbcode;
 
-use wcf\data\media\ViewableMedia;
+use wcf\data\media\Media;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\view\ContentNotVisibleView;
 use wcf\system\WCF;
@@ -42,7 +42,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
             $removeLinks = true;
         }
 
-        /** @var ?ViewableMedia $media */
+        /** @var ?Media $media */
         $media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $mediaID);
         if ($media === null) {
             return ContentNotVisibleView::forNotAvailable();
@@ -59,7 +59,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
 
             if ($parser->getOutputType() === 'text/html') {
                 $float = (!empty($openingTag['attributes'][2])) ? $openingTag['attributes'][2] : 'none';
-                $localizedMedia = MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID() !== 0
+                $localizedMedia = MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID() !== null
                     ? $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID())
                     : $media;
 
@@ -68,7 +68,7 @@ final class WoltLabSuiteMediaBBCode extends AbstractBBCode
                     $width = (!empty($openingTag['attributes'][3])) ? $openingTag['attributes'][3] : 'auto';
 
                     return WCF::getTPL()->render('wcf', 'shared_bbcode_wsm', [
-                        'mediaLink' => $media->getLink(),
+                        'mediaLink' => $media->getFullSizeImageSource(),
                         'removeLinks' => $removeLinks,
                         'thumbnailLink' => $thumbnailSize !== 'original' ? $media->getThumbnailLink(
                             $thumbnailSize

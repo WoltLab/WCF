@@ -5,6 +5,7 @@ namespace wcf\data\box;
 use wcf\data\box\content\BoxContent;
 use wcf\data\condition\Condition;
 use wcf\data\DatabaseObject;
+use wcf\data\media\Media;
 use wcf\data\media\ViewableMedia;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuCache;
@@ -61,7 +62,7 @@ class Box extends DatabaseObject
 
     /**
      * image media object
-     * @var ?ViewableMedia
+     * @var Media|ViewableMedia|null
      */
     protected $image;
 
@@ -392,7 +393,7 @@ class Box extends DatabaseObject
     /**
      * Returns the image of this box or `null` if the box has no image.
      *
-     * @return  ViewableMedia|null
+     * @return  Media|ViewableMedia|null
      */
     public function getImage()
     {

@@ -202,6 +202,16 @@
 				</attribute>
 			</attributes>
 		</bbcode>
+		<bbcode name="wsmg">
+			<classname>wcf\system\bbcode\WoltLabSuiteMediaGalleryBBCode</classname>
+			<isBlockElement>1</isBlockElement>
+			<attributes>
+				<attribute name="0">
+					<validationpattern><![CDATA[^\d+(,\d+)*$]]></validationpattern>
+					<required>1</required>
+				</attribute>
+			</attributes>
+		</bbcode>
 		<bbcode name="wsp">
 			<classname>wcf\system\bbcode\WoltLabSuitePageBBCode</classname>
 			<attributes>

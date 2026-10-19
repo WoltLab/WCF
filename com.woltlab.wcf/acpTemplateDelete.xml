@@ -164,5 +164,8 @@
 		<template>userAssignToGroup</template>
 		<template>userEmailAddressExport</template>
 		<template>devtoolsNotificationTestDialog</template>
+		<template>mediaEditor</template>
+		<template>mediaListItems</template>
+		<template>mediaJavaScript</template>
 	</delete>
 </data>

@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.box.'|concat:$action}
 
 <script data-relocate="true">
-	{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}{include file='mediaJavaScript'}{/if}
+	{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}{include file='shared_mediaJavaScript'}{/if}
 
 	{if $boxType == 'system'}
 		require(['WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler'], function(AcpUiBoxControllerHandler) {
@@ -34,10 +34,12 @@
 	});
 
 	{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
-		require(['WoltLabSuite/Core/Media/Manager/Select'], function(MediaManagerSelect) {
-			new MediaManagerSelect({
-				dialogTitle: '{jslang}wcf.media.chooseImage{/jslang}',
-				imagesOnly: 1
+		require(['WoltLabSuite/Core/Component/Media/Select'], ({ setup }) => {
+			document.querySelectorAll('.jsMediaSelectButton').forEach((button) => {
+				setup(button, {
+					title: '{jslang}wcf.media.chooseImage{/jslang}',
+					imagesOnly: true,
+				});
 			});
 		});
 	{/if}

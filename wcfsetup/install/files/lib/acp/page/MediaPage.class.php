@@ -12,6 +12,7 @@ use wcf\system\request\LinkHandler;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Only kept to resolve existing links, use `Media::getLink()` or `Media::getThumbnailLink()` instead.
  */
 class MediaPage extends AbstractPage
 {

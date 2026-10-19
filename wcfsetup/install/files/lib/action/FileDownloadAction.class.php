@@ -64,9 +64,6 @@ final class FileDownloadAction implements RequestHandlerInterface
             throw new PermissionDeniedException();
         }
 
-        $processor->trackDownload($file);
-        EventHandler::getInstance()->fire(new DownloadStarting($file));
-
         $filename = $file->getPathname();
         $response = new Response(
             new Stream($filename),
@@ -102,6 +99,14 @@ final class FileDownloadAction implements RequestHandlerInterface
                 ->withHeader('content-range', "bytes */{$file->fileSize}");
         }
 
+        // Media players and download managers request the remaining parts of
+        // a file through additional range requests, which must not be counted
+        // as separate downloads.
+        if ($startByte === 0) {
+            $processor->trackDownload($file);
+            EventHandler::getInstance()->fire(new DownloadStarting($file));
+        }
+
         if ($startByte > 0 || $endByte < $file->fileSize - 1) {
             $response = $response
                 ->withStatus(206)
@@ -113,8 +118,7 @@ final class FileDownloadAction implements RequestHandlerInterface
 
         // Prevent <script> execution in the context of the community's domain if
         // an attacker somehow bypasses 'content-disposition: attachment' for non-inline
-        // MIME-Types. One possibility might be a package extending $inlineMimeTypes
-        // in an unsafe fashion.
+        // MIME-Types.
         //
         // Allow style-src 'unsafe-inline', because otherwise the integrated PDF viewer
         // of Safari will fail to apply its own trusted stylesheet.

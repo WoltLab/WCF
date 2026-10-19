@@ -104,7 +104,7 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
                         this.#listViewParameters.set(key, event.detail[key]);
                     }
                 }
-                void this.#loadItems(0 /* StateChangeCause.Change */);
+                this.#state.resetPageNo();
             });
         }
         #setupState(viewId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {

@@ -12,6 +12,7 @@ use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\TextDatabaseTableColumn;
 use wcf\system\database\table\column\VarcharDatabaseTableColumn;
+use wcf\system\database\table\DatabaseTable;
 use wcf\system\database\table\PartialDatabaseTable;
 
 return [
@@ -81,6 +82,9 @@ return [
             MediumtextDatabaseTableColumn::create('answers')
                 ->drop(),
         ]),
+    // The localized content is migrated to `wcf1_media_l10n`.
+    DatabaseTable::create('wcf1_media_content')
+        ->drop(),
     // The link pattern is migrated to the configuration of the user options.
     PartialDatabaseTable::create('wcf1_user_option')
         ->columns([

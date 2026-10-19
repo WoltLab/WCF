@@ -106,6 +106,14 @@ export class State extends EventTarget {
     return this.#pageNo;
   }
 
+  /**
+   * Reloads the list starting from the first page, the previous page may
+   * no longer exist after the parameters of the list view have changed.
+   */
+  resetPageNo(): void {
+    this.#switchPage(1, StateChangeCause.Change);
+  }
+
   getSortField(): string {
     return this.#sorting.getSortField();
   }

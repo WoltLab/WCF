@@ -361,7 +361,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory
     /**
      * Returns the language id of the active message.
      *
-     * @return      int
+     * @return ?int
      */
     public function getActiveMessageLanguageID()
     {

@@ -1,46 +1,13 @@
 /**
  * Forwards upload requests from the editor to the media system.
  *
- * @author Alexander Ebert
- * @copyright 2001-2023 WoltLab GmbH
+ * @author Alexander Ebert, Marcel Werk
+ * @copyright 2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  * @woltlabExcludeBundle tiny
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
-define(["require", "exports", "./Event", "./Filename"], function (require, exports, Event_1, Filename_1) {
+define(["require", "exports", "./Event", "./Filename", "../Media/Manager", "../Media/Insert", "../../Helper/PromiseMutex"], function (require, exports, Event_1, Filename_1, Manager_1, Insert_1, PromiseMutex_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -54,6 +21,22 @@ define(["require", "exports", "./Event", "./Filename"], function (require, expor
         // Rejecting the upload promise will cause CKEditor to
         // stop caring about the file so that we regain control.
         return Promise.reject();
+    }
+    /**
+     * Opens the media manager and inserts the chosen media files. A file that was
+     * pasted or dropped into the editor is uploaded right away and inserted once
+     * the upload has been completed.
+     */
+    async function insertMedia(ckeditor, file) {
+        const media = await (0, Manager_1.openMediaManager)({ mode: "editor", file });
+        if (media.length === 0) {
+            return;
+        }
+        const options = await (0, Insert_1.chooseInsertOptions)(media);
+        if (options === undefined) {
+            return;
+        }
+        (0, Insert_1.insertIntoCkeditor)(ckeditor, media, options.size, options.gallery);
     }
     function setup(element) {
         (0, Event_1.listenToCkeditor)(element)
@@ -71,11 +54,20 @@ define(["require", "exports", "./Event", "./Filename"], function (require, expor
             if (!ckeditor.features.media) {
                 return;
             }
-            void new Promise((resolve_1, reject_1) => { require(["../../Media/Manager/Editor"], resolve_1, reject_1); }).then(__importStar).then(({ MediaManagerEditor }) => {
-                new MediaManagerEditor({
-                    ckeditor,
-                });
+            // The media manager is loaded asynchronously, repeated clicks must not open it twice.
+            const openManager = (0, PromiseMutex_1.promiseMutex)(() => insertMedia(ckeditor));
+            (0, Event_1.listenToCkeditor)(ckeditor.sourceElement).bbcode(({ bbcode }) => {
+                if (bbcode !== "media") {
+                    return false;
+                }
+                openManager();
+                return true;
             });
+            if (!ckeditor.features.attachment) {
+                (0, Event_1.listenToCkeditor)(ckeditor.sourceElement).uploadMedia((payload) => {
+                    void insertMedia(ckeditor, payload.file);
+                });
+            }
         });
     }
 });

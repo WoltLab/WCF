@@ -17,16 +17,16 @@ class ValueI18n extends Field {
     const data = {};
 
     const values = LanguageInput.getValues(this._fieldId);
-    if (values.size > 1) {
-      if (!Object.prototype.hasOwnProperty.call(data, this._fieldId + "_i18n")) {
-        data[this._fieldId + "_i18n"] = {};
-      }
+    if (values.size === 1 && values.has(0)) {
+      data[this._fieldId] = values.get(0);
+    } else {
+      // Fields that require per-language values can hold the value of a
+      // single language, which must not be sent as a monolingual value.
+      data[this._fieldId + "_i18n"] = {};
 
       values.forEach((value, key) => {
         data[this._fieldId + "_i18n"][key] = value;
       });
-    } else {
-      data[this._fieldId] = values.get(0);
     }
 
     return data;

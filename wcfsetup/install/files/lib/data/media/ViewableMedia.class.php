@@ -3,10 +3,6 @@
 namespace wcf\data\media;
 
 use wcf\data\DatabaseObjectDecorator;
-use wcf\data\user\UserProfile;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\style\FontAwesomeIcon;
-use wcf\util\StringUtil;
 
 /**
  * Represents a viewable media file.
@@ -14,47 +10,26 @@ use wcf\util\StringUtil;
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use `Media` instead.
  *
  * @mixin   Media
- * @property-read   string|null $title      title of the media file in the active user's language or `null` if object has not been fetched via `ViewableMediaList`
- * @property-read   string|null $caption    caption of the media file in the active user's language or `null` if object has not been fetched via `ViewableMediaList`
- * @property-read   string|null $altText    alternative text of the media file in the active user's language or `null` if object has not been fetched via `ViewableMediaList`
  * @extends DatabaseObjectDecorator<Media>
  */
 class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
 {
-    /**
-     * force localized content by language id
-     * @var ?int
-     */
-    protected $forceLanguageID;
-
-    /**
-     * localized content per language id
-     * @var string[][]
-     */
-    protected $localizedContent = [];
-
-    /**
-     * user profile of the user who uploaded the media file
-     * @var ?UserProfile
-     */
-    protected $userProfile;
-
     /**
      * @inheritDoc
      */
     protected static $baseClass = Media::class;
 
     /**
-     * Registers localized content by language id.
-     *
      * @param string[] $content
      * @return void
+     * @deprecated 6.3 The localized content is loaded by `Media` itself.
      */
     public function setLocalizedContent(int $languageID, array $content)
     {
-        $this->localizedContent[$languageID] = $content;
+        // does nothing
     }
 
     /**
@@ -64,34 +39,7 @@ class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
      */
     public function getLocalizedVersion(int $languageID)
     {
-        if (isset($this->localizedContent[$languageID])) {
-            $localized = clone $this;
-            $localized->forceLanguageID($languageID);
-
-            return $localized;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Forces the localized values by language id.
-     *
-     * @return void
-     */
-    protected function forceLanguageID(int $languageID)
-    {
-        $this->forceLanguageID = $languageID;
-    }
-
-    #[\Override]
-    public function __get(string $name)
-    {
-        if ($this->forceLanguageID !== null && isset($this->localizedContent[$this->forceLanguageID][$name])) {
-            return $this->localizedContent[$this->forceLanguageID][$name];
-        }
-
-        return $this->object->__get($name);
+        return new self($this->getDecoratedObject()->getLocalizedVersion($languageID));
     }
 
     /**
@@ -99,141 +47,13 @@ class ViewableMedia extends DatabaseObjectDecorator implements \Stringable
      */
     public function getTitle()
     {
-        if ($this->title !== null && $this->title !== '') {
-            return $this->title;
-        }
-
         return $this->getDecoratedObject()->getTitle();
     }
 
-    /**
-     * Returns the `title` attribute of the media file or an empty string if it has no title.
-     */
-    private function getTitleAttribute(): string
-    {
-        if ($this->title === null || $this->title === '') {
-            return '';
-        }
-
-        return 'title="' . StringUtil::encodeHTML($this->title) . '" ';
-    }
-
-    /**
-     * Returns a textual representation of the media file to be used in templates.
-     */
     #[\Override]
     public function __toString(): string
     {
-        if ($this->isImage !== 0) {
-            return '<img src="' . StringUtil::encodeHTML($this->getLink()) . '" alt="' . StringUtil::encodeHTML($this->altText) . '" ' . $this->getTitleAttribute() . '/>';
-        }
-
-        return '<a href="' . StringUtil::encodeHTML($this->getLink()) . '">' . StringUtil::encodeHTML($this->getTitle()) . '</a>';
-    }
-
-    /**
-     * Returns a tag to display the media element.
-     *
-     * @return  string
-     */
-    public function getElementTag(int $size)
-    {
-        if ($this->isImage !== 0) {
-            $width = $size;
-            $height = $size;
-            $link = null;
-            $marginTop = 0;
-
-            if ($this->tinyThumbnailType !== '') {
-                $link = $this->getThumbnailLink('tiny');
-
-                if ($size <= $this->tinyThumbnailWidth && $size <= $this->tinyThumbnailHeight) {
-                    if ($this->tinyThumbnailHeight < $this->tinyThumbnailWidth) {
-                        $height = \round($this->tinyThumbnailHeight / $this->tinyThumbnailWidth * $size);
-                    } else {
-                        $width = \round($this->tinyThumbnailWidth / $this->tinyThumbnailHeight * $size);
-                    }
-                } elseif ($size <= $this->tinyThumbnailWidth) {
-                    $height = \round($this->tinyThumbnailHeight / $this->tinyThumbnailWidth * $size);
-                } elseif ($size <= $this->tinyThumbnailHeight) {
-                    $width = \round($this->tinyThumbnailWidth / $this->tinyThumbnailHeight * $size);
-                } else {
-                    $link = null;
-                }
-
-                $marginTop = \floor(($size - $height) / 2);
-            }
-
-            if ($link === null) {
-                $link = $this->getLink();
-
-                // round smaller dimension to
-                if ($size <= $this->width && $size <= $this->height) {
-                    if ($this->height < $this->width) {
-                        $height = \round($this->height / $this->width * $size);
-                    } else {
-                        $width = \round($this->width / $this->height * $size);
-                    }
-                } elseif ($size <= $this->width) {
-                    $height = \round($this->height / $this->width * $size);
-                } elseif ($size <= $this->height) {
-                    $width = \round($this->width / $this->height * $size);
-                } else {
-                    $width = $this->width;
-                    $height = $this->height;
-                }
-
-                $marginTop = \floor(($size - $height) / 2);
-            }
-
-            return '<span style="display: inline-block; text-align: center; width: ' . $size . 'px; height: ' . $size . 'px;">
-                            <img src="' . StringUtil::encodeHTML($link) . '" alt="' . StringUtil::encodeHTML($this->altText)
-                . '" ' . $this->getTitleAttribute()
-                . 'style="margin-top: ' . $marginTop . 'px;" height="' . $height . '" width="' . $width . '" loading="lazy">
-                    </span>';
-        }
-
-        return FontAwesomeIcon::fromValues($this->getIconName(), false)->toHtml($size);
-    }
-
-    /**
-     * Returns a tag to display a certain thumbnail.
-     *
-     * @return  string
-     * @throws  \InvalidArgumentException
-     */
-    public function getThumbnailTag(string $size = 'tiny')
-    {
-        if (!isset(Media::getThumbnailSizes()[$size])) {
-            throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
-        }
-
-        return \sprintf(
-            '<img src="%s" alt="%s" width="%d" height="%d" loading="lazy" %s>',
-            StringUtil::encodeHTML($this->getThumbnailLink($size)),
-            StringUtil::encodeHTML($this->altText),
-            $this->getThumbnailWidth($size),
-            $this->getThumbnailHeight($size),
-            $this->getTitleAttribute()
-        );
-    }
-
-    /**
-     * Returns the user profile of the user who uploaded the media file.
-     *
-     * @return  UserProfile
-     */
-    public function getUserProfile()
-    {
-        if ($this->userProfile === null) {
-            if ($this->userID !== null) {
-                $this->userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
-            } else {
-                $this->userProfile = UserProfile::getGuestUserProfile($this->username);
-            }
-        }
-
-        return $this->userProfile;
+        return $this->getDecoratedObject()->__toString();
     }
 
     /**

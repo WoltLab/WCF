@@ -52,3 +52,96 @@ iframe.instagram-media {
 	display: flex;
 	justify-content: center;
 }
+
+.mediaGallery {
+	margin: 1em 0;
+}
+
+.mediaGallery__track {
+	display: flex;
+	gap: 10px;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scroll-behavior: smooth;
+	scroll-snap-type: x mandatory;
+
+	@media (hover: hover) {
+		scrollbar-width: none;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--wcfContentLink);
+		outline-offset: 2px;
+	}
+}
+
+.mediaGallery__slide {
+	display: flex;
+	flex: 0 0 100%;
+	flex-direction: column;
+	margin: 0;
+	min-width: 0;
+	scroll-snap-align: center;
+
+	img {
+		background-color: var(--wcfContentBackground);
+		border-radius: var(--wcfBorderRadius);
+		display: block;
+		height: clamp(200px, 50vw, 480px);
+		object-fit: contain;
+		width: 100%;
+	}
+}
+
+.mediaGallery__link {
+	display: block;
+}
+
+.mediaGallery__caption {
+	color: var(--wcfContentDimmedText);
+	margin-top: 5px;
+	text-align: center;
+
+	@include wcfFontSmall;
+}
+
+.mediaGallery__controls {
+	align-items: center;
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+.mediaGallery__button {
+	align-items: center;
+	background-color: var(--wcfButtonBackground);
+	border-radius: 50%;
+	color: var(--wcfButtonText);
+	display: inline-flex;
+	height: 32px;
+	justify-content: center;
+	width: 32px;
+
+	&:not([disabled]):hover {
+		background-color: var(--wcfButtonBackgroundActive);
+		color: var(--wcfButtonTextActive);
+	}
+
+	&[disabled] {
+		opacity: 0.5;
+	}
+}
+
+.mediaGallery__counter {
+	color: var(--wcfContentDimmedText);
+	font-variant-numeric: tabular-nums;
+	min-width: 50px;
+	text-align: center;
+
+	@include wcfFontSmall;
+}

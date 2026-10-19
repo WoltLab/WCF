@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/objectType.xsd">
 	<import>
-		<!-- clipboard items -->
-		<type>
-			<name>com.woltlab.wcf.media</name>
-			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
-			<listclassname>wcf\data\media\ViewableMediaList</listclassname>
-		</type>
-		<!-- /clipboard items -->
 		<!-- articles -->
 		<type>
 			<name>com.woltlab.wcf.article.category</name>
@@ -1176,8 +1169,16 @@
 			<definitionname>com.woltlab.wcf.file</definitionname>
 			<classname>wcf\system\file\processor\TrophyImageFileProcessor</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.media</name>
+			<definitionname>com.woltlab.wcf.file</definitionname>
+			<classname>wcf\system\file\processor\MediaFileProcessor</classname>
+		</type>
 	</import>
 	<delete>
+		<type name="com.woltlab.wcf.media">
+			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
+		</type>
 		<!-- sitemap objects are registered through `wcf\event\sitemap\SitemapObjectCollecting` since 6.3 -->
 		<type name="com.woltlab.wcf.sitemap.object.user">
 			<definitionname>com.woltlab.wcf.sitemap.object</definitionname>

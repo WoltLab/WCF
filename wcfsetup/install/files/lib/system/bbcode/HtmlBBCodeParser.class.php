@@ -49,6 +49,7 @@ class HtmlBBCodeParser extends BBCodeParser
         'url',
         'user',
         'wsm',
+        'wsmg',
         'wsp',
     ];
 

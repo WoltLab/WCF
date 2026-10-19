@@ -3,7 +3,7 @@
 namespace wcf\data\box\content;
 
 use wcf\data\DatabaseObjectList;
-use wcf\data\media\ViewableMediaList;
+use wcf\data\media\MediaList;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 
 /**
@@ -67,7 +67,7 @@ class BoxContentList extends DatabaseObjectList
             return;
         }
 
-        $mediaList = new ViewableMediaList();
+        $mediaList = new MediaList();
         $mediaList->setObjectIDs($imageIDs);
         $mediaList->readObjects();
         $images = $mediaList->getObjects();

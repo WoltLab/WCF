@@ -5,8 +5,10 @@ define(["require", "exports", "tslib", "./Field", "WoltLabSuite/Core/Dom/Util"],
         _getData() {
             const groupIds = Array.from(document.querySelectorAll(`input[name="${(0, Util_1.escapeAttributeSelector)(this._fieldId)}[group][]"]`)).map((input) => input.value);
             const usersIds = Array.from(document.querySelectorAll(`input[name="${(0, Util_1.escapeAttributeSelector)(this._fieldId)}[user][]"]`)).map((input) => input.value);
+            const allowAll = document.querySelector(`input[name="${(0, Util_1.escapeAttributeSelector)(this._fieldId)}[allowAll]"]:checked`);
             return {
                 [this._fieldId]: {
+                    allowAll: allowAll?.value ?? "1",
                     group: groupIds,
                     user: usersIds,
                 },

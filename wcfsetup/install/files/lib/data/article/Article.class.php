@@ -10,7 +10,7 @@ use wcf\data\ILinkableObject;
 use wcf\data\IPopoverObject;
 use wcf\data\IUserContent;
 use wcf\data\label\Label;
-use wcf\data\media\ViewableMedia;
+use wcf\data\media\Media;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\system\article\discussion\CommentArticleDiscussionProvider;
@@ -398,7 +398,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      *
      * @since 6.3
      */
-    public function getImage(): ?ViewableMedia
+    public function getImage(): ?Media
     {
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getImage();
@@ -412,7 +412,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      *
      * @since 6.3
      */
-    public function getTeaserImage(): ?ViewableMedia
+    public function getTeaserImage(): ?Media
     {
         if ($this->getArticleContent() !== null) {
             return $this->getArticleContent()->getTeaserImage();

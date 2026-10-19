@@ -32,11 +32,8 @@ final class WsmMetacodeUpcast extends AbstractImageMetacodeUpcast
         }
 
         $imgElement = $element->ownerDocument->createElement('img');
-        if ($thumbnail === 'original') {
-            $imgElement->setAttribute('src', StringUtil::decodeHTML($media->getLink()));
-        } else {
-            $imgElement->setAttribute('src', StringUtil::decodeHTML($media->getThumbnailLink($thumbnail)));
-        }
+        $source = $thumbnail === 'original' ? $media->getLink() : $media->getThumbnailLink($thumbnail);
+        $imgElement->setAttribute('src', StringUtil::decodeHTML($source));
         if ($width !== 'auto') {
             $imgElement->setAttribute('width', (string)\intval($width));
             $imgElement->setAttribute('data-width', \intval($width) . 'px');

@@ -2,7 +2,8 @@
 
 namespace wcf\system\form\builder\field\media;
 
-use wcf\data\media\ViewableMedia;
+use wcf\data\media\Media;
+use wcf\system\cache\runtime\MediaRuntimeCache;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\IImmutableFormField;
 use wcf\system\form\builder\field\TImmutableFormField;
@@ -28,7 +29,7 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
     /**
      * media object with the current value as id
      */
-    protected ?ViewableMedia $media = null;
+    protected ?Media $media = null;
 
     /**
      * @inheritDoc
@@ -46,7 +47,7 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
      * @throws  \InvalidArgumentException   if no or an invalid media id is set as value
      * @throws  \UnexpectedValueException   if no or an invalid media id is set as value
      */
-    public function getMedia(): ViewableMedia
+    public function getMedia(): Media
     {
         if ($this->media === null) {
             if (empty($this->getValue())) {
@@ -55,7 +56,7 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
                 );
             }
 
-            $this->media = ViewableMedia::getMedia($this->getValue());
+            $this->media = MediaRuntimeCache::getInstance()->getObject($this->getValue());
             if ($this->media === null) {
                 throw new \UnexpectedValueException(
                     "Cannot load media with id '{$this->getValue()}' for field '{$this->getId()}'."

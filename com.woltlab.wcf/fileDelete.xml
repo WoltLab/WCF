@@ -26,6 +26,17 @@
 		<file>js/WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler.js</file>
 		<file>js/WoltLabSuite/Core/Ui/User/Editor.js</file>
 		<file>js/WoltLabSuite/Core/Ui/User/Trophy/List.js</file>
+		<file>js/WoltLabSuite/Core/Controller/Media/List.js</file>
+		<file>js/WoltLabSuite/Core/Media/List/Upload.js</file>
+		<file>js/WoltLabSuite/Core/Media/Clipboard.js</file>
+		<file>js/WoltLabSuite/Core/Media/Editor.js</file>
+		<file>js/WoltLabSuite/Core/Media/Manager/Base.js</file>
+		<file>js/WoltLabSuite/Core/Media/Manager/Search.js</file>
+		<file>js/WoltLabSuite/Core/Media/Replace.js</file>
+		<file>js/WoltLabSuite/Core/Media/Upload.js</file>
+		<file>lib/system/clipboard/action/MediaClipboardAction.class.php</file>
+		<file>lib/system/upload/MediaReplaceUploadFileValidationStrategy.class.php</file>
+		<file>lib/system/upload/MediaUploadFileValidationStrategy.class.php</file>
 		<file>lib/acp/action/UserQuickSearchAction.class.php</file>
 		<file>lib/acp/form/UserSearchForm.class.php</file>
 		<file>lib/data/user/UserContentAction.class.php</file>

@@ -1,208 +1,269 @@
-.innerInfo + .mediaManagerMediaUploadButton {
-	margin-top: 5px;
+.button.jsMediaSelectButton + .button {
+	margin-left: 5px;
 }
 
-.mediaManagerMediaUploadButton > .button {
-	margin: 0;
-	text-align: center;
+/* Media manager dialog */
+.dialog.dialog--mediaManager {
+	height: min(760px, calc(100vh - 140px), var(--dialog-max-height));
+	max-width: min(1080px, var(--dialog-max-width));
+	min-height: min(520px, var(--dialog-max-height));
 	width: 100%;
 
-	> input {
+	.dialog__document,
+	.dialog__form {
+		height: 100%;
+	}
+
+	.dialog__content {
+		flex: 1 1 auto;
+	}
+
+	.dialog__control {
+		border-top: 1px solid var(--wcfContentBorderInner);
+		margin-top: 0;
+		padding-top: 12px;
+	}
+}
+
+.dialog--mediaManager .listView__header {
+	align-items: center;
+	background-color: var(--wcfContentBackground);
+	border-bottom: 1px solid var(--wcfContentBorderInner);
+	gap: 8px;
+	margin-bottom: 16px;
+	padding: 0 0 12px;
+	position: sticky;
+	top: 0;
+	z-index: 3;
+
+	.listView__header__additionalContent {
+		flex: 1 1 200px;
+	}
+
+	.button {
+		min-height: 36px;
+	}
+}
+
+/* The selection is handled by the media manager, there is no edit mode. */
+.dialog--mediaManager .listView__header__button:has(> .listView__editMode__toggle) {
+	display: none;
+}
+
+.mediaManager__search {
+	align-items: center;
+	display: flex;
+	flex: 1 1 auto;
+	position: relative;
+
+	> fa-icon {
+		color: var(--wcfContentDimmedText);
+		left: 10px;
+		pointer-events: none;
+		position: absolute;
+	}
+}
+
+.mediaManager__searchInput {
+	min-height: 36px;
+	padding-left: 34px !important;
+	width: 100%;
+}
+
+/* Drop zone */
+.mediaManager__dropZone {
+	align-items: center;
+	border: 1.5px dashed var(--wcfContentBorderInner);
+	border-radius: 10px;
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+	margin-bottom: 16px;
+	padding: 14px;
+	text-align: center;
+	transition:
+		background-color 0.12s linear,
+		border-color 0.12s linear;
+}
+
+.mediaManager__dropZone:hover,
+.mediaManager--dragOver .mediaManager__dropZone {
+	background-color: color-mix(in srgb, var(--wcfContentLink) 8%, transparent);
+	border-color: var(--wcfContentLink);
+}
+
+.mediaManager--dragOver {
+	background-color: color-mix(in srgb, var(--wcfContentLink) 4%, transparent);
+}
+
+.mediaManager__dropZone__select {
+	color: var(--wcfContentLink);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+
+	&:hover {
+		color: var(--wcfContentLinkActive);
+	}
+}
+
+/* Grid */
+.mediaManager {
+	display: grid;
+	gap: 16px 14px;
+	grid-template-columns: repeat(auto-fill, minmax(152px, 1fr));
+}
+
+.mediaManager__tile {
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	min-width: 0;
+	outline: none;
+}
+
+.mediaManager__tile__thumbnail {
+	align-items: center;
+	aspect-ratio: 1;
+	background-color: var(--wcfTabularBoxBackgroundActive);
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: 10px;
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	justify-content: center;
+	overflow: hidden;
+	position: relative;
+	transition:
+		border-color 0.12s linear,
+		box-shadow 0.12s linear;
+	width: 100%;
+
+	> img {
+		height: 100%;
+		object-fit: cover;
 		width: 100%;
 	}
 }
 
-.mediaManagerMediaList {
-	font-size: 0;
-	margin-top: 5px;
+.mediaManager__tile:hover .mediaManager__tile__thumbnail {
+	border-color: var(--wcfContentDimmedText);
+}
 
-	@include clearfix;
+.mediaManager__tile--selected .mediaManager__tile__thumbnail,
+.mediaManager__tile:focus-visible .mediaManager__tile__thumbnail {
+	border-color: var(--wcfContentLink);
+	box-shadow: 0 0 0 2px var(--wcfContentLink);
+}
 
-	> li {
-		float: left;
-		position: relative;
-		border: 1px solid #eee;
-		overflow: hidden;
-		font-size: 1rem;
-		margin: 0 10px 10px 0;
+.mediaManager__tile__name {
+	color: var(--wcfContentText);
+	font-size: 13px;
+	font-weight: 500;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 
-		&.jsMarked {
-			> .mediaInformation,
-			> .buttonGroupNavigation {
-				background-color: rgb(var(--wcfButtonPrimaryBackground-rgb) / 80%);
-				color: var(--wcfButtonPrimaryText);
+.mediaManager__tile__meta {
+	color: var(--wcfContentDimmedText);
+	font-size: 12px;
+	margin-top: -6px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 
-				a {
-					color: var(--wcfButtonPrimaryText);
-				}
+/* Select indicator and context menu, only shown on hover or focus */
+.mediaManager__tile__indicator {
+	align-items: center;
+	background-color: rgb(0 0 0 / 35%);
+	border: 2px solid #fff;
+	border-radius: 50%;
+	color: #fff;
+	display: flex;
+	height: 22px;
+	justify-content: center;
+	left: 8px;
+	opacity: 0;
+	position: absolute;
+	top: 8px;
+	transition: opacity 0.12s linear;
+	width: 22px;
 
-				fa-icon {
-					color: var(--wcfButtonPrimaryText);
-					text-shadow: none;
-				}
-			}
-		}
-
-		&.jsSelected {
-			> .mediaInformation,
-			> .buttonGroupNavigation {
-				background-color: rgb(0 128 0 / 80%);
-				color: white;
-
-				a {
-					color: white;
-				}
-
-				fa-icon {
-					color: white;
-					text-shadow: none;
-				}
-			}
-		}
-
-		&.uploadFailed {
-			cursor: pointer;
-
-			> .mediaInformation {
-				background-color: var(--wcfStatusErrorBackground);
-				color: var(--wcfStatusErrorText);
-
-				.mediaTitle {
-					max-height: 144px;
-					white-space: normal;
-				}
-			}
-		}
-
-		> .mediaThumbnail {
-			height: 144px;
-			width: 144px;
-		}
-
-		> .mediaInformation {
-			position: absolute;
-			bottom: 0;
-			background: rgba(0, 0, 0, 0.6);
-			color: #fff;
-			width: 100%;
-			padding: 5px 10px;
-			box-sizing: border-box;
-
-			@include wcfFontSmall;
-
-			.mediaTitle {
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
-		}
-
-		> .buttonGroupNavigation {
-			position: absolute;
-			top: 0;
-			right: 0;
-			overflow: hidden;
-			background: rgba(0, 0, 0, 0.6);
-
-			@include screen-lg {
-				fa-icon {
-					color: #fff;
-					@include textShadow(#000);
-				}
-			}
-		}
-
-		@include screen-md-down {
-			.buttonGroupNavigation {
-				&.open {
-					left: 0;
-
-					// dropdown is contained within this element, required to have it stand
-					// above any succeeding siblings
-					z-index: 10;
-
-					> .buttonList {
-						display: block;
-						visibility: visible;
-					}
-				}
-
-				> .dropdownLabel {
-					left: calc(100% - 24px);
-					position: relative;
-
-					fa-icon {
-						color: #fff;
-						@include textShadow(#000);
-					}
-				}
-
-				> .buttonList {
-					@include dropdownMenu;
-
-					position: static !important;
-					top: 0;
-
-					> li {
-						.invisible {
-							display: inline;
-							padding-left: 5px;
-						}
-					}
-				}
-			}
-		}
-
-		@include screen-lg {
-			.buttonGroupNavigation {
-				transition: opacity 0.12s;
-
-				> .dropdownLabel {
-					display: none;
-				}
-			}
-		}
-
-		@include screen-md-up {
-			> .buttonGroupNavigation {
-				height: 0;
-			}
-
-			&:hover {
-				> .buttonGroupNavigation {
-					height: auto;
-					padding: 10px;
-				}
-			}
-		}
-
-		@include screen-md-down {
-			> .buttonGroupNavigation .mediaCheckbox {
-				display: none !important;
-			}
-		}
+	> fa-icon {
+		--icon-size: 12px;
+		visibility: hidden;
 	}
 }
 
-[id^="mediaEditor"] {
-	.mediaEditorButtons {
-		margin-bottom: 20px;
-	}
+.mediaManager__tile--selected .mediaManager__tile__indicator {
+	background-color: var(--wcfButtonPrimaryBackground);
+	border-color: var(--wcfButtonPrimaryBackground);
 
-	.mediaThumbnail {
-		text-align: center;
-		margin-bottom: 20px;
-
-		+ .box48 > dl {
-			font-size: var(--wcfFontSizeSmall);
-		}
+	> fa-icon {
+		visibility: visible;
 	}
 }
 
-.mediaManagerCategoryList {
-	margin-bottom: 5px;
+.mediaManager__tile__menu {
+	opacity: 0;
+	position: absolute;
+	right: 6px;
+	top: 6px;
+	transition: opacity 0.12s linear;
 }
 
-.button.jsMediaSelectButton + .button {
-	margin-left: 5px;
+.mediaManager__tile__menuButton {
+	align-items: center;
+	backdrop-filter: blur(4px);
+	background-color: rgb(0 0 0 / 55%);
+	border-radius: 6px;
+	color: #fff;
+	display: flex;
+	height: 28px;
+	justify-content: center;
+	width: 28px;
+
+	fa-icon {
+		color: inherit;
+	}
+}
+
+.mediaManager__tile:hover,
+.mediaManager__tile:focus-within,
+.mediaManager__tile--selected {
+	.mediaManager__tile__indicator,
+	.mediaManager__tile__menu {
+		opacity: 1;
+	}
+}
+
+/* Selection info in the footer */
+.mediaManager__selectionInfo {
+	align-self: center;
+	color: var(--wcfContentText);
+	grid-area: extra;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	strong {
+		color: var(--wcfContentHeadlineText);
+		font-weight: 500;
+	}
+}
+
+.mediaManager__selectionInfo--empty {
+	color: var(--wcfContentDimmedText);
+}
+
+.dialog__control--duo-stacked,
+.dialog__control--extra-stacked,
+.dialog__control--tripple-stacked {
+	.mediaManager__selectionInfo {
+		grid-area: auto;
+		grid-column: 1 / -1;
+	}
 }

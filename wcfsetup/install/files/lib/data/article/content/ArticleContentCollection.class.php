@@ -4,8 +4,8 @@ namespace wcf\data\article\content;
 
 use wcf\data\article\Article;
 use wcf\data\DatabaseObjectCollection;
-use wcf\data\media\ViewableMedia;
-use wcf\data\media\ViewableMediaList;
+use wcf\data\media\Media;
+use wcf\data\media\MediaList;
 use wcf\data\TCollectionAttachments;
 use wcf\data\TCollectionEmbeddedObjects;
 use wcf\system\cache\runtime\ArticleRuntimeCache;
@@ -26,13 +26,13 @@ class ArticleContentCollection extends DatabaseObjectCollection
     use TCollectionAttachments;
 
     /**
-     * @var array<int, ViewableMedia>
+     * @var array<int, Media>
      */
     private array $images;
 
     private bool $articlesCached = false;
 
-    public function getImage(int $imageID): ?ViewableMedia
+    public function getImage(int $imageID): ?Media
     {
         $this->loadImages();
 
@@ -51,20 +51,10 @@ class ArticleContentCollection extends DatabaseObjectCollection
             return;
         }
 
-        $mediaList = new ViewableMediaList($this->getContentLanguageID());
+        $mediaList = new MediaList();
         $mediaList->setObjectIDs($imageIDs);
         $mediaList->readObjects();
         $this->images = $mediaList->getObjects();
-    }
-
-    protected function getContentLanguageID(): ?int
-    {
-        $objects = $this->getObjects();
-        if (\count($objects) === 1) {
-            return \reset($objects)->languageID;
-        }
-
-        return null;
     }
 
     /**

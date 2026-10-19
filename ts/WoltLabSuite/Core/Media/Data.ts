@@ -3,39 +3,28 @@
  * @copyright 2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
+ * @deprecated 6.3 Use `WoltLabSuite/Core/Api/Media/GetMedia` and `WoltLabSuite/Core/Component/Media/Manager` instead.
  */
 
-import MediaUpload from "./Upload";
-import { FileElements, UploadOptions } from "../Upload/Data";
-import MediaEditor from "./Editor";
-import MediaManager from "./Manager/Base";
-import { I18nValues } from "../Language/Input";
 import type { CKEditor } from "../Component/Ckeditor";
 
 export interface Media {
-  altText: I18nValues | string;
-  caption: I18nValues | string;
-  categoryID: number;
+  altText: string;
+  categoryID: number | null;
   elementTag: string;
-  captionEnableHtml: number;
   filename: string;
   formattedFilesize: string;
-  languageID: number | null;
   isImage: number;
-  isMultilingual: number;
   link: string;
   mediaID: number;
   smallThumbnailLink: string;
-  smallThumbnailType: string;
   tinyThumbnailLink: string;
-  tinyThumbnailType: string;
-  title: I18nValues | string;
+  title: string;
 }
 
 export interface MediaManagerOptions {
   dialogTitle: string;
   imagesOnly: boolean;
-  minSearchLength: number;
 }
 
 export const enum MediaInsertType {
@@ -50,39 +39,4 @@ export interface MediaManagerEditorOptions extends MediaManagerOptions {
 
 export interface MediaManagerSelectOptions extends MediaManagerOptions {
   buttonClass?: string;
-}
-
-export interface MediaEditorCallbackObject {
-  _editorClose?: () => void;
-  _editorSuccess?: (Media, number?, boolean?) => void;
-}
-
-export interface MediaUploadSuccessEventData {
-  files: FileElements;
-  isMultiFileUpload: boolean;
-  media: Media[];
-  upload: MediaUpload;
-  uploadId: number;
-}
-
-export interface MediaUploadOptions extends UploadOptions {
-  elementTagSize: number;
-  mediaEditor?: MediaEditor;
-  mediaManager?: MediaManager;
-}
-
-export interface MediaListUploadOptions extends MediaUploadOptions {
-  categoryId?: number;
-}
-
-export interface MediaUploadAjaxResponseData {
-  returnValues: {
-    errors: MediaUploadError[];
-    media: Media[];
-  };
-}
-
-export interface MediaUploadError {
-  errorType: string;
-  filename: string;
 }
