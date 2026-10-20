@@ -4,8 +4,9 @@
 .boxStats {
 	display: grid;
 	gap: 20px 24px;
-	/* 140px fits values up to 99,999,999. */
-	grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+	/* 140px fits values up to 99,999,999. `auto-fill` keeps the empty tracks, so the figures stay
+	   together instead of spreading across a full-width box. */
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr));
 }
 
 .boxStats__item {
