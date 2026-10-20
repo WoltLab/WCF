@@ -1,0 +1,35 @@
+/* Statistics box: `dl.plain.boxStats > div.boxStats__item > dt.boxStats__label + dd.boxStats__value`,
+   optionally with `span.boxStats__unit` inside the value. The label comes first in the source so that
+   screen readers announce "label, value", while the value is drawn on top. */
+.boxStats {
+	display: grid;
+	gap: 20px 24px;
+	/* 140px fits values up to 99,999,999. */
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+}
+
+.boxStats__item {
+	display: flex;
+	flex-direction: column-reverse;
+	gap: 2px;
+	/* Packs from the top, so values in a row stay aligned when a label wraps. */
+	justify-content: flex-end;
+	min-width: 0;
+}
+
+.boxStats__label {
+	color: var(--wcfContentDimmedText);
+}
+
+.boxStats__value {
+	font-size: var(--wcfFontSizeSection);
+	font-variant-numeric: tabular-nums;
+	font-weight: 600;
+	line-height: 1.2;
+}
+
+.boxStats__unit {
+	font-size: 0.8em;
+	font-weight: 400;
+	margin-inline-start: 0.2em;
+}

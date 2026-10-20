@@ -54,6 +54,11 @@
 		max-height: 100px;
 		overflow: hidden;
 	}
+
+	/* There is no dimmed footer box token. 85% keeps 4.5:1 against the default dark footer box background. */
+	.boxStats__label {
+		color: color-mix(in srgb, currentColor 85%, transparent);
+	}
 }
 
 /* styling for boxes in <footer> position */
