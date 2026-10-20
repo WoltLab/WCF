@@ -101,6 +101,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
                         siblingRow.querySelector(".selectOptionsListItem__key").focus();
                     }
                 });
+                // The selected values of multiple selections are stored comma-separated.
+                const validateKey = () => {
+                    keyInput.setCustomValidity(keyInput.value.includes(",")
+                        ? (0, Language_1.getPhrase)("wcf.form.selectOptions.error.invalidKey", { key: keyInput.value })
+                        : "");
+                };
+                validateKey();
+                keyInput.addEventListener("input", () => validateKey());
                 keyInput.addEventListener("keydown", (event) => {
                     if (event.key === "Enter") {
                         event.preventDefault();

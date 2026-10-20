@@ -4046,6 +4046,9 @@ Dateianhänge:
 		<item name="wcf.form.selectOptions.key"><![CDATA[Bezeichner]]></item>
 		<item name="wcf.form.selectOptions.value"><![CDATA[Wert]]></item>
 		<item name="wcf.form.selectOptions.addItem"><![CDATA[Weitere Option hinzufügen]]></item>
+		<item name="wcf.form.selectOptions.error.emptyKey"><![CDATA[Jede Option benötigt einen Bezeichner.]]></item>
+		<item name="wcf.form.selectOptions.error.invalidKey"><![CDATA[Der Bezeichner „{$key}“ darf kein Komma enthalten.]]></item>
+		<item name="wcf.form.selectOptions.error.duplicateKey"><![CDATA[Der Bezeichner „{$key}“ wird mehrfach verwendet.]]></item>
 		<item name="wcf.form.option.boolean"><![CDATA[Ja/Nein]]></item>
 		<item name="wcf.form.option.checkboxes"><![CDATA[Checkboxen]]></item>
 		<item name="wcf.form.option.currency"><![CDATA[Währung]]></item>

@@ -3992,6 +3992,9 @@ Attachments:
 		<item name="wcf.form.selectOptions.key"><![CDATA[Key]]></item>
 		<item name="wcf.form.selectOptions.value"><![CDATA[Value]]></item>
 		<item name="wcf.form.selectOptions.addItem"><![CDATA[Add another option]]></item>
+		<item name="wcf.form.selectOptions.error.emptyKey"><![CDATA[Every option requires a key.]]></item>
+		<item name="wcf.form.selectOptions.error.invalidKey"><![CDATA[The key “{$key}” must not contain a comma.]]></item>
+		<item name="wcf.form.selectOptions.error.duplicateKey"><![CDATA[The key “{$key}” is used more than once.]]></item>
 		<item name="wcf.form.option.boolean"><![CDATA[Yes/No]]></item>
 		<item name="wcf.form.option.checkboxes"><![CDATA[Multiple selection]]></item>
 		<item name="wcf.form.option.currency"><![CDATA[Currency]]></item>

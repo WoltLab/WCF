@@ -68,7 +68,7 @@ final class SelectOptionsFormField extends AbstractFormField implements
     {
         try {
             $mapper = (new MapperBuilder())->mapper();
-            $mapper->map(
+            $selectOptions = $mapper->map(
                 <<<'EOT'
                     list<array{
                         key: string,
@@ -77,10 +77,55 @@ final class SelectOptionsFormField extends AbstractFormField implements
                     EOT,
                 Source::json($this->getValue())
             );
+
+            $this->validateKeys(\array_column($selectOptions, 'key'));
         } catch (MappingError) {
             $this->addValidationError(new FormFieldValidationError('empty'));
         }
 
         parent::validate();
+    }
+
+    /**
+     * Validates that the keys are non-empty, unique and do not contain a comma,
+     * which is the separator of the selected values of multiple selections.
+     *
+     * @param list<string> $keys
+     */
+    private function validateKeys(array $keys): void
+    {
+        $knownKeys = [];
+        foreach ($keys as $key) {
+            if (\trim($key) === '') {
+                $this->addValidationError(new FormFieldValidationError(
+                    'emptyKey',
+                    'wcf.form.selectOptions.error.emptyKey'
+                ));
+
+                return;
+            }
+
+            if (\str_contains($key, ',')) {
+                $this->addValidationError(new FormFieldValidationError(
+                    'invalidKey',
+                    'wcf.form.selectOptions.error.invalidKey',
+                    ['key' => $key]
+                ));
+
+                return;
+            }
+
+            if (isset($knownKeys[$key])) {
+                $this->addValidationError(new FormFieldValidationError(
+                    'duplicateKey',
+                    'wcf.form.selectOptions.error.duplicateKey',
+                    ['key' => $key]
+                ));
+
+                return;
+            }
+
+            $knownKeys[$key] = true;
+        }
     }
 }
