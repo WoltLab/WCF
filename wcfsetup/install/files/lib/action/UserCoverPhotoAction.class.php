@@ -77,7 +77,7 @@ final class UserCoverPhotoAction implements RequestHandlerInterface
         $form->appendChildren([
             FileProcessorFormField::create('coverPhotoFileID')
                 ->objectType("com.woltlab.wcf.user.coverPhoto")
-                ->description('wcf.user.coverPhoto.upload.description', [
+                ->description('wcf.image.coverPhoto.upload.limits', [
                     'coverPhotoDimensions' => UserCoverPhoto::getCoverPhotoDimensions()
                 ])
                 ->singleFileUpload()
