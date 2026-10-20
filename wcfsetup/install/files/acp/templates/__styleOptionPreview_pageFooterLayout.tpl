@@ -10,7 +10,8 @@
 		<rect class="styleOptionPreview__item" x="12" y="42" width="14" height="4"/>
 		<rect class="styleOptionPreview__item" x="30" y="42" width="14" height="4"/>
 		<rect class="styleOptionPreview__item" x="48" y="42" width="14" height="4"/>
-		<rect class="styleOptionPreview__item" x="66" y="54" width="28" height="4"/>
+		<rect class="styleOptionPreview__bar" x="1" y="51" width="158" height="12"/>
+		<rect class="styleOptionPreview__item" x="66" y="55" width="28" height="4"/>
 	{elseif $styleOptionValue === 'compact'}
 		<rect class="styleOptionPreview__facade" x="12" y="20" width="67" height="11"/>
 		<rect class="styleOptionPreview__facade" x="81" y="20" width="67" height="11"/>
