@@ -697,6 +697,8 @@ final class SpiderCollecting implements IPsr14Event
             )
         );
         $this->register(new Spider('quillbot', 'Quillbot', 'https://quillbot.com/'));
+        $this->register(new Spider('CriteoBot', 'Criteo', 'https://www.criteo.com/criteo-crawler/'));
+        $this->register(new Spider('MojeekBot', 'Mojeek', 'https://www.mojeek.com/bot.html'));
     }
 
     /**
