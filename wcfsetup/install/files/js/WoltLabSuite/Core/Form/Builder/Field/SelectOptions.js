@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Language/Input", "sortablejs"], function (require, exports, tslib_1, Util_1, Language_1, Input_1, sortablejs_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Language/Input", "WoltLabSuite/Core/StringUtil", "sortablejs"], function (require, exports, tslib_1, Util_1, Language_1, Input_1, StringUtil_1, sortablejs_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -78,6 +78,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             }
             else {
                 removeButton.addEventListener("click", () => {
+                    (0, Input_1.unregister)(valueInput.id);
                     li.remove();
                     if (!this.#list.childElementCount) {
                         this.#createRow();
@@ -97,7 +98,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
                 });
             }
             const hasI18nValues = option && !Object.hasOwn(option.value, 0);
-            (0, Input_1.init)((0, Util_1.identify)(valueInput), hasI18nValues ? option.value : {}, this.#languages, false);
+            // `initI18n()` expects HTML-escaped values, but the values are raw JSON data.
+            const i18nValues = hasI18nValues
+                ? Object.fromEntries(Object.entries(option.value).map(([languageId, value]) => [languageId, (0, StringUtil_1.escapeHTML)(value)]))
+                : {};
+            (0, Input_1.init)((0, Util_1.identify)(valueInput), i18nValues, this.#languages, false);
             if (!hasI18nValues) {
                 valueInput.value = option?.value[0] ?? "";
             }

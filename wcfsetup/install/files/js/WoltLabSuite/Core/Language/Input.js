@@ -102,16 +102,18 @@ define(["require", "exports", "tslib", "../Dom/Util", "WoltLabSuite/Core/Languag
         }
         Simple_1.default.init(button);
         Simple_1.default.registerCallback(container.id, dropdownToggle);
+        const form = element.closest("form");
         _elements.set(elementId, {
             buttonLabel,
             callbacks: new Map(),
+            container,
             element,
+            form,
             languageId: 0,
             isEnabled: true,
             forceSelection,
         });
         // bind to submit event
-        const form = element.closest("form");
         if (form !== null) {
             form.addEventListener("submit", submit);
             let elementIds = _forms.get(form);
@@ -278,6 +280,17 @@ define(["require", "exports", "tslib", "../Dom/Util", "WoltLabSuite/Core/Languag
         if (!_values.has(elementId)) {
             throw new Error(`Unknown element id '${elementId}'.`);
         }
+        const data = _elements.get(elementId);
+        if (data.form !== null) {
+            const elementIds = _forms.get(data.form);
+            if (elementIds !== undefined) {
+                const index = elementIds.indexOf(elementId);
+                if (index !== -1) {
+                    elementIds.splice(index, 1);
+                }
+            }
+        }
+        Simple_1.default.destroy(data.container.id);
         _values.delete(elementId);
         _elements.delete(elementId);
     }

@@ -1,6 +1,7 @@
 import { identify } from "WoltLabSuite/Core/Dom/Util";
 import { getPhrase } from "WoltLabSuite/Core/Language";
-import { getValues, init as initI18n } from "WoltLabSuite/Core/Language/Input";
+import { getValues, init as initI18n, unregister as unregisterI18n } from "WoltLabSuite/Core/Language/Input";
+import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 import Sortable from "sortablejs";
 
 type Data = {
@@ -100,6 +101,7 @@ class SelectOptions {
       valueInput.disabled = true;
     } else {
       removeButton.addEventListener("click", () => {
+        unregisterI18n(valueInput.id);
         li.remove();
 
         if (!this.#list.childElementCount) {
@@ -124,7 +126,11 @@ class SelectOptions {
 
     const hasI18nValues = option && !Object.hasOwn(option.value, 0);
 
-    initI18n(identify(valueInput), hasI18nValues ? option.value : {}, this.#languages, false);
+    // `initI18n()` expects HTML-escaped values, but the values are raw JSON data.
+    const i18nValues = hasI18nValues
+      ? Object.fromEntries(Object.entries(option.value).map(([languageId, value]) => [languageId, escapeHTML(value)]))
+      : {};
+    initI18n(identify(valueInput), i18nValues, this.#languages, false);
 
     if (!hasI18nValues) {
       valueInput.value = option?.value[0] ?? "";

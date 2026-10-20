@@ -34,7 +34,9 @@ type Callback = (element: InputOrTextarea) => void;
 interface ElementData {
   buttonLabel: HTMLElement;
   callbacks: Map<CallbackEvent, Callback>;
+  container: HTMLElement;
   element: InputOrTextarea;
+  form: HTMLFormElement | null;
   languageId: number;
   isEnabled: boolean;
   forceSelection: boolean;
@@ -150,17 +152,20 @@ function initElement(
   UiDropdownSimple.init(button);
   UiDropdownSimple.registerCallback(container.id, dropdownToggle);
 
+  const form = element.closest("form");
+
   _elements.set(elementId, {
     buttonLabel,
     callbacks: new Map<CallbackEvent, Callback>(),
+    container,
     element,
+    form,
     languageId: 0,
     isEnabled: true,
     forceSelection,
   });
 
   // bind to submit event
-  const form = element.closest("form");
   if (form !== null) {
     form.addEventListener("submit", submit);
 
@@ -365,6 +370,19 @@ export function unregister(elementId: string): void {
   if (!_values.has(elementId)) {
     throw new Error(`Unknown element id '${elementId}'.`);
   }
+
+  const data = _elements.get(elementId)!;
+  if (data.form !== null) {
+    const elementIds = _forms.get(data.form);
+    if (elementIds !== undefined) {
+      const index = elementIds.indexOf(elementId);
+      if (index !== -1) {
+        elementIds.splice(index, 1);
+      }
+    }
+  }
+
+  UiDropdownSimple.destroy(data.container.id);
 
   _values.delete(elementId);
   _elements.delete(elementId);
