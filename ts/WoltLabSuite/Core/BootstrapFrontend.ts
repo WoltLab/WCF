@@ -28,7 +28,6 @@ import { setup as setupUserMenuDrawer } from "./Component/UserMenuDrawer";
 import { setup as setupPageHeaderSearch } from "./Component/PageHeaderSearch";
 import { setup as setupPageHeaderShadow } from "./Component/PageHeaderShadow";
 import { setup as setupColorSchemeSwitch } from "./Component/PageFooter/ColorSchemeSwitch";
-import { setup as setupFooterLanguageSwitch } from "./Component/PageFooter/LanguageSwitch";
 import { getStoredColorScheme } from "./Controller/Style/ColorScheme";
 
 interface BootstrapOptions {
@@ -125,7 +124,6 @@ export function setup(options: BootstrapOptions): void {
   const hasSystemPageFooter = options.templateVariants.includes("pageFooter");
   if (hasSystemPageFooter) {
     setupColorSchemeSwitch();
-    setupFooterLanguageSwitch();
   }
 
   if (hasSystemPageHeader || hasSystemPageFooter) {

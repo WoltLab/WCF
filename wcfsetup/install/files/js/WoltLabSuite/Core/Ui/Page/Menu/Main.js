@@ -130,7 +130,7 @@ define(["require", "exports", "tslib", "./Container", "WoltLabSuite/Core/Languag
                     listItem.querySelector("a"),
                 ]));
             }
-            return new Map(Array.from(document.querySelectorAll(".pageFooterLanguage__item"), (button) => [
+            return new Map(Array.from(document.querySelectorAll(".pageFooterLanguageMenu [data-switch-language]"), (button) => [
                 button.dataset.languageCode,
                 button,
             ]));

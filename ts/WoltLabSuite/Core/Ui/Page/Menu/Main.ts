@@ -168,7 +168,7 @@ export class PageMenuMain implements PageMenuProvider {
     }
 
     return new Map(
-      Array.from(document.querySelectorAll<HTMLElement>(".pageFooterLanguage__item"), (button) => [
+      Array.from(document.querySelectorAll<HTMLElement>(".pageFooterLanguageMenu [data-switch-language]"), (button) => [
         button.dataset.languageCode!,
         button,
       ]),
