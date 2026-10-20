@@ -126,11 +126,15 @@ class SelectOptions {
 
     const hasI18nValues = option && !Object.hasOwn(option.value, 0);
 
-    // `initI18n()` expects HTML-escaped values, but the values are raw JSON data.
-    const i18nValues = hasI18nValues
-      ? Object.fromEntries(Object.entries(option.value).map(([languageId, value]) => [languageId, escapeHTML(value)]))
-      : {};
-    initI18n(identify(valueInput), i18nValues, this.#languages, false);
+    // Immutable rows only offer the language selection to view existing
+    // localized values, it must not be possible to toggle i18n.
+    if (!this.#immutable || hasI18nValues) {
+      // `initI18n()` expects HTML-escaped values, but the values are raw JSON data.
+      const i18nValues = hasI18nValues
+        ? Object.fromEntries(Object.entries(option.value).map(([languageId, value]) => [languageId, escapeHTML(value)]))
+        : {};
+      initI18n(identify(valueInput), i18nValues, this.#languages, this.#immutable);
+    }
 
     if (!hasI18nValues) {
       valueInput.value = option?.value[0] ?? "";
