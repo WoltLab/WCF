@@ -572,6 +572,7 @@ final class SpiderCollecting implements IPsr14Event
         $this->register(new Spider('UMBC-memeta-Bot', 'UMBC'));
         $this->register(new Spider('unisterbot', 'Unister'));
         $this->register(new Spider('Unpartisan', 'Unpartisan', 'http://www.unpartisan.com'));
+        $this->register(new Spider('updown.io', 'updown.io', 'https://updown.io'));
         $this->register(new Spider('Uptime-Kuma', 'Uptime-Kuma', 'https://uptime.kuma.pet/'));
         $this->register(new Spider('UptimeRobot/2.0', 'Uptime Robot', 'http://uptimerobot.com/'));
         $this->register(new Spider('urlck', 'URL Check'));
