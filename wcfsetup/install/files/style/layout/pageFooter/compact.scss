@@ -89,20 +89,20 @@
 	color: var(--wcfFooterText);
 }
 
+/* Links outside the content area use the text color, the underline on hover marks them. */
 .pageFooter--compact a {
-	color: var(--wcfFooterLink);
+	color: var(--wcfFooterText);
 	text-underline-offset: 3px;
 }
 
 .pageFooter--compact a:focus-visible {
 	border-radius: 2px;
-	outline: 2px solid var(--wcfFooterLink);
+	outline: 2px solid var(--wcfFooterText);
 	outline-offset: 2px;
 }
 
 @media (hover: hover) {
 	.pageFooter--compact a:hover {
-		color: var(--wcfFooterLinkActive);
 		text-decoration: underline;
 	}
 }
@@ -140,14 +140,7 @@
 /* The current page keeps the color of the other current links, see `[aria-current]` below. */
 .pageFooter__part--main .boxTitle a,
 .pageFooter__part--main .boxMenuLinkGroup .boxMenu > li > .boxMenuLink:not([aria-current="page"]) {
-	color: var(--wcfFooterHeadlineLink);
-}
-
-@media (hover: hover) {
-	.pageFooter__part--main .boxTitle a:hover,
-	.pageFooter__part--main .boxMenuLinkGroup .boxMenu > li > .boxMenuLink:not([aria-current="page"]):hover {
-		color: var(--wcfFooterHeadlineLinkActive);
-	}
+	color: var(--wcfFooterHeadlineText);
 }
 
 .pageFooter__part--main .boxTitle + .boxContent {
@@ -245,17 +238,11 @@
 }
 
 .pageFooter__part--bottom a {
-	color: var(--wcfFooterCopyrightLink);
+	color: var(--wcfFooterCopyrightText);
 }
 
 .pageFooter__part--bottom a:focus-visible {
-	outline-color: var(--wcfFooterCopyrightLink);
-}
-
-@media (hover: hover) {
-	.pageFooter__part--bottom a:hover {
-		color: var(--wcfFooterCopyrightLinkActive);
-	}
+	outline-color: var(--wcfFooterCopyrightText);
 }
 
 .pageFooter__bottom {
@@ -347,7 +334,7 @@
 }
 
 .pageFooterPreferences__button:focus-visible {
-	outline: 2px solid var(--wcfFooterCopyrightLink);
+	outline: 2px solid var(--wcfFooterCopyrightText);
 	outline-offset: 2px;
 }
 
@@ -432,7 +419,7 @@
 
 .pageFooterScheme__option:has(:focus-visible) {
 	border-radius: 7px;
-	outline: 2px solid var(--wcfFooterCopyrightLink);
+	outline: 2px solid var(--wcfFooterCopyrightText);
 	outline-offset: -1px;
 }
 

@@ -815,20 +815,18 @@ html[dir="rtl"] #spTable th {
 	color: var(--wcfFooterText);
 }
 .spFooterCompactBand a {
-	color: var(--wcfFooterLink);
+	color: var(--wcfFooterText);
 }
-.spFooterCompactBand a:hover {
-	color: var(--wcfFooterLinkActive);
+.spFooterCompactBand a:hover,
+.spFooterCompactBottom a:hover {
+	text-decoration: underline;
 }
 .spFooterCompactHeadline {
 	color: var(--wcfFooterHeadlineText);
 	font-weight: 600;
 }
 .spFooterCompactBand .spFooterCompactHeadline a {
-	color: var(--wcfFooterHeadlineLink);
-}
-.spFooterCompactBand .spFooterCompactHeadline a:hover {
-	color: var(--wcfFooterHeadlineLinkActive);
+	color: var(--wcfFooterHeadlineText);
 }
 .spFooterCompactBand > .spBoundary {
 	display: flex;
@@ -841,10 +839,7 @@ html[dir="rtl"] #spTable th {
 	font-size: 12px;
 }
 .spFooterCompactBottom a {
-	color: var(--wcfFooterCopyrightLink);
-}
-.spFooterCompactBottom a:hover {
-	color: var(--wcfFooterCopyrightLinkActive);
+	color: var(--wcfFooterCopyrightText);
 }
 .spFooterCompactBottom > .spBoundary {
 	align-items: center;

@@ -838,6 +838,12 @@ class StyleAddForm extends AbstractForm
             'wcfFooterBoxHeadlineText' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
             'wcfFooterBoxHeadlineLink' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
             'wcfFooterBoxHeadlineLinkActive' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
+            'wcfFooterLink' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.emails'],
+            'wcfFooterLinkActive' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
+            'wcfFooterHeadlineLink' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
+            'wcfFooterHeadlineLinkActive' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
+            'wcfFooterCopyrightLink' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
+            'wcfFooterCopyrightLinkActive' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
         ];
 
         // set global variables
