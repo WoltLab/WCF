@@ -6,7 +6,7 @@
 			<woltlab-core-notice type="warning">{lang packageName=''}wcf.acp.package.update.authInsufficient{/lang}</woltlab-core-notice>
 		{/if}
 	{else}
-		<woltlab-core-notice type="{if $responseStatusCode == 401}error{else}warning{/if}">{lang}wcf.acp.package.update.errorCode.{$responseStatusCode}{/lang}</woltlab-core-notice>
+		<woltlab-core-notice type="{if $responseStatusCode == 401}error{else}warning{/if}">{if $responseStatusCode >= 401 && $responseStatusCode <= 404}{lang}wcf.acp.package.update.errorCode.{$responseStatusCode}{/lang}{else}{lang}wcf.acp.package.update.errorCode{/lang}{/if}</woltlab-core-notice>
 	{/if}
 {/if}
 
