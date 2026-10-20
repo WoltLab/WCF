@@ -733,7 +733,24 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function isProtected()
     {
+        if ($this->isHiddenBecauseBanned()) {
+            return true;
+        }
+
         return !WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions') && !$this->isAccessible('canViewProfile') && $this->userID !== WCF::getUser()->userID;
+    }
+
+    /**
+     * Returns true if the profile content of this user is hidden from the active
+     * user because this user is banned.
+     *
+     * @since 6.3
+     */
+    public function isHiddenBecauseBanned(): bool
+    {
+        return $this->banned !== 0
+            && $this->userID !== WCF::getUser()->userID
+            && !WCF::getSession()->hasPermission('admin.general.canViewPrivateUserOptions');
     }
 
     /**
@@ -1115,6 +1132,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     private function getVisibleUserOption(string $name): ?UserOption
     {
+        if ($this->isHiddenBecauseBanned()) {
+            return null;
+        }
+
         $option = UserOptionCacheBuilder::getInstance()->getData([], 'options')[$name] ?? null;
         if ($option === null) {
             return null;

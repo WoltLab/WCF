@@ -58,7 +58,11 @@
 		{/foreach}
 	</div>
 {else}
-	<woltlab-core-notice type="info">{lang}wcf.user.profile.protected{/lang}</woltlab-core-notice>
+	{if $user->isHiddenBecauseBanned()}
+		<woltlab-core-notice type="info">{lang}wcf.user.profile.banned{/lang}</woltlab-core-notice>
+	{else}
+		<woltlab-core-notice type="info">{lang}wcf.user.profile.protected{/lang}</woltlab-core-notice>
+	{/if}
 {/if}
 
 {include file='footer'}

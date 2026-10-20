@@ -25,6 +25,15 @@ class UserSitemapObject extends AbstractSitemapObjectObjectType
     }
 
     #[\Override]
+    public function getObjectList()
+    {
+        $userList = new UserList();
+        $userList->getConditionBuilder()->add('user_table.banned = ?', [0]);
+
+        return $userList;
+    }
+
+    #[\Override]
     public function getLastModifiedColumn(): string
     {
         return 'lastActivityTime';
