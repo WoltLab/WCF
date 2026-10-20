@@ -15,6 +15,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\style\option\IStyleOption;
+use wcf\system\style\option\PageFooterLayout;
 use wcf\system\style\option\PageHeaderLayout;
 use wcf\command\style\CreateManifest;
 use wcf\system\WCF;
@@ -427,7 +428,10 @@ final class StyleCompiler extends SingletonFactory
      */
     public function compileACP(): void
     {
-        $files = $this->getCoreFiles([PageHeaderLayout::Classic->getStylesheet()]);
+        $files = $this->getCoreFiles([
+            PageHeaderLayout::Classic->getStylesheet(),
+            PageFooterLayout::Classic->getStylesheet(),
+        ]);
 
         // ACP uses a slightly different layout
         $files[] = \WCF_DIR . 'acp/style/layout.scss';

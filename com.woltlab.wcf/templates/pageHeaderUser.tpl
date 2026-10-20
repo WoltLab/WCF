@@ -128,7 +128,8 @@
 				</li>
 			{/if}
 		{else}
-			{if $__wcf->getLanguage()->getLanguages()|count > 1}
+			{* The new page footers host the language switch instead. *}
+			{if $__wcf->getLanguage()->getLanguages()|count > 1 && $__wcf->getStyleHandler()->getStyle()->usesClassicPageFooter()}
 				<li id="pageLanguageContainer">
 					<script data-relocate="true">
 						require(['WoltLabSuite/Core/Language/Chooser'], function(LanguageChooser) {

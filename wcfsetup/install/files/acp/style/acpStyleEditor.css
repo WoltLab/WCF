@@ -773,6 +773,92 @@ html[dir="rtl"] #spTable th {
 	text-align: center;
 }
 
+/* ### compact footer ### */
+#spWindow[data-page-footer-layout="compact"] :is(#spFooterBox, #spFooter, #spFooterCopyright),
+#spWindow:not([data-page-footer-layout="compact"]) #spFooterCompact {
+	display: none;
+}
+#spFooterCompact {
+	background-color: var(--wcfContentBackground);
+	color: var(--wcfContentText);
+}
+#spFooterCompact .spFooterCompactBoxes a {
+	color: var(--wcfContentLink);
+}
+#spFooterCompact .spFooterCompactBoxes a:hover {
+	color: var(--wcfContentLinkActive);
+}
+.spFooterCompactBoxes {
+	padding-bottom: 15px;
+}
+.spFooterCompactBoxes > .spBoundary {
+	background-color: var(--wcfContentContainerBackground);
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: var(--wcfBorderRadiusContainer);
+	display: flex;
+}
+.spFooterCompactBoxItem {
+	flex: 1 1 0;
+	padding: 15px;
+}
+.spFooterCompactBoxItem + .spFooterCompactBoxItem {
+	border-inline-start: 1px solid var(--wcfContentBorderInner);
+}
+.spFooterCompactBoxHeadline {
+	color: var(--wcfContentHeadlineText);
+	font-size: 1.2rem;
+	font-weight: 300;
+	margin-bottom: 10px;
+}
+.spFooterCompactBand {
+	background-color: var(--wcfFooterBackground);
+	color: var(--wcfFooterText);
+}
+.spFooterCompactBand a {
+	color: var(--wcfFooterText);
+}
+.spFooterCompactBand a:hover,
+.spFooterCompactBottom a:hover {
+	text-decoration: underline;
+}
+.spFooterCompactHeadline {
+	color: var(--wcfFooterHeadlineText);
+	font-weight: 600;
+}
+.spFooterCompactBand .spFooterCompactHeadline a {
+	color: var(--wcfFooterHeadlineText);
+}
+.spFooterCompactBand > .spBoundary {
+	display: flex;
+	gap: 20px;
+	padding: 15px 0;
+}
+.spFooterCompactBottom {
+	background-color: var(--wcfFooterCopyrightBackground);
+	color: var(--wcfFooterCopyrightText);
+	font-size: 12px;
+}
+.spFooterCompactBottom a {
+	color: var(--wcfFooterCopyrightText);
+}
+.spFooterCompactBottom > .spBoundary {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 0;
+}
+.spFooterCompactControls {
+	display: flex;
+	gap: 6px;
+}
+/* The preview receives no `-rgb` variants, the border is mixed from the color instead. */
+.spFooterCompactControls > span {
+	border: 1px solid color-mix(in srgb, var(--wcfFooterCopyrightText) 22%, transparent);
+	border-radius: 6px;
+	height: 20px;
+	width: 32px;
+}
+
 /* ### content sidebar ### */
 #spContent > .spBoundary {
 	display: flex;
@@ -969,7 +1055,8 @@ html:not(.touch) .spColorBox {
 	display: flex;
 	flex: 0 0 auto;
 }
-#spWindow[data-page-header-layout="classic"] + #spSidebar .spColorScope {
+#spWindow[data-page-header-layout="classic"] + #spSidebar .spColorScope[data-style-option="pageHeaderLayout"],
+#spWindow[data-page-footer-layout="classic"] + #spSidebar .spColorScope[data-style-option="pageFooterLayout"] {
 	display: none;
 }
 .spDescription {

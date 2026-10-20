@@ -100,12 +100,13 @@ class StyleAddForm extends AbstractForm
     public $colors = [];
 
     /**
-     * Color variables that the new page header layouts use only partially: `classic` for colors
-     * used by the classic page header alone, `smallScreens` for colors limited to small screens.
-     * @var array<string, 'classic'|'smallScreens'>
+     * Color variables that the new layouts of a style option use only partially, with the
+     * option they depend on and the phrase that describes their remaining use. The note is
+     * hidden while the option uses its classic layout.
+     * @var array<string, array{option: string, phrase: string}>
      * @since 6.3
      */
-    public array $pageHeaderColorScopes = [];
+    public array $colorScopes = [];
 
     /**
      * copyright message
@@ -818,18 +819,31 @@ class StyleAddForm extends AbstractForm
             'wcfFooterCopyright' => ['background', 'text', 'link', 'linkActive'],
         ];
 
-        $this->pageHeaderColorScopes = [
-            'wcfHeaderMenuLinkBackground' => 'classic',
-            'wcfHeaderMenuDropdownBackground' => 'classic',
-            'wcfHeaderMenuDropdownBorder' => 'classic',
-            'wcfHeaderMenuDropdownLink' => 'classic',
-            'wcfHeaderSearchBoxBackground' => 'classic',
-            'wcfHeaderSearchBoxText' => 'classic',
-            'wcfHeaderSearchBoxPlaceholder' => 'classic',
-            'wcfNavigationBackground' => 'classic',
-            'wcfNavigationText' => 'smallScreens',
-            'wcfNavigationLink' => 'smallScreens',
-            'wcfNavigationLinkActive' => 'smallScreens',
+        $this->colorScopes = [
+            'wcfHeaderMenuLinkBackground' => ['option' => 'pageHeaderLayout', 'phrase' => 'wcf.acp.style.colors.pageHeaderScope.classic'],
+            'wcfHeaderMenuDropdownBackground' => ['option' => 'pageHeaderLayout', 'phrase' => 'wcf.acp.style.colors.pageHeaderScope.classic'],
+            'wcfHeaderMenuDropdownBorder' => ['option' => 'pageHeaderLayout', 'phrase' => 'wcf.acp.style.colors.pageHeaderScope.classic'],
+            'wcfHeaderMenuDropdownLink' => ['option' => 'pageHeaderLayout', 'phrase' => 'wcf.acp.style.colors.pageHeaderScope.classic'],
+            'wcfHeaderSearchBoxBackground' => ['option' => 'pageHeaderLayout', 'phrase' => 'wcf.acp.style.colors.pageHeaderScope.classic'],
+            'wcfHeaderSearchBoxText' => ['option' => 'pageHeaderLayout', 'phrase' => 'wcf.acp.style.colors.pageHeaderScope.classic'],
+            'wcfHeaderSearchBoxPlaceholder' => ['option' => 'pageHeaderLayout', 'phrase' => 'wcf.acp.style.colors.pageHeaderScope.classic'],
+            'wcfNavigationBackground' => ['option' => 'pageHeaderLayout', 'phrase' => 'wcf.acp.style.colors.pageHeaderScope.classic'],
+            'wcfNavigationText' => ['option' => 'pageHeaderLayout', 'phrase' => 'wcf.acp.style.colors.pageHeaderScope.smallScreens'],
+            'wcfNavigationLink' => ['option' => 'pageHeaderLayout', 'phrase' => 'wcf.acp.style.colors.pageHeaderScope.smallScreens'],
+            'wcfNavigationLinkActive' => ['option' => 'pageHeaderLayout', 'phrase' => 'wcf.acp.style.colors.pageHeaderScope.smallScreens'],
+            'wcfFooterBoxBackground' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.headerBoxes'],
+            'wcfFooterBoxText' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.headerBoxes'],
+            'wcfFooterBoxLink' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.headerBoxes'],
+            'wcfFooterBoxLinkActive' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.headerBoxes'],
+            'wcfFooterBoxHeadlineText' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
+            'wcfFooterBoxHeadlineLink' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
+            'wcfFooterBoxHeadlineLinkActive' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
+            'wcfFooterLink' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.emails'],
+            'wcfFooterLinkActive' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
+            'wcfFooterHeadlineLink' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
+            'wcfFooterHeadlineLinkActive' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
+            'wcfFooterCopyrightLink' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
+            'wcfFooterCopyrightLinkActive' => ['option' => 'pageFooterLayout', 'phrase' => 'wcf.acp.style.colors.pageFooterScope.classic'],
         ];
 
         // set global variables
@@ -991,7 +1005,7 @@ class StyleAddForm extends AbstractForm
             'isTainted' => $this->isTainted,
             'license' => $this->license,
             'packageName' => $this->packageName,
-            'pageHeaderColorScopes' => $this->pageHeaderColorScopes,
+            'colorScopes' => $this->colorScopes,
             'styleDate' => $this->styleDate,
             'styleDescription' => $this->styleDescription,
             'styleName' => $this->styleName,

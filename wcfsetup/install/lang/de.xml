@@ -2885,6 +2885,9 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.colors.linkColor"><![CDATA[Linkfarbe]]></item>
 		<item name="wcf.acp.style.colors.linkHoverColor"><![CDATA[Linkfarbe (Hover)]]></item>
 		<item name="wcf.acp.style.colors.page"><![CDATA[Seite]]></item>
+		<item name="wcf.acp.style.colors.pageFooterScope.classic"><![CDATA[Wird nur vom klassischen Seitenfuß verwendet.]]></item>
+		<item name="wcf.acp.style.colors.pageFooterScope.emails"><![CDATA[Wird mit dem gewählten Layout des Seitenfußes nur in E-Mails verwendet.]]></item>
+		<item name="wcf.acp.style.colors.pageFooterScope.headerBoxes"><![CDATA[Wird mit dem gewählten Layout des Seitenfußes nur von den Boxen der Position „Kopfzeile“ verwendet.]]></item>
 		<item name="wcf.acp.style.colors.pageHeaderScope.classic"><![CDATA[Wird nur vom klassischen Seitenkopf verwendet.]]></item>
 		<item name="wcf.acp.style.colors.pageHeaderScope.smallScreens"><![CDATA[Wird mit dem gewählten Layout des Seitenkopfs nur auf kleinen Bildschirmen verwendet.]]></item>
 		<item name="wcf.acp.style.colors.primaryBackgroundColor"><![CDATA[Hintergrundfarbe (primär)]]></item>
@@ -2965,6 +2968,11 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.styleDate.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum eingegeben.]]></item>
 		<item name="wcf.acp.style.option"><![CDATA[Stiloptionen]]></item>
 		<item name="wcf.acp.style.option.deprecated"><![CDATA[Veraltet]]></item>
+		<item name="wcf.acp.style.option.pageFooterLayout"><![CDATA[Layout des Seitenfußes]]></item>
+		<item name="wcf.acp.style.option.pageFooterLayout.classic"><![CDATA[Klassisch]]></item>
+		<item name="wcf.acp.style.option.pageFooterLayout.classic.description"><![CDATA[Der Seitenfuß früherer Versionen mit eigens eingefärbten Bändern für die Fußzeile, das Seitenende und das Copyright.<br><br>Dieser Seitenfuß wird in einer zukünftigen Version entfernt. Bis dahin steht diese Option für Stile zur Verfügung, deren Templates, CSS oder JavaScript darauf angewiesen sind und die noch nicht angepasst wurden.]]></item>
+		<item name="wcf.acp.style.option.pageFooterLayout.compact"><![CDATA[Kompakt]]></item>
+		<item name="wcf.acp.style.option.pageFooterLayout.compact.description"><![CDATA[Ein ruhiges Band in den Farben des Seitenfußes, die unterste Zeile zeigt das Copyright neben der Auswahl von Farbschema, Stil und Sprache. Die Boxen der Fußzeile setzen den Inhalt als zusammenhängende Karte fort.]]></item>
 		<item name="wcf.acp.style.option.pageHeaderLayout"><![CDATA[Layout des Seitenkopfs]]></item>
 		<item name="wcf.acp.style.option.pageHeaderLayout.classic"><![CDATA[Klassisch]]></item>
 		<item name="wcf.acp.style.option.pageHeaderLayout.classic.description"><![CDATA[Der Seitenkopf früherer Versionen. Die Menüleiste steht ganz oben und bleibt beim Scrollen am oberen Bildschirmrand, das Logo folgt darunter.<br><br>Dieser Seitenkopf wird in einer zukünftigen Version entfernt. Bis dahin steht diese Option für Stile zur Verfügung, deren Templates, CSS oder JavaScript darauf angewiesen sind und die noch nicht angepasst wurden.]]></item>

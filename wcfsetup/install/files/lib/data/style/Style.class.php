@@ -5,6 +5,7 @@ namespace wcf\data\style;
 use wcf\data\DatabaseObject;
 use wcf\data\ITitledObject;
 use wcf\system\style\option\IStyleOption;
+use wcf\system\style\option\PageFooterLayout;
 use wcf\system\style\option\PageHeaderLayout;
 use wcf\system\style\StyleCompiler;
 use wcf\system\WCF;
@@ -94,6 +95,7 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
      */
     private const OPTIONS = [
         PageHeaderLayout::class,
+        PageFooterLayout::class,
     ];
 
     /**
@@ -224,6 +226,20 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
         $variables = $this->getVariables();
 
         return PageHeaderLayout::fromString($variables[PageHeaderLayout::getVariableName()]) === PageHeaderLayout::Classic;
+    }
+
+    /**
+     * Returns true if this style renders the classic page footer. Templates outside
+     * the footer, such as the language controls of both headers, use this to adapt
+     * their markup without relying on the template variants.
+     *
+     * @since 6.3
+     */
+    public function usesClassicPageFooter(): bool
+    {
+        $variables = $this->getVariables();
+
+        return PageFooterLayout::fromString($variables[PageFooterLayout::getVariableName()]) === PageFooterLayout::Classic;
     }
 
     /**

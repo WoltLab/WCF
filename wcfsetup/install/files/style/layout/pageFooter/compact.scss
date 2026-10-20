@@ -1,0 +1,462 @@
+/* The boxes of the `footerBoxes` position continue the content column as one joined card. Separators
+   are each box's outline, so an empty grid cell keeps the card color instead of showing a hole. */
+.boxesFooterBoxes {
+	color: var(--wcfContentText);
+	padding-bottom: 30px;
+
+	@include screen-sm-md {
+		padding-bottom: 40px;
+	}
+
+	@include screen-xs {
+		padding-bottom: 20px;
+	}
+}
+
+.boxesFooterBoxes > .layoutBoundary > .boxContainer {
+	background-color: var(--wcfContentContainerBackground);
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: var(--wcfBorderRadiusContainer);
+	display: grid;
+	gap: 1px;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	overflow: hidden;
+
+	@include screen-sm-down {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.boxesFooterBoxes .boxContainer > .box {
+	box-shadow: 0 0 0 1px var(--wcfContentBorderInner);
+	min-width: 0;
+	padding: 24px;
+
+	@include screen-xs {
+		padding: 20px;
+	}
+}
+
+.boxesFooterBoxes .boxContainer > .box:is(.boxFullWidth, :last-child:nth-child(odd)) {
+	grid-column: 1 / -1;
+}
+
+.boxesFooterBoxes .boxTitle {
+	color: var(--wcfContentHeadlineText);
+}
+
+.boxesFooterBoxes .boxTitle a {
+	color: inherit;
+}
+
+.boxesFooterBoxes .boxTitle + .boxContent {
+	margin-top: 12px;
+}
+
+.boxesFooterBoxes a {
+	color: var(--wcfContentLink);
+}
+
+.boxesFooterBoxes a:focus-visible {
+	outline: 2px solid var(--wcfContentLink);
+	outline-offset: 2px;
+}
+
+@media (hover: hover) {
+	.boxesFooterBoxes a:hover {
+		color: var(--wcfContentLinkActive);
+	}
+}
+
+/* The image bleeds to the edges of the cell. */
+.boxesFooterBoxes .boxImage {
+	margin: -24px -24px 16px;
+
+	@include screen-xs {
+		margin: -20px -20px 16px;
+	}
+}
+
+.boxesFooterBoxes .boxImage img {
+	display: block;
+	max-height: 140px;
+	object-fit: cover;
+	width: 100%;
+}
+
+.pageFooter--compact {
+	background-color: var(--wcfFooterBackground);
+	color: var(--wcfFooterText);
+}
+
+/* Links outside the content area use the text color, the underline on hover marks them. */
+.pageFooter--compact a {
+	color: var(--wcfFooterText);
+	text-underline-offset: 3px;
+}
+
+.pageFooter--compact a:focus-visible {
+	border-radius: 2px;
+	outline: 2px solid var(--wcfFooterText);
+	outline-offset: 2px;
+}
+
+@media (hover: hover) {
+	.pageFooter--compact a:hover {
+		text-decoration: underline;
+	}
+}
+
+.pageFooter__part--main {
+	padding-block: 44px;
+
+	@include screen-sm-down {
+		padding-block: 32px;
+	}
+}
+
+/* A lone flat menu is a single line of links. The links carry 7px of touch padding on small screens. */
+.pageFooter__part--main:has(.boxContainer > .box:only-child:not(.boxMenuLinkGroup) nav) {
+	padding-block: 24px;
+
+	@include screen-sm-down {
+		padding-block: 17px;
+	}
+}
+
+.pageFooter__part--main .boxContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.pageFooter__part--main .boxTitle {
+	@include wcfFontDefault;
+	@include wcfFontBold;
+
+	color: var(--wcfFooterHeadlineText);
+}
+
+/* The current page keeps the color of the other current links, see `[aria-current]` below. */
+.pageFooter__part--main .boxTitle a,
+.pageFooter__part--main .boxMenuLinkGroup .boxMenu > li > .boxMenuLink:not([aria-current="page"]) {
+	color: var(--wcfFooterHeadlineText);
+}
+
+.pageFooter__part--main .boxTitle + .boxContent {
+	margin-top: 8px;
+}
+
+.pageFooter__part--main .boxMenu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.pageFooter__part--main .boxMenuLink {
+	display: inline;
+	padding: 0;
+}
+
+.pageFooter__part--main .boxMenu [aria-current="page"] {
+	color: var(--wcfFooterText);
+	text-decoration: underline;
+	text-decoration-thickness: 2px;
+}
+
+/* FooterMenu or any other untitled menu that is not grouped */
+.pageFooter__part--main .box:not(.boxMenuLinkGroup) > .boxContent > nav > .boxMenu {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 24px;
+
+	@include screen-md-down {
+		gap: 0 20px;
+	}
+}
+
+@include screen-md-down {
+	.pageFooter__part--main .box:not(.boxMenuLinkGroup) .boxMenuLink,
+	.pageFooter__part--main .boxMenuDepth1 .boxMenuLink {
+		display: inline-block;
+		padding-block: 7px;
+	}
+}
+
+/* FooterLinks: columns sized to their content, the top level items are the headings */
+.pageFooter__part--main .boxMenuLinkGroup .boxMenu {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 28px 72px;
+
+	@include screen-sm-down {
+		display: grid;
+		gap: 24px 20px;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
+	}
+}
+
+.pageFooter__part--main .boxMenuLinkGroup .boxMenu > li {
+	flex: 0 1 auto;
+	min-width: 140px;
+
+	@include screen-sm-down {
+		min-width: 0;
+	}
+}
+
+.pageFooter__part--main .boxMenuLinkGroup .boxMenu > li > .boxMenuLink {
+	@include wcfFontBold;
+}
+
+.pageFooter__part--main .boxMenuDepth1 {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	list-style: none;
+	margin: 10px 0 0;
+	padding: 0;
+
+	@include screen-md-down {
+		gap: 0;
+		margin-top: 4px;
+	}
+}
+
+.pageFooter__part--bottom {
+	background-color: var(--wcfFooterCopyrightBackground);
+	color: var(--wcfFooterCopyrightText);
+	padding-block: 14px;
+
+	@include screen-sm-down {
+		padding-block: 16px 20px;
+	}
+}
+
+.pageFooter__part--bottom:has(.pageFooter__ad) {
+	padding-block: 20px;
+}
+
+.pageFooter__part--bottom a {
+	color: var(--wcfFooterCopyrightText);
+}
+
+.pageFooter__part--bottom a:focus-visible {
+	outline-color: var(--wcfFooterCopyrightText);
+}
+
+.pageFooter__bottom {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px 40px;
+	justify-content: space-between;
+
+	@include screen-sm-down {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 16px;
+	}
+}
+
+.pageFooter__copyright {
+	@include wcfFontSmall;
+
+	display: flex;
+	flex: 1 1 320px;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
+
+	@include screen-sm-down {
+		flex: 0 0 auto;
+		width: 100%;
+	}
+}
+
+.pageFooter__copyright .benchmark {
+	overflow-wrap: anywhere;
+}
+
+/* The ad gets its own row, so the copyright and the preferences stay on one row. */
+.pageFooter__ad {
+	display: flex;
+	justify-content: center;
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+.pageFooter__bottom + .pageFooter__ad {
+	margin-top: 20px;
+}
+
+.pageFooter__ad > .wcfAdLocation {
+	max-width: 100%;
+}
+
+/* Every member is `.jsOnly` and the row spaces them with `gap`, so a missing one leaves no hole. */
+.pageFooterPreferences {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+
+	@include screen-sm-down {
+		order: -1;
+	}
+}
+
+.pageFooterPreferences__button {
+	align-items: center;
+	background-color: transparent;
+	border: 1px solid rgba(var(--wcfFooterCopyrightText-rgb) / 0.22);
+	border-radius: 9px;
+	box-sizing: border-box;
+	color: var(--wcfFooterCopyrightText);
+	cursor: pointer;
+	display: inline-flex;
+	font: inherit;
+	gap: 8px;
+	height: 36px;
+	padding: 0 12px;
+	transition:
+		background-color 0.12s ease,
+		border-color 0.12s ease;
+	white-space: nowrap;
+
+	@include screen-md-down {
+		height: 44px;
+	}
+}
+
+.pageFooterPreferences__button > fa-icon {
+	flex: 0 0 auto;
+}
+
+.pageFooterPreferences__button:focus-visible {
+	outline: 2px solid var(--wcfFooterCopyrightText);
+	outline-offset: 2px;
+}
+
+.pageFooterPreferences__button[aria-expanded="true"] {
+	background-color: rgba(var(--wcfFooterCopyrightText-rgb) / 0.08);
+}
+
+@media (hover: hover) {
+	.pageFooterPreferences__button:hover {
+		background-color: rgba(var(--wcfFooterCopyrightText-rgb) / 0.08);
+		border-color: rgba(var(--wcfFooterCopyrightText-rgb) / 0.34);
+	}
+}
+
+/* Native radios, the labels are visually hidden and repeated as the title. */
+.pageFooterScheme {
+	border: 1px solid rgba(var(--wcfFooterCopyrightText-rgb) / 0.22);
+	border-radius: 9px;
+	box-sizing: border-box;
+	display: inline-flex;
+	height: 36px;
+	margin: 0;
+	min-inline-size: 0;
+	padding: 0;
+
+	@include screen-md-down {
+		height: 44px;
+	}
+}
+
+.pageFooterScheme__option {
+	align-items: center;
+	color: var(--wcfFooterCopyrightText);
+	cursor: pointer;
+	display: inline-flex;
+	justify-content: center;
+	position: relative;
+	width: 36px;
+
+	@include screen-md-down {
+		width: 44px;
+	}
+}
+
+.pageFooterScheme__option::before {
+	border-radius: 6px;
+	content: "";
+	inset: 3px;
+	position: absolute;
+	transition: background-color 0.12s ease;
+}
+
+.pageFooterScheme__option > fa-icon {
+	position: relative;
+}
+
+.pageFooterScheme__input {
+	appearance: none;
+	cursor: pointer;
+	inset: 0;
+	margin: 0;
+	opacity: 0;
+	position: absolute;
+	z-index: 1;
+}
+
+/* Inverted text and background, so it passes whenever the footer text does. */
+.pageFooterScheme__option:has(:checked) {
+	color: var(--wcfFooterCopyrightBackground);
+}
+
+.pageFooterScheme__option:has(:checked)::before {
+	background-color: var(--wcfFooterCopyrightText);
+}
+
+/* Forced colors drop the background, a border survives. */
+@media (forced-colors: active) {
+	.pageFooterScheme__option:has(:checked)::before {
+		border: 2px solid CanvasText;
+	}
+}
+
+.pageFooterScheme__option:has(:focus-visible) {
+	border-radius: 7px;
+	outline: 2px solid var(--wcfFooterCopyrightText);
+	outline-offset: -1px;
+}
+
+@media (hover: hover) {
+	.pageFooterScheme__option:not(:has(:checked)):hover::before {
+		background-color: rgba(var(--wcfFooterCopyrightText-rgb) / 0.1);
+	}
+}
+
+.pageFooterLanguage .iconFlag,
+.pageFooterLanguageMenu .iconFlag {
+	border-radius: 2px;
+	display: block;
+	flex: 0 0 auto;
+	height: 15px;
+	object-fit: cover;
+	width: 20px;
+}
+
+/* The menu is moved into `.dropdownMenuContainer`, it is styled through its own class. */
+.dropdownMenu.pageFooterLanguageMenu li > button {
+	align-items: center;
+	display: flex;
+	gap: 10px;
+	width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.pageFooterPreferences__button,
+	.pageFooterScheme__option::before {
+		transition: none;
+	}
+}
+
+@media print {
+	.pageFooter__part--main,
+	.pageFooterPreferences {
+		display: none;
+	}
+}

@@ -13,8 +13,8 @@
 			>{icon size=32 name='magnifying-glass'} <span>{lang}wcf.global.search{/lang}</span></a>
 		</li>
 		
-		{* Members only switch the language through the developer tools. *}
-		{if $__wcf->getLanguage()->getLanguages()|count > 1 && ($__wcf->user->isGuest() || (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS))}
+		{* Members only switch the language through the developer tools. The new page footers host the switch instead. *}
+		{if $__wcf->getLanguage()->getLanguages()|count > 1 && ($__wcf->user->isGuest() || (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS)) && $__wcf->getStyleHandler()->getStyle()->usesClassicPageFooter()}
 			<li id="pageLanguageContainer" class="dropdown">
 				<button
 					type="button"

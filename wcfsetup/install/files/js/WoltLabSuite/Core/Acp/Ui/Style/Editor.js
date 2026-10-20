@@ -94,12 +94,12 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
         });
     }
     /**
-     * Mirrors the selected page header layout in the preview.
+     * Mirrors the selected style options in the preview, e.g. `data-page-header-layout`.
      */
-    function handlePageHeaderLayout() {
-        document.querySelectorAll('input[name="pageHeaderLayout"]').forEach((input) => {
+    function handleStyleOptions() {
+        document.querySelectorAll('.styleOptionList input[type="radio"]').forEach((input) => {
             input.addEventListener("change", () => {
-                _stylePreviewWindow.dataset.pageHeaderLayout = input.value;
+                _stylePreviewWindow.dataset[input.name] = input.value;
             });
         });
     }
@@ -246,7 +246,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
             handleProtection(options.styleId);
         }
         initVisualEditor();
-        handlePageHeaderLayout();
+        handleStyleOptions();
         UiScreen.on("screen-sm-down", {
             match() {
                 hideVisualEditor();

@@ -615,7 +615,7 @@
 		<div id="colors" class="tabMenuContent">
 			<div class="section">
 				<div id="spWrapper">
-					<div id="spWindow" data-page-header-layout="{if $styleOptions[pageHeaderLayout][selected] !== null}{$styleOptions[pageHeaderLayout][selected]->toString()}{else}classic{/if}">
+					<div id="spWindow" data-page-header-layout="{if $styleOptions[pageHeaderLayout][selected] !== null}{$styleOptions[pageHeaderLayout][selected]->toString()}{else}classic{/if}" data-page-footer-layout="{if $styleOptions[pageFooterLayout][selected] !== null}{$styleOptions[pageFooterLayout][selected]->toString()}{else}classic{/if}">
 						<div id="spPageHeader">
 							<div id="spHeaderPanel" data-region="wcfHeaderMenu">
 								<div class="spBoundary">
@@ -927,6 +927,37 @@
 								Copyright &copy; 1970-2038 <a>Example Company</a>
 							</div>
 						</div>
+						
+						<div id="spFooterCompact">
+							<div class="spFooterCompactBoxes" data-region="wcfContentContainer">
+								<div class="spBoundary">
+									<div class="spFooterCompactBoxItem">
+										<div class="spFooterCompactBoxHeadline" data-region="wcfContentHeadline">Lorem Ipsum</div>
+										
+										<p>Lorem ipsum dolor sit amet, consetetur <a>sadipscing elitr</a>, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
+									</div>
+									
+									<div class="spFooterCompactBoxItem">
+										<div class="spFooterCompactBoxHeadline">Dolor Sit Amet</div>
+										
+										<p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet, <a>sed diam voluptua</a>.</p>
+									</div>
+								</div>
+							</div>
+							
+							<div class="spFooterCompactBand" data-region="wcfFooter">
+								<div class="spBoundary">
+									<span class="spFooterCompactHeadline" data-region="wcfFooterHeadline">Lorem <a>Ipsum</a></span> <a>Dolor Sit Amet</a> <a>Consetetur</a> <a>Sadipscing</a>
+								</div>
+							</div>
+							
+							<div class="spFooterCompactBottom" data-region="wcfFooterCopyright">
+								<div class="spBoundary">
+									<span>Copyright &copy; 1970-2038 <a>Example Company</a></span>
+									<span class="spFooterCompactControls"><span></span><span></span><span></span></span>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div id="spSidebar">
 						<div id="spVariablesWrapper">
@@ -978,8 +1009,8 @@
 															*}{$spColor}{*
 															*}<span class="spVariableInvisible">)</span>{*
 														*}</span>
-														{if $pageHeaderColorScopes[$spColor]|isset}
-															<span class="spColorScope jsTooltip" title="{lang}wcf.acp.style.colors.pageHeaderScope.{$pageHeaderColorScopes[$spColor]}{/lang}">{icon name='circle-info'}</span>
+														{if $colorScopes[$spColor]|isset}
+															<span class="spColorScope jsTooltip" data-style-option="{$colorScopes[$spColor][option]}" title="{$colorScopes[$spColor][phrase]|language}">{icon name='circle-info'}</span>
 														{/if}
 													</div>
 													<span class="spDescription">{$spType}</span>
