@@ -69,11 +69,14 @@ final class LanguageItemEditAction implements RequestHandlerInterface
                     $data['languageItemOldValue'] = null;
                 }
 
-                if (
-                    $data['languageUseCustomValue'] === 0
-                    && ($languageItem->languageCustomItemValue === null || $languageItem->languageCustomItemValue === '')
-                ) {
-                    $data['languageCustomItemValue'] = null;
+                if ($data['languageUseCustomValue'] === 0) {
+                    // The custom value field is hidden by its dependency and
+                    // therefore missing from `$data`, but its value is still
+                    // submitted and allows to discard the custom value.
+                    $customValue = $form->getFormField('languageCustomItemValue')->getValue();
+                    if ($customValue === '') {
+                        $data['languageCustomItemValue'] = null;
+                    }
                 }
             }
 

@@ -67,6 +67,6 @@ class UrlFormOption extends AbstractFormOption
     #[\Override]
     public function getConfigurationFormFields(): array
     {
-        return ['urlLinkText'];
+        return ['required', 'urlLinkText'];
     }
 }

@@ -77,9 +77,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
         }
 
         if ($this->user->reactivationCode === 0) {
-            throw new NamedUserException(HtmlString::fromSafeHtml(
-                WCF::getLanguage()->get('wcf.user.registerActivation.error.userAlreadyEnabled')
-            ));
+            return;
         }
 
         // Check whether the new email isn't unique anymore.
@@ -131,21 +129,25 @@ final class EmailActivationForm extends AbstractFormBuilderForm
     {
         AbstractForm::save();
 
-        // enable new email
-        $builder = UserBuilder::forUpdate($this->user)
-            ->setEmail($this->user->newEmail)
-            ->setNewEmail('')
-            ->setReactivationCode(0);
-        foreach ($this->additionalFields as $name => $value) {
-            $builder->setCustomProperty($name, $value);
-        }
-        (new UpdateUser($builder))();
+        // Link scanners of mail providers may have consumed the activation link
+        // before the user follows it, which must look like a regular activation.
+        if ($this->user->reactivationCode !== 0) {
+            // enable new email
+            $builder = UserBuilder::forUpdate($this->user)
+                ->setEmail($this->user->newEmail)
+                ->setNewEmail('')
+                ->setReactivationCode(0);
+            foreach ($this->additionalFields as $name => $value) {
+                $builder->setCustomProperty($name, $value);
+            }
+            (new UpdateUser($builder))();
 
-        // confirm email
-        if (!$this->user->isEmailConfirmed() && $this->user->blacklistMatches === '') {
-            (new ConfirmUserEmail($this->user))();
+            // confirm email
+            if (!$this->user->isEmailConfirmed() && $this->user->blacklistMatches === '') {
+                (new ConfirmUserEmail($this->user))();
+            }
+            $this->saved();
         }
-        $this->saved();
 
         // forward to index page
         HeaderUtil::delayedRedirect(

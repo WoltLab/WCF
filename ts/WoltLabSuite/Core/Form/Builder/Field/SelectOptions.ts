@@ -11,6 +11,7 @@ type Data = {
 type Languages = Record<string, string>;
 
 class SelectOptions {
+  readonly #immutable: boolean;
   readonly #languages: Languages;
   readonly #list: HTMLUListElement;
   readonly #template: HTMLTemplateElement;
@@ -24,11 +25,17 @@ class SelectOptions {
       });
     }
 
+    this.#immutable = formField.disabled;
     this.#languages = languages;
     this.#template = document.getElementById(`${formField.id}_template`) as HTMLTemplateElement;
 
     this.#list = this.#createUi(formField);
     this.#createListItems(formField);
+
+    if (this.#immutable) {
+      return;
+    }
+
     this.#initializeSorting();
 
     formField.form.addEventListener("submit", () => {
@@ -40,6 +47,10 @@ class SelectOptions {
     const ul = document.createElement("ul");
     ul.classList.add("selectOptionsList");
     formField.insertAdjacentElement("afterend", ul);
+
+    if (this.#immutable) {
+      return ul;
+    }
 
     const addButton = this.#createAddButton();
     addButton.addEventListener("click", () => {
@@ -56,7 +67,7 @@ class SelectOptions {
       data.forEach((option) => {
         this.#createRow(option);
       });
-    } else {
+    } else if (!this.#immutable) {
       this.#createRow();
     }
   }
@@ -78,30 +89,38 @@ class SelectOptions {
     this.#list.append(li);
 
     const removeButton = li.querySelector(".selectOptionsListItem__remove") as HTMLButtonElement;
-    removeButton.addEventListener("click", () => {
-      li.remove();
-
-      if (!this.#list.childElementCount) {
-        this.#createRow();
-      }
-    });
-
     const keyInput = li.querySelector(".selectOptionsListItem__key") as HTMLInputElement;
-    keyInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        this.#createRow(undefined, true);
-      }
-    });
     keyInput.value = option ? option.key : "";
-
     const valueInput = li.querySelector(".selectOptionsListItem__value") as HTMLInputElement;
-    valueInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        this.#createRow(undefined, true);
-      }
-    });
+
+    if (this.#immutable) {
+      li.querySelector(".selectOptionsListItem__handle")!.remove();
+      removeButton.remove();
+      keyInput.disabled = true;
+      valueInput.disabled = true;
+    } else {
+      removeButton.addEventListener("click", () => {
+        li.remove();
+
+        if (!this.#list.childElementCount) {
+          this.#createRow();
+        }
+      });
+
+      keyInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          this.#createRow(undefined, true);
+        }
+      });
+
+      valueInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          this.#createRow(undefined, true);
+        }
+      });
+    }
 
     const hasI18nValues = option && !Object.hasOwn(option.value, 0);
 

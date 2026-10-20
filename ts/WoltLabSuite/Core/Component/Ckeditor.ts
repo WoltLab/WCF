@@ -26,10 +26,10 @@ import { normalizeLegacyHtml, normalizeLegacyMessage } from "./Ckeditor/Normaliz
 import { element as scrollToElement } from "../Ui/Scroll";
 import Devtools from "../Devtools";
 import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
-import { setup as setupLayer } from "./Ckeditor/Layer";
 import { setup as setupBalloonPanel } from "./Ckeditor/BalloonPanel";
 import { browser, touch } from "../Environment";
 import type { WoltlabSmileyItem } from "@woltlab/editor/plugins/ckeditor5-woltlab-smiley";
+import { getPageOverlayContainer } from "../Helper/PageOverlay";
 
 const instances = new WeakMap<HTMLElement, CKEditor>();
 
@@ -253,6 +253,8 @@ function initializeConfiguration(
     toolbar.push(name);
   }
 
+  configuration.ui!.overlayContainer = getPageOverlayContainer();
+
   return configuration;
 }
 
@@ -288,7 +290,6 @@ export async function setupCkeditor(
     throw new TypeError(`Cannot initialize the editor for '${element.id}' twice.`);
   }
 
-  setupLayer();
   setupBalloonPanel();
 
   const { create: createEditor, CKEditor5 } = await import("@woltlab/editor");

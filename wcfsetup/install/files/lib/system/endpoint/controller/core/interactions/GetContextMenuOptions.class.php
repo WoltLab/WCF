@@ -49,10 +49,13 @@ final class GetContextMenuOptions implements IController
     private function getDatabaseObject(string $className, int|string $objectID): DatabaseObject
     {
         if (\is_subclass_of($className, DatabaseObjectDecorator::class)) {
-            $baseObject = new ($className::getBaseClass())($objectID);
+            /** @var class-string<DatabaseObject> $baseClassName */
+            $baseClassName = $className::getBaseClass();
+            $baseObject = Helper::fetchObjectFromRequestParameter($objectID, $baseClassName);
             return new ($className)($baseObject);
         } else {
-            return new ($className)($objectID);
+            /** @var class-string<DatabaseObject> $className */
+            return Helper::fetchObjectFromRequestParameter($objectID, $className);
         }
     }
 }
