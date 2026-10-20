@@ -83,10 +83,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             }
             else {
                 removeButton.addEventListener("click", () => {
+                    const siblingRow = li.nextElementSibling ?? li.previousElementSibling;
                     (0, Input_1.unregister)(valueInput.id);
                     li.remove();
-                    if (!this.#list.childElementCount) {
-                        this.#createRow();
+                    if (siblingRow === null) {
+                        this.#createRow(undefined, true);
+                    }
+                    else {
+                        siblingRow.querySelector(".selectOptionsListItem__key").focus();
                     }
                 });
                 keyInput.addEventListener("keydown", (event) => {

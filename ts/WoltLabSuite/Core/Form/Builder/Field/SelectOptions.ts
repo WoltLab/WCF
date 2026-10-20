@@ -105,11 +105,15 @@ class SelectOptions {
       valueInput.disabled = true;
     } else {
       removeButton.addEventListener("click", () => {
+        const siblingRow = li.nextElementSibling ?? li.previousElementSibling;
+
         unregisterI18n(valueInput.id);
         li.remove();
 
-        if (!this.#list.childElementCount) {
-          this.#createRow();
+        if (siblingRow === null) {
+          this.#createRow(undefined, true);
+        } else {
+          siblingRow.querySelector<HTMLInputElement>(".selectOptionsListItem__key")!.focus();
         }
       });
 
