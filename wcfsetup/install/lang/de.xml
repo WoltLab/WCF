@@ -2880,7 +2880,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.colors.linkHoverColor"><![CDATA[Linkfarbe (Hover)]]></item>
 		<item name="wcf.acp.style.colors.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.style.colors.pageFooterScope.classic"><![CDATA[Wird nur vom klassischen Seitenfuß verwendet.]]></item>
-		<item name="wcf.acp.style.colors.pageFooterScope.emails"><![CDATA[Wird mit dem gewählten Layout des Seitenfußes nur in E-Mails verwendet.]]></item>
 		<item name="wcf.acp.style.colors.pageFooterScope.headerBoxes"><![CDATA[Wird mit dem gewählten Layout des Seitenfußes nur von den Boxen der Position „Kopfzeile“ verwendet.]]></item>
 		<item name="wcf.acp.style.colors.pageHeaderScope.classic"><![CDATA[Wird nur vom klassischen Seitenkopf verwendet.]]></item>
 		<item name="wcf.acp.style.colors.pageHeaderScope.smallScreens"><![CDATA[Wird mit dem gewählten Layout des Seitenkopfs nur auf kleinen Bildschirmen verwendet.]]></item>

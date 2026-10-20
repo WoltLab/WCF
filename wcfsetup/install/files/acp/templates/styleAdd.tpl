@@ -945,15 +945,15 @@
 								</div>
 							</div>
 							
-							<div class="spFooterCompactBand" data-region="wcfContent">
+							<div class="spFooterCompactBand" data-region="wcfFooter">
 								<div class="spBoundary">
-									<a>Lorem Ipsum</a> <a>Dolor Sit Amet</a> <a>Consetetur</a>
+									<span class="spFooterCompactHeadline" data-region="wcfFooterHeadline">Lorem <a>Ipsum</a></span> <a>Dolor Sit Amet</a> <a>Consetetur</a> <a>Sadipscing</a>
 								</div>
 							</div>
 							
-							<div class="spFooterCompactBottom">
+							<div class="spFooterCompactBottom" data-region="wcfFooterCopyright">
 								<div class="spBoundary">
-									<span>Copyright &copy; 1970-2038 Example Company</span>
+									<span>Copyright &copy; 1970-2038 <a>Example Company</a></span>
 									<span class="spFooterCompactControls"><span></span><span></span><span></span></span>
 								</div>
 							</div>

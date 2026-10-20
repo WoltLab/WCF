@@ -84,26 +84,25 @@
 	width: 100%;
 }
 
-/* The surface is derived from the text color, so it separates from the page under any palette. */
 .pageFooter--compact {
-	background-color: rgba(var(--wcfContentText-rgb) / 0.04);
-	color: var(--wcfContentText);
+	background-color: var(--wcfFooterBackground);
+	color: var(--wcfFooterText);
 }
 
 .pageFooter--compact a {
-	color: var(--wcfContentLink);
+	color: var(--wcfFooterLink);
 	text-underline-offset: 3px;
 }
 
 .pageFooter--compact a:focus-visible {
 	border-radius: 2px;
-	outline: 2px solid var(--wcfContentLink);
+	outline: 2px solid var(--wcfFooterLink);
 	outline-offset: 2px;
 }
 
 @media (hover: hover) {
 	.pageFooter--compact a:hover {
-		color: var(--wcfContentLinkActive);
+		color: var(--wcfFooterLinkActive);
 		text-decoration: underline;
 	}
 }
@@ -135,11 +134,20 @@
 	@include wcfFontDefault;
 	@include wcfFontBold;
 
-	color: var(--wcfContentText);
+	color: var(--wcfFooterHeadlineText);
 }
 
-.pageFooter__part--main .boxTitle a {
-	color: inherit;
+/* The current page keeps the color of the other current links, see `[aria-current]` below. */
+.pageFooter__part--main .boxTitle a,
+.pageFooter__part--main .boxMenuLinkGroup .boxMenu > li > .boxMenuLink:not([aria-current="page"]) {
+	color: var(--wcfFooterHeadlineLink);
+}
+
+@media (hover: hover) {
+	.pageFooter__part--main .boxTitle a:hover,
+	.pageFooter__part--main .boxMenuLinkGroup .boxMenu > li > .boxMenuLink:not([aria-current="page"]):hover {
+		color: var(--wcfFooterHeadlineLinkActive);
+	}
 }
 
 .pageFooter__part--main .boxTitle + .boxContent {
@@ -158,7 +166,7 @@
 }
 
 .pageFooter__part--main .boxMenu [aria-current="page"] {
-	color: var(--wcfContentText);
+	color: var(--wcfFooterText);
 	text-decoration: underline;
 	text-decoration-thickness: 2px;
 }
@@ -206,8 +214,6 @@
 
 .pageFooter__part--main .boxMenuLinkGroup .boxMenu > li > .boxMenuLink {
 	@include wcfFontBold;
-
-	color: var(--wcfContentText);
 }
 
 .pageFooter__part--main .boxMenuDepth1 {
@@ -224,10 +230,9 @@
 	}
 }
 
-/* A second step on top of the footer tint. Links are kept off this row, the default link color
-   would drop below 4.5:1 on it. */
 .pageFooter__part--bottom {
-	background-color: rgba(var(--wcfContentText-rgb) / 0.05);
+	background-color: var(--wcfFooterCopyrightBackground);
+	color: var(--wcfFooterCopyrightText);
 	padding-block: 14px;
 
 	@include screen-sm-down {
@@ -237,6 +242,20 @@
 
 .pageFooter__part--bottom:has(.pageFooter__ad) {
 	padding-block: 20px;
+}
+
+.pageFooter__part--bottom a {
+	color: var(--wcfFooterCopyrightLink);
+}
+
+.pageFooter__part--bottom a:focus-visible {
+	outline-color: var(--wcfFooterCopyrightLink);
+}
+
+@media (hover: hover) {
+	.pageFooter__part--bottom a:hover {
+		color: var(--wcfFooterCopyrightLinkActive);
+	}
 }
 
 .pageFooter__bottom {
@@ -266,12 +285,6 @@
 		flex: 0 0 auto;
 		width: 100%;
 	}
-}
-
-/* Covers links added through `footerContents` too, the hover state keeps only the underline. */
-.pageFooter__copyright a,
-.pageFooter__copyright a:hover {
-	color: inherit;
 }
 
 .pageFooter__copyright .benchmark {
@@ -309,10 +322,10 @@
 .pageFooterPreferences__button {
 	align-items: center;
 	background-color: transparent;
-	border: 1px solid rgba(var(--wcfContentText-rgb) / 0.22);
+	border: 1px solid rgba(var(--wcfFooterCopyrightText-rgb) / 0.22);
 	border-radius: 9px;
 	box-sizing: border-box;
-	color: var(--wcfContentText);
+	color: var(--wcfFooterCopyrightText);
 	cursor: pointer;
 	display: inline-flex;
 	font: inherit;
@@ -334,24 +347,24 @@
 }
 
 .pageFooterPreferences__button:focus-visible {
-	outline: 2px solid var(--wcfContentLink);
+	outline: 2px solid var(--wcfFooterCopyrightLink);
 	outline-offset: 2px;
 }
 
 .pageFooterPreferences__button[aria-expanded="true"] {
-	background-color: rgba(var(--wcfContentText-rgb) / 0.08);
+	background-color: rgba(var(--wcfFooterCopyrightText-rgb) / 0.08);
 }
 
 @media (hover: hover) {
 	.pageFooterPreferences__button:hover {
-		background-color: rgba(var(--wcfContentText-rgb) / 0.08);
-		border-color: rgba(var(--wcfContentText-rgb) / 0.34);
+		background-color: rgba(var(--wcfFooterCopyrightText-rgb) / 0.08);
+		border-color: rgba(var(--wcfFooterCopyrightText-rgb) / 0.34);
 	}
 }
 
 /* Native radios, the labels are visually hidden and repeated as the title. */
 .pageFooterScheme {
-	border: 1px solid rgba(var(--wcfContentText-rgb) / 0.22);
+	border: 1px solid rgba(var(--wcfFooterCopyrightText-rgb) / 0.22);
 	border-radius: 9px;
 	box-sizing: border-box;
 	display: inline-flex;
@@ -367,7 +380,7 @@
 
 .pageFooterScheme__option {
 	align-items: center;
-	color: var(--wcfContentText);
+	color: var(--wcfFooterCopyrightText);
 	cursor: pointer;
 	display: inline-flex;
 	justify-content: center;
@@ -403,11 +416,11 @@
 
 /* Inverted text and background, so it passes whenever the footer text does. */
 .pageFooterScheme__option:has(:checked) {
-	color: var(--wcfContentBackground);
+	color: var(--wcfFooterCopyrightBackground);
 }
 
 .pageFooterScheme__option:has(:checked)::before {
-	background-color: var(--wcfContentText);
+	background-color: var(--wcfFooterCopyrightText);
 }
 
 /* Forced colors drop the background, a border survives. */
@@ -419,13 +432,13 @@
 
 .pageFooterScheme__option:has(:focus-visible) {
 	border-radius: 7px;
-	outline: 2px solid var(--wcfContentLink);
+	outline: 2px solid var(--wcfFooterCopyrightLink);
 	outline-offset: -1px;
 }
 
 @media (hover: hover) {
 	.pageFooterScheme__option:not(:has(:checked)):hover::before {
-		background-color: rgba(var(--wcfContentText-rgb) / 0.1);
+		background-color: rgba(var(--wcfFooterCopyrightText-rgb) / 0.1);
 	}
 }
 

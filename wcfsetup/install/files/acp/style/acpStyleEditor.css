@@ -778,15 +778,14 @@ html[dir="rtl"] #spTable th {
 #spWindow:not([data-page-footer-layout="compact"]) #spFooterCompact {
 	display: none;
 }
-/* The preview receives no `-rgb` variants, the tints are mixed from the colors instead. */
 #spFooterCompact {
 	background-color: var(--wcfContentBackground);
 	color: var(--wcfContentText);
 }
-#spFooterCompact a {
+#spFooterCompact .spFooterCompactBoxes a {
 	color: var(--wcfContentLink);
 }
-#spFooterCompact a:hover {
+#spFooterCompact .spFooterCompactBoxes a:hover {
 	color: var(--wcfContentLinkActive);
 }
 .spFooterCompactBoxes {
@@ -812,7 +811,24 @@ html[dir="rtl"] #spTable th {
 	margin-bottom: 10px;
 }
 .spFooterCompactBand {
-	background-color: color-mix(in srgb, var(--wcfContentText) 4%, var(--wcfContentBackground));
+	background-color: var(--wcfFooterBackground);
+	color: var(--wcfFooterText);
+}
+.spFooterCompactBand a {
+	color: var(--wcfFooterLink);
+}
+.spFooterCompactBand a:hover {
+	color: var(--wcfFooterLinkActive);
+}
+.spFooterCompactHeadline {
+	color: var(--wcfFooterHeadlineText);
+	font-weight: 600;
+}
+.spFooterCompactBand .spFooterCompactHeadline a {
+	color: var(--wcfFooterHeadlineLink);
+}
+.spFooterCompactBand .spFooterCompactHeadline a:hover {
+	color: var(--wcfFooterHeadlineLinkActive);
 }
 .spFooterCompactBand > .spBoundary {
 	display: flex;
@@ -820,8 +836,15 @@ html[dir="rtl"] #spTable th {
 	padding: 15px 0;
 }
 .spFooterCompactBottom {
-	background-color: color-mix(in srgb, var(--wcfContentText) 9%, var(--wcfContentBackground));
+	background-color: var(--wcfFooterCopyrightBackground);
+	color: var(--wcfFooterCopyrightText);
 	font-size: 12px;
+}
+.spFooterCompactBottom a {
+	color: var(--wcfFooterCopyrightLink);
+}
+.spFooterCompactBottom a:hover {
+	color: var(--wcfFooterCopyrightLinkActive);
 }
 .spFooterCompactBottom > .spBoundary {
 	align-items: center;
@@ -833,8 +856,9 @@ html[dir="rtl"] #spTable th {
 	display: flex;
 	gap: 6px;
 }
+/* The preview receives no `-rgb` variants, the border is mixed from the color instead. */
 .spFooterCompactControls > span {
-	border: 1px solid color-mix(in srgb, var(--wcfContentText) 22%, transparent);
+	border: 1px solid color-mix(in srgb, var(--wcfFooterCopyrightText) 22%, transparent);
 	border-radius: 6px;
 	height: 20px;
 	width: 32px;
