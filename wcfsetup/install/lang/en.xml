@@ -4545,7 +4545,7 @@ Allowed extensions: gif, jpg, jpeg, png, webp]]></item>
 		<item name="wcf.poll.endTime"><![CDATA[Poll Ends (optional)]]></item>
 		<item name="wcf.poll.endTime.error.invalid"><![CDATA[The entered date is invalid.]]></item>
 		<item name="wcf.poll.isChangeable"><![CDATA[Votes can be changed]]></item>
-		<item name="wcf.poll.isPublic"><![CDATA[Publicize participants]]></item>
+		<item name="wcf.poll.isPublic"><![CDATA[Participants are visible]]></item>
 		<item name="wcf.poll.management"><![CDATA[Poll]]></item>
 		<item name="wcf.poll.maxVotes"><![CDATA[Maximum Poll Votes]]></item>
 		<item name="wcf.poll.maxVotes.error.invalid"><![CDATA[The maximum number of votes allowed exceeds the number of available options.]]></item>
