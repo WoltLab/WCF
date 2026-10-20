@@ -61,11 +61,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
             button.textContent = (0, Language_1.getPhrase)("wcf.form.selectOptions.addItem");
             return button;
         }
-        #createRow(option, autoFocus = false) {
+        #createRow(option, autoFocus = false, previousRow) {
             const li = document.createElement("li");
             li.classList.add("selectOptionsListItem");
             li.append(this.#template.content.cloneNode(true));
-            this.#list.append(li);
+            if (previousRow) {
+                previousRow.after(li);
+            }
+            else {
+                this.#list.append(li);
+            }
             const removeButton = li.querySelector(".selectOptionsListItem__remove");
             const keyInput = li.querySelector(".selectOptionsListItem__key");
             keyInput.value = option ? option.key : "";
@@ -87,13 +92,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
                 keyInput.addEventListener("keydown", (event) => {
                     if (event.key === "Enter") {
                         event.preventDefault();
-                        this.#createRow(undefined, true);
+                        this.#createRow(undefined, true, li);
                     }
                 });
                 valueInput.addEventListener("keydown", (event) => {
                     if (event.key === "Enter") {
                         event.preventDefault();
-                        this.#createRow(undefined, true);
+                        this.#createRow(undefined, true, li);
                     }
                 });
             }

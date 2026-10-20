@@ -82,12 +82,16 @@ class SelectOptions {
     return button;
   }
 
-  #createRow(option?: Data, autoFocus: boolean = false): void {
+  #createRow(option?: Data, autoFocus: boolean = false, previousRow?: HTMLLIElement): void {
     const li = document.createElement("li");
     li.classList.add("selectOptionsListItem");
     li.append(this.#template.content.cloneNode(true));
 
-    this.#list.append(li);
+    if (previousRow) {
+      previousRow.after(li);
+    } else {
+      this.#list.append(li);
+    }
 
     const removeButton = li.querySelector(".selectOptionsListItem__remove") as HTMLButtonElement;
     const keyInput = li.querySelector(".selectOptionsListItem__key") as HTMLInputElement;
@@ -112,14 +116,14 @@ class SelectOptions {
       keyInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
           event.preventDefault();
-          this.#createRow(undefined, true);
+          this.#createRow(undefined, true, li);
         }
       });
 
       valueInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
           event.preventDefault();
-          this.#createRow(undefined, true);
+          this.#createRow(undefined, true, li);
         }
       });
     }
