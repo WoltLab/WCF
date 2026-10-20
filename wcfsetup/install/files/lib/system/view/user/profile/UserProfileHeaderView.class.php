@@ -2,6 +2,9 @@
 
 namespace wcf\system\view\user\profile;
 
+use wcf\data\user\avatar\DefaultAvatar;
+use wcf\data\user\avatar\IUserAvatar;
+use wcf\data\user\cover\photo\IUserCoverPhoto;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
 use wcf\event\user\profile\UserProfileHeaderSearchContentLinkCollecting;
@@ -91,6 +94,30 @@ final class UserProfileHeaderView implements \Stringable
     public function getManagementContextMenu(): StandaloneInteractionContextMenuComponent
     {
         return $this->managementContextMenu;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getAvatar(): IUserAvatar
+    {
+        if ($this->user->isHiddenBecauseBanned()) {
+            return new DefaultAvatar($this->user->username);
+        }
+
+        return $this->user->getAvatar();
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getCoverPhoto(): IUserCoverPhoto
+    {
+        if ($this->user->isHiddenBecauseBanned()) {
+            return $this->user->getDefaultCoverPhoto();
+        }
+
+        return $this->user->getCoverPhoto();
     }
 
     public function canEditUser(): bool

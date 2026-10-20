@@ -162,7 +162,9 @@ class UserPage extends AbstractPage
             $this->user->username . ' - ' . WCF::getLanguage()->get('wcf.user.members') . ' - ' . WCF::getLanguage()->get(\PAGE_TITLE),
             true
         );
-        MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->user->getAvatar()->getURL(), true);
+        if (!$this->user->isHiddenBecauseBanned()) {
+            MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->user->getAvatar()->getURL(), true);
+        }
     }
 
     #[\Override]
@@ -186,6 +188,10 @@ class UserPage extends AbstractPage
             'specialTrophyCount' => (\MODULE_TROPHY !== 0 ? \count($this->user->getSpecialTrophies()) : 0),
             'userProfileHeaderView' => new UserProfileHeaderView($this->user),
         ]);
+
+        if ($this->user->banned !== 0) {
+            WCF::getTPL()->assign('allowSpidersToIndexThisPage', false);
+        }
     }
 
     #[\Override]

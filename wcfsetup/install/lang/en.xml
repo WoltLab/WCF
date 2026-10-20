@@ -5383,6 +5383,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[<strong>{$author}</strong> replied to a comment by <strong>{$commentAuthor}</strong> on <strong>{$user}’s wall</strong>.]]></item>
 		<item name="wcf.user.profile.report"><![CDATA[Report User Profile]]></item>
 		<item name="wcf.user.profile.protected"><![CDATA[This member limits who may view their full profile.]]></item>
+		<item name="wcf.user.profile.banned"><![CDATA[This member has been banned, their profile is not available.]]></item>
 		<item name="wcf.user.profile.management"><![CDATA[Management]]></item>
 		<item name="wcf.user.profile.title"><![CDATA[User profile of {$user->username}]]></item>
 	</category>

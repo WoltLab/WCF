@@ -4,7 +4,7 @@
 >
 	<div class="userProfileHeader__coverPhotoContainer">
 		<div class="userProfileHeader__coverPhoto">
-			<img src="{$view->user->getCoverPhoto()->getURL()}" data-object-id="{$view->user->getCoverPhoto()->getObjectID()}" class="userProfileHeader__coverPhotoImage" alt="">
+			<img src="{$view->getCoverPhoto()->getURL()}" data-object-id="{$view->getCoverPhoto()->getObjectID()}" class="userProfileHeader__coverPhotoImage" alt="">
 		</div>
 		
 		<div class="userProfileHeader__manageButtons">
@@ -42,7 +42,7 @@
 	<div class="userProfileHeader__content">
 		<div class="userProfileHeader__avatar">
 			<div class="userProfileHeader__avatarBorder">
-				{unsafe:$view->user->getAvatar()->getImageTag(128)}
+				{unsafe:$view->getAvatar()->getImageTag(128)}
 				
 				{if $view->user->isOnline()}<span class="userProfileHeader__onlineIndicator jsTooltip" title="{lang username=$view->user->username}wcf.user.online.title{/lang}"></span>{/if}
 			</div>

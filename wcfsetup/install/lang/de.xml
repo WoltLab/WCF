@@ -5388,6 +5388,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[<strong>{$author}</strong> hat auf einen Kommentar von <strong>{$commentAuthor}</strong> an der <strong>Pinnwand von {$user}</strong> geantwortet.]]></item>
 		<item name="wcf.user.profile.report"><![CDATA[Benutzerprofil melden]]></item>
 		<item name="wcf.user.profile.protected"><![CDATA[Der Benutzer hat den Zugriff auf sein vollständiges Profil eingeschränkt.]]></item>
+		<item name="wcf.user.profile.banned"><![CDATA[Der Benutzer wurde gesperrt, sein Profil ist nicht verfügbar.]]></item>
 		<item name="wcf.user.profile.management"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.user.profile.title"><![CDATA[Benutzerprofil von {$user->username}]]></item>
 	</category>
