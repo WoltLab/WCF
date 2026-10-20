@@ -19,7 +19,16 @@ class SelectOptions {
 
   constructor(formField: HTMLInputElement, languages: Languages) {
     if (formField.form === null) {
-      throw new Error("Cannot create select options for an form field that is not part of a form.", {
+      throw new Error("Cannot create select options for a form field that is not part of a form.", {
+        cause: {
+          formField,
+        },
+      });
+    }
+
+    const template = document.getElementById(`${formField.id}_template`);
+    if (!(template instanceof HTMLTemplateElement)) {
+      throw new Error(`Cannot find the template '${formField.id}_template' for the select options.`, {
         cause: {
           formField,
         },
@@ -28,7 +37,7 @@ class SelectOptions {
 
     this.#immutable = formField.disabled;
     this.#languages = languages;
-    this.#template = document.getElementById(`${formField.id}_template`) as HTMLTemplateElement;
+    this.#template = template;
 
     this.#list = this.#createUi(formField);
     this.#createListItems(formField);
