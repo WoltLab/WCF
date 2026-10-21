@@ -226,10 +226,10 @@ abstract class MessageForm extends AbstractCaptchaForm
         }
 
         if ($this->disallowedBBCodesPermission !== '') {
-            BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
-                ',',
-                WCF::getSession()->getPermission($this->disallowedBBCodesPermission)
-            ));
+            BBCodeHandler::getInstance()->setDisallowedBBCodesFor(
+                $this->disallowedBBCodesPermission,
+                $this->messageObjectType
+            );
         }
 
         $this->htmlInputProcessor = new HtmlInputProcessor();
@@ -315,10 +315,10 @@ abstract class MessageForm extends AbstractCaptchaForm
         }
 
         if ($this->disallowedBBCodesPermission !== '') {
-            BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
-                ',',
-                WCF::getSession()->getPermission($this->disallowedBBCodesPermission)
-            ));
+            BBCodeHandler::getInstance()->setDisallowedBBCodesFor(
+                $this->disallowedBBCodesPermission,
+                $this->messageObjectType
+            );
         }
     }
 

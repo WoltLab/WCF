@@ -602,16 +602,20 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
 
         // handle custom nodes that have no dedicated handler
         $customTags = [
-            'spoiler' => 'woltlab-spoiler',
-            'url' => 'a',
+            // `<pre class="woltlabHtml">` represents the HTML bbcode
+            'code' => "//pre[not(contains(concat(' ', normalize-space(@class), ' '), ' woltlabHtml '))]",
+            'heading' => '//h1 | //h2 | //h3 | //h4 | //h5 | //h6',
+            'spoiler' => '//woltlab-spoiler',
+            'table' => '//table',
+            'url' => '//a',
         ];
 
-        foreach ($customTags as $bbcode => $tagName) {
+        foreach ($customTags as $bbcode => $query) {
             if (BBCodeHandler::getInstance()->isAvailableBBCode($bbcode)) {
                 continue;
             }
 
-            if ($this->getDocument()->getElementsByTagName($tagName)->length !== 0) {
+            if ($this->getXPath()->query($query)->length !== 0) {
                 $result[] = $bbcode;
             }
         }

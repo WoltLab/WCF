@@ -9,7 +9,6 @@ use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
 
 /**
  * Provides a default message preview action.
@@ -56,10 +55,10 @@ class MessagePreviewAction extends BBCodeAction
         // set disallowed bbcodes first to ensure proper parsing
         $disallowedBBCodesPermission = $this->parameters['disallowedBBCodesPermission'] ?? 'user.message.disallowedBBCodes';
         if ($disallowedBBCodesPermission !== '') {
-            BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(\explode(
-                ',',
-                WCF::getSession()->getPermission($disallowedBBCodesPermission)
-            )));
+            BBCodeHandler::getInstance()->setDisallowedBBCodesFor(
+                $disallowedBBCodesPermission,
+                $this->parameters['messageObjectType']
+            );
         }
 
         $htmlInputProcessor = new HtmlInputProcessor();
