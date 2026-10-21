@@ -1011,7 +1011,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.label.group.groupName.description"><![CDATA[Der Titel ist für alle Benutzer sichtbar, die Zugriff auf diese Labelgruppe haben.]]></item>
 		<item name="wcf.acp.label.group.groupDescription.description"><![CDATA[Die optionale Beschreibung wird nur in der Administrationsoberfläche angezeigt.]]></item>
-		<item name="wcf.acp.label.showOrder.description"><![CDATA[Reihenfolge des Labels innerhalb seiner Labelgruppe. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Feld leer {if LANGUAGE_USE_INFORMAL_VARIANT}lässt{else}lassen{/if}, wird das Label an letzter Position einsortiert.]]></item>
+		<item name="wcf.acp.label.showOrder.description"><![CDATA[Reihenfolge des Labels innerhalb seiner Labelgruppe. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} das Feld leer {if LANGUAGE_USE_INFORMAL_VARIANT}lässt{else}lassen{/if}, wird das Label ans Ende einsortiert.]]></item>
 		<item name="wcf.acp.label.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.label.container.com.woltlab.wcf.article.category"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.label.group.showLabels"><![CDATA[Labels anzeigen]]></item>
@@ -3376,7 +3376,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.category.noneAvailable"><![CDATA[Es wurde noch keine Kategorie hinzugefügt.]]></item>
 		<item name="wcf.category.parentCategoryID"><![CDATA[Übergeordnete Kategorie]]></item>
 		<item name="wcf.category.parentCategoryID.error.invalid"><![CDATA[Die ausgewählte Kategorie existiert nicht.]]></item>
-		<item name="wcf.category.position"><![CDATA[Position]]></item>
+		<item name="wcf.category.position"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.category.title"><![CDATA[Titel]]></item>
 		<item name="wcf.category.button.choose"><![CDATA[Kategorie wählen]]></item>
@@ -4015,7 +4015,7 @@ Dateianhänge:
 		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[Der angegebene Wert darf nicht kleiner als {#$minimum} sein.]]></item>
 		<item name="wcf.form.field.option"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.form.field.option.error.nonExistent"><![CDATA[Die folgenden Einstellungen existieren nicht: {implode from=$options item=option}<kbd>{$option}</kbd>{/implode}.]]></item>
-		<item name="wcf.form.field.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.form.field.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(an erster Stelle)]]></item>
 		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[Der angegebene Text{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, er darf aber nicht länger als {#$maximumLength} Zeichen sein.]]></item>
 		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[Der angegebene Text{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, er darf aber nicht kürzer als {#$minimumLength} Zeichen sein.]]></item>

@@ -989,7 +989,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.label.group.groupName.description"><![CDATA[The title is visible for every user who can interact with the label group.]]></item>
 		<item name="wcf.acp.label.group.groupDescription.description"><![CDATA[This description is optional and only visible in the Administration Control Panel. It is intended to help differentiate groups with the same title.]]></item>
-		<item name="wcf.acp.label.showOrder.description"><![CDATA[Display order of the label in its label group. If you leave this field empty, the label will be placed at the last position.]]></item>
+		<item name="wcf.acp.label.showOrder.description"><![CDATA[Display order of the label in its label group. If you leave this field empty, the label will be placed at the end.]]></item>
 		<item name="wcf.acp.label.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.label.container.com.woltlab.wcf.article.category"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.label.group.showLabels"><![CDATA[Show Labels]]></item>
@@ -3962,7 +3962,7 @@ Attachments:
 		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[The entered value may not be less than {#$minimum}.]]></item>
 		<item name="wcf.form.field.option"><![CDATA[Options]]></item>
 		<item name="wcf.form.field.option.error.nonExistent"><![CDATA[The following options do not exist: {implode from=$options item=option}<kbd>{$option}</kbd>{/implode}.]]></item>
-		<item name="wcf.form.field.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.form.field.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(first position)]]></item>
 		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[The entered text{if $language|isset} for language “{$language}”{/if} contains {#$length} character{if $length !== 1}s{/if} but it may not be longer than {#$maximumLength} character{if $maximumLength !== 1}s{/if}.]]></item>
 		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[The entered text{if $language|isset} for language “{$language}”{/if} only contains {#$length} character{if $length !== 1}s{/if} but it may not be shorter than {#$minimumLength} character{if $minimumLength !== 1}s{/if}.]]></item>
