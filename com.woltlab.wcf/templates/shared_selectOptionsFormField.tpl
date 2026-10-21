@@ -19,7 +19,7 @@
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Field/SelectOptions'], ({ setup }) => {
 		{jsphrase name='wcf.form.selectOptions.addItem'}
-		{jsphrase name='wcf.form.selectOptions.error.invalidKey'}
+		WoltLabLanguage.registerPhrase('wcf.form.selectOptions.error.invalidKey', '{jslang __literal=true}wcf.form.selectOptions.error.invalidKey{/jslang}');
 
 		const availableLanguages = {unsafe:$availableLanguages|json};
 		setup(document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}'), availableLanguages);
