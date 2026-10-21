@@ -15,7 +15,6 @@ use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
 
 /**
  * Renders the preview of the active user's signature.
@@ -41,10 +40,10 @@ final class RenderSignaturePreview implements IController
 
         $parameters = Helper::mapApiParameters($request, RenderSignaturePreviewParameters::class);
 
-        BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(\explode(
-            ',',
-            WCF::getSession()->getPermission('user.signature.disallowedBBCodes')
-        )));
+        BBCodeHandler::getInstance()->setDisallowedBBCodesFor(
+            'user.signature.disallowedBBCodes',
+            'com.woltlab.wcf.user.signature'
+        );
 
         $htmlInputProcessor = new HtmlInputProcessor();
         $htmlInputProcessor->process(

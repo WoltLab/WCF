@@ -26,7 +26,6 @@ use wcf\system\html\upcast\HtmlUpcastProcessor;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\language\LanguageFactory;
 use wcf\system\message\quote\MessageQuoteManager;
-use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -154,10 +153,10 @@ final class WysiwygFormField extends AbstractFormField implements
             $disallowedBBCodesPermission = 'user.message.disallowedBBCodes';
         }
 
-        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
-            ',',
-            WCF::getSession()->getPermission($disallowedBBCodesPermission)
-        ));
+        BBCodeHandler::getInstance()->setDisallowedBBCodesFor(
+            $disallowedBBCodesPermission,
+            $this->getObjectType()->objectType
+        );
 
         return parent::getFieldHtml();
     }
@@ -245,7 +244,7 @@ final class WysiwygFormField extends AbstractFormField implements
         }
 
         return \array_map(
-            static fn (HtmlInputProcessor $htmlInputProcessor) => $htmlInputProcessor->getHtml(),
+            static fn(HtmlInputProcessor $htmlInputProcessor) => $htmlInputProcessor->getHtml(),
             $this->htmlInputProcessors
         );
     }
@@ -420,10 +419,10 @@ final class WysiwygFormField extends AbstractFormField implements
             $disallowedBBCodesPermission = 'user.message.disallowedBBCodes';
         }
 
-        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
-            ',',
-            WCF::getSession()->getPermission($disallowedBBCodesPermission)
-        ));
+        BBCodeHandler::getInstance()->setDisallowedBBCodesFor(
+            $disallowedBBCodesPermission,
+            $this->getObjectType()->objectType
+        );
 
         if ($this->isL10n()) {
             $this->validateL10n();
@@ -538,7 +537,7 @@ final class WysiwygFormField extends AbstractFormField implements
                 $value = $this->upcast($value);
             } elseif (\is_array($value)) {
                 $value = \array_map(
-                    fn ($languageValue) => \is_string($languageValue) ? $this->upcast($languageValue) : $languageValue,
+                    fn($languageValue) => \is_string($languageValue) ? $this->upcast($languageValue) : $languageValue,
                     $value
                 );
             }

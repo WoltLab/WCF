@@ -140,6 +140,22 @@ class BBCodeHandler extends SingletonFactory
     }
 
     /**
+     * Sets the disallowed BBCodes based on the given user group permission. Headings are
+     * always disallowed in signatures.
+     *
+     * @since 6.3
+     */
+    public function setDisallowedBBCodesFor(string $permission, string $messageObjectType): void
+    {
+        $bbCodes = \explode(',', (string)WCF::getSession()->getPermission($permission));
+        if ($messageObjectType === 'com.woltlab.wcf.user.signature') {
+            $bbCodes[] = 'heading';
+        }
+
+        $this->setDisallowedBBCodes($bbCodes);
+    }
+
+    /**
      * Returns a list of BBCodes which contain raw code (disabled BBCode parsing)
      *
      * @return  BBCode[]

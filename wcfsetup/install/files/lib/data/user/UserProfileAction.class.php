@@ -16,7 +16,6 @@ use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\upload\UploadFile;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
 
 /**
  * Executes user profile-related actions.
@@ -77,10 +76,10 @@ class UserProfileAction extends UserAction
             WCF::getUser()->userID
         );
 
-        BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(\explode(
-            ',',
-            WCF::getSession()->getPermission('user.signature.disallowedBBCodes')
-        )));
+        BBCodeHandler::getInstance()->setDisallowedBBCodesFor(
+            'user.signature.disallowedBBCodes',
+            'com.woltlab.wcf.user.signature'
+        );
         $disallowedBBCodes = $htmlInputProcessor->validate();
         if ($disallowedBBCodes !== []) {
             throw new UserInputException(
