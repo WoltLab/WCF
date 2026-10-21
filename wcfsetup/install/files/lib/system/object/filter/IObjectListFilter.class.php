@@ -15,6 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @since       6.3
  *
  * @template TDatabaseObject of DatabaseObject
+ * @phpstan-template-contravariant TDatabaseObject of DatabaseObject
  * @template TValueType of mixed
  * @extends IObjectFilter<TDatabaseObject, TValueType>
  */

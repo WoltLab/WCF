@@ -7,9 +7,11 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\event\user\group\assignment\UserGroupAssignmentObjectFilterCollecting;
 use wcf\system\event\EventHandler;
+use wcf\system\object\filter\EndDateObjectFilter;
 use wcf\system\object\filter\IObjectListFilter;
 use wcf\system\object\filter\ObjectFilterHandler;
 use wcf\system\object\filter\ObjectListFilterHandler;
+use wcf\system\object\filter\StartDateObjectFilter;
 use wcf\system\object\filter\user\UserActivatedObjectFilter;
 use wcf\system\object\filter\user\UserAvatarObjectFilter;
 use wcf\system\object\filter\user\UserBannedObjectFilter;
@@ -48,6 +50,8 @@ final class UserGroupAssignmentObjectFilterBuilder extends AbstractObjectFilterB
     protected function createFilters(): array
     {
         $event = new UserGroupAssignmentObjectFilterCollecting();
+        $event->register(new StartDateObjectFilter());
+        $event->register(new EndDateObjectFilter());
         $event->register(new UserUsernameObjectFilter());
         $event->register(new UserEmailObjectFilter());
         $event->register(new UserGroupObjectFilter());
