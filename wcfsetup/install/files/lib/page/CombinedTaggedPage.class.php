@@ -101,6 +101,9 @@ class CombinedTaggedPage extends MultipleLinkPage
             throw new IllegalLinkException();
         }
 
+        // Restrict the tag ids to existing tags and normalize them into a list.
+        $this->tagIDs = \array_keys($this->tags);
+
         $this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.tagging.taggableObject');
         foreach ($this->availableObjectTypes as $key => $objectType) {
             if (!$objectType->validateOptions() || !$objectType->validatePermissions()) {

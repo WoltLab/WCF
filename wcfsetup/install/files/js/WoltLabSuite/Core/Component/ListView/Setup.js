@@ -55,7 +55,14 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
             }
             if (listViewParameters) {
                 listViewParameters.forEach((value, key) => {
-                    url.searchParams.set(`listViewParameters[${key}]`, value);
+                    if (Array.isArray(value)) {
+                        value.forEach((innerValue, innerKey) => {
+                            url.searchParams.set(`listViewParameters[${key}][${innerKey}]`, innerValue);
+                        });
+                    }
+                    else {
+                        url.searchParams.set(`listViewParameters[${key}]`, value);
+                    }
                 });
             }
             const json = (await (0, Backend_1.prepareRequest)(url).get().fetchAsJson());

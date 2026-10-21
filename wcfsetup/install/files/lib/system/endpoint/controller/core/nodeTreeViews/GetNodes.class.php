@@ -28,11 +28,17 @@ final class GetNodes implements IController
     {
         $parameters = Helper::mapApiParameters($request, GetNodesParameters::class);
 
-        if (!\is_subclass_of($parameters->nodeTreeView, AbstractNodeTreeView::class)) {
+        if (
+            !\is_subclass_of($parameters->nodeTreeView, AbstractNodeTreeView::class)
+            || !(new \ReflectionClass($parameters->nodeTreeView))->isInstantiable()
+        ) {
             throw new UserInputException('nodeTreeView', 'invalid');
         }
 
-        $view = new $parameters->nodeTreeView(...$parameters->nodeTreeViewParameters);
+        $view = Helper::mapQueryParametersToConstructor(
+            $parameters->nodeTreeViewParameters,
+            $parameters->nodeTreeView
+        );
         // @phpstan-ignore function.alreadyNarrowedType, instanceof.alwaysTrue
         \assert($view instanceof AbstractNodeTreeView);
 

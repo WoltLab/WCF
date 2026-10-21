@@ -30,6 +30,13 @@ final class ListViewFilterAction implements RequestHandlerInterface
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /**
+         * @var array{
+         *  listView: string,
+         *  filters: string[],
+         *  listViewParameters: array<string, string|string[]>
+         * } $parameters
+         */
         $parameters = Helper::mapQueryParameters(
             $request->getQueryParams(),
             <<<'EOT'
@@ -41,20 +48,18 @@ final class ListViewFilterAction implements RequestHandlerInterface
                 EOT
         );
 
-        if (!\is_subclass_of($parameters['listView'], AbstractListView::class)) {
+        if (
+            !\is_subclass_of($parameters['listView'], AbstractListView::class)
+            || !(new \ReflectionClass($parameters['listView']))->isInstantiable()
+        ) {
             throw new UserInputException('listView', 'invalid');
         }
 
-        try {
-            /** @var AbstractListView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
-            $view = new $parameters['listView'](...$parameters['listViewParameters']);
-        } catch (\ArgumentCountError | \TypeError $e) {
-            if (\ENABLE_DEBUG_MODE !== 0) {
-                throw $e;
-            } else {
-                throw new IllegalLinkException();
-            }
-        }
+        /** @var AbstractListView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
+        $view = Helper::mapQueryParametersToConstructor(
+            $parameters['listViewParameters'],
+            $parameters['listView']
+        );
 
         if (!$view->isAccessible()) {
             throw new PermissionDeniedException();

@@ -17,7 +17,7 @@ export class ListViewSetup {
   async fromPreset(
     title: string,
     listViewClass: string,
-    listViewParameters?: Map<string, string>,
+    listViewParameters?: Map<string, string | string[]>,
     filters?: Map<string, string>,
     sortField: string = "",
     sortOrder: string = "ASC",
@@ -36,7 +36,13 @@ export class ListViewSetup {
     }
     if (listViewParameters) {
       listViewParameters.forEach((value, key) => {
-        url.searchParams.set(`listViewParameters[${key}]`, value);
+        if (Array.isArray(value)) {
+          value.forEach((innerValue, innerKey) => {
+            url.searchParams.set(`listViewParameters[${key}][${innerKey}]`, innerValue);
+          });
+        } else {
+          url.searchParams.set(`listViewParameters[${key}]`, value);
+        }
       });
     }
     const json = (await prepareRequest(url).get().fetchAsJson()) as ResponseListView;

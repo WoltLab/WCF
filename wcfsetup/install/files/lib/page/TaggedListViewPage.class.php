@@ -92,6 +92,9 @@ class TaggedListViewPage extends AbstractListViewPage
             throw new IllegalLinkException();
         }
 
+        // Restrict the tag ids to existing tags and normalize them into a list.
+        $this->tagIDs = \array_keys($this->tags);
+
         $this->loadObjectTypes();
         if ($this->availableObjectTypes === []) {
             throw new IllegalLinkException();

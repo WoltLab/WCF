@@ -30,6 +30,13 @@ final class GridViewColumnConfigurationAction implements RequestHandlerInterface
     #[\Override]
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /**
+         * @var array{
+         *  gridView:string,
+         *  columns: list<string>,
+         *  gridViewParameters: array<string, string|string[]>
+         * } $parameters
+         */
         $parameters = Helper::mapQueryParameters(
             $request->getQueryParams(),
             <<<'EOT'
@@ -41,20 +48,18 @@ final class GridViewColumnConfigurationAction implements RequestHandlerInterface
                 EOT
         );
 
-        if (!\is_subclass_of($parameters['gridView'], AbstractGridView::class)) {
+        if (
+            !\is_subclass_of($parameters['gridView'], AbstractGridView::class)
+            || !(new \ReflectionClass($parameters['gridView']))->isInstantiable()
+        ) {
             throw new UserInputException('gridView', 'invalid');
         }
 
-        try {
-            /** @var AbstractGridView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
-            $view = new $parameters['gridView'](...$parameters['gridViewParameters']);
-        } catch (\ArgumentCountError | \TypeError $e) {
-            if (\ENABLE_DEBUG_MODE !== 0) {
-                throw $e;
-            } else {
-                throw new IllegalLinkException();
-            }
-        }
+        /** @var AbstractGridView<DatabaseObject, DatabaseObjectList<DatabaseObject>> $view */
+        $view = Helper::mapQueryParametersToConstructor(
+            $parameters['gridViewParameters'],
+            $parameters['gridView']
+        );
 
         if (!$view->isAccessible()) {
             throw new PermissionDeniedException();
