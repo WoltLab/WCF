@@ -87,7 +87,6 @@ return new class {
                 $event->register(\wcf\data\reaction\type\ReactionType::getL10nDefinition());
                 $event->register(\wcf\data\user\rank\UserRank::getL10nDefinition());
                 $event->register(\wcf\data\contact\recipient\ContactRecipient::getL10nDefinition());
-                $event->register(\wcf\data\trophy\Trophy::getL10nDefinition());
             }
         );
         $eventHandler->register(
