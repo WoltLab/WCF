@@ -565,13 +565,9 @@ html[data-color-scheme="dark"] {
 	max-height: 1000px;
 }
 
-#styleLogo,
-#styleLogoMobile {
-	background-color: #fff;
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEX////MzMw46qqDAAAAD0lEQVQI12P4z4Ad4ZAAAH6/D/Hgw85/AAAAAElFTkSuQmCC);
-	border: 1px solid #ccc;
-	min-height: 20px;
-	min-width: 20px;
+#pageLogouploadFileList,
+#pageLogoMobileuploadFileList {
+	max-width: 400px;
 }
 
 .selectedImagePreview,
