@@ -68,7 +68,7 @@ class Code {
     const clickCallback = async () => {
       await Clipboard.copyElementTextToClipboard(this.codeContainer);
 
-      showSuccessSnackbar(getPhrase("wcf.message.bbcode.code.copy.success"));
+      showSuccessSnackbar(getPhrase("wcf.global.success.copy"));
     };
     button.addEventListener("click", () => clickCallback());
 

@@ -116,12 +116,12 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.global.snackbar.progress');
         $event->preload('wcf.global.success');
         $event->preload('wcf.global.success.add');
+        $event->preload('wcf.global.success.copy');
         $event->preload('wcf.global.success.delete');
         $event->preload('wcf.global.success.edit');
 
         $event->preload('wcf.global.rss.accessToken.info');
         $event->preload('wcf.global.rss.copy');
-        $event->preload('wcf.global.rss.copy.success');
         $event->preload('wcf.global.rss.withoutAccessToken');
         $event->preload('wcf.global.rss.withAccessToken');
 
@@ -137,7 +137,6 @@ final class PreloadPhrasesCollectingListener
 
         $event->preload('wcf.message.share');
         $event->preload('wcf.message.share.copy');
-        $event->preload('wcf.message.share.copy.success');
         $event->preload('wcf.message.share.nativeShare');
         $event->preload('wcf.message.share.permalink');
         $event->preload('wcf.message.share.permalink.bbcode');

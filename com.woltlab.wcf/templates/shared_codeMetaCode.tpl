@@ -22,7 +22,6 @@
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Bbcode/Collapsible', 'WoltLabSuite/Core/Bbcode/Code'], function (BbcodeCollapsible, BbcodeCode) {
 		{jsphrase name='wcf.message.bbcode.code.copy'}
-		{jsphrase name='wcf.message.bbcode.code.copy.success'}
 		BbcodeCollapsible.observe();
 		BbcodeCode.processAll();
 	});

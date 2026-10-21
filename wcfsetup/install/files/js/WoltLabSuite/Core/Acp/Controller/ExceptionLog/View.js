@@ -6,15 +6,16 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "WoltLabSuite/Core/Api/Exceptions/RenderException", "WoltLabSuite/Core/Clipboard", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Language"], function (require, exports, RenderException_1, Clipboard_1, Dialog_1, PromiseMutex_1, Selector_1, Language_1) {
+define(["require", "exports", "WoltLabSuite/Core/Api/Exceptions/RenderException", "WoltLabSuite/Core/Clipboard", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Language"], function (require, exports, RenderException_1, Clipboard_1, Dialog_1, Snackbar_1, PromiseMutex_1, Selector_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     async function showDialog(button) {
         const { template } = await (0, RenderException_1.renderException)(button.closest("tr").dataset.objectId);
         const dialog = (0, Dialog_1.dialogFactory)().fromHtml(template).withoutControls();
-        dialog.content.querySelector(".jsCopyButton")?.addEventListener("click", () => {
-            void (0, Clipboard_1.copyTextToClipboard)(dialog.content.querySelector(".jsCopyException").value);
+        dialog.content.querySelector(".jsCopyButton")?.addEventListener("click", async () => {
+            await (0, Clipboard_1.copyTextToClipboard)(dialog.content.querySelector(".jsCopyException").value);
+            (0, Snackbar_1.showSuccessSnackbar)((0, Language_1.getPhrase)("wcf.global.success.copy"));
         });
         dialog.show((0, Language_1.getPhrase)("wcf.acp.exceptionLog.exception.message"));
     }

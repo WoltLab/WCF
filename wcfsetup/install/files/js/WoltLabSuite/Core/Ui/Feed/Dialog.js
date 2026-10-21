@@ -20,7 +20,7 @@ define(["require", "exports", "tslib", "../Dialog", "../../StringUtil", "WoltLab
         const target = event.currentTarget;
         const input = target.parentNode.querySelector('input[type="text"]');
         await Clipboard.copyTextToClipboard(input.value);
-        (0, Snackbar_1.showSuccessSnackbar)((0, Language_1.getPhrase)("wcf.global.rss.copy.success"));
+        (0, Snackbar_1.showSuccessSnackbar)((0, Language_1.getPhrase)("wcf.global.success.copy"));
     }
     /**
      * Opens the dialog with an anonymous and personalized link after clicking on the RSS feed link.

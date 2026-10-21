@@ -24,7 +24,7 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
         const target = event.currentTarget;
         const input = DomTraverse.prevBySel(target, 'input[type="text"]');
         await Clipboard.copyTextToClipboard(input.value);
-        (0, Snackbar_1.showSuccessSnackbar)((0, Language_1.getPhrase)("wcf.message.share.copy.success"));
+        (0, Snackbar_1.showSuccessSnackbar)((0, Language_1.getPhrase)("wcf.global.success.copy"));
     }
     /**
      * Returns all of the dialog elements shown in the dialog.

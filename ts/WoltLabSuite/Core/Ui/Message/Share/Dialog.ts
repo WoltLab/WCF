@@ -44,7 +44,7 @@ async function copy(event: Event): Promise<void> {
 
   await Clipboard.copyTextToClipboard(input.value);
 
-  showSuccessSnackbar(getPhrase("wcf.message.share.copy.success"));
+  showSuccessSnackbar(getPhrase("wcf.global.success.copy"));
 }
 
 /**

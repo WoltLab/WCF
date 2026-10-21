@@ -3890,6 +3890,7 @@ Dateianhänge:
 		<item name="wcf.global.success"><![CDATA[Die Aktion wurde erfolgreich ausgeführt.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[Der Eintrag wurde gespeichert.]]></item>
 		<item name="wcf.global.success.add.editCreatedObject"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} jetzt einen weiteren erstellen oder den <a href="{$objectEditLink}">zuvor erstellten Eintrag bearbeiten</a>.]]></item>
+		<item name="wcf.global.success.copy"><![CDATA[In die Zwischenablage kopiert.]]></item>
 		<item name="wcf.global.success.delete"><![CDATA[Der Eintrag wurde erfolgreich gelöscht.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Die Änderungen wurden gespeichert.]]></item>
 		<item name="wcf.global.language.noSelection"><![CDATA[Keine Auswahl]]></item>
@@ -3944,7 +3945,6 @@ Dateianhänge:
 		<item name="wcf.global.button.markAsRead"><![CDATA[Als gelesen markieren]]></item>
 		<item name="wcf.global.button.markAllAsRead"><![CDATA[Alle als gelesen markieren]]></item>
 		<item name="wcf.global.rss.copy"><![CDATA[Link kopieren]]></item>
-		<item name="wcf.global.rss.copy.success"><![CDATA[Der Link wurde erfolgreich kopiert.]]></item>
 		<item name="wcf.global.rss.accessToken.info"><![CDATA[Der Link zum anonymen RSS-Feed enthält nur Inhalte, auf die Gäste Zugriff haben. Der Link zum personalisierten RSS-Feed enthält alle Inhalte, auf die {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Zugriff {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}.]]></item>
 		<item name="wcf.global.rss.withAccessToken"><![CDATA[Personalisierter RSS-Feed]]></item>
 		<item name="wcf.global.rss.withoutAccessToken"><![CDATA[Anonymer RSS-Feed]]></item>
@@ -4215,7 +4215,6 @@ Dateianhänge:
 	</category>
 	<category name="wcf.message">
 		<item name="wcf.message.bbcode.code.copy"><![CDATA[Inhalt kopieren]]></item>
-		<item name="wcf.message.bbcode.code.copy.success"><![CDATA[Der Inhalt wurde erfolgreich kopiert.]]></item>
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Zitat einfügen]]></item>
 		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Alle Zitate einfügen]]></item>
 		<item name="wcf.message.quote.deleteAllQuotes"><![CDATA[Alle Zitate löschen]]></item>
@@ -4237,7 +4236,6 @@ Dateianhänge:
 		<item name="wcf.message.share.xing"><![CDATA[XING]]></item>
 		<item name="wcf.message.share.socialMedia"><![CDATA[Social Media]]></item>
 		<item name="wcf.message.share.copy"><![CDATA[Code kopieren]]></item>
-		<item name="wcf.message.share.copy.success"><![CDATA[Der Code wurde erfolgreich kopiert.]]></item>
 		<item name="wcf.message.share.nativeShare"><![CDATA[Weitere Optionen]]></item>
 		<item name="wcf.message.smilies"><![CDATA[Smileys]]></item>
 		<item name="wcf.message.button.extendedReply"><![CDATA[Erweiterte Antwort]]></item>
@@ -5860,5 +5858,8 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.media.search.cancel"/>
 	<item name="wcf.media.search.info.searchStringThreshold"/>
 	<item name="wcf.user.coverPhoto.upload.description"/>
+	<item name="wcf.global.rss.copy.success"/>
+	<item name="wcf.message.bbcode.code.copy.success"/>
+	<item name="wcf.message.share.copy.success"/>
 </delete>
 </language>

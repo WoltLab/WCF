@@ -3836,6 +3836,7 @@ Attachments:
 		<item name="wcf.global.success"><![CDATA[The action completed successfully.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[The entry has been saved.]]></item>
 		<item name="wcf.global.success.add.editCreatedObject"><![CDATA[You can create another one now or <a href="{$objectEditLink}">edit the previously created entry</a>.]]></item>
+		<item name="wcf.global.success.copy"><![CDATA[Copied to clipboard.]]></item>
 		<item name="wcf.global.success.delete"><![CDATA[The entry has been deleted.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Your changes have been saved.]]></item>
 		<item name="wcf.global.language.noSelection"><![CDATA[No Selection]]></item>
@@ -3890,7 +3891,6 @@ Attachments:
 		<item name="wcf.global.button.markAsRead"><![CDATA[Mark as Read]]></item>
 		<item name="wcf.global.button.markAllAsRead"><![CDATA[Mark All as Read]]></item>
 		<item name="wcf.global.rss.copy"><![CDATA[Copy Link]]></item>
-		<item name="wcf.global.rss.copy.success"><![CDATA[The link has been copied successfully.]]></item>
 		<item name="wcf.global.rss.accessToken.info"><![CDATA[The link to the anonymous RSS feed only contains contents that guests can access. The link to the personalized RSS feed contains all contents that you can access.]]></item>
 		<item name="wcf.global.rss.withAccessToken"><![CDATA[Personalized RSS Feed]]></item>
 		<item name="wcf.global.rss.withoutAccessToken"><![CDATA[Anonymous RSS Feed]]></item>
@@ -4161,7 +4161,6 @@ Attachments:
 	</category>
 	<category name="wcf.message">
 		<item name="wcf.message.bbcode.code.copy"><![CDATA[Copy Contents]]></item>
-		<item name="wcf.message.bbcode.code.copy.success"><![CDATA[The contents have been successfully copied.]]></item>
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Insert Quote]]></item>
 		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Insert All Quotes]]></item>
 		<item name="wcf.message.quote.deleteAllQuotes"><![CDATA[Delete All Quotes]]></item>
@@ -4183,7 +4182,6 @@ Attachments:
 		<item name="wcf.message.share.xing"><![CDATA[XING]]></item>
 		<item name="wcf.message.share.socialMedia"><![CDATA[Social Media]]></item>
 		<item name="wcf.message.share.copy"><![CDATA[Copy Code]]></item>
-		<item name="wcf.message.share.copy.success"><![CDATA[The code has been successfully copied.]]></item>
 		<item name="wcf.message.share.nativeShare"><![CDATA[More Options]]></item>
 		<item name="wcf.message.smilies"><![CDATA[Smilies]]></item>
 		<item name="wcf.message.button.extendedReply"><![CDATA[More Options]]></item>
@@ -5862,5 +5860,8 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.media.search.cancel"/>
 	<item name="wcf.media.search.info.searchStringThreshold"/>
 	<item name="wcf.user.coverPhoto.upload.description"/>
+	<item name="wcf.global.rss.copy.success"/>
+	<item name="wcf.message.bbcode.code.copy.success"/>
+	<item name="wcf.message.share.copy.success"/>
 </delete>
 </language>

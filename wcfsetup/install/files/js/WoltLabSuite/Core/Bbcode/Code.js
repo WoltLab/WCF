@@ -54,7 +54,7 @@ define(["require", "exports", "tslib", "../Clipboard", "../Prism", "../Prism/Hel
             button.title = (0, Language_1.getPhrase)("wcf.message.bbcode.code.copy");
             const clickCallback = async () => {
                 await Clipboard.copyElementTextToClipboard(this.codeContainer);
-                (0, Snackbar_1.showSuccessSnackbar)((0, Language_1.getPhrase)("wcf.message.bbcode.code.copy.success"));
+                (0, Snackbar_1.showSuccessSnackbar)((0, Language_1.getPhrase)("wcf.global.success.copy"));
             };
             button.addEventListener("click", () => clickCallback());
             header.appendChild(button);

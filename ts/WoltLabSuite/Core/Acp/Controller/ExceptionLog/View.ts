@@ -10,6 +10,7 @@
 import { renderException } from "WoltLabSuite/Core/Api/Exceptions/RenderException";
 import { copyTextToClipboard } from "WoltLabSuite/Core/Clipboard";
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
+import { showSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
 import { wheneverFirstSeen } from "WoltLabSuite/Core/Helper/Selector";
 import { getPhrase } from "WoltLabSuite/Core/Language";
@@ -18,8 +19,10 @@ async function showDialog(button: HTMLElement): Promise<void> {
   const { template } = await renderException(button.closest("tr")!.dataset.objectId!);
 
   const dialog = dialogFactory().fromHtml(template).withoutControls();
-  dialog.content.querySelector(".jsCopyButton")?.addEventListener("click", () => {
-    void copyTextToClipboard(dialog.content.querySelector<HTMLTextAreaElement>(".jsCopyException")!.value);
+  dialog.content.querySelector(".jsCopyButton")?.addEventListener("click", async () => {
+    await copyTextToClipboard(dialog.content.querySelector<HTMLTextAreaElement>(".jsCopyException")!.value);
+
+    showSuccessSnackbar(getPhrase("wcf.global.success.copy"));
   });
 
   dialog.show(getPhrase("wcf.acp.exceptionLog.exception.message"));
