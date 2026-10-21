@@ -55,7 +55,14 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (requi
             }
             if (gridViewParameters) {
                 gridViewParameters.forEach((value, key) => {
-                    url.searchParams.set(`gridViewParameters[${key}]`, value);
+                    if (Array.isArray(value)) {
+                        value.forEach((innerValue, innerKey) => {
+                            url.searchParams.set(`gridViewParameters[${key}][${innerKey}]`, innerValue);
+                        });
+                    }
+                    else {
+                        url.searchParams.set(`gridViewParameters[${key}]`, value);
+                    }
                 });
             }
             const json = (await (0, Backend_1.prepareRequest)(url).get().fetchAsJson());

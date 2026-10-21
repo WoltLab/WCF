@@ -28,11 +28,17 @@ final class GetItem implements IController
     {
         $parameters = Helper::mapApiParameters($request, GetItemParameters::class);
 
-        if (!\is_subclass_of($parameters->listView, AbstractListView::class)) {
+        if (
+            !\is_subclass_of($parameters->listView, AbstractListView::class)
+            || !(new \ReflectionClass($parameters->listView))->isInstantiable()
+        ) {
             throw new UserInputException('listView', 'invalid');
         }
 
-        $view = new $parameters->listView(...$parameters->listViewParameters);
+        $view = Helper::mapQueryParametersToConstructor(
+            $parameters->listViewParameters,
+            $parameters->listView
+        );
         // @phpstan-ignore function.alreadyNarrowedType, instanceof.alwaysTrue
         \assert($view instanceof AbstractListView);
 

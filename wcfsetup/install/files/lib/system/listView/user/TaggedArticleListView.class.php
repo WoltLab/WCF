@@ -17,7 +17,7 @@ use wcf\system\WCF;
 class TaggedArticleListView extends ArticleListView
 {
     public function __construct(
-        /** @var list<int> */
+        /** @var non-empty-list<int> */
         public readonly array $tagIDs,
     ) {
         parent::__construct();
@@ -52,6 +52,7 @@ class TaggedArticleListView extends ArticleListView
     {
         return parent::isAccessible()
             && \MODULE_TAGGING !== 0
-            && WCF::getSession()->hasPermission('user.tag.canViewTag');
+            && WCF::getSession()->hasPermission('user.tag.canViewTag')
+            && \count($this->tagIDs) <= \SEARCH_MAX_COMBINED_TAGS;
     }
 }

@@ -20,7 +20,7 @@ export class GridViewSetup {
     sortField: string = "",
     sortOrder: string = "ASC",
     filters?: Map<string, string>,
-    gridViewParameters?: Map<string, string>,
+    gridViewParameters?: Map<string, string | string[]>,
   ): Promise<WoltlabCoreDialog> {
     const url = new URL(`${window.WSC_RPC_API_URL}core/grid-views/render`);
     url.searchParams.set("gridView", gridViewClass);
@@ -34,7 +34,13 @@ export class GridViewSetup {
     }
     if (gridViewParameters) {
       gridViewParameters.forEach((value, key) => {
-        url.searchParams.set(`gridViewParameters[${key}]`, value);
+        if (Array.isArray(value)) {
+          value.forEach((innerValue, innerKey) => {
+            url.searchParams.set(`gridViewParameters[${key}][${innerKey}]`, innerValue);
+          });
+        } else {
+          url.searchParams.set(`gridViewParameters[${key}]`, value);
+        }
       });
     }
     const json = (await prepareRequest(url).get().fetchAsJson()) as ResponseGridView;

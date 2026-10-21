@@ -28,11 +28,17 @@ final class GetRows implements IController
     {
         $parameters = Helper::mapApiParameters($request, GetRowsParameters::class);
 
-        if (!\is_subclass_of($parameters->gridView, AbstractGridView::class)) {
+        if (
+            !\is_subclass_of($parameters->gridView, AbstractGridView::class)
+            || !(new \ReflectionClass($parameters->gridView))->isInstantiable()
+        ) {
             throw new UserInputException('gridView', 'invalid');
         }
 
-        $view = new $parameters->gridView(...$parameters->gridViewParameters);
+        $view = Helper::mapQueryParametersToConstructor(
+            $parameters->gridViewParameters,
+            $parameters->gridView
+        );
         // @phpstan-ignore function.alreadyNarrowedType, instanceof.alwaysTrue
         \assert($view instanceof AbstractGridView);
 

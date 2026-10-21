@@ -188,6 +188,79 @@ final class Helper
     }
 
     /**
+     * Creates an instance of the provided class by validating the query
+     * parameters against the signature of its constructor. Unknown keys
+     * are skipped and values are gracefully converted into the requested
+     * types. Parameters without a specific type, such as a plain `array`,
+     * are passed through as-is.
+     *
+     * Missing parameters or values that cannot be casted to the requested
+     * type will yield a `MappingError`. The class must be instantiable and
+     * its constructor may only accept builtin types, objects cannot be
+     * safely created from user input.
+     *
+     * @template T of object
+     * @param mixed[] $queryParameters
+     * @param class-string<T> $className
+     * @return T
+     * @throws MappingError
+     * @throws \LogicException
+     * @since 6.3
+     */
+    public static function mapQueryParametersToConstructor(array $queryParameters, string $className): object
+    {
+        $reflectionClass = new \ReflectionClass($className);
+        $constructor = $reflectionClass->getConstructor();
+        if ($constructor === null) {
+            return $reflectionClass->newInstance();
+        }
+
+        foreach ($constructor->getParameters() as $parameter) {
+            if (!self::isBuiltinType($parameter->getType())) {
+                throw new \LogicException(\sprintf(
+                    "The parameter '%s' of '%s::__construct()' must be of a builtin type.",
+                    $parameter->getName(),
+                    $className
+                ));
+            }
+        }
+
+        // Only the constructor arguments are mapped, mapping the whole object
+        // would also attempt to populate all other properties of the class.
+        $object = $reflectionClass->newInstanceWithoutConstructor();
+        $constructorClosure = $constructor->getClosure($object);
+
+        $arguments = (new MapperBuilder())
+            ->allowSuperfluousKeys()
+            ->allowScalarValueCasting()
+            ->allowUndefinedValues()
+            ->allowPermissiveTypes()
+            ->argumentsMapper()
+            ->mapArguments($constructorClosure, Source::array($queryParameters));
+
+        $constructorClosure(...$arguments);
+
+        return $object;
+    }
+
+    /**
+     * Returns true if the type and, for union types, all of its members
+     * are builtin types. Missing types are treated as `mixed`.
+     */
+    private static function isBuiltinType(?\ReflectionType $type): bool
+    {
+        return match (true) {
+            $type === null => true,
+            $type instanceof \ReflectionNamedType => $type->isBuiltin(),
+            $type instanceof \ReflectionUnionType => \array_all(
+                $type->getTypes(),
+                static fn(\ReflectionType $type) => self::isBuiltinType($type)
+            ),
+            default => false,
+        };
+    }
+
+    /**
      * Fetch a database object using a parameter value in the URL.
      *
      * If the value does not resolve to an object, i.e. its object id is not
