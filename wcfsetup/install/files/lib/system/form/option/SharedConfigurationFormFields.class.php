@@ -54,6 +54,7 @@ final class SharedConfigurationFormFields
                 ->addFieldClass('medium'),
             'maxLength' => IntegerFormField::create('maxLength')
                 ->label('wcf.form.option.shared.maxLength')
+                ->suffix('wcf.acp.option.suffix.chars')
                 ->nullable()
                 ->minimum(1),
             'minIntegerValue' => IntegerFormField::create('minIntegerValue')
