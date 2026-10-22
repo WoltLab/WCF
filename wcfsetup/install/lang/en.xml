@@ -1857,9 +1857,11 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.update.credentials.description"><![CDATA[You can find your license and serial number in the <a class="externalURL" href="https://www.woltlab.com/license-list/"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>customer area on woltlab.com</a>.]]></item>
 		<item name="wcf.acp.package.update.error.listNotFound"><![CDATA[The package list could not be retrieved.]]></item>
 		<item name="wcf.acp.package.update.error.outstandingUpdates"><![CDATA[Please install all outstanding updates before attempting to migrate to a newer version.]]></item>
+		<item name="wcf.acp.package.update.errorCode"><![CDATA[The package server rejected the request (HTTP status code {$responseStatusCode}).]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Your credentials are invalid, please verify {if $updateServer->requiresLicense()}license and serial number{else}username and password{/if}.]]></item>
 		<item name="wcf.acp.package.update.errorCode.402"><![CDATA[{if $updateServer->requiresLicense()}License and serial number{else}Username and password{/if} have been accepted by the server, but they do not grant you the permission to download this commercial product.]]></item>
 		<item name="wcf.acp.package.update.errorCode.403"><![CDATA[You are not allowed to access this package.]]></item>
+		<item name="wcf.acp.package.update.errorCode.404"><![CDATA[The requested package could not be found on the package server.]]></item>
 		<item name="wcf.acp.package.update.authInsufficient"><![CDATA[The credentials are valid, but do not allow the download of {if $packageName}the package “<strong>{$packageName}</strong>”{else}this package{/if}.]]></item>
 		<item name="wcf.acp.package.update.licenseNo"><![CDATA[License Number]]></item>
 		<item name="wcf.acp.package.update.password"><![CDATA[Password]]></item>
@@ -4456,7 +4458,7 @@ Attachments:
 		<item name="wcf.poll.endTime"><![CDATA[Poll Ends (optional)]]></item>
 		<item name="wcf.poll.endTime.error.invalid"><![CDATA[The entered date is invalid.]]></item>
 		<item name="wcf.poll.isChangeable"><![CDATA[Votes can be changed]]></item>
-		<item name="wcf.poll.isPublic"><![CDATA[Publicize participants]]></item>
+		<item name="wcf.poll.isPublic"><![CDATA[Participants are visible]]></item>
 		<item name="wcf.poll.management"><![CDATA[Poll]]></item>
 		<item name="wcf.poll.maxVotes"><![CDATA[Maximum Poll Votes]]></item>
 		<item name="wcf.poll.maxVotes.error.invalid"><![CDATA[The maximum number of votes allowed exceeds the number of available options.]]></item>

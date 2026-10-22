@@ -199,6 +199,7 @@ final class SpiderCollecting implements IPsr14Event
         $this->register(new Spider('trendictionbot', 'Trendiction-Bot', 'http://www.trendiction.com/bot'));
         $this->register(new Spider('TurnitinBot', 'TurnitinBot', 'http://www.turnitin.com/robot/crawlerinfo.html'));
         $this->register(new Spider('Twitterbot', 'Twitterbot', 'https://twitter.com/'));
+        $this->register(new Spider('updown.io', 'updown.io', 'https://updown.io'));
         $this->register(new Spider('Uptime-Kuma', 'Uptime-Kuma', 'https://uptime.kuma.pet/'));
         $this->register(new Spider('UptimeRobot/2.0', 'Uptime Robot', 'http://uptimerobot.com/'));
         $this->register(new Spider('VelenPublicWebCrawler', 'Velen Crawler', 'https://velen.io'));
