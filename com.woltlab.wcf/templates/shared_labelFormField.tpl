@@ -1,1 +1,1 @@
-{unsafe:$field->getLabelGroup()->renderPicker($field->getPrefixedId(), $field->getValue(), $field->isRequired(), false, $field->getPrefixedId())}
+{unsafe:$field->getLabelGroup()->renderPicker($field->getPrefixedId(), $field->getValue(), $field->isRequired(), $field->isInvertible(), $field->getPrefixedId())}

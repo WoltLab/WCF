@@ -31,6 +31,12 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
 
     /**
+     * `true` if the value `-1` can be selected for objects without any label of the label group
+     * @since 6.3
+     */
+    protected bool $invertible = false;
+
+    /**
      * label group whose labels can be selected via this form field
      */
     protected ?ViewableLabelGroup $labelGroup = null;
@@ -71,6 +77,32 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     public function hasSaveValue(): bool
     {
         return false;
+    }
+
+    /**
+     * Sets whether the value `-1` can be selected for objects without any label of the label
+     * group and returns this form field.
+     *
+     * Per default, the value `-1` cannot be selected.
+     *
+     * @since 6.3
+     */
+    public function invertible(bool $invertible = true): static
+    {
+        $this->invertible = $invertible;
+
+        return $this;
+    }
+
+    /**
+     * Returns `true` if the value `-1` can be selected for objects without any label of the label
+     * group and returns `false` otherwise.
+     *
+     * @since 6.3
+     */
+    public function isInvertible(): bool
+    {
+        return $this->invertible;
     }
 
     /**
@@ -130,8 +162,11 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
         $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
             'label',
             function (IFormDocument $document, array $parameters) {
-                // `-1` and `0` are special values that are irrelevant for saving.
-                if ($this->checkDependencies() && $this->getValue() > 0) {
+                // `0` is irrelevant for saving, `-1` is only relevant for invertible fields.
+                if (
+                    $this->checkDependencies()
+                    && ($this->getValue() > 0 || ($this->getValue() === -1 && $this->isInvertible()))
+                ) {
                     if (!isset($parameters[$this->getObjectProperty()])) {
                         $parameters[$this->getObjectProperty()] = [];
                     }
@@ -166,6 +201,8 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
                     'wcf.global.form.error.noValidSelection'
                 ));
             }
+        } elseif ($this->value === -1 && $this->isInvertible()) {
+            return;
         } elseif ($this->isRequired()) {
             $this->addValidationError(new FormFieldValidationError('empty'));
         }

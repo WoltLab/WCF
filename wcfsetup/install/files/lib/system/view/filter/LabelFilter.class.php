@@ -4,9 +4,11 @@ namespace wcf\system\view\filter;
 
 use wcf\data\DatabaseObjectList;
 use wcf\data\label\group\ViewableLabelGroup;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\label\LabelFormField;
 use wcf\system\view\filter\exception\InvalidFilterValue;
+use wcf\system\WCF;
 
 /**
  * Filter that allows to filter a list view by labels.
@@ -32,7 +34,8 @@ class LabelFilter extends AbstractFilter
     {
         return LabelFormField::create($this->id)
             ->objectProperty('labelIDs')
-            ->labelGroup($this->labelGroup);
+            ->labelGroup($this->labelGroup)
+            ->invertible();
     }
 
     #[\Override]
@@ -44,6 +47,12 @@ class LabelFilter extends AbstractFilter
     #[\Override]
     public function applyFilter(DatabaseObjectList $list, string $value): void
     {
+        if ((int)$value === -1) {
+            $this->applyWithoutLabelFilter($list);
+
+            return;
+        }
+
         $label = $this->labelGroup->getLabel((int)$value);
         if ($label === null) {
             throw new InvalidFilterValue("Invalid value '{$value}' for filter '{$this->id}' given.");
@@ -63,9 +72,37 @@ class LabelFilter extends AbstractFilter
         );
     }
 
+    /**
+     * Restricts the list to objects without any label of the label group.
+     */
+    private function applyWithoutLabelFilter(DatabaseObjectList $list): void
+    {
+        $labelIDs = $this->labelGroup->getLabelIDs();
+        if ($labelIDs === []) {
+            return;
+        }
+
+        $conditions = new PreparedStatementConditionBuilder(addWhereKeyword: false);
+        $conditions->add('objectTypeID = ?', [$this->objectTypeID]);
+        $conditions->add('labelID IN (?)', [$labelIDs]);
+
+        $list->getConditionBuilder()->add(
+            "{$list->getDatabaseTableAlias()}.{$list->getDatabaseTableIndexName()} NOT IN (
+                SELECT  objectID
+                FROM    wcf1_label_object
+                WHERE   {$conditions}
+            )",
+            $conditions->getParameters()
+        );
+    }
+
     #[\Override]
     public function renderValue(string $value): string
     {
+        if ((int)$value === -1) {
+            return WCF::getLanguage()->get('wcf.label.withoutSelection');
+        }
+
         return $this->labelGroup->getLabel((int)$value)->getTitle();
     }
 
