@@ -45,6 +45,30 @@ html[data-color-scheme="dark"] .reactionPopover {
 	margin: 0 2px;
 }
 
+@keyframes reactionButtonIcon {
+	0% {
+		opacity: 0;
+		transform: scale(0.6);
+	}
+	60% {
+		opacity: 1;
+		transform: scale(1.2);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+.reactionButton--animated > * {
+	animation: reactionButtonIcon 0.36s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reactionButton--animated > * {
+		animation: none;
+	}
+}
+
 .reactionPopoverContent .reactionType,
 .reactionTypeListImage .reactionType {
 	width: 24px;
