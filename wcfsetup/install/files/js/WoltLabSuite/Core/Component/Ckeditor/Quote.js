@@ -1,8 +1,8 @@
 /**
  * Inserts quotes into the editor.
  *
- * @author Alexander Ebert
- * @copyright 2001-2023 WoltLab GmbH
+ * @author Alexander Ebert, Marcel Werk
+ * @copyright 2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  * @woltlabExcludeBundle tiny
@@ -18,7 +18,8 @@ define(["require", "exports", "../../StringUtil", "./Event"], function (require,
         }
         author = (0, StringUtil_1.escapeHTML)(author);
         link = (0, StringUtil_1.escapeHTML)(link);
-        editor.insertHtml(`<woltlab-quote data-author="${author}" data-link="${link}">${content}</woltlab-quote>
+        const quoteId = payload.uuid !== undefined ? ` data-quote-id="${(0, StringUtil_1.escapeHTML)(payload.uuid)}"` : "";
+        editor.insertHtml(`<woltlab-quote data-author="${author}" data-link="${link}"${quoteId}>${content}</woltlab-quote>
     <p><br data-cke-filler="true"></p>`);
     }
     function approximateHtmlRepresentation(text) {

@@ -149,6 +149,7 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.message.quote.deleteAllQuotes');
         $event->preload('wcf.message.quote.insertAllQuotes');
         $event->preload('wcf.message.quote.insertQuote');
+        $event->preload('wcf.message.quote.inserted');
         $event->preload('wcf.message.quote.quoteSelected');
         $event->preload('wcf.message.quote.quoteSelected.success');
         $event->preload('wcf.message.quote.quoteAndReply');

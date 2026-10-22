@@ -1,13 +1,13 @@
 /**
  * Handles quotes for CKEditor 5 message fields.
  *
- * @author Olaf Braun
- * @copyright 2001-2024 WoltLab GmbH
+ * @author Olaf Braun, Marcel Werk
+ * @copyright 2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Event", "WoltLabSuite/Core/Component/Message/MessageTabMenu", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/Quote/Message", "WoltLabSuite/Core/Component/Quote/Storage", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/StringUtil"], function (require, exports, tslib_1, Event_1, MessageTabMenu_1, Language_1, Message_1, Storage_1, Util_1, StringUtil_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor", "WoltLabSuite/Core/Component/Ckeditor/Event", "WoltLabSuite/Core/Component/Message/MessageTabMenu", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/Quote/Message", "WoltLabSuite/Core/Component/Quote/Storage", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/StringUtil"], function (require, exports, tslib_1, Ckeditor_1, Event_1, MessageTabMenu_1, Language_1, Message_1, Storage_1, Core_1, Util_1, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getQuoteList = getQuoteList;
@@ -28,6 +28,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
             this.#editor.closest("form")?.addEventListener("submit", () => {
                 this.#formSubmitted();
             });
+            (0, Event_1.listenToCkeditor)(this.#editor).changeData((0, Core_1.debounce)(() => {
+                this.#markInsertedQuotes();
+            }, 500));
             this.renderQuotes();
         }
         get editorId() {
@@ -41,12 +44,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
                 quotesCount += quotes.size;
                 quotes.forEach((quote, uuid) => {
                     const fragment = Util_1.default.createFragmentFromHtml(`
-<div class="quoteBox quoteBox--tabMenu">
+<div class="quoteBox quoteBox--tabMenu" data-uuid="${(0, StringUtil_1.escapeHTML)(uuid)}">
   <div class="quoteBoxIcon">
     <img src="${(0, StringUtil_1.escapeHTML)(message.avatar)}" alt="" class="userAvatarImage" height="24" width="24">
   </div>
   <div class="quoteBoxTitle">
     <a href="${(0, StringUtil_1.escapeHTML)(message.link)}" target="_blank">${(0, StringUtil_1.escapeHTML)(message.author)}</a>
+    <span class="quoteBox__indicator green jsTooltip" title="${(0, Language_1.getPhrase)("wcf.message.quote.inserted")}" aria-hidden="true">
+      <fa-icon name="circle-check"></fa-icon>
+    </span>
   </div>
   <div class="quoteBoxButtons">
     <button type="button" class="button small jsTooltip" title="${(0, Language_1.getPhrase)("wcf.global.button.delete")}" data-action="delete">
@@ -72,6 +78,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
                             content,
                             isText: !quote.rawMessage,
                             link: message.link,
+                            uuid,
                         });
                     });
                     fragment.querySelector('button[data-action="delete"]').addEventListener("click", () => {
@@ -93,6 +100,21 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
             else {
                 tabMenu.hideTab("quotes");
             }
+            this.#markInsertedQuotes();
+        }
+        #markInsertedQuotes() {
+            // The editor of an inline edit may already have been destroyed.
+            const ckeditor = (0, Ckeditor_1.getCkeditor)(this.#editor);
+            if (ckeditor === undefined) {
+                return;
+            }
+            const insertedQuotes = new Set();
+            ckeditor.element.querySelectorAll("blockquote[data-quote-id]").forEach((blockquote) => {
+                insertedQuotes.add(blockquote.dataset.quoteId);
+            });
+            this.#container.querySelectorAll(".quoteBox--tabMenu").forEach((quoteBox) => {
+                quoteBox.classList.toggle("quoteBox--inserted", insertedQuotes.has(quoteBox.dataset.uuid));
+            });
         }
         #addBulkButtons() {
             const removeIcon = document.createElement("fa-icon");

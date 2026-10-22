@@ -1,13 +1,14 @@
 /**
  * Handles quotes for CKEditor 5 message fields.
  *
- * @author Olaf Braun
- * @copyright 2001-2024 WoltLab GmbH
+ * @author Olaf Braun, Marcel Werk
+ * @copyright 2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  * @woltlabExcludeBundle tiny
  */
 
+import { getCkeditor } from "WoltLabSuite/Core/Component/Ckeditor";
 import { listenToCkeditor, dispatchToCkeditor } from "WoltLabSuite/Core/Component/Ckeditor/Event";
 import { getTabMenu } from "WoltLabSuite/Core/Component/Message/MessageTabMenu";
 import { getPhrase } from "WoltLabSuite/Core/Language";
@@ -19,6 +20,7 @@ import {
   markQuoteAsUsed,
   getUsedQuotes,
 } from "WoltLabSuite/Core/Component/Quote/Storage";
+import { debounce } from "WoltLabSuite/Core/Core";
 import DomUtil from "WoltLabSuite/Core/Dom/Util";
 import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 
@@ -40,6 +42,12 @@ class QuoteList {
       this.#formSubmitted();
     });
 
+    listenToCkeditor(this.#editor).changeData(
+      debounce(() => {
+        this.#markInsertedQuotes();
+      }, 500),
+    );
+
     this.renderQuotes();
   }
 
@@ -57,12 +65,15 @@ class QuoteList {
 
       quotes.forEach((quote, uuid) => {
         const fragment = DomUtil.createFragmentFromHtml(`
-<div class="quoteBox quoteBox--tabMenu">
+<div class="quoteBox quoteBox--tabMenu" data-uuid="${escapeHTML(uuid)}">
   <div class="quoteBoxIcon">
     <img src="${escapeHTML(message.avatar)}" alt="" class="userAvatarImage" height="24" width="24">
   </div>
   <div class="quoteBoxTitle">
     <a href="${escapeHTML(message.link)}" target="_blank">${escapeHTML(message.author)}</a>
+    <span class="quoteBox__indicator green jsTooltip" title="${getPhrase("wcf.message.quote.inserted")}" aria-hidden="true">
+      <fa-icon name="circle-check"></fa-icon>
+    </span>
   </div>
   <div class="quoteBoxButtons">
     <button type="button" class="button small jsTooltip" title="${getPhrase("wcf.global.button.delete")}" data-action="delete">
@@ -91,6 +102,7 @@ class QuoteList {
             content,
             isText: !quote.rawMessage,
             link: message.link,
+            uuid,
           });
         });
 
@@ -116,6 +128,25 @@ class QuoteList {
     } else {
       tabMenu.hideTab("quotes");
     }
+
+    this.#markInsertedQuotes();
+  }
+
+  #markInsertedQuotes(): void {
+    // The editor of an inline edit may already have been destroyed.
+    const ckeditor = getCkeditor(this.#editor);
+    if (ckeditor === undefined) {
+      return;
+    }
+
+    const insertedQuotes = new Set<string>();
+    ckeditor.element.querySelectorAll<HTMLElement>("blockquote[data-quote-id]").forEach((blockquote) => {
+      insertedQuotes.add(blockquote.dataset.quoteId!);
+    });
+
+    this.#container.querySelectorAll<HTMLElement>(".quoteBox--tabMenu").forEach((quoteBox) => {
+      quoteBox.classList.toggle("quoteBox--inserted", insertedQuotes.has(quoteBox.dataset.uuid!));
+    });
   }
 
   #addBulkButtons(): void {
