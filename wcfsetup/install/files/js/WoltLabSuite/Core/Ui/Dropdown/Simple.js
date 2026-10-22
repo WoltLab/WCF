@@ -373,6 +373,12 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
             // move menu into global container
             _menuContainer.appendChild(menu);
             const containerId = Util_1.default.identify(dropdown);
+            // A dropdown with the same id might have been removed from the DOM,
+            // e.g. when a dialog with a fixed set of ids is shown again.
+            const existingDropdown = _dropdowns.get(containerId);
+            if (existingDropdown !== undefined && existingDropdown !== dropdown && !existingDropdown.isConnected) {
+                UiDropdownSimple.destroy(containerId);
+            }
             if (!_dropdowns.has(containerId)) {
                 button.classList.add("jsDropdownEnabled");
                 button.addEventListener("click", toggle);
