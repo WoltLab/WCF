@@ -7,5 +7,9 @@
 	data-reaction-object-type="{$reactionData->objectType}"
 	data-object-id="{$reactionData->objectID}"
 >
-	{icon name='face-smile'}
+	{if $reactionData->getReactionType()}
+		{unsafe:$reactionData->getReactionType()->renderIcon()}
+	{else}
+		{icon name='face-smile'}
+	{/if}
 </button>
