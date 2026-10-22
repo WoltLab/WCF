@@ -4219,6 +4219,7 @@ Dateianhänge:
 	<category name="wcf.message">
 		<item name="wcf.message.bbcode.code.copy"><![CDATA[Inhalt kopieren]]></item>
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Zitat einfügen]]></item>
+		<item name="wcf.message.quote.inserted"><![CDATA[Eingefügt]]></item>
 		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Alle Zitate einfügen]]></item>
 		<item name="wcf.message.quote.deleteAllQuotes"><![CDATA[Alle Zitate löschen]]></item>
 		<item name="wcf.message.quote.quoteSelected"><![CDATA[Zitat speichern]]></item>

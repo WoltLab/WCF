@@ -50,6 +50,8 @@
 .quoteBoxTitle {
 	align-self: center;
 	color: var(--wcfContentDimmedText);
+	display: flex;
+	gap: 5px;
 	grid-area: title;
 
 	a {
@@ -108,6 +110,14 @@
 
 .quoteBox.quoteBox--tabMenu .quoteBoxContent {
 	pointer-events: none !important;
+}
+
+.quoteBox__indicator {
+	display: none;
+}
+
+.quoteBox--inserted .quoteBox__indicator {
+	display: inline;
 }
 
 .quoteBox__bulk__actions {
