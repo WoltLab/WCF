@@ -267,6 +267,21 @@ function updateReactionSummary(
   component?.setData(reactions, selectedReaction);
 }
 
+function updateButton(button: HTMLButtonElement, reactionTypeId: number): void {
+  button.dataset.reactionTypeId = reactionTypeId.toString();
+  button.classList.toggle("active", reactionTypeId !== 0);
+  button.setAttribute("aria-pressed", reactionTypeId !== 0 ? "true" : "false");
+
+  const reactionType = window.REACTION_TYPES[reactionTypeId];
+  if (reactionType !== undefined) {
+    button.innerHTML = reactionType.renderedIcon;
+  } else {
+    const icon = document.createElement("fa-icon");
+    icon.setIcon("face-smile");
+    button.replaceChildren(icon);
+  }
+}
+
 function setupToggleButton(): void {
   wheneverFirstSeen("[data-reaction-object-type]", (button: HTMLButtonElement) => {
     button.addEventListener(
@@ -284,17 +299,12 @@ async function toggleButton(button: HTMLButtonElement): Promise<void> {
 
   if (button.classList.contains("active")) {
     reactions = (await revertReaction(objectType, objectId)).reactions;
-    button.dataset.reactionTypeId = "0";
-    button.classList.remove("active");
-    button.setAttribute("aria-pressed", "false");
   } else {
     reactionTypeId = availableReactions[0].reactionTypeID;
     reactions = (await setReaction(objectType, objectId, reactionTypeId)).reactions;
-    button.dataset.reactionTypeId = reactionTypeId.toString();
-    button.classList.add("active");
-    button.setAttribute("aria-pressed", "true");
   }
 
+  updateButton(button, reactionTypeId);
   updateReactionSummary(objectType, objectId, reactions, reactionTypeId);
 }
 
@@ -334,17 +344,12 @@ function setupPopoverButton(): void {
 
         if (result.reactionTypeId == oldReactionTypeId) {
           reactions = (await revertReaction(objectType, objectId)).reactions;
-          button.dataset.reactionTypeId = "0";
-          button.classList.remove("active");
-          button.setAttribute("aria-pressed", "false");
         } else {
           reactionTypeId = result.reactionTypeId;
           reactions = (await setReaction(objectType, objectId, reactionTypeId)).reactions;
-          button.dataset.reactionTypeId = reactionTypeId.toString();
-          button.classList.add("active");
-          button.setAttribute("aria-pressed", "true");
         }
 
+        updateButton(button, reactionTypeId);
         updateReactionSummary(objectType, objectId, reactions, reactionTypeId);
       });
     });

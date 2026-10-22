@@ -2,6 +2,9 @@
 
 namespace wcf\system\reaction;
 
+use wcf\data\reaction\type\ReactionType;
+use wcf\data\reaction\type\ReactionTypeCache;
+
 /**
  * Data transfer object for an object that has reactions.
  *
@@ -19,4 +22,16 @@ final class ReactionData
         public readonly ?string $cachedReactions = null,
         public readonly string $reactionsJson = '[]',
     ) {}
+
+    /**
+     * Returns the reaction type the active user has reacted with or `null` if there is none.
+     */
+    public function getReactionType(): ?ReactionType
+    {
+        if ($this->reactionTypeID === 0) {
+            return null;
+        }
+
+        return ReactionTypeCache::getInstance()->getReactionTypeByID($this->reactionTypeID);
+    }
 }

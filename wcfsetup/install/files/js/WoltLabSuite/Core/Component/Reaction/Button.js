@@ -195,6 +195,20 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
         const component = document.querySelector(`woltlab-core-reaction-summary[object-type="${objectType}"][object-id="${objectId}"]`);
         component?.setData(reactions, selectedReaction);
     }
+    function updateButton(button, reactionTypeId) {
+        button.dataset.reactionTypeId = reactionTypeId.toString();
+        button.classList.toggle("active", reactionTypeId !== 0);
+        button.setAttribute("aria-pressed", reactionTypeId !== 0 ? "true" : "false");
+        const reactionType = window.REACTION_TYPES[reactionTypeId];
+        if (reactionType !== undefined) {
+            button.innerHTML = reactionType.renderedIcon;
+        }
+        else {
+            const icon = document.createElement("fa-icon");
+            icon.setIcon("face-smile");
+            button.replaceChildren(icon);
+        }
+    }
     function setupToggleButton() {
         (0, Selector_1.wheneverFirstSeen)("[data-reaction-object-type]", (button) => {
             button.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(() => toggleButton(button)));
@@ -207,17 +221,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
         let reactions;
         if (button.classList.contains("active")) {
             reactions = (await (0, RevertReaction_1.revertReaction)(objectType, objectId)).reactions;
-            button.dataset.reactionTypeId = "0";
-            button.classList.remove("active");
-            button.setAttribute("aria-pressed", "false");
         }
         else {
             reactionTypeId = availableReactions[0].reactionTypeID;
             reactions = (await (0, SetReaction_1.setReaction)(objectType, objectId, reactionTypeId)).reactions;
-            button.dataset.reactionTypeId = reactionTypeId.toString();
-            button.classList.add("active");
-            button.setAttribute("aria-pressed", "true");
         }
+        updateButton(button, reactionTypeId);
         updateReactionSummary(objectType, objectId, reactions, reactionTypeId);
     }
     function setupPopoverButton() {
@@ -249,17 +258,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
                     let reactions;
                     if (result.reactionTypeId == oldReactionTypeId) {
                         reactions = (await (0, RevertReaction_1.revertReaction)(objectType, objectId)).reactions;
-                        button.dataset.reactionTypeId = "0";
-                        button.classList.remove("active");
-                        button.setAttribute("aria-pressed", "false");
                     }
                     else {
                         reactionTypeId = result.reactionTypeId;
                         reactions = (await (0, SetReaction_1.setReaction)(objectType, objectId, reactionTypeId)).reactions;
-                        button.dataset.reactionTypeId = reactionTypeId.toString();
-                        button.classList.add("active");
-                        button.setAttribute("aria-pressed", "true");
                     }
+                    updateButton(button, reactionTypeId);
                     updateReactionSummary(objectType, objectId, reactions, reactionTypeId);
                 });
             });

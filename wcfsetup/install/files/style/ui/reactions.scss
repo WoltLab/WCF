@@ -38,6 +38,13 @@ html[data-color-scheme="dark"] .reactionPopover {
 	height: 20px;
 }
 
+.reactionButton .reactionType {
+	width: 16px;
+	height: 16px;
+	// Necessary because the default icon has a size of 20x16.
+	margin: 0 2px;
+}
+
 .reactionPopoverContent .reactionType,
 .reactionTypeListImage .reactionType {
 	width: 24px;
