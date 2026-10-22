@@ -54,7 +54,7 @@
 	{/hascontent}
 </header>
 
-{if !(80300 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80599)}
+{if !((80427 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80499) || (80512 <= PHP_VERSION_ID && PHP_VERSION_ID <= 80599))}
 	<woltlab-core-notice type="error">{lang}wcf.global.incompatiblePhpVersion{/lang}</woltlab-core-notice>
 {/if}
 {foreach from=$taintedApplications item=$taintedApplication}
