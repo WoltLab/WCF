@@ -25,10 +25,11 @@ use Psr\Http\Server\RequestHandlerInterface;
 final class HandleStartupErrors implements MiddlewareInterface
 {
     private const MALFORMED_REQUEST_ERRORS = [
-        'Missing boundary in multipart/form-data POST data',
-        'Invalid boundary in multipart/form-data POST data',
+        'PHP Request Startup: Missing boundary in multipart/form-data POST data',
+        'PHP Request Startup: Invalid boundary in multipart/form-data POST data',
+        // Raised through `sapi_error()`, which does not add the prefix.
         'Boundary too large in multipart/form-data POST data',
-        'File Upload Mime headers garbled',
+        'PHP Request Startup: File Upload Mime headers garbled',
     ];
 
     #[\Override]
@@ -47,17 +48,8 @@ final class HandleStartupErrors implements MiddlewareInterface
 
     private function isMalformedRequest(string $message): bool
     {
-        // Errors raised through `php_error_docref()` carry a prefix, which is
-        // `Unknown: ` before PHP 8.2. Those raised through `sapi_error()` do not.
-        foreach (['PHP Request Startup: ', 'Unknown: '] as $prefix) {
-            if (\str_starts_with($message, $prefix)) {
-                $message = \substr($message, \strlen($prefix));
-                break;
-            }
-        }
-
         // The message embeds the configured `max_input_nesting_level`.
-        if (\str_starts_with($message, 'Input variable nesting level exceeded ')) {
+        if (\str_starts_with($message, 'PHP Request Startup: Input variable nesting level exceeded ')) {
             return true;
         }
 
