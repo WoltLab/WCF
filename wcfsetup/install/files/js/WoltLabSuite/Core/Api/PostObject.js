@@ -12,12 +12,13 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "./Result"], fun
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.postObject = postObject;
     async function postObject(endpoint, payload) {
+        let response;
         try {
-            await (0, Backend_1.prepareRequest)(endpoint).post(payload).fetchAsJson();
+            response = (await (0, Backend_1.prepareRequest)(endpoint).post(payload).fetchAsJson());
         }
         catch (e) {
             return (0, Result_1.apiResultFromError)(e);
         }
-        return (0, Result_1.apiResultFromValue)([]);
+        return (0, Result_1.apiResultFromValue)(response);
     }
 });

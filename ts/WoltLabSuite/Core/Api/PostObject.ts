@@ -13,12 +13,14 @@ import { ApiResult, apiResultFromError, apiResultFromValue } from "./Result";
 
 type Payload = Blob | FormData | Record<string, unknown>;
 
-export async function postObject(endpoint: string, payload?: Payload): Promise<ApiResult<[]>> {
+export async function postObject<T = []>(endpoint: string, payload?: Payload): Promise<ApiResult<T>> {
+  let response: T;
+
   try {
-    await prepareRequest(endpoint).post(payload).fetchAsJson();
+    response = (await prepareRequest(endpoint).post(payload).fetchAsJson()) as T;
   } catch (e) {
     return apiResultFromError(e);
   }
 
-  return apiResultFromValue([]);
+  return apiResultFromValue(response);
 }

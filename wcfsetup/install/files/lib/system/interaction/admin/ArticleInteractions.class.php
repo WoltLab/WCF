@@ -10,6 +10,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\FormBuilderDialogInteraction;
+use wcf\system\interaction\InteractionConfirmationType;
 use wcf\system\interaction\InteractionEffect;
 use wcf\system\interaction\LinkableObjectInteraction;
 use wcf\system\interaction\RestoreInteraction;
@@ -100,7 +101,19 @@ final class ArticleInteractions extends AbstractInteractionProvider
                         && (\count(LanguageFactory::getInstance()->getLanguages()) > 1 || $article->isMultilingual !== 0);
                 },
                 InteractionEffect::ReloadPage
-            )
+            ),
+            new RpcInteraction(
+                'copy',
+                'core/articles/%s/copy',
+                'wcf.acp.article.button.copy',
+                InteractionConfirmationType::Custom,
+                static fn(Article $article): string => WCF::getLanguage()->getDynamicVariable(
+                    'wcf.acp.article.copy.confirmMessage',
+                    ['article' => $article]
+                ),
+                static fn(Article $article): bool => $article->canEdit() && $article->isDeleted === 0,
+                InteractionEffect::Redirect
+            ),
         ]);
 
         EventHandler::getInstance()->fire(

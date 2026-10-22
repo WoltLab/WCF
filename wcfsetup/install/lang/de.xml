@@ -74,6 +74,7 @@
 		<item name="wcf.acp.article.edit"><![CDATA[Artikel bearbeiten]]></item>
 		<item name="wcf.acp.article.list"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.article.author"><![CDATA[Autor]]></item>
+		<item name="wcf.acp.article.button.copy"><![CDATA[Kopieren]]></item>
 		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Mehrsprachigkeit verwalten]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Artikel anzeigen]]></item>
 		<item name="wcf.acp.article.category.sortField"><![CDATA[Sortierung]]></item>
@@ -81,6 +82,8 @@
 		<item name="wcf.acp.article.category.sortField.title"><![CDATA[Titel]]></item>
 		<item name="wcf.acp.article.category.error.noCategories"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einen Artikel erstellen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst, musst du{else}können, müssen Sie{/if} eine <a href="{link controller='ArticleCategoryAdd' isACP=true}{/link}">Kategorie anlegen</a>.]]></item>
 		<item name="wcf.acp.article.content"><![CDATA[Inhalt]]></item>
+		<item name="wcf.acp.article.copy.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Artikel „{$article->getTitle()}“ wirklich kopieren? Die Kopie wird nicht veröffentlicht.]]></item>
+		<item name="wcf.acp.article.copy.title"><![CDATA[{@$title} (Kopie)]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Kommentare aktivieren]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Mehrsprachigkeit]]></item>
 		<item name="wcf.acp.article.i18n.none"><![CDATA[Einsprachiger Artikel]]></item>

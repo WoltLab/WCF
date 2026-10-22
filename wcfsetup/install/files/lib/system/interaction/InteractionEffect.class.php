@@ -17,6 +17,13 @@ enum InteractionEffect
     case ReloadPage;
     case RemoveItem;
 
+    /**
+     * Navigates to the URL provided by the `redirectUrl` property of the response.
+     *
+     * @since 6.3
+     */
+    case Redirect;
+
     public function toString(): string
     {
         return match ($this) {
@@ -24,6 +31,7 @@ enum InteractionEffect
             self::ReloadList => 'ReloadList',
             self::ReloadPage => 'ReloadPage',
             self::RemoveItem => 'RemoveItem',
+            self::Redirect => 'Redirect',
         };
     }
 }

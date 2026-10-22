@@ -15,6 +15,9 @@ import { getPhrase } from "WoltLabSuite/Core/Language";
 import { InteractionEffect } from "./InteractionEffect";
 
 type Payload = Record<string, string>;
+type Response = {
+  redirectUrl?: string;
+};
 
 async function handleRpcInteraction(
   container: HTMLElement,
@@ -37,12 +40,30 @@ async function handleRpcInteraction(
     return;
   }
 
+  let response: Response = {};
   if (confirmationType == ConfirmationType.Delete) {
     (await deleteObject(endpoint)).unwrap();
   } else {
-    (
-      await postObject(endpoint, confirmationResult.reason ? { reason: confirmationResult.reason } : undefined)
+    response = (
+      await postObject<Response>(
+        endpoint,
+        confirmationResult.reason ? { reason: confirmationResult.reason } : undefined,
+      )
     ).unwrap();
+  }
+
+  if (interactionEffect === InteractionEffect.Redirect) {
+    const { redirectUrl } = response;
+    if (redirectUrl) {
+      showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
+        window.location.href = redirectUrl;
+      });
+
+      return;
+    }
+
+    // The endpoint did not provide a target, reload the page instead.
+    interactionEffect = InteractionEffect.ReloadPage;
   }
 
   if (interactionEffect === InteractionEffect.ReloadItem || interactionEffect === InteractionEffect.ReloadPage) {

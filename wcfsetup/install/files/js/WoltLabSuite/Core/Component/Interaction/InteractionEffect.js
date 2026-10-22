@@ -16,5 +16,6 @@ define(["require", "exports"], function (require, exports) {
         InteractionEffect["ReloadList"] = "ReloadList";
         InteractionEffect["ReloadPage"] = "ReloadPage";
         InteractionEffect["RemoveItem"] = "RemoveItem";
+        InteractionEffect["Redirect"] = "Redirect";
     })(InteractionEffect || (exports.InteractionEffect = InteractionEffect = {}));
 });

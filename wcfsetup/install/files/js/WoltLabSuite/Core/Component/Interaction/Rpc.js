@@ -15,11 +15,23 @@ define(["require", "exports", "WoltLabSuite/Core/Api/DeleteObject", "WoltLabSuit
         if (!confirmationResult.result) {
             return;
         }
+        let response = {};
         if (confirmationType == Confirmation_1.ConfirmationType.Delete) {
             (await (0, DeleteObject_1.deleteObject)(endpoint)).unwrap();
         }
         else {
-            (await (0, PostObject_1.postObject)(endpoint, confirmationResult.reason ? { reason: confirmationResult.reason } : undefined)).unwrap();
+            response = (await (0, PostObject_1.postObject)(endpoint, confirmationResult.reason ? { reason: confirmationResult.reason } : undefined)).unwrap();
+        }
+        if (interactionEffect === InteractionEffect_1.InteractionEffect.Redirect) {
+            const { redirectUrl } = response;
+            if (redirectUrl) {
+                (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
+                    window.location.href = redirectUrl;
+                });
+                return;
+            }
+            // The endpoint did not provide a target, reload the page instead.
+            interactionEffect = InteractionEffect_1.InteractionEffect.ReloadPage;
         }
         if (interactionEffect === InteractionEffect_1.InteractionEffect.ReloadItem || interactionEffect === InteractionEffect_1.InteractionEffect.ReloadPage) {
             element.dispatchEvent(new CustomEvent("interaction:invalidate", {

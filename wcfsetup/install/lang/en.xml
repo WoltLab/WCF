@@ -74,6 +74,7 @@
 		<item name="wcf.acp.article.edit"><![CDATA[Edit Article]]></item>
 		<item name="wcf.acp.article.list"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.article.author"><![CDATA[Author]]></item>
+		<item name="wcf.acp.article.button.copy"><![CDATA[Copy]]></item>
 		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Toggle Internationalization]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Article]]></item>
 		<item name="wcf.acp.article.category.sortField"><![CDATA[Show Order]]></item>
@@ -81,6 +82,8 @@
 		<item name="wcf.acp.article.category.sortField.title"><![CDATA[Title]]></item>
 		<item name="wcf.acp.article.category.error.noCategories"><![CDATA[Please <a href="{link controller='ArticleCategoryAdd' isACP=true}{/link}">add a category</a> before writing articles.]]></item>
 		<item name="wcf.acp.article.content"><![CDATA[Content]]></item>
+		<item name="wcf.acp.article.copy.confirmMessage"><![CDATA[Are you sure you want to copy the article “{$article->getTitle()}”? The copy will not be published.]]></item>
+		<item name="wcf.acp.article.copy.title"><![CDATA[{@$title} (Copy)]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Enable comments]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.acp.article.i18n.none"><![CDATA[Monolingual article]]></item>

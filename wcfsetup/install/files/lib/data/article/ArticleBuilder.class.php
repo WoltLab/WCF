@@ -41,6 +41,13 @@ final class ArticleBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    public function setUserID(?int $userID): static
+    {
+        $this->properties['userID'] = $userID;
+
+        return $this;
+    }
+
     public function setUsername(string $username): static
     {
         $this->properties['username'] = $username;

@@ -15,6 +15,17 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
         if (!ok) {
             return;
         }
+        if (interactionEffect === InteractionEffect_1.InteractionEffect.Redirect) {
+            const { redirectUrl } = result;
+            if (redirectUrl) {
+                (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
+                    window.location.href = redirectUrl;
+                });
+                return;
+            }
+            // The endpoint did not provide a target, reload the page instead.
+            interactionEffect = InteractionEffect_1.InteractionEffect.ReloadPage;
+        }
         if (interactionEffect === InteractionEffect_1.InteractionEffect.ReloadItem || interactionEffect === InteractionEffect_1.InteractionEffect.ReloadPage) {
             element.dispatchEvent(new CustomEvent("interaction:invalidate", {
                 bubbles: true,

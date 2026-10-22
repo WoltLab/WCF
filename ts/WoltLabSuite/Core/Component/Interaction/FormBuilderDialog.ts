@@ -26,6 +26,20 @@ async function handleFormBuilderDialogAction(
     return;
   }
 
+  if (interactionEffect === InteractionEffect.Redirect) {
+    const { redirectUrl } = result;
+    if (redirectUrl) {
+      showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
+        window.location.href = redirectUrl;
+      });
+
+      return;
+    }
+
+    // The endpoint did not provide a target, reload the page instead.
+    interactionEffect = InteractionEffect.ReloadPage;
+  }
+
   if (interactionEffect === InteractionEffect.ReloadItem || interactionEffect === InteractionEffect.ReloadPage) {
     element.dispatchEvent(
       new CustomEvent<Payload>("interaction:invalidate", {

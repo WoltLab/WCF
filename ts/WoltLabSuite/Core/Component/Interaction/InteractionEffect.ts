@@ -12,4 +12,5 @@ export enum InteractionEffect {
   ReloadList = "ReloadList",
   ReloadPage = "ReloadPage",
   RemoveItem = "RemoveItem",
+  Redirect = "Redirect",
 }
