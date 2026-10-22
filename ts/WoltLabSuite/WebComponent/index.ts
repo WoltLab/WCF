@@ -13,6 +13,7 @@ import "./fa-brand.ts";
 import "./fa-icon.ts";
 import "./woltlab-core-date-time.ts";
 import "./woltlab-core-file-upload.ts";
+import "./woltlab-core-label-picker.ts";
 import "./woltlab-core-loading-indicator.ts";
 import "./woltlab-core-notice.ts";
 import "./woltlab-core-pagination.ts";

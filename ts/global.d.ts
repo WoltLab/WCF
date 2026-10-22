@@ -123,6 +123,17 @@ declare global {
     setData: (data: Map<number, number>, selectedReaction?: number) => void;
   }
 
+  interface WoltlabCoreLabelPickerElement extends HTMLElement {
+    get value(): number;
+    set value(value: number);
+    get name(): string;
+    get form(): HTMLFormElement | null;
+    get disabled(): boolean;
+    set disabled(disabled: boolean);
+    get required(): boolean;
+    get invertible(): boolean;
+  }
+
   interface WoltlabCorePaginationElement extends HTMLElement {
     getLinkUrl(page: number): string;
     jumpToPage(page: number): void;
@@ -151,6 +162,7 @@ declare global {
     "woltlab-core-file": WoltlabCoreFileElement;
     "woltlab-core-file-upload": WoltlabCoreFileUploadElement;
     "woltlab-core-google-maps": WoltlabCoreGoogleMapsElement;
+    "woltlab-core-label-picker": WoltlabCoreLabelPickerElement;
     "woltlab-core-loading-indicator": WoltlabCoreLoadingIndicatorElement;
     "woltlab-core-notice": WoltlabCoreNoticeElement;
     "woltlab-core-pagination": WoltlabCorePaginationElement;

@@ -12,6 +12,7 @@ WCF.Label = {};
  * @param	string		containerSelector
  * @param	string		submitButtonSelector
  * @param	boolean		showWithoutSelection
+ * @deprecated	6.3 Use `ViewableLabelGroup::renderPicker()` instead.
  */
 WCF.Label.Chooser = Class.extend({
 	/**

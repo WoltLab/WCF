@@ -24,6 +24,9 @@ export interface FormBuilderDialogOptions {
   usesDboAction: boolean;
 }
 
+/**
+ * @deprecated 6.3
+ */
 export interface LabelFormFieldOptions {
   forceSelection: boolean;
   showWithoutSelection: boolean;

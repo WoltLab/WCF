@@ -5,6 +5,7 @@
  * @copyright 2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.2
+ * @deprecated 6.3 `LabelFormField` uses `<woltlab-core-label-picker>` instead.
  */
 define(["require", "exports", "tslib", "../../../../Core", "../../../../Dom/Util", "WoltLabSuite/Core/Language", "../../../../Ui/Dropdown/Simple"], function (require, exports, tslib_1, Core, DomUtil, Language_1, Simple_1) {
     "use strict";

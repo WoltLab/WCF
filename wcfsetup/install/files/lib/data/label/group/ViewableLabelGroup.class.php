@@ -8,6 +8,8 @@ use wcf\data\label\Label;
 use wcf\data\user\User;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\JSON;
+use wcf\util\StringUtil;
 
 /**
  * Represents a viewable label group.
@@ -257,6 +259,54 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
             static fn(Label $a, Label $b) => $collator->compare($a->getTitle(), $b->getTitle())
         );
         $this->indexToObject = \array_keys($this->labels);
+    }
+
+    /**
+     * Renders a `<woltlab-core-label-picker>` to select a label of this group.
+     *
+     * The selected value is `0` or `null` for no selection, `-1` for objects
+     * without any label of this group (requires `$invertible`) or a label id.
+     * Invalid values are treated as no selection.
+     *
+     * @since 6.3
+     */
+    public function renderPicker(
+        string $name,
+        ?int $value = null,
+        bool $required = false,
+        bool $invertible = false,
+        string $id = '',
+    ): string {
+        $labels = [];
+        foreach ($this->labels as $label) {
+            $labels[] = [$label->labelID, $label->render()];
+        }
+
+        if ($value === null || ($value === -1 ? !$invertible : !$this->isValid($value))) {
+            $value = 0;
+        }
+
+        $attributes = [
+            'name' => $name,
+            'labels' => JSON::encode($labels),
+            'value' => $value,
+        ];
+        if ($id !== '') {
+            $attributes['id'] = $id;
+        }
+
+        $html = '';
+        foreach ($attributes as $attribute => $attributeValue) {
+            $html .= \sprintf(' %s="%s"', $attribute, StringUtil::encodeHTML((string)$attributeValue));
+        }
+        if ($required) {
+            $html .= ' required';
+        }
+        if ($invertible) {
+            $html .= ' invertible';
+        }
+
+        return "<woltlab-core-label-picker{$html}></woltlab-core-label-picker>";
     }
 
     /**
