@@ -1,0 +1,63 @@
+/* Statistics box: `dl.plain.boxStats > div.boxStats__item > dt.boxStats__label + dd.boxStats__value`,
+   where the label holds `span.boxStats__icon` and `span.boxStats__labelText`, and the value optionally
+   `span.boxStats__unit`. The label comes first in the source so that screen readers announce
+   "label, value"; the grid areas place the value above the label text. */
+.boxStats {
+	display: grid;
+	gap: 14px 16px;
+	/* 144px fits the icon plus values up to 99,999,999. `auto-fill` keeps the empty tracks, so the
+	   figures stay together instead of spreading across a full-width box. */
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 144px), 1fr));
+}
+
+.boxStats__item {
+	/* Keeps the rows from stretching to the grid row height, so values in a row stay aligned when a
+	   neighboring label wraps. */
+	align-content: start;
+	align-items: center;
+	column-gap: 10px;
+	display: grid;
+	grid-template-areas: "icon value" "icon label";
+	grid-template-columns: 32px minmax(0, 1fr);
+	min-width: 0;
+}
+
+/* Lets the icon and the label text inside the `<dt>` sit in separate grid areas of the item. The
+   color stays here and is inherited, so box positions can override it in one place. */
+.boxStats__label {
+	color: var(--wcfContentDimmedText);
+	display: contents;
+}
+
+.boxStats__icon {
+	align-items: center;
+	/* Tinted with the icon color itself, so it suits any style palette and box background. */
+	background-color: color-mix(in srgb, currentColor 10%, transparent);
+	border-radius: 8px;
+	display: flex;
+	grid-area: icon;
+	height: 32px;
+	justify-content: center;
+	width: 32px;
+}
+
+.boxStats__labelText {
+	font-size: var(--wcfFontSizeSmall);
+	grid-area: label;
+	line-height: 1.3;
+	text-wrap: pretty;
+}
+
+.boxStats__value {
+	font-size: var(--wcfFontSizeHeadline);
+	font-variant-numeric: tabular-nums;
+	font-weight: 600;
+	grid-area: value;
+	line-height: 1.2;
+}
+
+.boxStats__unit {
+	font-size: 0.8em;
+	font-weight: 400;
+	margin-inline-start: 0.2em;
+}
