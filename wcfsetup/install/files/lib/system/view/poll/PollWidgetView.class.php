@@ -3,6 +3,9 @@
 namespace wcf\system\view\poll;
 
 use wcf\data\poll\Poll;
+use wcf\system\interaction\InteractionContextMenuComponent;
+use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
+use wcf\system\interaction\user\PollInteractions;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -35,14 +38,34 @@ final class PollWidgetView implements \Stringable
             $leadingVotes = \max($leadingVotes, $option->votes);
         }
 
+        // The same poll can be embedded multiple times on a page.
+        $elementID = 'poll' . $this->poll->pollID . '_' . \substr(StringUtil::getRandomID(), 0, 8);
+
+        $interactionButton = $interactionInitialization = '';
+        if ($this->poll->canManage()) {
+            // The widget itself serves as the container of the interactions.
+            $component = new InteractionContextMenuComponent(
+                new PollInteractions(),
+                new InteractionContextMenuComponentConfiguration(
+                    cssClassName: 'pollWidget__interactions',
+                    buttonCssClassName: 'pollWidget__interactionButton',
+                )
+            );
+            $interactionButton = $component->renderButton($this->poll);
+            if ($interactionButton !== '') {
+                $interactionInitialization = $component->renderInitialization($elementID);
+            }
+        }
+
         return WCF::getTPL()->render('wcf', 'shared_bbcode_poll', [
             'poll' => $this->poll,
             'options' => $this->poll->getOptions(),
             'resultPositions' => $resultPositions,
             'leadingVotes' => $leadingVotes,
             'initialState' => $this->getInitialState(),
-            // The same poll can be embedded multiple times on a page.
-            'elementID' => 'poll' . $this->poll->pollID . '_' . \substr(StringUtil::getRandomID(), 0, 8),
+            'elementID' => $elementID,
+            'interactionButton' => $interactionButton,
+            'interactionInitialization' => $interactionInitialization,
         ]);
     }
 

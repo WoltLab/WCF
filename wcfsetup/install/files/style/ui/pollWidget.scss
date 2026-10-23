@@ -41,6 +41,33 @@
 	text-transform: none;
 }
 
+.pollWidget__interactions {
+	margin-left: auto;
+}
+
+.pollWidget__interactionButton {
+	align-items: center;
+	border-radius: 6px;
+	color: var(--wcfContentDimmedText);
+	cursor: pointer;
+	display: flex;
+	height: 28px;
+	justify-content: center;
+	margin: -6px -6px -6px 0;
+	width: 28px;
+
+	&:hover,
+	.dropdownOpen > & {
+		background-color: var(--wcfTabularBoxBackgroundActive);
+		color: var(--wcfContentText);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--wcfContentLink);
+		outline-offset: 1px;
+	}
+}
+
 .pollWidget h3.pollWidget__question {
 	color: var(--wcfContentHeadlineText);
 	font-size: 18px;

@@ -10,6 +10,7 @@
 			<span class="pollWidget__label">{lang}wcf.poll.widget.label{/lang}</span>
 			<span class="pollWidget__separator" aria-hidden="true"></span>
 			<span class="pollWidget__totalVotes">{lang}wcf.poll.widget.votes{/lang}</span>
+			{unsafe:$interactionButton}
 		</div>
 
 		<h3 class="pollWidget__question" id="{$elementID}_question" tabindex="-1">{$poll->getQuestion()}</h3>
@@ -122,4 +123,6 @@
 
 		{event name='footer'}
 	</footer>
+
+	{unsafe:$interactionInitialization}
 </section>
