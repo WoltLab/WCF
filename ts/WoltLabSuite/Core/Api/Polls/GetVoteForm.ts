@@ -5,6 +5,7 @@
  * @copyright  2001-2026 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
+ * @deprecated 6.3 Only used by the legacy poll UI.
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";

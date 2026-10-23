@@ -28,6 +28,7 @@ use wcf\system\poll\IPollHandler;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
+ * @deprecated 6.3 Use standalone polls that are embedded through the `[poll]` BBCode instead.
  */
 class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormNode
 {

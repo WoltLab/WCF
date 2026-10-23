@@ -1,3 +1,4 @@
+{* deprecated since 6.3: use `shared_pollOptionListFormField.tpl` instead *}
 <ol class="sortableList"></ol>
 
 <script data-relocate="true">

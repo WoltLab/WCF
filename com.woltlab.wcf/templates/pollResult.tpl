@@ -1,3 +1,4 @@
+{* deprecated since 6.3: use standalone polls that are embedded through the `[poll]` BBCode instead *}
 <ol class="pollResultList">
 	{foreach from=$poll->getOptions(true) item=option}
 		<li class="pollResultItem">

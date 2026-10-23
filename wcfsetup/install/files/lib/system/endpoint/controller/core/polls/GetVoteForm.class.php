@@ -20,6 +20,7 @@ use wcf\system\WCF;
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
+ * @deprecated 6.3 Only used by the legacy poll UI, the widget of standalone polls contains the vote form.
  */
 #[GetRequest('/core/polls/{id:\d+}/vote-form')]
 final class GetVoteForm implements IController

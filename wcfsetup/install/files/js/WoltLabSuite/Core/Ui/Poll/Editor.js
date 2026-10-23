@@ -5,6 +5,7 @@
  * @copyright  2001-2020 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
+ * @deprecated 6.3 Use standalone polls that are embedded through the `[poll]` BBCode instead.
  */
 define(["require", "exports", "tslib", "../../Core", "WoltLabSuite/Core/Language", "../Sortable/List", "../../Event/Handler", "../../Date/Picker", "../../Component/Ckeditor/Event", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, Core, Language_1, List_1, EventHandler, DatePicker, Event_1, Util_1) {
     "use strict";

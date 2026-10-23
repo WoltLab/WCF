@@ -13,6 +13,7 @@ use wcf\system\WCF;
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
+ * @deprecated 6.3 Only supports the legacy polls that are bound to a content object.
  */
 final class CopyPoll
 {

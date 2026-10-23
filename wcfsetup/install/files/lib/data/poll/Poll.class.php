@@ -72,6 +72,7 @@ class Poll extends CollectionDatabaseObject implements ITitledObject, \Stringabl
     /**
      * related object
      * @var ?IPollObject
+     * @deprecated 6.3 Use standalone polls that are embedded through the `[poll]` BBCode instead.
      */
     protected $relatedObject;
 
@@ -297,6 +298,7 @@ class Poll extends CollectionDatabaseObject implements ITitledObject, \Stringabl
      * Sets related object for this poll.
      *
      * @return void
+     * @deprecated 6.3 Use standalone polls that are embedded through the `[poll]` BBCode instead.
      */
     public function setRelatedObject(IPollObject $object)
     {
@@ -307,6 +309,7 @@ class Poll extends CollectionDatabaseObject implements ITitledObject, \Stringabl
      * Returns related object.
      *
      * @return IPollObject
+     * @deprecated 6.3 Use standalone polls that are embedded through the `[poll]` BBCode instead.
      */
     public function getRelatedObject()
     {

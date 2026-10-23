@@ -58,6 +58,8 @@ final class PollBuilder extends DatabaseObjectBuilder
     /**
      * Assigns the poll to the poll container of the given object type, see the
      * object type definition `com.woltlab.wcf.poll`.
+     *
+     * @deprecated 6.3 Standalone polls are not bound to a content object.
      */
     public function setContainer(string $objectType, int $objectID): static
     {
@@ -74,6 +76,8 @@ final class PollBuilder extends DatabaseObjectBuilder
 
     /**
      * Sets the id of the poll container object, the object type must not change.
+     *
+     * @deprecated 6.3 Standalone polls are not bound to a content object.
      */
     public function setObjectID(int $objectID): static
     {

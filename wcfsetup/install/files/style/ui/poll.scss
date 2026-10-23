@@ -1,4 +1,4 @@
-/* poll create/edit form */
+/* poll create/edit form, deprecated since 6.3: use standalone polls that are embedded through the `[poll]` BBCode instead */
 .pollOptionContainer .pollOptionInput {
 	column-gap: 5px;
 	margin: 5px 0;
@@ -22,7 +22,7 @@
 	}
 }
 
-/* displayed poll */
+/* displayed poll, deprecated since 6.3: use standalone polls that are embedded through the `[poll]` BBCode instead */
 .pollContainer {
 	background-color: var(--wcfContentContainerBackground);
 	border: 1px solid var(--wcfContentBorderInner);

@@ -1442,6 +1442,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<minvalue>2</minvalue>
 				<maxvalue>100</maxvalue>
 			</option>
+			<!-- deprecated since 6.3, only affects the legacy polls, the widget of standalone polls always uses the full width -->
 			<option name="poll_full_width">
 				<categoryname>message.general.poll</categoryname>
 				<optiontype>boolean</optiontype>
