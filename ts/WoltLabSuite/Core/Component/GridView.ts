@@ -17,6 +17,7 @@ import { promiseMutex } from "../Helper/PromiseMutex";
 import { wheneverFirstSeen } from "../Helper/Selector";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import { State, StateChangeCause } from "./GridView/State";
+import { isOwnInteraction } from "./Interaction/Container";
 
 export class GridView {
   readonly #gridClassName: string;
@@ -112,6 +113,10 @@ export class GridView {
       const containers = [row];
 
       row.querySelectorAll<HTMLElement>(".dropdownToggle").forEach((element) => {
+        if (!isOwnInteraction(row, element)) {
+          return;
+        }
+
         const dropdown = UiDropdownSimple.getDropdownMenu(element.dataset.target!);
         if (dropdown) {
           containers.push(dropdown);
@@ -120,6 +125,10 @@ export class GridView {
 
       for (const container of containers) {
         container.querySelectorAll<HTMLButtonElement>("[data-interaction]").forEach((element) => {
+          if (container === row && !isOwnInteraction(row, element)) {
+            return;
+          }
+
           element.addEventListener("click", () => {
             row.dispatchEvent(
               new CustomEvent("interaction:execute", {

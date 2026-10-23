@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-define(["require", "exports", "tslib", "../Api/PostObject", "../Api/NodeTreeViews/GetNode", "../Api/NodeTreeViews/GetNodes", "../Helper/PromiseMutex", "../Helper/Selector", "../Dom/Util", "../Ui/Dropdown/Simple", "sortablejs"], function (require, exports, tslib_1, PostObject_1, GetNode_1, GetNodes_1, PromiseMutex_1, Selector_1, Util_1, Simple_1, sortablejs_1) {
+define(["require", "exports", "tslib", "../Api/PostObject", "../Api/NodeTreeViews/GetNode", "../Api/NodeTreeViews/GetNodes", "../Helper/PromiseMutex", "../Helper/Selector", "../Dom/Util", "../Ui/Dropdown/Simple", "sortablejs", "./Interaction/Container"], function (require, exports, tslib_1, PostObject_1, GetNode_1, GetNodes_1, PromiseMutex_1, Selector_1, Util_1, Simple_1, sortablejs_1, Container_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.NodeTreeView = void 0;
@@ -34,6 +34,9 @@ define(["require", "exports", "tslib", "../Api/PostObject", "../Api/NodeTreeView
                 const content = node.querySelector(":scope > .nodeTreeView__item__content");
                 const containers = [content];
                 content.querySelectorAll(".dropdownToggle").forEach((element) => {
+                    if (!(0, Container_1.isOwnInteraction)(content, element)) {
+                        return;
+                    }
                     const dropdown = Simple_1.default.getDropdownMenu(element.dataset.target);
                     if (dropdown) {
                         containers.push(dropdown);
@@ -41,6 +44,9 @@ define(["require", "exports", "tslib", "../Api/PostObject", "../Api/NodeTreeView
                 });
                 for (const container of containers) {
                     container.querySelectorAll("[data-interaction]").forEach((element) => {
+                        if (container === content && !(0, Container_1.isOwnInteraction)(content, element)) {
+                            return;
+                        }
                         element.addEventListener("click", () => {
                             node.dispatchEvent(new CustomEvent("interaction:execute", {
                                 detail: element.dataset,

@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listener", "../Dom/Util", "../Api/ListViews/GetItems", "WoltLabSuite/Core/Ui/Scroll", "../Helper/Selector", "../Ui/Dropdown/Simple", "../Api/ListViews/GetItem", "../Api/Interactions/GetBulkContextMenuOptions", "../Helper/PromiseMutex"], function (require, exports, tslib_1, State_1, Listener_1, Util_1, GetItems_1, Scroll_1, Selector_1, Simple_1, GetItem_1, GetBulkContextMenuOptions_1, PromiseMutex_1) {
+define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listener", "../Dom/Util", "../Api/ListViews/GetItems", "WoltLabSuite/Core/Ui/Scroll", "../Helper/Selector", "../Ui/Dropdown/Simple", "../Api/ListViews/GetItem", "../Api/Interactions/GetBulkContextMenuOptions", "../Helper/PromiseMutex", "./Interaction/Container"], function (require, exports, tslib_1, State_1, Listener_1, Util_1, GetItems_1, Scroll_1, Selector_1, Simple_1, GetItem_1, GetBulkContextMenuOptions_1, PromiseMutex_1, Container_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ListView = void 0;
@@ -58,6 +58,9 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
         #initInteractions() {
             (0, Selector_1.wheneverFirstSeen)(`#${this.#viewElement.id} .listView__item`, (item) => {
                 item.querySelectorAll(".dropdownToggle").forEach((element) => {
+                    if (!(0, Container_1.isOwnInteraction)(item, element)) {
+                        return;
+                    }
                     let dropdown = Simple_1.default.getDropdownMenu(element.dataset.target);
                     if (!dropdown) {
                         dropdown = element.closest(".dropdown").querySelector(".dropdownMenu");

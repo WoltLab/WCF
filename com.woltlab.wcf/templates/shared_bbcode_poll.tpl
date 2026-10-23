@@ -1,4 +1,4 @@
-<section class="pollWidget" id="{$elementID}" aria-labelledby="{$elementID}_question"{*
+<section class="pollWidget" id="{$elementID}" data-interaction-container aria-labelledby="{$elementID}_question"{*
 	*} data-poll-id="{$poll->pollID}"{*
 	*} data-state="{$initialState}"{*
 	*} data-can-vote="{if $poll->canVote()}true{else}false{/if}"{*

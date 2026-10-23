@@ -15,6 +15,7 @@ import { wheneverFirstSeen } from "../Helper/Selector";
 import { createFragmentFromHtml, setInnerHtml } from "../Dom/Util";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import Sortable from "sortablejs";
+import { isOwnInteraction } from "./Interaction/Container";
 
 export class NodeTreeView {
   readonly #id: string;
@@ -48,6 +49,10 @@ export class NodeTreeView {
       const containers = [content];
 
       content.querySelectorAll<HTMLElement>(".dropdownToggle").forEach((element) => {
+        if (!isOwnInteraction(content, element)) {
+          return;
+        }
+
         const dropdown = UiDropdownSimple.getDropdownMenu(element.dataset.target!);
         if (dropdown) {
           containers.push(dropdown);
@@ -56,6 +61,10 @@ export class NodeTreeView {
 
       for (const container of containers) {
         container.querySelectorAll<HTMLButtonElement>("[data-interaction]").forEach((element) => {
+          if (container === content && !isOwnInteraction(content, element)) {
+            return;
+          }
+
           element.addEventListener("click", () => {
             node.dispatchEvent(
               new CustomEvent("interaction:execute", {
