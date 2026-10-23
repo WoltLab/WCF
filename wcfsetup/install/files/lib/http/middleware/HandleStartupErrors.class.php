@@ -36,7 +36,7 @@ final class HandleStartupErrors implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (\defined('WCF_STARTUP_ERROR')) {
-            if (\ENABLE_DEBUG_MODE === 0 && $this->isMalformedRequest(\WCF_STARTUP_ERROR['message'])) {
+            if (\ENABLE_DEBUG_MODE === 0 && $this->isMalformedRequest(\WCF_STARTUP_ERROR['message'], $request)) {
                 return new TextResponse('Failed to parse the incoming request.', 400);
             }
 
@@ -46,11 +46,24 @@ final class HandleStartupErrors implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    private function isMalformedRequest(string $message): bool
+    private function isMalformedRequest(string $message, ServerRequestInterface $request): bool
     {
         // The message embeds the configured `max_input_nesting_level`.
         if (\str_starts_with($message, 'PHP Request Startup: Input variable nesting level exceeded ')) {
             return true;
+        }
+
+        // The session upload progress starts a session while the request body
+        // is parsed, which fails for an invalid session ID. WoltLab Suite never
+        // sends this field, it is used by requests probing for file inclusions.
+        // PHP before 8.4.27 continues after the failed read, ending in a failed write.
+        if (
+            \str_starts_with($message, 'PHP Request Startup: Failed to read session data: ')
+            || \str_starts_with($message, 'PHP Request Startup: Failed to write session data (')
+        ) {
+            $body = $request->getParsedBody();
+
+            return \is_array($body) && isset($body[\ini_get('session.upload_progress.name')]);
         }
 
         return \in_array($message, self::MALFORMED_REQUEST_ERRORS, true);
