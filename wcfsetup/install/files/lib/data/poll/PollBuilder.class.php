@@ -172,6 +172,17 @@ final class PollBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    /**
+     * Hides the results from everyone until the poll has ended, this requires
+     * an end time.
+     */
+    public function setResultsRequireEnd(bool $resultsRequireEnd): static
+    {
+        $this->properties['resultsRequireEnd'] = (int)$resultsRequireEnd;
+
+        return $this;
+    }
+
     public function setMaxVotes(int $maxVotes): static
     {
         $this->properties['maxVotes'] = \max($maxVotes, 1);

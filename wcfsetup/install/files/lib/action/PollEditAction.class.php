@@ -220,6 +220,38 @@ final class PollEditAction implements RequestHandlerInterface
                         ->loadValueCallback(static function (Poll $object, IFormField $field): void {
                             $field->value($object->resultsRequireVote);
                         }),
+                    BooleanFormField::create('resultsRequireEnd')
+                        ->label('wcf.poll.resultsRequireEnd')
+                        ->description('wcf.poll.resultsRequireEnd.description')
+                        ->addValidator(new FormFieldValidator(
+                            'endTimeRequired',
+                            static function (BooleanFormField $field): void {
+                                if ($field->getSaveValue() === 0) {
+                                    return;
+                                }
+
+                                $endTimeField = $field->getDocument()->getNodeById('endTime');
+                                \assert($endTimeField instanceof DateFormField);
+
+                                // A malformed end time is already reported by the field itself.
+                                if ($endTimeField->getValidationErrors() !== []) {
+                                    return;
+                                }
+
+                                if ($endTimeField->getValue() === null) {
+                                    $field->addValidationError(new FormFieldValidationError(
+                                        'endTimeRequired',
+                                        'wcf.poll.resultsRequireEnd.error.endTimeRequired'
+                                    ));
+                                }
+                            }
+                        ))
+                        ->saveValueCallback(static function (PollBuilder $builder, BooleanFormField $field): void {
+                            $builder->setResultsRequireEnd($field->getSaveValue() !== 0);
+                        })
+                        ->loadValueCallback(static function (Poll $object, IFormField $field): void {
+                            $field->value($object->resultsRequireEnd);
+                        }),
                     BooleanFormField::create('sortByVotes')
                         ->label('wcf.poll.sortByVotes')
                         ->saveValueCallback(static function (PollBuilder $builder, BooleanFormField $field): void {

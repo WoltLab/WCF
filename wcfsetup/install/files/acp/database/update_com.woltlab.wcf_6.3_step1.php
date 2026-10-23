@@ -163,6 +163,7 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('username')
                 ->defaultValue(''),
             DefaultFalseBooleanDatabaseTableColumn::create('isMultilingual'),
+            DefaultFalseBooleanDatabaseTableColumn::create('resultsRequireEnd'),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()

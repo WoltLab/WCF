@@ -4483,6 +4483,9 @@ Dateianhänge:
 		<item name="wcf.poll.restrictedResult"><![CDATA[Das Ergebnis ist nur für Teilnehmer sichtbar.]]></item>
 		<item name="wcf.poll.resultsRequireVote"><![CDATA[Ergebnis erst nach Abgabe der Stimme sichtbar]]></item>
 		<item name="wcf.poll.resultsRequireVote.description"><![CDATA[Das Ergebnis ist erst mit dem Ablauf der Umfrage oder der Abgabe einer Stimme sichtbar.]]></item>
+		<item name="wcf.poll.resultsRequireEnd"><![CDATA[Ergebnis erst nach Ende der Umfrage anzeigen]]></item>
+		<item name="wcf.poll.resultsRequireEnd.description"><![CDATA[Das Ergebnis ist bis zum Ende der Umfrage für niemanden sichtbar, auch nicht für Teilnehmer.]]></item>
+		<item name="wcf.poll.resultsRequireEnd.error.endTimeRequired"><![CDATA[Diese Option erfordert ein Ende der Umfrage.]]></item>
 		<item name="wcf.poll.sortByVotes"><![CDATA[Ergebnis nach Stimmen sortieren]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[Insgesamt {#$poll->votes} Stimme{if $poll->votes != 1}n{/if}]]></item>
 		<item name="wcf.poll.endTimeInfo"><![CDATA[Umfrage endet am {@$poll->endTime|plainTime}]]></item>
@@ -4500,6 +4503,7 @@ Dateianhänge:
 		<item name="wcf.poll.widget.hint.single"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} eine Antwort.]]></item>
 		<item name="wcf.poll.widget.hint.multiple"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} bis zu {#$poll->maxVotes} Antworten.]]></item>
 		<item name="wcf.poll.widget.hint.voted"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} abgestimmt.]]></item>
+		<item name="wcf.poll.widget.hint.resultsAfterEnd"><![CDATA[Das Ergebnis wird nach Ende der Umfrage angezeigt.]]></item>
 		<item name="wcf.poll.widget.ownVote"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Stimme]]></item>
 		<item name="wcf.poll.widget.endTime"><![CDATA[Endet am {@$poll->endTime|plainTime}]]></item>
 		<item name="wcf.poll.widget.ended"><![CDATA[Beendet am {@$poll->endTime|plainTime}]]></item>

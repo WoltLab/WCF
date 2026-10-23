@@ -23,11 +23,19 @@
 					{lang}wcf.poll.widget.hint.single{/lang}
 				{/if}
 			</div>
-		{elseif !$poll->canSeeResult()}
+		{elseif !$poll->canSeeResult() && !$poll->resultsRequireEnd}
 			<div class="pollWidget__hint pollWidget__hint--vote">{lang}wcf.poll.restrictedResult{/lang}</div>
 		{/if}
 		{if $poll->isParticipant()}
-			<div class="pollWidget__hint pollWidget__hint--results">{lang}wcf.poll.widget.hint.voted{/lang}</div>
+			{if $poll->canSeeResult()}
+				<div class="pollWidget__hint pollWidget__hint--results">{lang}wcf.poll.widget.hint.voted{/lang}</div>
+			{else}
+				{* Participants remain in the vote state while the results are hidden until the end. *}
+				<div class="pollWidget__hint">{lang}wcf.poll.widget.hint.voted{/lang}</div>
+			{/if}
+		{/if}
+		{if $poll->resultsRequireEnd && !$poll->isFinished()}
+			<div class="pollWidget__hint">{lang}wcf.poll.widget.hint.resultsAfterEnd{/lang}</div>
 		{/if}
 	</header>
 

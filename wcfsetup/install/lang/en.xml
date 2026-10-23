@@ -4482,6 +4482,9 @@ Attachments:
 		<item name="wcf.poll.restrictedResult"><![CDATA[The result is only visible to the participants.]]></item>
 		<item name="wcf.poll.resultsRequireVote"><![CDATA[Restrict the results to the participants only]]></item>
 		<item name="wcf.poll.resultsRequireVote.description"><![CDATA[The results are invisible unless the poll ended or the user voted.]]></item>
+		<item name="wcf.poll.resultsRequireEnd"><![CDATA[Show results only after the poll has ended]]></item>
+		<item name="wcf.poll.resultsRequireEnd.description"><![CDATA[The results remain hidden from everyone, including participants, until the poll has ended.]]></item>
+		<item name="wcf.poll.resultsRequireEnd.error.endTimeRequired"><![CDATA[This option requires an end time for the poll.]]></item>
 		<item name="wcf.poll.sortByVotes"><![CDATA[Sort result by votes]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[A total of {#$poll->votes} vote{if $poll->votes != 1}s{/if}]]></item>
 		<item name="wcf.poll.endTimeInfo"><![CDATA[Poll ends on {@$poll->endTime|plainTime}]]></item>
@@ -4499,6 +4502,7 @@ Attachments:
 		<item name="wcf.poll.widget.hint.single"><![CDATA[Choose one answer.]]></item>
 		<item name="wcf.poll.widget.hint.multiple"><![CDATA[Choose up to {#$poll->maxVotes} answers.]]></item>
 		<item name="wcf.poll.widget.hint.voted"><![CDATA[You have voted.]]></item>
+		<item name="wcf.poll.widget.hint.resultsAfterEnd"><![CDATA[The results will be shown once the poll has ended.]]></item>
 		<item name="wcf.poll.widget.ownVote"><![CDATA[Your vote]]></item>
 		<item name="wcf.poll.widget.endTime"><![CDATA[Ends on {@$poll->endTime|plainTime}]]></item>
 		<item name="wcf.poll.widget.ended"><![CDATA[Ended on {@$poll->endTime|plainTime}]]></item>

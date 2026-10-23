@@ -41,6 +41,7 @@ use wcf\system\WCF;
  * @property-read   0|1     $isPublic           is `1` if the result of the poll is public, otherwise `0`
  * @property-read   0|1     $sortByVotes        is `1` if the results will be sorted by votes, otherwise `0`
  * @property-read   0|1     $resultsRequireVote is `1` if a user has to have voted to see the results, otherwise `0`
+ * @property-read   0|1     $resultsRequireEnd  is `1` if the results are hidden from everyone until the poll has ended, otherwise `0`
  * @property-read   int     $maxVotes           maximum number of options the user can select
  * @property-read   int     $votes              number of votes in the poll
  *
@@ -253,6 +254,10 @@ class Poll extends CollectionDatabaseObject implements ITitledObject, \Stringabl
     {
         if (!$this->isAccessible()) {
             return false;
+        }
+
+        if ($this->resultsRequireEnd === 1) {
+            return $this->isFinished();
         }
 
         if ($this->isFinished() || $this->isParticipant() || $this->resultsRequireVote === 0) {

@@ -3170,6 +3170,7 @@ return [
             DefaultFalseBooleanDatabaseTableColumn::create('isPublic'),
             DefaultFalseBooleanDatabaseTableColumn::create('sortByVotes'),
             DefaultFalseBooleanDatabaseTableColumn::create('resultsRequireVote'),
+            DefaultFalseBooleanDatabaseTableColumn::create('resultsRequireEnd'),
             NotNullInt10DatabaseTableColumn::create('maxVotes')
                 ->defaultValue(1),
             NotNullInt10DatabaseTableColumn::create('votes')
