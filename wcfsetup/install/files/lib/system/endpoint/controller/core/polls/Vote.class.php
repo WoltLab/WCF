@@ -12,12 +12,12 @@ use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
-use wcf\system\poll\PollManager;
 use wcf\system\view\poll\PollWidgetView;
 use wcf\system\WCF;
 
 /**
- * Stores the vote of the active user in the poll with the given ID.
+ * Stores the vote of the active user in the standalone poll with the given ID
+ * and returns the updated widget of the poll.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
@@ -31,9 +31,8 @@ final class Vote implements IController
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $poll = Helper::fetchObjectFromRequestParameter($variables['id'], Poll::class);
-        PollManager::getInstance()->loadRelatedObject($poll);
 
-        if (!$poll->canVote()) {
+        if (!$poll->isStandalone() || !$poll->canVote()) {
             throw new PermissionDeniedException();
         }
 
@@ -61,26 +60,8 @@ final class Vote implements IController
 
         (new VotePoll($poll, WCF::getUser(), $optionIDs))();
 
-        $poll = new Poll($poll->pollID);
-        PollManager::getInstance()->loadRelatedObject($poll);
-
-        // Standalone polls are embedded as a widget that is replaced as a whole.
-        if ($poll->isStandalone()) {
-            $template = (string)new PollWidgetView($poll);
-        } else {
-            $template = WCF::getTPL()->render('wcf', 'pollResult', [
-                'poll' => $poll,
-            ]);
-        }
-
         return new JsonResponse([
-            'changeableVote' => $poll->isChangeable === 1,
-            'totalVotes' => $poll->votes,
-            'totalVotesTooltip' => WCF::getLanguage()->getDynamicVariable(
-                'wcf.poll.totalVotes',
-                ['poll' => $poll]
-            ),
-            'template' => $template,
+            'template' => (string)new PollWidgetView(new Poll($poll->pollID)),
         ]);
     }
 }

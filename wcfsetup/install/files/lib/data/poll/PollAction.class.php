@@ -2,7 +2,6 @@
 
 namespace wcf\data\poll;
 
-use wcf\command\poll\CopyPoll;
 use wcf\command\poll\CreatePoll;
 use wcf\command\poll\DeletePolls;
 use wcf\command\poll\UpdatePoll;
@@ -376,11 +375,48 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             ];
         }
 
-        $newPoll = (new CopyPoll(
-            $poll,
-            $this->parameters['targetObjectType'],
-            (int)$this->parameters['targetObjectID']
-        ))();
+        $sourceOptions = \array_values($poll->getOptions());
+
+        $builder = PollBuilder::forCreate()
+            ->setContainer($this->parameters['targetObjectType'], (int)$this->parameters['targetObjectID'])
+            ->setMultilingual($poll->isMultilingual === 1)
+            ->setQuestion($poll->getL10nValues('question'))
+            ->setOptions(\array_map(
+                static fn($option) => ['optionValue' => $option->getL10nValues('optionValue')],
+                $sourceOptions
+            ))
+            ->setTime($poll->time)
+            ->setEndTime($poll->endTime)
+            ->setIsChangeable($poll->isChangeable === 1)
+            ->setIsPublic($poll->isPublic === 1)
+            ->setSortByVotes($poll->sortByVotes === 1)
+            ->setResultsRequireVote($poll->resultsRequireVote === 1)
+            ->setResultsRequireEnd($poll->resultsRequireEnd === 1)
+            ->setMinVotes($poll->minVotes)
+            ->setMaxVotes($poll->maxVotes);
+        $newPoll = (new CreatePoll($builder))();
+
+        // The new options are created in the order of the source options.
+        $newOptions = \array_values($newPoll->getOptions());
+
+        $sql = "INSERT INTO wcf1_poll_option_vote
+                            (pollID, optionID, userID)
+                SELECT      ?, ?, userID
+                FROM        wcf1_poll_option_vote
+                WHERE       optionID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+
+        WCF::getDB()->beginTransaction();
+        foreach ($sourceOptions as $index => $sourceOption) {
+            $statement->execute([
+                $newPoll->pollID,
+                $newOptions[$index]->optionID,
+                $sourceOption->optionID,
+            ]);
+        }
+        WCF::getDB()->commitTransaction();
+
+        PollBuilder::forUpdate($newPoll)->recalculateVotes()->update();
 
         return [
             'pollID' => $newPoll->pollID,

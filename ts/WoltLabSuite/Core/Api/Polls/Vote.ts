@@ -11,10 +11,7 @@ import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { fromInfallibleApiRequest } from "WoltLabSuite/Core/Api/Result";
 
 export type VoteResponse = {
-  changeableVote: boolean;
-  totalVotes: number;
-  totalVotesTooltip: string;
-  // The results of a poll or the entire widget of a standalone poll.
+  // The updated widget of the standalone poll.
   template: string;
 };
 

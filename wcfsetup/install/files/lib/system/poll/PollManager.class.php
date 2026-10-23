@@ -501,20 +501,6 @@ class PollManager extends SingletonFactory
     }
 
     /**
-     * Assigns the related object to the given poll, polls without a poll
-     * container (standalone polls) have no related object.
-     *
-     * @since 6.3
-     */
-    public function loadRelatedObject(Poll $poll): void
-    {
-        $relatedObject = $this->getRelatedObject($poll);
-        if ($relatedObject !== null) {
-            $poll->setRelatedObject($relatedObject);
-        }
-    }
-
-    /**
      * Returns the handler object for given object type. Returns false if object type (id)
      * is not found, or null if no handler is assigned.
      *

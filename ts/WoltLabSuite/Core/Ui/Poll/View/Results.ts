@@ -8,8 +8,12 @@
  * @deprecated 6.3 Use standalone polls that are embedded through the `[poll]` BBCode instead.
  */
 
-import { getResults } from "WoltLabSuite/Core/Api/Polls/GetResults";
+import * as Ajax from "../../../Ajax";
 import { Poll, PollViews } from "../Poll";
+
+type ResultResponseData = {
+  template: string;
+};
 
 export class Results {
   private readonly pollManager: Poll;
@@ -37,7 +41,9 @@ export class Results {
   }
 
   private async loadView(): Promise<void> {
-    const results = await getResults(this.pollManager.pollId);
+    const request = Ajax.dboAction("getResultTemplate", "wcf\\data\\poll\\PollAction");
+    request.objectIds([this.pollManager.pollId]);
+    const results = (await request.dispatch()) as ResultResponseData;
 
     this.pollManager.addView(PollViews.results, results.template);
     this.pollManager.displayView(PollViews.results);

@@ -7,10 +7,11 @@
  * @since   5.5
  * @deprecated 6.3 Use standalone polls that are embedded through the `[poll]` BBCode instead.
  */
-define(["require", "exports", "./Poll", "WoltLabSuite/Core/Api/Polls/Vote"], function (require, exports, Poll_1, Vote_1) {
+define(["require", "exports", "tslib", "./Poll", "../../Ajax"], function (require, exports, tslib_1, Poll_1, Ajax) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Vote = void 0;
+    Ajax = tslib_1.__importStar(Ajax);
     class Vote {
         pollManager;
         button;
@@ -30,9 +31,6 @@ define(["require", "exports", "./Poll", "WoltLabSuite/Core/Api/Polls/Vote"], fun
                 const container = this.pollManager.getView(Poll_1.PollViews.vote);
                 this.inputs = Array.from(container.querySelectorAll("input"));
                 this.inputs.forEach((input) => {
-                    // The same poll can be embedded multiple times on a page, the radio
-                    // buttons must not share a group across those instances.
-                    input.name = `${this.pollManager.getElement().id}[]`;
                     input.addEventListener("change", () => this.checkInputs());
                 });
                 this.checkInputs();
@@ -68,8 +66,13 @@ define(["require", "exports", "./Poll", "WoltLabSuite/Core/Api/Polls/Vote"], fun
         async submit() {
             this.button.disabled = true;
             const optionIDs = this.getSelectedOptions();
-            const results = await (0, Vote_1.vote)(this.pollManager.pollId, optionIDs);
-            this.pollManager.canVote = results.changeableVote;
+            const request = Ajax.dboAction("vote", "wcf\\data\\poll\\PollAction");
+            request.objectIds([this.pollManager.pollId]);
+            request.payload({
+                optionIDs,
+            });
+            const results = (await request.dispatch());
+            this.pollManager.canVote = !!results.changeableVote;
             this.pollManager.canViewResults = true;
             this.pollManager.addView(Poll_1.PollViews.results, results.template);
             this.pollManager.displayView(Poll_1.PollViews.results);
