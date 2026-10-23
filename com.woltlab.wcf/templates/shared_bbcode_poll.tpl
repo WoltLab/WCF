@@ -50,7 +50,7 @@
 		{foreach from=$options item=option}
 			<label class="pollWidget__option{if $poll->canSeeResult() && $leadingVotes && $option->votes == $leadingVotes} pollWidget__option--leading{/if}"{*
 				*}{if $poll->canSeeResult()} style="--pollWidget-percent: {$option->getRelativeVotes($poll)}%; --pollWidget-order: {$resultPositions[$option->optionID]}"{/if}>
-				<input type="{if $poll->maxVotes > 1}checkbox{else}radio{/if}" class="pollWidget__input" name="{$elementID}" value="{$option->optionID}"{if $option->voted} checked{/if}{if !$poll->canVote()} disabled{/if}>
+				<input type="{if $poll->maxVotes > 1}checkbox{else}radio{/if}" class="pollWidget__input visuallyHidden" name="{$elementID}" value="{$option->optionID}"{if $option->voted} checked{/if}{if !$poll->canVote()} disabled{/if}>
 				<span class="pollWidget__indicator" aria-hidden="true"></span>
 				{if $poll->canSeeResult()}
 					<span class="pollWidget__bar" aria-hidden="true"></span>
@@ -102,7 +102,7 @@
 			<div class="pollWidget__actions pollWidget__actions--vote">
 				{content}
 					{if $poll->canVote()}
-						<button type="button" class="button buttonPrimary pollWidget__button pollWidget__vote" disabled>
+						<button type="button" class="button buttonPrimary pollWidget__vote" disabled>
 							{lang}wcf.poll.button.vote{/lang}
 						</button>
 					{/if}
@@ -119,7 +119,7 @@
 			<div class="pollWidget__actions pollWidget__actions--results">
 				{content}
 					{if $poll->canVote()}
-						<button type="button" class="button buttonPrimary pollWidget__button pollWidget__showVote">
+						<button type="button" class="button buttonPrimary pollWidget__showVote">
 							{if $poll->isParticipant()}
 								{lang}wcf.poll.button.changeVote{/lang}
 							{else}

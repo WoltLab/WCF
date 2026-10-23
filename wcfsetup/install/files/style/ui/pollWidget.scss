@@ -2,7 +2,7 @@
 .pollWidget {
 	background-color: var(--wcfContentContainerBackground);
 	border: 1px solid var(--wcfContentBorderInner);
-	border-radius: 12px;
+	border-radius: var(--wcfBorderRadiusContainer);
 	color: var(--wcfContentText);
 	margin: 20px 0;
 	max-width: 600px;
@@ -21,9 +21,13 @@
 	color: var(--wcfContentDimmedText);
 	display: flex;
 	flex-wrap: wrap;
-	font-size: 11px;
-	font-weight: 500;
 	gap: 6px;
+
+	@include wcfFontSmall;
+}
+
+.pollWidget__label {
+	font-weight: 500;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
 }
@@ -35,19 +39,13 @@
 	width: 3px;
 }
 
-.pollWidget__totalVotes {
-	font-size: 12px;
-	letter-spacing: normal;
-	text-transform: none;
-}
-
 .pollWidget__interactions {
 	margin-left: auto;
 }
 
 .pollWidget__interactionButton {
 	align-items: center;
-	border-radius: 6px;
+	border-radius: var(--wcfBorderRadius);
 	color: var(--wcfContentDimmedText);
 	cursor: pointer;
 	display: flex;
@@ -61,26 +59,25 @@
 		background-color: var(--wcfTabularBoxBackgroundActive);
 		color: var(--wcfContentText);
 	}
-
-	&:focus-visible {
-		outline: 2px solid var(--wcfContentLink);
-		outline-offset: 1px;
-	}
 }
 
 .pollWidget h3.pollWidget__question {
 	color: var(--wcfContentHeadlineText);
-	font-size: 18px;
-	font-weight: 600;
-	line-height: 1.3;
-	margin: 8px 0 0 !important;
+	margin: 8px 0 0;
 	text-wrap: pretty;
+
+	@include wcfFontHeadline;
+
+	& {
+		font-weight: 600;
+	}
 }
 
 .pollWidget__hint {
 	color: var(--wcfContentDimmedText);
-	font-size: 12.5px;
 	margin-top: 4px;
+
+	@include wcfFontSmall;
 }
 
 .pollWidget__options {
@@ -94,30 +91,17 @@
 	align-items: center;
 	background-color: color-mix(in srgb, var(--wcfContentText) 3%, transparent);
 	border: 1px solid var(--wcfContentBorderInner);
-	border-radius: 9px;
+	border-radius: var(--wcfBorderRadius);
 	display: flex;
-	font-size: 14px;
 	gap: 11px;
 	isolation: isolate;
-	min-height: 42px;
 	overflow: hidden;
 	padding: 0 12px;
 	position: relative;
 }
 
-/* The native input remains focusable for the keyboard navigation. */
-.pollWidget__input {
-	clip-path: inset(50%);
-	height: 1px;
-	margin: 0;
-	overflow: hidden;
-	position: absolute;
-	white-space: nowrap;
-	width: 1px;
-}
-
-.pollWidget__indicator {
-	border: 1.5px solid var(--wcfContentDimmedText);
+.pollWidget__indicator,
+.pollWidget__ownVote {
 	border-radius: 50%;
 	flex: 0 0 auto;
 	height: 16px;
@@ -125,19 +109,21 @@
 	width: 16px;
 }
 
+.pollWidget__indicator {
+	border: 1.5px solid var(--wcfContentDimmedText);
+}
+
 .pollWidget__input[type="checkbox"] + .pollWidget__indicator {
-	border-radius: 4px;
+	border-radius: var(--wcfBorderRadius);
+}
+
+.pollWidget__input:checked + .pollWidget__indicator {
+	background-color: var(--wcfButtonPrimaryBackground);
+	border-color: var(--wcfButtonPrimaryBackground);
 }
 
 .pollWidget__input[type="radio"]:checked + .pollWidget__indicator {
-	background-color: var(--wcfButtonPrimaryBackground);
-	border-color: var(--wcfButtonPrimaryBackground);
 	box-shadow: inset 0 0 0 3px var(--wcfContentContainerBackground);
-}
-
-.pollWidget__input[type="checkbox"]:checked + .pollWidget__indicator {
-	background-color: var(--wcfButtonPrimaryBackground);
-	border-color: var(--wcfButtonPrimaryBackground);
 }
 
 .pollWidget__input[type="checkbox"]:checked + .pollWidget__indicator::after,
@@ -154,7 +140,6 @@
 }
 
 .pollWidget__text {
-	line-height: 1.4;
 	min-width: 0;
 	overflow-wrap: anywhere;
 	padding: 10px 0;
@@ -162,17 +147,6 @@
 
 .pollWidget__ownVote {
 	background-color: var(--wcfButtonPrimaryBackground);
-	border-radius: 50%;
-	flex: 0 0 auto;
-	height: 16px;
-	position: relative;
-	width: 16px;
-
-	&::after {
-		border-width: 0 1.5px 1.5px 0;
-		height: 7px;
-		width: 3.5px;
-	}
 }
 
 .pollWidget__bar {
@@ -202,6 +176,7 @@
 
 .pollWidget__value {
 	align-items: baseline;
+	color: var(--wcfContentDimmedText);
 	display: flex;
 	flex: 0 0 auto;
 	font-variant-numeric: tabular-nums;
@@ -210,13 +185,10 @@
 }
 
 .pollWidget__count {
-	color: var(--wcfContentDimmedText);
-	font-size: 12px;
+	@include wcfFontSmall;
 }
 
 .pollWidget__percent {
-	color: var(--wcfContentDimmedText);
-	font-size: 13.5px;
 	font-weight: 500;
 	min-width: 38px;
 	text-align: right;
@@ -293,8 +265,9 @@
 	color: var(--wcfContentDimmedText);
 	display: flex;
 	flex-wrap: wrap;
-	font-size: 12.5px;
 	gap: 6px 14px;
+
+	@include wcfFontSmall;
 }
 
 .pollWidget__metaItem {
@@ -310,16 +283,12 @@
 	gap: 10px;
 }
 
-.pollWidget__button {
-	border-radius: 8px;
-	min-height: 36px;
-}
-
 .pollWidget__link {
 	color: var(--wcfContentDimmedText);
 	cursor: pointer;
-	font-size: 13px;
 	margin-left: auto;
+
+	@include wcfFontSmall;
 
 	&:hover {
 		text-decoration: underline;
