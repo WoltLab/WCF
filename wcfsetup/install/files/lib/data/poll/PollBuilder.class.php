@@ -183,6 +183,13 @@ final class PollBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    public function setMinVotes(int $minVotes): static
+    {
+        $this->properties['minVotes'] = \max($minVotes, 1);
+
+        return $this;
+    }
+
     public function setMaxVotes(int $maxVotes): static
     {
         $this->properties['maxVotes'] = \max($maxVotes, 1);

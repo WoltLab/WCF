@@ -3,6 +3,7 @@
 	*} data-state="{$initialState}"{*
 	*} data-can-vote="{if $poll->canVote()}true{else}false{/if}"{*
 	*} data-max-votes="{$poll->maxVotes}"{*
+	*} data-required-votes="{$poll->getRequiredVotes()}"{*
 	*} data-question="{$poll->getQuestion()}">
 	<header class="pollWidget__header">
 		<div class="pollWidget__eyebrow">
@@ -18,7 +19,13 @@
 		{if $poll->canVote()}
 			<div class="pollWidget__hint pollWidget__hint--vote">
 				{if $poll->maxVotes > 1}
-					{lang}wcf.poll.widget.hint.multiple{/lang}
+					{if $poll->getRequiredVotes() == $poll->maxVotes}
+						{lang}wcf.poll.widget.hint.exactly{/lang}
+					{elseif $poll->getRequiredVotes() > 1}
+						{lang}wcf.poll.widget.hint.range{/lang}
+					{else}
+						{lang}wcf.poll.widget.hint.multiple{/lang}
+					{/if}
 				{else}
 					{lang}wcf.poll.widget.hint.single{/lang}
 				{/if}

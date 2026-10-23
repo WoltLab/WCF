@@ -53,6 +53,7 @@ class AbstractPollImporter extends AbstractImporter
                 'sortByVotes' => $builder->setSortByVotes((bool)$value),
                 'resultsRequireVote' => $builder->setResultsRequireVote((bool)$value),
                 'resultsRequireEnd' => $builder->setResultsRequireEnd((bool)$value),
+                'minVotes' => $builder->setMinVotes($value),
                 'maxVotes' => $builder->setMaxVotes($value),
                 'votes' => $builder->setVotes($value),
                 default => $builder->setCustomProperty($key, $value),

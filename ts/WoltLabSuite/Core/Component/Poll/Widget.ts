@@ -24,6 +24,7 @@ class PollWidget {
   readonly #element: HTMLElement;
   readonly #inputs: HTMLInputElement[];
   readonly #maxVotes: number;
+  readonly #requiredVotes: number;
   readonly #pollId: number;
   readonly #voteButton: HTMLButtonElement | null;
 
@@ -31,6 +32,7 @@ class PollWidget {
     this.#element = element;
     this.#inputs = Array.from(element.querySelectorAll<HTMLInputElement>(".pollWidget__input"));
     this.#maxVotes = parseInt(element.dataset.maxVotes!);
+    this.#requiredVotes = parseInt(element.dataset.requiredVotes!);
     this.#pollId = parseInt(element.dataset.pollId!);
     this.#voteButton = element.querySelector<HTMLButtonElement>(".pollWidget__vote");
 
@@ -153,7 +155,7 @@ class PollWidget {
     }
 
     const selectedCount = this.#getSelectedOptionIds().length;
-    this.#voteButton.disabled = selectedCount === 0;
+    this.#voteButton.disabled = selectedCount < this.#requiredVotes;
 
     if (this.#maxVotes > 1) {
       for (const input of this.#inputs) {

@@ -44,6 +44,7 @@ final class CopyPoll
             ->setSortByVotes($this->poll->sortByVotes === 1)
             ->setResultsRequireVote($this->poll->resultsRequireVote === 1)
             ->setResultsRequireEnd($this->poll->resultsRequireEnd === 1)
+            ->setMinVotes($this->poll->minVotes)
             ->setMaxVotes($this->poll->maxVotes);
         $newPoll = new CreatePoll($builder)();
 

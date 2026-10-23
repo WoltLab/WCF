@@ -168,6 +168,32 @@ final class PollEditAction implements RequestHandlerInterface
                         ->loadValueCallback(static function (Poll $object, IFormField $field): void {
                             $field->value($object->endTime);
                         }),
+                    IntegerFormField::create('minVotes')
+                        ->label('wcf.poll.minVotes')
+                        ->description('wcf.poll.minVotes.description')
+                        ->minimum(1)
+                        ->maximum(\POLL_MAX_OPTIONS)
+                        ->value(1)
+                        ->addValidator(new FormFieldValidator(
+                            'minVotes',
+                            static function (IntegerFormField $field): void {
+                                $maxVotesField = $field->getDocument()->getNodeById('maxVotes');
+                                \assert($maxVotesField instanceof IntegerFormField);
+
+                                if ($field->getSaveValue() > $maxVotesField->getSaveValue()) {
+                                    $field->addValidationError(new FormFieldValidationError(
+                                        'invalid',
+                                        'wcf.poll.minVotes.error.invalid'
+                                    ));
+                                }
+                            }
+                        ))
+                        ->saveValueCallback(static function (PollBuilder $builder, IntegerFormField $field): void {
+                            $builder->setMinVotes($field->getSaveValue());
+                        })
+                        ->loadValueCallback(static function (Poll $object, IFormField $field): void {
+                            $field->value($object->minVotes);
+                        }),
                     IntegerFormField::create('maxVotes')
                         ->label('wcf.poll.maxVotes')
                         ->minimum(1)

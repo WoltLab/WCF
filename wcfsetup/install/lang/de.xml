@@ -4475,6 +4475,9 @@ Dateianhänge:
 		<item name="wcf.poll.management"><![CDATA[Umfrage]]></item>
 		<item name="wcf.poll.maxVotes"><![CDATA[Anzahl erlaubter Antworten]]></item>
 		<item name="wcf.poll.maxVotes.error.invalid"><![CDATA[Die Anzahl der erlaubten Antworten liegt über den tatsächlich verfügbaren Antworten.]]></item>
+		<item name="wcf.poll.minVotes"><![CDATA[Mindestanzahl an Antworten]]></item>
+		<item name="wcf.poll.minVotes.description"><![CDATA[Teilnehmer müssen mindestens so viele Antworten wählen. Entspricht der Wert der Anzahl erlaubter Antworten, müssen alle Stimmen genutzt werden.]]></item>
+		<item name="wcf.poll.minVotes.error.invalid"><![CDATA[Die Mindestanzahl darf die Anzahl erlaubter Antworten nicht übersteigen.]]></item>
 		<item name="wcf.poll.multipleVotes"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} {#$poll->maxVotes} Antwortmöglichkeiten wählen.]]></item>
 		<item name="wcf.poll.noVotes"><![CDATA[Bisher keine Stimmen]]></item>
 		<item name="wcf.poll.options"><![CDATA[Antworten]]></item>
@@ -4502,6 +4505,8 @@ Dateianhänge:
 		<item name="wcf.poll.widget.votes"><![CDATA[{#$poll->votes} Stimme{if $poll->votes != 1}n{/if}]]></item>
 		<item name="wcf.poll.widget.hint.single"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} eine Antwort.]]></item>
 		<item name="wcf.poll.widget.hint.multiple"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} bis zu {#$poll->maxVotes} Antworten.]]></item>
+		<item name="wcf.poll.widget.hint.exactly"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} genau {#$poll->maxVotes} Antworten.]]></item>
+		<item name="wcf.poll.widget.hint.range"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} {#$poll->getRequiredVotes()} bis {#$poll->maxVotes} Antworten.]]></item>
 		<item name="wcf.poll.widget.hint.voted"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} abgestimmt.]]></item>
 		<item name="wcf.poll.widget.hint.resultsAfterEnd"><![CDATA[Das Ergebnis wird nach Ende der Umfrage angezeigt.]]></item>
 		<item name="wcf.poll.widget.ownVote"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Stimme]]></item>

@@ -18,12 +18,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Polls/GetWidget", 
         #element;
         #inputs;
         #maxVotes;
+        #requiredVotes;
         #pollId;
         #voteButton;
         constructor(element) {
             this.#element = element;
             this.#inputs = Array.from(element.querySelectorAll(".pollWidget__input"));
             this.#maxVotes = parseInt(element.dataset.maxVotes);
+            this.#requiredVotes = parseInt(element.dataset.requiredVotes);
             this.#pollId = parseInt(element.dataset.pollId);
             this.#voteButton = element.querySelector(".pollWidget__vote");
             this.#initEventListeners();
@@ -115,7 +117,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Polls/GetWidget", 
                 return;
             }
             const selectedCount = this.#getSelectedOptionIds().length;
-            this.#voteButton.disabled = selectedCount === 0;
+            this.#voteButton.disabled = selectedCount < this.#requiredVotes;
             if (this.#maxVotes > 1) {
                 for (const input of this.#inputs) {
                     input.disabled = !input.checked && selectedCount >= this.#maxVotes;

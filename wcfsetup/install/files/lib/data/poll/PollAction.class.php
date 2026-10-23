@@ -111,6 +111,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
                 'sortByVotes' => $builder->setSortByVotes((bool)$value),
                 'resultsRequireVote' => $builder->setResultsRequireVote((bool)$value),
                 'resultsRequireEnd' => $builder->setResultsRequireEnd((bool)$value),
+                'minVotes' => $builder->setMinVotes($value),
                 'maxVotes' => $builder->setMaxVotes($value),
                 'votes' => $builder->setVotes($value),
                 default => $builder->setCustomProperty($key, $value),
@@ -166,6 +167,10 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 
         if (\count($this->parameters['optionIDs']) > $this->poll->maxVotes) {
             throw new UserInputException('optionIDs', 'maxVotes');
+        }
+
+        if (\count(\array_unique($this->parameters['optionIDs'])) < $this->poll->getRequiredVotes()) {
+            throw new UserInputException('optionIDs', 'minVotes');
         }
 
         $optionIDs = [];

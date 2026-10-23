@@ -48,6 +48,10 @@ final class Vote implements IController
             throw new UserInputException('optionIDs', 'maxVotes');
         }
 
+        if (\count($optionIDs) < $poll->getRequiredVotes()) {
+            throw new UserInputException('optionIDs', 'minVotes');
+        }
+
         $options = $poll->getOptions();
         foreach ($optionIDs as $optionID) {
             if (!isset($options[$optionID])) {

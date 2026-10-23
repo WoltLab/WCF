@@ -4474,6 +4474,9 @@ Attachments:
 		<item name="wcf.poll.management"><![CDATA[Poll]]></item>
 		<item name="wcf.poll.maxVotes"><![CDATA[Maximum Poll Votes]]></item>
 		<item name="wcf.poll.maxVotes.error.invalid"><![CDATA[The maximum number of votes allowed exceeds the number of available options.]]></item>
+		<item name="wcf.poll.minVotes"><![CDATA[Minimum Number of Answers]]></item>
+		<item name="wcf.poll.minVotes.description"><![CDATA[Participants have to choose at least this many answers. If the value matches the number of allowed answers, all votes have to be used.]]></item>
+		<item name="wcf.poll.minVotes.error.invalid"><![CDATA[The minimum number of answers must not exceed the number of allowed answers.]]></item>
 		<item name="wcf.poll.multipleVotes"><![CDATA[You can select up to {#$poll->maxVotes} options.]]></item>
 		<item name="wcf.poll.noVotes"><![CDATA[No votes yet]]></item>
 		<item name="wcf.poll.options"><![CDATA[Poll Options]]></item>
@@ -4501,6 +4504,8 @@ Attachments:
 		<item name="wcf.poll.widget.votes"><![CDATA[{#$poll->votes} Vote{if $poll->votes != 1}s{/if}]]></item>
 		<item name="wcf.poll.widget.hint.single"><![CDATA[Choose one answer.]]></item>
 		<item name="wcf.poll.widget.hint.multiple"><![CDATA[Choose up to {#$poll->maxVotes} answers.]]></item>
+		<item name="wcf.poll.widget.hint.exactly"><![CDATA[Choose exactly {#$poll->maxVotes} answers.]]></item>
+		<item name="wcf.poll.widget.hint.range"><![CDATA[Choose {#$poll->getRequiredVotes()} to {#$poll->maxVotes} answers.]]></item>
 		<item name="wcf.poll.widget.hint.voted"><![CDATA[You have voted.]]></item>
 		<item name="wcf.poll.widget.hint.resultsAfterEnd"><![CDATA[The results will be shown once the poll has ended.]]></item>
 		<item name="wcf.poll.widget.ownVote"><![CDATA[Your vote]]></item>

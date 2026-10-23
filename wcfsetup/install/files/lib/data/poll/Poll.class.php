@@ -42,6 +42,7 @@ use wcf\system\WCF;
  * @property-read   0|1     $sortByVotes        is `1` if the results will be sorted by votes, otherwise `0`
  * @property-read   0|1     $resultsRequireVote is `1` if a user has to have voted to see the results, otherwise `0`
  * @property-read   0|1     $resultsRequireEnd  is `1` if the results are hidden from everyone until the poll has ended, otherwise `0`
+ * @property-read   int     $minVotes           minimum number of options the user has to select
  * @property-read   int     $maxVotes           maximum number of options the user can select
  * @property-read   int     $votes              number of votes in the poll
  *
@@ -144,6 +145,17 @@ class Poll extends CollectionDatabaseObject implements ITitledObject, \Stringabl
         foreach ($this->getCollection()->getOptions($this) as $option) {
             $this->addOption($option);
         }
+    }
+
+    /**
+     * Returns the number of options the user has to select at least, which
+     * never exceeds the maximum number of votes or the number of options.
+     *
+     * @since 6.3
+     */
+    public function getRequiredVotes(): int
+    {
+        return \max(1, \min($this->minVotes, $this->maxVotes, \count($this->getOptions())));
     }
 
     /**

@@ -164,6 +164,8 @@ return [
                 ->defaultValue(''),
             DefaultFalseBooleanDatabaseTableColumn::create('isMultilingual'),
             DefaultFalseBooleanDatabaseTableColumn::create('resultsRequireEnd'),
+            NotNullInt10DatabaseTableColumn::create('minVotes')
+                ->defaultValue(1),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()
