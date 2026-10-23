@@ -89,7 +89,7 @@
 		{/if}
 
 		var aclList = new AclList(
-			'#{unsafe:$containerID|encodeJS}',
+			'#' + CSS.escape('{unsafe:$containerID|encodeJS}'),
 			{$objectTypeID},
 			{if $categoryName|isset}'{unsafe:$categoryName|encodeJS}'{else}null{/if},
 			{if $objectID|isset}{$objectID}{else}0{/if},

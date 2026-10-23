@@ -473,7 +473,7 @@ class AclList {
   #save(type: string) {
     const form = this.#container.closest("form")!;
     const name = this.#aclValuesFieldName + "[" + type + "]";
-    let input = form.querySelector<HTMLInputElement>("input[name='" + name + "']");
+    let input = form.querySelector<HTMLInputElement>(`input[name="${CSS.escape(name)}"]`);
     if (input) {
       // combine json values
       input.value = JSON.stringify(extend(JSON.parse(input.value), this.#values[type]));
