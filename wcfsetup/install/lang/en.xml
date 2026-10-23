@@ -4504,7 +4504,6 @@ Attachments:
 		<item name="wcf.poll.votes"><![CDATA[Votes]]></item>
 		<item name="wcf.poll.widget.label"><![CDATA[Poll]]></item>
 		<item name="wcf.poll.widget.votes"><![CDATA[{#$poll->votes} Vote{if $poll->votes != 1}s{/if}]]></item>
-		<item name="wcf.poll.widget.hint.single"><![CDATA[Choose one answer.]]></item>
 		<item name="wcf.poll.widget.hint.multiple"><![CDATA[Choose up to {#$poll->maxVotes} answers.]]></item>
 		<item name="wcf.poll.widget.hint.exactly"><![CDATA[Choose exactly {#$poll->maxVotes} answers.]]></item>
 		<item name="wcf.poll.widget.hint.range"><![CDATA[Choose {#$poll->getRequiredVotes()} to {#$poll->maxVotes} answers.]]></item>

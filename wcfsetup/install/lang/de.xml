@@ -4505,7 +4505,6 @@ Dateianhänge:
 		<item name="wcf.poll.votes"><![CDATA[Stimmen]]></item>
 		<item name="wcf.poll.widget.label"><![CDATA[Umfrage]]></item>
 		<item name="wcf.poll.widget.votes"><![CDATA[{#$poll->votes} Stimme{if $poll->votes != 1}n{/if}]]></item>
-		<item name="wcf.poll.widget.hint.single"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} eine Antwort.]]></item>
 		<item name="wcf.poll.widget.hint.multiple"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} bis zu {#$poll->maxVotes} Antworten.]]></item>
 		<item name="wcf.poll.widget.hint.exactly"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} genau {#$poll->maxVotes} Antworten.]]></item>
 		<item name="wcf.poll.widget.hint.range"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} {#$poll->getRequiredVotes()} bis {#$poll->maxVotes} Antworten.]]></item>

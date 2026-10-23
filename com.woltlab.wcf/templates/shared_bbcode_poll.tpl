@@ -17,8 +17,8 @@
 		<h3 class="pollWidget__question" id="{$elementID}_question" tabindex="-1">{$poll->getQuestion()}</h3>
 
 		{if $poll->canVote()}
-			<div class="pollWidget__hint pollWidget__hint--vote">
-				{if $poll->maxVotes > 1}
+			{if $poll->maxVotes > 1}
+				<div class="pollWidget__hint pollWidget__hint--vote">
 					{if $poll->getRequiredVotes() == $poll->maxVotes}
 						{lang}wcf.poll.widget.hint.exactly{/lang}
 					{elseif $poll->getRequiredVotes() > 1}
@@ -26,10 +26,8 @@
 					{else}
 						{lang}wcf.poll.widget.hint.multiple{/lang}
 					{/if}
-				{else}
-					{lang}wcf.poll.widget.hint.single{/lang}
-				{/if}
-			</div>
+				</div>
+			{/if}
 		{elseif !$poll->canSeeResult() && !$poll->resultsRequireEnd}
 			<div class="pollWidget__hint pollWidget__hint--vote">{lang}wcf.poll.restrictedResult{/lang}</div>
 		{/if}
