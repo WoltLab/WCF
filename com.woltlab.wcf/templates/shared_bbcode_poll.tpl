@@ -32,8 +32,8 @@
 
 	<div class="pollWidget__options">
 		{foreach from=$options item=option}
-			<label class="pollWidget__option{if $leadingVotes && $option->votes == $leadingVotes} pollWidget__option--leading{/if}"{*
-				*} style="--pollWidget-percent: {$option->getRelativeVotes($poll)}%; --pollWidget-order: {$resultPositions[$option->optionID]}">
+			<label class="pollWidget__option{if $poll->canSeeResult() && $leadingVotes && $option->votes == $leadingVotes} pollWidget__option--leading{/if}"{*
+				*}{if $poll->canSeeResult()} style="--pollWidget-percent: {$option->getRelativeVotes($poll)}%; --pollWidget-order: {$resultPositions[$option->optionID]}"{/if}>
 				<input type="{if $poll->maxVotes > 1}checkbox{else}radio{/if}" class="pollWidget__input" name="{$elementID}" value="{$option->optionID}"{if $option->voted} checked{/if}{if !$poll->canVote()} disabled{/if}>
 				<span class="pollWidget__indicator" aria-hidden="true"></span>
 				{if $poll->canSeeResult()}
