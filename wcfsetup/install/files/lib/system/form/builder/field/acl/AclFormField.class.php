@@ -166,7 +166,14 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
                 $this->getDocument()->hasRequestData($this->getPrefixedId())
                 && \is_array($this->getDocument()->getRequestData($this->getPrefixedId()))
             ) {
-                $valueSource = $this->getDocument()->getRequestData($this->getPrefixedId());
+                // Ajax forms submit the values as objects instead of the JSON
+                // strings of the hidden inputs that `ACLHandler` expects.
+                $requestData = $this->getDocument()->getRequestData($this->getPrefixedId());
+                foreach (['group', 'user'] as $type) {
+                    if (isset($requestData[$type]) && \is_array($requestData[$type])) {
+                        $valueSource[$type] = \json_encode($requestData[$type], \JSON_THROW_ON_ERROR);
+                    }
+                }
             }
         }
 
