@@ -7,12 +7,8 @@
  * @since   5.5
  */
 
-import * as Ajax from "../../../Ajax";
+import { getResults } from "WoltLabSuite/Core/Api/Polls/GetResults";
 import { Poll, PollViews } from "../Poll";
-
-type ResultResponseData = {
-  template: string;
-};
 
 export class Results {
   private readonly pollManager: Poll;
@@ -40,9 +36,7 @@ export class Results {
   }
 
   private async loadView(): Promise<void> {
-    const request = Ajax.dboAction("getResultTemplate", "wcf\\data\\poll\\PollAction");
-    request.objectIds([this.pollManager.pollId]);
-    const results = (await request.dispatch()) as ResultResponseData;
+    const results = await getResults(this.pollManager.pollId);
 
     this.pollManager.addView(PollViews.results, results.template);
     this.pollManager.displayView(PollViews.results);

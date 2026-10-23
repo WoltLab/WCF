@@ -43,6 +43,7 @@ class HtmlBBCodeParser extends BBCodeParser
         'i',
         'img',
         'media',
+        'poll',
         's',
         'tt',
         'u',

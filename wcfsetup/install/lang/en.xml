@@ -761,6 +761,13 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[User Profile Fields]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Can manage user profile fields]]></item>
 		<item name="wcf.acp.group.option.category.user.message.attachment"><![CDATA[Attachments]]></item>
+		<item name="wcf.acp.group.option.category.user.message.poll"><![CDATA[Polls]]></item>
+		<item name="wcf.acp.group.option.user.poll.canVotePoll"><![CDATA[Can participate in polls]]></item>
+		<item name="wcf.acp.group.option.user.poll.canVotePoll.description"><![CDATA[Applies to polls that are embedded into messages.]]></item>
+		<item name="wcf.acp.group.option.user.poll.canCreatePoll"><![CDATA[Can create polls]]></item>
+		<item name="wcf.acp.group.option.user.poll.canCreatePoll.description"><![CDATA[Polls can be embedded into messages.]]></item>
+		<item name="wcf.acp.group.option.user.poll.canStartPublicPoll"><![CDATA[Can create public polls]]></item>
+		<item name="wcf.acp.group.option.user.poll.canStartPublicPoll.description"><![CDATA[The participants of public polls are visible to other users.]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximum Attachment File Size]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
@@ -878,6 +885,9 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.admin.content.cms.canUseMedia"><![CDATA[Can use media]]></item>
 		<item name="wcf.acp.group.option.category.mod.cms"><![CDATA[CMS]]></item>
 		<item name="wcf.acp.group.option.category.mod.article"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.group.option.category.mod.poll"><![CDATA[Polls]]></item>
+		<item name="wcf.acp.group.option.mod.poll.canManagePoll"><![CDATA[Can manage all polls]]></item>
+		<item name="wcf.acp.group.option.mod.poll.canManagePoll.description"><![CDATA[Applies to polls that are embedded into messages.]]></item>
 		<item name="wcf.acp.group.option.category.mod.page"><![CDATA[Pages]]></item>
 		<item name="wcf.acp.group.option.category.user.article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.group.option.category.user.page"><![CDATA[Pages]]></item>
@@ -3769,6 +3779,7 @@ Attachments:
 		<item name="wcf.editor.button.group.format"><![CDATA[Format Text]]></item>
 		<item name="wcf.editor.button.group.list"><![CDATA[Lists]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
+		<item name="wcf.editor.button.poll"><![CDATA[Poll]]></item>
 		<item name="wcf.editor.button.page"><![CDATA[CMS Page]]></item>
 		<item name="wcf.editor.restoreDraft"><![CDATA[Do you want to restore the saved draft?]]></item>
 		<item name="wcf.editor.restoreDraft.preview"><![CDATA[Preview]]></item>
@@ -4473,6 +4484,15 @@ Attachments:
 		<item name="wcf.poll.sortByVotes"><![CDATA[Sort result by votes]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[A total of {#$poll->votes} vote{if $poll->votes != 1}s{/if}]]></item>
 		<item name="wcf.poll.endTimeInfo"><![CDATA[Poll ends on {@$poll->endTime|plainTime}]]></item>
+		<item name="wcf.poll.access"><![CDATA[Access]]></item>
+		<item name="wcf.poll.add"><![CDATA[Create Poll]]></item>
+		<item name="wcf.poll.edit"><![CDATA[Edit Poll]]></item>
+		<item name="wcf.poll.manager"><![CDATA[Polls]]></item>
+		<item name="wcf.poll.manager.item.meta"><![CDATA[{#$poll->votes} vote{if $poll->votes != 1}s{/if} · created {@$poll->time|plainTime}{if $poll->isFinished()} · ended{/if}]]></item>
+		<item name="wcf.poll.manager.selection.none"><![CDATA[No poll selected]]></item>
+		<item name="wcf.poll.search.placeholder"><![CDATA[Search polls …]]></item>
+		<item name="wcf.poll.time"><![CDATA[Created]]></item>
+		<item name="wcf.poll.votes"><![CDATA[Votes]]></item>
 	</category>
 	<category name="wcf.reactions">
 		<item name="wcf.reactions.summary.title"><![CDATA[Reactions]]></item>

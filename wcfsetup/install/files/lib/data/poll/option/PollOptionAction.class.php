@@ -12,6 +12,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<PollOption, PollOptionEditor>
+ * @deprecated 6.3 Use `PollBuilder` instead.
  */
 class PollOptionAction extends AbstractDatabaseObjectAction
 {

@@ -50,6 +50,10 @@
 		{jsphrase name='wcf.editor.restoreDraft'}
 		{jsphrase name='wcf.editor.restoreDraft.preview'}
 		{jsphrase name='wcf.editor.restoreDraft.restoreOrDiscard'}
+		{if MODULE_POLL && $__wcf->session->getPermission('user.poll.canCreatePoll')}
+			{jsphrase name='wcf.poll.manager'}
+			{jsphrase name='wcf.poll.manager.selection.none'}
+		{/if}
 
 		{if $__wcf->language->languageCode !== 'en'}
 		window.CKEDITOR_TRANSLATIONS['{unsafe:$__wcf->getBBCodeHandler()->getEditorLocalization(true)|strtolower|encodeJS}'].dictionary["Single line code"] = '{jslang}wcf.editor.button.code{/jslang}';
@@ -82,6 +86,7 @@
 			mark: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('mark')}true{else}false{/if},
 			media: {if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}true{else}false{/if},
 			mention: {if $__wcf->session->hasPermission('user.message.canMention')}element.dataset.supportMention === "true"{else}false{/if},
+			poll: {if MODULE_POLL && $__wcf->session->getPermission('user.poll.canCreatePoll') && $__wcf->getBBCodeHandler()->isAvailableBBCode('poll')}true{else}false{/if},
 			quoteBlock: true,
 			strikethrough: true,
 			submitOnEnter: false,
@@ -107,6 +112,13 @@
 				icon: "file-circle-plus;false",
 				name: "media",
 				label: '{jslang}wcf.editor.button.media{/jslang}',
+			});
+		}
+		if (features.poll) {
+			bbcodes.push({
+				icon: "chart-bar;false",
+				name: "poll",
+				label: '{jslang}wcf.editor.button.poll{/jslang}',
 			});
 		}
 		const smileys = [

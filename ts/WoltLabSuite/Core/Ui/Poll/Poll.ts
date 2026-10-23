@@ -32,15 +32,19 @@ export class Poll {
 
   private readonly views: Map<PollViews, HTMLElement> = new Map();
 
-  public constructor(pollID: number) {
-    const poll = document.getElementById(`poll${pollID}`);
-
-    if (poll === null) {
-      throw new Error(`Could not find poll with id "${pollID}".`);
+  public constructor(pollIdOrElement: number | HTMLElement) {
+    let poll: HTMLElement | null;
+    if (typeof pollIdOrElement === "number") {
+      poll = document.getElementById(`poll${pollIdOrElement}`);
+      if (poll === null) {
+        throw new Error(`Could not find poll with id "${pollIdOrElement}".`);
+      }
+    } else {
+      poll = pollIdOrElement;
     }
 
     this.element = poll;
-    this.pollId = pollID;
+    this.pollId = parseInt(poll.dataset.pollId!, 10);
 
     this.getInnerContainer()
       .querySelectorAll("div")
@@ -194,8 +198,8 @@ function setup(): void {
       return;
     }
 
-    const pollID = parseInt(pollElement.dataset.pollId, 10);
-    new Poll(pollID);
+    // The same poll can be embedded multiple times on a page.
+    new Poll(pollElement);
 
     polls.add(pollElement);
   });

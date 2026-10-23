@@ -14,6 +14,7 @@ use wcf\system\WCF;
  *
  * @mixin       Poll
  * @extends DatabaseObjectEditor<Poll>
+ * @deprecated 6.3 Use `PollBuilder` instead.
  */
 class PollEditor extends DatabaseObjectEditor
 {

@@ -8,14 +8,7 @@
  */
 
 import { PollViews, Poll } from "./Poll";
-import * as Ajax from "../../Ajax";
-
-type VoteResponseData = {
-  changeableVote: number;
-  totalVotes: number;
-  totalVotesTooltip: string;
-  template: string;
-};
+import { vote } from "WoltLabSuite/Core/Api/Polls/Vote";
 
 export class Vote {
   private readonly pollManager: Poll;
@@ -42,6 +35,9 @@ export class Vote {
       this.inputs = Array.from(container.querySelectorAll<HTMLInputElement>("input"));
 
       this.inputs.forEach((input) => {
+        // The same poll can be embedded multiple times on a page, the radio
+        // buttons must not share a group across those instances.
+        input.name = `${this.pollManager.getElement().id}[]`;
         input.addEventListener("change", () => this.checkInputs());
       });
 
@@ -85,14 +81,9 @@ export class Vote {
 
     const optionIDs = this.getSelectedOptions();
 
-    const request = Ajax.dboAction("vote", "wcf\\data\\poll\\PollAction");
-    request.objectIds([this.pollManager.pollId]);
-    request.payload({
-      optionIDs,
-    });
-    const results = (await request.dispatch()) as VoteResponseData;
+    const results = await vote(this.pollManager.pollId, optionIDs);
 
-    this.pollManager.canVote = !!results.changeableVote;
+    this.pollManager.canVote = results.changeableVote;
     this.pollManager.canViewResults = true;
     this.pollManager.addView(PollViews.results, results.template);
     this.pollManager.displayView(PollViews.results);

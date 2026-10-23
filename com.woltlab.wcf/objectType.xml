@@ -676,6 +676,11 @@
 			<classname>wcf\system\message\embedded\object\MediaMessageEmbeddedObjectHandler</classname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.poll</name>
+			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
+			<classname>wcf\system\message\embedded\object\PollMessageEmbeddedObjectHandler</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.user</name>
 			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
 			<classname>wcf\system\message\embedded\object\UserMessageEmbeddedObjectHandler</classname>
@@ -1027,6 +1032,10 @@
 		</type>
 		<type>
 			<name>com.woltlab.wcf.media</name>
+			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.poll</name>
 			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
 		</type>
 		<type>

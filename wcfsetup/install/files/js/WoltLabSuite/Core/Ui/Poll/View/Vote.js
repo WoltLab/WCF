@@ -6,11 +6,10 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.5
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../Poll"], function (require, exports, tslib_1, Ajax, Poll_1) {
+define(["require", "exports", "WoltLabSuite/Core/Api/Polls/GetVoteForm", "../Poll"], function (require, exports, GetVoteForm_1, Poll_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Vote = void 0;
-    Ajax = tslib_1.__importStar(Ajax);
     class Vote {
         pollManager;
         button;
@@ -36,9 +35,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../Poll"], function (re
             });
         }
         async loadView() {
-            const request = Ajax.dboAction("getVoteTemplate", "wcf\\data\\poll\\PollAction");
-            request.objectIds([this.pollManager.pollId]);
-            const results = (await request.dispatch());
+            const results = await (0, GetVoteForm_1.getVoteForm)(this.pollManager.pollId);
             this.pollManager.addView(Poll_1.PollViews.vote, results.template);
             this.pollManager.displayView(Poll_1.PollViews.vote);
         }

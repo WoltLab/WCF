@@ -85,6 +85,20 @@ return [
     // The localized content is migrated to `wcf1_media_l10n`.
     DatabaseTable::create('wcf1_media_content')
         ->drop(),
+    // The question and option values are migrated to `wcf1_poll_l10n` and `wcf1_poll_option_l10n`.
+    PartialDatabaseTable::create('wcf1_poll')
+        ->columns([
+            VarcharDatabaseTableColumn::create('question')
+                ->length(255)
+                ->defaultValue('')
+                ->drop(),
+        ]),
+    PartialDatabaseTable::create('wcf1_poll_option')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('optionValue')
+                ->defaultValue('')
+                ->drop(),
+        ]),
     // The link pattern is migrated to the configuration of the user options.
     PartialDatabaseTable::create('wcf1_user_option')
         ->columns([

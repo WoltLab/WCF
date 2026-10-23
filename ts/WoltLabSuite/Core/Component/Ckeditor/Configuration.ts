@@ -392,6 +392,7 @@ export type Features = {
   mark: boolean;
   media: boolean;
   mention: boolean;
+  poll: boolean;
   quoteBlock: boolean;
   spoiler: boolean;
   strikethrough: boolean;

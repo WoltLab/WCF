@@ -783,6 +783,13 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[Benutzerprofilfelder]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Kann Benutzerprofilfelder verwalten]]></item>
 		<item name="wcf.acp.group.option.category.user.message.attachment"><![CDATA[Dateianhänge]]></item>
+		<item name="wcf.acp.group.option.category.user.message.poll"><![CDATA[Umfragen]]></item>
+		<item name="wcf.acp.group.option.user.poll.canVotePoll"><![CDATA[Kann an Umfragen teilnehmen]]></item>
+		<item name="wcf.acp.group.option.user.poll.canVotePoll.description"><![CDATA[Gilt für Umfragen, die in Nachrichten eingebunden werden.]]></item>
+		<item name="wcf.acp.group.option.user.poll.canCreatePoll"><![CDATA[Kann Umfragen erstellen]]></item>
+		<item name="wcf.acp.group.option.user.poll.canCreatePoll.description"><![CDATA[Umfragen können in Nachrichten eingebunden werden.]]></item>
+		<item name="wcf.acp.group.option.user.poll.canStartPublicPoll"><![CDATA[Kann öffentliche Umfragen erstellen]]></item>
+		<item name="wcf.acp.group.option.user.poll.canStartPublicPoll.description"><![CDATA[Die Teilnehmer öffentlicher Umfragen sind für andere Benutzer sichtbar.]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximale Dateianhangsgröße]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
@@ -900,6 +907,9 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.admin.content.cms.canUseMedia"><![CDATA[Kann Medien einbinden]]></item>
 		<item name="wcf.acp.group.option.category.mod.cms"><![CDATA[CMS]]></item>
 		<item name="wcf.acp.group.option.category.mod.article"><![CDATA[Artikel]]></item>
+		<item name="wcf.acp.group.option.category.mod.poll"><![CDATA[Umfragen]]></item>
+		<item name="wcf.acp.group.option.mod.poll.canManagePoll"><![CDATA[Kann alle Umfragen verwalten]]></item>
+		<item name="wcf.acp.group.option.mod.poll.canManagePoll.description"><![CDATA[Gilt für Umfragen, die in Nachrichten eingebunden werden.]]></item>
 		<item name="wcf.acp.group.option.category.mod.page"><![CDATA[Seiten]]></item>
 		<item name="wcf.acp.group.option.category.user.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.group.option.category.user.page"><![CDATA[Seiten]]></item>
@@ -3823,6 +3833,7 @@ Dateianhänge:
 		<item name="wcf.editor.button.group.format"><![CDATA[Text formatieren]]></item>
 		<item name="wcf.editor.button.group.list"><![CDATA[Listen]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
+		<item name="wcf.editor.button.poll"><![CDATA[Umfrage]]></item>
 		<item name="wcf.editor.button.page"><![CDATA[CMS-Seite]]></item>
 		<item name="wcf.editor.restoreDraft"><![CDATA[Möchten Sie den zwischengespeicherten Entwurf wiederherstellen?]]></item>
 		<item name="wcf.editor.restoreDraft.preview"><![CDATA[Vorschau]]></item>
@@ -4474,6 +4485,15 @@ Dateianhänge:
 		<item name="wcf.poll.sortByVotes"><![CDATA[Ergebnis nach Stimmen sortieren]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[Insgesamt {#$poll->votes} Stimme{if $poll->votes != 1}n{/if}]]></item>
 		<item name="wcf.poll.endTimeInfo"><![CDATA[Umfrage endet am {@$poll->endTime|plainTime}]]></item>
+		<item name="wcf.poll.access"><![CDATA[Zugriff]]></item>
+		<item name="wcf.poll.add"><![CDATA[Umfrage erstellen]]></item>
+		<item name="wcf.poll.edit"><![CDATA[Umfrage bearbeiten]]></item>
+		<item name="wcf.poll.manager"><![CDATA[Umfragen]]></item>
+		<item name="wcf.poll.manager.item.meta"><![CDATA[{#$poll->votes} Stimme{if $poll->votes != 1}n{/if} · erstellt am {@$poll->time|plainTime}{if $poll->isFinished()} · beendet{/if}]]></item>
+		<item name="wcf.poll.manager.selection.none"><![CDATA[Keine Umfrage ausgewählt]]></item>
+		<item name="wcf.poll.search.placeholder"><![CDATA[Umfragen durchsuchen …]]></item>
+		<item name="wcf.poll.time"><![CDATA[Erstellt]]></item>
+		<item name="wcf.poll.votes"><![CDATA[Stimmen]]></item>
 	</category>
 	<category name="wcf.reactions">
 		<item name="wcf.reactions.summary.title"><![CDATA[Reaktionen]]></item>

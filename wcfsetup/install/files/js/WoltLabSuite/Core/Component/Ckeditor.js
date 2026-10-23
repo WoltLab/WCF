@@ -12,7 +12,7 @@
  * @since 6.0
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "./Ckeditor/Normalizer", "../Ui/Scroll", "../Devtools", "./Ckeditor/Keyboard", "./Ckeditor/BalloonPanel", "../Environment", "../Helper/PageOverlay"], function (require, exports, tslib_1, Attachment_1, Media_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Normalizer_1, Scroll_1, Devtools_1, Keyboard_1, BalloonPanel_1, Environment_1, PageOverlay_1) {
+define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Poll", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "./Ckeditor/Normalizer", "../Ui/Scroll", "../Devtools", "./Ckeditor/Keyboard", "./Ckeditor/BalloonPanel", "../Environment", "../Helper/PageOverlay"], function (require, exports, tslib_1, Attachment_1, Media_1, Poll_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Normalizer_1, Scroll_1, Devtools_1, Keyboard_1, BalloonPanel_1, Environment_1, PageOverlay_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setupCkeditor = setupCkeditor;
@@ -219,6 +219,12 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         }
         else {
             bbcodes = bbcodes.filter((item) => item.name !== "media");
+        }
+        if (features.poll) {
+            (0, Poll_1.setup)(element);
+        }
+        else {
+            bbcodes = bbcodes.filter((item) => item.name !== "poll");
         }
         (0, Mention_1.setup)(element);
         if (features.quoteBlock) {

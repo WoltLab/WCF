@@ -2,18 +2,21 @@
 
 namespace wcf\system\poll;
 
+use wcf\command\poll\CreatePoll;
+use wcf\command\poll\DeletePolls;
+use wcf\command\poll\UpdatePoll;
 use wcf\data\IPollContainer;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\poll\option\PollOptionList;
 use wcf\data\poll\Poll;
-use wcf\data\poll\PollAction;
+use wcf\data\poll\PollBuilder;
 use wcf\data\poll\PollList;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -75,7 +78,7 @@ class PollManager extends SingletonFactory
 
     /**
      * list of poll options
-     * @var string[]
+     * @var array<int, array{optionID: int, optionValue: string}>
      */
     protected $pollOptions = [];
 
@@ -96,13 +99,15 @@ class PollManager extends SingletonFactory
      */
     public function removePolls(array $pollIDs)
     {
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("pollID IN (?)", [$pollIDs]);
+        if ($pollIDs === []) {
+            return;
+        }
 
-        $sql = "DELETE FROM wcf1_poll
-                " . $conditions;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
+        $pollList = new PollList();
+        $pollList->setObjectIDs($pollIDs);
+        $pollList->readObjects();
+
+        (new DeletePolls($pollList->getObjects()))();
     }
 
     /**
@@ -143,14 +148,11 @@ class PollManager extends SingletonFactory
             ];
 
             // load poll options
-            $sql = "SELECT      optionID, optionValue
-                    FROM        wcf1_poll_option
-                    WHERE       pollID = ?
-                    ORDER BY    showOrder ASC";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->poll->pollID]);
-            while ($row = $statement->fetchArray()) {
-                $this->pollOptions[] = $row;
+            foreach ($this->poll->getOptions() as $option) {
+                $this->pollOptions[] = [
+                    'optionID' => $option->optionID,
+                    'optionValue' => $option->getOptionValue(),
+                ];
             }
         }
 
@@ -292,36 +294,60 @@ class PollManager extends SingletonFactory
                 throw new SystemException("Could not create poll, missing object type");
             }
 
-            $data = $this->pollData;
-            $data['objectID'] = $this->objectID;
-            $data['objectTypeID'] = $this->cache[$this->objectType]->objectTypeID;
-            $data['time'] = \TIME_NOW;
+            $builder = PollBuilder::forCreate()
+                ->setContainer($this->objectType, $this->objectID)
+                ->setTime(\TIME_NOW)
+                ->setOptions($this->getOptionsForBuilder());
+            $this->applyPollData($builder);
 
-            $action = new PollAction([], 'create', [
-                'data' => $data,
-                'options' => $this->pollOptions,
-            ]);
-            $returnValues = $action->executeAction();
-            $this->poll = $returnValues['returnValues'];
+            $this->poll = (new CreatePoll($builder))();
         } else {
             // remove poll
             if (empty($this->pollData['question'])) {
-                $action = new PollAction([$this->poll], 'delete');
-                $action->executeAction();
+                (new DeletePolls([$this->poll]))();
                 $this->poll = null;
 
                 return 0;
             } else {
                 // update existing poll
-                $action = new PollAction([$this->poll], 'update', [
-                    'data' => $this->pollData,
-                    'options' => $this->pollOptions,
-                ]);
-                $action->executeAction();
+                $builder = PollBuilder::forUpdate($this->poll)
+                    ->setOptions($this->getOptionsForBuilder());
+                $this->applyPollData($builder);
+
+                $this->poll = (new UpdatePoll($builder))();
             }
         }
 
         return $this->poll->pollID;
+    }
+
+    private function applyPollData(PollBuilder $builder): void
+    {
+        $builder
+            ->setQuestion([L10nStorage::MONOLINGUAL => (string)$this->pollData['question']])
+            ->setEndTime((int)$this->pollData['endTime'])
+            ->setIsChangeable((bool)$this->pollData['isChangeable'])
+            ->setIsPublic((bool)$this->pollData['isPublic'])
+            ->setResultsRequireVote((bool)$this->pollData['resultsRequireVote'])
+            ->setSortByVotes((bool)$this->pollData['sortByVotes'])
+            ->setMaxVotes((int)$this->pollData['maxVotes']);
+    }
+
+    /**
+     * @return list<array{optionID: int, optionValue: array<int, string>}>
+     */
+    private function getOptionsForBuilder(): array
+    {
+        $options = $this->pollOptions;
+        \ksort($options);
+
+        return \array_values(\array_map(
+            static fn(array $option) => [
+                'optionID' => $option['optionID'],
+                'optionValue' => [L10nStorage::MONOLINGUAL => $option['optionValue']],
+            ],
+            $options
+        ));
     }
 
     /**
@@ -466,11 +492,25 @@ class PollManager extends SingletonFactory
      */
     public function getRelatedObject(Poll $poll)
     {
-        if ($poll->objectID !== 0) {
+        if (!$poll->isStandalone() && $poll->objectID !== 0) {
             return $this->getHandler($poll->objectTypeID)->getRelatedObject($poll);
         }
 
         return null;
+    }
+
+    /**
+     * Assigns the related object to the given poll, polls without a poll
+     * container (standalone polls) have no related object.
+     *
+     * @since 6.3
+     */
+    public function loadRelatedObject(Poll $poll): void
+    {
+        $relatedObject = $this->getRelatedObject($poll);
+        if ($relatedObject !== null) {
+            $poll->setRelatedObject($relatedObject);
+        }
     }
 
     /**

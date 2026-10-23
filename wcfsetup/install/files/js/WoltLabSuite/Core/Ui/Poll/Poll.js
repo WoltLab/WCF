@@ -30,13 +30,19 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
         participants = undefined;
         voteHandler = undefined;
         views = new Map();
-        constructor(pollID) {
-            const poll = document.getElementById(`poll${pollID}`);
-            if (poll === null) {
-                throw new Error(`Could not find poll with id "${pollID}".`);
+        constructor(pollIdOrElement) {
+            let poll;
+            if (typeof pollIdOrElement === "number") {
+                poll = document.getElementById(`poll${pollIdOrElement}`);
+                if (poll === null) {
+                    throw new Error(`Could not find poll with id "${pollIdOrElement}".`);
+                }
+            }
+            else {
+                poll = pollIdOrElement;
             }
             this.element = poll;
-            this.pollId = pollID;
+            this.pollId = parseInt(poll.dataset.pollId, 10);
             this.getInnerContainer()
                 .querySelectorAll("div")
                 .forEach((element) => {
@@ -155,8 +161,8 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
             if (polls.has(pollElement)) {
                 return;
             }
-            const pollID = parseInt(pollElement.dataset.pollId, 10);
-            new Poll(pollID);
+            // The same poll can be embedded multiple times on a page.
+            new Poll(pollElement);
             polls.add(pollElement);
         });
     }

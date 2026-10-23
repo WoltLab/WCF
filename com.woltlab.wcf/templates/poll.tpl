@@ -7,7 +7,7 @@
 	</script>
 {/if}
 
-<div id="poll{$poll->pollID}" class="pollContainer{if POLL_FULL_WIDTH} pollContainerFullWidth{/if}"{*
+<div id="{if $pollElementID|isset}{$pollElementID}{else}poll{$poll->pollID}{/if}" class="pollContainer{if POLL_FULL_WIDTH} pollContainerFullWidth{/if}"{*
 	*} data-poll-id="{$poll->pollID}"{*
 	*} data-can-vote="{if $poll->canVote()}true{else}false{/if}"{*
 	*} data-can-view-result="{if $poll->canSeeResult()}true{else}false{/if}"{*

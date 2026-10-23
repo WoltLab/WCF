@@ -71,6 +71,7 @@ final class MergeUsers
     private function getUserColumns(): array
     {
         return [
+            new UserColumn('wcf1_poll', usernameColumn: 'username'),
             new UserColumn('wcf1_poll_option_vote', ignore: true),
             new UserColumn('wcf1_comment', usernameColumn: 'username'),
             new UserColumn('wcf1_comment_response', usernameColumn: 'username'),
