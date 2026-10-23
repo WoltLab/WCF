@@ -14,6 +14,7 @@ export type VoteResponse = {
   changeableVote: boolean;
   totalVotes: number;
   totalVotesTooltip: string;
+  // The results of a poll or the entire widget of a standalone poll.
   template: string;
 };
 

@@ -13,6 +13,7 @@ use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\poll\PollManager;
+use wcf\system\view\poll\PollWidgetView;
 use wcf\system\WCF;
 
 /**
@@ -59,6 +60,15 @@ final class Vote implements IController
         $poll = new Poll($poll->pollID);
         PollManager::getInstance()->loadRelatedObject($poll);
 
+        // Standalone polls are embedded as a widget that is replaced as a whole.
+        if ($poll->isStandalone()) {
+            $template = (string)new PollWidgetView($poll);
+        } else {
+            $template = WCF::getTPL()->render('wcf', 'pollResult', [
+                'poll' => $poll,
+            ]);
+        }
+
         return new JsonResponse([
             'changeableVote' => $poll->isChangeable === 1,
             'totalVotes' => $poll->votes,
@@ -66,9 +76,7 @@ final class Vote implements IController
                 'wcf.poll.totalVotes',
                 ['poll' => $poll]
             ),
-            'template' => WCF::getTPL()->render('wcf', 'pollResult', [
-                'poll' => $poll,
-            ]),
+            'template' => $template,
         ]);
     }
 }

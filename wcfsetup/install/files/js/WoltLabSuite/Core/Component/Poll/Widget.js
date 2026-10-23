@@ -8,7 +8,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Polls/GetWidget", "WoltLabSuite/Core/Api/Polls/Vote", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Helper/Selector"], function (require, exports, tslib_1, GetWidget_1, Vote_1, Dialog_1, Util_1, PromiseMutex_1, Selector_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Polls/Vote", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Helper/Selector"], function (require, exports, tslib_1, Vote_1, Dialog_1, Util_1, PromiseMutex_1, Selector_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -97,8 +97,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Polls/GetWidget", 
             this.#voteButton.disabled = true;
             this.#element.setAttribute("aria-busy", "true");
             try {
-                await (0, Vote_1.vote)(this.#pollId, optionIds);
-                const { template } = await (0, GetWidget_1.getWidget)(this.#pollId);
+                const { template } = await (0, Vote_1.vote)(this.#pollId, optionIds);
                 const container = document.createElement("div");
                 Util_1.default.setInnerHtml(container, template);
                 const widget = container.querySelector(".pollWidget");

@@ -9,7 +9,6 @@
  * @since 6.3
  */
 
-import { getWidget } from "WoltLabSuite/Core/Api/Polls/GetWidget";
 import { vote } from "WoltLabSuite/Core/Api/Polls/Vote";
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import DomUtil from "WoltLabSuite/Core/Dom/Util";
@@ -132,8 +131,7 @@ class PollWidget {
     this.#element.setAttribute("aria-busy", "true");
 
     try {
-      await vote(this.#pollId, optionIds);
-      const { template } = await getWidget(this.#pollId);
+      const { template } = await vote(this.#pollId, optionIds);
 
       const container = document.createElement("div");
       DomUtil.setInnerHtml(container, template);
