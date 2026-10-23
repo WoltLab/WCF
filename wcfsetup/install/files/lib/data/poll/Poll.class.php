@@ -7,7 +7,6 @@ use wcf\data\IPollObject;
 use wcf\data\ITitledObject;
 use wcf\data\poll\option\PollOption;
 use wcf\data\user\UserProfile;
-use wcf\system\acl\simple\SimpleAclResolver;
 use wcf\system\l10n\L10nDefinition;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
@@ -220,7 +219,32 @@ class Poll extends CollectionDatabaseObject implements ITitledObject, \Stringabl
             return true;
         }
 
-        return SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.poll', $this->pollID);
+        // Standalone polls are visible unless the acl denies it.
+        return $this->getAclPermission('canViewPoll') ?? true;
+    }
+
+    /**
+     * Returns the value of the acl option for the active user or `null` if
+     * neither the user nor any of the user's groups has a value. The values
+     * of the groups are combined, a value of the user takes precedence.
+     */
+    private function getAclPermission(string $optionName): ?bool
+    {
+        $permissions = $this->getCollection()->getAclPermissions($this);
+        $user = WCF::getUser();
+
+        if (isset($permissions['user'][$user->userID][$optionName])) {
+            return $permissions['user'][$user->userID][$optionName] === 1;
+        }
+
+        $permission = null;
+        foreach ($user->getGroupIDs() as $groupID) {
+            if (isset($permissions['group'][$groupID][$optionName])) {
+                $permission = $permission === true || $permissions['group'][$groupID][$optionName] === 1;
+            }
+        }
+
+        return $permission;
     }
 
     /**
@@ -240,7 +264,8 @@ class Poll extends CollectionDatabaseObject implements ITitledObject, \Stringabl
         }
 
         if ($this->isStandalone()) {
-            return $this->isAccessible() && WCF::getSession()->hasPermission('user.poll.canVotePoll');
+            return $this->isAccessible()
+                && ($this->getAclPermission('canVotePoll') ?? WCF::getSession()->hasPermission('user.poll.canVotePoll'));
         }
 
         if ($this->objectID !== 0) {

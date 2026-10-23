@@ -49,6 +49,8 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
      */
     protected static bool $includedAclJavaScript = false;
 
+    private bool $valuesRead = false;
+
     /**
      * Sets the name of/filter for the name(s) of the shown acl option categories and
      * returns this field.
@@ -86,7 +88,12 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
     #[\Override]
     public function getHtmlVariables(): array
     {
-        ACLHandler::getInstance()->assignVariables($this->getObjectType()->objectTypeID);
+        $objectTypeID = $this->getObjectType()->objectTypeID;
+        if (!$this->valuesRead) {
+            $this->preloadValues($objectTypeID);
+        }
+
+        ACLHandler::getInstance()->assignVariables($objectTypeID);
 
         $includeAclJavaScript = !static::$includedAclJavaScript;
         if (!static::$includedAclJavaScript) {
@@ -164,8 +171,35 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
         }
 
         ACLHandler::getInstance()->readValues($this->getObjectType()->objectTypeID, $valueSource);
+        $this->valuesRead = true;
 
         return $this;
+    }
+
+    /**
+     * Provides the stored values of the edited object to the acl list, which
+     * otherwise requests them through an action that requires the ACP.
+     *
+     * @since 6.3
+     */
+    private function preloadValues(int $objectTypeID): void
+    {
+        $values = [
+            'group' => [],
+            'user' => [],
+        ];
+
+        if ($this->objectID !== null) {
+            $permissions = ACLHandler::getInstance()->getPermissions($objectTypeID, [$this->objectID]);
+            foreach (\array_keys($values) as $type) {
+                $values[$type] = $permissions[$type][$this->objectID] ?? [];
+            }
+        }
+
+        ACLHandler::getInstance()->readValues($objectTypeID, [
+            'group' => \json_encode($values['group'], \JSON_THROW_ON_ERROR),
+            'user' => \json_encode($values['user'], \JSON_THROW_ON_ERROR),
+        ]);
     }
 
     #[\Override]

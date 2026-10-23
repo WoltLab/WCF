@@ -11,11 +11,11 @@ use wcf\command\poll\UpdatePoll;
 use wcf\data\poll\Poll;
 use wcf\data\poll\PollBuilder;
 use wcf\http\Helper;
-use wcf\system\acl\simple\SimpleAclHandler;
+use wcf\system\acl\ACLHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\acl\simple\SimpleAclFormField;
+use wcf\system\form\builder\field\acl\AclFormField;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\IFormField;
@@ -93,6 +93,12 @@ final class PollEditAction implements RequestHandlerInterface
             } else {
                 $poll = (new UpdatePoll($builder))();
             }
+
+            // The acl values have been read by the acl form field.
+            ACLHandler::getInstance()->save(
+                $poll->pollID,
+                ACLHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.poll')
+            );
 
             return new JsonResponse([
                 'result' => [
@@ -290,24 +296,9 @@ final class PollEditAction implements RequestHandlerInterface
             FormContainer::create('access')
                 ->label('wcf.poll.access')
                 ->appendChildren([
-                    SimpleAclFormField::create('acl')
-                        ->saveValueCallback(static function (PollBuilder $builder, SimpleAclFormField $field): void {
-                            $value = $field->getValue();
-                            if (!\is_array($value) || $value === []) {
-                                return;
-                            }
-
-                            $builder->setAclValues([
-                                'allowAll' => (bool)($value['allowAll'] ?? true),
-                                'user' => \array_values(\array_map(\intval(...), $value['user'] ?? [])),
-                                'group' => \array_values(\array_map(\intval(...), $value['group'] ?? [])),
-                            ]);
-                        })
-                        ->loadValueCallback(static function (Poll $object, IFormField $field): void {
-                            $field->value(
-                                SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.poll', $object->pollID)
-                            );
-                        }),
+                    AclFormField::create('acl')
+                        ->label('wcf.acl.permissions')
+                        ->objectType('com.woltlab.wcf.poll'),
                 ]),
         ]);
 

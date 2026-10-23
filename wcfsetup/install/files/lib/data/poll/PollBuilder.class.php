@@ -8,9 +8,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\poll\option\PollOption;
 use wcf\data\poll\option\PollOptionBuilder;
 use wcf\data\poll\option\PollOptionList;
-use wcf\system\acl\simple\SimpleAclHandler;
-use wcf\system\acl\simple\SimpleAclResolver;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\acl\ACLHandler;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -31,13 +29,10 @@ use wcf\system\WCF;
  * @extends DatabaseObjectBuilder<Poll>
  *
  * @phpstan-import-type L10nValue from L10nStorage
- * @phpstan-type AclValues array{allowAll: bool, user: list<int>, group: list<int>}
  * @phpstan-type PollOptionData array{optionID?: int, optionValue: L10nValue}
  */
 final class PollBuilder extends DatabaseObjectBuilder
 {
-    private const ACL_OBJECT_TYPE = 'com.woltlab.wcf.poll';
-
     /**
      * @var L10nValue
      */
@@ -47,11 +42,6 @@ final class PollBuilder extends DatabaseObjectBuilder
      * @var list<PollOptionData>
      */
     private array $options;
-
-    /**
-     * @var AclValues
-     */
-    private array $aclValues;
 
     private bool $recalculateVotes = false;
 
@@ -212,18 +202,6 @@ final class PollBuilder extends DatabaseObjectBuilder
     }
 
     /**
-     * Sets the users and groups that can access the standalone poll, see `SimpleAclHandler`.
-     *
-     * @param AclValues $aclValues
-     */
-    public function setAclValues(array $aclValues): static
-    {
-        $this->aclValues = $aclValues;
-
-        return $this;
-    }
-
-    /**
      * Recalculates the number of votes of the poll and its options from the
      * stored votes.
      */
@@ -253,7 +231,6 @@ final class PollBuilder extends DatabaseObjectBuilder
     {
         $this->saveQuestion($object);
         $this->saveOptions($object);
-        $this->saveAclValues($object);
 
         if ($this->recalculateVotes) {
             self::calculateVotes($object->pollID);
@@ -274,8 +251,6 @@ final class PollBuilder extends DatabaseObjectBuilder
             $this->saveOptions($object);
         }
 
-        $this->saveAclValues($object);
-
         if ($this->recalculateVotes || isset($this->options)) {
             self::calculateVotes($object->pollID);
         }
@@ -284,20 +259,10 @@ final class PollBuilder extends DatabaseObjectBuilder
     #[\Override]
     protected static function beforeDeleteAll(array $objectIDs): void
     {
-        $objectTypeID = SimpleAclHandler::getInstance()->getObjectTypeID(self::ACL_OBJECT_TYPE);
-
-        foreach (['wcf1_acl_simple_to_user', 'wcf1_acl_simple_to_group'] as $tableName) {
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('objectTypeID = ?', [$objectTypeID]);
-            $conditionBuilder->add('objectID IN (?)', [$objectIDs]);
-
-            $sql = "DELETE FROM {$tableName}
-                    {$conditionBuilder}";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditionBuilder->getParameters());
-        }
-
-        SimpleAclResolver::getInstance()->resetCache(self::ACL_OBJECT_TYPE);
+        ACLHandler::getInstance()->removeValues(
+            ACLHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.poll'),
+            $objectIDs
+        );
     }
 
     private function saveQuestion(Poll $poll): void
@@ -377,15 +342,6 @@ final class PollBuilder extends DatabaseObjectBuilder
                 WCF::getDB()->rollBackTransaction();
             }
         }
-    }
-
-    private function saveAclValues(Poll $poll): void
-    {
-        if (!isset($this->aclValues)) {
-            return;
-        }
-
-        SimpleAclHandler::getInstance()->setValues(self::ACL_OBJECT_TYPE, $poll->pollID, $this->aclValues);
     }
 
     /**

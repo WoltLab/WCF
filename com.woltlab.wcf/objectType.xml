@@ -408,6 +408,10 @@
 			<name>com.woltlab.wcf.label</name>
 			<definitionname>com.woltlab.wcf.acl</definitionname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.poll</name>
+			<definitionname>com.woltlab.wcf.acl</definitionname>
+		</type>
 		<!-- importers -->
 		<type>
 			<name>com.woltlab.wcf.user</name>
@@ -1032,10 +1036,6 @@
 		</type>
 		<type>
 			<name>com.woltlab.wcf.media</name>
-			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.poll</name>
 			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
 		</type>
 		<type>

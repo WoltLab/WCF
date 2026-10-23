@@ -7,6 +7,7 @@ use wcf\data\poll\option\PollOption;
 use wcf\data\poll\option\PollOptionList;
 use wcf\data\TCollectionL10n;
 use wcf\data\TCollectionUserProfiles;
+use wcf\system\acl\ACLHandler;
 use wcf\system\l10n\L10nDefinition;
 use wcf\system\WCF;
 
@@ -19,6 +20,7 @@ use wcf\system\WCF;
  * @since       6.3
  *
  * @extends DatabaseObjectCollection<Poll>
+ * @phpstan-type AclPermissions array{group: array<int, array<string, int>>, user: array<int, array<string, int>>}
  */
 class PollCollection extends DatabaseObjectCollection
 {
@@ -29,6 +31,11 @@ class PollCollection extends DatabaseObjectCollection
      * @var array<int, array<int, PollOption>>
      */
     private array $options;
+
+    /**
+     * @var array<int, AclPermissions>
+     */
+    private array $aclPermissions;
 
     /**
      * Returns the options of the given poll including the vote state of the
@@ -67,6 +74,52 @@ class PollCollection extends DatabaseObjectCollection
 
         foreach ($optionList as $option) {
             $this->options[$option->pollID][$option->optionID] = $option;
+        }
+    }
+
+    /**
+     * Returns the acl values of the given standalone poll by option name for
+     * groups and users.
+     *
+     * @return AclPermissions
+     */
+    public function getAclPermissions(Poll $poll): array
+    {
+        $this->loadAclPermissions();
+
+        return $this->aclPermissions[$poll->pollID] ?? ['group' => [], 'user' => []];
+    }
+
+    private function loadAclPermissions(): void
+    {
+        if (isset($this->aclPermissions)) {
+            return;
+        }
+
+        $this->aclPermissions = [];
+
+        $pollIDs = \array_keys(\array_filter(
+            $this->getObjects(),
+            static fn(Poll $poll) => $poll->isStandalone()
+        ));
+        if ($pollIDs === []) {
+            return;
+        }
+
+        $data = ACLHandler::getInstance()->getPermissions(
+            ACLHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.poll'),
+            $pollIDs
+        );
+        $options = $data['options']->getObjects();
+
+        foreach (['group', 'user'] as $type) {
+            foreach ($data[$type] as $pollID => $values) {
+                foreach ($values as $typeID => $optionValues) {
+                    foreach ($optionValues as $optionID => $optionValue) {
+                        $this->aclPermissions[$pollID][$type][$typeID][$options[$optionID]->optionName] = (int)$optionValue;
+                    }
+                }
+            }
         }
     }
 

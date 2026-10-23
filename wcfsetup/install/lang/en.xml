@@ -21,6 +21,8 @@
 	<category name="wcf.acl.option">
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canViewLabel"><![CDATA[Can view labels]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canSetLabel"><![CDATA[Can set labels]]></item>
+		<item name="wcf.acl.option.com.woltlab.wcf.poll.canViewPoll"><![CDATA[Can view poll]]></item>
+		<item name="wcf.acl.option.com.woltlab.wcf.poll.canVotePoll"><![CDATA[Can vote in poll]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canViewCategory"><![CDATA[Can access the category]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canReadArticle"><![CDATA[Can read articles]]></item>
 	</category>
