@@ -4462,6 +4462,7 @@ Dateianhänge:
 	</category>
 	<category name="wcf.poll">
 		<item name="wcf.poll.button.addOption"><![CDATA[Weitere Antwort hinzufügen]]></item>
+		<item name="wcf.poll.button.changeVote"><![CDATA[Stimme ändern]]></item>
 		<item name="wcf.poll.button.removeOption"><![CDATA[Antwort entfernen]]></item>
 		<item name="wcf.poll.button.showParticipants"><![CDATA[Teilnehmer auflisten]]></item>
 		<item name="wcf.poll.button.showResult"><![CDATA[Ergebnis anzeigen]]></item>
@@ -4494,6 +4495,15 @@ Dateianhänge:
 		<item name="wcf.poll.search.placeholder"><![CDATA[Umfragen durchsuchen …]]></item>
 		<item name="wcf.poll.time"><![CDATA[Erstellt]]></item>
 		<item name="wcf.poll.votes"><![CDATA[Stimmen]]></item>
+		<item name="wcf.poll.widget.label"><![CDATA[Umfrage]]></item>
+		<item name="wcf.poll.widget.votes"><![CDATA[{#$poll->votes} Stimme{if $poll->votes != 1}n{/if}]]></item>
+		<item name="wcf.poll.widget.hint.single"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} eine Antwort.]]></item>
+		<item name="wcf.poll.widget.hint.multiple"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} bis zu {#$poll->maxVotes} Antworten.]]></item>
+		<item name="wcf.poll.widget.hint.voted"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} abgestimmt.]]></item>
+		<item name="wcf.poll.widget.ownVote"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Stimme]]></item>
+		<item name="wcf.poll.widget.endTime"><![CDATA[Endet am {@$poll->endTime|plainTime}]]></item>
+		<item name="wcf.poll.widget.ended"><![CDATA[Beendet am {@$poll->endTime|plainTime}]]></item>
+		<item name="wcf.poll.widget.optionResult"><![CDATA[: {#$option->votes} Stimme{if $option->votes != 1}n{/if}, {#$option->getRelativeVotes($poll)} %]]></item>
 	</category>
 	<category name="wcf.reactions">
 		<item name="wcf.reactions.summary.title"><![CDATA[Reaktionen]]></item>

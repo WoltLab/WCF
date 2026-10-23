@@ -5,7 +5,7 @@ namespace wcf\system\bbcode;
 use wcf\data\poll\Poll;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\view\ContentNotVisibleView;
-use wcf\system\WCF;
+use wcf\system\view\poll\PollWidgetView;
 use wcf\util\StringUtil;
 
 /**
@@ -37,11 +37,7 @@ final class PollBBCode extends AbstractBBCode
         }
 
         if ($parser->getOutputType() === 'text/html') {
-            return WCF::getTPL()->render('wcf', 'poll', [
-                'poll' => $poll,
-                // The same poll can be embedded multiple times on a page.
-                'pollElementID' => 'poll' . $poll->pollID . '_' . \substr(StringUtil::getRandomID(), 0, 8),
-            ]);
+            return (string)new PollWidgetView($poll);
         }
 
         $options = \array_map(

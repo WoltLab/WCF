@@ -4461,6 +4461,7 @@ Attachments:
 	</category>
 	<category name="wcf.poll">
 		<item name="wcf.poll.button.addOption"><![CDATA[Add Another Option]]></item>
+		<item name="wcf.poll.button.changeVote"><![CDATA[Change Vote]]></item>
 		<item name="wcf.poll.button.removeOption"><![CDATA[Remove Option]]></item>
 		<item name="wcf.poll.button.showParticipants"><![CDATA[List Participants]]></item>
 		<item name="wcf.poll.button.showResult"><![CDATA[Display Result]]></item>
@@ -4493,6 +4494,15 @@ Attachments:
 		<item name="wcf.poll.search.placeholder"><![CDATA[Search polls …]]></item>
 		<item name="wcf.poll.time"><![CDATA[Created]]></item>
 		<item name="wcf.poll.votes"><![CDATA[Votes]]></item>
+		<item name="wcf.poll.widget.label"><![CDATA[Poll]]></item>
+		<item name="wcf.poll.widget.votes"><![CDATA[{#$poll->votes} Vote{if $poll->votes != 1}s{/if}]]></item>
+		<item name="wcf.poll.widget.hint.single"><![CDATA[Choose one answer.]]></item>
+		<item name="wcf.poll.widget.hint.multiple"><![CDATA[Choose up to {#$poll->maxVotes} answers.]]></item>
+		<item name="wcf.poll.widget.hint.voted"><![CDATA[You have voted.]]></item>
+		<item name="wcf.poll.widget.ownVote"><![CDATA[Your vote]]></item>
+		<item name="wcf.poll.widget.endTime"><![CDATA[Ends on {@$poll->endTime|plainTime}]]></item>
+		<item name="wcf.poll.widget.ended"><![CDATA[Ended on {@$poll->endTime|plainTime}]]></item>
+		<item name="wcf.poll.widget.optionResult"><![CDATA[: {#$option->votes} vote{if $option->votes != 1}s{/if}, {#$option->getRelativeVotes($poll)} %]]></item>
 	</category>
 	<category name="wcf.reactions">
 		<item name="wcf.reactions.summary.title"><![CDATA[Reactions]]></item>
