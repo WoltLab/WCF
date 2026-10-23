@@ -29,7 +29,9 @@ final class PollBBCode extends AbstractBBCode
         /** @var ?Poll $poll */
         $poll = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.poll', $pollID);
         if ($poll === null || !$poll->isStandalone() || \MODULE_POLL === 0) {
-            return ContentNotVisibleView::forNotAvailable();
+            // Intentionally don't use `ContentNotVisibleView::forNotAvailable()`,
+            // because deleted polls do not automatically remove the BBCode from the content.
+            return '';
         }
 
         if (!$poll->isAccessible()) {
