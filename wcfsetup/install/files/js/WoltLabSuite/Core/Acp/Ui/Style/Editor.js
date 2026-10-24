@@ -5,13 +5,12 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Ui/Screen"], function (require, exports, tslib_1, Ajax, Core, Util_1, EventHandler, UiScreen) {
+define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Ui/Screen"], function (require, exports, tslib_1, Core, Util_1, EventHandler, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     exports.hideVisualEditor = hideVisualEditor;
     exports.showVisualEditor = showVisualEditor;
-    Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
     EventHandler = tslib_1.__importStar(EventHandler);
@@ -73,25 +72,6 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
                 }
             });
         }
-    }
-    function handleProtection(styleId) {
-        const button = document.getElementById("styleDisableProtectionSubmit");
-        const checkbox = document.getElementById("styleDisableProtectionConfirm");
-        checkbox.addEventListener("change", () => {
-            button.disabled = !checkbox.checked;
-        });
-        button.addEventListener("click", () => {
-            Ajax.apiOnce({
-                data: {
-                    actionName: "markAsTainted",
-                    className: "wcf\\data\\style\\StyleAction",
-                    objectIDs: [styleId],
-                },
-                success: () => {
-                    window.location.reload();
-                },
-            });
-        });
     }
     /**
      * Mirrors the selected style options in the preview, e.g. `data-page-header-layout`.
@@ -242,9 +222,6 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
     function setup(options) {
         handleLayoutWidth();
         handleScss(options.isTainted);
-        if (!options.isTainted) {
-            handleProtection(options.styleId);
-        }
         initVisualEditor();
         handleStyleOptions();
         UiScreen.on("screen-sm-down", {

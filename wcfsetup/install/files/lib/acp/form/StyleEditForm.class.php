@@ -66,6 +66,23 @@ class StyleEditForm extends StyleAddForm
     }
 
     #[\Override]
+    public function readFormParameters()
+    {
+        parent::readFormParameters();
+
+        // The fields are only marked as `readonly` for protected styles.
+        if ($this->style->isTainted === 0) {
+            $this->authorName = $this->style->authorName;
+            $this->authorURL = $this->style->authorURL;
+            $this->copyright = $this->style->copyright;
+            $this->license = $this->style->license;
+            $this->packageName = $this->style->packageName;
+            $this->styleDate = $this->style->styleDate;
+            $this->styleVersion = $this->style->styleVersion;
+        }
+    }
+
+    #[\Override]
     public function validate()
     {
         parent::validate();

@@ -6,7 +6,6 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-import * as Ajax from "../../../Ajax";
 import * as Core from "../../../Core";
 import DomUtil from "../../../Dom/Util";
 import * as EventHandler from "../../../Event/Handler";
@@ -22,7 +21,6 @@ let _updateRegionMarker: () => void;
 
 interface StyleEditorOptions {
   isTainted: boolean;
-  styleId: number;
 }
 
 /**
@@ -79,28 +77,6 @@ function handleScss(isTainted: boolean): void {
       }
     });
   }
-}
-
-function handleProtection(styleId: number): void {
-  const button = document.getElementById("styleDisableProtectionSubmit") as HTMLButtonElement;
-  const checkbox = document.getElementById("styleDisableProtectionConfirm") as HTMLInputElement;
-
-  checkbox.addEventListener("change", () => {
-    button.disabled = !checkbox.checked;
-  });
-
-  button.addEventListener("click", () => {
-    Ajax.apiOnce({
-      data: {
-        actionName: "markAsTainted",
-        className: "wcf\\data\\style\\StyleAction",
-        objectIDs: [styleId],
-      },
-      success: () => {
-        window.location.reload();
-      },
-    });
-  });
 }
 
 /**
@@ -280,10 +256,6 @@ function initVisualEditor(): void {
 export function setup(options: StyleEditorOptions): void {
   handleLayoutWidth();
   handleScss(options.isTainted);
-
-  if (!options.isTainted) {
-    handleProtection(options.styleId);
-  }
 
   initVisualEditor();
   handleStyleOptions();

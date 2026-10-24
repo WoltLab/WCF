@@ -8,7 +8,6 @@
 	require(["WoltLabSuite/Core/Acp/Ui/Style/Editor", "WoltLabSuite/Core/Ui/Color/Picker"], (AcpUiStyleEditor, ColorPicker) => {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
-			styleId: {if $action === 'edit'}{$style->styleID}{else}0{/if},
 		});
 
 		ColorPicker.fromSelector(".jsColorPicker");
@@ -1179,18 +1178,5 @@
 		{csrfToken}
 	</div>
 </form>
-
-<div id="styleDisableProtection" class="jsStaticDialogContent" data-title="{lang}wcf.acp.style.protected.title{/lang}">
-	<p>{lang}wcf.acp.style.protected.description{/lang}</p>
-	
-	<dl>
-		<dt></dt>
-		<dd><label for="styleDisableProtectionConfirm"><input type="checkbox" id="styleDisableProtectionConfirm"> {lang}wcf.acp.style.protected.confirm{/lang}</label></dd>
-	</dl>
-	
-	<div class="formSubmit">
-		<button type="button" id="styleDisableProtectionSubmit" class="button buttonPrimary" disabled>{lang}wcf.global.button.submit{/lang}</button>
-	</div>
-</div>
 
 {include file='footer'}

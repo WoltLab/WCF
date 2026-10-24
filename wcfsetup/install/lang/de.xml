@@ -2957,11 +2957,8 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.packageName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier optional den Paketbezeichner in der Form „tld.domain.paketName“ an. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} beispielsweise die Domain „example.com“ gehört und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Stil „Blue Sunrise“ heißt, so wäre „com.example.style.blueSunrise“ ein passender und gültiger Paketbezeichner.]]></item>
 		<item name="wcf.acp.style.packageName.error.invalid"><![CDATA[Der eingegebene Paketbezeichner ist ungültig]]></item>
 		<item name="wcf.acp.style.packageName.error.reserved"><![CDATA[Der Paketbezeichner darf nicht mit „com.woltlab.“ beginnen]]></item>
-		<item name="wcf.acp.style.protected"><![CDATA[Dieser Stil ist geschützt und kann nur eingeschränkt verändert werden, {if LANGUAGE_USE_INFORMAL_VARIANT}du kannst{else}Sie können{/if} diesen <a class="jsStaticDialog" data-dialog-id="styleDisableProtection">Schutz aufheben</a>.]]></item>
-		<item name="wcf.acp.style.protected.confirm"><![CDATA[Schutz aufheben]]></item>
-		<item name="wcf.acp.style.protected.description"><![CDATA[Importierte bzw. installierte Stile erhalten automatisch einen geschützten Status, dieser unterbindet die Veränderungen der unmittelbar durch den Stil vorgegebenen Deklarationen. Die Aufhebung dieses Schutzes gestattet {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die vollständige Veränderung, verhindert dadurch aber auch eine Aktualisierung mit einer neueren Version des Stils, beispielsweise im Rahmen eines Updates.<br><br>Dieser Schritt wird nicht empfohlen und ist grundsätzlich nicht notwendig, Stile können weiterhin nach belieben angepasst werden, nur die Vorlage selbst kann nicht verändert werden.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speicher{else}speichern Sie{/if} eventuelle vorgenommene Änderungen bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} diesen Schritt {if LANGUAGE_USE_INFORMAL_VARIANT}ausführst{else}ausführen{/if}.]]></item>
+		<item name="wcf.acp.style.protected"><![CDATA[Dieser Stil ist geschützt und kann nur eingeschränkt verändert werden, damit er weiterhin aktualisiert werden kann. Eine Kopie des Stils kann ohne Einschränkungen verändert werden.]]></item>
 		<item name="wcf.acp.style.protected.less"><![CDATA[Nur lesend]]></item>
-		<item name="wcf.acp.style.protected.title"><![CDATA[Schutz aufheben]]></item>
 		<item name="wcf.acp.style.styleDate"><![CDATA[Datum]]></item>
 		<item name="wcf.acp.style.styleDescription"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.style.styleName"><![CDATA[Name]]></item>
@@ -5867,5 +5864,8 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.global.rss.copy.success"/>
 	<item name="wcf.message.bbcode.code.copy.success"/>
 	<item name="wcf.message.share.copy.success"/>
+	<item name="wcf.acp.style.protected.confirm"/>
+	<item name="wcf.acp.style.protected.description"/>
+	<item name="wcf.acp.style.protected.title"/>
 </delete>
 </language>

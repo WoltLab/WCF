@@ -653,6 +653,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             }
 
             $styleData['packageID'] = $packageID;
+            // A style without a package name is never updated, protecting it
+            // would only lock the preset declarations.
+            $styleData['isTainted'] = $styleData['packageName'] === '' ? 1 : 0;
             $style = new self(self::create($styleData));
 
             // handle descriptions

@@ -55,6 +55,8 @@ final class CopyStyle
             'coverPhotoExtension' => $style->coverPhotoExtension,
             'hasFavicon' => $style->hasFavicon,
             'hasDarkMode' => $style->hasDarkMode,
+            // A copy is never updated, protecting it would only lock the preset declarations.
+            'isTainted' => 1,
         ]);
     }
 
@@ -97,6 +99,21 @@ final class CopyStyle
                                         variableValueDarkMode = VALUES(variableValueDarkMode)";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$destination->styleID, $source->styleID]);
+
+        $sql = "UPDATE      wcf1_style_variable_value style_variable_value
+                INNER JOIN  wcf1_style_variable style_variable
+                ON          style_variable.variableID = style_variable_value.variableID
+                SET         style_variable_value.variableValue = REPLACE(style_variable_value.variableValue, ?, '')
+                WHERE       style_variable_value.styleID = ?
+                        AND style_variable.variableName IN (?, ?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            "/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n",
+            $destination->styleID,
+            'individualScss',
+            'individualScssDarkMode',
+            'overrideScss',
+        ]);
     }
 
     private function copyAssets(Style $source, Style $destination): void
