@@ -2,7 +2,6 @@
 
 namespace wcf\data\poll;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\poll\option\PollOption;
@@ -227,21 +226,23 @@ final class PollBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
-        $this->saveQuestion($object);
-        $this->saveOptions($object);
+        $this->saveQuestion($this->getObject());
+        $this->saveOptions($this->getObject());
 
         if ($this->recalculateVotes) {
-            self::calculateVotes($object->pollID);
+            self::calculateVotes($this->getObject()->pollID);
         }
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
+        $object = $this->getObject();
+
         $modeChanged = \array_key_exists('isMultilingual', $this->properties)
-            && $this->getObject()->isMultilingual !== $object->isMultilingual;
+            && $this->getExistingObject()->isMultilingual !== $object->isMultilingual;
 
         if (isset($this->question) || $modeChanged) {
             $this->saveQuestion($object);
