@@ -38,6 +38,13 @@ abstract class DatabaseObjectBuilder
     private bool $consumed = false;
 
     /**
+     * The object that has been created or updated by this builder.
+     *
+     * @var ?TDatabaseObject
+     */
+    protected ?DatabaseObject $object = null;
+
+    /**
      * Use forCreate() or forUpdate() to obtain a builder instance.
      *
      * @param ?TDatabaseObject $existingObject
@@ -85,11 +92,11 @@ abstract class DatabaseObjectBuilder
             $id = WCF::getDB()->getInsertID(static::getBaseClass()::getDatabaseTableName(), static::getBaseClass()::getDatabaseTableIndexName());
         }
 
-        $object = new (static::getBaseClass())($id);
+        $this->object = new (static::getBaseClass())($id);
 
-        $this->afterCreate($object);
+        $this->afterCreate($this->object);
 
-        return $object;
+        return $this->object;
     }
 
     /**
@@ -191,14 +198,14 @@ abstract class DatabaseObjectBuilder
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute($statementParameters);
 
-            $object = new (static::getBaseClass())($this->existingObject->getObjectID());
+            $this->object = new (static::getBaseClass())($this->existingObject->getObjectID());
         } else {
-            $object = $this->existingObject;
+            $this->object = $this->existingObject;
         }
 
-        $this->afterUpdate($object);
+        $this->afterUpdate($this->object);
 
-        return $object;
+        return $this->object;
     }
 
     /**
@@ -438,5 +445,20 @@ abstract class DatabaseObjectBuilder
         }
 
         return $this->existingObject;
+    }
+
+    /**
+     * Returns the object that has been created or updated by this builder.
+     *
+     * @return TDatabaseObject
+     * @throws \BadMethodCallException if neither create() nor update() has completed yet
+     */
+    final public function getObject(): DatabaseObject
+    {
+        if ($this->object === null) {
+            throw new \BadMethodCallException('The object can only be retrieved after `create()` or `update()` has been executed.');
+        }
+
+        return $this->object;
     }
 }
