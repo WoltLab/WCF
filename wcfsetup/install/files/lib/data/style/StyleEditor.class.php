@@ -645,13 +645,20 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             $importedOptions[$variableName] = $option::tryFromString($styleData['variables'][$variableName] ?? '');
         }
 
+        $authoredVariables = $styleData['variables'];
+        foreach (Style::getAvailableOptions() as $option) {
+            $variableName = $option::getVariableName();
+            $authoredVariables[$variableName] = ($importedOptions[$variableName] ?? $option::getFallback())->toString();
+        }
+
+        $authoredVariablesDarkMode = null;
+        if ($styleData['hasDarkMode'] === 1) {
+            $authoredVariablesDarkMode = \is_array($styleData['variablesDarkMode']) ? $styleData['variablesDarkMode'] : [];
+        }
+
         // save style
         if ($style === null) {
-            foreach (Style::getAvailableOptions() as $option) {
-                $variableName = $option::getVariableName();
-                $styleData['variables'][$variableName] = ($importedOptions[$variableName] ?? $option::getFallback())->toString();
-            }
-
+            $styleData['variables'] = $authoredVariables;
             $styleData['packageID'] = $packageID;
             // A style without a package name is never updated, protecting it
             // would only lock the preset declarations.
@@ -725,6 +732,9 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
             $style->update($styleData);
         }
+
+        // An update keeps the installed values, but records the ones it ships.
+        $style->setAuthoredVariables($authoredVariables, $authoredVariablesDarkMode);
 
         // import images
         if (!empty($data['images'])) {
@@ -1300,6 +1310,43 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         }
 
         StyleHandler::getInstance()->resetStylesheet($this->getDecoratedObject());
+    }
+
+    /**
+     * Records the values the style author shipped. Variables missing from the
+     * archive store the current default, because a later change of the default
+     * must not alter what the author shipped.
+     *
+     * @param array<string, string> $variables
+     * @param ?array<string, string> $variablesDarkMode `null` if the archive has no dark mode
+     */
+    private function setAuthoredVariables(array $variables, ?array $variablesDarkMode): void
+    {
+        $sql = "SELECT  variableID, variableName, defaultValue, defaultValueDarkMode
+                FROM    wcf1_style_variable";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
+        $styleVariables = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        $sql = "INSERT INTO             wcf1_style_variable_value
+                                        (styleID, variableID, authoredValue, authoredValueDarkMode)
+                VALUES                  (?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE authoredValue = VALUES(authoredValue),
+                                        authoredValueDarkMode = VALUES(authoredValueDarkMode)";
+        $statement = WCF::getDB()->prepare($sql);
+
+        WCF::getDB()->beginTransaction();
+        foreach ($styleVariables as $row) {
+            $variableName = $row['variableName'];
+
+            $statement->execute([
+                $this->styleID,
+                $row['variableID'],
+                $variables[$variableName] ?? $row['defaultValue'],
+                $variablesDarkMode === null ? null : ($variablesDarkMode[$variableName] ?? $row['defaultValueDarkMode']),
+            ]);
+        }
+        WCF::getDB()->commitTransaction();
     }
 
     /**

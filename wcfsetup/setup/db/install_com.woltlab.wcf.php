@@ -3625,6 +3625,8 @@ return [
             NotNullInt10DatabaseTableColumn::create('variableID'),
             MediumtextDatabaseTableColumn::create('variableValue'),
             MediumtextDatabaseTableColumn::create('variableValueDarkMode'),
+            MediumtextDatabaseTableColumn::create('authoredValue'),
+            MediumtextDatabaseTableColumn::create('authoredValueDarkMode'),
         ])
         ->indices([
             DatabaseTableIndex::create('styleID')

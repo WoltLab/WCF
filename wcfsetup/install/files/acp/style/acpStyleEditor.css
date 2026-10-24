@@ -1055,6 +1055,17 @@ html:not(.touch) .spColorBox {
 	display: flex;
 	flex: 0 0 auto;
 }
+.spColorRestore {
+	color: var(--wcfContentDimmedText);
+	flex: 0 0 auto;
+	margin-left: auto;
+}
+.spColorRestore:not([hidden]) {
+	display: flex;
+}
+.spColorRestore:hover {
+	color: var(--wcfContentText);
+}
 #spWindow[data-page-header-layout="classic"] + #spSidebar .spColorScope[data-style-option="pageHeaderLayout"],
 #spWindow[data-page-footer-layout="classic"] + #spSidebar .spColorScope[data-style-option="pageFooterLayout"] {
 	display: none;

@@ -91,12 +91,14 @@ final class CopyStyle
     private function copyVariables(Style $source, Style $destination): void
     {
         $sql = "INSERT INTO             wcf1_style_variable_value
-                                        (styleID, variableID, variableValue, variableValueDarkMode)
-                SELECT                  ?, variableID, variableValue, variableValueDarkMode
+                                        (styleID, variableID, variableValue, variableValueDarkMode, authoredValue, authoredValueDarkMode)
+                SELECT                  ?, variableID, variableValue, variableValueDarkMode, authoredValue, authoredValueDarkMode
                 FROM                    wcf1_style_variable_value
                 WHERE                   styleID = ?
                 ON DUPLICATE KEY UPDATE variableValue = VALUES(variableValue),
-                                        variableValueDarkMode = VALUES(variableValueDarkMode)";
+                                        variableValueDarkMode = VALUES(variableValueDarkMode),
+                                        authoredValue = VALUES(authoredValue),
+                                        authoredValueDarkMode = VALUES(authoredValueDarkMode)";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$destination->styleID, $source->styleID]);
 

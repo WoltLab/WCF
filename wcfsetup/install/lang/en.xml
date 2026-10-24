@@ -2827,6 +2827,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.colors.primaryBackgroundColor"><![CDATA[Background Color (primary)]]></item>
 		<item name="wcf.acp.style.colors.primaryBorderColor"><![CDATA[Border Color (primary)]]></item>
 		<item name="wcf.acp.style.colors.primaryColor"><![CDATA[Font Color (primary)]]></item>
+		<item name="wcf.acp.style.colors.restoreAuthored"><![CDATA[Restore the original color]]></item>
 		<item name="wcf.acp.style.colors.selectCategoryByClick"><![CDATA[Category Direct Selection]]></item>
 		<item name="wcf.acp.style.colors.tabular"><![CDATA[Tabular Lists]]></item>
 		<item name="wcf.acp.style.colors.toggleColorPalette"><![CDATA[Toggle View]]></item>

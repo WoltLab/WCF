@@ -7,6 +7,7 @@
  */
 
 import * as Core from "../../../Core";
+import * as ColorUtil from "../../../ColorUtil";
 import DomUtil from "../../../Dom/Util";
 import * as EventHandler from "../../../Event/Handler";
 import * as UiScreen from "../../../Ui/Screen";
@@ -21,6 +22,24 @@ let _updateRegionMarker: () => void;
 
 interface StyleEditorOptions {
   isTainted: boolean;
+}
+
+/**
+ * Compares two colors regardless of their notation, e.g. `.8` and `0.8` for the alpha channel.
+ */
+function isSameColor(a: string, b: string): boolean {
+  if (a === b) {
+    return true;
+  }
+
+  if (!ColorUtil.isValidColor(a) || !ColorUtil.isValidColor(b)) {
+    return false;
+  }
+
+  const colorA = ColorUtil.stringToRgba(a);
+  const colorB = ColorUtil.stringToRgba(b);
+
+  return colorA.r === colorB.r && colorA.g === colorB.g && colorA.b === colorB.b && colorA.a === colorB.a;
 }
 
 /**
@@ -182,11 +201,30 @@ function initVisualEditor(): void {
   const wrapper = document.getElementById("spVariablesWrapper")!;
   wrapper.querySelectorAll(".styleVariableColor").forEach((colorField: HTMLElement) => {
     const variableName = colorField.dataset.store!.replace(/_value$/, "");
+    const input = document.getElementById(colorField.dataset.store!) as HTMLInputElement;
+    const restoreButton = wrapper.querySelector<HTMLButtonElement>(
+      `.spColorRestore[data-store="${colorField.dataset.store!}"]`,
+    );
+
+    const updateRestoreButton = () => {
+      if (restoreButton !== null) {
+        restoreButton.hidden = isSameColor(input.value, restoreButton.dataset.authoredColor!);
+      }
+    };
+
+    restoreButton?.addEventListener("click", () => {
+      const authoredColor = restoreButton.dataset.authoredColor!;
+
+      input.value = authoredColor;
+      colorField.dataset.color = authoredColor;
+      colorField.style.setProperty("background-color", authoredColor);
+    });
 
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.attributeName === "style") {
           spWindow.style.setProperty(`--${variableName}`, colorField.style.getPropertyValue("background-color"));
+          updateRestoreButton();
         }
       });
     });
@@ -196,6 +234,7 @@ function initVisualEditor(): void {
     });
 
     spWindow.style.setProperty(`--${variableName}`, colorField.style.getPropertyValue("background-color"));
+    updateRestoreButton();
   });
 
   // category selection by clicking on the area

@@ -253,6 +253,11 @@ return [
         ->columns([
             IntDatabaseTableColumn::create('templateGroupID'),
         ]),
+    PartialDatabaseTable::create('wcf1_style_variable_value')
+        ->columns([
+            MediumtextDatabaseTableColumn::create('authoredValue'),
+            MediumtextDatabaseTableColumn::create('authoredValueDarkMode'),
+        ]),
     PartialDatabaseTable::create('wcf1_user_activity_event')
         ->columns([
             IntDatabaseTableColumn::create('userID'),

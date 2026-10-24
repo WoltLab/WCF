@@ -1050,6 +1050,9 @@
 														{if $colorScopes[$spColor]|isset}
 															<span class="spColorScope jsTooltip" data-style-option="{$colorScopes[$spColor][option]}" title="{$colorScopes[$spColor][phrase]|language}">{icon name='circle-info'}</span>
 														{/if}
+														{if $authoredVariables[$spColor]|isset}
+															<button type="button" class="spColorRestore jsTooltip" data-store="{$spColor}_value" data-authored-color="{$authoredVariables[$spColor]}" title="{lang}wcf.acp.style.colors.restoreAuthored{/lang}"{if $authoredVariables[$spColor] === $variables[$spColor]} hidden{/if}>{icon name='arrow-rotate-left'}</button>
+														{/if}
 													</div>
 													<span class="spDescription">{$spType}</span>
 												</div>

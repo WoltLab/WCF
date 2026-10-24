@@ -2898,6 +2898,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.colors.primaryBackgroundColor"><![CDATA[Hintergrundfarbe (primär)]]></item>
 		<item name="wcf.acp.style.colors.primaryBorderColor"><![CDATA[Rahmenfarbe (primär)]]></item>
 		<item name="wcf.acp.style.colors.primaryColor"><![CDATA[Schriftfarbe (primär)]]></item>
+		<item name="wcf.acp.style.colors.restoreAuthored"><![CDATA[Ursprüngliche Farbe wiederherstellen]]></item>
 		<item name="wcf.acp.style.colors.selectCategoryByClick"><![CDATA[Kategorie-Direktauswahl]]></item>
 		<item name="wcf.acp.style.colors.tabular"><![CDATA[Tabellarische Auflistungen]]></item>
 		<item name="wcf.acp.style.colors.toggleColorPalette"><![CDATA[Ansicht umschalten]]></item>

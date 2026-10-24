@@ -143,6 +143,9 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                         this.opacityInput.addEventListener("input", (event) => {
                             this.setOpacity(event);
                         });
+                    },
+                    onShow: () => {
+                        // The stored value can change while the dialog is closed.
                         if (ColorUtil.isValidColor(this.input.value)) {
                             this.setInitialColor(this.input.value);
                         }
@@ -152,8 +155,6 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
                         else {
                             this.setInitialColor("#FFF0");
                         }
-                    },
-                    onShow: () => {
                         this.colorTextInput.focus();
                         this.colorTextInput.select();
                     },

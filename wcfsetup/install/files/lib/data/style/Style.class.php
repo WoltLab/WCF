@@ -131,6 +131,37 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
     }
 
     /**
+     * Returns the values shipped by the author of this style, the values for
+     * the dark mode are prefixed with `DARK_MODE_PREFIX`. Variables without a
+     * known value are omitted.
+     *
+     * @return array<string, string>
+     * @since 6.3
+     */
+    public function getAuthoredVariables(): array
+    {
+        $sql = "SELECT      variable.variableName, value.authoredValue, value.authoredValueDarkMode
+                FROM        wcf1_style_variable_value value
+                INNER JOIN  wcf1_style_variable variable
+                ON          variable.variableID = value.variableID
+                WHERE       value.styleID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$this->styleID]);
+
+        $variables = [];
+        while ($row = $statement->fetchArray()) {
+            if ($row['authoredValue'] !== null) {
+                $variables[$row['variableName']] = $row['authoredValue'];
+            }
+            if ($row['authoredValueDarkMode'] !== null) {
+                $variables[self::DARK_MODE_PREFIX . $row['variableName']] = $row['authoredValueDarkMode'];
+            }
+        }
+
+        return $variables;
+    }
+
+    /**
      * Returns a specific style variable or null if not found.
      * If $toHex is set to true the color defined by the variable
      * will be converted to the hexadecimal notation (e.g. for use

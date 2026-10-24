@@ -454,6 +454,7 @@ class StyleEditForm extends StyleAddForm
             'style' => $this->style,
             'styleID' => $this->styleID,
             'isDarkMode' => $this->isDarkMode,
+            'authoredVariables' => $this->getAuthoredVariables(),
             'stylePackage' => $this->getStylePackage(),
             'canViewStylePackage' => WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')
                 && WCF::getSession()->hasPermission('admin.configuration.package.canUpdatePackage'),
@@ -481,5 +482,34 @@ class StyleEditForm extends StyleAddForm
         }
 
         return $package;
+    }
+
+    /**
+     * Returns the authored values of the variables edited in the current mode.
+     * The dark mode edits the light value of variables without dark mode support.
+     *
+     * @return array<string, string>
+     */
+    private function getAuthoredVariables(): array
+    {
+        $authoredVariables = $this->style->getAuthoredVariables();
+        $supportsDarkMode = $this->isDarkMode ? Style::getVariablesWithDarkModeSupport() : [];
+
+        $variables = [];
+        foreach ($authoredVariables as $variableName => $value) {
+            if (\str_starts_with($variableName, Style::DARK_MODE_PREFIX)) {
+                continue;
+            }
+
+            if (\in_array($variableName, $supportsDarkMode, true)) {
+                $value = $authoredVariables[Style::DARK_MODE_PREFIX . $variableName] ?? null;
+            }
+
+            if ($value !== null) {
+                $variables[$variableName] = $value;
+            }
+        }
+
+        return $variables;
     }
 }

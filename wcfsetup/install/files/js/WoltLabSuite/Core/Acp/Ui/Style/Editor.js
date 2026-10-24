@@ -5,13 +5,14 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Ui/Screen"], function (require, exports, tslib_1, Core, Util_1, EventHandler, UiScreen) {
+define(["require", "exports", "tslib", "../../../Core", "../../../ColorUtil", "../../../Dom/Util", "../../../Event/Handler", "../../../Ui/Screen"], function (require, exports, tslib_1, Core, ColorUtil, Util_1, EventHandler, UiScreen) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     exports.hideVisualEditor = hideVisualEditor;
     exports.showVisualEditor = showVisualEditor;
     Core = tslib_1.__importStar(Core);
+    ColorUtil = tslib_1.__importStar(ColorUtil);
     Util_1 = tslib_1.__importDefault(Util_1);
     EventHandler = tslib_1.__importStar(EventHandler);
     UiScreen = tslib_1.__importStar(UiScreen);
@@ -21,6 +22,20 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "..
     let _isVisible = true;
     let _isSmartphone = false;
     let _updateRegionMarker;
+    /**
+     * Compares two colors regardless of their notation, e.g. `.8` and `0.8` for the alpha channel.
+     */
+    function isSameColor(a, b) {
+        if (a === b) {
+            return true;
+        }
+        if (!ColorUtil.isValidColor(a) || !ColorUtil.isValidColor(b)) {
+            return false;
+        }
+        const colorA = ColorUtil.stringToRgba(a);
+        const colorB = ColorUtil.stringToRgba(b);
+        return colorA.r === colorB.r && colorA.g === colorB.g && colorA.b === colorB.b && colorA.a === colorB.a;
+    }
     /**
      * Handles the switch between static and fluid layout.
      */
@@ -163,10 +178,24 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "..
         const wrapper = document.getElementById("spVariablesWrapper");
         wrapper.querySelectorAll(".styleVariableColor").forEach((colorField) => {
             const variableName = colorField.dataset.store.replace(/_value$/, "");
+            const input = document.getElementById(colorField.dataset.store);
+            const restoreButton = wrapper.querySelector(`.spColorRestore[data-store="${colorField.dataset.store}"]`);
+            const updateRestoreButton = () => {
+                if (restoreButton !== null) {
+                    restoreButton.hidden = isSameColor(input.value, restoreButton.dataset.authoredColor);
+                }
+            };
+            restoreButton?.addEventListener("click", () => {
+                const authoredColor = restoreButton.dataset.authoredColor;
+                input.value = authoredColor;
+                colorField.dataset.color = authoredColor;
+                colorField.style.setProperty("background-color", authoredColor);
+            });
             const observer = new MutationObserver((mutations) => {
                 mutations.forEach((mutation) => {
                     if (mutation.attributeName === "style") {
                         spWindow.style.setProperty(`--${variableName}`, colorField.style.getPropertyValue("background-color"));
+                        updateRestoreButton();
                     }
                 });
             });
@@ -174,6 +203,7 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "..
                 attributes: true,
             });
             spWindow.style.setProperty(`--${variableName}`, colorField.style.getPropertyValue("background-color"));
+            updateRestoreButton();
         });
         // category selection by clicking on the area
         const buttonToggleColorPalette = document.querySelector(".jsButtonToggleColorPalette");
