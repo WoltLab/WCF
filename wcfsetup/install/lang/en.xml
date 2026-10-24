@@ -2887,7 +2887,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.packageName.description"><![CDATA[Enter a package identifier matching the pattern “tld.domain.packageName”. For example if you own the domain “example.com” and created a style called “Blue Sunrise”, you could pick “com.example.style.blueSunrise” as a valid and descriptive identifier.]]></item>
 		<item name="wcf.acp.style.packageName.error.invalid"><![CDATA[The package identifier is invalid.]]></item>
 		<item name="wcf.acp.style.packageName.error.reserved"><![CDATA[The package identifiers cannot begin with “com.woltlab.”.]]></item>
-		<item name="wcf.acp.style.protected"><![CDATA[This style is protected and editing is limited, preserving the ability to update it. A copy of this style can be edited without restrictions.]]></item>
+		<item name="wcf.acp.style.protected"><![CDATA[{if $stylePackage !== null}This style is provided by the package {if $canViewStylePackage}<a href="{$stylePackage->getLink()}">{$stylePackage->getTitle()}</a>{else}“{$stylePackage->getTitle()}”{/if} and receives updates with it.{elseif $style->packageName !== ''}This style was imported and receives updates by importing a newer version of it.{else}This style is protected and editing is limited.{/if}]]></item>
 		<item name="wcf.acp.style.protected.less"><![CDATA[Read only]]></item>
 		<item name="wcf.acp.style.styleDate"><![CDATA[Date]]></item>
 		<item name="wcf.acp.style.styleDescription"><![CDATA[Description]]></item>

@@ -2957,7 +2957,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.packageName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier optional den Paketbezeichner in der Form „tld.domain.paketName“ an. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} beispielsweise die Domain „example.com“ gehört und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Stil „Blue Sunrise“ heißt, so wäre „com.example.style.blueSunrise“ ein passender und gültiger Paketbezeichner.]]></item>
 		<item name="wcf.acp.style.packageName.error.invalid"><![CDATA[Der eingegebene Paketbezeichner ist ungültig]]></item>
 		<item name="wcf.acp.style.packageName.error.reserved"><![CDATA[Der Paketbezeichner darf nicht mit „com.woltlab.“ beginnen]]></item>
-		<item name="wcf.acp.style.protected"><![CDATA[Dieser Stil ist geschützt und kann nur eingeschränkt verändert werden, damit er weiterhin aktualisiert werden kann. Eine Kopie des Stils kann ohne Einschränkungen verändert werden.]]></item>
+		<item name="wcf.acp.style.protected"><![CDATA[{if $stylePackage !== null}Dieser Stil wird durch das Paket {if $canViewStylePackage}<a href="{$stylePackage->getLink()}">{$stylePackage->getTitle()}</a>{else}„{$stylePackage->getTitle()}“{/if} bereitgestellt und mit diesem aktualisiert.{elseif $style->packageName !== ''}Dieser Stil wurde importiert und wird durch den Import einer neueren Version aktualisiert.{else}Dieser Stil ist geschützt und kann nur eingeschränkt verändert werden.{/if}]]></item>
 		<item name="wcf.acp.style.protected.less"><![CDATA[Nur lesend]]></item>
 		<item name="wcf.acp.style.styleDate"><![CDATA[Datum]]></item>
 		<item name="wcf.acp.style.styleDescription"><![CDATA[Beschreibung]]></item>

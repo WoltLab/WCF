@@ -3,6 +3,8 @@
 namespace wcf\acp\form;
 
 use wcf\acp\page\StyleListPage;
+use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
 use wcf\data\style\StyleEditor;
@@ -452,11 +454,32 @@ class StyleEditForm extends StyleAddForm
             'style' => $this->style,
             'styleID' => $this->styleID,
             'isDarkMode' => $this->isDarkMode,
+            'stylePackage' => $this->getStylePackage(),
+            'canViewStylePackage' => WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')
+                && WCF::getSession()->hasPermission('admin.configuration.package.canUpdatePackage'),
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new StyleInteractions(),
                 $this->style,
                 LinkHandler::getInstance()->getControllerLink(StyleListPage::class)
             ),
         ]);
+    }
+
+    /**
+     * Returns the package that updates this style. Imported styles carry the
+     * Core's package id, but are only updated by importing them again.
+     */
+    private function getStylePackage(): ?Package
+    {
+        if ($this->style->isTainted !== 0) {
+            return null;
+        }
+
+        $package = PackageCache::getInstance()->getPackage($this->style->packageID);
+        if ($package === null || ($package->packageID === 1 && $this->style->packageName !== 'com.woltlab.wcf')) {
+            return null;
+        }
+
+        return $package;
     }
 }
