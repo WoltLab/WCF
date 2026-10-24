@@ -2,7 +2,6 @@
 
 namespace wcf\data\comment;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\object\type\ObjectType;
 use wcf\data\user\User;
@@ -223,18 +222,18 @@ final class CommentBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         if (isset($this->htmlInputProcessor)) {
-            $this->registerEmbeddedObjects($object);
+            $this->registerEmbeddedObjects($this->getObject());
         }
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         if (isset($this->htmlInputProcessor)) {
-            $this->registerEmbeddedObjects($object);
+            $this->registerEmbeddedObjects($this->getObject());
         }
     }
 

@@ -5,7 +5,6 @@ namespace wcf\data\article;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentBuilder;
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\user\User;
 use wcf\system\label\object\ArticleLabelObjectHandler;
@@ -178,24 +177,24 @@ final class ArticleBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         foreach ($this->articleContentBuilders as $articleContentBuilder) {
             $articleContentBuilder
-                ->setArticle($object)
+                ->setArticle($this->getObject())
                 ->create();
         }
 
         if (isset($this->labelIDs)) {
-            ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $object->articleID, false);
+            ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $this->getObject()->articleID, false);
         }
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         foreach ($this->articleContentBuilders as $articleContentBuilder) {
-            $articleContentBuilder->setArticle($object);
+            $articleContentBuilder->setArticle($this->getObject());
             if ($articleContentBuilder->isUpdate()) {
                 $articleContentBuilder->update();
             } else {
@@ -204,7 +203,7 @@ final class ArticleBuilder extends DatabaseObjectBuilder
         }
 
         if (isset($this->labelIDs)) {
-            ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $object->articleID, false);
+            ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $this->getObject()->articleID, false);
         }
     }
 

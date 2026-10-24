@@ -3,7 +3,6 @@
 namespace wcf\data\reaction\type;
 
 use wcf\command\file\DeleteFiles;
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\file\FileList;
 use wcf\system\l10n\L10nStorage;
@@ -82,7 +81,7 @@ final class ReactionTypeBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         if (isset($this->properties['showOrder'])) {
             $sql = "UPDATE  wcf1_reaction_type
@@ -91,18 +90,18 @@ final class ReactionTypeBuilder extends DatabaseObjectBuilder
                         AND reactionTypeID <> ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
-                $object->showOrder,
-                $object->reactionTypeID,
+                $this->getObject()->showOrder,
+                $this->getObject()->reactionTypeID,
             ]);
         }
 
         if (isset($this->title)) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         $oldObject = $this->getExistingObject();
 
@@ -116,7 +115,7 @@ final class ReactionTypeBuilder extends DatabaseObjectBuilder
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
                 $oldObject->showOrder,
-                $object->reactionTypeID,
+                $this->getObject()->reactionTypeID,
             ]);
 
             $sql = "UPDATE  wcf1_reaction_type
@@ -125,20 +124,20 @@ final class ReactionTypeBuilder extends DatabaseObjectBuilder
                         AND reactionTypeID <> ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
-                $object->showOrder,
-                $object->reactionTypeID,
+                $this->getObject()->showOrder,
+                $this->getObject()->reactionTypeID,
             ]);
         }
 
         if (isset($this->title)) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
 
         // A reaction type owns its icon file, a replaced file is orphaned.
         if (
             \array_key_exists('iconFileID', $this->properties)
             && $oldObject->iconFileID !== null
-            && $oldObject->iconFileID !== $object->iconFileID
+            && $oldObject->iconFileID !== $this->getObject()->iconFileID
         ) {
             $fileList = new FileList();
             $fileList->setObjectIDs([$oldObject->iconFileID]);

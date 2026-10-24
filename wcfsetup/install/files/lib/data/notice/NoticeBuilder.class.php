@@ -2,7 +2,6 @@
 
 namespace wcf\data\notice;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\ConditionCacheBuilder;
@@ -131,22 +130,22 @@ final class NoticeBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
-        $this->saveI18nValues($object);
+        $this->saveI18nValues($this->getObject());
 
         if ($this->showOrder !== null) {
-            self::applyShowOrder($object, $this->showOrder);
+            self::applyShowOrder($this->getObject(), $this->showOrder);
         }
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
-        $this->saveI18nValues($object);
+        $this->saveI18nValues($this->getObject());
 
         if ($this->showOrder !== null && $this->showOrder !== $this->getExistingObject()->showOrder) {
-            self::applyShowOrder($object, $this->showOrder);
+            self::applyShowOrder($this->getObject(), $this->showOrder);
         }
     }
 

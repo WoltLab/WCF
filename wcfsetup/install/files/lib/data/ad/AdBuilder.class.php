@@ -2,7 +2,6 @@
 
 namespace wcf\data\ad;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\AdCacheBuilder;
@@ -96,22 +95,22 @@ final class AdBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
-        self::applyShowOrder($object, $this->showOrder ?? 0);
+        self::applyShowOrder($this->getObject(), $this->showOrder ?? 0);
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         $previousAd = $this->getExistingObject();
 
-        if ($object->objectTypeID !== $previousAd->objectTypeID) {
+        if ($this->getObject()->objectTypeID !== $previousAd->objectTypeID) {
             // The ad is moved to another location, therefore its position
             // must be determined in relation to the ads at the new location.
-            self::applyShowOrder($object, $this->showOrder ?? 0);
+            self::applyShowOrder($this->getObject(), $this->showOrder ?? 0);
         } elseif ($this->showOrder !== null && $this->showOrder !== $previousAd->showOrder) {
-            self::applyShowOrder($object, $this->showOrder);
+            self::applyShowOrder($this->getObject(), $this->showOrder);
         }
     }
 

@@ -2,7 +2,6 @@
 
 namespace wcf\data\contact\recipient;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\system\l10n\L10nStorage;
 
@@ -111,18 +110,18 @@ final class ContactRecipientBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         if (isset($this->name) || isset($this->email)) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         if (isset($this->name) || isset($this->email)) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
     }
 

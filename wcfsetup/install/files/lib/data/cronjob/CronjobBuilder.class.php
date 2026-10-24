@@ -2,7 +2,6 @@
 
 namespace wcf\data\cronjob;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
@@ -167,7 +166,7 @@ final class CronjobBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         if ($this->generateCronjobName) {
             $sql = "UPDATE  wcf1_cronjob
@@ -175,22 +174,22 @@ final class CronjobBuilder extends DatabaseObjectBuilder
                     WHERE   cronjobID = ?";
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute([
-                'com.woltlab.wcf.cronjob' . $object->cronjobID,
-                $object->cronjobID,
+                'com.woltlab.wcf.cronjob' . $this->getObject()->cronjobID,
+                $this->getObject()->cronjobID,
             ]);
         }
 
-        $this->saveL10nValues($object);
+        $this->saveL10nValues($this->getObject());
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         if (isset($this->description)) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
 
-        $this->rescheduleOnExpressionChange($object);
+        $this->rescheduleOnExpressionChange($this->getObject());
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace wcf\data\user\option\category;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\system\l10n\L10nStorage;
 use wcf\util\StringUtil;
@@ -140,25 +139,25 @@ final class UserOptionCategoryBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         // assign the generic category name now that the id is known
         if ($this->isGenericCategoryName) {
-            UserOptionCategoryBuilder::forUpdate($object)
-                ->setCategoryName('category' . $object->categoryID)
+            UserOptionCategoryBuilder::forUpdate($this->getObject())
+                ->setCategoryName('category' . $this->getObject()->categoryID)
                 ->update();
         }
 
         if (isset($this->l10nTitle)) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         if (isset($this->l10nTitle)) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
     }
 

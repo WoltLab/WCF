@@ -3,7 +3,6 @@
 namespace wcf\data\user\rank;
 
 use wcf\command\file\DeleteFiles;
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\l10n\L10nStorage;
@@ -118,18 +117,18 @@ final class UserRankBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         if (isset($this->rankTitle)) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         if (isset($this->rankTitle)) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
 
         // A user rank owns its image file, a replaced file is orphaned.
@@ -137,7 +136,7 @@ final class UserRankBuilder extends DatabaseObjectBuilder
         if (
             \array_key_exists('rankImageFileID', $this->properties)
             && $oldObject->rankImageFileID !== null
-            && $oldObject->rankImageFileID !== $object->rankImageFileID
+            && $oldObject->rankImageFileID !== $this->getObject()->rankImageFileID
         ) {
             $file = FileRuntimeCache::getInstance()->getObject($oldObject->rankImageFileID);
             if ($file !== null) {

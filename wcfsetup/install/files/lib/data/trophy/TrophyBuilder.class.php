@@ -3,7 +3,6 @@
 namespace wcf\data\trophy;
 
 use wcf\command\file\DeleteFiles;
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\ConditionCacheBuilder;
@@ -180,32 +179,32 @@ final class TrophyBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
-        $this->saveL10nValues($object);
+        $this->saveL10nValues($this->getObject());
 
         if ($this->showOrder !== null) {
-            self::applyShowOrder($object, $this->showOrder);
+            self::applyShowOrder($this->getObject(), $this->showOrder);
         }
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         $oldObject = $this->getExistingObject();
 
         if (isset($this->title) || isset($this->description)) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
 
         if ($this->showOrder !== null && $this->showOrder !== $oldObject->showOrder) {
-            self::applyShowOrder($object, $this->showOrder);
+            self::applyShowOrder($this->getObject(), $this->showOrder);
         }
 
         if (
             \array_key_exists('iconFileID', $this->properties)
             && $oldObject->iconFileID !== null
-            && $oldObject->iconFileID !== $object->iconFileID
+            && $oldObject->iconFileID !== $this->getObject()->iconFileID
         ) {
             $file = FileRuntimeCache::getInstance()->getObject($oldObject->iconFileID);
             if ($file !== null) {

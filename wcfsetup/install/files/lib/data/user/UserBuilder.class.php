@@ -3,7 +3,6 @@
 namespace wcf\data\user;
 
 use ParagonIE\ConstantTime\Hex;
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\user\group\UserGroup;
 use wcf\system\attachment\AttachmentHandler;
@@ -513,22 +512,22 @@ final class UserBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
-        $this->createUserOptions($object);
+        $this->createUserOptions($this->getObject());
         $this->saveGroupIDs(
-            $object,
+            $this->getObject(),
             $this->groupIDs ?? UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::USERS]),
             false
         );
-        $this->saveLanguageIDs($object, $this->languageIDs ?? [], false);
+        $this->saveLanguageIDs($this->getObject(), $this->languageIDs ?? [], false);
 
         if (isset($this->signatureHtmlInputProcessor)) {
-            $this->registerSignatureEmbeddedObjects($object);
+            $this->registerSignatureEmbeddedObjects($this->getObject());
         }
 
         if (isset($this->signatureAttachmentHandler)) {
-            $this->signatureAttachmentHandler->updateObjectID($object->userID);
+            $this->signatureAttachmentHandler->updateObjectID($this->getObject()->userID);
         }
 
         if (\PACKAGE_ID !== 0) {
@@ -539,27 +538,27 @@ final class UserBuilder extends DatabaseObjectBuilder
                     FROM        wcf1_user_notification_event
                     WHERE       preset = ?";
             $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$object->userID, 1]);
+            $statement->execute([$this->getObject()->userID, 1]);
         }
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         if ($this->userOptions !== null) {
-            $this->updateUserOptions($object);
+            $this->updateUserOptions($this->getObject());
         }
 
         if ($this->groupIDs !== null) {
-            $this->saveGroupIDs($object, $this->groupIDs, true);
+            $this->saveGroupIDs($this->getObject(), $this->groupIDs, true);
         }
 
         if ($this->languageIDs !== null) {
-            $this->saveLanguageIDs($object, $this->languageIDs, true);
+            $this->saveLanguageIDs($this->getObject(), $this->languageIDs, true);
         }
 
         if (isset($this->signatureHtmlInputProcessor)) {
-            $this->registerSignatureEmbeddedObjects($object);
+            $this->registerSignatureEmbeddedObjects($this->getObject());
         }
     }
 

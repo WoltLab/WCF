@@ -2,7 +2,6 @@
 
 namespace wcf\data\paid\subscription;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
@@ -146,40 +145,40 @@ final class PaidSubscriptionBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         $showOrder = $this->properties['showOrder'] ?? 0;
-        $maxShowOrder = $this->getMaxShowOrder($object->subscriptionID);
+        $maxShowOrder = $this->getMaxShowOrder($this->getObject()->subscriptionID);
         if ($showOrder === 0 || $showOrder > $maxShowOrder) {
-            $this->updateShowOrder($object->subscriptionID, $maxShowOrder + 1);
+            $this->updateShowOrder($this->getObject()->subscriptionID, $maxShowOrder + 1);
         } else {
-            $this->shiftShowOrder($object->subscriptionID, $showOrder, 1);
+            $this->shiftShowOrder($this->getObject()->subscriptionID, $showOrder, 1);
         }
 
-        $this->saveL10nValues($object);
+        $this->saveL10nValues($this->getObject());
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         $oldObject = $this->getExistingObject();
 
         if (isset($this->properties['showOrder']) && $this->properties['showOrder'] !== $oldObject->showOrder) {
             // Closes the gap at the previous position before making room at
             // the new one, the position is relative to the other subscriptions.
-            $this->shiftShowOrder($object->subscriptionID, $oldObject->showOrder + 1, -1);
+            $this->shiftShowOrder($this->getObject()->subscriptionID, $oldObject->showOrder + 1, -1);
 
             $showOrder = $this->properties['showOrder'];
-            $maxShowOrder = $this->getMaxShowOrder($object->subscriptionID);
+            $maxShowOrder = $this->getMaxShowOrder($this->getObject()->subscriptionID);
             if ($showOrder === 0 || $showOrder > $maxShowOrder) {
-                $this->updateShowOrder($object->subscriptionID, $maxShowOrder + 1);
+                $this->updateShowOrder($this->getObject()->subscriptionID, $maxShowOrder + 1);
             } else {
-                $this->shiftShowOrder($object->subscriptionID, $showOrder, 1);
+                $this->shiftShowOrder($this->getObject()->subscriptionID, $showOrder, 1);
             }
         }
 
         if (isset($this->title) || isset($this->description)) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
     }
 

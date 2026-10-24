@@ -2,7 +2,6 @@
 
 namespace wcf\data\label\group;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\label\LabelAction;
 use wcf\system\acl\ACLHandler;
@@ -85,16 +84,16 @@ final class LabelGroupBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
-        $this->saveL10nValues($object);
+        $this->saveL10nValues($this->getObject());
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         if (isset($this->groupName)) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
     }
 

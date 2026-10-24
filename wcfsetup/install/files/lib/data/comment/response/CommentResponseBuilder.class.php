@@ -3,7 +3,6 @@
 namespace wcf\data\comment\response;
 
 use wcf\data\comment\Comment;
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\user\User;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -103,18 +102,18 @@ final class CommentResponseBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         if (isset($this->htmlInputProcessor)) {
-            $this->registerEmbeddedObjects($object);
+            $this->registerEmbeddedObjects($this->getObject());
         }
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         if (isset($this->htmlInputProcessor)) {
-            $this->registerEmbeddedObjects($object);
+            $this->registerEmbeddedObjects($this->getObject());
         }
     }
 

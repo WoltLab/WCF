@@ -2,7 +2,6 @@
 
 namespace wcf\data\user\trophy;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\system\l10n\L10nStorage;
 
@@ -86,15 +85,15 @@ final class UserTrophyBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
-        $this->saveL10nValues($object);
+        $this->saveL10nValues($this->getObject());
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
-        $this->saveL10nValues($object);
+        $this->saveL10nValues($this->getObject());
     }
 
     private function saveL10nValues(UserTrophy $userTrophy): void

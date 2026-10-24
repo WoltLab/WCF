@@ -2,7 +2,6 @@
 
 namespace wcf\data\captcha\question;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\system\l10n\L10nStorage;
 
@@ -70,13 +69,13 @@ final class CaptchaQuestionBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
-        $this->saveL10nValues($object);
+        $this->saveL10nValues($this->getObject());
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         if (isset($this->question) || isset($this->answers)) {
             if (!isset($this->question) || !isset($this->answers)) {
@@ -85,7 +84,7 @@ final class CaptchaQuestionBuilder extends DatabaseObjectBuilder
                 throw new \BadMethodCallException("'question' and 'answers' must be set together.");
             }
 
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
     }
 

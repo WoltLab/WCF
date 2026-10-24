@@ -2,7 +2,6 @@
 
 namespace wcf\data\user\option;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\package\PackageCache;
 use wcf\system\database\table\column\IDatabaseTableColumn;
@@ -255,42 +254,42 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         // add the dynamic value column for this option
         self::applyColumnChanges([
-            $object->getFormOption()->getDatabaseTableColumn($object->getIdentifier()),
+            $this->getObject()->getFormOption()->getDatabaseTableColumn($this->getObject()->getIdentifier()),
         ]);
 
         // apply the default value to all existing rows
-        if ($object->defaultValue !== null) {
+        if ($this->getObject()->defaultValue !== null) {
             $sql = "UPDATE  wcf1_user_option_value
-                    SET     userOption" . $object->optionID . " = ?";
+                    SET     userOption" . $this->getObject()->optionID . " = ?";
             $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$object->defaultValue]);
+            $statement->execute([$this->getObject()->defaultValue]);
         }
 
         // assign the generic option name now that the id is known
         if ($this->isGenericOptionName) {
-            UserOptionBuilder::forUpdate($object)
-                ->setOptionName('option' . $object->optionID)
+            UserOptionBuilder::forUpdate($this->getObject())
+                ->setOptionName('option' . $this->getObject()->optionID)
                 ->update();
         }
 
-        $this->saveL10nValues($object);
+        $this->saveL10nValues($this->getObject());
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         // re-type the value column if the option type changed
-        if ($object->optionType !== $this->getExistingObject()->optionType) {
+        if ($this->getObject()->optionType !== $this->getExistingObject()->optionType) {
             self::applyColumnChanges([
-                $object->getFormOption()->getDatabaseTableColumn($object->getIdentifier()),
+                $this->getObject()->getFormOption()->getDatabaseTableColumn($this->getObject()->getIdentifier()),
             ]);
         }
 
-        $this->saveL10nValues($object);
+        $this->saveL10nValues($this->getObject());
     }
 
     /**

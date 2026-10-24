@@ -3,7 +3,6 @@
 namespace wcf\data\article\content;
 
 use wcf\data\article\Article;
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -165,30 +164,30 @@ final class ArticleContentBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         if (isset($this->htmlInputProcessor)) {
-            $this->registerEmbeddedObjects($this->htmlInputProcessor, $object);
+            $this->registerEmbeddedObjects($this->htmlInputProcessor, $this->getObject());
         }
 
         if (isset($this->attachmentHandler)) {
-            $this->attachmentHandler->updateObjectID($object->articleContentID);
+            $this->attachmentHandler->updateObjectID($this->getObject()->articleContentID);
         }
 
         if (isset($this->tags)) {
-            $this->saveTags($this->tags, $object);
+            $this->saveTags($this->tags, $this->getObject());
         }
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         if (isset($this->htmlInputProcessor)) {
-            $this->registerEmbeddedObjects($this->htmlInputProcessor, $object);
+            $this->registerEmbeddedObjects($this->htmlInputProcessor, $this->getObject());
         }
 
         if (isset($this->tags)) {
-            $this->saveTags($this->tags, $object);
+            $this->saveTags($this->tags, $this->getObject());
         }
     }
 

@@ -2,7 +2,6 @@
 
 namespace wcf\data\unfurl\url;
 
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\background\job\UnfurlUrlBackgroundJob;
@@ -86,10 +85,10 @@ final class UnfurlUrlBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         BackgroundQueueHandler::getInstance()->enqueueIn([
-            new UnfurlUrlBackgroundJob($object),
+            new UnfurlUrlBackgroundJob($this->getObject()),
         ]);
 
         BackgroundQueueHandler::getInstance()->forceCheck();

@@ -94,7 +94,7 @@ abstract class DatabaseObjectBuilder
 
         $this->object = new (static::getBaseClass())($id);
 
-        $this->afterCreate($this->object);
+        $this->afterCreate();
 
         return $this->object;
     }
@@ -203,7 +203,7 @@ abstract class DatabaseObjectBuilder
             $this->object = $this->existingObject;
         }
 
-        $this->afterUpdate($this->object);
+        $this->afterUpdate();
 
         return $this->object;
     }
@@ -370,10 +370,9 @@ abstract class DatabaseObjectBuilder
     /**
      * This method is called after the creation of a new object.
      * It can be overriden to handle additional tasks that are not handled by the default implementation.
-     *
-     * @param TDatabaseObject $object
+     * The created object is available as `$this->getObject()`.
      */
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
         // does nothing
     }
@@ -381,10 +380,9 @@ abstract class DatabaseObjectBuilder
     /**
      * This method is called after an update.
      * It can be overriden to handle additional tasks that are not handled by the default implementation.
-     *
-     * @param TDatabaseObject $object
+     * The updated object is available as `$this->getObject()`.
      */
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         // does nothing
     }

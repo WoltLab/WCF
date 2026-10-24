@@ -3,7 +3,6 @@
 namespace wcf\data\media;
 
 use wcf\command\file\DeleteFiles;
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectBuilder;
 use wcf\data\file\File;
 use wcf\system\acl\simple\SimpleAclHandler;
@@ -232,14 +231,14 @@ final class MediaBuilder extends DatabaseObjectBuilder
     }
 
     #[\Override]
-    protected function afterCreate(DatabaseObject $object): void
+    protected function afterCreate(): void
     {
-        $this->saveL10nValues($object);
-        $this->saveAclValues($object);
+        $this->saveL10nValues($this->getObject());
+        $this->saveAclValues($this->getObject());
     }
 
     #[\Override]
-    protected function afterUpdate(DatabaseObject $object): void
+    protected function afterUpdate(): void
     {
         if (
             isset($this->title)
@@ -247,11 +246,11 @@ final class MediaBuilder extends DatabaseObjectBuilder
             || isset($this->altText)
             || \array_key_exists('isMultilingual', $this->properties)
         ) {
-            $this->saveL10nValues($object);
+            $this->saveL10nValues($this->getObject());
         }
 
-        $this->saveAclValues($object);
-        $this->deleteReplacedFile($object);
+        $this->saveAclValues($this->getObject());
+        $this->deleteReplacedFile($this->getObject());
     }
 
     #[\Override]
