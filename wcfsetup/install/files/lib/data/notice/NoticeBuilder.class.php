@@ -145,7 +145,7 @@ final class NoticeBuilder extends DatabaseObjectBuilder
     {
         $this->saveI18nValues($object);
 
-        if ($this->showOrder !== null && $this->showOrder !== $this->getObject()->showOrder) {
+        if ($this->showOrder !== null && $this->showOrder !== $this->getExistingObject()->showOrder) {
             self::applyShowOrder($object, $this->showOrder);
         }
     }

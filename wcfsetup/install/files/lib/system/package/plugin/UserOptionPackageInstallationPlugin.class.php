@@ -356,7 +356,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
         if ($profileConfiguration !== []) {
             $required = isset($option['required'])
                 ? (bool)$option['required']
-                : $builder->isUpdate() && $builder->getObject()->required === 1;
+                : $builder->isUpdate() && $builder->getExistingObject()->required === 1;
             $configuration = UserOptionBuilder::buildConfiguration((string)($option['selectoptions'] ?? ''), $required);
 
             $builder->setConfiguration(\array_merge(

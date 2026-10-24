@@ -104,7 +104,7 @@ final class AdBuilder extends DatabaseObjectBuilder
     #[\Override]
     protected function afterUpdate(DatabaseObject $object): void
     {
-        $previousAd = $this->getObject();
+        $previousAd = $this->getExistingObject();
 
         if ($object->objectTypeID !== $previousAd->objectTypeID) {
             // The ad is moved to another location, therefore its position

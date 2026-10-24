@@ -79,7 +79,7 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
 
     public function setOptionName(string $optionName): static
     {
-        if ($this->isUpdate() && !\str_starts_with($this->getObject()->optionName, 'tmp_')) {
+        if ($this->isUpdate() && !\str_starts_with($this->getExistingObject()->optionName, 'tmp_')) {
             throw new \BadMethodCallException('setOptionName() is only allowed for generic option names.');
         }
 
@@ -284,7 +284,7 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
     protected function afterUpdate(DatabaseObject $object): void
     {
         // re-type the value column if the option type changed
-        if ($object->optionType !== $this->getObject()->optionType) {
+        if ($object->optionType !== $this->getExistingObject()->optionType) {
             self::applyColumnChanges([
                 $object->getFormOption()->getDatabaseTableColumn($object->getIdentifier()),
             ]);
@@ -363,8 +363,8 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
         }
 
         $this->properties['configuration'] = self::buildConfiguration(
-            (string)($this->properties['selectOptions'] ?? ($this->isUpdate() ? $this->getObject()->selectOptions : '')),
-            (bool)($this->properties['required'] ?? ($this->isUpdate() ? $this->getObject()->required : false))
+            (string)($this->properties['selectOptions'] ?? ($this->isUpdate() ? $this->getExistingObject()->selectOptions : '')),
+            (bool)($this->properties['required'] ?? ($this->isUpdate() ? $this->getExistingObject()->required : false))
         );
     }
 

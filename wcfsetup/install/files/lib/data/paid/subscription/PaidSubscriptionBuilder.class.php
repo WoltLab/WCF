@@ -162,7 +162,7 @@ final class PaidSubscriptionBuilder extends DatabaseObjectBuilder
     #[\Override]
     protected function afterUpdate(DatabaseObject $object): void
     {
-        $oldObject = $this->getObject();
+        $oldObject = $this->getExistingObject();
 
         if (isset($this->properties['showOrder']) && $this->properties['showOrder'] !== $oldObject->showOrder) {
             // Closes the gap at the previous position before making room at
@@ -228,7 +228,7 @@ final class PaidSubscriptionBuilder extends DatabaseObjectBuilder
         $description = $this->description ?? null;
         if ($description === null) {
             $description = $this->isUpdate()
-                ? $this->getObject()->getL10nValues('description')
+                ? $this->getExistingObject()->getL10nValues('description')
                 : [L10nStorage::MONOLINGUAL => ''];
         }
 
@@ -236,7 +236,7 @@ final class PaidSubscriptionBuilder extends DatabaseObjectBuilder
         (new L10nStorage(PaidSubscription::getL10nDefinition()))->setValues(
             $subscription->subscriptionID,
             [
-                'title' => $this->title ?? $this->getObject()->getL10nValues('title'),
+                'title' => $this->title ?? $this->getExistingObject()->getL10nValues('title'),
                 'description' => $description,
             ]
         );

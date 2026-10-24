@@ -26,7 +26,7 @@ final class UpdateTrophy
 
     public function __invoke(): Trophy
     {
-        $wasDisabled = $this->builder->getObject()->isDisabled;
+        $wasDisabled = $this->builder->getExistingObject()->isDisabled;
 
         $trophy = $this->builder->update();
 

@@ -199,7 +199,7 @@ final class CronjobBuilder extends DatabaseObjectBuilder
      */
     private function rescheduleOnExpressionChange(Cronjob $cronjob): void
     {
-        $previousExpression = $this->getObject()->getExpression()->getExpression();
+        $previousExpression = $this->getExistingObject()->getExpression()->getExpression();
         if ($cronjob->getExpression()->getExpression() === $previousExpression) {
             return;
         }

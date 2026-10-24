@@ -32,7 +32,7 @@ final class UpdateArticle
 
     public function __invoke(): Article
     {
-        $oldArticle = $this->builder->getObject();
+        $oldArticle = $this->builder->getExistingObject();
         $oldStatus = $oldArticle->publicationStatus;
 
         // Capture the current content before it is overwritten so that the

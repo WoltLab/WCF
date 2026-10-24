@@ -59,7 +59,7 @@ final class UserOptionCategoryBuilder extends DatabaseObjectBuilder
 
     public function setCategoryName(string $categoryName): static
     {
-        if ($this->isUpdate() && !\str_starts_with($this->getObject()->categoryName, 'tmp_')) {
+        if ($this->isUpdate() && !\str_starts_with($this->getExistingObject()->categoryName, 'tmp_')) {
             throw new \BadMethodCallException('setCategoryName() is only allowed for generic category names.');
         }
 

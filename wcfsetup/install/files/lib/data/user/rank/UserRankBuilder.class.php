@@ -133,7 +133,7 @@ final class UserRankBuilder extends DatabaseObjectBuilder
         }
 
         // A user rank owns its image file, a replaced file is orphaned.
-        $oldObject = $this->getObject();
+        $oldObject = $this->getExistingObject();
         if (
             \array_key_exists('rankImageFileID', $this->properties)
             && $oldObject->rankImageFileID !== null

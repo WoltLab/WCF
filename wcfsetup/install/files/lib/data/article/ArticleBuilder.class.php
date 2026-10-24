@@ -162,8 +162,8 @@ final class ArticleBuilder extends DatabaseObjectBuilder
     public function getArticleContentBuilder(?int $languageID): ArticleContentBuilder
     {
         if (!isset($this->articleContentBuilders[$languageID ?: 0])) {
-            $existingContent = $this->object !== null
-                ? ArticleContent::getArticleContent($this->object->getObjectID(), $languageID)
+            $existingContent = $this->existingObject !== null
+                ? ArticleContent::getArticleContent($this->existingObject->getObjectID(), $languageID)
                 : null;
 
             if ($existingContent !== null) {

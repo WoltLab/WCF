@@ -31,7 +31,7 @@ final class UpdateUser
 
     public function __invoke(): User
     {
-        $oldUser = $this->builder->getObject();
+        $oldUser = $this->builder->getExistingObject();
         $this->builder->update();
 
         // The object returned by the builder lacks the changes to the user options.

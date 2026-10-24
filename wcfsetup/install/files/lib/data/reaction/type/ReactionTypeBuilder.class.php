@@ -104,7 +104,7 @@ final class ReactionTypeBuilder extends DatabaseObjectBuilder
     #[\Override]
     protected function afterUpdate(DatabaseObject $object): void
     {
-        $oldObject = $this->getObject();
+        $oldObject = $this->getExistingObject();
 
         if (isset($this->properties['showOrder'])) {
             // Closes the gap at the previous position before making room at

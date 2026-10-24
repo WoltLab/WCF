@@ -120,7 +120,7 @@ final class FileTemporaryBuilder extends DatabaseObjectBuilder
      */
     public function markChunkAsWritten(int $sequenceNo): static
     {
-        $chunks = $this->properties['chunks'] ?? $this->getObject()->chunks;
+        $chunks = $this->properties['chunks'] ?? $this->getExistingObject()->chunks;
         if ($sequenceNo < 0 || $sequenceNo >= \strlen($chunks)) {
             throw new \OutOfRangeException(
                 \sprintf(

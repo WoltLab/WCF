@@ -128,7 +128,7 @@ final class ContactRecipientBuilder extends DatabaseObjectBuilder
 
     private function isAdministratorRecipient(): bool
     {
-        return $this->isUpdate() && $this->getObject()->isAdministrator === 1;
+        return $this->isUpdate() && $this->getExistingObject()->isAdministrator === 1;
     }
 
     private function saveL10nValues(ContactRecipient $recipient): void
@@ -142,8 +142,8 @@ final class ContactRecipientBuilder extends DatabaseObjectBuilder
         (new L10nStorage(ContactRecipient::getL10nDefinition()))->setValues(
             $recipient->recipientID,
             [
-                'name' => $this->name ?? $this->getObject()->getL10nValues('name'),
-                'email' => $this->email ?? $this->getObject()->getL10nValues('email'),
+                'name' => $this->name ?? $this->getExistingObject()->getL10nValues('name'),
+                'email' => $this->email ?? $this->getExistingObject()->getL10nValues('email'),
             ]
         );
     }

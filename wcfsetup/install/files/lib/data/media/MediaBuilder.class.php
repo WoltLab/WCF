@@ -281,7 +281,7 @@ final class MediaBuilder extends DatabaseObjectBuilder
         foreach (['title', 'caption', 'altText'] as $columnName) {
             $value = $this->{$columnName} ?? null;
             if ($value === null && $this->isUpdate()) {
-                $value = $this->getObject()->getL10nValues($columnName);
+                $value = $this->getExistingObject()->getL10nValues($columnName);
             }
 
             $values[$columnName] = \array_map(
@@ -332,7 +332,7 @@ final class MediaBuilder extends DatabaseObjectBuilder
      */
     private function deleteReplacedFile(Media $media): void
     {
-        $oldMedia = $this->getObject();
+        $oldMedia = $this->getExistingObject();
         if (!\array_key_exists('fileID', $this->properties) || $oldMedia->fileID === $media->fileID) {
             return;
         }

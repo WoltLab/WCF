@@ -171,7 +171,7 @@ final class CommentBuilder extends DatabaseObjectBuilder
                         AND isDisabled = ?
                 ORDER BY    time ASC, responseID ASC";
         $statement = WCF::getDB()->prepare($sql, 5);
-        $statement->execute([$this->getObject()->commentID, 0]);
+        $statement->execute([$this->getExistingObject()->commentID, 0]);
 
         return $this->setResponseIDs($statement->fetchAll(\PDO::FETCH_COLUMN));
     }
@@ -187,7 +187,7 @@ final class CommentBuilder extends DatabaseObjectBuilder
                 WHERE       commentID = ?
                 ORDER BY    time ASC, responseID ASC";
         $statement = WCF::getDB()->prepare($sql, 5);
-        $statement->execute([$this->getObject()->commentID]);
+        $statement->execute([$this->getExistingObject()->commentID]);
 
         return $this->setUnfilteredResponseIDs($statement->fetchAll(\PDO::FETCH_COLUMN));
     }
@@ -203,7 +203,7 @@ final class CommentBuilder extends DatabaseObjectBuilder
                 WHERE   commentID = ?
                     AND isDisabled = ?";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$this->getObject()->commentID, 0]);
+        $statement->execute([$this->getExistingObject()->commentID, 0]);
 
         return $this->setResponses((int)$statement->fetchSingleColumn());
     }
@@ -217,7 +217,7 @@ final class CommentBuilder extends DatabaseObjectBuilder
                 FROM    wcf1_comment_response
                 WHERE   commentID = ?";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$this->getObject()->commentID]);
+        $statement->execute([$this->getExistingObject()->commentID]);
 
         return $this->setUnfilteredResponses((int)$statement->fetchSingleColumn());
     }

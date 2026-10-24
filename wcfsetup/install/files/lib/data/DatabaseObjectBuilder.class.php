@@ -40,9 +40,9 @@ abstract class DatabaseObjectBuilder
     /**
      * Use forCreate() or forUpdate() to obtain a builder instance.
      *
-     * @param ?TDatabaseObject $object
+     * @param ?TDatabaseObject $existingObject
      */
-    private function __construct(protected readonly ?DatabaseObject $object = null) {}
+    private function __construct(protected readonly ?DatabaseObject $existingObject = null) {}
 
     /**
      * Inserts a new row and returns the created database object.
@@ -51,7 +51,7 @@ abstract class DatabaseObjectBuilder
      */
     final public function create(): DatabaseObject
     {
-        if ($this->object !== null) {
+        if ($this->existingObject !== null) {
             throw new \BadMethodCallException("create() can only be used with forCreate().");
         }
 
@@ -155,7 +155,7 @@ abstract class DatabaseObjectBuilder
      */
     final public function update(): DatabaseObject
     {
-        if ($this->object === null) {
+        if ($this->existingObject === null) {
             throw new \BadMethodCallException("update() can only be used with forUpdate().");
         }
 
@@ -183,7 +183,7 @@ abstract class DatabaseObjectBuilder
                 );
                 $statementParameters[] = $value;
             }
-            $statementParameters[] = $this->object->getObjectID();
+            $statementParameters[] = $this->existingObject->getObjectID();
 
             $sql = "UPDATE  " . static::getBaseClass()::getDatabaseTableName() . "
                 SET     " . $updateSQL . "
@@ -191,9 +191,9 @@ abstract class DatabaseObjectBuilder
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute($statementParameters);
 
-            $object = new (static::getBaseClass())($this->object->getObjectID());
+            $object = new (static::getBaseClass())($this->existingObject->getObjectID());
         } else {
-            $object = $this->object;
+            $object = $this->existingObject;
         }
 
         $this->afterUpdate($object);
@@ -223,7 +223,7 @@ abstract class DatabaseObjectBuilder
      */
     final public function createOrIgnore(): ?DatabaseObject
     {
-        if ($this->object !== null) {
+        if ($this->existingObject !== null) {
             throw new \BadMethodCallException("createOrIgnore() can only be used with forCreate().");
         }
 
@@ -404,7 +404,7 @@ abstract class DatabaseObjectBuilder
      */
     final public function setID(int|string $id): static
     {
-        if ($this->object !== null) {
+        if ($this->existingObject !== null) {
             throw new \BadMethodCallException('The ID cannot be set when updating an existing object.');
         }
 
@@ -415,18 +415,28 @@ abstract class DatabaseObjectBuilder
 
     final public function isUpdate(): bool
     {
-        return $this->object !== null;
+        return $this->existingObject !== null;
+    }
+
+    /**
+     * Returns true if this builder has already been executed via create(),
+     * update() or createOrIgnore() and can no longer be used. A builder is
+     * also considered consumed if the execution failed.
+     */
+    final public function isConsumed(): bool
+    {
+        return $this->consumed;
     }
 
     /**
      * @return TDatabaseObject
      */
-    final public function getObject(): DatabaseObject
+    final public function getExistingObject(): DatabaseObject
     {
-        if ($this->object === null) {
-            throw new \BadMethodCallException('The object can only be retrieved for builders created with `forUpdate()`.');
+        if ($this->existingObject === null) {
+            throw new \BadMethodCallException('The existing object can only be retrieved for builders created with `forUpdate()`.');
         }
 
-        return $this->object;
+        return $this->existingObject;
     }
 }

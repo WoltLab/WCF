@@ -192,7 +192,7 @@ final class TrophyBuilder extends DatabaseObjectBuilder
     #[\Override]
     protected function afterUpdate(DatabaseObject $object): void
     {
-        $oldObject = $this->getObject();
+        $oldObject = $this->getExistingObject();
 
         if (isset($this->title) || isset($this->description)) {
             $this->saveL10nValues($object);
@@ -225,7 +225,7 @@ final class TrophyBuilder extends DatabaseObjectBuilder
         $description = $this->description ?? null;
         if ($description === null) {
             $description = $this->isUpdate()
-                ? $this->getObject()->getL10nValues('description')
+                ? $this->getExistingObject()->getL10nValues('description')
                 : [L10nStorage::MONOLINGUAL => ''];
         }
 
@@ -233,7 +233,7 @@ final class TrophyBuilder extends DatabaseObjectBuilder
         (new L10nStorage(Trophy::getL10nDefinition()))->setValues(
             $trophy->trophyID,
             [
-                'title' => $this->title ?? $this->getObject()->getL10nValues('title'),
+                'title' => $this->title ?? $this->getExistingObject()->getL10nValues('title'),
                 'description' => $description,
             ]
         );
