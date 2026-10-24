@@ -136,7 +136,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         return [
             'definitionID' => $this->getDefinitionID($data['elements']['definitionname']),
             'objectType' => $data['elements']['name'],
-            'className' => $data['elements']['classname'] ?? '',
+            'className' => \trim($data['elements']['classname'] ?? ''),
             'additionalData' => \serialize($additionalData),
         ];
     }
@@ -218,7 +218,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 
         $className = $element->getElementsByTagName('classname')->item(0);
         if ($className !== null) {
-            $data['className'] = $className->nodeValue;
+            $data['className'] = \trim($className->nodeValue);
         }
 
         $additionalData = [];
