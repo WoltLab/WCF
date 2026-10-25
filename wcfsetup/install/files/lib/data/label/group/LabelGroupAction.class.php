@@ -8,15 +8,12 @@ use wcf\data\AbstractDatabaseObjectAction;
 /**
  * Executes label group-related actions.
  *
- * Label groups should be created, updated and deleted through the
- * `CreateLabelGroup`, `UpdateLabelGroup` and `DeleteLabelGroup` commands, the
- * `create`, `update` and `delete` actions are `@deprecated 6.3`.
- *
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<LabelGroup, LabelGroupEditor>
+ * @deprecated 6.3 use `LabelGroupBuilder` with the `CreateLabelGroup` / `UpdateLabelGroup` commands instead.
  */
 class LabelGroupAction extends AbstractDatabaseObjectAction
 {
