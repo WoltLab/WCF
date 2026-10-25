@@ -12,16 +12,12 @@ use wcf\system\exception\PermissionDeniedException;
 /**
  * Executes contact recipient related actions.
  *
- * Contact recipients should be created, updated and deleted through the
- * `CreateContactRecipient`, `UpdateContactRecipient` and
- * `DeleteContactRecipient` commands, the `create`, `update` and `delete`
- * actions are `@deprecated 6.3`.
- *
  * @author  Olaf Braun, Alexander Ebert
  * @copyright   2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<ContactRecipient, ContactRecipientEditor>
+ * @deprecated 6.3 use `ContactRecipientBuilder` with the `CreateContactRecipient` / `UpdateContactRecipient` commands instead.
  */
 class ContactRecipientAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
