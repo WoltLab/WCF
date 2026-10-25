@@ -1,15 +1,13 @@
 {include file='header' pageTitle='wcf.acp.package.list'}
 
 <script data-relocate="true">
-	$(function() {
-		{jsphrase name='wcf.acp.package.searchForUpdates'}
-		{jsphrase name='wcf.acp.package.searchForUpdates.noResults'}
+	{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
 		{jsphrase name='wcf.acp.package.uninstallation.title'}
-		
-		{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
-			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
-		{/if}
-	});
+
+		require(['WoltLabSuite/Core/Acp/Component/Package/Installation'], ({ setupUninstallButtons }) => {
+			setupUninstallButtons();
+		});
+	{/if}
 
 	{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
 		{jsphrase name='wcf.acp.package.searchForUpdates'}

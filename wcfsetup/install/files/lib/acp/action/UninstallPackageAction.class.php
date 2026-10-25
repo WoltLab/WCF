@@ -2,21 +2,24 @@
 
 namespace wcf\acp\action;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use Laminas\Diactoros\Response\JsonResponse;
+use Laminas\Diactoros\Response\TextResponse;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use wcf\acp\page\PackageListPage;
-use wcf\action\AbstractSecureAction;
 use wcf\command\application\MarkApplicationAsTainted;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
+use wcf\http\Helper;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\package\PackageUninstallationDispatcher;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Handles an AJAX-based package uninstallation.
@@ -25,85 +28,50 @@ use wcf\util\StringUtil;
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-final class UninstallPackageAction extends AbstractSecureAction
+final class UninstallPackageAction implements RequestHandlerInterface
 {
-    public string $step = '';
-
-    public string $node = '';
-
-    public PackageUninstallationDispatcher $installation;
-
-    public PackageInstallationQueue $queue;
-
-    protected int $packageID = 0;
-
     #[\Override]
-    public function readParameters()
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        parent::readParameters();
-
-        if (isset($_REQUEST['step'])) {
-            $this->step = StringUtil::trim($_REQUEST['step']);
+        try {
+            $parameters = Helper::mapQueryParameters(
+                $request->getQueryParams(),
+                <<<'EOT'
+                    array {
+                        step: "prepare" | "uninstall",
+                        packageID?: positive-int,
+                        queueID?: positive-int,
+                        node?: string
+                    }
+                    EOT
+            );
+        } catch (MappingError) {
+            throw new IllegalLinkException();
         }
 
-        switch ($this->step) {
-            case 'prepare':
-            case 'uninstall':
-                // valid steps
-                break;
-
-            default:
-                throw new IllegalLinkException();
-        }
-
-        if (isset($_POST['node'])) {
-            $this->node = StringUtil::trim($_POST['node']);
-        }
-
-        if (isset($_POST['packageID'])) {
-            $this->packageID = \intval($_POST['packageID']);
+        if ($request->getMethod() === 'GET') {
+            return new TextResponse('Unsupported', 400);
+        } elseif ($request->getMethod() === 'POST') {
+            return match ($parameters['step']) {
+                'prepare' => $this->stepPrepare(
+                    $parameters['packageID'] ?? throw new IllegalLinkException()
+                ),
+                'uninstall' => $this->stepUninstall(
+                    $parameters['queueID'] ?? throw new IllegalLinkException(),
+                    $parameters['node'] ?? ''
+                ),
+            };
         } else {
-            if (isset($_POST['queueID'])) {
-                $this->queue = new PackageInstallationQueue(\intval($_POST['queueID']));
-            }
-
-            if (!isset($this->queue) || $this->queue->isNil()) {
-                throw new IllegalLinkException();
-            }
-
-            // `stepPrepare()` is guarded by `Package::canUninstall()`, but this branch
-            // resumes an existing queue and is reached without passing through it.
-            WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
-
-            if ($this->queue->userID !== WCF::getUser()->userID) {
-                throw new PermissionDeniedException();
-            }
-
-            $this->installation = new PackageUninstallationDispatcher($this->queue);
+            throw new \LogicException('Unreachable');
         }
-    }
-
-    #[\Override]
-    public function execute(): ResponseInterface
-    {
-        parent::execute();
-
-        $response = match ($this->step) {
-            'prepare' => $this->stepPrepare(),
-            'uninstall' => $this->stepUninstall(),
-        };
-
-        $this->executed();
-
-        return $response;
     }
 
     /**
      * Prepares the uninstallation process.
      */
-    protected function stepPrepare(): ResponseInterface
+    private function stepPrepare(int $packageID): ResponseInterface
     {
-        $package = new Package($this->packageID);
+        $package = new Package($packageID);
         if ($package->isNil() || !$package->canUninstall()) {
             throw new IllegalLinkException();
         }
@@ -121,7 +89,7 @@ final class UninstallPackageAction extends AbstractSecureAction
         ]);
 
         // initialize uninstallation
-        $this->installation = new PackageUninstallationDispatcher($queue);
+        $installation = new PackageUninstallationDispatcher($queue);
 
         // mark package as tainted if it is an app
         if ($package->isApplication !== 0) {
@@ -131,14 +99,15 @@ final class UninstallPackageAction extends AbstractSecureAction
             new MarkApplicationAsTainted($application)();
         }
 
-        $this->installation->nodeBuilder->purgeNodes();
-        $this->installation->nodeBuilder->buildNodes();
+        $installation->nodeBuilder->purgeNodes();
+        $installation->nodeBuilder->buildNodes();
 
-        $nextNode = $this->installation->nodeBuilder->getNextNode();
-        $queueID = $this->installation->nodeBuilder->getQueueByNode(
+        $nextNode = $installation->nodeBuilder->getNextNode();
+        $queueID = $installation->nodeBuilder->getQueueByNode(
             $queue->processNo,
             $nextNode
         );
+        \assert($queueID !== null);
 
         return new JsonResponse([
             'template' => WCF::getTPL()->render('wcf', 'packageUninstallationStepPrepare', [
@@ -146,7 +115,13 @@ final class UninstallPackageAction extends AbstractSecureAction
             ]),
             'step' => 'uninstall',
             'node' => $nextNode,
-            'currentAction' => $this->getCurrentAction($queueID, $queue),
+            'currentAction' => WCF::getLanguage()->getDynamicVariable(
+                'wcf.acp.package.uninstallation.step.uninstall',
+                [
+                    'packageName' => $installation->nodeBuilder->getPackageNameByQueue($queueID),
+                    'queue' => $queue,
+                ]
+            ),
             'progress' => 0,
             'queueID' => $queueID,
         ]);
@@ -155,11 +130,26 @@ final class UninstallPackageAction extends AbstractSecureAction
     /**
      * Uninstalls node components.
      */
-    public function stepUninstall(): ResponseInterface
+    private function stepUninstall(int $queueID, string $node): ResponseInterface
     {
-        $step = $this->installation->uninstall($this->node);
-        $queueID = $this->installation->nodeBuilder->getQueueByNode(
-            $this->installation->queue->processNo,
+        $queue = new PackageInstallationQueue($queueID);
+        if ($queue->isNil()) {
+            throw new IllegalLinkException();
+        }
+
+        // `stepPrepare()` is guarded by `Package::canUninstall()`, but this step
+        // resumes an existing queue and is reached without passing through it.
+        WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
+
+        if ($queue->userID !== WCF::getUser()->userID) {
+            throw new PermissionDeniedException();
+        }
+
+        $installation = new PackageUninstallationDispatcher($queue);
+
+        $step = $installation->uninstall($node);
+        $queueID = $installation->nodeBuilder->getQueueByNode(
+            $installation->queue->processNo,
             $step->getNode()
         );
 
@@ -177,26 +167,8 @@ final class UninstallPackageAction extends AbstractSecureAction
         return new JsonResponse([
             'step' => 'uninstall',
             'node' => $step->getNode(),
-            'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
+            'progress' => $installation->nodeBuilder->calculateProgress($node),
             'queueID' => $queueID,
         ]);
-    }
-
-    protected function getCurrentAction(?int $queueID, PackageInstallationQueue $queue): string
-    {
-        if ($queueID === null) {
-            // success message
-            $currentAction = WCF::getLanguage()->get('wcf.acp.package.uninstallation.step.' . $this->queue->action . '.success');
-        } else {
-            // build package name
-            $packageName = $this->installation->nodeBuilder->getPackageNameByQueue($queueID);
-            $installationType = $this->installation->nodeBuilder->getInstallationTypeByQueue($queueID);
-            $currentAction = WCF::getLanguage()->getDynamicVariable(
-                'wcf.acp.package.uninstallation.step.' . $installationType,
-                ['packageName' => $packageName, 'queue' => $queue]
-            );
-        }
-
-        return $currentAction;
     }
 }

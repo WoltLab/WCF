@@ -6,7 +6,7 @@
  * @copyright 2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Ajax/Status", "../../../Core", "WoltLabSuite/Core/Language", "../../../Dom/Util", "../../../Ui/Dialog", "WoltLabSuite/Core/Ajax/Error"], function (require, exports, tslib_1, Ajax_1, AjaxStatus, Core_1, Language_1, Util_1, Dialog_1, Error_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Ajax/Status", "../../../Core", "WoltLabSuite/Core/Language", "../../../Dom/Util", "../../../Ui/Dialog", "WoltLabSuite/Core/Ajax/Error", "WoltLabSuite/Core/Acp/Component/Package/Installation"], function (require, exports, tslib_1, Ajax_1, AjaxStatus, Core_1, Language_1, Util_1, Dialog_1, Error_1, Installation_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -99,8 +99,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Ajax/Status", 
                 (0, Util_1.innerError)(codeInput, (0, Language_1.getPhrase)("wcf.acp.package.error.uniqueAlreadyInstalled"));
             }
             else {
-                const installation = new window.WCF.ACP.Package.Installation(response.queueID, undefined, false);
-                installation.prepareInstallation();
+                void (0, Installation_1.startInstallation)(response.queueID);
             }
         }
         else if ("template" in response) {

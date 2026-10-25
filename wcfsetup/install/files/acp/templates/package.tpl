@@ -1,10 +1,10 @@
 {include file='header' pageTitle=$package->getName()}
 
 <script data-relocate="true">
-	$(function() {
-		{jsphrase name='wcf.acp.package.uninstallation.title'}
-		
-		new WCF.ACP.Package.Uninstallation($('.jsUninstallButton'));
+	{jsphrase name='wcf.acp.package.uninstallation.title'}
+
+	require(['WoltLabSuite/Core/Acp/Component/Package/Installation'], ({ setupUninstallButtons }) => {
+		setupUninstallButtons();
 	});
 </script>
 

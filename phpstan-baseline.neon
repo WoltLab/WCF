@@ -1585,12 +1585,6 @@ parameters:
 			path: wcfsetup/install/files/lib/system/form/element/AbstractNamedFormElement.class.php
 
 		-
-			message: '#^Call to function is_array\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: wcfsetup/install/files/lib/system/form/element/MultipleSelectionFormElement.class.php
-
-		-
 			message: '#^Property wcf\\system\\form\\element\\AbstractNamedFormElement\:\:\$value \(string\) does not accept array\<string\>\.$#'
 			identifier: assign.propertyType
 			count: 1

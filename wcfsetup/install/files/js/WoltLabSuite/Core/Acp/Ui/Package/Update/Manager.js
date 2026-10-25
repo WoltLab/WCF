@@ -6,7 +6,7 @@
  * @copyright   2001-2022 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/Language", "../../../../Ui/Dialog", "../../../../Dom/Util"], function (require, exports, tslib_1, Ajax_1, Language_1, UiDialog, Util_1) {
+define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/Language", "../../../../Ui/Dialog", "../../../../Dom/Util", "WoltLabSuite/Core/Acp/Component/Package/Installation"], function (require, exports, tslib_1, Ajax_1, Language_1, UiDialog, Util_1, Installation_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -95,8 +95,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
             if (UiDialog.isOpen(this)) {
                 UiDialog.close(this);
             }
-            const installation = new window.WCF.ACP.Package.Installation(queueId, undefined, false, true);
-            installation.prepareInstallation();
+            void (0, Installation_1.startInstallation)(queueId, { isUpdate: true });
         }
         _dialogSetup() {
             return {

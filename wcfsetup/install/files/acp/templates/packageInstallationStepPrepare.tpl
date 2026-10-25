@@ -11,7 +11,7 @@
 		</div>
 	</header>
 	
-	<div id="packageInstallationInnerContentContainer" style="display: none;">
+	<div id="packageInstallationInnerContentContainer" hidden>
 		<div id="packageInstallationInnerContent"></div>
 	</div>
 </div>

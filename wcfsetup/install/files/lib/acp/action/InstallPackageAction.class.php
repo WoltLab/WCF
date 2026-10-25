@@ -2,75 +2,77 @@
 
 namespace wcf\acp\action;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use Laminas\Diactoros\Response\JsonResponse;
+use Laminas\Diactoros\Response\TextResponse;
 use Psr\Http\Message\ResponseInterface;
-use wcf\action\AbstractSecureAction;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\application\Application;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
+use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Handles an AJAX-based package installation.
+ *
+ * The values of the forms that package installation plugins prompt for are
+ * read from `$_REQUEST` by `FormDocument::handleRequest()`, therefore the
+ * request body is form data and the parameters of this controller are passed
+ * through the query string.
  *
  * @author  Tim Duesterhus, Alexander Ebert
  * @copyright   2001-2022 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class InstallPackageAction extends AbstractSecureAction
+class InstallPackageAction implements RequestHandlerInterface
 {
-    public string $step = '';
+    private PackageInstallationDispatcher $installation;
 
-    public string $node = '';
-
-    public PackageInstallationDispatcher $installation;
-
-    public PackageInstallationQueue $queue;
-
-    private string $redirectLocation = '';
+    private PackageInstallationQueue $queue;
 
     #[\Override]
-    public function readParameters()
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        parent::readParameters();
-
-        if (isset($_REQUEST['step'])) {
-            $this->step = StringUtil::trim($_REQUEST['step']);
+        try {
+            $parameters = Helper::mapQueryParameters(
+                $request->getQueryParams(),
+                <<<'EOT'
+                    array {
+                        queueID: positive-int,
+                        step: "install" | "prepare" | "rollback",
+                        node?: string,
+                        redirectLocation?: "license"
+                    }
+                    EOT
+            );
+        } catch (MappingError) {
+            throw new IllegalLinkException();
         }
 
-        switch ($this->step) {
-            case 'install':
-            case 'prepare':
-            case 'rollback':
-                // valid steps
-                break;
-
-            default:
-                throw new IllegalLinkException();
-        }
-
-        if (isset($_POST['node'])) {
-            $this->node = StringUtil::trim($_POST['node']);
-        }
-        if (isset($_POST['queueID'])) {
-            $this->queue = new PackageInstallationQueue(\intval($_POST['queueID']));
-        }
-
-        if (!isset($this->queue) || $this->queue->isNil()) {
+        $this->queue = new PackageInstallationQueue($parameters['queueID']);
+        if ($this->queue->isNil()) {
             throw new IllegalLinkException();
         }
 
         $this->checkQueuePermissions();
 
-        $redirectLocation = $_REQUEST['redirectLocation'] ?? '';
-        if ($redirectLocation === 'license') {
-            $this->redirectLocation = $redirectLocation;
-        }
+        if ($request->getMethod() === 'GET') {
+            return new TextResponse('Unsupported', 400);
+        } elseif ($request->getMethod() === 'POST') {
+            $this->installation = $this->createDispatcher($request, $this->queue);
 
-        $this->installation = new PackageInstallationDispatcher($this->queue);
+            return match ($parameters['step']) {
+                'prepare' => $this->stepPrepare(),
+                'install' => $this->stepInstall($parameters['node'] ?? '', $parameters['redirectLocation'] ?? ''),
+                'rollback' => $this->stepRollback(),
+            };
+        } else {
+            throw new \LogicException('Unreachable');
+        }
     }
 
     /**
@@ -98,22 +100,13 @@ class InstallPackageAction extends AbstractSecureAction
     }
 
     /**
-     * @return ResponseInterface
+     * @since 6.3
      */
-    #[\Override]
-    public function execute()
-    {
-        parent::execute();
-
-        $response = match ($this->step) {
-            'prepare' => $this->stepPrepare(),
-            'install' => $this->stepInstall(),
-            'rollback' => $this->stepRollback(),
-        };
-
-        $this->executed();
-
-        return $response;
+    protected function createDispatcher(
+        ServerRequestInterface $request,
+        PackageInstallationQueue $queue
+    ): PackageInstallationDispatcher {
+        return new PackageInstallationDispatcher($queue);
     }
 
     /**
@@ -153,9 +146,9 @@ class InstallPackageAction extends AbstractSecureAction
     /**
      * Executes installation based upon nodes.
      */
-    protected function stepInstall(): ResponseInterface
+    protected function stepInstall(string $node, string $redirectLocation): ResponseInterface
     {
-        $step = $this->installation->install($this->node);
+        $step = $this->installation->install($node);
         $queueID = $this->installation->nodeBuilder->getQueueByNode(
             $this->installation->queue->processNo,
             $step->getNode()
@@ -166,7 +159,7 @@ class InstallPackageAction extends AbstractSecureAction
                 'currentAction' => $this->getCurrentAction($queueID),
                 'innerTemplate' => $step->getTemplate(),
                 'node' => $step->getNode(),
-                'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
+                'progress' => $this->installation->nodeBuilder->calculateProgress($node),
                 'step' => 'install',
                 'queueID' => $queueID,
             ]);
@@ -177,7 +170,7 @@ class InstallPackageAction extends AbstractSecureAction
             return new JsonResponse([
                 'currentAction' => $this->getCurrentAction(null),
                 'progress' => 100,
-                'redirectLocation' => $this->getRedirectLink(),
+                'redirectLocation' => $this->getRedirectLink($redirectLocation),
                 'step' => 'success',
             ]);
         }
@@ -187,7 +180,7 @@ class InstallPackageAction extends AbstractSecureAction
             'currentAction' => $this->getCurrentAction($queueID),
             'step' => 'install',
             'node' => $step->getNode(),
-            'progress' => $this->installation->nodeBuilder->calculateProgress($this->node),
+            'progress' => $this->installation->nodeBuilder->calculateProgress($node),
             'queueID' => $queueID,
         ]);
     }
@@ -198,7 +191,7 @@ class InstallPackageAction extends AbstractSecureAction
      *
      * @since   5.2
      */
-    protected function getRedirectLink(): string
+    protected function getRedirectLink(string $redirectLocation): string
     {
         // get domain path
         $sql = "SELECT  *
@@ -215,7 +208,7 @@ class InstallPackageAction extends AbstractSecureAction
             $controller = 'first-time-setup';
 
             WCF::getSession()->unregister('__wcfSetup_completed');
-        } else if ($this->redirectLocation === 'license') {
+        } elseif ($redirectLocation === 'license') {
             $controller = 'license';
         }
 
@@ -240,18 +233,20 @@ class InstallPackageAction extends AbstractSecureAction
     protected function getCurrentAction(?int $queueID): string
     {
         if ($queueID === null) {
-            // success message
-            $currentAction = WCF::getLanguage()->get('wcf.acp.package.installation.step.' . $this->queue->action . '.success');
-        } else {
-            // build package name
-            $packageName = $this->installation->nodeBuilder->getPackageNameByQueue($queueID);
-            $installationType = $this->installation->nodeBuilder->getInstallationTypeByQueue($queueID);
-            $currentAction = WCF::getLanguage()->getDynamicVariable(
-                'wcf.acp.package.installation.step.' . $installationType,
-                ['packageName' => $packageName]
-            );
+            return WCF::getLanguage()->get(match ($this->queue->action) {
+                'install' => 'wcf.acp.package.installation.step.install.success',
+                'update' => 'wcf.acp.package.installation.step.update.success',
+            });
         }
 
-        return $currentAction;
+        $installationType = $this->installation->nodeBuilder->getInstallationTypeByQueue($queueID);
+
+        return WCF::getLanguage()->getDynamicVariable(
+            match ($installationType) {
+                'install' => 'wcf.acp.package.installation.step.install',
+                'update' => 'wcf.acp.package.installation.step.update',
+            },
+            ['packageName' => $this->installation->nodeBuilder->getPackageNameByQueue($queueID)]
+        );
     }
 }

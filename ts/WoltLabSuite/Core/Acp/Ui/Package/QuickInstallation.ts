@@ -14,6 +14,7 @@ import { getPhrase } from "WoltLabSuite/Core/Language";
 import { innerError } from "../../../Dom/Util";
 import UiDialog from "../../../Ui/Dialog";
 import { StatusNotOk } from "WoltLabSuite/Core/Ajax/Error";
+import { startInstallation } from "WoltLabSuite/Core/Acp/Component/Package/Installation";
 
 let codeInput: HTMLInputElement;
 
@@ -129,8 +130,7 @@ async function prepareInstallation(data: InstallationCode, versionNumber: string
 
       innerError(codeInput, getPhrase("wcf.acp.package.error.uniqueAlreadyInstalled"));
     } else {
-      const installation = new window.WCF.ACP.Package.Installation(response.queueID, undefined, false);
-      installation.prepareInstallation();
+      void startInstallation(response.queueID);
     }
   } else if ("template" in response) {
     UiDialog.open(
