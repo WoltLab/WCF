@@ -3,7 +3,7 @@
 namespace wcf\command\user;
 
 use wcf\data\user\follow\UserFollow;
-use wcf\data\user\follow\UserFollowEditor;
+use wcf\data\user\follow\UserFollowBuilder;
 use wcf\data\user\User;
 use wcf\event\user\UserFollowed;
 use wcf\system\event\EventHandler;
@@ -29,11 +29,11 @@ final class Follow
 
     public function __invoke(): void
     {
-        $follow = UserFollowEditor::createOrIgnore([
-            'userID' => $this->user->userID,
-            'followUserID' => $this->target->userID,
-            'time' => \TIME_NOW,
-        ]);
+        $follow = UserFollowBuilder::forCreate()
+            ->setUserID($this->user->userID)
+            ->setFollowUserID($this->target->userID)
+            ->setTime(\TIME_NOW)
+            ->createOrIgnore();
 
         if ($follow === null) {
             return;

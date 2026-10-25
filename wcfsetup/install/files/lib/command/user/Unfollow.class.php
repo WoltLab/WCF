@@ -3,7 +3,7 @@
 namespace wcf\command\user;
 
 use wcf\data\user\follow\UserFollow;
-use wcf\data\user\follow\UserFollowEditor;
+use wcf\data\user\follow\UserFollowBuilder;
 use wcf\data\user\User;
 use wcf\event\user\UserUnfollowed;
 use wcf\system\event\EventHandler;
@@ -30,8 +30,7 @@ final class Unfollow
         $follow = UserFollow::getFollow($this->user->userID, $this->target->userID);
 
         if (!$follow->isNil()) {
-            $followEditor = new UserFollowEditor($follow);
-            $followEditor->delete();
+            UserFollowBuilder::delete($follow);
 
             $this->removeActivityEvent();
         }

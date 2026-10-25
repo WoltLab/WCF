@@ -3,7 +3,7 @@
 namespace wcf\system\user\notification\event;
 
 use wcf\data\user\follow\UserFollow;
-use wcf\data\user\follow\UserFollowAction;
+use wcf\data\user\follow\UserFollowBuilder;
 use wcf\data\user\UserProfile;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\user\notification\object\UserFollowUserNotificationObject;
@@ -91,13 +91,11 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
     {
         $follow = UserFollow::getFollow($recipient->userID, $author->userID);
         if ($follow->isNil()) {
-            $follow = (new UserFollowAction([], 'create', [
-                'data' => [
-                    'userID' => $recipient->userID,
-                    'followUserID' => $author->userID,
-                    'time' => \TIME_NOW - 60 * 60,
-                ],
-            ]))->executeAction()['returnValues'];
+            $follow = UserFollowBuilder::forCreate()
+                ->setUserID($recipient->userID)
+                ->setFollowUserID($author->userID)
+                ->setTime(\TIME_NOW - 60 * 60)
+                ->create();
         }
 
         return [new UserFollowUserNotificationObject($follow)];

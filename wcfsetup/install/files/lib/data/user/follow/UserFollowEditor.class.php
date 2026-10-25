@@ -13,6 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  *
  * @mixin       UserFollow
  * @extends DatabaseObjectEditor<UserFollow>
+ * @deprecated 6.3 use `UserFollowBuilder` instead.
  */
 class UserFollowEditor extends DatabaseObjectEditor
 {

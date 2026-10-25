@@ -24,6 +24,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<UserFollow, UserFollowEditor>
+ * @deprecated 6.3 use the `Follow` / `Unfollow` commands or `UserFollowBuilder` instead.
  */
 class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction
 {
