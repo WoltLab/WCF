@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Api/Users/ActivityEvents/RenderUserActivityEvents", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, Ajax_1, RenderUserActivityEvents_1, Core_1, Util_1, PromiseMutex_1, Language_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Users/ActivityEvents/RenderUserActivityEvents", "WoltLabSuite/Core/Api/Users/ActivityEvents/SetUserActivityEventFilter", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, RenderUserActivityEvents_1, SetUserActivityEventFilter_1, Core_1, Util_1, PromiseMutex_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -56,7 +56,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
         });
     }
     async function switchContext(container) {
-        await (0, Ajax_1.dboAction)("switchContext", "wcf\\data\\user\\activity\\event\\UserActivityEventAction").dispatch();
+        await (0, SetUserActivityEventFilter_1.setUserActivityEventFilter)(!(0, Core_1.stringToBool)(container.dataset.filteredByFollowedUsers || ""));
         window.location.hash = `#${container.id}`;
         window.location.reload();
     }

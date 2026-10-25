@@ -13,6 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  *
  * @mixin       UserActivityEvent
  * @extends DatabaseObjectEditor<UserActivityEvent>
+ * @deprecated 6.3 use `UserActivityEventBuilder` instead.
  */
 class UserActivityEventEditor extends DatabaseObjectEditor
 {

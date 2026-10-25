@@ -24,6 +24,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<UserActivityEvent, UserActivityEventEditor>
+ * @deprecated 6.3 use `UserActivityEventHandler`, the `SetRecentActivitiesFilterByFollowing` command or `UserActivityEventBuilder` instead.
  */
 class UserActivityEventAction extends AbstractDatabaseObjectAction
 {

@@ -7,8 +7,8 @@
  * @since 6.1
  */
 
-import { dboAction } from "WoltLabSuite/Core/Ajax";
 import { renderUserActivityEvents } from "WoltLabSuite/Core/Api/Users/ActivityEvents/RenderUserActivityEvents";
+import { setUserActivityEventFilter } from "WoltLabSuite/Core/Api/Users/ActivityEvents/SetUserActivityEventFilter";
 import { stringToBool } from "WoltLabSuite/Core/Core";
 import DomUtil from "WoltLabSuite/Core/Dom/Util";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
@@ -81,7 +81,7 @@ function initSwitchContextButtons(container: HTMLElement): void {
 }
 
 async function switchContext(container: HTMLElement): Promise<void> {
-  await dboAction("switchContext", "wcf\\data\\user\\activity\\event\\UserActivityEventAction").dispatch();
+  await setUserActivityEventFilter(!stringToBool(container.dataset.filteredByFollowedUsers || ""));
 
   window.location.hash = `#${container.id}`;
   window.location.reload();

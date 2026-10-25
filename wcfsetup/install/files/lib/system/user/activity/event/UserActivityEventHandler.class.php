@@ -5,7 +5,7 @@ namespace wcf\system\user\activity\event;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\activity\event\UserActivityEvent;
-use wcf\data\user\activity\event\UserActivityEventAction;
+use wcf\data\user\activity\event\UserActivityEventBuilder;
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
@@ -74,20 +74,15 @@ final class UserActivityEventHandler extends SingletonFactory
             throw new \BadMethodCallException("Recent activity events of guests require a username");
         }
 
-        $eventAction = new UserActivityEventAction([], 'create', [
-            'data' => [
-                'objectTypeID' => $objectTypeID,
-                'objectID' => $objectID,
-                'languageID' => $languageID,
-                'userID' => $userID,
-                'username' => $userID === null ? $username : null,
-                'time' => $time,
-                'additionalData' => \serialize($additionalData),
-            ],
-        ]);
-        $returnValues = $eventAction->executeAction();
-
-        return $returnValues['returnValues'];
+        return UserActivityEventBuilder::forCreate()
+            ->setObjectTypeID($objectTypeID)
+            ->setObjectID($objectID)
+            ->setLanguageID($languageID)
+            ->setUserID($userID)
+            ->setUsername($userID === null ? $username : null)
+            ->setTime($time)
+            ->setAdditionalData($additionalData)
+            ->create();
     }
 
     /**
