@@ -4,7 +4,6 @@
 			require(["WoltLabSuite/Core/Ui/Sortable/List"], function (UiSortableList) {
 				new UiSortableList({
 					containerId: '{$option->optionName}SortableList',
-					toleranceElement: '',
 				});
 			});
 		});

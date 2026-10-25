@@ -85,13 +85,18 @@ class TemplateDiffPage extends AbstractPage
 
         // build template group hierarchy (template groups that are parents of the template group of the selected template)
         $this->templateGroupHierarchy = [];
-        $templateGroup = $templateGroupList->search($this->template->templateGroupID);
-        while ($templateGroup !== null) {
+        $templateGroupID = $this->template->templateGroupID;
+        while ($templateGroupID !== null) {
+            $templateGroup = $templateGroupList->search($templateGroupID);
+            if ($templateGroup === null) {
+                break;
+            }
+
             $this->templateGroupHierarchy[$templateGroup->templateGroupID] = [
                 'group' => $templateGroup,
                 'hasTemplate' => false,
             ];
-            $templateGroup = $templateGroupList->search($templateGroup->parentTemplateGroupID);
+            $templateGroupID = $templateGroup->parentTemplateGroupID;
         }
         $this->templateGroupHierarchy[0] = ['group' => null, 'hasTemplate' => false];
 
