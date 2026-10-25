@@ -93,6 +93,7 @@
 		<definition>
 			<name>com.woltlab.wcf.searchableObjectType</name>
 		</definition>
+		<!-- deprecated since 6.3, use standalone polls that are embedded through the `[poll]` BBCode instead -->
 		<definition>
 			<name>com.woltlab.wcf.poll</name>
 			<interfacename>wcf\system\poll\IPollHandler</interfacename>

@@ -14,6 +14,12 @@
 			<option name="canReadArticle">
 				<objecttype>com.woltlab.wcf.article.category</objecttype>
 			</option>
+			<option name="canViewPoll">
+				<objecttype>com.woltlab.wcf.poll</objecttype>
+			</option>
+			<option name="canVotePoll">
+				<objecttype>com.woltlab.wcf.poll</objecttype>
+			</option>
 		</options>
 	</import>
 </data>

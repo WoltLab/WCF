@@ -122,6 +122,7 @@ final class UpdateUser
             new UsernameColumn('wcf1_comment_response'),
             new UsernameColumn('wcf1_media'),
             new UsernameColumn('wcf1_modification_log'),
+            new UsernameColumn('wcf1_poll'),
         ];
     }
 }

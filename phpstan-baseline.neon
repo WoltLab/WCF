@@ -493,15 +493,9 @@ parameters:
 			path: wcfsetup/install/files/lib/data/page/PageAction.class.php
 
 		-
-			message: '#^Call to function array_search\(\) requires parameter \#3 to be set\.$#'
-			identifier: function.strict
-			count: 1
-			path: wcfsetup/install/files/lib/data/poll/PollAction.class.php
-
-		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
-			count: 2
+			count: 1
 			path: wcfsetup/install/files/lib/data/poll/PollAction.class.php
 
 		-

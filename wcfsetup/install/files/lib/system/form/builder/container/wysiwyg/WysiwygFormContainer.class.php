@@ -347,6 +347,7 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
      *
      * @return  WysiwygPollFormContainer
      * @throws  \BadMethodCallException     if the form field container has not been populated yet/form has not been built yet
+     * @deprecated 6.3 Use standalone polls that are embedded through the `[poll]` BBCode instead.
      */
     public function getPollContainer()
     {
@@ -526,6 +527,7 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
      * @param string $pollObjectType poll object type for wysiwyg form field
      * @return  WysiwygFormContainer            this container
      * @throws  \InvalidArgumentException       if the given string is no poll object type
+     * @deprecated 6.3 Use standalone polls that are embedded through the `[poll]` BBCode instead.
      */
     public function pollObjectType(string $pollObjectType)
     {

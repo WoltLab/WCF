@@ -2,13 +2,16 @@
 
 namespace wcf\data\poll;
 
+use wcf\command\poll\CreatePoll;
+use wcf\command\poll\DeletePolls;
+use wcf\command\poll\UpdatePoll;
+use wcf\command\poll\VotePoll;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\poll\option\PollOptionEditor;
-use wcf\data\poll\option\PollOptionList;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\l10n\L10nStorage;
 use wcf\system\poll\PollManager;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
@@ -16,11 +19,12 @@ use wcf\system\WCF;
 /**
  * Executes poll-related actions.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @author  Alexander Ebert, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<Poll, PollEditor>
+ * @deprecated 6.3 Use `PollBuilder`, the commands and the RPC endpoints instead.
  */
 class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction
 {
@@ -43,118 +47,95 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     #[\Override]
     public function create()
     {
-        if (!isset($this->parameters['data']['time'])) {
-            $this->parameters['data']['time'] = \TIME_NOW;
-        }
+        $builder = PollBuilder::forCreate()
+            ->setTime($this->parameters['data']['time'] ?? \TIME_NOW)
+            ->setOptions($this->getOptionsFromParameter());
+        $this->applyData($builder, $this->parameters['data']);
 
-        /** @var Poll $poll */
-        $poll = parent::create();
-
-        // create options
-        $sql = "INSERT INTO wcf1_poll_option
-                            (pollID, optionValue, showOrder)
-                VALUES      (?, ?, ?)";
-        $statement = WCF::getDB()->prepare($sql);
-
-        WCF::getDB()->beginTransaction();
-        foreach ($this->parameters['options'] as $showOrder => $option) {
-            $statement->execute([
-                $poll->pollID,
-                $option['optionValue'],
-                $showOrder,
-            ]);
-        }
-        WCF::getDB()->commitTransaction();
-
-        return $poll;
+        return (new CreatePoll($builder))();
     }
 
     #[\Override]
     public function update()
     {
-        parent::update();
-
-        // read current poll
-        $pollEditor = \reset($this->objects);
-
-        // get current options
-        $optionList = new PollOptionList();
-        $optionList->getConditionBuilder()->add("poll_option.pollID = ?", [$pollEditor->pollID]);
-        $optionList->sqlOrderBy = "poll_option.showOrder ASC";
-        $optionList->readObjects();
-        $options = $optionList->getObjects();
-
-        $newOptions = $updateOptions = [];
-        foreach ($this->parameters['options'] as $showOrder => $option) {
-            // check if editing an existing option
-            if ($option['optionID'] !== 0) {
-                // check if an update is required
-                if ($options[$option['optionID']]->showOrder !== $showOrder || $options[$option['optionID']]->optionValue !== $option['optionValue']) {
-                    $updateOptions[$option['optionID']] = [
-                        'optionValue' => $option['optionValue'],
-                        'showOrder' => $showOrder,
-                    ];
-                }
-
-                // remove option
-                unset($options[$option['optionID']]);
-            } else {
-                $newOptions[] = [
-                    'optionValue' => $option['optionValue'],
-                    'showOrder' => $showOrder,
-                ];
-            }
+        if ($this->objects === []) {
+            $this->readObjects();
         }
 
-        if ($newOptions !== [] || $updateOptions !== [] || $options !== []) {
-            WCF::getDB()->beginTransaction();
-
-            // check if new options should be created
-            if ($newOptions !== []) {
-                $sql = "INSERT INTO wcf1_poll_option
-                                    (pollID, optionValue, showOrder)
-                        VALUES      (?, ?, ?)";
-                $statement = WCF::getDB()->prepare($sql);
-                foreach ($newOptions as $option) {
-                    $statement->execute([
-                        $pollEditor->pollID,
-                        $option['optionValue'],
-                        $option['showOrder'],
-                    ]);
-                }
+        foreach ($this->getObjects() as $pollEditor) {
+            $builder = PollBuilder::forUpdate($pollEditor->getDecoratedObject());
+            $this->applyData($builder, $this->parameters['data'] ?? []);
+            if (isset($this->parameters['options'])) {
+                $builder->setOptions($this->getOptionsFromParameter());
             }
 
-            // check if existing options should be updated
-            if ($updateOptions !== []) {
-                $sql = "UPDATE  wcf1_poll_option
-                        SET     optionValue = ?,
-                                showOrder = ?
-                        WHERE   optionID = ?";
-                $statement = WCF::getDB()->prepare($sql);
-                foreach ($updateOptions as $optionID => $option) {
-                    $statement->execute([
-                        $option['optionValue'],
-                        $option['showOrder'],
-                        $optionID,
-                    ]);
-                }
-            }
-
-            // check if options should be removed
-            if ($options !== []) {
-                $sql = "DELETE FROM wcf1_poll_option
-                        WHERE       optionID = ?";
-                $statement = WCF::getDB()->prepare($sql);
-                foreach ($options as $option) {
-                    $statement->execute([$option->optionID]);
-                }
-            }
-
-            // force recalculation of poll stats
-            $pollEditor->calculateVotes();
-
-            WCF::getDB()->commitTransaction();
+            (new UpdatePoll($builder))();
         }
+    }
+
+    #[\Override]
+    public function delete()
+    {
+        if ($this->objects === []) {
+            $this->readObjects();
+        }
+
+        (new DeletePolls(\array_map(
+            static fn(PollEditor $editor) => $editor->getDecoratedObject(),
+            $this->getObjects()
+        )))();
+
+        return \count($this->objects);
+    }
+
+    /**
+     * Maps the legacy `data` parameter to the given builder.
+     *
+     * @param array<string, mixed> $data
+     */
+    private function applyData(PollBuilder $builder, array $data): void
+    {
+        foreach ($data as $key => $value) {
+            match ($key) {
+                'objectTypeID' => $builder->setContainer(
+                    ObjectTypeCache::getInstance()->getObjectType($value)->objectType,
+                    $data['objectID'] ?? 0
+                ),
+                'objectID' => $builder->setObjectID($value),
+                'question' => $builder->setQuestion([L10nStorage::MONOLINGUAL => (string)$value]),
+                'time' => $builder->setTime($value),
+                'endTime' => $builder->setEndTime($value),
+                'isChangeable' => $builder->setIsChangeable((bool)$value),
+                'isPublic' => $builder->setIsPublic((bool)$value),
+                'sortByVotes' => $builder->setSortByVotes((bool)$value),
+                'resultsRequireVote' => $builder->setResultsRequireVote((bool)$value),
+                'resultsRequireEnd' => $builder->setResultsRequireEnd((bool)$value),
+                'minVotes' => $builder->setMinVotes($value),
+                'maxVotes' => $builder->setMaxVotes($value),
+                'votes' => $builder->setVotes($value),
+                default => $builder->setCustomProperty($key, $value),
+            };
+        }
+    }
+
+    /**
+     * Maps the legacy `options` parameter (`showOrder => [optionID, optionValue]`)
+     * to the options of the builder.
+     *
+     * @return list<array{optionID: int, optionValue: array<int, string>}>
+     */
+    private function getOptionsFromParameter(): array
+    {
+        $options = $this->parameters['options'] ?? [];
+        \ksort($options);
+
+        return \array_values(\array_map(
+            static fn(array $option) => [
+                'optionID' => (int)($option['optionID'] ?? 0),
+                'optionValue' => [L10nStorage::MONOLINGUAL => (string)$option['optionValue']],
+            ],
+            $options
+        ));
     }
 
     public function validateVote(): void
@@ -187,6 +168,10 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             throw new UserInputException('optionIDs', 'maxVotes');
         }
 
+        if (\count(\array_unique($this->parameters['optionIDs'])) < $this->poll->getRequiredVotes()) {
+            throw new UserInputException('optionIDs', 'minVotes');
+        }
+
         $optionIDs = [];
         foreach ($this->poll->getOptions() as $option) {
             $optionIDs[] = $option->optionID;
@@ -215,80 +200,11 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             $this->poll = $this->getSingleObject();
         }
 
-        // get previous vote
-        $sql = "SELECT  optionID
-                FROM    wcf1_poll_option_vote
-                WHERE   pollID = ?
-                    AND userID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $this->poll->pollID,
-            WCF::getUser()->userID,
-        ]);
-        $optionIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-        $alreadyVoted = $optionIDs !== [];
-
-        // calculate the difference
-        foreach ($this->parameters['optionIDs'] as $index => $optionID) {
-            $optionsIndex = \array_search($optionID, $optionIDs);
-            if ($optionsIndex !== false) {
-                // ignore this option
-                unset($this->parameters['optionIDs'][$index]);
-                unset($optionIDs[$optionsIndex]);
-            }
-        }
-
-        // insert new vote options
-        if (!empty($this->parameters['optionIDs'])) {
-            $sql = "INSERT INTO wcf1_poll_option_vote
-                                (pollID, optionID, userID)
-                    VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
-            foreach ($this->parameters['optionIDs'] as $optionID) {
-                $statement->execute([
-                    $this->poll->pollID,
-                    $optionID,
-                    WCF::getUser()->userID,
-                ]);
-            }
-
-            // increase votes per option
-            $sql = "UPDATE  wcf1_poll_option
-                    SET     votes = votes + 1
-                    WHERE   optionID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            foreach ($this->parameters['optionIDs'] as $optionID) {
-                $statement->execute([$optionID]);
-            }
-        }
-
-        // remove previous options
-        if ($optionIDs !== []) {
-            $sql = "DELETE FROM wcf1_poll_option_vote
-                    WHERE       optionID = ?
-                            AND userID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            foreach ($optionIDs as $optionID) {
-                $statement->execute([
-                    $optionID,
-                    WCF::getUser()->userID,
-                ]);
-            }
-
-            // decrease votes per option
-            $sql = "UPDATE  wcf1_poll_option
-                    SET     votes = votes - 1
-                    WHERE   optionID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            foreach ($optionIDs as $optionID) {
-                $statement->execute([$optionID]);
-            }
-        }
-
-        // increase poll votes
-        if (!$alreadyVoted) {
-            $this->poll->increaseVotes();
-        }
+        (new VotePoll(
+            $this->poll->getDecoratedObject(),
+            WCF::getUser(),
+            \array_values($this->parameters['optionIDs'])
+        ))();
 
         // update poll object
         $polls = PollManager::getInstance()->getPolls([$this->poll->pollID]);
@@ -405,15 +321,9 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     public function getGroupedUserList()
     {
         // get options
-        $sql = "SELECT      optionID, optionValue
-                FROM        wcf1_poll_option
-                WHERE       pollID = ?
-                ORDER BY    " . ($this->poll->sortByVotes !== 0 ? "votes DESC" : "showOrder ASC");
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$this->poll->pollID]);
         $options = [];
-        while ($row = $statement->fetchArray()) {
-            $options[$row['optionID']] = new GroupedUserList($row['optionValue'], 'wcf.poll.noVotes');
+        foreach ($this->poll->getOptions(true) as $option) {
+            $options[$option->optionID] = new GroupedUserList($option->getOptionValue(), 'wcf.poll.noVotes');
         }
 
         // get votes
@@ -451,75 +361,62 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             'com.woltlab.wcf.poll',
             $this->parameters['sourceObjectType']
         );
-        $targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
-            'com.woltlab.wcf.poll',
-            $this->parameters['targetObjectType']
-        );
 
-        //
-        // step 1) get data
-        //
+        $pollList = new PollList();
+        $pollList->getConditionBuilder()->add("poll.objectTypeID = ?", [$sourceObjectType->objectTypeID]);
+        $pollList->getConditionBuilder()->add("poll.objectID = ?", [$this->parameters['sourceObjectID']]);
+        $pollList->sqlLimit = 1;
+        $pollList->readObjects();
+        $poll = $pollList->getSingleObject();
 
-        // get poll
-        $sql = "SELECT  *
-                FROM    wcf1_poll
-                WHERE   objectTypeID = ?
-                    AND objectID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $sourceObjectType->objectTypeID,
-            $this->parameters['sourceObjectID'],
-        ]);
-        $row = $statement->fetchArray();
-
-        if ($row === false) {
+        if ($poll === null) {
             return [
                 'pollID' => null,
             ];
         }
 
-        // get options
-        $pollOptionList = new PollOptionList();
-        $pollOptionList->getConditionBuilder()->add("poll_option.pollID = ?", [$row['pollID']]);
-        $pollOptionList->readObjects();
+        $sourceOptions = \array_values($poll->getOptions());
 
-        //
-        // step 2) copy
-        //
+        $builder = PollBuilder::forCreate()
+            ->setContainer($this->parameters['targetObjectType'], (int)$this->parameters['targetObjectID'])
+            ->setMultilingual($poll->isMultilingual === 1)
+            ->setQuestion($poll->getL10nValues('question'))
+            ->setOptions(\array_map(
+                static fn($option) => ['optionValue' => $option->getL10nValues('optionValue')],
+                $sourceOptions
+            ))
+            ->setTime($poll->time)
+            ->setEndTime($poll->endTime)
+            ->setIsChangeable($poll->isChangeable === 1)
+            ->setIsPublic($poll->isPublic === 1)
+            ->setSortByVotes($poll->sortByVotes === 1)
+            ->setResultsRequireVote($poll->resultsRequireVote === 1)
+            ->setResultsRequireEnd($poll->resultsRequireEnd === 1)
+            ->setMinVotes($poll->minVotes)
+            ->setMaxVotes($poll->maxVotes);
+        $newPoll = (new CreatePoll($builder))();
 
-        // create poll
-        $pollData = $row;
-        $pollData['objectTypeID'] = $targetObjectType->objectTypeID;
-        $pollData['objectID'] = $this->parameters['targetObjectID'];
-        unset($pollData['pollID']);
+        // The new options are created in the order of the source options.
+        $newOptions = \array_values($newPoll->getOptions());
 
-        $newPoll = PollEditor::create($pollData);
+        $sql = "INSERT INTO wcf1_poll_option_vote
+                            (pollID, optionID, userID)
+                SELECT      ?, ?, userID
+                FROM        wcf1_poll_option_vote
+                WHERE       optionID = ?";
+        $statement = WCF::getDB()->prepare($sql);
 
-        // create options
-        $newOptionIDs = [];
-        foreach ($pollOptionList as $pollOption) {
-            $newOption = PollOptionEditor::create([
-                'pollID' => $newPoll->pollID,
-                'optionValue' => $pollOption->optionValue,
-                'votes' => $pollOption->votes,
-                'showOrder' => $pollOption->showOrder,
-            ]);
-
-            $newOptionIDs[$pollOption->optionID] = $newOption->optionID;
-        }
-
-        // copy votes
         WCF::getDB()->beginTransaction();
-        foreach ($newOptionIDs as $oldOptionID => $newOptionID) {
-            $sql = "INSERT INTO wcf1_poll_option_vote
-                                (pollID, optionID, userID)
-                    SELECT      " . $newPoll->pollID . ", " . $newOptionID . ", userID
-                    FROM        wcf1_poll_option_vote
-                    WHERE       optionID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$oldOptionID]);
+        foreach ($sourceOptions as $index => $sourceOption) {
+            $statement->execute([
+                $newPoll->pollID,
+                $newOptions[$index]->optionID,
+                $sourceOption->optionID,
+            ]);
         }
         WCF::getDB()->commitTransaction();
+
+        PollBuilder::forUpdate($newPoll)->recalculateVotes()->update();
 
         return [
             'pollID' => $newPoll->pollID,

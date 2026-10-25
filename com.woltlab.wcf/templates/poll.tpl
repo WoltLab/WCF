@@ -1,3 +1,4 @@
+{* deprecated since 6.3: use standalone polls that are embedded through the `[poll]` BBCode instead *}
 {if (!$__wcf->getUser()->isGuest() || $poll->canSeeResult() || $poll->canViewParticipants()) && !$__pollLoadedJavaScript|isset}
 	{assign var=__pollLoadedJavaScript value=true}
 	<script data-relocate="true">

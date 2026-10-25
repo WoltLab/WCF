@@ -356,7 +356,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/User/Search/Input",
         #save(type) {
             const form = this.#container.closest("form");
             const name = this.#aclValuesFieldName + "[" + type + "]";
-            let input = form.querySelector("input[name='" + name + "']");
+            let input = form.querySelector(`input[name="${CSS.escape(name)}"]`);
             if (input) {
                 // combine json values
                 input.value = JSON.stringify((0, Core_1.extend)(JSON.parse(input.value), this.#values[type]));

@@ -1,3 +1,4 @@
+{* deprecated since 6.3: use standalone polls that are embedded through the `[poll]` BBCode instead *}
 {if $__showPoll|isset && $__showPoll}
 	<script data-relocate="true">
 		require(["WoltLabSuite/Core/Ui/Poll/Editor"], (UiPollEditor) => {

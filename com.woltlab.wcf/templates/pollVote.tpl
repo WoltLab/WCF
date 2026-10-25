@@ -1,3 +1,4 @@
+{* deprecated since 6.3: use standalone polls that are embedded through the `[poll]` BBCode instead *}
 <dl class="wide pollVoteContainer" data-max-votes="{$poll->maxVotes}">
 	{foreach from=$poll->getOptions() item=option}
 		<dt></dt>

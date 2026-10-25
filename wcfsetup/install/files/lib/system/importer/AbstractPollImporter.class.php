@@ -2,8 +2,10 @@
 
 namespace wcf\system\importer;
 
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\poll\Poll;
-use wcf\data\poll\PollEditor;
+use wcf\data\poll\PollBuilder;
+use wcf\system\l10n\L10nStorage;
 
 /**
  * Imports polls.
@@ -11,6 +13,7 @@ use wcf\data\poll\PollEditor;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Only supports the legacy polls that are bound to a content object.
  */
 class AbstractPollImporter extends AbstractImporter
 {
@@ -34,7 +37,31 @@ class AbstractPollImporter extends AbstractImporter
     #[\Override]
     public function import(mixed $oldID, array $data, array $additionalData = [])
     {
-        $poll = PollEditor::create(\array_merge($data, ['objectTypeID' => $this->objectTypeID]));
+        $builder = PollBuilder::forCreate()
+            ->setContainer(
+                ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->objectType,
+                $data['objectID'] ?? 0
+            )
+            ->setTime($data['time'] ?? \TIME_NOW)
+            ->setQuestion([L10nStorage::MONOLINGUAL => (string)($data['question'] ?? '')]);
+        unset($data['objectID'], $data['objectTypeID'], $data['time'], $data['question']);
+
+        foreach ($data as $key => $value) {
+            match ($key) {
+                'endTime' => $builder->setEndTime($value),
+                'isChangeable' => $builder->setIsChangeable((bool)$value),
+                'isPublic' => $builder->setIsPublic((bool)$value),
+                'sortByVotes' => $builder->setSortByVotes((bool)$value),
+                'resultsRequireVote' => $builder->setResultsRequireVote((bool)$value),
+                'resultsRequireEnd' => $builder->setResultsRequireEnd((bool)$value),
+                'minVotes' => $builder->setMinVotes($value),
+                'maxVotes' => $builder->setMaxVotes($value),
+                'votes' => $builder->setVotes($value),
+                default => $builder->setCustomProperty($key, $value),
+            };
+        }
+
+        $poll = $builder->create();
 
         ImportHandler::getInstance()->saveNewID($this->objectTypeName, $oldID, $poll->pollID);
 

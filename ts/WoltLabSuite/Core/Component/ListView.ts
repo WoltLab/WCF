@@ -17,6 +17,7 @@ import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import { getItem } from "../Api/ListViews/GetItem";
 import { getBulkContextMenuOptions } from "../Api/Interactions/GetBulkContextMenuOptions";
 import { promiseMutex } from "../Helper/PromiseMutex";
+import { isOwnInteraction } from "./Interaction/Container";
 
 export class ListView {
   readonly #viewClassName: string;
@@ -104,6 +105,10 @@ export class ListView {
   #initInteractions(): void {
     wheneverFirstSeen(`#${this.#viewElement.id} .listView__item`, (item) => {
       item.querySelectorAll<HTMLElement>(".dropdownToggle").forEach((element) => {
+        if (!isOwnInteraction(item, element)) {
+          return;
+        }
+
         let dropdown = UiDropdownSimple.getDropdownMenu(element.dataset.target!);
         if (!dropdown) {
           dropdown = element.closest(".dropdown")!.querySelector<HTMLElement>(".dropdownMenu")!;

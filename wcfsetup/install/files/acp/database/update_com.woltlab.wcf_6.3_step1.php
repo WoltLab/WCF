@@ -155,6 +155,76 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    PartialDatabaseTable::create('wcf1_poll')
+        ->columns([
+            // `NULL` represents a standalone poll that is embedded via bbcode.
+            IntDatabaseTableColumn::create('objectTypeID'),
+            IntDatabaseTableColumn::create('userID'),
+            NotNullVarchar255DatabaseTableColumn::create('username')
+                ->defaultValue(''),
+            DefaultFalseBooleanDatabaseTableColumn::create('isMultilingual'),
+            DefaultFalseBooleanDatabaseTableColumn::create('resultsRequireEnd'),
+            NotNullInt10DatabaseTableColumn::create('minVotes')
+                ->defaultValue(1),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['userID'])
+                ->referencedTable('wcf1_user')
+                ->referencedColumns(['userID'])
+                ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_poll_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('pollID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('question')
+                ->length(255),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('pollID')
+                ->columns(['pollID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['pollID'])
+                ->referencedTable('wcf1_poll')
+                ->referencedColumns(['pollID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_poll_option_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('optionID'),
+            IntDatabaseTableColumn::create('languageID'),
+            VarcharDatabaseTableColumn::create('optionValue')
+                ->length(255),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('optionID')
+                ->columns(['optionID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['optionID'])
+                ->referencedTable('wcf1_poll_option')
+                ->referencedColumns(['optionID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
     PartialDatabaseTable::create('wcf1_like_object')
         ->columns([
             TextDatabaseTableColumn::create('cachedUsers')

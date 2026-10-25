@@ -5,6 +5,7 @@
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.5
+ * @deprecated 6.3 Use standalone polls that are embedded through the `[poll]` BBCode instead.
  */
 define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/Util", "../../StringUtil", "./View/Participants", "./View/Results", "./View/Vote", "./Vote"], function (require, exports, tslib_1, Listener_1, Util_1, StringUtil_1, Participants_1, Results_1, Vote_1, Vote_2) {
     "use strict";

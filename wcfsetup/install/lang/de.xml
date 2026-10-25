@@ -21,6 +21,8 @@
 	<category name="wcf.acl.option">
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canViewLabel"><![CDATA[Kann Labels sehen]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canSetLabel"><![CDATA[Kann Labels setzen]]></item>
+		<item name="wcf.acl.option.com.woltlab.wcf.poll.canViewPoll"><![CDATA[Kann Umfrage sehen]]></item>
+		<item name="wcf.acl.option.com.woltlab.wcf.poll.canVotePoll"><![CDATA[Kann an Umfrage teilnehmen]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canViewCategory"><![CDATA[Kann Kategorie betreten]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canReadArticle"><![CDATA[Kann Artikel lesen]]></item>
 	</category>
@@ -783,6 +785,13 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[Benutzerprofilfelder]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Kann Benutzerprofilfelder verwalten]]></item>
 		<item name="wcf.acp.group.option.category.user.message.attachment"><![CDATA[Dateianhänge]]></item>
+		<item name="wcf.acp.group.option.category.user.message.poll"><![CDATA[Umfragen]]></item>
+		<item name="wcf.acp.group.option.user.poll.canVotePoll"><![CDATA[Kann an Umfragen teilnehmen]]></item>
+		<item name="wcf.acp.group.option.user.poll.canVotePoll.description"><![CDATA[Gilt für Umfragen, die in Nachrichten eingebunden werden.]]></item>
+		<item name="wcf.acp.group.option.user.poll.canCreatePoll"><![CDATA[Kann Umfragen erstellen]]></item>
+		<item name="wcf.acp.group.option.user.poll.canCreatePoll.description"><![CDATA[Umfragen können in Nachrichten eingebunden werden.]]></item>
+		<item name="wcf.acp.group.option.user.poll.canStartPublicPoll"><![CDATA[Kann öffentliche Umfragen erstellen]]></item>
+		<item name="wcf.acp.group.option.user.poll.canStartPublicPoll.description"><![CDATA[Die Teilnehmer öffentlicher Umfragen sind für andere Benutzer sichtbar.]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximale Dateianhangsgröße]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
@@ -900,6 +909,9 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.admin.content.cms.canUseMedia"><![CDATA[Kann Medien einbinden]]></item>
 		<item name="wcf.acp.group.option.category.mod.cms"><![CDATA[CMS]]></item>
 		<item name="wcf.acp.group.option.category.mod.article"><![CDATA[Artikel]]></item>
+		<item name="wcf.acp.group.option.category.mod.poll"><![CDATA[Umfragen]]></item>
+		<item name="wcf.acp.group.option.mod.poll.canManagePoll"><![CDATA[Kann alle Umfragen verwalten]]></item>
+		<item name="wcf.acp.group.option.mod.poll.canManagePoll.description"><![CDATA[Gilt für Umfragen, die in Nachrichten eingebunden werden.]]></item>
 		<item name="wcf.acp.group.option.category.mod.page"><![CDATA[Seiten]]></item>
 		<item name="wcf.acp.group.option.category.user.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.group.option.category.user.page"><![CDATA[Seiten]]></item>
@@ -3823,6 +3835,7 @@ Dateianhänge:
 		<item name="wcf.editor.button.group.format"><![CDATA[Text formatieren]]></item>
 		<item name="wcf.editor.button.group.list"><![CDATA[Listen]]></item>
 		<item name="wcf.editor.button.media"><![CDATA[Media]]></item>
+		<item name="wcf.editor.button.poll"><![CDATA[Umfrage]]></item>
 		<item name="wcf.editor.button.page"><![CDATA[CMS-Seite]]></item>
 		<item name="wcf.editor.restoreDraft"><![CDATA[Möchten Sie den zwischengespeicherten Entwurf wiederherstellen?]]></item>
 		<item name="wcf.editor.restoreDraft.preview"><![CDATA[Vorschau]]></item>
@@ -4451,6 +4464,7 @@ Dateianhänge:
 	</category>
 	<category name="wcf.poll">
 		<item name="wcf.poll.button.addOption"><![CDATA[Weitere Antwort hinzufügen]]></item>
+		<item name="wcf.poll.button.changeVote"><![CDATA[Stimme ändern]]></item>
 		<item name="wcf.poll.button.removeOption"><![CDATA[Antwort entfernen]]></item>
 		<item name="wcf.poll.button.showParticipants"><![CDATA[Teilnehmer auflisten]]></item>
 		<item name="wcf.poll.button.showResult"><![CDATA[Ergebnis anzeigen]]></item>
@@ -4463,6 +4477,9 @@ Dateianhänge:
 		<item name="wcf.poll.management"><![CDATA[Umfrage]]></item>
 		<item name="wcf.poll.maxVotes"><![CDATA[Anzahl erlaubter Antworten]]></item>
 		<item name="wcf.poll.maxVotes.error.invalid"><![CDATA[Die Anzahl der erlaubten Antworten liegt über den tatsächlich verfügbaren Antworten.]]></item>
+		<item name="wcf.poll.minVotes"><![CDATA[Mindestanzahl an Antworten]]></item>
+		<item name="wcf.poll.minVotes.description"><![CDATA[Teilnehmer müssen mindestens so viele Antworten wählen. Entspricht der Wert der Anzahl erlaubter Antworten, müssen alle Stimmen genutzt werden.]]></item>
+		<item name="wcf.poll.minVotes.error.invalid"><![CDATA[Die Mindestanzahl darf die Anzahl erlaubter Antworten nicht übersteigen.]]></item>
 		<item name="wcf.poll.multipleVotes"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} {#$poll->maxVotes} Antwortmöglichkeiten wählen.]]></item>
 		<item name="wcf.poll.noVotes"><![CDATA[Bisher keine Stimmen]]></item>
 		<item name="wcf.poll.options"><![CDATA[Antworten]]></item>
@@ -4471,9 +4488,32 @@ Dateianhänge:
 		<item name="wcf.poll.restrictedResult"><![CDATA[Das Ergebnis ist nur für Teilnehmer sichtbar.]]></item>
 		<item name="wcf.poll.resultsRequireVote"><![CDATA[Ergebnis erst nach Abgabe der Stimme sichtbar]]></item>
 		<item name="wcf.poll.resultsRequireVote.description"><![CDATA[Das Ergebnis ist erst mit dem Ablauf der Umfrage oder der Abgabe einer Stimme sichtbar.]]></item>
+		<item name="wcf.poll.resultsRequireEnd"><![CDATA[Ergebnis erst nach Ende der Umfrage anzeigen]]></item>
+		<item name="wcf.poll.resultsRequireEnd.description"><![CDATA[Das Ergebnis ist bis zum Ende der Umfrage für niemanden sichtbar, auch nicht für Teilnehmer.]]></item>
+		<item name="wcf.poll.resultsRequireEnd.error.endTimeRequired"><![CDATA[Diese Option erfordert ein Ende der Umfrage.]]></item>
 		<item name="wcf.poll.sortByVotes"><![CDATA[Ergebnis nach Stimmen sortieren]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[Insgesamt {#$poll->votes} Stimme{if $poll->votes != 1}n{/if}]]></item>
 		<item name="wcf.poll.endTimeInfo"><![CDATA[Umfrage endet am {@$poll->endTime|plainTime}]]></item>
+		<item name="wcf.poll.access"><![CDATA[Zugriff]]></item>
+		<item name="wcf.poll.add"><![CDATA[Umfrage erstellen]]></item>
+		<item name="wcf.poll.edit"><![CDATA[Umfrage bearbeiten]]></item>
+		<item name="wcf.poll.manager"><![CDATA[Umfragen]]></item>
+		<item name="wcf.poll.manager.item.meta"><![CDATA[{#$poll->votes} Stimme{if $poll->votes != 1}n{/if} · erstellt am {@$poll->time|plainTime}{if $poll->isFinished()} · beendet{/if}]]></item>
+		<item name="wcf.poll.manager.selection.none"><![CDATA[Keine Umfrage ausgewählt]]></item>
+		<item name="wcf.poll.search.placeholder"><![CDATA[Umfragen durchsuchen …]]></item>
+		<item name="wcf.poll.time"><![CDATA[Erstellt]]></item>
+		<item name="wcf.poll.votes"><![CDATA[Stimmen]]></item>
+		<item name="wcf.poll.widget.label"><![CDATA[Umfrage]]></item>
+		<item name="wcf.poll.widget.votes"><![CDATA[{#$poll->votes} Stimme{if $poll->votes != 1}n{/if}]]></item>
+		<item name="wcf.poll.widget.hint.multiple"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} bis zu {#$poll->maxVotes} Antworten.]]></item>
+		<item name="wcf.poll.widget.hint.exactly"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} genau {#$poll->maxVotes} Antworten.]]></item>
+		<item name="wcf.poll.widget.hint.range"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} {#$poll->getRequiredVotes()} bis {#$poll->maxVotes} Antworten.]]></item>
+		<item name="wcf.poll.widget.hint.voted"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} abgestimmt.]]></item>
+		<item name="wcf.poll.widget.hint.resultsAfterEnd"><![CDATA[Das Ergebnis wird nach Ende der Umfrage angezeigt.]]></item>
+		<item name="wcf.poll.widget.ownVote"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Stimme]]></item>
+		<item name="wcf.poll.widget.endTime"><![CDATA[Endet am {@$poll->endTime|plainTime}]]></item>
+		<item name="wcf.poll.widget.ended"><![CDATA[Beendet am {@$poll->endTime|plainTime}]]></item>
+		<item name="wcf.poll.widget.optionResult"><![CDATA[: {#$option->votes} Stimme{if $option->votes != 1}n{/if}, {#$option->getRelativeVotes($poll)} %]]></item>
 	</category>
 	<category name="wcf.reactions">
 		<item name="wcf.reactions.summary.title"><![CDATA[Reaktionen]]></item>

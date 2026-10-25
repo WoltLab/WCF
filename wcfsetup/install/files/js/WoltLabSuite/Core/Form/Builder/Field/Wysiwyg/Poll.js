@@ -5,6 +5,7 @@
  * @copyright 2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.2
+ * @deprecated 6.3 Use `WoltLabSuite/Core/Form/Builder/Field/PollOptionList` instead.
  */
 define(["require", "exports", "tslib", "../Field"], function (require, exports, tslib_1, Field_1) {
     "use strict";

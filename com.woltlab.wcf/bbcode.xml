@@ -212,6 +212,16 @@
 				</attribute>
 			</attributes>
 		</bbcode>
+		<bbcode name="poll">
+			<classname>wcf\system\bbcode\PollBBCode</classname>
+			<isBlockElement>1</isBlockElement>
+			<attributes>
+				<attribute name="0">
+					<validationpattern><![CDATA[^\d+$]]></validationpattern>
+					<required>1</required>
+				</attribute>
+			</attributes>
+		</bbcode>
 		<bbcode name="wsp">
 			<classname>wcf\system\bbcode\WoltLabSuitePageBBCode</classname>
 			<attributes>

@@ -5,6 +5,7 @@
  * @copyright  2001-2022 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.5
+ * @deprecated 6.3 Use standalone polls that are embedded through the `[poll]` BBCode instead.
  */
 define(["require", "exports", "tslib", "./Poll", "../../Ajax"], function (require, exports, tslib_1, Poll_1, Ajax) {
     "use strict";

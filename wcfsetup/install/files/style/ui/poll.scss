@@ -1,4 +1,4 @@
-/* poll create/edit form */
+/* poll create/edit form, deprecated since 6.3: use standalone polls that are embedded through the `[poll]` BBCode instead */
 .pollOptionContainer .pollOptionInput {
 	column-gap: 5px;
 	margin: 5px 0;
@@ -22,7 +22,7 @@
 	}
 }
 
-/* displayed poll */
+/* displayed poll, deprecated since 6.3: use standalone polls that are embedded through the `[poll]` BBCode instead */
 .pollContainer {
 	background-color: var(--wcfContentContainerBackground);
 	border: 1px solid var(--wcfContentBorderInner);
@@ -98,4 +98,199 @@
 
 html[data-color-scheme="dark"] .pollMeterValue {
 	background-color: rgb(255 255 255 / 34%);
+}
+
+/* option list of the poll editor dialog */
+.pollOptionList {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.pollOptionListItem {
+	align-items: center;
+	column-gap: 5px;
+	display: flex;
+}
+
+.pollOptionListItem__handle {
+	cursor: move;
+}
+
+.pollOptionListItem .inputAddon,
+.pollOptionListItem__value {
+	flex: 1 1 auto;
+}
+
+.pollOptionList + .pollOptionList__addItem {
+	margin-top: 10px;
+}
+
+/* poll manager */
+.dialog.dialog--pollManager {
+	height: min(640px, calc(100vh - 140px), var(--dialog-max-height));
+	max-width: min(720px, var(--dialog-max-width));
+	min-height: min(420px, var(--dialog-max-height));
+	width: 100%;
+
+	.dialog__document,
+	.dialog__form {
+		height: 100%;
+	}
+
+	.dialog__content {
+		flex: 1 1 auto;
+	}
+
+	.dialog__control {
+		border-top: 1px solid var(--wcfContentBorderInner);
+		margin-top: 0;
+		padding-top: 12px;
+	}
+}
+
+.dialog--pollManager .listView__header {
+	align-items: center;
+	background-color: var(--wcfContentBackground);
+	border-bottom: 1px solid var(--wcfContentBorderInner);
+	gap: 8px;
+	margin-bottom: 16px;
+	padding: 0 0 12px;
+	position: sticky;
+	top: 0;
+	z-index: 3;
+
+	.listView__header__additionalContent {
+		flex: 1 1 200px;
+	}
+
+	.button {
+		min-height: 36px;
+	}
+}
+
+/* The selection is handled by the poll manager, there is no edit mode. */
+.dialog--pollManager .listView__header__button:has(> .listView__editMode__toggle) {
+	display: none;
+}
+
+.pollManager__search {
+	align-items: center;
+	display: flex;
+	flex: 1 1 auto;
+	position: relative;
+
+	> fa-icon {
+		color: var(--wcfContentDimmedText);
+		left: 10px;
+		pointer-events: none;
+		position: absolute;
+	}
+}
+
+.pollManager__searchInput {
+	min-height: 36px;
+	padding-left: 34px !important;
+	width: 100%;
+}
+
+.listView__items.pollManager {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.pollManager__item {
+	align-items: center;
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: var(--wcfBorderRadius);
+	cursor: pointer;
+	display: flex;
+	gap: 12px;
+	padding: 10px 12px;
+
+	&:hover {
+		background-color: var(--wcfTabularBoxBackgroundActive);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--wcfContentLink);
+		outline-offset: 1px;
+	}
+}
+
+.pollManager__item--selected {
+	border-color: var(--wcfContentLink);
+	box-shadow: 0 0 0 1px var(--wcfContentLink);
+}
+
+.pollManager__item__indicator {
+	align-items: center;
+	border: 2px solid var(--wcfContentBorderInner);
+	border-radius: 50%;
+	color: #fff;
+	display: flex;
+	flex: 0 0 auto;
+	height: 22px;
+	justify-content: center;
+	width: 22px;
+
+	> fa-icon {
+		visibility: hidden;
+	}
+}
+
+.pollManager__item--selected .pollManager__item__indicator {
+	background-color: var(--wcfButtonPrimaryBackground);
+	border-color: var(--wcfButtonPrimaryBackground);
+
+	> fa-icon {
+		visibility: visible;
+	}
+}
+
+.pollManager__item__content {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.pollManager__item__question {
+	color: var(--wcfContentHeadlineText);
+	font-weight: 500;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.pollManager__item__meta {
+	color: var(--wcfContentDimmedText);
+	font-size: 12px;
+}
+
+.pollManager__item__menu {
+	flex: 0 0 auto;
+}
+
+.pollManager__selectionInfo {
+	align-self: center;
+	color: var(--wcfContentDimmedText);
+	grid-area: extra;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	strong {
+		color: var(--wcfContentHeadlineText);
+		font-weight: 500;
+	}
+}
+
+.dialog__control--duo-stacked,
+.dialog__control--extra-stacked,
+.dialog__control--tripple-stacked {
+	.pollManager__selectionInfo {
+		grid-area: auto;
+		grid-column: 1 / -1;
+	}
 }

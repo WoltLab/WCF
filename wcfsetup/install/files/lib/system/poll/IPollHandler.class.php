@@ -10,6 +10,7 @@ use wcf\data\poll\Poll;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated 6.3 Use standalone polls that are embedded through the `[poll]` BBCode instead.
  */
 interface IPollHandler
 {

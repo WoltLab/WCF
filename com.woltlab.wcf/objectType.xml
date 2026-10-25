@@ -408,6 +408,10 @@
 			<name>com.woltlab.wcf.label</name>
 			<definitionname>com.woltlab.wcf.acl</definitionname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.poll</name>
+			<definitionname>com.woltlab.wcf.acl</definitionname>
+		</type>
 		<!-- importers -->
 		<type>
 			<name>com.woltlab.wcf.user</name>
@@ -674,6 +678,11 @@
 			<name>com.woltlab.wcf.media</name>
 			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
 			<classname>wcf\system\message\embedded\object\MediaMessageEmbeddedObjectHandler</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.poll</name>
+			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
+			<classname>wcf\system\message\embedded\object\PollMessageEmbeddedObjectHandler</classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user</name>

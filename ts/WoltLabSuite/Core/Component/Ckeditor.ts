@@ -16,6 +16,7 @@
 import type { CKEditor5 } from "@woltlab/editor";
 import { setup as setupAttachment } from "./Ckeditor/Attachment";
 import { setup as setupMedia } from "./Ckeditor/Media";
+import { setup as setupPoll } from "./Ckeditor/Poll";
 import { setup as setupMention } from "./Ckeditor/Mention";
 import { setup as setupQuote } from "./Ckeditor/Quote";
 import { deleteDraft, initializeAutosave, setupRestoreDraft } from "./Ckeditor/Autosave";
@@ -307,6 +308,11 @@ export async function setupCkeditor(
     setupMedia(element);
   } else {
     bbcodes = bbcodes.filter((item) => item.name !== "media");
+  }
+  if (features.poll) {
+    setupPoll(element);
+  } else {
+    bbcodes = bbcodes.filter((item) => item.name !== "poll");
   }
 
   setupMention(element);

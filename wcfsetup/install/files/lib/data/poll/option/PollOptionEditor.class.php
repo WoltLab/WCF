@@ -13,6 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  *
  * @mixin       PollOption
  * @extends DatabaseObjectEditor<PollOption>
+ * @deprecated 6.3 Use `PollBuilder` instead.
  */
 class PollOptionEditor extends DatabaseObjectEditor
 {

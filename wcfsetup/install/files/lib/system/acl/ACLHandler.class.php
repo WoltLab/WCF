@@ -175,10 +175,19 @@ class ACLHandler extends SingletonFactory
             $options = ACLOption::getOptions($objectTypeID)->getObjects();
 
             foreach (['group', 'user'] as $type) {
-                if (isset($valuesSource[$type])) {
+                if (isset($valuesSource[$type]) && \is_string($valuesSource[$type])) {
                     $this->__readValues[$objectTypeID][$type] = [];
 
-                    foreach (\json_decode($valuesSource[$type], true, flags: \JSON_THROW_ON_ERROR) as $typeID => $optionData) {
+                    $typeData = \json_decode($valuesSource[$type], true, flags: \JSON_THROW_ON_ERROR);
+                    if (!\is_array($typeData)) {
+                        $typeData = [];
+                    }
+
+                    foreach ($typeData as $typeID => $optionData) {
+                        if (!\is_array($optionData)) {
+                            continue;
+                        }
+
                         $this->__readValues[$objectTypeID][$type][$typeID] = [];
 
                         foreach ($optionData as $optionID => $optionValue) {

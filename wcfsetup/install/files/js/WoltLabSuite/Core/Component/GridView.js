@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridViews/GetRows", "../Api/Interactions/GetBulkContextMenuOptions", "../Api/PostObject", "../Dom/Change/Listener", "../Dom/Util", "../Helper/PromiseMutex", "../Helper/Selector", "../Ui/Dropdown/Simple", "./GridView/State"], function (require, exports, tslib_1, GetRow_1, GetRows_1, GetBulkContextMenuOptions_1, PostObject_1, Listener_1, Util_1, PromiseMutex_1, Selector_1, Simple_1, State_1) {
+define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridViews/GetRows", "../Api/Interactions/GetBulkContextMenuOptions", "../Api/PostObject", "../Dom/Change/Listener", "../Dom/Util", "../Helper/PromiseMutex", "../Helper/Selector", "../Ui/Dropdown/Simple", "./GridView/State", "./Interaction/Container"], function (require, exports, tslib_1, GetRow_1, GetRows_1, GetBulkContextMenuOptions_1, PostObject_1, Listener_1, Util_1, PromiseMutex_1, Selector_1, Simple_1, State_1, Container_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.GridView = void 0;
@@ -60,6 +60,9 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridVi
             (0, Selector_1.wheneverFirstSeen)(`#${this.#table.id} tbody tr`, (row) => {
                 const containers = [row];
                 row.querySelectorAll(".dropdownToggle").forEach((element) => {
+                    if (!(0, Container_1.isOwnInteraction)(row, element)) {
+                        return;
+                    }
                     const dropdown = Simple_1.default.getDropdownMenu(element.dataset.target);
                     if (dropdown) {
                         containers.push(dropdown);
@@ -67,6 +70,9 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridVi
                 });
                 for (const container of containers) {
                     container.querySelectorAll("[data-interaction]").forEach((element) => {
+                        if (container === row && !(0, Container_1.isOwnInteraction)(row, element)) {
+                            return;
+                        }
                         element.addEventListener("click", () => {
                             row.dispatchEvent(new CustomEvent("interaction:execute", {
                                 detail: element.dataset,

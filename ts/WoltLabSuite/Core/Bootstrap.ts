@@ -199,6 +199,10 @@ export function setup(options: BoostrapOptions): void {
     void import("./Component/Media/Gallery").then(({ setup }) => setup());
   });
 
+  whenFirstSeen(".pollWidget", () => {
+    void import("./Component/Poll/Widget").then(({ setup }) => setup());
+  });
+
   whenFirstSeen("[data-fancybox]", () => {
     void import("./Component/Image/Viewer").then(({ setup }) => setup());
   });
