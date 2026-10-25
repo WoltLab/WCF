@@ -3,6 +3,8 @@
 namespace wcf\acp\form;
 
 use wcf\acp\page\StyleListPage;
+use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
 use wcf\data\style\StyleEditor;
@@ -63,6 +65,23 @@ class StyleEditForm extends StyleAddForm
         }
 
         parent::readParameters();
+    }
+
+    #[\Override]
+    public function readFormParameters()
+    {
+        parent::readFormParameters();
+
+        // The fields are only marked as `readonly` for protected styles.
+        if ($this->style->isTainted === 0) {
+            $this->authorName = $this->style->authorName;
+            $this->authorURL = $this->style->authorURL;
+            $this->copyright = $this->style->copyright;
+            $this->license = $this->style->license;
+            $this->packageName = $this->style->packageName;
+            $this->styleDate = $this->style->styleDate;
+            $this->styleVersion = $this->style->styleVersion;
+        }
     }
 
     #[\Override]
@@ -435,11 +454,62 @@ class StyleEditForm extends StyleAddForm
             'style' => $this->style,
             'styleID' => $this->styleID,
             'isDarkMode' => $this->isDarkMode,
+            'authoredVariables' => $this->getAuthoredVariables(),
+            'stylePackage' => $this->getStylePackage(),
+            'canViewStylePackage' => WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')
+                && WCF::getSession()->hasPermission('admin.configuration.package.canUpdatePackage'),
             'interactionContextMenu' => StandaloneInteractionContextMenuComponent::forContentHeaderButton(
                 new StyleInteractions(),
                 $this->style,
                 LinkHandler::getInstance()->getControllerLink(StyleListPage::class)
             ),
         ]);
+    }
+
+    /**
+     * Returns the package that updates this style. Imported styles carry the
+     * Core's package id, but are only updated by importing them again.
+     */
+    private function getStylePackage(): ?Package
+    {
+        if ($this->style->isTainted !== 0) {
+            return null;
+        }
+
+        $package = PackageCache::getInstance()->getPackage($this->style->packageID);
+        if ($package === null || ($package->packageID === 1 && $this->style->packageName !== 'com.woltlab.wcf')) {
+            return null;
+        }
+
+        return $package;
+    }
+
+    /**
+     * Returns the authored values of the variables edited in the current mode.
+     * The dark mode edits the light value of variables without dark mode support.
+     *
+     * @return array<string, string>
+     */
+    private function getAuthoredVariables(): array
+    {
+        $authoredVariables = $this->style->getAuthoredVariables();
+        $supportsDarkMode = $this->isDarkMode ? Style::getVariablesWithDarkModeSupport() : [];
+
+        $variables = [];
+        foreach ($authoredVariables as $variableName => $value) {
+            if (\str_starts_with($variableName, Style::DARK_MODE_PREFIX)) {
+                continue;
+            }
+
+            if (\in_array($variableName, $supportsDarkMode, true)) {
+                $value = $authoredVariables[Style::DARK_MODE_PREFIX . $variableName] ?? null;
+            }
+
+            if ($value !== null) {
+                $variables[$variableName] = $value;
+            }
+        }
+
+        return $variables;
     }
 }
