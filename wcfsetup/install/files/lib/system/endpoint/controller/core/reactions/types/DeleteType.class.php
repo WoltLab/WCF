@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\reactions\types;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\reaction\type\DeleteReactionType;
 use wcf\data\reaction\type\ReactionType;
-use wcf\data\reaction\type\ReactionTypeAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -31,7 +31,7 @@ final class DeleteType implements IController
 
         $reactionType = Helper::fetchObjectFromRequestParameter($variables['id'], ReactionType::class);
 
-        (new ReactionTypeAction([$reactionType], 'delete'))->executeAction();
+        new DeleteReactionType($reactionType)();
 
         return new JsonResponse([]);
     }

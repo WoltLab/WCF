@@ -16,6 +16,7 @@ use wcf\data\IEditableCachedObject;
  * @mixin ReactionType
  * @extends DatabaseObjectEditor<ReactionType>
  * @implements IEditableCachedObject<ReactionType>
+ * @deprecated 6.3 use `ReactionTypeBuilder` instead.
  */
 class ReactionTypeEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {

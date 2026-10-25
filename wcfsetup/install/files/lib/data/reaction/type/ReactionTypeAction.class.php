@@ -2,20 +2,14 @@
 
 namespace wcf\data\reaction\type;
 
-use wcf\command\file\DeleteFiles;
+use wcf\command\reaction\type\DeleteReactionType;
 use wcf\command\reaction\type\DisableReactionType;
 use wcf\command\reaction\type\EnableReactionType;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\file\FileList;
 use wcf\data\IToggleAction;
-use wcf\system\WCF;
 
 /**
  * ReactionType related actions.
- *
- * Reaction types should be created and updated through the
- * `CreateReactionType` and `UpdateReactionType` commands, the `create` and
- * `update` actions are `@deprecated 6.3`.
  *
  * @author  Joshua Ruesweg
  * @copyright   2001-2019 WoltLab GmbH
@@ -23,6 +17,7 @@ use wcf\system\WCF;
  * @since   5.2
  *
  * @extends AbstractDatabaseObjectAction<ReactionType, ReactionTypeEditor>
+ * @deprecated 6.3 use `ReactionTypeBuilder` with the `CreateReactionType` / `UpdateReactionType` commands instead.
  */
 class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
@@ -41,6 +36,9 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
      */
     protected $requireACP = ['delete', 'update'];
 
+    /**
+     * @deprecated 6.3 use the `DeleteReactionType` command instead.
+     */
     #[\Override]
     public function delete()
     {
@@ -48,47 +46,11 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements IToggle
             $this->readObjects();
         }
 
-        $fileIDs = [];
         foreach ($this->objects as $object) {
-            if ($object->iconFileID !== null) {
-                $fileIDs[] = $object->iconFileID;
-            }
+            new DeleteReactionType($object->getDecoratedObject())();
         }
 
-        $returnValues = parent::delete();
-
-        $sql = "UPDATE  wcf1_reaction_type
-                SET     showOrder = showOrder - 1
-                WHERE   showOrder > ?";
-        $statement = WCF::getDB()->prepare($sql);
-        foreach ($this->getObjects() as $object) {
-            $statement->execute([
-                $object->showOrder,
-            ]);
-        }
-
-        $this->deleteFiles($fileIDs);
-
-        return $returnValues;
-    }
-
-    /**
-     * @param list<int> $fileIDs
-     */
-    private function deleteFiles(array $fileIDs): void
-    {
-        if ($fileIDs === []) {
-            return;
-        }
-
-        $fileList = new FileList();
-        $fileList->setObjectIDs($fileIDs);
-        $fileList->readObjects();
-        $files = \array_values($fileList->getObjects());
-
-        if ($files !== []) {
-            new DeleteFiles($files)();
-        }
+        return \count($this->objects);
     }
 
     /**

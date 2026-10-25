@@ -3,7 +3,7 @@
 namespace wcf\system\file\processor;
 
 use wcf\data\file\File;
-use wcf\data\reaction\type\ReactionTypeEditor;
+use wcf\system\cache\builder\ReactionTypeCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -101,7 +101,7 @@ final class ReactionTypeIconFileProcessor extends AbstractFileProcessor
         $statement->execute([null, ...$conditionBuilder->getParameters()]);
 
         if ($statement->getAffectedRows() > 0) {
-            ReactionTypeEditor::resetCache();
+            ReactionTypeCacheBuilder::getInstance()->reset();
         }
     }
 
@@ -110,7 +110,7 @@ final class ReactionTypeIconFileProcessor extends AbstractFileProcessor
     {
         // The reaction type cache holds the file and therefore its pathname.
         if ($this->getReactionTypeIDByFile($file) !== null) {
-            ReactionTypeEditor::resetCache();
+            ReactionTypeCacheBuilder::getInstance()->reset();
         }
     }
 

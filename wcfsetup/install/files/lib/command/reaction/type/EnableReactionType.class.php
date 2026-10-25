@@ -3,8 +3,9 @@
 namespace wcf\command\reaction\type;
 
 use wcf\data\reaction\type\ReactionType;
-use wcf\data\reaction\type\ReactionTypeEditor;
+use wcf\data\reaction\type\ReactionTypeBuilder;
 use wcf\event\reaction\type\ReactionTypeEnabled;
+use wcf\system\cache\builder\ReactionTypeCacheBuilder;
 use wcf\system\event\EventHandler;
 
 /**
@@ -21,11 +22,11 @@ final class EnableReactionType
 
     public function __invoke(): void
     {
-        (new ReactionTypeEditor($this->reactionType))->update([
-            'isAssignable' => 1,
-        ]);
+        ReactionTypeBuilder::forUpdate($this->reactionType)
+            ->setIsAssignable(true)
+            ->update();
 
-        ReactionTypeEditor::resetCache();
+        ReactionTypeCacheBuilder::getInstance()->reset();
 
         $event = new ReactionTypeEnabled($this->reactionType);
         EventHandler::getInstance()->fire($event);
