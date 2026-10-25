@@ -14,6 +14,7 @@ import { getPageOverlayContainer } from "../Helper/PageOverlay";
 import { wheneverFirstSeen } from "../Helper/Selector";
 import RepeatingTimer from "../Timer/Repeating";
 import * as UiAlignment from "../Ui/Alignment";
+import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import SharedCache from "./Popover/SharedCache";
 
 const enum Delay {
@@ -79,6 +80,7 @@ class Popover {
           }
 
           const container = this.#getContainer();
+          destroyDropdowns(container);
           DomUtil.setInnerHtml(container, content);
 
           UiAlignment.set(container, this.#element, { vertical: "top" });
@@ -187,6 +189,16 @@ export function setupFor(configuration: Configuration): void {
   });
 }
 
+/**
+ * The dropdown menus have been moved into the global container and must be
+ * removed together with the content of the popover.
+ */
+export function destroyDropdowns(element: HTMLElement): void {
+  element.querySelectorAll<HTMLElement>(".dropdownToggle[data-target]").forEach((toggle) => {
+    UiDropdownSimple.destroy(toggle.dataset.target!);
+  });
+}
+
 export function resetCache(identifier: string, objectId: number): void {
-  cacheByIdentifier.get(identifier)!.reset(objectId);
+  cacheByIdentifier.get(identifier)?.reset(objectId);
 }

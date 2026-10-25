@@ -53,6 +53,7 @@ final class GetUserPopover implements IController
             'user' => $user,
             'contextMenuButton' => $interactionContextMenuComponent->renderButton($user),
             'interactionInitialization' => $interactionContextMenuComponent->renderInitialization('userPopover_' . $user->userID),
+            'providerClassName' => UserProfileInteractions::class,
         ]);
     }
 }

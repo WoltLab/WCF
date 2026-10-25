@@ -54,7 +54,8 @@ final class UserPopoverAction implements RequestHandlerInterface
             WCF::getTPL()->render('wcf', 'userPopover', [
                 'user' => $user,
                 'contextMenuButton' => $interactionContextMenuComponent->renderButton($user),
-                'interactionInitialization' => $interactionContextMenuComponent->renderInitialization('userPopover_' . $user->userID)
+                'interactionInitialization' => $interactionContextMenuComponent->renderInitialization('userPopover_' . $user->userID),
+                'providerClassName' => UserProfileInteractions::class,
             ]),
         );
     }
