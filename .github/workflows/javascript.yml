@@ -78,3 +78,7 @@ jobs:
     - name: "Check 'cropperjs'"
       run: |
         diff -wu wcfsetup/install/files/js/3rdParty/cropper.min.js node_modules/cropperjs/dist/cropper.min.js
+    - name: "Check 'chart.js'"
+      run: |
+        diff -wu wcfsetup/install/files/js/3rdParty/chart.js/chart.umd.min.js node_modules/chart.js/dist/chart.umd.min.js
+        diff -wu wcfsetup/install/files/js/3rdParty/chart.js/chart.umd.min.js.map node_modules/chart.js/dist/chart.umd.min.js.map

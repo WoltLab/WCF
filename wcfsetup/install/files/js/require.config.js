@@ -1,6 +1,7 @@
 //noinspection JSUnresolvedVariable
 requirejs.config({
 	paths: {
+		chartjs: "3rdParty/chart.js/chart.umd.min",
 		"focus-trap": "3rdParty/focus-trap/focus-trap.umd.min",
 		"perfect-scrollbar": "3rdParty/perfect-scrollbar",
 		Pica: "3rdParty/pica",
@@ -44,6 +45,8 @@ requirejs.config({
 	},
 	map: {
 		"*": {
+			// RequireJS loads module IDs ending in `.js` as plain URLs, bypassing `paths`.
+			"chart.js": "chartjs",
 			Ajax: "WoltLabSuite/Core/Ajax",
 			AjaxJsonp: "WoltLabSuite/Core/Ajax/Jsonp",
 			AjaxRequest: "WoltLabSuite/Core/Ajax/Request",

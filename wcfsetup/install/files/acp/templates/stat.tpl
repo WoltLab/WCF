@@ -1,20 +1,10 @@
 {include file='header' pageTitle='wcf.acp.stat'}
 
-<script data-relocate="true" src="{$__wcf->getPath()}js/3rdParty/flot/jquery.flot.js"></script>
-<script data-relocate="true" src="{$__wcf->getPath()}js/3rdParty/flot/jquery.flot.time.js"></script>
-<script data-relocate="true" src="{$__wcf->getPath()}js/3rdParty/flot/jquery.flot.resize.js"></script>
 <script data-relocate="true">
-	$(function() {
-		{jsphrase name='wcf.acp.stat.timeFormat.daily'}
-		{jsphrase name='wcf.acp.stat.timeFormat.weekly'}
-		{jsphrase name='wcf.acp.stat.timeFormat.monthly'}
-		{jsphrase name='wcf.acp.stat.timeFormat.yearly'}
-		{jsphrase name='wcf.acp.stat.noData'}
-		WCF.Language.addObject({
-			'__monthsShort': [ '{jslang}wcf.date.month.short.jan{/jslang}', '{jslang}wcf.date.month.short.feb{/jslang}', '{jslang}wcf.date.month.short.mar{/jslang}', '{jslang}wcf.date.month.short.apr{/jslang}', '{jslang}wcf.date.month.short.may{/jslang}', '{jslang}wcf.date.month.short.jun{/jslang}', '{jslang}wcf.date.month.short.jul{/jslang}', '{jslang}wcf.date.month.short.aug{/jslang}', '{jslang}wcf.date.month.short.sep{/jslang}', '{jslang}wcf.date.month.short.oct{/jslang}', '{jslang}wcf.date.month.short.nov{/jslang}', '{jslang}wcf.date.month.short.dec{/jslang}' ],
-		});
-		
-		new WCF.ACP.Stat.Chart();
+	require(["WoltLabSuite/Core/Acp/Ui/Stat/Chart"], ({ setup }) => {
+		{jsphrase name='wcf.global.date'}
+
+		setup();
 	});
 </script>
 
@@ -23,7 +13,17 @@
 </header>
 
 <div class="section">
-	<div id="chart" style="height: 400px"></div>
+	<div id="statChart" class="acpStatChart"></div>
+
+	<woltlab-core-notice type="info" id="statNoData" hidden>{lang}wcf.acp.stat.noData{/lang}</woltlab-core-notice>
+
+	<details id="statTable" class="acpStatTable" hidden>
+		<summary>{lang}wcf.acp.stat.tableView{/lang}</summary>
+
+		<div class="tabularBox">
+			<table class="table"></table>
+		</div>
+	</details>
 </div>
 
 <section class="section">
@@ -75,7 +75,5 @@
 <div class="formSubmit">
 	<button type="button" class="button buttonPrimary" id="statRefreshButton">{lang}wcf.global.button.refresh{/lang}</button>
 </div>
-
-<div id="chartTooltip" class="balloonTooltip active" style="display: none"></div>
 
 {include file='footer'}

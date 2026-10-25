@@ -30,6 +30,7 @@
     "@woltlab/editor": "git+https://github.com/WoltLab/editor.git#da3d29e2067693661c658e16a6869cc781bdd684",
     "@woltlab/visual-dom-diff": "git+https://github.com/WoltLab/visual-dom-diff.git#e5b51fce3157d1eda310566fc1f86101341d1fea",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#5b582b24e437f1883ccad3c37dae7c3c5f1e7da3",
+    "chart.js": "^4.6.1",
     "cropperjs": "2.2.0",
     "focus-trap": "^8.2.2",
     "hash-wasm": "^4.12.0",
