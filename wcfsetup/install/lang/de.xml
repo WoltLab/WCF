@@ -2745,10 +2745,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.stat.value.counter"><![CDATA[Veränderung]]></item>
 		<item name="wcf.acp.stat.value.total"><![CDATA[Gesamtanzahl]]></item>
 		<item name="wcf.acp.stat.types"><![CDATA[Daten]]></item>
-		<item name="wcf.acp.stat.timeFormat.daily"><![CDATA[%d.%m.%y]]></item>
-		<item name="wcf.acp.stat.timeFormat.weekly"><![CDATA[%d.%m.%y]]></item>
-		<item name="wcf.acp.stat.timeFormat.monthly"><![CDATA[%b %Y]]></item>
-		<item name="wcf.acp.stat.timeFormat.yearly"><![CDATA[%Y]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[Dateianhänge-Speicherbedarf (MB)]]></item>
@@ -2762,6 +2758,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.general"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.user"><![CDATA[Benutzer-Daten]]></item>
 		<item name="wcf.acp.stat.noData"><![CDATA[Es liegen keine Daten für den ausgewählten Zeitraum vor.]]></item>
+		<item name="wcf.acp.stat.tableView"><![CDATA[Als Tabelle anzeigen]]></item>
 	</category>
 	<category name="wcf.acp.systemCheck">
 		<item name="wcf.acp.systemCheck"><![CDATA[Systemüberprüfung]]></item>
