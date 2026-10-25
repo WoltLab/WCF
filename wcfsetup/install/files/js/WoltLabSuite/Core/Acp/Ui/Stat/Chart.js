@@ -18,7 +18,7 @@ define(["require", "exports", "tslib", "chart.js", "WoltLabSuite/Core/Api/Stats/
         light: ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"],
         dark: ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767"],
     };
-    // Distinguishes series that share a color once there are more types than colors.
+    // Distinguishes series that share a color once more series are shown than there are colors.
     const POINT_STYLES = ["circle", "rectRot", "triangle"];
     // Markers on every point turn into a solid band for long series.
     const MAX_POINTS_WITH_MARKERS = 60;
@@ -37,9 +37,33 @@ define(["require", "exports", "tslib", "chart.js", "WoltLabSuite/Core/Api/Stats/
     function getToken(style, name) {
         return style.getPropertyValue(`--${name}`).trim().replace(/\s+/g, " ");
     }
-    function getSlot(objectTypeID) {
+    /**
+     * Assigns each type the color matching its position in the list of types, so
+     * that it keeps its color across refreshes, unless a type further up already
+     * holds that color. Colors only repeat once all of them are in use.
+     */
+    function assignColors(objectTypeIDs, colorCount) {
         const checkboxes = Array.from(document.querySelectorAll('input[name="objectTypeID"]'));
-        return Math.max(0, checkboxes.findIndex((checkbox) => checkbox.value === objectTypeID.toString()));
+        const positions = new Map(objectTypeIDs.map((objectTypeID) => [
+            objectTypeID,
+            Math.max(0, checkboxes.findIndex((checkbox) => checkbox.value === objectTypeID.toString())),
+        ]));
+        const assignments = new Map();
+        let usedColors = new Set();
+        let style = 0;
+        for (const objectTypeID of [...objectTypeIDs].sort((a, b) => positions.get(a) - positions.get(b))) {
+            if (usedColors.size === colorCount) {
+                usedColors = new Set();
+                style++;
+            }
+            let color = positions.get(objectTypeID) % colorCount;
+            while (usedColors.has(color)) {
+                color = (color + 1) % colorCount;
+            }
+            usedColors.add(color);
+            assignments.set(objectTypeID, { color, style });
+        }
+        return assignments;
     }
     function applyTheme(chart) {
         const style = window.getComputedStyle(document.documentElement);
@@ -66,14 +90,15 @@ define(["require", "exports", "tslib", "chart.js", "WoltLabSuite/Core/Api/Stats/
         options.plugins.tooltip.bodyColor = getToken(style, "wcfTooltipText");
         options.plugins.tooltip.titleFont = { ...font, weight: "bold" };
         options.plugins.tooltip.bodyFont = font;
-        for (const dataset of chart.data.datasets) {
-            const slot = getSlot(dataset.objectTypeID);
-            const color = palette[slot % palette.length];
-            dataset.borderColor = color;
-            dataset.backgroundColor = color;
-            dataset.pointBackgroundColor = color;
+        const datasets = chart.data.datasets;
+        const assignments = assignColors(datasets.map((dataset) => dataset.objectTypeID), palette.length);
+        for (const dataset of datasets) {
+            const { color, style } = assignments.get(dataset.objectTypeID);
+            dataset.borderColor = palette[color];
+            dataset.backgroundColor = palette[color];
+            dataset.pointBackgroundColor = palette[color];
             dataset.pointBorderColor = surface;
-            dataset.pointStyle = POINT_STYLES[Math.floor(slot / palette.length) % POINT_STYLES.length];
+            dataset.pointStyle = POINT_STYLES[style % POINT_STYLES.length];
         }
     }
     function toTimestamp(date) {
