@@ -5,7 +5,7 @@ namespace wcf\command\reaction;
 use wcf\data\like\Like;
 use wcf\data\like\LikeEditor;
 use wcf\data\like\object\ILikeObject;
-use wcf\data\like\object\LikeObjectEditor;
+use wcf\data\like\object\LikeObjectBuilder;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\object\IReactionObject;
 use wcf\data\reaction\type\ReactionType;
@@ -37,12 +37,12 @@ final class SetReaction
 
     public function __invoke(): void
     {
-        LikeObjectEditor::createFromLikeable($this->likeable);
+        LikeObjectBuilder::createFromLikeable($this->likeable);
 
         try {
             WCF::getDB()->beginTransaction();
 
-            $likeObject = LikeObjectEditor::getLikeObjectForUpdate($this->likeable);
+            $likeObject = LikeObjectBuilder::getLikeObjectForUpdate($this->likeable);
 
             $originalLike = Like::getLike(
                 $this->likeable->getObjectType()->objectTypeID,
@@ -78,7 +78,7 @@ final class SetReaction
                 $like = new Like($originalLike->likeID);
             }
 
-            LikeObjectEditor::rebuildLikeObjectData([$likeObject->getObjectID()]);
+            LikeObjectBuilder::rebuildLikeObjectData([$likeObject->getObjectID()]);
 
             WCF::getDB()->commitTransaction();
         } catch (DatabaseQueryException $e) {

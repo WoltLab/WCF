@@ -5,7 +5,7 @@ namespace wcf\command\reaction;
 use wcf\data\like\Like;
 use wcf\data\like\LikeEditor;
 use wcf\data\like\object\ILikeObject;
-use wcf\data\like\object\LikeObjectEditor;
+use wcf\data\like\object\LikeObjectBuilder;
 use wcf\data\user\User;
 use wcf\data\user\UserBuilder;
 use wcf\event\reaction\ReactionReverted;
@@ -33,12 +33,12 @@ final class RevertReaction
 
     public function __invoke(): void
     {
-        LikeObjectEditor::createFromLikeable($this->likeable);
+        LikeObjectBuilder::createFromLikeable($this->likeable);
 
         try {
             WCF::getDB()->beginTransaction();
 
-            $likeObject = LikeObjectEditor::getLikeObjectForUpdate($this->likeable);
+            $likeObject = LikeObjectBuilder::getLikeObjectForUpdate($this->likeable);
 
             (new LikeEditor($this->like))->delete();
 
@@ -46,7 +46,7 @@ final class RevertReaction
 
             $this->likeable->updateLikeCounter($likeObject->likes - 1);
 
-            LikeObjectEditor::rebuildLikeObjectData([$likeObject->getObjectID()]);
+            LikeObjectBuilder::rebuildLikeObjectData([$likeObject->getObjectID()]);
 
             WCF::getDB()->commitTransaction();
         } catch (DatabaseQueryException $e) {

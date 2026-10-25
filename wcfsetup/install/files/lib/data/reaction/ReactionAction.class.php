@@ -2,6 +2,7 @@
 
 namespace wcf\data\reaction;
 
+use wcf\command\reaction\CopyObjectReactions;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\DatabaseObject;
 use wcf\data\like\ILikeObjectTypeProvider;
@@ -9,20 +10,15 @@ use wcf\data\like\IRestrictedLikeObjectTypeProvider;
 use wcf\data\like\Like;
 use wcf\data\like\LikeEditor;
 use wcf\data\like\object\ILikeObject;
-use wcf\data\like\object\LikeObjectEditor;
 use wcf\data\like\ViewableLikeList;
 use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeCache;
-use wcf\data\user\User;
-use wcf\data\user\UserBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\reaction\ReactionHandler;
-use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -317,86 +313,15 @@ class ReactionAction extends AbstractDatabaseObjectAction
      * Copies likes from one object id to another.
      *
      * @return void
+     * @deprecated 6.3 use the `CopyObjectReactions` command instead.
      */
     public function copy()
     {
-        $sourceObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
-            'com.woltlab.wcf.like.likeableObject',
-            $this->parameters['sourceObjectType']
-        );
-        $targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
-            'com.woltlab.wcf.like.likeableObject',
-            $this->parameters['targetObjectType']
-        );
-
-        //
-        // step 1) get data
-        //
-
-        // get like object
-        $sql = "SELECT  *
-                FROM    wcf1_like_object
-                WHERE   objectTypeID = ?
-                    AND objectID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $sourceObjectType->objectTypeID,
+        new CopyObjectReactions(
+            $this->parameters['sourceObjectType'],
             $this->parameters['sourceObjectID'],
-        ]);
-        $row = $statement->fetchArray();
-
-        // no reactions at all
-        if ($row === false) {
-            return;
-        }
-
-        unset($row['likeObjectID']);
-        $row['objectTypeID'] = $targetObjectType->objectTypeID;
-        $row['objectID'] = $this->parameters['targetObjectID'];
-        $newLikeObject = LikeObjectEditor::create($row);
-
-        //
-        // step 2) copy
-        //
-
-        $sql = "INSERT INTO wcf1_like
-                            (objectID, objectTypeID, objectUserID, userID, time, likeValue, reactionTypeID)
-                SELECT      " . $this->parameters['targetObjectID'] . ", " . $targetObjectType->objectTypeID . ", objectUserID, userID, time, likeValue, reactionTypeID
-                FROM        wcf1_like
-                WHERE       objectTypeID = ?
-                        AND objectID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $sourceObjectType->objectTypeID,
-            $this->parameters['sourceObjectID'],
-        ]);
-
-        //
-        // step 3) update owner
-        //
-
-        if ($newLikeObject->objectUserID !== null) {
-            $sql = "SELECT  COUNT(*) as count
-                    FROM    wcf1_like
-                    WHERE   objectTypeID = ?
-                        AND objectID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([
-                $targetObjectType->objectTypeID,
-                $this->parameters['targetObjectID'],
-            ]);
-            $count = $statement->fetchSingleColumn();
-
-            // update received likes
-            UserBuilder::forUpdate(new User($newLikeObject->objectUserID))
-                ->incrementLikesReceived($count)
-                ->update();
-
-            // add activity points
-            UserActivityPointHandler::getInstance()->fireEvents(
-                'com.woltlab.wcf.like.activityPointEvent.receivedLikes',
-                [$newLikeObject->objectUserID => $count]
-            );
-        }
+            $this->parameters['targetObjectType'],
+            $this->parameters['targetObjectID'],
+        )();
     }
 }

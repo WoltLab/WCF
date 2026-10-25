@@ -4,7 +4,7 @@ namespace wcf\command\reaction;
 
 use wcf\data\like\LikeEditor;
 use wcf\data\like\LikeList;
-use wcf\data\like\object\LikeObjectEditor;
+use wcf\data\like\object\LikeObjectBuilder;
 use wcf\data\like\object\LikeObjectList;
 use wcf\data\user\User;
 use wcf\data\user\UserBuilder;
@@ -106,7 +106,7 @@ final class DeleteObjectReactions
 
         // delete like objects
         if ($likeObjectIDs !== []) {
-            LikeObjectEditor::deleteAll($likeObjectIDs);
+            LikeObjectBuilder::deleteAll($likeObjectIDs);
         }
 
         // delete activity events
