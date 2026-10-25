@@ -9,6 +9,7 @@ use wcf\event\interaction\user\UserProfileInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteraction;
 use wcf\system\interaction\AbstractInteractionProvider;
+use wcf\system\interaction\FormBuilderDialogInteraction;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\UserProfileHandler;
 use wcf\system\WCF;
@@ -18,7 +19,7 @@ use wcf\util\StringUtil;
  * Interaction provider for the context menu of user profiles.
  *
  * @author      Marcel Werk
- * @copyright   2001-2025 WoltLab GmbH
+ * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.2
  */
@@ -26,57 +27,24 @@ class UserProfileInteractions extends AbstractInteractionProvider
 {
     public function __construct()
     {
-        if (!WCF::getSession()->hasPermission('user.profile.canViewUserProfile')) {
-            return;
-        }
-
         $this->addInteractions([
-            new class(
+            new FormBuilderDialogInteraction(
                 'ignore',
+                LinkHandler::getInstance()->getControllerLink(UserIgnoreAction::class, ['id' => '%s']),
+                static fn(UserProfile $user) => WCF::getLanguage()->get(
+                    UserProfileHandler::getInstance()->isIgnoredUser($user->userID)
+                        ? 'wcf.user.button.unignore'
+                        : 'wcf.user.button.ignore'
+                ),
                 static fn(UserProfile $user) => !WCF::getUser()->isGuest() && WCF::getUser()->userID !== $user->userID
-            ) extends AbstractInteraction {
-                #[\Override]
-                public function render(DatabaseObject $object): string
-                {
-                    \assert($object instanceof UserProfile);
-
-                    if (UserProfileHandler::getInstance()->isIgnoredUser($object->userID)) {
-                        $endpoint = StringUtil::encodeHTML(
-                            LinkHandler::getInstance()->getControllerLink(UserIgnoreAction::class, ['id' => $object->userID])
-                        );
-                        $title = WCF::getLanguage()->get('wcf.user.button.unignore');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                data-ignored="1"
-                                data-ignore-user="{$endpoint}"
-                                data-type="button"
-                            >{$title}</button>
-                            HTML;
-                    } else {
-                        $endpoint = StringUtil::encodeHTML(
-                            LinkHandler::getInstance()->getControllerLink(UserIgnoreAction::class, ['id' => $object->userID])
-                        );
-                        $title = WCF::getLanguage()->get('wcf.user.button.ignore');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                data-ignored="0"
-                                data-ignore-user="{$endpoint}"
-                                data-type="button"
-                            >{$title}</button>
-                            HTML;
-                    }
-                }
-            },
+            ),
             new class(
                 'homepage',
                 static fn(UserProfile $user) => $user->homepage !== null
                     && $user->homepage !== ''
                     && $user->homepage !== 'http://'
                     && !$user->isProtected()
+                    && WCF::getSession()->hasPermission('user.profile.canViewUserProfile')
             ) extends AbstractInteraction {
                 #[\Override]
                 public function render(DatabaseObject $object): string

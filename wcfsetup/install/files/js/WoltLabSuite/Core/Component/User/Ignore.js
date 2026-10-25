@@ -5,6 +5,7 @@
  * @copyright 2001-2024 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.1
+ * @deprecated 6.3 Use the `ignore` interaction of `wcf\system\interaction\user\UserProfileInteractions` instead.
  */
 define(["require", "exports", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Component/Dialog", "../Snackbar"], function (require, exports, PromiseMutex_1, Selector_1, Language_1, Dialog_1, Snackbar_1) {
     "use strict";

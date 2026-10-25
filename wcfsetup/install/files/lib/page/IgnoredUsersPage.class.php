@@ -2,42 +2,29 @@
 
 namespace wcf\page;
 
-use wcf\data\user\ignore\ViewableUserIgnoreList;
+use wcf\system\listView\user\IgnoredUserListView;
 use wcf\system\menu\user\UserMenu;
-use wcf\system\WCF;
 
 /**
  * Shows a list with all users the active user ignores.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Alexander Ebert, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @extends MultipleLinkPage<ViewableUserIgnoreList>
+ * @extends AbstractListViewPage<IgnoredUserListView>
  */
-class IgnoredUsersPage extends MultipleLinkPage
+class IgnoredUsersPage extends AbstractListViewPage
 {
     /**
      * @inheritDoc
      */
     public $loginRequired = true;
 
-    /**
-     * @inheritDoc
-     */
-    public $objectListClassName = ViewableUserIgnoreList::class;
-
-    /**
-     * @inheritDoc
-     */
-    public $sqlOrderBy = 'user_ignore.time DESC';
-
     #[\Override]
-    protected function initObjectList()
+    protected function createListView(): IgnoredUserListView
     {
-        parent::initObjectList();
-
-        $this->objectList->getConditionBuilder()->add("user_ignore.userID = ?", [WCF::getUser()->userID]);
+        return new IgnoredUserListView();
     }
 
     #[\Override]

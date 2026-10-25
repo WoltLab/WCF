@@ -134,14 +134,11 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
         (0, LazyLoader_1.whenFirstSeen)("[data-follow-user]", () => {
             void new Promise((resolve_9, reject_9) => { require(["./Component/User/Follow"], resolve_9, reject_9); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
-        (0, LazyLoader_1.whenFirstSeen)("[data-ignore-user]", () => {
-            void new Promise((resolve_10, reject_10) => { require(["./Component/User/Ignore"], resolve_10, reject_10); }).then(tslib_1.__importStar).then(({ setup }) => setup());
-        });
         (0, LazyLoader_1.whenFirstSeen)("[data-report-content]", () => {
-            void new Promise((resolve_11, reject_11) => { require(["./Ui/Moderation/Report"], resolve_11, reject_11); }).then(tslib_1.__importStar).then(({ setup }) => setup(options.reportEndpoint));
+            void new Promise((resolve_10, reject_10) => { require(["./Ui/Moderation/Report"], resolve_10, reject_10); }).then(tslib_1.__importStar).then(({ setup }) => setup(options.reportEndpoint));
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-reaction-object-type]", () => {
-            void new Promise((resolve_12, reject_12) => { require(["./Component/Reaction/Button"], resolve_12, reject_12); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_11, reject_11) => { require(["./Component/Reaction/Button"], resolve_11, reject_11); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
     }
 });
