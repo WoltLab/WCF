@@ -7,7 +7,7 @@ use wcf\command\paid\subscription\user\RestorePaidSubscriptionUser;
 use wcf\command\paid\subscription\user\RevokePaidSubscriptionUser;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLog;
-use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLogAction;
+use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLogBuilder;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
 use wcf\data\user\User;
@@ -102,34 +102,28 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
             }
 
             // log success
-            $action = new PaidSubscriptionTransactionLogAction([], 'create', [
-                'data' => [
-                    'subscriptionUserID' => $userSubscription->subscriptionUserID,
-                    'userID' => $user->userID,
-                    'subscriptionID' => $subscription->subscriptionID,
-                    'paymentMethodObjectTypeID' => $paymentMethodObjectTypeID,
-                    'logTime' => \TIME_NOW,
-                    'transactionID' => $transactionID,
-                    'logMessage' => $logMessage,
-                    'transactionDetails' => \serialize($transactionDetails),
-                ],
-            ]);
-            $action->executeAction();
+            PaidSubscriptionTransactionLogBuilder::forCreate()
+                ->setSubscriptionUser($userSubscription)
+                ->setUser($user)
+                ->setSubscription($subscription)
+                ->setPaymentMethodObjectTypeID($paymentMethodObjectTypeID)
+                ->setLogTime(\TIME_NOW)
+                ->setTransactionID($transactionID)
+                ->setLogMessage($logMessage)
+                ->setTransactionDetails($transactionDetails)
+                ->create();
         } catch (SystemException $e) {
             // log failure
-            $action = new PaidSubscriptionTransactionLogAction([], 'create', [
-                'data' => [
-                    'subscriptionUserID' => $userSubscription?->subscriptionUserID,
-                    'userID' => $user?->userID ?: null,
-                    'subscriptionID' => $subscription?->subscriptionID ?: null,
-                    'paymentMethodObjectTypeID' => $paymentMethodObjectTypeID,
-                    'logTime' => \TIME_NOW,
-                    'transactionID' => $transactionID,
-                    'logMessage' => $e->getMessage(),
-                    'transactionDetails' => \serialize($transactionDetails),
-                ],
-            ]);
-            $action->executeAction();
+            PaidSubscriptionTransactionLogBuilder::forCreate()
+                ->setSubscriptionUser($userSubscription)
+                ->setUser($user)
+                ->setSubscription($subscription)
+                ->setPaymentMethodObjectTypeID($paymentMethodObjectTypeID)
+                ->setLogTime(\TIME_NOW)
+                ->setTransactionID($transactionID)
+                ->setLogMessage($e->getMessage())
+                ->setTransactionDetails($transactionDetails)
+                ->create();
             throw $e;
         }
     }
