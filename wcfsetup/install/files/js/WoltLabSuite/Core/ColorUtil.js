@@ -329,17 +329,4 @@ define(["require", "exports"], function (require, exports) {
         }
         throw new Error(`Cannot process color '${color}'.`);
     }
-    // WCF.ColorPicker compatibility (color format conversion)
-    window.__wcf_bc_colorUtil = {
-        hexToRgb,
-        hslToRgb,
-        hsvToRgb,
-        isValidColor,
-        rgbaToHex,
-        rgbaToString,
-        rgbToHex,
-        rgbToHsv,
-        rgbToHsl,
-        stringToRgba,
-    };
 });

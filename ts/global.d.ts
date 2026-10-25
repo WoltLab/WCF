@@ -1,7 +1,6 @@
 import DatePicker from "WoltLabSuite/Core/Date/Picker";
 import Devtools from "WoltLabSuite/Core/Devtools";
 import DomUtil from "WoltLabSuite/Core/Dom/Util";
-import * as ColorUtil from "WoltLabSuite/Core/ColorUtil";
 import * as EventHandler from "WoltLabSuite/Core/Event/Handler";
 import UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/editor";
@@ -48,8 +47,6 @@ declare global {
     WCF: any;
     bc_wcfDomUtil: typeof DomUtil;
     bc_wcfSimpleDropdown: typeof UiDropdownSimple;
-    __wcf_bc_colorPickerInit?: () => void;
-    __wcf_bc_colorUtil: typeof ColorUtil;
     __wcf_bc_datePicker: typeof DatePicker;
     __wcf_bc_eventHandler: typeof EventHandler;
 
