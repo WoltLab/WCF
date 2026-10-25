@@ -9,6 +9,7 @@
 import * as Ajax from "../../../../../Ajax";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiConfirmation from "../../../../../Ui/Confirmation";
+import { startDevtoolsInstallation } from "WoltLabSuite/Core/Acp/Component/Package/Installation";
 
 let _projectId: number;
 let _projectName: string;
@@ -24,15 +25,7 @@ function installPackage(): void {
       objectIDs: [_projectId],
     },
     success: (data) => {
-      const packageInstallation = new window.WCF.ACP.Package.Installation(
-        data.returnValues.queueID,
-        "DevtoolsInstallPackage",
-        data.returnValues.isApplication,
-        false,
-        { projectID: _projectId },
-      );
-
-      packageInstallation.prepareInstallation();
+      void startDevtoolsInstallation(data.returnValues.queueID, _projectId);
     },
   });
 }

@@ -147,7 +147,8 @@ class BackendRequest {
           init.headers!["Content-Type"] = "application/octet-stream";
           init.body = this.#payload;
         } else if (this.#payload instanceof FormData) {
-          init.headers!["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
+          // `fetch()` serializes `FormData` as `multipart/form-data` and must set
+          // the content type itself, because it includes the generated boundary.
           init.body = this.#payload;
         } else {
           init.headers!["Content-Type"] = "application/json; charset=UTF-8";

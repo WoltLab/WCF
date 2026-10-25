@@ -2,15 +2,20 @@
 {include file='header'}
 
 <script data-relocate="true">
-	$(function() {
-		{jsphrase name='wcf.acp.package.install.title'}
-		{jsphrase name='wcf.acp.package.installation.rollback'}
-		{jsphrase name='wcf.acp.package.uninstallation.title'}
-		{jsphrase name='wcf.acp.package.update.title'}
-		
-		new WCF.ACP.Package.Installation({$queue->queueID}, undefined, {if $queue->action == 'install'}{if $queue->isApplication}false{else}true{/if}, false{else}false, true{/if});
-		
-		new WCF.ACP.Package.Installation.Cancel({$queue->queueID});
+	{jsphrase name='wcf.acp.package.install.title'}
+	{jsphrase name='wcf.acp.package.installation.rollback'}
+	{jsphrase name='wcf.acp.package.uninstallation.title'}
+	{jsphrase name='wcf.acp.package.update.title'}
+
+	require(['WoltLabSuite/Core/Acp/Component/Package/Installation'], ({ setupConfirmation }) => {
+		setupConfirmation(
+			{$queue->queueID},
+			'{link controller='PackageInstallationCancel' id=$queue->queueID encode=false}{/link}',
+			{
+				allowRollback: {if $queue->action === 'install' && !$queue->isApplication}true{else}false{/if},
+				isUpdate: {if $queue->action === 'install'}false{else}true{/if},
+			}
+		);
 	});
 </script>
 

@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../../../Ajax", "WoltLabSuite/Core/Language", "../../../../../Ui/Confirmation"], function (require, exports, tslib_1, Ajax, Language_1, UiConfirmation) {
+define(["require", "exports", "tslib", "../../../../../Ajax", "WoltLabSuite/Core/Language", "../../../../../Ui/Confirmation", "WoltLabSuite/Core/Acp/Component/Package/Installation"], function (require, exports, tslib_1, Ajax, Language_1, UiConfirmation, Installation_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
@@ -24,8 +24,7 @@ define(["require", "exports", "tslib", "../../../../../Ajax", "WoltLabSuite/Core
                 objectIDs: [_projectId],
             },
             success: (data) => {
-                const packageInstallation = new window.WCF.ACP.Package.Installation(data.returnValues.queueID, "DevtoolsInstallPackage", data.returnValues.isApplication, false, { projectID: _projectId });
-                packageInstallation.prepareInstallation();
+                void (0, Installation_1.startDevtoolsInstallation)(data.returnValues.queueID, _projectId);
             },
         });
     }

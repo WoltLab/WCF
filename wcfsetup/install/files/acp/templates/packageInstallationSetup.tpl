@@ -7,11 +7,10 @@
 	}
 </style>
 <script data-relocate="true">
-	$(function() {
-		{jsphrase name='wcf.acp.package.install.title'}
+	{jsphrase name='wcf.acp.package.install.title'}
 
-		var $installation = new WCF.ACP.Package.Installation({$queueID});
-		$installation.prepareInstallation();
+	require(['WoltLabSuite/Core/Acp/Component/Package/Installation'], ({ startInstallation }) => {
+		void startInstallation({$queueID});
 	});
 </script>
 

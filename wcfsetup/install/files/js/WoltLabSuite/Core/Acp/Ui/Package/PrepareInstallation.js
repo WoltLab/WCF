@@ -6,7 +6,7 @@
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Ajax", "WoltLabSuite/Core/Language", "../../../Ui/Dialog", "../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Language_1, Dialog_1, Util_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "WoltLabSuite/Core/Language", "../../../Ui/Dialog", "../../../Dom/Util", "WoltLabSuite/Core/Acp/Component/Package/Installation"], function (require, exports, tslib_1, Ajax, Language_1, Dialog_1, Util_1, Installation_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
@@ -68,10 +68,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "WoltLabSuite/Core/Langu
                 if (Dialog_1.default.isOpen(this)) {
                     Dialog_1.default.close(this);
                 }
-                const installation = new window.WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false, false, {
-                    redirectLocation: this.#redirectLocation,
-                });
-                installation.prepareInstallation();
+                void (0, Installation_1.startInstallation)(data.returnValues.queueID, { redirectLocation: this.#redirectLocation });
             }
             else if (data.returnValues.template) {
                 Dialog_1.default.open(this, data.returnValues.template);

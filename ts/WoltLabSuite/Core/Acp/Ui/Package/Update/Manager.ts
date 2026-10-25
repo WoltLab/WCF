@@ -12,6 +12,7 @@ import { DialogCallbackObject, DialogCallbackSetup } from "../../../../Ui/Dialog
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiDialog from "../../../../Ui/Dialog";
 import DomUtil from "../../../../Dom/Util";
+import { startInstallation } from "WoltLabSuite/Core/Acp/Component/Package/Installation";
 
 const enum ResponseType {
   AuthorizationRequired = "authorizationRequired",
@@ -150,8 +151,7 @@ class AcpUiPackageUpdateManager implements DialogCallbackObject {
       UiDialog.close(this);
     }
 
-    const installation = new window.WCF.ACP.Package.Installation(queueId, undefined, false, true);
-    installation.prepareInstallation();
+    void startInstallation(queueId, { isUpdate: true });
   }
 
   _dialogSetup(): ReturnType<DialogCallbackSetup> {

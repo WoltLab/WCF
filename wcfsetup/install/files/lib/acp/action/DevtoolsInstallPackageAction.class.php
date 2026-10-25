@@ -2,14 +2,16 @@
 
 namespace wcf\acp\action;
 
+use CuyZ\Valinor\Mapper\MappingError;
+use Psr\Http\Message\ServerRequestInterface;
 use wcf\acp\page\DevtoolsProjectListPage;
-use wcf\action\AbstractSecureAction;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
+use wcf\http\Helper;
 use wcf\system\devtools\pip\DevtoolsPackageInstallationDispatcher;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\LinkHandler;
-use wcf\util\StringUtil;
 
 /**
  * Handles an AJAX-based package installation of devtools projects.
@@ -21,63 +23,35 @@ use wcf\util\StringUtil;
  */
 final class DevtoolsInstallPackageAction extends InstallPackageAction
 {
-    /**
-     * project whose source is installed as a package
-     */
-    public DevtoolsProject $project;
-
     #[\Override]
-    protected function getRedirectLink(): string
-    {
-        return LinkHandler::getInstance()->getControllerLink(DevtoolsProjectListPage::class);
+    protected function createDispatcher(
+        ServerRequestInterface $request,
+        PackageInstallationQueue $queue
+    ): PackageInstallationDispatcher {
+        try {
+            $parameters = Helper::mapQueryParameters(
+                $request->getQueryParams(),
+                <<<'EOT'
+                    array {
+                        projectID: positive-int
+                    }
+                    EOT
+            );
+        } catch (MappingError) {
+            throw new IllegalLinkException();
+        }
+
+        $project = new DevtoolsProject($parameters['projectID']);
+        if ($project->isNil()) {
+            throw new IllegalLinkException();
+        }
+
+        return new DevtoolsPackageInstallationDispatcher($project, $queue);
     }
 
-    /**
-     * @throws  IllegalLinkException
-     */
     #[\Override]
-    public function readParameters()
+    protected function getRedirectLink(string $redirectLocation): string
     {
-        AbstractSecureAction::readParameters();
-
-        if (isset($_REQUEST['step'])) {
-            $this->step = StringUtil::trim($_REQUEST['step']);
-
-            switch ($this->step) {
-                case 'install':
-                case 'prepare':
-                case 'rollback':
-                    // valid steps
-                    break;
-
-                default:
-                    throw new IllegalLinkException();
-            }
-        }
-
-        if (isset($_POST['projectID'])) {
-            $this->project = new DevtoolsProject(\intval($_POST['projectID']));
-        }
-
-        if (!isset($this->project) || $this->project->isNil()) {
-            throw new IllegalLinkException();
-        }
-
-        if (isset($_POST['node'])) {
-            $this->node = StringUtil::trim($_POST['node']);
-        }
-
-        if (isset($_POST['queueID'])) {
-            $queueID = \intval($_POST['queueID']);
-            $this->queue = new PackageInstallationQueue($queueID);
-        }
-
-        if (!isset($this->queue) || $this->queue->isNil()) {
-            throw new IllegalLinkException();
-        }
-
-        $this->checkQueuePermissions();
-
-        $this->installation = new DevtoolsPackageInstallationDispatcher($this->project, $this->queue);
+        return LinkHandler::getInstance()->getControllerLink(DevtoolsProjectListPage::class);
     }
 }

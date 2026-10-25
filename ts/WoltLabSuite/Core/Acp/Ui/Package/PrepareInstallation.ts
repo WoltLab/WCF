@@ -13,6 +13,7 @@ import { DialogCallbackSetup } from "../../../Ui/Dialog/Data";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import UiDialog from "../../../Ui/Dialog";
 import DomUtil from "../../../Dom/Util";
+import { startInstallation } from "WoltLabSuite/Core/Acp/Component/Package/Installation";
 
 interface AjaxResponse {
   returnValues: {
@@ -90,10 +91,7 @@ class AcpUiPackagePrepareInstallation {
         UiDialog.close(this);
       }
 
-      const installation = new window.WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false, false, {
-        redirectLocation: this.#redirectLocation,
-      });
-      installation.prepareInstallation();
+      void startInstallation(data.returnValues.queueID, { redirectLocation: this.#redirectLocation });
     } else if (data.returnValues.template) {
       UiDialog.open(this, data.returnValues.template);
     }
