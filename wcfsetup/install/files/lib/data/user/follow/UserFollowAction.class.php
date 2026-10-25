@@ -41,7 +41,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
      * Validates given parameters.
      *
      * @return void
-     * @deprecated 6.1 use `wcf\action\UserFollowAction` instead
+     * @deprecated 6.1 use `wcf\system\endpoint\controller\core\users\FollowUser` instead
      */
     public function validateFollow()
     {
@@ -72,7 +72,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
      * Follows a user.
      *
      * @return array{following: 1}
-     * @deprecated 6.1 use `wcf\action\UserFollowAction` instead
+     * @deprecated 6.1 use `wcf\system\endpoint\controller\core\users\FollowUser` instead
      */
     public function follow()
     {
@@ -85,7 +85,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 
     /**
      * @return void
-     * @deprecated 6.1 use `wcf\action\UserFollowAction` instead
+     * @deprecated 6.1 use `wcf\system\endpoint\controller\core\users\UnfollowUser` instead
      */
     public function validateUnfollow()
     {
@@ -96,7 +96,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
      * Stops following a user.
      *
      * @return array{following: 0}
-     * @deprecated 6.1 use `wcf\action\UserFollowAction` instead
+     * @deprecated 6.1 use `wcf\system\endpoint\controller\core\users\UnfollowUser` instead
      */
     public function unfollow()
     {

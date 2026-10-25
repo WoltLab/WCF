@@ -2,14 +2,10 @@
 
 namespace wcf\system\interaction\user;
 
-use wcf\action\UserFollowAction;
-use wcf\data\DatabaseObject;
 use wcf\data\user\UserProfile;
-use wcf\system\interaction\AbstractInteraction;
-use wcf\system\request\LinkHandler;
+use wcf\system\interaction\RpcInteraction;
 use wcf\system\user\UserProfileHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Extended interaction provider for the context menu of user profiles with the option to follow users.
@@ -24,48 +20,29 @@ final class UserProfileInteractionsWithFollow extends UserProfileInteractions
     public function __construct()
     {
         $this->addInteractions([
-            new class(
+            new RpcInteraction(
                 'follow',
-                static fn(UserProfile $user) => !WCF::getUser()->isGuest()
-                    && WCF::getUser()->userID !== $user->userID
-                    && !UserProfileHandler::getInstance()->isIgnoredByUser($user->userID)
-            ) extends AbstractInteraction {
-                #[\Override]
-                public function render(DatabaseObject $object): string
-                {
-                    \assert($object instanceof UserProfile);
-
-                    $endpoint = StringUtil::encodeHTML(
-                        LinkHandler::getInstance()->getControllerLink(UserFollowAction::class, ['id' => $object->userID])
-                    );
-
-                    if (UserProfileHandler::getInstance()->isFollowing($object->userID)) {
-                        $title = WCF::getLanguage()->get('wcf.user.button.unfollow');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                data-following="1"
-                                data-follow-user="{$endpoint}"
-                                data-type="button"
-                            >{$title}</button>
-                            HTML;
-                    } else {
-                        $title = WCF::getLanguage()->get('wcf.user.button.follow');
-
-                        return <<<HTML
-                            <button
-                                type="button"
-                                data-following="0"
-                                data-follow-user="{$endpoint}"
-                                data-type="button"
-                            >{$title}</button>
-                            HTML;
-                    }
-                }
-            },
+                'core/users/%s/follow',
+                'wcf.user.button.follow',
+                isAvailableCallback: static fn(UserProfile $user) => self::canFollow($user)
+                    && !UserProfileHandler::getInstance()->isFollowing($user->userID),
+            ),
+            new RpcInteraction(
+                'unfollow',
+                'core/users/%s/unfollow',
+                'wcf.user.button.unfollow',
+                isAvailableCallback: static fn(UserProfile $user) => self::canFollow($user)
+                    && UserProfileHandler::getInstance()->isFollowing($user->userID),
+            ),
         ]);
 
         parent::__construct();
+    }
+
+    private static function canFollow(UserProfile $user): bool
+    {
+        return !WCF::getUser()->isGuest()
+            && WCF::getUser()->userID !== $user->userID
+            && !UserProfileHandler::getInstance()->isIgnoredByUser($user->userID);
     }
 }

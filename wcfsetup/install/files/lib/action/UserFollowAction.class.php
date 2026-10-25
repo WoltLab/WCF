@@ -22,6 +22,7 @@ use wcf\system\WCF;
  * @copyright   2001-2023 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.1
+ * @deprecated  6.3 use `wcf\system\endpoint\controller\core\users\FollowUser` and `wcf\system\endpoint\controller\core\users\UnfollowUser` instead
  */
 final class UserFollowAction implements RequestHandlerInterface
 {
