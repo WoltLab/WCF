@@ -2,42 +2,30 @@
 
 namespace wcf\page;
 
-use wcf\data\user\follow\UserFollowingList;
+use wcf\system\listView\user\FollowingListView;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\WCF;
 
 /**
  * Shows a list with all users the active user is following.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @author      Alexander Ebert, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
- * @extends MultipleLinkPage<UserFollowingList>
+ * @extends AbstractListViewPage<FollowingListView>
  */
-class FollowingPage extends MultipleLinkPage
+class FollowingPage extends AbstractListViewPage
 {
     /**
      * @inheritDoc
      */
     public $loginRequired = true;
 
-    /**
-     * @inheritDoc
-     */
-    public $objectListClassName = UserFollowingList::class;
-
-    /**
-     * @inheritDoc
-     */
-    public $sqlOrderBy = 'user_follow.time DESC';
-
     #[\Override]
-    protected function initObjectList()
+    protected function createListView(): FollowingListView
     {
-        parent::initObjectList();
-
-        $this->objectList->getConditionBuilder()->add("user_follow.userID = ?", [WCF::getUser()->userID]);
+        return new FollowingListView(WCF::getUser()->userID);
     }
 
     #[\Override]

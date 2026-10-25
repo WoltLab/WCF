@@ -4791,7 +4791,6 @@ not register with us.]]></item>
 		<item name="wcf.user.usercp"><![CDATA[User Account]]></item>
 		<item name="wcf.user.button.mail"><![CDATA[Send Email]]></item>
 		<item name="wcf.user.ignoredUsers.noUsers"><![CDATA[You are not blocking any users at the moment.]]></item>
-		<item name="wcf.user.following.noUsers"><![CDATA[You are not following any users at the moment.]]></item>
 		<item name="wcf.user.userTitle"><![CDATA[Custom User Title]]></item>
 		<item name="wcf.user.userTitle.description"><![CDATA[You can enter a custom user title.]]></item>
 		<item name="wcf.user.userTitle.error.forbidden"><![CDATA[The user title is invalid.]]></item>
@@ -5910,5 +5909,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.style.protected.confirm"/>
 	<item name="wcf.acp.style.protected.description"/>
 	<item name="wcf.acp.style.protected.title"/>
+	<item name="wcf.user.following.noUsers"/>
 </delete>
 </language>

@@ -4795,7 +4795,6 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.usercp"><![CDATA[Benutzerkonto]]></item>
 		<item name="wcf.user.button.mail"><![CDATA[E-Mail senden]]></item>
 		<item name="wcf.user.ignoredUsers.noUsers"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du blockierst{else}Sie blockieren{/if} derzeit keine Benutzer.]]></item>
-		<item name="wcf.user.following.noUsers"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du folgst{else}Sie folgen{/if} derzeit keinen Benutzern.]]></item>
 		<item name="wcf.user.userTitle"><![CDATA[Individueller Benutzertitel]]></item>
 		<item name="wcf.user.userTitle.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dir{else}Sie können sich{/if} einen individuellen Benutzertitel geben.]]></item>
 		<item name="wcf.user.userTitle.error.forbidden"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Benutzertitel eingegeben.]]></item>
@@ -5908,5 +5907,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.style.protected.confirm"/>
 	<item name="wcf.acp.style.protected.description"/>
 	<item name="wcf.acp.style.protected.title"/>
+	<item name="wcf.user.following.noUsers"/>
 </delete>
 </language>
