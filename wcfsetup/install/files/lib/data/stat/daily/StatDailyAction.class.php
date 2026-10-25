@@ -29,6 +29,7 @@ class StatDailyAction extends AbstractDatabaseObjectAction
      * Validates the getData action.
      *
      * @return void
+     * @deprecated 6.3 use the `GET /core/stats` endpoint instead.
      */
     public function validateGetData()
     {
@@ -78,6 +79,7 @@ class StatDailyAction extends AbstractDatabaseObjectAction
      *  label: string,
      *  data: list<array{0: int, 1: mixed}>
      * }>
+     * @deprecated 6.3 use the `GET /core/stats` endpoint instead.
      */
     public function getData()
     {
