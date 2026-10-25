@@ -586,54 +586,20 @@ BROWSERCONFIG;
     }
 
     /**
-     * Validates the mark as tainted action.
-     *
      * @return void
+     * @deprecated 6.3 The protection of a style can no longer be lifted.
      */
     public function validateMarkAsTainted()
     {
-        if (!WCF::getSession()->hasPermission('admin.style.canManageStyle')) {
-            throw new PermissionDeniedException();
-        }
-
-        $this->styleEditor = $this->getSingleObject();
+        throw new PermissionDeniedException();
     }
 
     /**
-     * Marks a style as tainted.
+     * @deprecated 6.3 The protection of a style can no longer be lifted.
      */
     public function markAsTainted(): void
     {
-        // merge definitions
-        $variables = $this->styleEditor->getVariables();
-        $variables['individualScss'] = \str_replace(
-            "/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n",
-            '',
-            $variables['individualScss']
-        );
-        $variables['overrideScss'] = \str_replace(
-            "/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n",
-            '',
-            $variables['overrideScss']
-        );
-
-        $variablesDarkMode = [];
-        $variables = \array_filter($variables, static function ($value, $key) use (&$variablesDarkMode) {
-            if (!\str_starts_with($key, Style::DARK_MODE_PREFIX)) {
-                return true;
-            }
-
-            $variablesDarkMode[\str_replace(Style::DARK_MODE_PREFIX, '', $key)] = $value;
-
-            return false;
-        }, \ARRAY_FILTER_USE_BOTH);
-
-        $this->styleEditor->setVariables($variables, $variablesDarkMode);
-
-        $this->styleEditor->update([
-            'isTainted' => 1,
-            'packageName' => '',
-        ]);
+        throw new PermissionDeniedException();
     }
 
     /**

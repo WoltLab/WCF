@@ -2839,6 +2839,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.colors.primaryBackgroundColor"><![CDATA[Background Color (primary)]]></item>
 		<item name="wcf.acp.style.colors.primaryBorderColor"><![CDATA[Border Color (primary)]]></item>
 		<item name="wcf.acp.style.colors.primaryColor"><![CDATA[Font Color (primary)]]></item>
+		<item name="wcf.acp.style.colors.restoreAuthored"><![CDATA[Restore the original color]]></item>
 		<item name="wcf.acp.style.colors.selectCategoryByClick"><![CDATA[Category Direct Selection]]></item>
 		<item name="wcf.acp.style.colors.tabular"><![CDATA[Tabular Lists]]></item>
 		<item name="wcf.acp.style.colors.toggleColorPalette"><![CDATA[Toggle View]]></item>
@@ -2899,11 +2900,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.packageName.description"><![CDATA[Enter a package identifier matching the pattern “tld.domain.packageName”. For example if you own the domain “example.com” and created a style called “Blue Sunrise”, you could pick “com.example.style.blueSunrise” as a valid and descriptive identifier.]]></item>
 		<item name="wcf.acp.style.packageName.error.invalid"><![CDATA[The package identifier is invalid.]]></item>
 		<item name="wcf.acp.style.packageName.error.reserved"><![CDATA[The package identifiers cannot begin with “com.woltlab.”.]]></item>
-		<item name="wcf.acp.style.protected"><![CDATA[This style is protected and editing is limited; You can <a class="jsStaticDialog" data-dialog-id="styleDisableProtection">disable this protection</a>.]]></item>
-		<item name="wcf.acp.style.protected.confirm"><![CDATA[Disable protection]]></item>
-		<item name="wcf.acp.style.protected.description"><![CDATA[Imported and installed styles are automatically protected to prevent editing the original declaration, preserving the ability to update this style. You may disable this protection and recover full editing permissions, but it can no longer be updated.<br><br>It is neither recommended nor necessary to remove the protection in most cases, styles can still be fully customized while preserving the preset declarations.<br><br>Please save any unsaved changes before proceeding.]]></item>
+		<item name="wcf.acp.style.protected"><![CDATA[{if $stylePackage !== null}This style is provided by the package {if $canViewStylePackage}<a href="{$stylePackage->getLink()}">{$stylePackage->getTitle()}</a>{else}“{$stylePackage->getTitle()}”{/if} and receives updates with it.{elseif $style->packageName !== ''}This style was imported and receives updates by importing a newer version of it.{else}This style is protected and editing is limited.{/if}]]></item>
 		<item name="wcf.acp.style.protected.less"><![CDATA[Read only]]></item>
-		<item name="wcf.acp.style.protected.title"><![CDATA[Disable Protection]]></item>
 		<item name="wcf.acp.style.styleDate"><![CDATA[Date]]></item>
 		<item name="wcf.acp.style.styleDescription"><![CDATA[Description]]></item>
 		<item name="wcf.acp.style.styleName"><![CDATA[Name]]></item>
@@ -5909,5 +5907,8 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.global.rss.copy.success"/>
 	<item name="wcf.message.bbcode.code.copy.success"/>
 	<item name="wcf.message.share.copy.success"/>
+	<item name="wcf.acp.style.protected.confirm"/>
+	<item name="wcf.acp.style.protected.description"/>
+	<item name="wcf.acp.style.protected.title"/>
 </delete>
 </language>

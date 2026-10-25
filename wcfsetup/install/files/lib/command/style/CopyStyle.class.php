@@ -55,6 +55,8 @@ final class CopyStyle
             'coverPhotoExtension' => $style->coverPhotoExtension,
             'hasFavicon' => $style->hasFavicon,
             'hasDarkMode' => $style->hasDarkMode,
+            // A copy is never updated, protecting it would only lock the preset declarations.
+            'isTainted' => 1,
         ]);
     }
 
@@ -89,14 +91,31 @@ final class CopyStyle
     private function copyVariables(Style $source, Style $destination): void
     {
         $sql = "INSERT INTO             wcf1_style_variable_value
-                                        (styleID, variableID, variableValue, variableValueDarkMode)
-                SELECT                  ?, variableID, variableValue, variableValueDarkMode
+                                        (styleID, variableID, variableValue, variableValueDarkMode, authoredValue, authoredValueDarkMode)
+                SELECT                  ?, variableID, variableValue, variableValueDarkMode, authoredValue, authoredValueDarkMode
                 FROM                    wcf1_style_variable_value
                 WHERE                   styleID = ?
                 ON DUPLICATE KEY UPDATE variableValue = VALUES(variableValue),
-                                        variableValueDarkMode = VALUES(variableValueDarkMode)";
+                                        variableValueDarkMode = VALUES(variableValueDarkMode),
+                                        authoredValue = VALUES(authoredValue),
+                                        authoredValueDarkMode = VALUES(authoredValueDarkMode)";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$destination->styleID, $source->styleID]);
+
+        $sql = "UPDATE      wcf1_style_variable_value style_variable_value
+                INNER JOIN  wcf1_style_variable style_variable
+                ON          style_variable.variableID = style_variable_value.variableID
+                SET         style_variable_value.variableValue = REPLACE(style_variable_value.variableValue, ?, '')
+                WHERE       style_variable_value.styleID = ?
+                        AND style_variable.variableName IN (?, ?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            "/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n",
+            $destination->styleID,
+            'individualScss',
+            'individualScssDarkMode',
+            'overrideScss',
+        ]);
     }
 
     private function copyAssets(Style $source, Style $destination): void

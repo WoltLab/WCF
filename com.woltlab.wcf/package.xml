@@ -64,6 +64,8 @@
 	<instruction type="objectType" />
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_styleTemplateGroup.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_styleVariables.php</instruction>
+	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_styleProtection.php</instruction>
+	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_styleAuthoredValues.php</instruction>
 	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.3_step2.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_embeddedObjects.php</instruction>
 

@@ -8,7 +8,6 @@
 	require(["WoltLabSuite/Core/Acp/Ui/Style/Editor", "WoltLabSuite/Core/Ui/Color/Picker"], (AcpUiStyleEditor, ColorPicker) => {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
-			styleId: {if $action === 'edit'}{$style->styleID}{else}0{/if},
 		});
 
 		ColorPicker.fromSelector(".jsColorPicker");
@@ -116,105 +115,144 @@
 						{/if}
 					</dd>
 				</dl>
-				<dl{if $errorField == 'authorName'} class="formError"{/if}>
-					<dt><label for="authorName">{lang}wcf.acp.style.authorName{/lang}</label></dt>
-					<dd>
-						<input type="text" name="authorName" id="authorName" value="{$authorName}" class="long"{if !$isTainted} readonly{/if}>
-						{if $errorField == 'authorName'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.style.authorName.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
-				<dl{if $errorField == 'copyright'} class="formError"{/if}>
-					<dt><label for="copyright">{lang}wcf.acp.style.copyright{/lang}</label></dt>
-					<dd>
-						<input type="text" name="copyright" id="copyright" value="{$copyright}" class="long"{if !$isTainted} readonly{/if}>
-						{if $errorField == 'copyright'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.style.copyright.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
-				<dl{if $errorField == 'styleVersion'} class="formError"{/if}>
-					<dt><label for="styleVersion">{lang}wcf.acp.style.styleVersion{/lang}</label></dt>
-					<dd>
-						<input type="text" name="styleVersion" id="styleVersion" value="{$styleVersion}" class="small"{if !$isTainted} readonly{/if}>
-						{if $errorField == 'styleVersion'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.style.styleVersion.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
-				<dl{if $errorField == 'styleDate'} class="formError"{/if}>
-					<dt><label for="styleDate">{lang}wcf.acp.style.styleDate{/lang}</label></dt>
-					<dd>
-						<input type="date" name="styleDate" id="styleDate" value="{$styleDate}" class="small"{if !$isTainted} readonly{/if}>
-						{if $errorField == 'styleDate'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.style.styleDate.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
-				<dl{if $errorField == 'license'} class="formError"{/if}>
-					<dt><label for="license">{lang}wcf.acp.style.license{/lang}</label></dt>
-					<dd>
-						<input type="text" name="license" id="license" value="{$license}" class="long"{if !$isTainted} readonly{/if}>
-						{if $errorField == 'license'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.style.license.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
-				<dl{if $errorField == 'authorURL'} class="formError"{/if}>
-					<dt><label for="authorURL">{lang}wcf.acp.style.authorURL{/lang}</label></dt>
-					<dd>
-						<input type="text" name="authorURL" id="authorURL" value="{$authorURL}" class="long"{if !$isTainted} readonly{/if}>
-						{if $errorField == 'authorURL'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.style.authorURL.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
-				<dl{if $errorField == 'packageName'} class="formError"{/if}>
-					<dt><label for="packageName">{lang}wcf.acp.style.packageName{/lang}</label></dt>
-					<dd>
-						<input type="text" name="packageName" id="packageName" value="{$packageName}" class="long"{if !$isTainted} readonly{/if}>
-						{if $errorField == 'packageName'}
-							<small class="innerError">{lang}wcf.acp.style.packageName.error.{$errorType}{/lang}</small>
-						{/if}
-					</dd>
-				</dl>
+				{if $isTainted}
+					<dl{if $errorField == 'authorName'} class="formError"{/if}>
+						<dt><label for="authorName">{lang}wcf.acp.style.authorName{/lang}</label></dt>
+						<dd>
+							<input type="text" name="authorName" id="authorName" value="{$authorName}" class="long">
+							{if $errorField == 'authorName'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.style.authorName.error.{$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					<dl{if $errorField == 'copyright'} class="formError"{/if}>
+						<dt><label for="copyright">{lang}wcf.acp.style.copyright{/lang}</label></dt>
+						<dd>
+							<input type="text" name="copyright" id="copyright" value="{$copyright}" class="long">
+							{if $errorField == 'copyright'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.style.copyright.error.{$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					<dl{if $errorField == 'styleVersion'} class="formError"{/if}>
+						<dt><label for="styleVersion">{lang}wcf.acp.style.styleVersion{/lang}</label></dt>
+						<dd>
+							<input type="text" name="styleVersion" id="styleVersion" value="{$styleVersion}" class="small">
+							{if $errorField == 'styleVersion'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.style.styleVersion.error.{$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					<dl{if $errorField == 'styleDate'} class="formError"{/if}>
+						<dt><label for="styleDate">{lang}wcf.acp.style.styleDate{/lang}</label></dt>
+						<dd>
+							<input type="date" name="styleDate" id="styleDate" value="{$styleDate}" class="small">
+							{if $errorField == 'styleDate'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.style.styleDate.error.{$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					<dl{if $errorField == 'license'} class="formError"{/if}>
+						<dt><label for="license">{lang}wcf.acp.style.license{/lang}</label></dt>
+						<dd>
+							<input type="text" name="license" id="license" value="{$license}" class="long">
+							{if $errorField == 'license'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.style.license.error.{$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					<dl{if $errorField == 'authorURL'} class="formError"{/if}>
+						<dt><label for="authorURL">{lang}wcf.acp.style.authorURL{/lang}</label></dt>
+						<dd>
+							<input type="text" name="authorURL" id="authorURL" value="{$authorURL}" class="long">
+							{if $errorField == 'authorURL'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.style.authorURL.error.{$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					<dl{if $errorField == 'packageName'} class="formError"{/if}>
+						<dt><label for="packageName">{lang}wcf.acp.style.packageName{/lang}</label></dt>
+						<dd>
+							<input type="text" name="packageName" id="packageName" value="{$packageName}" class="long">
+							{if $errorField == 'packageName'}
+								<small class="innerError">{lang}wcf.acp.style.packageName.error.{$errorType}{/lang}</small>
+							{/if}
+						</dd>
+					</dl>
+				{else}
+					{if $authorName !== ''}
+						<dl>
+							<dt>{lang}wcf.acp.style.authorName{/lang}</dt>
+							<dd>{$authorName}</dd>
+						</dl>
+					{/if}
+					{if $copyright !== ''}
+						<dl>
+							<dt>{lang}wcf.acp.style.copyright{/lang}</dt>
+							<dd>{$copyright}</dd>
+						</dl>
+					{/if}
+					{if $styleVersion !== ''}
+						<dl>
+							<dt>{lang}wcf.acp.style.styleVersion{/lang}</dt>
+							<dd>{$styleVersion}</dd>
+						</dl>
+					{/if}
+					{if $styleDate !== ''}
+						<dl>
+							<dt>{lang}wcf.acp.style.styleDate{/lang}</dt>
+							<dd>{$styleDate}</dd>
+						</dl>
+					{/if}
+					{if $license !== ''}
+						<dl>
+							<dt>{lang}wcf.acp.style.license{/lang}</dt>
+							<dd>{$license}</dd>
+						</dl>
+					{/if}
+					{if $authorURL !== ''}
+						<dl>
+							<dt>{lang}wcf.acp.style.authorURL{/lang}</dt>
+							<dd>{$authorURL}</dd>
+						</dl>
+					{/if}
+				{/if}
 				<dl{if $errorField == 'styleDescription'} class="formError"{/if}>
 					<dt><label for="styleDescription">{lang}wcf.acp.style.styleDescription{/lang}</label></dt>
 					<dd>
@@ -1012,6 +1050,9 @@
 														{if $colorScopes[$spColor]|isset}
 															<span class="spColorScope jsTooltip" data-style-option="{$colorScopes[$spColor][option]}" title="{$colorScopes[$spColor][phrase]|language}">{icon name='circle-info'}</span>
 														{/if}
+														{if $authoredVariables[$spColor]|isset}
+															<button type="button" class="spColorRestore jsTooltip" data-store="{$spColor}_value" data-authored-color="{$authoredVariables[$spColor]}" title="{lang}wcf.acp.style.colors.restoreAuthored{/lang}"{if $authoredVariables[$spColor] === $variables[$spColor]} hidden{/if}>{icon name='arrow-rotate-left'}</button>
+														{/if}
 													</div>
 													<span class="spDescription">{$spType}</span>
 												</div>
@@ -1179,18 +1220,5 @@
 		{csrfToken}
 	</div>
 </form>
-
-<div id="styleDisableProtection" class="jsStaticDialogContent" data-title="{lang}wcf.acp.style.protected.title{/lang}">
-	<p>{lang}wcf.acp.style.protected.description{/lang}</p>
-	
-	<dl>
-		<dt></dt>
-		<dd><label for="styleDisableProtectionConfirm"><input type="checkbox" id="styleDisableProtectionConfirm"> {lang}wcf.acp.style.protected.confirm{/lang}</label></dd>
-	</dl>
-	
-	<div class="formSubmit">
-		<button type="button" id="styleDisableProtectionSubmit" class="button buttonPrimary" disabled>{lang}wcf.global.button.submit{/lang}</button>
-	</div>
-</div>
 
 {include file='footer'}
