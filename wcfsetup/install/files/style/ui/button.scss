@@ -186,7 +186,7 @@ a.button {
 	}
 }
 
-.buttonList.iconList a {
+.buttonList.iconList :is(a, button) {
 	color: var(--wcfButtonText);
 }
 

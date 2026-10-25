@@ -39,6 +39,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             else {
                 button.dataset.tooltip = (0, Language_1.getPhrase)("wcf.user.button.unfollow");
                 button.querySelector("fa-icon")?.setIcon("user-minus");
+                updateInvisibleLabel(button, (0, Language_1.getPhrase)("wcf.user.button.unfollow"));
             }
         }
         else {
@@ -50,9 +51,17 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             else {
                 button.dataset.tooltip = (0, Language_1.getPhrase)("wcf.user.button.follow");
                 button.querySelector("fa-icon")?.setIcon("user-plus");
+                updateInvisibleLabel(button, (0, Language_1.getPhrase)("wcf.user.button.follow"));
             }
         }
         (0, Snackbar_1.showDefaultSuccessSnackbar)();
+    }
+    // Icon buttons in a `.buttonGroupNavigation` show this label in the mobile dropdown.
+    function updateInvisibleLabel(button, label) {
+        const invisible = button.querySelector(".invisible");
+        if (invisible !== null) {
+            invisible.textContent = label;
+        }
     }
     function setup() {
         (0, Selector_1.wheneverFirstSeen)("[data-follow-user]", (button) => {

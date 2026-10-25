@@ -48,6 +48,7 @@ async function toggleFollow(button: HTMLElement): Promise<void> {
     } else {
       button.dataset.tooltip = getPhrase("wcf.user.button.unfollow");
       button.querySelector("fa-icon")?.setIcon("user-minus");
+      updateInvisibleLabel(button, getPhrase("wcf.user.button.unfollow"));
     }
   } else {
     await sendRequest(button, false);
@@ -59,10 +60,19 @@ async function toggleFollow(button: HTMLElement): Promise<void> {
     } else {
       button.dataset.tooltip = getPhrase("wcf.user.button.follow");
       button.querySelector("fa-icon")?.setIcon("user-plus");
+      updateInvisibleLabel(button, getPhrase("wcf.user.button.follow"));
     }
   }
 
   showDefaultSuccessSnackbar();
+}
+
+// Icon buttons in a `.buttonGroupNavigation` show this label in the mobile dropdown.
+function updateInvisibleLabel(button: HTMLElement, label: string): void {
+  const invisible = button.querySelector(".invisible");
+  if (invisible !== null) {
+    invisible.textContent = label;
+  }
 }
 
 export function setup(): void {

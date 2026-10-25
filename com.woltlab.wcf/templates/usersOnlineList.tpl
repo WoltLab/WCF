@@ -225,13 +225,4 @@
 	{/hascontent}
 </footer>
 
-<script data-relocate="true">
-	$(function() {
-		{jsphrase name='wcf.user.button.follow'}
-		{jsphrase name='wcf.user.button.unfollow'}
-		
-		new WCF.User.Action.Follow($('.userList > li'));
-	});
-</script>
-
 {include file='footer'}

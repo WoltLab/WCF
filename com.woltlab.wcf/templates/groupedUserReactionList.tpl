@@ -20,12 +20,3 @@
 {/foreach}
 
 <div class="paginationBottom jsPagination"></div>
-
-<script data-relocate="true">
-		$(function() {
-			{jsphrase name='wcf.user.button.follow'}
-			{jsphrase name='wcf.user.button.unfollow'}
-			
-			new WCF.User.Action.Follow($('.jsGroupedUserList > li'));
-		});
-</script>

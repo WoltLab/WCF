@@ -35,12 +35,3 @@
 {else}
 	<woltlab-core-notice type="info">{lang}wcf.global.noItems{/lang}</woltlab-core-notice>
 {/if}
-
-<script data-relocate="true">
-	$(function() {
-		{jsphrase name='wcf.user.button.follow'}
-		{jsphrase name='wcf.user.button.unfollow'}
-		
-		new WCF.User.Action.Follow($('.jsGroupedUserList > li'));
-	});
-</script>
