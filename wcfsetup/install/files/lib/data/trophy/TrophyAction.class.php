@@ -11,15 +11,12 @@ use wcf\data\IToggleAction;
 /**
  * Trophy related actions.
  *
- * Trophies should be created, updated and deleted through the `CreateTrophy`,
- * `UpdateTrophy` and `DeleteTrophy` commands, the `create`, `update` and
- * `delete` actions are `@deprecated 6.3`.
- *
  * @author  Joshua Ruesweg
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<Trophy, TrophyEditor>
+ * @deprecated 6.3 use `TrophyBuilder` with the `CreateTrophy` / `UpdateTrophy` commands instead.
  */
 class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
