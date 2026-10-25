@@ -3,7 +3,7 @@
 namespace wcf\command\reaction;
 
 use wcf\data\like\Like;
-use wcf\data\like\LikeEditor;
+use wcf\data\like\LikeBuilder;
 use wcf\data\like\object\ILikeObject;
 use wcf\data\like\object\LikeObjectBuilder;
 use wcf\data\object\type\ObjectTypeCache;
@@ -52,30 +52,26 @@ final class SetReaction
 
             if ($originalLike->likeID === 0) {
                 // new reaction
-                $like = LikeEditor::create([
-                    'objectID' => $this->likeable->getObjectID(),
-                    'objectTypeID' => $this->likeable->getObjectType()->objectTypeID,
-                    'objectUserID' => $this->likeable->getUserID() ?: null,
-                    'userID' => $this->user->userID,
-                    'time' => \TIME_NOW,
-                    'likeValue' => 1,
-                    'reactionTypeID' => $this->reactionType->reactionTypeID,
-                ]);
+                $like = LikeBuilder::forCreate()
+                    ->setObjectID($this->likeable->getObjectID())
+                    ->setObjectTypeID($this->likeable->getObjectType()->objectTypeID)
+                    ->setObjectUserID($this->likeable->getUserID() ?: null)
+                    ->setUserID($this->user->userID)
+                    ->setTime(\TIME_NOW)
+                    ->setLikeValue(Like::LIKE)
+                    ->setReactionTypeID($this->reactionType->reactionTypeID)
+                    ->create();
 
                 $this->updateUserCounter($this->likeable, $like);
 
                 $this->likeable->updateLikeCounter($likeObject->likes + 1);
             } else {
                 // update existing reaction
-                $editor = new LikeEditor($originalLike);
-                $editor->update([
-                    'time' => \TIME_NOW,
-                    'likeValue' => 1,
-                    'reactionTypeID' => $this->reactionType->reactionTypeID,
-                ]);
-
-                // reload like object to avoid stale object (reaction type id)
-                $like = new Like($originalLike->likeID);
+                $like = LikeBuilder::forUpdate($originalLike)
+                    ->setTime(\TIME_NOW)
+                    ->setLikeValue(Like::LIKE)
+                    ->setReactionTypeID($this->reactionType->reactionTypeID)
+                    ->update();
             }
 
             LikeObjectBuilder::rebuildLikeObjectData([$likeObject->getObjectID()]);

@@ -32,6 +32,7 @@ use wcf\util\StringUtil;
  * @since   5.2
  *
  * @extends AbstractDatabaseObjectAction<Like, LikeEditor>
+ * @deprecated 6.3 use the `SetReaction` / `RevertReaction` commands and endpoints instead.
  */
 class ReactionAction extends AbstractDatabaseObjectAction
 {
@@ -73,6 +74,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
      * Validates parameters to fetch like details.
      *
      * @return void
+     * @deprecated 6.3 use `ReactionSummaryDetailsListView` instead.
      */
     public function validateGetReactionDetails()
     {
@@ -87,6 +89,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
      * Returns like details.
      *
      * @return array{template: string, title: string}
+     * @deprecated 6.3 use `ReactionSummaryDetailsListView` instead.
      */
     public function getReactionDetails()
     {
@@ -163,6 +166,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
      *  reactionTypeID: int,
      *  reputationCount: int,
      * }
+     * @deprecated 6.3 use the `SetReaction` / `RevertReaction` endpoints instead.
      */
     public function react()
     {
@@ -186,6 +190,7 @@ class ReactionAction extends AbstractDatabaseObjectAction
      * Validates the 'react' method.
      *
      * @return void
+     * @deprecated 6.3 use the `SetReaction` / `RevertReaction` endpoints instead.
      */
     public function validateReact()
     {

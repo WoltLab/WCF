@@ -10,7 +10,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @deprecated  since 5.2, use \wcf\data\reaction\ReactionAction instead
+ * @deprecated  since 5.2, use `LikeBuilder` with the `SetReaction` / `RevertReaction` commands instead
  *
  * @extends AbstractDatabaseObjectAction<Like, LikeEditor>
  */

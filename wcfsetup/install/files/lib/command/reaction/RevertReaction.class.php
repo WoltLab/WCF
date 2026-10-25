@@ -3,7 +3,7 @@
 namespace wcf\command\reaction;
 
 use wcf\data\like\Like;
-use wcf\data\like\LikeEditor;
+use wcf\data\like\LikeBuilder;
 use wcf\data\like\object\ILikeObject;
 use wcf\data\like\object\LikeObjectBuilder;
 use wcf\data\user\User;
@@ -40,7 +40,7 @@ final class RevertReaction
 
             $likeObject = LikeObjectBuilder::getLikeObjectForUpdate($this->likeable);
 
-            (new LikeEditor($this->like))->delete();
+            LikeBuilder::delete($this->like);
 
             $this->updateUserCounter($this->likeable);
 

@@ -2,7 +2,7 @@
 
 namespace wcf\command\reaction;
 
-use wcf\data\like\LikeEditor;
+use wcf\data\like\LikeBuilder;
 use wcf\data\like\LikeList;
 use wcf\data\like\object\LikeObjectBuilder;
 use wcf\data\like\object\LikeObjectList;
@@ -101,7 +101,7 @@ final class DeleteObjectReactions
                 ->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $activityPoints);
 
             // delete likes
-            LikeEditor::deleteAll(\array_keys($likeData));
+            LikeBuilder::deleteAll(\array_keys($likeData));
         }
 
         // delete like objects

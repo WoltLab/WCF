@@ -13,6 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  *
  * @mixin       Like
  * @extends DatabaseObjectEditor<Like>
+ * @deprecated 6.3 use `LikeBuilder` instead.
  */
 class LikeEditor extends DatabaseObjectEditor
 {
