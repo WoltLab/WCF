@@ -702,11 +702,6 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
       silent: true,
     };
   }
-
-  /** @deprecated  3.0 - used only for backward compatibility with `WCF.Message.InlineEditor` */
-  legacyEdit(containerId: string): void {
-    this._click(document.getElementById(containerId), null);
-  }
 }
 
 export = UiMessageInlineEditor;

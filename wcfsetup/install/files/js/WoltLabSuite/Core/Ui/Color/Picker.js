@@ -168,8 +168,7 @@ define(["require", "exports", "tslib", "../../Core", "../Dialog", "../../Dom/Uti
         /**
          * Sets the callback called after submitting the dialog.
          *
-         * @deprecated  5.5, only exists for backward compatibility with the old `WCF.ColorPicker`;
-         *              use the constructor options instead
+         * @deprecated  5.5 use the constructor options instead
          */
         setCallbackSubmit(callbackSubmit) {
             this.options.callbackSubmit = callbackSubmit;

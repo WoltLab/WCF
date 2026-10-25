@@ -405,17 +405,3 @@ export type HSL = {
   s: number;
   l: number;
 };
-
-// WCF.ColorPicker compatibility (color format conversion)
-window.__wcf_bc_colorUtil = {
-  hexToRgb,
-  hslToRgb,
-  hsvToRgb,
-  isValidColor,
-  rgbaToHex,
-  rgbaToString,
-  rgbToHex,
-  rgbToHsv,
-  rgbToHsl,
-  stringToRgba,
-};

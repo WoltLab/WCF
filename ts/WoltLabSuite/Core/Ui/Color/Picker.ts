@@ -217,8 +217,7 @@ class UiColorPicker implements DialogCallbackObject {
   /**
    * Sets the callback called after submitting the dialog.
    *
-   * @deprecated  5.5, only exists for backward compatibility with the old `WCF.ColorPicker`;
-   *              use the constructor options instead
+   * @deprecated  5.5 use the constructor options instead
    */
   public setCallbackSubmit(callbackSubmit: CallbackSubmit): void {
     this.options.callbackSubmit = callbackSubmit;
