@@ -81,4 +81,3 @@ jobs:
     - name: "Check 'chart.js'"
       run: |
         diff -wu wcfsetup/install/files/js/3rdParty/chart.js/chart.umd.min.js node_modules/chart.js/dist/chart.umd.min.js
-        diff -wu wcfsetup/install/files/js/3rdParty/chart.js/chart.umd.min.js.map node_modules/chart.js/dist/chart.umd.min.js.map
