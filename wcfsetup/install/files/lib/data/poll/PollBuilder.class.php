@@ -275,7 +275,7 @@ final class PollBuilder extends DatabaseObjectBuilder
             $question = $this->getObject()->getL10nValues('question');
         }
 
-        (new L10nStorage($definition))->setValues($poll->pollID, [
+        new L10nStorage($definition)->setValues($poll->pollID, [
             'question' => \array_map(
                 static fn(string $value) => $definition->truncateValue('question', $value),
                 self::normalizeL10nValue($question ?? [], $poll->isMultilingual === 1)

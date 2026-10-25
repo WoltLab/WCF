@@ -30,7 +30,7 @@ final class RemoveGroupMembership
             return;
         }
 
-        (new RemoveUserFromGroups($this->user, $groupIDs))();
+        new RemoveUserFromGroups($this->user, $groupIDs)();
     }
 
     /**

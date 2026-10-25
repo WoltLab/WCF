@@ -52,7 +52,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             ->setOptions($this->getOptionsFromParameter());
         $this->applyData($builder, $this->parameters['data']);
 
-        return (new CreatePoll($builder))();
+        return new CreatePoll($builder)();
     }
 
     #[\Override]
@@ -69,7 +69,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
                 $builder->setOptions($this->getOptionsFromParameter());
             }
 
-            (new UpdatePoll($builder))();
+            new UpdatePoll($builder)();
         }
     }
 
@@ -80,10 +80,10 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             $this->readObjects();
         }
 
-        (new DeletePolls(\array_map(
+        new DeletePolls(\array_map(
             static fn(PollEditor $editor) => $editor->getDecoratedObject(),
             $this->getObjects()
-        )))();
+        ))();
 
         return \count($this->objects);
     }
@@ -200,11 +200,11 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             $this->poll = $this->getSingleObject();
         }
 
-        (new VotePoll(
+        new VotePoll(
             $this->poll->getDecoratedObject(),
             WCF::getUser(),
             \array_values($this->parameters['optionIDs'])
-        ))();
+        )();
 
         // update poll object
         $polls = PollManager::getInstance()->getPolls([$this->poll->pollID]);
@@ -394,7 +394,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
             ->setResultsRequireEnd($poll->resultsRequireEnd === 1)
             ->setMinVotes($poll->minVotes)
             ->setMaxVotes($poll->maxVotes);
-        $newPoll = (new CreatePoll($builder))();
+        $newPoll = new CreatePoll($builder)();
 
         // The new options are created in the order of the source options.
         $newOptions = \array_values($newPoll->getOptions());

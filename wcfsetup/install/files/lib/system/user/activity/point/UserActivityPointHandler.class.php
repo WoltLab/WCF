@@ -288,6 +288,6 @@ class UserActivityPointHandler extends SingletonFactory
         $userList->setObjectIDs($userIDs);
         $userList->readObjects();
 
-        (new RefreshUserRanks(\array_values($userList->getObjects())))();
+        new RefreshUserRanks(\array_values($userList->getObjects()))();
     }
 }

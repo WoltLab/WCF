@@ -54,7 +54,7 @@ final class UserBanAction implements RequestHandlerInterface
             WCF::getDB()->beginTransaction();
             foreach ($users as $user) {
                 if ($user->banned === 0) {
-                    (new BanUser($user, $data['banReason'], $banExpires))();
+                    new BanUser($user, $data['banReason'], $banExpires)();
                 }
             }
             WCF::getDB()->commitTransaction();

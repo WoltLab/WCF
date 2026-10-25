@@ -21,7 +21,7 @@ final class EnableBox
 
     public function __invoke(): void
     {
-        (new BoxEditor($this->box))->update([
+        new BoxEditor($this->box)->update([
             'isDisabled' => 0,
         ]);
         BoxEditor::resetCache();

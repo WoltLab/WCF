@@ -30,7 +30,7 @@ final class DeleteCategory implements IController
 
         $this->assertCategoryCanBeDeleted($category);
 
-        (new CategoryAction([$category->categoryID], 'delete'))->executeAction();
+        new CategoryAction([$category->categoryID], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

@@ -471,7 +471,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         if (!empty($data['templates'])) {
             $templateGroupFolderName = '';
             if ($style !== null && $style->templateGroupID !== null) {
-                $templateGroupFolderName = (new TemplateGroup($style->templateGroupID))->templateGroupFolderName;
+                $templateGroupFolderName = new TemplateGroup($style->templateGroupID)->templateGroupFolderName;
                 $styleData['templateGroupID'] = $style->templateGroupID;
             }
 

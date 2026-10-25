@@ -45,13 +45,13 @@ final class CreateBoxCondition
             throw new \InvalidArgumentException("Unknown box with identifier '{$this->boxIdentifier}'");
         }
 
-        (new ConditionAction([], 'create', [
+        new ConditionAction([], 'create', [
             'data' => [
                 'conditionData' => \serialize($this->conditionData),
                 'objectID' => $box->boxID,
                 'objectTypeID' => $objectTypeID,
             ],
-        ]))->executeAction();
+        ])->executeAction();
     }
 
     private function getObjectTypeID(): ?int

@@ -141,7 +141,7 @@ final class CategoryHandler extends SingletonFactory
             $this->objectTypeIDs[$objectType->objectTypeID] = $objectType->objectType;
         }
 
-        $this->cache = (new CategoryCache())->getCache();
+        $this->cache = new CategoryCache()->getCache();
     }
 
     /**

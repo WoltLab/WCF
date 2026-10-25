@@ -46,7 +46,7 @@ trait TCollectionL10n
             return;
         }
 
-        $this->l10nValues = (new L10nStorage($this->getL10nDefinition()))->getValuesForObjects(
+        $this->l10nValues = new L10nStorage($this->getL10nDefinition())->getValuesForObjects(
             $this->getObjectIDs()
         );
     }

@@ -368,7 +368,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
         }
 
         if ($updateData !== []) {
-            (new $this->editorClassName($file))->update($updateData);
+            new $this->editorClassName($file)->update($updateData);
         }
     }
 }

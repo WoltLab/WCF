@@ -32,7 +32,7 @@ final class DeleteOption implements IController
 
         $this->assertOptionCanBeDeleted($option);
 
-        (new ContactOptionAction([$option], 'delete'))->executeAction();
+        new ContactOptionAction([$option], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

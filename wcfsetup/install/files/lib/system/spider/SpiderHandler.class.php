@@ -44,7 +44,7 @@ final class SpiderHandler extends SingletonFactory
      */
     public function getIdentifier(string $userAgent): ?string
     {
-        $regex = (new SpiderCache())->getCache()['regex'];
+        $regex = new SpiderCache()->getCache()['regex'];
 
         $userAgent = \mb_strtolower($userAgent);
         if (\preg_match($regex, $userAgent, $matches)) {

@@ -64,7 +64,7 @@ final class ApplicationManagementForm extends AbstractForm
     {
         parent::readParameters();
 
-        $this->pageNodeList = (new PageNodeTree())->getNodeList();
+        $this->pageNodeList = new PageNodeTree()->getNodeList();
     }
 
     #[\Override]
@@ -177,7 +177,7 @@ final class ApplicationManagementForm extends AbstractForm
         ApplicationHandler::rebuild();
 
         // Reset caches to reflect the new landing pages.
-        (new ApplicationCache())->rebuild();
+        new ApplicationCache()->rebuild();
         PageCacheBuilder::getInstance()->reset();
         RoutingCacheBuilder::getInstance()->reset();
         StyleHandler::resetStylesheets();

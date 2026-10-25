@@ -108,7 +108,7 @@ abstract class AbstractOauth2AuthAction implements RequestHandlerInterface
     protected function mapParameters(ServerRequestInterface $request): OAuth2Success | OAuth2Failure | null
     {
         try {
-            $mapper = (new MapperBuilder())
+            $mapper = new MapperBuilder()
                 ->allowSuperfluousKeys()
                 ->mapper();
 

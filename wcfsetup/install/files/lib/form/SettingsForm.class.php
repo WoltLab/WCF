@@ -282,7 +282,7 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
                         ->loadValueCallback(static function (User $user, MultipleSelectionFormField $field) {
                             $field->value(\array_values(\array_unique(\array_map(
                                 static fn(Trophy $trophy) => $trophy->trophyID,
-                                (new UserProfile($user))->getSpecialTrophies()
+                                new UserProfile($user)->getSpecialTrophies()
                             ))));
                         })
                 );
@@ -309,10 +309,10 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
 
         $specialTrophies = $this->form->getFormField('specialTrophies');
         if ($specialTrophies !== null) {
-            (new SetSpecialTrophies(
+            new SetSpecialTrophies(
                 $this->object,
                 \array_values(\array_map(\intval(...), $specialTrophies->getValue() ?? []))
-            ))();
+            )();
         }
     }
 

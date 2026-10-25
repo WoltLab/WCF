@@ -30,7 +30,7 @@ trait TTestablePageUserNotificationEvent
     public static function getTestPage()
     {
         /** @var Page $page */
-        $page = (new PageAction([], 'create', [
+        $page = new PageAction([], 'create', [
             'data' => [
                 'parentPageID' => null,
                 'pageType' => 'text',
@@ -50,7 +50,7 @@ trait TTestablePageUserNotificationEvent
                     'customURL' => 'test-page',
                 ],
             ],
-        ]))->executeAction()['returnValues'];
+        ])->executeAction()['returnValues'];
         $pageContents = $page->getPageContents();
         $pageContent = \reset($pageContents);
 

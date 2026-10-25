@@ -32,7 +32,7 @@ final class DeleteLanguage implements IController
 
         $this->assertLanguageCanBeDeleted($language);
 
-        (new LanguageAction([$language], 'delete'))->executeAction();
+        new LanguageAction([$language], 'delete')->executeAction();
 
         LanguageFactory::getInstance()->clearCache();
         LanguageFactory::getInstance()->deleteLanguageCache();

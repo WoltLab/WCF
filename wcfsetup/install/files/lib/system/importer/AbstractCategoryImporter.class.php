@@ -84,7 +84,7 @@ class AbstractCategoryImporter extends AbstractImporter
 
                     $this->importI18nValues($items, 'wcf.category', $package->package);
 
-                    (new CategoryEditor($category))->update($updateData);
+                    new CategoryEditor($category)->update($updateData);
                 }
             }
         }

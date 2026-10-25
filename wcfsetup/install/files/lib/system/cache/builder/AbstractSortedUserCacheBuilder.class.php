@@ -41,24 +41,24 @@ abstract class AbstractSortedUserCacheBuilder extends AbstractLegacyCacheBuilder
     #[\Override]
     public function reset(array $parameters = [])
     {
-        (new SortedUserCache(
+        new SortedUserCache(
             $this->sortField,
             $parameters['sortOrder'] ?? $this->defaultSortOrder,
             $parameters['limit'] ?? $this->defaultLimit,
             $this->positiveValuesOnly,
             $parameters['conditions'] ?? []
-        ))->rebuild();
+        )->rebuild();
     }
 
     #[\Override]
     protected function rebuild(array $parameters): array
     {
-        return (new SortedUserCache(
+        return new SortedUserCache(
             $this->sortField,
             $parameters['sortOrder'] ?? $this->defaultSortOrder,
             $parameters['limit'] ?? $this->defaultLimit,
             $this->positiveValuesOnly,
             $parameters['conditions'] ?? []
-        ))->getCache();
+        )->getCache();
     }
 }

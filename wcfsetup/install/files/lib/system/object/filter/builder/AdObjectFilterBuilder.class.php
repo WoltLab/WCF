@@ -80,7 +80,7 @@ final class AdObjectFilterBuilder extends AbstractObjectFilterBuilder
         $event->register(new UserIntegerPropertyObjectFilter('trophyPoints', 'wcf.user.condition.trophyPoints'));
         $event->register(new UserTrophyObjectFilter());
         $event->register(new UserNoTrophyObjectFilter());
-        foreach ((new UserOptionObjectFilterFactory())->getFilters() as $filter) {
+        foreach (new UserOptionObjectFilterFactory()->getFilters() as $filter) {
             $event->register($filter);
         }
 

@@ -25,13 +25,13 @@ final class ConfirmUserEmail
     {
         $builder = UserBuilder::forUpdate($this->user)
             ->setEmailConfirmed(null);
-        $user = (new UpdateUser($builder))();
+        $user = new UpdateUser($builder)();
 
         if (
             $user->pendingActivation()
             && ((int)\REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) === 0
         ) {
-            $user = (new EnableUser($user, $this->sendNotification))();
+            $user = new EnableUser($user, $this->sendNotification)();
         }
 
         return $user;

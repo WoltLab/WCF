@@ -30,7 +30,7 @@ final class AddGroupMembership
             return;
         }
 
-        (new AddUserToGroups($this->user, $groupIDs))();
+        new AddUserToGroups($this->user, $groupIDs)();
     }
 
     /**

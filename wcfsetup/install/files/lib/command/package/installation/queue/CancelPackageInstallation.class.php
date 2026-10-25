@@ -21,6 +21,6 @@ final class CancelPackageInstallation
     {
         @\unlink($this->queue->archive);
 
-        (new PackageInstallationQueueEditor($this->queue))->delete();
+        new PackageInstallationQueueEditor($this->queue)->delete();
     }
 }

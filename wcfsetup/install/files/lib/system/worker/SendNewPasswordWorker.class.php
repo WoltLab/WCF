@@ -45,7 +45,7 @@ class SendNewPasswordWorker extends AbstractWorker
         $userList->readObjects();
 
         foreach ($userList as $user) {
-            (new SendNewPassword($user))();
+            new SendNewPassword($user)();
         }
     }
 

@@ -52,7 +52,7 @@ abstract class AbstractUserMergeListener implements IParameterizedEventListener
                 $databaseTable['ignore'] ?? false,
             );
 
-            (new ReassignUserColumn($column, $destinationUser, $eventObj->mergedUserIDs))();
+            new ReassignUserColumn($column, $destinationUser, $eventObj->mergedUserIDs)();
         }
     }
 }

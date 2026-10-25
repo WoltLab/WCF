@@ -86,7 +86,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
     private function handleGuest(ServerRequestInterface $request): ResponseInterface
     {
         if (Helper::isAjaxRequest($request)) {
-            return (new PermissionDeniedHandler())->handle($request);
+            return new PermissionDeniedHandler()->handle($request);
         }
 
         return new RedirectResponse(
@@ -106,7 +106,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
         ]);
 
         if (Helper::isAjaxRequest($request)) {
-            return (new PermissionDeniedHandler())->handle($request);
+            return new PermissionDeniedHandler()->handle($request);
         }
 
         return new HtmlResponse(
@@ -121,7 +121,7 @@ final class EnforceAcpAuthentication implements MiddlewareInterface
     private function handleReauthentication(ServerRequestInterface $request): ResponseInterface
     {
         if (Helper::isAjaxRequest($request)) {
-            return (new PermissionDeniedHandler())->handle(
+            return new PermissionDeniedHandler()->handle(
                 ErrorDetail::fromMessage(WCF::getLanguage()->getDynamicVariable('wcf.user.reauthentication.explanation'))
                     ->attachToRequest($request)
             );

@@ -80,7 +80,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
     #[\Override]
     protected function cleanup()
     {
-        (new CoreObjectCache())->rebuild();
+        new CoreObjectCache()->rebuild();
     }
 
     #[\Override]

@@ -75,7 +75,7 @@ class PollManagerListView extends AbstractListView
         $list->getConditionBuilder()->add('poll.objectTypeID IS NULL');
 
         // required to sort and search by the localized question
-        $questionSelect = (new L10nStorage(Poll::getL10nDefinition()))->getSubSelect('question', 'poll');
+        $questionSelect = new L10nStorage(Poll::getL10nDefinition())->getSubSelect('question', 'poll');
         if ($list->sqlSelects !== '') {
             $list->sqlSelects .= ',';
         }

@@ -853,7 +853,7 @@ class PageAddForm extends AbstractForm
             'availableApplications' => $this->availableApplications,
             'availableLanguages' => $this->availableLanguages,
             'availableBoxes' => $this->availableBoxes,
-            'pageNodeList' => (new PageNodeTree())->getNodeList(),
+            'pageNodeList' => new PageNodeTree()->getNodeList(),
             'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues),
             'addPageToMainMenu' => $this->addPageToMainMenu,
             'parentMenuItemID' => $this->parentMenuItemID,

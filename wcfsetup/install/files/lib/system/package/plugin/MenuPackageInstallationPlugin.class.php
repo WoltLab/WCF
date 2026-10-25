@@ -391,7 +391,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
                 ->label('wcf.acp.pip.menu.boxVisibilityExceptions.hiddenEverywhere')
                 ->filterable()
                 ->options(static function () {
-                    $pageNodeList = (new PageNodeTree())->getNodeList();
+                    $pageNodeList = new PageNodeTree()->getNodeList();
 
                     $nestedOptions = [];
                     /** @var PageNode $pageNode */

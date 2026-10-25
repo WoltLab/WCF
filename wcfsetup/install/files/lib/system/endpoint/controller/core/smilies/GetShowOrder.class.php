@@ -42,7 +42,7 @@ final class GetShowOrder implements IController
             $smileyList->getObjects()
         );
 
-        return (new ShowOrderHandler($items))->toJsonResponse();
+        return new ShowOrderHandler($items)->toJsonResponse();
     }
 
     private function assertSmileyCanBeSorted(): void

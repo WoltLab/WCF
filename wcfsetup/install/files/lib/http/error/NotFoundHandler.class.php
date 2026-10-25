@@ -55,7 +55,7 @@ final class NotFoundHandler implements RequestHandlerInterface
                 \JSON_PRETTY_PRINT
             ),
             'text/html' => new HtmlResponse(
-                (new HtmlErrorRenderer())->render(
+                new HtmlErrorRenderer()->render(
                     WCF::getLanguage()->getDynamicVariable('wcf.page.error.illegalLink.title'),
                     $message,
                     $errorDetail?->getThrowable()

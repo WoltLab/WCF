@@ -32,7 +32,7 @@ final class CheckForEnterpriseNonOwnerAccess implements MiddlewareInterface
             && (bool)\constant($requestHandler->getActiveRequest()->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
             && !WCF::getUser()->hasOwnerAccess()
         ) {
-            return (new NotFoundHandler())->handle($request);
+            return new NotFoundHandler()->handle($request);
         }
 
         return $handler->handle($request);

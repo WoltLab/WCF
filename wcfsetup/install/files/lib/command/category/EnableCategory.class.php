@@ -21,7 +21,7 @@ final class EnableCategory
 
     public function __invoke(): void
     {
-        (new CategoryEditor($this->category))->update([
+        new CategoryEditor($this->category)->update([
             'isDisabled' => 0,
         ]);
 

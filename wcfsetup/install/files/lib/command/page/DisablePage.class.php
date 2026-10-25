@@ -21,7 +21,7 @@ final class DisablePage
 
     public function __invoke(): void
     {
-        (new PageEditor($this->page))->update([
+        new PageEditor($this->page)->update([
             'isDisabled' => 1,
         ]);
 

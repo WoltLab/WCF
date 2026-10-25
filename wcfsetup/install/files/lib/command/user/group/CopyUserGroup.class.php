@@ -141,7 +141,7 @@ final class CopyUserGroup
             $groupType = UserGroup::OTHER;
         }
 
-        $group = (new UserGroupAction([], 'create', [
+        $group = new UserGroupAction([], 'create', [
             'data' => [
                 'groupName' => $group->groupName,
                 'groupDescription' => $group->groupDescription,
@@ -151,7 +151,7 @@ final class CopyUserGroup
                 'groupType' => $groupType,
             ],
             'options' => $optionValues,
-        ]))->executeAction()['returnValues'];
+        ])->executeAction()['returnValues'];
         \assert($group instanceof UserGroup);
 
         return $group;

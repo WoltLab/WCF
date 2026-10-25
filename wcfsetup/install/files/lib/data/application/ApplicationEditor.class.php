@@ -28,6 +28,6 @@ class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedO
     #[\Override]
     public static function resetCache()
     {
-        (new ApplicationCache())->rebuild();
+        new ApplicationCache()->rebuild();
     }
 }

@@ -140,11 +140,11 @@ final class EmailActivationForm extends AbstractFormBuilderForm
             foreach ($this->additionalFields as $name => $value) {
                 $builder->setCustomProperty($name, $value);
             }
-            (new UpdateUser($builder))();
+            new UpdateUser($builder)();
 
             // confirm email
             if (!$this->user->isEmailConfirmed() && $this->user->blacklistMatches === '') {
-                (new ConfirmUserEmail($this->user))();
+                new ConfirmUserEmail($this->user)();
             }
             $this->saved();
         }

@@ -34,7 +34,7 @@ final class DisableUser
             $builder->setEmailConfirmed(Hex::encode(\random_bytes(20)));
         }
 
-        return (new UpdateUser($builder))();
+        return new UpdateUser($builder)();
     }
 
     /**

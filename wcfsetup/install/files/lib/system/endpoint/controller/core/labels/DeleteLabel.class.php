@@ -30,7 +30,7 @@ final class DeleteLabel implements IController
 
         $this->assertLabelCanBeDeleted();
 
-        (new LabelAction([$label], 'delete'))->executeAction();
+        new LabelAction([$label], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

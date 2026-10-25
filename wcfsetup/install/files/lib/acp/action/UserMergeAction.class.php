@@ -55,7 +55,7 @@ final class UserMergeAction implements RequestHandlerInterface
                 static fn(User $user) => $user->userID !== $destinationUserID
             ));
 
-            (new MergeUsers($users[$destinationUserID], $mergedUsers))();
+            new MergeUsers($users[$destinationUserID], $mergedUsers)();
 
             return new JsonResponse([]);
         } else {

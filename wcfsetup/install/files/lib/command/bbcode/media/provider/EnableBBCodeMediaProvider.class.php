@@ -21,7 +21,7 @@ final class EnableBBCodeMediaProvider
 
     public function __invoke(): void
     {
-        (new BBCodeMediaProviderEditor($this->mediaProvider))->update([
+        new BBCodeMediaProviderEditor($this->mediaProvider)->update([
             'isDisabled' => 0,
         ]);
 

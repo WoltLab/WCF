@@ -162,7 +162,7 @@ final class MessageQuoteManager extends SingletonFactory
         }
 
         if ($avatar === '') {
-            $avatar = (new DefaultAvatar($message->getUsername()))->getURL();
+            $avatar = new DefaultAvatar($message->getUsername())->getURL();
         }
 
         $messageData = $quoteHandler->renderQuotes([

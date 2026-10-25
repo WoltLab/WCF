@@ -168,7 +168,7 @@ final class RegisterNewActivationCodeForm extends AbstractFormBuilderForm
         foreach ($this->additionalFields as $name => $value) {
             $builder->setCustomProperty($name, $value);
         }
-        $this->user = (new UpdateUser($builder))();
+        $this->user = new UpdateUser($builder)();
     }
 
     private function sendActivationMail(): void

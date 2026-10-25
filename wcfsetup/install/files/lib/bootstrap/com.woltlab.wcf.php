@@ -95,7 +95,7 @@ return new class {
                 new ResetPreloadCache($event->language)();
 
                 // A new language has no localized values yet.
-                (new \wcf\command\l10n\SyncL10nLanguageItems())();
+                new \wcf\command\l10n\SyncL10nLanguageItems()();
             }
         );
         $eventHandler->register(

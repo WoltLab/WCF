@@ -48,7 +48,7 @@ class BoxEditor extends DatabaseObjectEditor implements IEditableCachedObject
     public static function resetCache()
     {
         foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-            (new BoxCache($language->languageID))->rebuild();
+            new BoxCache($language->languageID)->rebuild();
         }
     }
 }

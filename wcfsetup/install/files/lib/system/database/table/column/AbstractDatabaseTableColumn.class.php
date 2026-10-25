@@ -168,7 +168,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     #[\Override]
     public static function create(string $name): static
     {
-        return (new static())->name($name);
+        return new static()->name($name);
     }
 
     #[\Override]

@@ -108,7 +108,7 @@ class LanguageMultilingualismForm extends AbstractForm
         LanguageEditor::enableMultilingualism(($this->enable === 1 ? $this->languageIDs : []));
 
         // clear cache
-        (new LanguageCache())->rebuild();
+        new LanguageCache()->rebuild();
         $this->saved();
 
         // show success message

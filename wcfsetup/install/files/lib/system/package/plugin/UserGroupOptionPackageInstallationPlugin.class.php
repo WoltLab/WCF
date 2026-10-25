@@ -449,7 +449,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
                         !\is_subclass_of(
                             $classname,
                             IOptionType::class
-                        ) || !(new \ReflectionClass($classname))->isInstantiable()
+                        ) || !new \ReflectionClass($classname)->isInstantiable()
                     ) {
                         continue;
                     }

@@ -63,13 +63,13 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
             $sourceLanguage = LanguageFactory::getInstance()->getLanguage($this->parameters['sourceLanguageID']);
 
             LanguageEditor::copyLanguageContent($sourceLanguage->getObjectID(), $object->getObjectID());
-            (new LanguageEditor($sourceLanguage))->copy($object);
+            new LanguageEditor($sourceLanguage)->copy($object);
 
             LanguageFactory::getInstance()->clearCache();
             LanguageFactory::getInstance()->deleteLanguageCache();
 
             // The copied phrases provide the localized values of the new language.
-            (new SyncL10nLanguageItems())();
+            new SyncL10nLanguageItems()();
         }
         StyleHandler::resetStylesheets();
 

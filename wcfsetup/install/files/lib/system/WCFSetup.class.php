@@ -840,7 +840,7 @@ final class WCFSetup extends WCF
 
         \assert($statement->getAffectedRows() === 1);
 
-        (new LanguageCache())->rebuild();
+        new LanguageCache()->rebuild();
 
         return $this->gotoNextStep('createUser');
     }

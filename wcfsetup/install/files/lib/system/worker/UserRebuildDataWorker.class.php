@@ -72,7 +72,7 @@ final class UserRebuildDataWorker extends AbstractLinearRebuildDataWorker
             $userIDs[] = $user->userID;
         }
 
-        (new RefreshUserOnlineMarkings(\array_values($this->getObjectList()->getObjects())))();
+        new RefreshUserOnlineMarkings(\array_values($this->getObjectList()->getObjects()))();
 
         $this->updateUserOnlineStatus($users);
 

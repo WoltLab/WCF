@@ -134,7 +134,7 @@ final class Helper
      */
     public static function mapQueryParameters(array $queryParameters, string $schema): mixed
     {
-        $mapper = (new MapperBuilder())
+        $mapper = new MapperBuilder()
             ->allowSuperfluousKeys()
             ->allowScalarValueCasting()
             ->allowUndefinedValues()
@@ -159,7 +159,7 @@ final class Helper
      */
     public static function mapRequestBody(array $bodyParameters, string $schema): mixed
     {
-        $mapper = (new MapperBuilder())
+        $mapper = new MapperBuilder()
             ->mapper();
 
         return $mapper->map(
@@ -230,7 +230,7 @@ final class Helper
         $object = $reflectionClass->newInstanceWithoutConstructor();
         $constructorClosure = $constructor->getClosure($object);
 
-        $arguments = (new MapperBuilder())
+        $arguments = new MapperBuilder()
             ->allowSuperfluousKeys()
             ->allowScalarValueCasting()
             ->allowUndefinedValues()

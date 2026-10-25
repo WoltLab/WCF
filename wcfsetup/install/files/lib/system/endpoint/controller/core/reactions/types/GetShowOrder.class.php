@@ -41,7 +41,7 @@ final class GetShowOrder implements IController
             $reactionTypeList->getObjects()
         );
 
-        return (new ShowOrderHandler($items))->toJsonResponse();
+        return new ShowOrderHandler($items)->toJsonResponse();
     }
 
     private function assertReactionTypeCanBeSorted(): void

@@ -51,7 +51,7 @@ abstract class AbstractUserActionRenameListener implements IParameterizedEventLi
                 $databaseTable['username'] ?? 'username',
             );
 
-            (new UpdateUsernameColumn($column, $user))();
+            new UpdateUsernameColumn($column, $user)();
         }
 
         WCF::getDB()->commitTransaction();

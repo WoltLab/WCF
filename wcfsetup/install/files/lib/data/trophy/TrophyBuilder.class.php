@@ -229,7 +229,7 @@ final class TrophyBuilder extends DatabaseObjectBuilder
         }
 
         // `L10nStorage::setValues()` replaces all rows of the trophy.
-        (new L10nStorage(Trophy::getL10nDefinition()))->setValues(
+        new L10nStorage(Trophy::getL10nDefinition())->setValues(
             $trophy->trophyID,
             [
                 'title' => $this->title ?? $this->getExistingObject()->getL10nValues('title'),

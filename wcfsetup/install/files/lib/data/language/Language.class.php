@@ -127,10 +127,10 @@ class Language extends DatabaseObject implements \Stringable
             && \LOG_MISSING_LANGUAGE_ITEMS !== 0
             && \preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
         ) {
-            (new DevtoolsMissingLanguageItemAction([], 'logLanguageItem', [
+            new DevtoolsMissingLanguageItemAction([], 'logLanguageItem', [
                 'language' => $this,
                 'languageItem' => $item,
-            ]))->executeAction();
+            ])->executeAction();
         }
 
         // return plain input
@@ -170,10 +170,10 @@ class Language extends DatabaseObject implements \Stringable
             && $staticItem === $item
             && \preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
         ) {
-            (new DevtoolsMissingLanguageItemAction([], 'logLanguageItem', [
+            new DevtoolsMissingLanguageItemAction([], 'logLanguageItem', [
                 'language' => $this,
                 'languageItem' => $item,
-            ]))->executeAction();
+            ])->executeAction();
         }
 
         return $staticItem;

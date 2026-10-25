@@ -68,7 +68,7 @@ final class PollOptionListFormField extends AbstractFormField
         }
 
         try {
-            $options = (new MapperBuilder())->mapper()->map(
+            $options = new MapperBuilder()->mapper()->map(
                 <<<'EOT'
                     list<array{
                         optionID: int,

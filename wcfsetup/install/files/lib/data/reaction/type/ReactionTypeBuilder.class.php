@@ -152,7 +152,7 @@ final class ReactionTypeBuilder extends DatabaseObjectBuilder
 
     private function saveL10nValues(ReactionType $reactionType): void
     {
-        (new L10nStorage(ReactionType::getL10nDefinition()))->setValues(
+        new L10nStorage(ReactionType::getL10nDefinition())->setValues(
             $reactionType->reactionTypeID,
             [
                 'title' => $this->title,

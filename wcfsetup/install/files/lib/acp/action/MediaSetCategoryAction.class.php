@@ -45,9 +45,9 @@ final class MediaSetCategoryAction implements RequestHandlerInterface
 
             $categoryID = (int)$form->getData()['data']['categoryID'] ?: null;
             foreach ($media as $mediaFile) {
-                (new UpdateMedia(
+                new UpdateMedia(
                     MediaBuilder::forUpdate($mediaFile)->setCategoryID($categoryID)
-                ))();
+                )();
             }
 
             return new JsonResponse([]);

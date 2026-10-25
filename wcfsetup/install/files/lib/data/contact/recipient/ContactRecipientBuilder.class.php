@@ -138,7 +138,7 @@ final class ContactRecipientBuilder extends DatabaseObjectBuilder
         }
 
         // `L10nStorage::setValues()` replaces all rows of the recipient.
-        (new L10nStorage(ContactRecipient::getL10nDefinition()))->setValues(
+        new L10nStorage(ContactRecipient::getL10nDefinition())->setValues(
             $recipient->recipientID,
             [
                 'name' => $this->name ?? $this->getExistingObject()->getL10nValues('name'),

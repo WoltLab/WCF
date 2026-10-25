@@ -78,11 +78,11 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
                 // active/extend subscription
                 if ($userSubscription === null) {
                     // create new subscription
-                    $userSubscription = (new CreatePaidSubscriptionUser(
+                    $userSubscription = new CreatePaidSubscriptionUser(
                         PaidSubscriptionUserBuilder::forCreate()
                             ->setSubscription($subscription)
                             ->setUser($user)
-                    ))();
+                    )();
                 } else {
                     new ExtendPaidSubscriptionUser($userSubscription)();
                 }

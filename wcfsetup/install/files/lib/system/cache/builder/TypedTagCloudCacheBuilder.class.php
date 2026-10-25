@@ -18,12 +18,12 @@ class TypedTagCloudCacheBuilder extends AbstractLegacyCacheBuilder
     #[\Override]
     public function reset(array $parameters = [])
     {
-        (new TagCloudCache($parameters["objectTypeIDs"], $parameters["languageIDs"]))->rebuild();
+        new TagCloudCache($parameters["objectTypeIDs"], $parameters["languageIDs"])->rebuild();
     }
 
     #[\Override]
     protected function rebuild(array $parameters): array
     {
-        return (new TagCloudCache($parameters["objectTypeIDs"], $parameters["languageIDs"]))->getCache();
+        return new TagCloudCache($parameters["objectTypeIDs"], $parameters["languageIDs"])->getCache();
     }
 }

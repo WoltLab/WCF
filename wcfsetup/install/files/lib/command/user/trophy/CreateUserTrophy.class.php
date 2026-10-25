@@ -37,9 +37,9 @@ final class CreateUserTrophy
         $userTrophy = $this->builder->create();
 
         if (!$userTrophy->getTrophy()->isDisabled()) {
-            (new UpdateUser(
+            new UpdateUser(
                 UserBuilder::forUpdate($userTrophy->getUserProfile()->getDecoratedObject())->incrementTrophyPoints(1)
-            ))();
+            )();
 
             $this->addSpecialTrophy($userTrophy);
         }
@@ -94,9 +94,9 @@ final class CreateUserTrophy
         );
         $trophyIDs[] = $userTrophy->trophyID;
 
-        (new SetSpecialTrophies(
+        new SetSpecialTrophies(
             $userProfile->getDecoratedObject(),
             \array_values(\array_unique($trophyIDs))
-        ))();
+        )();
     }
 }

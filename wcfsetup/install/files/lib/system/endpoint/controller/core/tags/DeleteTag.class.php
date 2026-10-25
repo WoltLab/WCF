@@ -31,7 +31,7 @@ final class DeleteTag implements IController
 
         $this->assertTagCanBeDeleted();
 
-        (new TagAction([$tag], 'delete'))->executeAction();
+        new TagAction([$tag], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

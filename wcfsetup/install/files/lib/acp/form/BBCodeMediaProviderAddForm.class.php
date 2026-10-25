@@ -127,7 +127,7 @@ class BBCodeMediaProviderAddForm extends AbstractFormBuilderForm
         if ($this->formAction === "create") {
             /** @var BBCodeMediaProvider $provider */
             $provider = $this->objectAction->getReturnValues()['returnValues'];
-            (new BBCodeMediaProviderEditor($provider))->update([
+            new BBCodeMediaProviderEditor($provider)->update([
                 'name' => 'com.woltlab.wcf.generic' . $provider->providerID,
             ]);
         }

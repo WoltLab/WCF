@@ -22,7 +22,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
 
         $package = $this->installation->getPackage();
 
-        (new AuditLogger())->log(
+        new AuditLogger()->log(
             <<<EOT
             Building uninstallation nodes
             ===========================
@@ -43,7 +43,7 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
 
         $this->buildEndMarkerNode();
 
-        (new AuditLogger())->log(
+        new AuditLogger()->log(
             <<<EOT
             Finished building nodes
             =======================

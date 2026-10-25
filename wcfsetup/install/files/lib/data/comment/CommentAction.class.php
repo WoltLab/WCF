@@ -361,7 +361,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         $htmlInputProcessor->setObjectID($this->createdComment->getObjectID());
         if (MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor)) {
-            (new CommentEditor($this->createdComment))->update([
+            new CommentEditor($this->createdComment)->update([
                 'hasEmbeddedObjects' => 1,
             ]);
             $this->createdComment = new Comment($this->createdComment->getObjectID());
@@ -524,7 +524,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         $htmlInputProcessor->setObjectID($this->createdResponse->getObjectID());
         if (MessageEmbeddedObjectManager::getInstance()->registerObjects($htmlInputProcessor)) {
-            (new CommentResponseEditor($this->createdResponse))->update([
+            new CommentResponseEditor($this->createdResponse)->update([
                 'hasEmbeddedObjects' => 1,
             ]);
             $this->createdResponse = new CommentResponse($this->createdResponse->getObjectID());
@@ -613,7 +613,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         /** @var CommentResponse $response */
         foreach ($this->parameters['responses'] as $response) {
-            (new CommentResponseEditor($response))->update(['isDisabled' => 0]);
+            new CommentResponseEditor($response)->update(['isDisabled' => 0]);
 
             $comment = $response->getComment();
 

@@ -24,6 +24,6 @@ final class DisconnectThirdPartyLogin
         $builder = UserBuilder::forUpdate($this->user)
             ->setAuthData('');
 
-        return (new UpdateUser($builder))();
+        return new UpdateUser($builder)();
     }
 }

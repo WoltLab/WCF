@@ -29,13 +29,13 @@ class LanguageCacheBuilder extends AbstractLegacyCacheBuilder
     #[\Override]
     public function reset(array $parameters = [])
     {
-        (new LanguageCache())->rebuild();
+        new LanguageCache()->rebuild();
     }
 
     #[\Override]
     public function rebuild(array $parameters): array
     {
-        $cacheData = (new LanguageCache())->getCache();
+        $cacheData = new LanguageCache()->getCache();
 
         return [
             'codes' => $cacheData->codes,

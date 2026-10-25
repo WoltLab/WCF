@@ -67,7 +67,7 @@ final class UserDisableCoverPhotoAction implements RequestHandlerInterface
             }
 
             if ($user->disableCoverPhoto === 0) {
-                (new DisableUserCoverPhoto($user, $data['disableCoverPhotoReason'], $disableCoverPhotoExpires))();
+                new DisableUserCoverPhoto($user, $data['disableCoverPhotoReason'], $disableCoverPhotoExpires)();
             }
 
             return new JsonResponse([]);

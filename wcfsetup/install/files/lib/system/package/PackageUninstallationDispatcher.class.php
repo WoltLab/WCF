@@ -103,7 +103,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
         // perform post-uninstall actions
         if ($node === '') {
-            (new AuditLogger())->log(
+            new AuditLogger()->log(
                 <<<EOT
                 Finalizing process
                 ==================
@@ -126,7 +126,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
 
             new ClearCache()();
 
-            (new AuditLogger())->log(
+            new AuditLogger()->log(
                 <<<EOT
                 Finalized process
                 =================

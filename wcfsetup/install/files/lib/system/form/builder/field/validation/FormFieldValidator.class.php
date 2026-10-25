@@ -33,7 +33,7 @@ final class FormFieldValidator implements IFormFieldValidator
         $this->id = $id;
 
         // validate validation function
-        $parameters = (new \ReflectionFunction($validator))->getParameters();
+        $parameters = new \ReflectionFunction($validator)->getParameters();
         if (\count($parameters) !== 1) {
             throw new \InvalidArgumentException(
                 "The validation function must expect one parameter, instead " . \count($parameters)

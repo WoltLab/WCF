@@ -88,7 +88,7 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController
     {
         EventHandler::getInstance()->fireAction($this, 'readObjects');
 
-        $userIDs = (new WhoWasOnlineCache())->getCache();
+        $userIDs = new WhoWasOnlineCache()->getCache();
 
         if ($userIDs !== []) {
             $this->users = \array_filter(

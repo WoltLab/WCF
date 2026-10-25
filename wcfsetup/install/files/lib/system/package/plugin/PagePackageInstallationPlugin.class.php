@@ -387,7 +387,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
                     // generate template if page's type is 'tpl'
                     $page = new Page($pageID);
                     if ($page->pageType === 'tpl') {
-                        (new PageEditor($page))->updateTemplate($languageID, $content['content']);
+                        new PageEditor($page)->updateTemplate($languageID, $content['content']);
                     }
                 }
             }
@@ -505,7 +505,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
                 ->required()
                 ->filterable()
                 ->options(function () {
-                    $pageNodeList = (new PageNodeTree())->getNodeList();
+                    $pageNodeList = new PageNodeTree()->getNodeList();
 
                     $nestedOptions = [
                         [

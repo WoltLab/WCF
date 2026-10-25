@@ -96,7 +96,7 @@ final class AcpMenuItemCollectingListener
             parentMenuItem: 'wcf.acp.menu.link.configuration'
         ));
 
-        foreach ((new TopOptionCategoryCache())->getCache() as $optionCategory) {
+        foreach (new TopOptionCategoryCache()->getCache() as $optionCategory) {
             if (!$optionCategory->validateOptions() || !$optionCategory->validatePermissions()) {
                 continue;
             }

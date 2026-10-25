@@ -94,7 +94,7 @@ class MediaImporter extends AbstractImporter
             );
         }
 
-        $media = (new CreateMedia($builder))();
+        $media = new CreateMedia($builder)();
 
         ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.media', $oldID, $media->mediaID);
 

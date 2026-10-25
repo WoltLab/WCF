@@ -297,13 +297,13 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                     };
                     $newLocation = $style->getAssetPath() . $newName;
                     \rename($fileLocation, $newLocation);
-                    (new StyleEditor($style))->update([
+                    new StyleEditor($style)->update([
                         $type => FileUtil::getRelativePath(\WCF_DIR . 'images/', $style->getAssetPath()) . $newName,
                     ]);
 
                     $file->setProcessed($newLocation);
                 } else {
-                    (new StyleEditor($style))->update([
+                    new StyleEditor($style)->update([
                         $type => '',
                     ]);
                 }
@@ -358,7 +358,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                         \unlink($style->getAssetPath() . "favicon.ico");
                     }
 
-                    (new StyleEditor($style))->update([
+                    new StyleEditor($style)->update([
                         'hasFavicon' => 1,
                     ]);
                 }
@@ -385,7 +385,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                         \unlink($style->getAssetPath() . "favicon-template." . $extension);
                     }
                 }
-                (new StyleEditor($style))->update([
+                new StyleEditor($style)->update([
                     'hasFavicon' => 0,
                 ]);
             }
@@ -449,13 +449,13 @@ BROWSERCONFIG;
 
                 $extension = ($result === false) ? 'jpg' : $extension;
                 $newLocation = "{$outputFilenameWithoutExtension}.{$extension}";
-                (new StyleEditor($style))->update([
+                new StyleEditor($style)->update([
                     'coverPhotoExtension' => $extension,
                 ]);
 
                 $file->setProcessed($newLocation);
             } else {
-                (new StyleEditor($style))->update([
+                new StyleEditor($style)->update([
                     'coverPhotoExtension' => '',
                 ]);
             }

@@ -95,9 +95,9 @@ abstract class AbstractBoxController implements IBoxController
     {
         // always write additional data to make sure that the additional data of the previous box controller
         // are properly overwritten
-        (new BoxAction([$this->box], 'update', [
+        new BoxAction([$this->box], 'update', [
             'data' => ['additionalData' => \serialize($this->getAdditionalData())],
-        ]))->executeAction();
+        ])->executeAction();
     }
 
     #[\Override]

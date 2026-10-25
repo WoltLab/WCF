@@ -128,7 +128,7 @@ final class FileDownloadAction implements RequestHandlerInterface
 
         $lifetimeInSeconds = $processor->getFileCacheDuration($file)->lifetimeInSeconds;
         if ($lifetimeInSeconds !== null) {
-            $expiresAt = (new \DateTimeImmutable('@' . \TIME_NOW))
+            $expiresAt = new \DateTimeImmutable('@' . \TIME_NOW)
                 ->modify("+{$lifetimeInSeconds} seconds")
                 ->setTimezone(new \DateTimeZone('UTC'))
                 ->format('D, d M Y H:i:s \\G\\M\\T');

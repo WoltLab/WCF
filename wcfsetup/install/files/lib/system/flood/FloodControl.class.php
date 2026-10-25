@@ -223,7 +223,7 @@ final class FloodControl extends SingletonFactory
             return $ipAddress;
         }
 
-        return (new IpAddress($ipAddress))->toMasked(32, 64)->getIpAddress();
+        return new IpAddress($ipAddress)->toMasked(32, 64)->getIpAddress();
     }
 
     /**

@@ -30,7 +30,7 @@ final class PagesFormField extends MultipleSelectionFormField
         $this
             ->label('wcf.acp.box.visibilityException.visible')
             ->invertedLabel('wcf.acp.box.visibilityException.hidden')
-            ->options((new PageNodeTree())->getNodeList(), true)
+            ->options(new PageNodeTree()->getNodeList(), true)
             ->filterable();
     }
 

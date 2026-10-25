@@ -157,7 +157,7 @@ class BoxHandler extends SingletonFactory
     public static function loadBoxes(int $pageID, bool $forDisplay)
     {
         if ($forDisplay) {
-            $cache = (new BoxCache(WCF::getLanguage()->languageID))->getCache();
+            $cache = new BoxCache(WCF::getLanguage()->languageID)->getCache();
 
             // The boxes are modified below, which must not leak into the shared cache data.
             $boxList = \array_map(

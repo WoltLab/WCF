@@ -31,7 +31,7 @@ final class DeleteTrophy implements IController
 
         $this->assertTrophyCanBeDeleted();
 
-        (new DeleteTrophyCommand($trophy))();
+        new DeleteTrophyCommand($trophy)();
 
         return new JsonResponse([]);
     }

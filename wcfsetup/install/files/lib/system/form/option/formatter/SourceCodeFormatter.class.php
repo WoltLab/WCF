@@ -17,7 +17,7 @@ final class SourceCodeFormatter implements IFormOptionFormatter
     #[\Override]
     public function format(string $value, int $languageID, array $configuration): string
     {
-        return (new SourceCodeRenderer())->render(
+        return new SourceCodeRenderer()->render(
             $value,
             (string)($configuration['sourceCodeLanguage'] ?? ''),
             codeIDPrefix: 'formOption_'

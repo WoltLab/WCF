@@ -31,7 +31,7 @@ final class DeleteMenuItem implements IController
 
         $this->assertMenuItemCanBeDeleted($menuItem);
 
-        (new MenuItemAction([$menuItem], 'delete'))->executeAction();
+        new MenuItemAction([$menuItem], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

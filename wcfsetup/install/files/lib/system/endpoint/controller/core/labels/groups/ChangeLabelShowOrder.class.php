@@ -43,7 +43,7 @@ final class ChangeLabelShowOrder implements IController
             LabelHandler::getInstance()->getLabelGroup($labelGroup->groupID)->getLabels()
         );
 
-        $sortedItems = (new ShowOrderHandler($items))->getSortedItemsFromRequest($request);
+        $sortedItems = new ShowOrderHandler($items)->getSortedItemsFromRequest($request);
         $this->saveShowOrder($sortedItems);
 
         return new JsonResponse([]);

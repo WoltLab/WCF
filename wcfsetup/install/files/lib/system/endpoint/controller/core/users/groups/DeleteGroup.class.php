@@ -30,7 +30,7 @@ final class DeleteGroup implements IController
 
         $this->assertGroupCanBeDeleted($userGroup);
 
-        (new UserGroupAction([$userGroup], 'delete'))->executeAction();
+        new UserGroupAction([$userGroup], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

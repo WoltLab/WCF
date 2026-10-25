@@ -19,7 +19,7 @@ class UserBirthdayCacheBuilder extends AbstractLegacyCacheBuilder
     protected function rebuild(array $parameters): array
     {
         $cache = [];
-        foreach ((new UserBirthdayCache($parameters['month']))->getCache() as $day => $userIDs) {
+        foreach (new UserBirthdayCache($parameters['month'])->getCache() as $day => $userIDs) {
             $cache[\sprintf("%02d-%02d", $parameters['month'], $day)] = $userIDs;
         }
 
@@ -29,6 +29,6 @@ class UserBirthdayCacheBuilder extends AbstractLegacyCacheBuilder
     #[\Override]
     public function reset(array $parameters = [])
     {
-        (new UserBirthdayCache($parameters['month']))->rebuild();
+        new UserBirthdayCache($parameters['month'])->rebuild();
     }
 }

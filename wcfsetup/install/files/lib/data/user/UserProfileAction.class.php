@@ -195,7 +195,7 @@ class UserProfileAction extends UserAction
             static fn (UserEditor $editor) => $editor->getDecoratedObject(),
             $this->getObjects()
         );
-        (new RefreshUserRanks(\array_values($users)))();
+        new RefreshUserRanks(\array_values($users))();
     }
 
     /**
@@ -214,7 +214,7 @@ class UserProfileAction extends UserAction
             static fn (UserEditor $editor) => $editor->getDecoratedObject(),
             $this->getObjects()
         );
-        (new RefreshUserOnlineMarkings(\array_values($users)))();
+        new RefreshUserOnlineMarkings(\array_values($users))();
     }
 
     /**
@@ -231,7 +231,7 @@ class UserProfileAction extends UserAction
 
         $trophyIDs = \array_values(\array_map(\intval(...), $this->parameters['trophyIDs'] ?? []));
         foreach ($this->getObjects() as $user) {
-            (new SetSpecialTrophies($user->getDecoratedObject(), $trophyIDs))();
+            new SetSpecialTrophies($user->getDecoratedObject(), $trophyIDs)();
         }
     }
 }

@@ -32,7 +32,7 @@ final class SendNewPassword
             ->setPassword(null)
             ->setLostPasswordKey(\hash('sha256', $lostPasswordKey))
             ->setLastLostPasswordRequestTime(\TIME_NOW);
-        $user = (new UpdateUser($builder))();
+        $user = new UpdateUser($builder)();
 
         $email = new Email();
         $email->setMessageID(\sprintf(

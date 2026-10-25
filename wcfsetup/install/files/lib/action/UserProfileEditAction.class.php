@@ -68,7 +68,7 @@ final class UserProfileEditAction implements RequestHandlerInterface
 
             $builder = UserBuilder::forUpdate($this->user->getDecoratedObject());
             $form->applyValuesToBuilder($builder);
-            (new UpdateUser($builder))();
+            new UpdateUser($builder)();
 
             return new JsonResponse([
                 'result' => [],

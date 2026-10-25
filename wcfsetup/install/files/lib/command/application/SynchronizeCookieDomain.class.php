@@ -59,6 +59,6 @@ final class SynchronizeCookieDomain
     private function resetCache(): void
     {
         LanguageFactory::getInstance()->deleteLanguageCache();
-        (new ApplicationCache())->rebuild();
+        new ApplicationCache()->rebuild();
     }
 }

@@ -22,6 +22,6 @@ class UpdateBlacklistCronjob extends AbstractCronjob
             return;
         }
 
-        (new ImportBlacklist())();
+        new ImportBlacklist()();
     }
 }

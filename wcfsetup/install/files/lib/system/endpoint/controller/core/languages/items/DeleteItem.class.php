@@ -33,7 +33,7 @@ final class DeleteItem implements IController
 
         $this->assertLanguageItemCanBeDeleted($languageItem);
 
-        (new LanguageItemAction($this->getLanguageItemsForAllLanguages($languageItem), 'delete'))->executeAction();
+        new LanguageItemAction($this->getLanguageItemsForAllLanguages($languageItem), 'delete')->executeAction();
 
         LanguageFactory::getInstance()->clearCache();
         LanguageFactory::getInstance()->deleteLanguageCache();

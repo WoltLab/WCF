@@ -181,18 +181,18 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
         $formData = $this->getForm()->getData();
 
         if ($formData['data']['type'] === UserIgnore::TYPE_NO_IGNORE) {
-            return (new self([], 'unignore', [
+            return new self([], 'unignore', [
                 'data' => [
                     'userID' => $this->parameters['userID'],
                 ],
-            ]))->executeAction()['returnValues'];
+            ])->executeAction()['returnValues'];
         } else {
-            return (new self([], 'ignore', [
+            return new self([], 'ignore', [
                 'data' => [
                     'userID' => $this->parameters['userID'],
                     'type' => $formData['data']['type'],
                 ],
-            ]))->executeAction()['returnValues'];
+            ])->executeAction()['returnValues'];
         }
     }
 

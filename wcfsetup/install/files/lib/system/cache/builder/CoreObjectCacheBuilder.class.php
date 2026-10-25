@@ -18,12 +18,12 @@ class CoreObjectCacheBuilder extends AbstractLegacyCacheBuilder
     #[\Override]
     public function reset(array $parameters = [])
     {
-        (new CoreObjectCache())->rebuild();
+        new CoreObjectCache()->rebuild();
     }
 
     #[\Override]
     public function rebuild(array $parameters): array
     {
-        return (new CoreObjectCache())->getCache();
+        return new CoreObjectCache()->getCache();
     }
 }

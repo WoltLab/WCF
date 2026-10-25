@@ -6,7 +6,7 @@ $finder = PhpCsFixer\Finder::create()
     ->notPath('install.php')
     ->notPath('core.functions.php');
 
-return (new PhpCsFixer\Config())
+return new PhpCsFixer\Config()
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR1' => true,

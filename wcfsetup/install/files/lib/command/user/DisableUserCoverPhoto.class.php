@@ -29,6 +29,6 @@ final class DisableUserCoverPhoto
             ->setDisableCoverPhotoReason($this->reason)
             ->setDisableCoverPhotoExpires(\min($this->expires, 2147483647));
 
-        return (new UpdateUser($builder))();
+        return new UpdateUser($builder)();
     }
 }

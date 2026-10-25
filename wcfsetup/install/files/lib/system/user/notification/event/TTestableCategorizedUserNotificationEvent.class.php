@@ -31,7 +31,7 @@ trait TTestableCategorizedUserNotificationEvent
             throw new \InvalidArgumentException("Unknown comment object type '{$objectTypeName}'.");
         }
 
-        $category = (new CategoryAction([], 'create', [
+        $category = new CategoryAction([], 'create', [
             'data' => [
                 'additionalData' => \serialize($additionalData),
                 'description' => 'Category Description',
@@ -39,7 +39,7 @@ trait TTestableCategorizedUserNotificationEvent
                 'objectTypeID' => $objectType->objectTypeID,
                 'title' => 'Category Title',
             ],
-        ]))->executeAction()['returnValues'];
+        ])->executeAction()['returnValues'];
 
         // work-around to reset category cache during this request
         TestableUserNotificationEventHandler::getInstance()->resetCacheHandler((new CategoryCache()));

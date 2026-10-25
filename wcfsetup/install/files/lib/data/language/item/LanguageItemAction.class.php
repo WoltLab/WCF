@@ -56,7 +56,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction
         if (!empty($this->parameters['languageItemValue_i18n'])) {
             // multiple languages
             foreach ($this->parameters['languageItemValue_i18n'] as $languageID => $value) {
-                (new self([], 'create', [
+                new self([], 'create', [
                     'data' => \array_merge(
                         $this->parameters['data'],
                         [
@@ -64,18 +64,18 @@ class LanguageItemAction extends AbstractDatabaseObjectAction
                             'languageItemValue' => $value,
                         ]
                     ),
-                ]))->executeAction();
+                ])->executeAction();
             }
         } else {
             // single language
-            (new self([], 'create', [
+            new self([], 'create', [
                 'data' => \array_merge(
                     $this->parameters['data'],
                     [
                         'languageID' => LanguageFactory::getInstance()->getDefaultLanguageID(),
                     ]
                 ),
-            ]))->executeAction();
+            ])->executeAction();
         }
     }
 }

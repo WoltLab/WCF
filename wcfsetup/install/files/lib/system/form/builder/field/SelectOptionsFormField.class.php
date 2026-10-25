@@ -67,7 +67,7 @@ final class SelectOptionsFormField extends AbstractFormField implements
     public function validate()
     {
         try {
-            $mapper = (new MapperBuilder())->mapper();
+            $mapper = new MapperBuilder()->mapper();
             $selectOptions = $mapper->map(
                 <<<'EOT'
                     list<array{

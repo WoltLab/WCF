@@ -48,7 +48,7 @@ class UserGroupAssignmentCronjob extends AbstractCronjob
 
         foreach ($usersToGroup as $groupID => $users) {
             foreach ($users as $user) {
-                (new AddUserToGroups($user, [$groupID], ignoreUserGroupAssignments: true))();
+                new AddUserToGroups($user, [$groupID], ignoreUserGroupAssignments: true)();
             }
         }
     }

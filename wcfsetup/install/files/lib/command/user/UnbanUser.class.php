@@ -25,6 +25,6 @@ final class UnbanUser
             ->setBanned(false)
             ->setBanExpires(0);
 
-        return (new UpdateUser($builder))();
+        return new UpdateUser($builder)();
     }
 }

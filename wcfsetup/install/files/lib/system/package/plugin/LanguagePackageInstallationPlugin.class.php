@@ -710,11 +710,11 @@ XML;
 
         if (!isset($newElementData['languageCategoryID']) && isset($newElementData['languageCategory'])) {
             /** @var LanguageCategory $languageCategory */
-            $languageCategory = (new LanguageCategoryAction([], 'create', [
+            $languageCategory = new LanguageCategoryAction([], 'create', [
                 'data' => [
                     'languageCategory' => $newElementData['languageCategory'],
                 ],
-            ]))->executeAction()['returnValues'];
+            ])->executeAction()['returnValues'];
 
             $this->newLanguageCategories[$languageCategory->languageCategory] = $languageCategory;
 

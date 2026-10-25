@@ -66,7 +66,7 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
 
         $this->saveI18nValue($label);
 
-        (new LabelEditor($label))->setShowOrder($label->groupID, $showOrder);
+        new LabelEditor($label)->setShowOrder($label->groupID, $showOrder);
 
         return $label;
     }

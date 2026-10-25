@@ -85,7 +85,7 @@ class SessionAction extends AbstractDatabaseObjectAction
         $pollData = [];
 
         // trigger session keep alive
-        $keepAliveData = (new self([], 'keepAlive'))->executeAction()['returnValues'];
+        $keepAliveData = new self([], 'keepAlive')->executeAction()['returnValues'];
 
         // get notifications
         if (!empty($keepAliveData['userNotificationCount'])) {

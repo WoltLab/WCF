@@ -58,7 +58,7 @@ final class Vote implements IController
             }
         }
 
-        (new VotePoll($poll, WCF::getUser(), $optionIDs))();
+        new VotePoll($poll, WCF::getUser(), $optionIDs)();
 
         return new JsonResponse([
             'template' => (string)new PollWidgetView(new Poll($poll->pollID)),

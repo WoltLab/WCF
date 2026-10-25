@@ -75,7 +75,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin
             $style = $styleList->getSingleObject();
 
             if ($style !== null) {
-                (new StyleEditor($style))->setAsDefault();
+                new StyleEditor($style)->setAsDefault();
             }
         }
     }

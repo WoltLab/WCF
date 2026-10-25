@@ -32,7 +32,7 @@ final class DeleteRecipient implements IController
 
         $this->assertRecipientCanBeDeleted($recipient);
 
-        (new DeleteContactRecipient($recipient))();
+        new DeleteContactRecipient($recipient)();
 
         return new JsonResponse([]);
     }

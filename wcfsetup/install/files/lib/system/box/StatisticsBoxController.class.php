@@ -26,7 +26,7 @@ class StatisticsBoxController extends AbstractBoxController
             $this->content = WCF::getTPL()->render(
                 'wcf',
                 'boxStatistics',
-                ['statistics' => (new UserStatsCache())->getCache()]
+                ['statistics' => new UserStatsCache()->getCache()]
             );
         }
     }

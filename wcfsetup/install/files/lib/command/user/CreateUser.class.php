@@ -27,9 +27,9 @@ final class CreateUser
         $user = new User($this->builder->create()->userID);
 
         if (\MODULE_USER_RANK !== 0) {
-            (new RefreshUserRanks([$user]))();
+            new RefreshUserRanks([$user])();
         }
-        (new RefreshUserOnlineMarkings([$user]))();
+        new RefreshUserOnlineMarkings([$user])();
 
         EventHandler::getInstance()->fire(new UserCreated($user, $this->builder));
 

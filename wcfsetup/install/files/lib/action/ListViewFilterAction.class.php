@@ -50,7 +50,7 @@ final class ListViewFilterAction implements RequestHandlerInterface
 
         if (
             !\is_subclass_of($parameters['listView'], AbstractListView::class)
-            || !(new \ReflectionClass($parameters['listView']))->isInstantiable()
+            || !new \ReflectionClass($parameters['listView'])->isInstantiable()
         ) {
             throw new UserInputException('listView', 'invalid');
         }

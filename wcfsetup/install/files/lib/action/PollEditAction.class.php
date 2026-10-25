@@ -89,9 +89,9 @@ final class PollEditAction implements RequestHandlerInterface
             $builder->setMultilingual($this->hasL10nValues($form));
 
             if ($this->poll === null) {
-                $poll = (new CreatePoll($builder))();
+                $poll = new CreatePoll($builder)();
             } else {
-                $poll = (new UpdatePoll($builder))();
+                $poll = new UpdatePoll($builder)();
             }
 
             // The acl values have been read by the acl form field.

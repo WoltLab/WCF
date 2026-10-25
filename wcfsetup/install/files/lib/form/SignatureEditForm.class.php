@@ -135,7 +135,7 @@ class SignatureEditForm extends MessageForm
         foreach ($this->additionalFields as $name => $value) {
             $builder->setCustomProperty($name, $value);
         }
-        $user = (new UpdateUser($builder))();
+        $user = new UpdateUser($builder)();
         SignatureCache::getInstance()->getSignature($user);
         $this->saved();
 

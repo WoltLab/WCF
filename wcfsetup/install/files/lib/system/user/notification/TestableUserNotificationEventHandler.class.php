@@ -78,14 +78,14 @@ class TestableUserNotificationEventHandler extends SingletonFactory
             while ($count < self::MAX_AUTHOR_COUNT) {
                 $username = \substr(StringUtil::getRandomID(), 0, 10);
 
-                (new CreateUser(
+                new CreateUser(
                     UserBuilder::forCreate()
                         ->setUsername($username)
                         ->setEmail($username . '@example.com')
                         ->setPassword(Hex::encode(\random_bytes(16)))
                         ->setLanguageID($languages[\array_rand($languages)]->languageID)
                         ->setRegistrationDate(\TIME_NOW - 24 * 3600 * \random_int(10, 1000))
-                ))();
+                )();
 
                 $count++;
             }

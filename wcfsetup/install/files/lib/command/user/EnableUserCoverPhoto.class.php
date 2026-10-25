@@ -25,6 +25,6 @@ final class EnableUserCoverPhoto
             ->setDisableCoverPhoto(false)
             ->setDisableCoverPhotoExpires(0);
 
-        return (new UpdateUser($builder))();
+        return new UpdateUser($builder)();
     }
 }

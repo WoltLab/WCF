@@ -163,7 +163,7 @@ final class UserOptionCategoryBuilder extends DatabaseObjectBuilder
 
     private function saveL10nValues(UserOptionCategory $category): void
     {
-        (new L10nStorage(UserOptionCategory::getL10nDefinition()))->setValues(
+        new L10nStorage(UserOptionCategory::getL10nDefinition())->setValues(
             $category->categoryID,
             [
                 'title' => $this->l10nTitle,

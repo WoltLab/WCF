@@ -100,8 +100,8 @@ class MenuItemAddForm extends AbstractFormBuilderForm
     {
         parent::createForm();
 
-        $this->menuItemNodeList = (new MenuItemNodeTree($this->menuID, null, false))->getNodeList();
-        $pageNodeList = (new PageNodeTree())->getNodeList();
+        $this->menuItemNodeList = new MenuItemNodeTree($this->menuID, null, false)->getNodeList();
+        $pageNodeList = new PageNodeTree()->getNodeList();
 
         $pageHandlers = [];
         $pageOptions = [];

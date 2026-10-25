@@ -29,6 +29,6 @@ final class BanUser
             ->setBanReason($this->reason)
             ->setBanExpires(\min($this->expires, 2147483647));
 
-        return (new UpdateUser($builder))();
+        return new UpdateUser($builder)();
     }
 }

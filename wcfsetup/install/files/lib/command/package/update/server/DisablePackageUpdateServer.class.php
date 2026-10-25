@@ -21,7 +21,7 @@ final class DisablePackageUpdateServer
 
     public function __invoke(): void
     {
-        (new PackageUpdateServerEditor($this->server))->update([
+        new PackageUpdateServerEditor($this->server)->update([
             'isDisabled' => 1,
         ]);
 

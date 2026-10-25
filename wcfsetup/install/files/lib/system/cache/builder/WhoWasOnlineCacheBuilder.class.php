@@ -18,12 +18,12 @@ class WhoWasOnlineCacheBuilder extends AbstractLegacyCacheBuilder
     #[\Override]
     protected function rebuild(array $parameters): array
     {
-        return (new WhoWasOnlineCache())->getCache();
+        return new WhoWasOnlineCache()->getCache();
     }
 
     #[\Override]
     public function reset(array $parameters = [])
     {
-        (new WhoWasOnlineCache())->rebuild();
+        new WhoWasOnlineCache()->rebuild();
     }
 }

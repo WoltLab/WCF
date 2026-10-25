@@ -155,12 +155,12 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
                 $name = $directory . ' (' . ($iteration++) . ')';
             }
 
-            (new self([], 'create', [
+            new self([], 'create', [
                 'data' => [
                     'name' => $name,
                     'path' => $projectPath,
                 ],
-            ]))->executeAction();
+            ])->executeAction();
 
             $projectCount++;
         });

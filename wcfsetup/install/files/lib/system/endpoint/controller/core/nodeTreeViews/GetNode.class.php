@@ -30,7 +30,7 @@ final class GetNode implements IController
 
         if (
             !\is_subclass_of($parameters->nodeTreeView, AbstractNodeTreeView::class)
-            || !(new \ReflectionClass($parameters->nodeTreeView))->isInstantiable()
+            || !new \ReflectionClass($parameters->nodeTreeView)->isInstantiable()
         ) {
             throw new UserInputException('nodeTreeView', 'invalid');
         }

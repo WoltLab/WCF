@@ -98,7 +98,7 @@ class MediaAction extends AbstractDatabaseObjectAction
                 }
             }
 
-            (new UpdateMedia($builder))();
+            new UpdateMedia($builder)();
         }
     }
 
@@ -147,7 +147,7 @@ class MediaAction extends AbstractDatabaseObjectAction
             static fn(MediaEditor $mediaEditor) => $mediaEditor->getDecoratedObject(),
             $this->getObjects()
         );
-        (new DeleteMedia($media))();
+        new DeleteMedia($media)();
 
         return \count($media);
     }

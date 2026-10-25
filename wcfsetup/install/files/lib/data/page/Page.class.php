@@ -292,7 +292,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
         WCF::getDB()->commitTransaction();
 
         // reset caches to reflect new landing page
-        (new ApplicationCache())->rebuild();
+        new ApplicationCache()->rebuild();
         RoutingCacheBuilder::getInstance()->reset();
     }
 

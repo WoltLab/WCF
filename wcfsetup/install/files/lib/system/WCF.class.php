@@ -677,7 +677,7 @@ class WCF
 
                 if (\class_exists($className)) {
                     // the class can now be found, update the `packageDir` value
-                    (new PackageEditor($package))->update(['packageDir' => $relativePath]);
+                    new PackageEditor($package)->update(['packageDir' => $relativePath]);
                 }
             }
         }
@@ -775,7 +775,7 @@ class WCF
             return;
         }
 
-        self::$coreObjectCache = (new CoreObjectCache())->getCache();
+        self::$coreObjectCache = new CoreObjectCache()->getCache();
     }
 
     /**

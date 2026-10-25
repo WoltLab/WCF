@@ -18,7 +18,7 @@ final class ApplicationCacheBuilder extends AbstractLegacyCacheBuilder
     #[\Override]
     protected function rebuild(array $parameters): array
     {
-        $cache = (new ApplicationCache())->getCache();
+        $cache = new ApplicationCache()->getCache();
 
         return [
             'application' => $cache->applications,
@@ -31,6 +31,6 @@ final class ApplicationCacheBuilder extends AbstractLegacyCacheBuilder
     #[\Override]
     public function reset(array $parameters = [])
     {
-        (new ApplicationCache())->rebuild();
+        new ApplicationCache()->rebuild();
     }
 }

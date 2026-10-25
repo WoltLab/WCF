@@ -241,7 +241,7 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         }
 
         foreach ($this->getObjects() as $userEditor) {
-            (new BanUser($userEditor->getDecoratedObject(), $this->parameters['banReason'], $banExpires))();
+            new BanUser($userEditor->getDecoratedObject(), $this->parameters['banReason'], $banExpires)();
         }
 
         $firstUser = new User(\reset($this->objectIDs));
@@ -263,7 +263,7 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         }
 
         foreach ($this->getObjects() as $userEditor) {
-            (new UnbanUser($userEditor->getDecoratedObject()))();
+            new UnbanUser($userEditor->getDecoratedObject())();
         }
     }
 
@@ -306,10 +306,10 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
 
             // update user rank
             if (\MODULE_USER_RANK !== 0) {
-                (new RefreshUserRanks([$user]))();
+                new RefreshUserRanks([$user])();
             }
             // update user online marking
-            (new RefreshUserOnlineMarkings([$user]))();
+            new RefreshUserOnlineMarkings([$user])();
         }
 
         return $user;
@@ -450,10 +450,10 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         }
 
         foreach ($this->getObjects() as $userEditor) {
-            (new RemoveUserFromGroups(
+            new RemoveUserFromGroups(
                 $userEditor->getDecoratedObject(),
                 \array_values(\array_map(static fn($groupID) => (int)$groupID, $this->parameters['groups']))
-            ))();
+            )();
         }
     }
 
@@ -482,16 +482,16 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
 
         foreach ($this->getObjects() as $userEditor) {
             if ($deleteOldGroups) {
-                (new UpdateUser(
+                new UpdateUser(
                     UserBuilder::forUpdate($userEditor->getDecoratedObject())->setGroupIDs($groupIDs),
                     $ignoreUserGroupAssignments
-                ))();
+                )();
             } else {
-                (new AddUserToGroups(
+                new AddUserToGroups(
                     $userEditor->getDecoratedObject(),
                     $groupIDs,
                     $ignoreUserGroupAssignments
-                ))();
+                )();
             }
         }
     }
@@ -708,7 +708,7 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
 
         $sendNotification = !(bool)($this->parameters['skipNotification'] ?? false);
         foreach ($this->getObjects() as $userEditor) {
-            (new ConfirmUserEmail($userEditor->getDecoratedObject(), $sendNotification))();
+            new ConfirmUserEmail($userEditor->getDecoratedObject(), $sendNotification)();
         }
     }
 
@@ -727,7 +727,7 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         }
 
         foreach ($this->getObjects() as $userEditor) {
-            (new UnconfirmUserEmail($userEditor->getDecoratedObject()))();
+            new UnconfirmUserEmail($userEditor->getDecoratedObject())();
         }
     }
 
@@ -746,7 +746,7 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
 
         $sendNotification = !(bool)($this->parameters['skipNotification'] ?? false);
         foreach ($this->getObjects() as $userEditor) {
-            (new EnableUser($userEditor->getDecoratedObject(), $sendNotification))();
+            new EnableUser($userEditor->getDecoratedObject(), $sendNotification)();
         }
     }
 
@@ -764,7 +764,7 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
         }
 
         foreach ($this->getObjects() as $userEditor) {
-            (new DisableUser($userEditor->getDecoratedObject()))();
+            new DisableUser($userEditor->getDecoratedObject())();
         }
     }
 
@@ -1068,9 +1068,9 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      */
     public function saveUserConsent()
     {
-        (new UpdateUser(
+        new UpdateUser(
             UserBuilder::forUpdate(WCF::getUser())->setUserOption(User::getUserOptionID('enableEmbeddedMedia'), '1')
-        ))();
+        )();
     }
 
     /**
@@ -1114,7 +1114,7 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
     public function resendActivationMail()
     {
         foreach ($this->getObjects() as $userEditor) {
-            (new ResendActivationMail($userEditor->getDecoratedObject()))();
+            new ResendActivationMail($userEditor->getDecoratedObject())();
         }
     }
 
@@ -1143,9 +1143,9 @@ class UserAction extends AbstractDatabaseObjectAction implements ISearchAction
      */
     public function devtoolsSetLanguage()
     {
-        (new UpdateUser(
+        new UpdateUser(
             UserBuilder::forUpdate(WCF::getUser())->setLanguageID((int)$this->parameters['languageID'])
-        ))();
+        )();
     }
 
     /**

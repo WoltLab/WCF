@@ -21,7 +21,7 @@ final class EnableStyle
 
     public function __invoke(): void
     {
-        (new StyleEditor($this->style))->update([
+        new StyleEditor($this->style)->update([
             'isDisabled' => 0,
         ]);
 

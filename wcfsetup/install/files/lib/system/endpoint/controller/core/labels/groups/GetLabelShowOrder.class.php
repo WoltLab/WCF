@@ -41,6 +41,6 @@ final class GetLabelShowOrder implements IController
             LabelHandler::getInstance()->getLabelGroup($labelGroup->groupID)->getLabels()
         );
 
-        return (new ShowOrderHandler($items))->toJsonResponse();
+        return new ShowOrderHandler($items)->toJsonResponse();
     }
 }

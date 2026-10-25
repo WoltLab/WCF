@@ -417,11 +417,11 @@ class SearchForm extends AbstractCaptchaForm
         }
         // save keyword
         if (!empty($this->query)) {
-            (new SearchKeywordAction([], 'registerSearch', [
+            new SearchKeywordAction([], 'registerSearch', [
                 'data' => [
                     'keyword' => $this->query,
                 ],
-            ]))->executeAction();
+            ])->executeAction();
         }
         $this->saved();
 

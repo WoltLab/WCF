@@ -67,7 +67,7 @@ final class UserDisableAvatarAction implements RequestHandlerInterface
             }
 
             if ($user->disableAvatar === 0) {
-                (new DisableUserAvatar($user, $data['disableAvatarReason'], $disableAvatarExpires))();
+                new DisableUserAvatar($user, $data['disableAvatarReason'], $disableAvatarExpires)();
             }
 
             return new JsonResponse([]);

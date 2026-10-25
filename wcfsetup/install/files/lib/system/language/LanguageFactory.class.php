@@ -177,7 +177,7 @@ class LanguageFactory extends SingletonFactory
      */
     protected function loadCache(): void
     {
-        $this->cache = (new LanguageCache())->getCache();
+        $this->cache = new LanguageCache()->getCache();
     }
 
     /**
@@ -187,7 +187,7 @@ class LanguageFactory extends SingletonFactory
      */
     public function clearCache(): void
     {
-        (new LanguageCache())->rebuild();
+        new LanguageCache()->rebuild();
     }
 
     /**

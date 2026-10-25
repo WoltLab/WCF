@@ -110,7 +110,7 @@ final class ApiAction implements RequestHandlerInterface
 
         if (
             CheckForForceLogin::appliesToActiveUser()
-            && (new \ReflectionClass($controller))->getAttributes(AvailableDuringForceLogin::class) === []
+            && new \ReflectionClass($controller)->getAttributes(AvailableDuringForceLogin::class) === []
         ) {
             return $this->toErrorResponse(RequestFailure::PermissionDenied, 'force_login');
         }

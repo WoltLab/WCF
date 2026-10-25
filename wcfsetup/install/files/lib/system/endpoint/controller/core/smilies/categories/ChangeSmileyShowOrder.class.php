@@ -48,7 +48,7 @@ final class ChangeSmileyShowOrder implements IController
             $smileyList->getObjects()
         );
 
-        $sortedItems = (new ShowOrderHandler($items))->getSortedItemsFromRequest($request);
+        $sortedItems = new ShowOrderHandler($items)->getSortedItemsFromRequest($request);
         $this->saveShowOrder($sortedItems);
 
         return new JsonResponse([]);

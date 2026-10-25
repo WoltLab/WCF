@@ -429,7 +429,7 @@ class UserOption extends CollectionDatabaseObject implements ITitledObject
         $htmlInputProcessor->processEmbeddedContent($value, $objectType, $user->userID);
         MessageEmbeddedObjectManager::getInstance()->registerTemporaryMessage($htmlInputProcessor);
 
-        return (new WysiwygFormatter($objectType, $user->userID))->format(
+        return new WysiwygFormatter($objectType, $user->userID)->format(
             $value,
             WCF::getLanguage()->languageID,
             []

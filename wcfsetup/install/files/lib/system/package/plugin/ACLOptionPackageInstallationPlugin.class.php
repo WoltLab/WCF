@@ -202,7 +202,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
             if ($categoryID === false) {
                 throw new \UnexpectedValueException("Cannot find edited acl option category in database.");
             } else {
-                (new ACLOptionCategoryEditor(new ACLOptionCategory($categoryID)))->update([
+                new ACLOptionCategoryEditor(new ACLOptionCategory($categoryID))->update([
                     'categoryName' => $category['categoryName'],
                     'objectTypeID' => $objectTypeID,
                 ]);

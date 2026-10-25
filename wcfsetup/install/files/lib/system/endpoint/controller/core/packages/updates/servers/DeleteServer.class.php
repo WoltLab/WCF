@@ -31,7 +31,7 @@ final class DeleteServer implements IController
 
         $this->assertServerCanBeDeleted($server);
 
-        (new PackageUpdateServerAction([$server], 'delete'))->executeAction();
+        new PackageUpdateServerAction([$server], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

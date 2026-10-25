@@ -290,7 +290,7 @@ final class MediaBuilder extends DatabaseObjectBuilder
         }
 
         // `L10nStorage::setValues()` replaces all rows of the media file.
-        (new L10nStorage($definition))->setValues($media->mediaID, $values);
+        new L10nStorage($definition)->setValues($media->mediaID, $values);
     }
 
     /**

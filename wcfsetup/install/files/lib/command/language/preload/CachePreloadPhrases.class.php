@@ -32,7 +32,7 @@ final class CachePreloadPhrases
             \sprintf(
                 "/* cache for '%s' (generated at %s) -- DO NOT EDIT */\n",
                 $this->language->getLocale(),
-                (new \DateTimeImmutable())->format('c'),
+                new \DateTimeImmutable()->format('c'),
             )
         );
 

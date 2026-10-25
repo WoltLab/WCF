@@ -232,7 +232,7 @@ final class PaidSubscriptionBuilder extends DatabaseObjectBuilder
         }
 
         // `L10nStorage::setValues()` replaces all rows of the subscription.
-        (new L10nStorage(PaidSubscription::getL10nDefinition()))->setValues(
+        new L10nStorage(PaidSubscription::getL10nDefinition())->setValues(
             $subscription->subscriptionID,
             [
                 'title' => $this->title ?? $this->getExistingObject()->getL10nValues('title'),

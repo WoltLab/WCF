@@ -101,7 +101,7 @@ final class PaidSubscriptionUserGridView extends AbstractGridView
     protected function createObjectList(): PaidSubscriptionUserList
     {
         $list = new PaidSubscriptionUserList();
-        $list->sqlSelects = (new L10nStorage(PaidSubscription::getL10nDefinition()))
+        $list->sqlSelects = new L10nStorage(PaidSubscription::getL10nDefinition())
             ->getSubSelect('title', 'paid_subscription') . ' AS title';
         $list->sqlJoins = "
             LEFT JOIN   wcf1_user user_table

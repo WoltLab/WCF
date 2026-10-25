@@ -116,7 +116,7 @@ final class TimeRangeObjectFilter extends AbstractRangeObjectFilter
     {
         [$from, $to] = $configuredValue;
 
-        $now = (new \DateTimeImmutable('@' . \TIME_NOW))
+        $now = new \DateTimeImmutable('@' . \TIME_NOW)
             ->setTimezone($object->getTimeZone())
             ->format('H:i');
 

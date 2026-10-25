@@ -44,9 +44,9 @@ final class ChangeStyle
 
     private function saveUserStyle(int $styleID, bool $isDefaultStyle): void
     {
-        (new UpdateUser(
+        new UpdateUser(
             UserBuilder::forUpdate(WCF::getUser())->setStyleID($isDefaultStyle ? 0 : $styleID)
-        ))();
+        )();
     }
 
     private function saveGuestStyle(int $styleID, bool $isDefaultStyle): void

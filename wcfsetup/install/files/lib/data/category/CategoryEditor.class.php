@@ -195,6 +195,6 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
     #[\Override]
     public static function resetCache()
     {
-        (new CategoryCache())->rebuild();
+        new CategoryCache()->rebuild();
     }
 }

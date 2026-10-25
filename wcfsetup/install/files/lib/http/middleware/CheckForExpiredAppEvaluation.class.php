@@ -42,7 +42,7 @@ final class CheckForExpiredAppEvaluation implements MiddlewareInterface
                 }
 
                 return new HtmlResponse(
-                    (new HtmlErrorRenderer())->renderHtmlMessage(
+                    new HtmlErrorRenderer()->renderHtmlMessage(
                         WCF::getLanguage()->getDynamicVariable('wcf.global.error.title'),
                         WCF::getLanguage()->getDynamicVariable(
                             'wcf.acp.package.evaluation.expired',

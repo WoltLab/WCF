@@ -593,7 +593,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
                 ->label('wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere')
                 ->filterable()
                 ->options(static function () {
-                    $pageNodeList = (new PageNodeTree())->getNodeList();
+                    $pageNodeList = new PageNodeTree()->getNodeList();
 
                     $nestedOptions = [];
                     /** @var PageNode $pageNode */

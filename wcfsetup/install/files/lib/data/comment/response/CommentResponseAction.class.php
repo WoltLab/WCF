@@ -235,9 +235,9 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
             $data['hasEmbeddedObjects'] = $this->response->hasEmbeddedObjects !== 0 ? 0 : 1;
         }
 
-        (new self([$this->response], 'update', [
+        new self([$this->response], 'update', [
             'data' => $data,
-        ]))->executeAction();
+        ])->executeAction();
 
         $response = new CommentResponse($this->response->getObjectID());
 
@@ -396,11 +396,11 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         foreach ($this->getObjects() as $response) {
             $objectType = ObjectTypeCache::getInstance()->getObjectType($response->getComment()->objectTypeID);
 
-            (new CommentAction([], 'triggerPublicationResponse', [
+            new CommentAction([], 'triggerPublicationResponse', [
                 'commentProcessor' => $objectType->getProcessor(),
                 'objectTypeID' => $objectType->objectTypeID,
                 'responses' => [$response->getDecoratedObject()],
-            ]))->executeAction();
+            ])->executeAction();
         }
 
         ModerationQueueActivationManager::getInstance()->removeModeratedContent(

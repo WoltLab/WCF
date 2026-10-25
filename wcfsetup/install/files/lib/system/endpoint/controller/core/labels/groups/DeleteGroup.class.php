@@ -30,7 +30,7 @@ final class DeleteGroup implements IController
 
         $this->assertGroupCanBeDeleted();
 
-        (new DeleteLabelGroup($labelGroup))();
+        new DeleteLabelGroup($labelGroup)();
 
         return new JsonResponse([]);
     }

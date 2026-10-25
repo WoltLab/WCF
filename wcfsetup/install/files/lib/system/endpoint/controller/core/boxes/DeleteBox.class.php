@@ -30,7 +30,7 @@ final class DeleteBox implements IController
 
         $this->assertBoxCanBeDeleted($box);
 
-        (new BoxAction([$box], 'delete'))->executeAction();
+        new BoxAction([$box], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

@@ -37,9 +37,9 @@ final class EnableUser
             $builder->setEmailConfirmed(null);
         }
 
-        $user = (new UpdateUser($builder))();
+        $user = new UpdateUser($builder)();
 
-        (new MarkActivationNotificationsAsConfirmed($user))();
+        new MarkActivationNotificationsAsConfirmed($user)();
 
         if ($this->sendNotification) {
             $this->sendNotification($user);

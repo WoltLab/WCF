@@ -38,7 +38,7 @@ final class GetShowOrder implements IController
             $adList->getObjects()
         );
 
-        return (new ShowOrderHandler($items))->toJsonResponse();
+        return new ShowOrderHandler($items)->toJsonResponse();
     }
 
     private function assertAdCanBeSorted(): void

@@ -30,7 +30,7 @@ class UserBirthdayCache extends SingletonFactory
     protected function loadMonth(int $month): void
     {
         if (!\array_key_exists($month, $this->birthdays)) {
-            $this->birthdays[$month] = (new \wcf\system\cache\tolerant\UserBirthdayCache($month))->getCache();
+            $this->birthdays[$month] = new \wcf\system\cache\tolerant\UserBirthdayCache($month)->getCache();
 
             $data = [
                 'birthdays' => $this->birthdays,

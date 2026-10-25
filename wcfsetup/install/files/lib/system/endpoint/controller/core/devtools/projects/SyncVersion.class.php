@@ -52,7 +52,7 @@ final class SyncVersion implements IController
             return;
         }
 
-        (new PackageEditor($package))->update([
+        new PackageEditor($package)->update([
             'packageVersion' => $projectVersion,
         ]);
 

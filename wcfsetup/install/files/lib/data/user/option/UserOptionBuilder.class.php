@@ -308,7 +308,7 @@ final class UserOptionBuilder extends DatabaseObjectBuilder
             );
         }
 
-        (new L10nStorage(UserOption::getL10nDefinition()))->setValues(
+        new L10nStorage(UserOption::getL10nDefinition())->setValues(
             $object->optionID,
             [
                 'title' => $this->l10nTitle,

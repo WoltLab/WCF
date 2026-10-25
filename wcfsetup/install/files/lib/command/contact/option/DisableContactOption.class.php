@@ -23,7 +23,7 @@ final class DisableContactOption
 
     public function __invoke(): void
     {
-        (new ContactOptionEditor($this->contactOption))->update([
+        new ContactOptionEditor($this->contactOption)->update([
             'isDisabled' => 1,
         ]);
 

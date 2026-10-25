@@ -163,7 +163,7 @@ final class ArticleGridView extends AbstractGridView
                 ->sortable()
                 ->renderer(new CategoryColumnRenderer())
                 ->filter(new CategoryFilter(
-                    (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
+                    new CategoryNodeTree('com.woltlab.wcf.article.category')->getIterator(),
                     'categoryID',
                     'wcf.global.category'
                 )),

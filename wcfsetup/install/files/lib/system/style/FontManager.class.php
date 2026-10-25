@@ -51,7 +51,7 @@ final class FontManager extends SingletonFactory
             RequestOptions::TIMEOUT => 10,
         ]);
 
-        $this->mapper = (new MapperBuilder())
+        $this->mapper = new MapperBuilder()
             ->allowSuperfluousKeys()
             ->mapper();
     }

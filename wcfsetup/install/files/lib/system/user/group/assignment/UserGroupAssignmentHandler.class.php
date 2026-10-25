@@ -77,7 +77,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
             }
 
             if ($newGroupIDs !== []) {
-                (new AddUserToGroups($user, $newGroupIDs, ignoreUserGroupAssignments: true))();
+                new AddUserToGroups($user, $newGroupIDs, ignoreUserGroupAssignments: true)();
             }
 
             $removedGroupIDs = [];
@@ -91,7 +91,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
             }
 
             if ($removedGroupIDs !== []) {
-                (new RemoveUserFromGroups($user, $removedGroupIDs, ignoreUserGroupAssignments: true))();
+                new RemoveUserFromGroups($user, $removedGroupIDs, ignoreUserGroupAssignments: true)();
             }
         }
     }
@@ -114,7 +114,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
             $userList->readObjects();
 
             foreach ($userList as $user) {
-                (new RemoveUserFromGroups($user, [$assignment->groupID], ignoreUserGroupAssignments: true))();
+                new RemoveUserFromGroups($user, [$assignment->groupID], ignoreUserGroupAssignments: true)();
             }
 
             $i += \count($userIDs);
@@ -151,7 +151,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
             return false;
         }
 
-        $notInGroupIdentifier = (new UserNotInGroupObjectFilter())->getIdentifier();
+        $notInGroupIdentifier = new UserNotInGroupObjectFilter()->getIdentifier();
         foreach ($values as $value) {
             if (
                 \is_array($value)

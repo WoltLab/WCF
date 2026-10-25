@@ -41,7 +41,7 @@ final class LicenseApi
     private static function parseLicenseData(string $json): LicenseData
     {
         try {
-            return (new MapperBuilder())
+            return new MapperBuilder()
                 ->allowSuperfluousKeys()
                 ->mapper()
                 ->map(

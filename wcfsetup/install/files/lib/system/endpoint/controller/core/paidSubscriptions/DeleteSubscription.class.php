@@ -30,7 +30,7 @@ final class DeleteSubscription implements IController
 
         $this->assertSubscriptionCanBeDeleted();
 
-        (new DeletePaidSubscription($subscription))();
+        new DeletePaidSubscription($subscription)();
 
         return new JsonResponse([]);
     }

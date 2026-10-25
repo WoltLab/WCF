@@ -72,7 +72,7 @@ class UserGroupImporter extends AbstractImporter
 
                     $this->importI18nValues($items, 'wcf.acp.group', 'com.woltlab.wcf');
 
-                    (new UserGroupEditor($group))->update($updateData);
+                    new UserGroupEditor($group)->update($updateData);
                 }
             }
         }

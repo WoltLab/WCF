@@ -177,11 +177,11 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
      */
     public function switchContext()
     {
-        (new UpdateUser(
+        new UpdateUser(
             UserBuilder::forUpdate(WCF::getUser())->setUserOption(
                 User::getUserOptionID('recentActivitiesFilterByFollowing'),
                 WCF::getUser()->recentActivitiesFilterByFollowing !== 0 ? '0' : '1'
             )
-        ))();
+        )();
     }
 }

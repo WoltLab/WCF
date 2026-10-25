@@ -299,11 +299,11 @@ final class SearchHandler
     private function saveKeywordSuggestion(): void
     {
         if (!empty($this->parameters['q'])) {
-            (new SearchKeywordAction([], 'registerSearch', [
+            new SearchKeywordAction([], 'registerSearch', [
                 'data' => [
                     'keyword' => $this->parameters['q'],
                 ],
-            ]))->executeAction();
+            ])->executeAction();
         }
     }
 

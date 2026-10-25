@@ -30,7 +30,7 @@ final class GetGridView implements IController
 
         if (
             !\is_subclass_of($parameters->gridView, AbstractGridView::class)
-            || !(new \ReflectionClass($parameters->gridView))->isInstantiable()
+            || !new \ReflectionClass($parameters->gridView)->isInstantiable()
         ) {
             throw new UserInputException('gridView', 'invalid');
         }

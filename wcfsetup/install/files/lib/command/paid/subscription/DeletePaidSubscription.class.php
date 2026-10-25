@@ -27,7 +27,7 @@ final class DeletePaidSubscription
     {
         // The given object may predate the deletion of another subscription,
         // which moved this one to a lower position.
-        $showOrder = (new PaidSubscription($this->subscription->subscriptionID))->showOrder;
+        $showOrder = new PaidSubscription($this->subscription->subscriptionID)->showOrder;
 
         PaidSubscriptionBuilder::delete($this->subscription);
 

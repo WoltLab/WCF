@@ -250,7 +250,7 @@ class BoxAddForm extends AbstractForm
             return;
         }
 
-        $this->pageNodeList = (new PageNodeTree())->getNodeList();
+        $this->pageNodeList = new PageNodeTree()->getNodeList();
 
         // fetch page handlers
         foreach ($this->pageNodeList as $pageNode) {

@@ -35,7 +35,7 @@ final class CheckForOfflineMode implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        return (new OfflineHandler())->handle($request);
+        return new OfflineHandler()->handle($request);
     }
 
     private function offlineModeEnabled(): bool

@@ -517,7 +517,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         }
 
         if ($updateData !== []) {
-            (new CategoryEditor($category))->update($updateData);
+            new CategoryEditor($category)->update($updateData);
         }
 
         CategoryEditor::resetCache();

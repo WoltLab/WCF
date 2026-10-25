@@ -108,7 +108,7 @@ class PollManager extends SingletonFactory
         $pollList->setObjectIDs($pollIDs);
         $pollList->readObjects();
 
-        (new DeletePolls($pollList->getObjects()))();
+        new DeletePolls($pollList->getObjects())();
     }
 
     /**
@@ -301,11 +301,11 @@ class PollManager extends SingletonFactory
                 ->setOptions($this->getOptionsForBuilder());
             $this->applyPollData($builder);
 
-            $this->poll = (new CreatePoll($builder))();
+            $this->poll = new CreatePoll($builder)();
         } else {
             // remove poll
             if (empty($this->pollData['question'])) {
-                (new DeletePolls([$this->poll]))();
+                new DeletePolls([$this->poll])();
                 $this->poll = null;
 
                 return 0;
@@ -315,7 +315,7 @@ class PollManager extends SingletonFactory
                     ->setOptions($this->getOptionsForBuilder());
                 $this->applyPollData($builder);
 
-                $this->poll = (new UpdatePoll($builder))();
+                $this->poll = new UpdatePoll($builder)();
             }
         }
 

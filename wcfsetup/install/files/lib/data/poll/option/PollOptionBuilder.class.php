@@ -91,7 +91,7 @@ final class PollOptionBuilder extends DatabaseObjectBuilder
     {
         $definition = PollOption::getL10nDefinition();
 
-        (new L10nStorage($definition))->setValues($option->optionID, [
+        new L10nStorage($definition)->setValues($option->optionID, [
             'optionValue' => \array_map(
                 static fn(string $value) => $definition->truncateValue('optionValue', $value),
                 $this->optionValue

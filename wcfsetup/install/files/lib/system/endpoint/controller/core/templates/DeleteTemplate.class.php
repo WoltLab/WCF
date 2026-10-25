@@ -31,7 +31,7 @@ final class DeleteTemplate implements IController
 
         $this->assertTemplateCanBeDeleted($template);
 
-        (new TemplateAction([$template], 'delete'))->executeAction();
+        new TemplateAction([$template], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

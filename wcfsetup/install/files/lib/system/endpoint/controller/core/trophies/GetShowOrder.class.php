@@ -38,7 +38,7 @@ final class GetShowOrder implements IController
             $trophyList->getObjects()
         );
 
-        return (new ShowOrderHandler($items))->toJsonResponse();
+        return new ShowOrderHandler($items)->toJsonResponse();
     }
 
     private function assertTrophyCanBeSorted(): void

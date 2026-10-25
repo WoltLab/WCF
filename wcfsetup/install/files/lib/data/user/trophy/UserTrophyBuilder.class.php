@@ -103,7 +103,7 @@ final class UserTrophyBuilder extends DatabaseObjectBuilder
         }
 
         // `L10nStorage::setValues()` replaces all rows of the user trophy.
-        (new L10nStorage(UserTrophy::getL10nDefinition()))->setValues(
+        new L10nStorage(UserTrophy::getL10nDefinition())->setValues(
             $userTrophy->userTrophyID,
             ['description' => $this->description]
         );

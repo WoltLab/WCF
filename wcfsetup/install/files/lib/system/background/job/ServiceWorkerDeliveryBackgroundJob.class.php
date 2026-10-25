@@ -124,7 +124,7 @@ final class ServiceWorkerDeliveryBackgroundJob extends AbstractUniqueBackgroundJ
             if ($report->isSubscriptionExpired()) {
                 // Only a 404/410 tells us that the subscription is gone for good, any other
                 // failure can be transient and must not drop a valid subscription.
-                (new ServiceWorkerEditor($serviceWorker))->delete();
+                new ServiceWorkerEditor($serviceWorker)->delete();
             }
         } finally {
             SessionHandler::getInstance()->changeUser($user, true);

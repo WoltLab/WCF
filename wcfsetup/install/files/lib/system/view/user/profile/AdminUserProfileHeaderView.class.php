@@ -90,13 +90,13 @@ final class AdminUserProfileHeaderView implements \Stringable
     {
         if ($this->user->disableAvatar !== 0) {
             if ($this->user->avatarPathname !== null) {
-                return (new AvatarDecorator(new StaticAvatar($this->user->avatarPathname)))->getImageTag(128);
+                return new AvatarDecorator(new StaticAvatar($this->user->avatarPathname))->getImageTag(128);
             }
 
             if ($this->user->avatarFileID !== null) {
                 $file = FileRuntimeCache::getInstance()->getObject($this->user->avatarFileID);
                 if ($file !== null) {
-                    return (new AvatarDecorator($file))->getImageTag(128);
+                    return new AvatarDecorator($file)->getImageTag(128);
                 }
             }
         }

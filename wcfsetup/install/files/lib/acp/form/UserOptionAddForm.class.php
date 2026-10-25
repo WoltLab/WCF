@@ -68,7 +68,7 @@ class UserOptionAddForm extends AbstractFormOptionBuilderForm
         if ($this->availableCategories === []) {
             $this->setPsr7Response(
                 new HtmlResponse(
-                    (new HtmlErrorRenderer())->renderHtmlMessage(
+                    new HtmlErrorRenderer()->renderHtmlMessage(
                         WCF::getLanguage()->getDynamicVariable('wcf.global.error.title'),
                         WCF::getLanguage()->getDynamicVariable('wcf.acp.user.option.error.noCategories'),
                         null,

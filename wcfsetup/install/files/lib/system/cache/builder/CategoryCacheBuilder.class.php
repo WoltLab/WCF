@@ -18,7 +18,7 @@ class CategoryCacheBuilder extends AbstractLegacyCacheBuilder
     #[\Override]
     protected function rebuild(array $parameters): array
     {
-        $cache = (new CategoryCache())->getCache();
+        $cache = new CategoryCache()->getCache();
 
         return [
             'categories' => $cache->categories,
@@ -29,6 +29,6 @@ class CategoryCacheBuilder extends AbstractLegacyCacheBuilder
     #[\Override]
     public function reset(array $parameters = [])
     {
-        (new CategoryCache())->rebuild();
+        new CategoryCache()->rebuild();
     }
 }

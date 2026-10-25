@@ -195,7 +195,7 @@ final class TemplateGridView extends AbstractGridView
                     ]
                 ];
 
-                foreach ((new TemplateGroupNodeTree())->getIterator() as $node) {
+                foreach (new TemplateGroupNodeTree()->getIterator() as $node) {
                     \assert($node instanceof TemplateGroupNode);
                     $options[] = [
                         'depth' => $node->getDepth(),

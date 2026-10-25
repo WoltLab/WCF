@@ -81,7 +81,7 @@ final class CopyStyle
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$style->styleDescription]);
 
-        (new StyleEditor($style))->update([
+        new StyleEditor($style)->update([
             'styleDescription' => $styleDescription,
         ]);
 
@@ -123,7 +123,7 @@ final class CopyStyle
         foreach (['image', 'image2x'] as $imageType) {
             $image = $source->{$imageType};
             if ($image !== '') {
-                (new StyleEditor($destination))->update([
+                new StyleEditor($destination)->update([
                     $imageType => \preg_replace('/^style-\d+/', 'style-' . $destination->styleID, $image),
                 ]);
             }

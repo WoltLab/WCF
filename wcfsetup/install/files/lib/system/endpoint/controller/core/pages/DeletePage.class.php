@@ -31,7 +31,7 @@ final class DeletePage implements IController
 
         $this->assertPageCanBeDeleted($page);
 
-        (new PageAction([$page], 'delete'))->executeAction();
+        new PageAction([$page], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

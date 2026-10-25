@@ -30,7 +30,7 @@ final class DeleteProvider implements IController
 
         $this->assertMediaProviderCanBeDeleted();
 
-        (new BBCodeMediaProviderAction([$provider], 'delete'))->executeAction();
+        new BBCodeMediaProviderAction([$provider], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

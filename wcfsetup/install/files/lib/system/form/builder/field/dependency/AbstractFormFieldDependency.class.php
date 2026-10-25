@@ -160,6 +160,6 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
      */
     public static function create(string $id)
     {
-        return (new static())->id($id);
+        return new static()->id($id);
     }
 }

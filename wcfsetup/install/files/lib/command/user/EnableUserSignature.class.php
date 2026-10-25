@@ -25,6 +25,6 @@ final class EnableUserSignature
             ->setDisableSignature(false)
             ->setDisableSignatureExpires(0);
 
-        return (new UpdateUser($builder))();
+        return new UpdateUser($builder)();
     }
 }

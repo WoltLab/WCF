@@ -82,19 +82,19 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
     #[\Override]
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {
-        $paidSubscription = (new CreatePaidSubscription(
+        $paidSubscription = new CreatePaidSubscription(
             PaidSubscriptionBuilder::forCreate()
                 ->setTitle([L10nStorage::MONOLINGUAL => 'Test Subscription'])
                 ->setGroupIDs([])
-        ))();
+        )();
 
-        $paidSubscriptionUser = (new CreatePaidSubscriptionUser(
+        $paidSubscriptionUser = new CreatePaidSubscriptionUser(
             PaidSubscriptionUserBuilder::forCreate()
                 ->setSubscription($paidSubscription)
                 ->setUserID($recipient->userID)
                 ->setStartDate(\TIME_NOW - 24 * 24 * 60 * 60)
                 ->setEndDate(\TIME_NOW + 24 * 60 * 60)
-        ))();
+        )();
 
         $paidSubscriptionUser->setSubscription($paidSubscription);
 

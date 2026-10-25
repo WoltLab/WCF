@@ -131,7 +131,7 @@ final class EmailNewActivationCodeForm extends AbstractFormBuilderForm
         foreach ($this->additionalFields as $name => $value) {
             $builder->setCustomProperty($name, $value);
         }
-        (new UpdateUser($builder))();
+        new UpdateUser($builder)();
 
         // Use user list to allow overriding of the fields without duplicating logic.
         $userList = new UserList();

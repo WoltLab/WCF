@@ -46,8 +46,8 @@ foreach ([
 }
 
 // update administrator user rank and user online marking
-(new RefreshUserRanks([WCF::getUser()]))();
-(new RefreshUserOnlineMarkings([WCF::getUser()]))();
+new RefreshUserRanks([WCF::getUser()])();
+new RefreshUserOnlineMarkings([WCF::getUser()])();
 
 // install default reactions
 foreach ([

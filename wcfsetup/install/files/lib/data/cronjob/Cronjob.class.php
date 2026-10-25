@@ -83,7 +83,7 @@ class Cronjob extends CollectionDatabaseObject
             }
         }
 
-        $dateTime = (new \DateTimeImmutable("@{$timeBase}"))
+        $dateTime = new \DateTimeImmutable("@{$timeBase}")
             // The TZ parameter in the constructor is ignored for timestamps.
             ->setTimezone(new \DateTimeZone(\TIMEZONE));
 

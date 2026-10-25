@@ -164,7 +164,7 @@ class PackageInstallationDispatcher
 
         // perform post-install/update actions
         if ($node === '') {
-            (new AuditLogger())->log(
+            new AuditLogger()->log(
                 <<<EOT
                 Finalizing process
                 ==================
@@ -210,7 +210,7 @@ class PackageInstallationDispatcher
 
             new \wcf\command\package\RebuildBootstrapper()();
 
-            (new \wcf\command\l10n\SyncL10nLanguageItems())();
+            new \wcf\command\l10n\SyncL10nLanguageItems()();
 
             EventHandler::getInstance()->fire(new PackageListChanged());
 
@@ -236,7 +236,7 @@ class PackageInstallationDispatcher
 
             $this->logInstallationStep([], 'finished cleanup');
 
-            (new AuditLogger())->log(
+            new AuditLogger()->log(
                 <<<EOT
                 Finalized process
                 =================
@@ -329,13 +329,13 @@ class PackageInstallationDispatcher
 
         foreach (DevtoolsSetup::getInstance()->getUsers() as $newUser) {
             try {
-                (new CreateUser(
+                new CreateUser(
                     UserBuilder::forCreate()
                         ->setUsername($newUser['username'])
                         ->setEmail($newUser['email'])
                         ->setPassword($newUser['password'])
                         ->setRegistrationDate(\TIME_NOW)
-                ))();
+                )();
             } catch (\LogicException $e) {
                 // ignore errors due to event listeners missing at this
                 // point during installation
@@ -344,9 +344,9 @@ class PackageInstallationDispatcher
 
         $importPath = DevtoolsSetup::getInstance()->getDevtoolsImportPath();
         if ($importPath !== '') {
-            (new DevtoolsProjectAction([], 'quickSetup', [
+            new DevtoolsProjectAction([], 'quickSetup', [
                 'path' => $importPath,
-            ]))->executeAction();
+            ])->executeAction();
         }
 
         $packageServerLogin = DevtoolsSetup::getInstance()->getPackageServerLogin();
@@ -406,7 +406,7 @@ class PackageInstallationDispatcher
      */
     protected function handleStartMarker(array $nodeData)
     {
-        (new AuditLogger())->log(
+        new AuditLogger()->log(
             <<<EOT
             Starting queue
             ==============
@@ -443,7 +443,7 @@ class PackageInstallationDispatcher
      */
     protected function handleEndMarker()
     {
-        (new AuditLogger())->log(
+        new AuditLogger()->log(
             <<<EOT
             Ending queue
             ============

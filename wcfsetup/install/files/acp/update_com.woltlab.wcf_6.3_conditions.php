@@ -334,14 +334,14 @@ $converters = [
 ];
 
 // Notices do not provide a filter for banned users, who cannot access the site anyway.
-(new LegacyConditionMigration('com.woltlab.wcf.condition.notice', 'wcf1_notice', 'noticeID'))
+new LegacyConditionMigration('com.woltlab.wcf.condition.notice', 'wcf1_notice', 'noticeID')
     ->migrate([
         ...$converters,
         UserStateCondition::class => $userState(includeBanned: false),
     ]);
-(new LegacyConditionMigration('com.woltlab.wcf.condition.ad', 'wcf1_ad', 'adID'))
+new LegacyConditionMigration('com.woltlab.wcf.condition.ad', 'wcf1_ad', 'adID')
     ->migrate($converters);
-(new LegacyConditionMigration('com.woltlab.wcf.condition.userGroupAssignment', 'wcf1_user_group_assignment', 'assignmentID'))
+new LegacyConditionMigration('com.woltlab.wcf.condition.userGroupAssignment', 'wcf1_user_group_assignment', 'assignmentID')
     ->migrate($converters);
 
 // The legacy form stored the conditions of trophies regardless of whether they
@@ -366,5 +366,5 @@ $statement->execute([
     'com.woltlab.wcf.condition.trophy',
 ]);
 
-(new LegacyConditionMigration('com.woltlab.wcf.condition.trophy', 'wcf1_trophy', 'trophyID'))
+new LegacyConditionMigration('com.woltlab.wcf.condition.trophy', 'wcf1_trophy', 'trophyID')
     ->migrate($converters);

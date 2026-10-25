@@ -353,7 +353,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 ->required()
                 ->filterable()
                 ->options(function () {
-                    $pageNodeList = (new PageNodeTree())->getNodeList();
+                    $pageNodeList = new PageNodeTree()->getNodeList();
 
                     $packageIDs = \array_merge(
                         [$this->installation->getPackage()->packageID],
@@ -495,7 +495,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                     unset($data['menu']);
                     unset($data['parent']);
                 } else {
-                    $data['menu'] = (new Menu($menuItemList->current()->menuID))->identifier;
+                    $data['menu'] = new Menu($menuItemList->current()->menuID)->identifier;
                 }
             }
         } elseif ($saveData) {

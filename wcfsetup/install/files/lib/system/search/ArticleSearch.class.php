@@ -157,7 +157,7 @@ class ArticleSearch extends AbstractSearchProvider
     public function assignVariables(): void
     {
         WCF::getTPL()->assign([
-            'articleCategoryList' => (new ArticleCategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
+            'articleCategoryList' => new ArticleCategoryNodeTree('com.woltlab.wcf.article.category')->getIterator(),
         ]);
     }
 }

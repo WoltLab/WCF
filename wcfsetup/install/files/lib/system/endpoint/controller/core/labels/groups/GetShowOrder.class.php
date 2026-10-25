@@ -33,6 +33,6 @@ final class GetShowOrder implements IController
             LabelHandler::getInstance()->getLabelGroups()
         );
 
-        return (new ShowOrderHandler($items))->toJsonResponse();
+        return new ShowOrderHandler($items)->toJsonResponse();
     }
 }

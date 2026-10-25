@@ -86,7 +86,7 @@ final class MediaEditAction implements RequestHandlerInterface
                 $builder->setLanguageID(LanguageFactory::getInstance()->getDefaultLanguageID());
             }
 
-            $media = (new UpdateMedia($builder))();
+            $media = new UpdateMedia($builder)();
 
             return new JsonResponse([
                 'result' => $this->getResult(new Media($media->mediaID)),

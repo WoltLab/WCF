@@ -57,9 +57,9 @@ final class DeleteUserTrophies
         $this->removeSpecialTrophies(\array_values(\array_unique($userIDs)));
 
         foreach ($trophyPointChanges as $userID => $count) {
-            (new UpdateUser(
+            new UpdateUser(
                 UserBuilder::forUpdate(new User($userID))->incrementTrophyPoints($count)
-            ))();
+            )();
         }
 
         EventHandler::getInstance()->fire(new UserTrophiesDeleted($this->userTrophies));

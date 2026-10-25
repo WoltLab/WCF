@@ -243,7 +243,7 @@ final class CronjobBuilder extends DatabaseObjectBuilder
 
     private function saveL10nValues(Cronjob $cronjob): void
     {
-        (new L10nStorage(Cronjob::getL10nDefinition()))->setValues(
+        new L10nStorage(Cronjob::getL10nDefinition())->setValues(
             $cronjob->cronjobID,
             [
                 'description' => $this->description,

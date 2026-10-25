@@ -65,11 +65,11 @@ class DatabasePackageInstallationPlugin extends AbstractPackageInstallationPlugi
             throw new \UnexpectedValueException("A database script must return an array.");
         }
 
-        (new DatabaseTableChangeProcessor(
+        new DatabaseTableChangeProcessor(
             $this->installation->getPackage(),
             $tables,
             WCF::getDB()->getEditor()
-        ))->process();
+        )->process();
     }
 
     #[\Override]

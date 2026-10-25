@@ -139,10 +139,10 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
         // Link scanners of mail providers may have consumed the activation link
         // before the user follows it, which must look like a regular activation.
         if (!$this->user->isEmailConfirmed()) {
-            $user = (new ConfirmUserEmail($this->user, false))();
+            $user = new ConfirmUserEmail($this->user, false)();
             $this->saved();
 
-            (new CreateRegistrationNotification($user))();
+            new CreateRegistrationNotification($user)();
         }
 
         // forward to index page

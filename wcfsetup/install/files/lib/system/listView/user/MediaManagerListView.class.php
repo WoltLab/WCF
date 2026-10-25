@@ -54,7 +54,7 @@ class MediaManagerListView extends AbstractListView
         ]);
 
         // The filter dialog would be empty without any categories.
-        $categories = (new CategoryNodeTree('com.woltlab.wcf.media.category'))->getIterator();
+        $categories = new CategoryNodeTree('com.woltlab.wcf.media.category')->getIterator();
         if (\iterator_count($categories) > 0) {
             $this->addAvailableFilter(new CategoryFilter($categories, 'categoryID'));
         }
@@ -108,7 +108,7 @@ class MediaManagerListView extends AbstractListView
         if ($list->sqlSelects !== '') {
             $list->sqlSelects .= ',';
         }
-        $list->sqlSelects .= (new L10nStorage(Media::getL10nDefinition()))->getSubSelect('title', 'media') . ' AS title';
+        $list->sqlSelects .= new L10nStorage(Media::getL10nDefinition())->getSubSelect('title', 'media') . ' AS title';
 
         if (WCF::getSession()->hasPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
             $list->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);

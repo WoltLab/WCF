@@ -31,7 +31,7 @@ final class DeleteTemplateGroup implements IController
 
         $this->assertTemplateGroupCanBeDeleted($group);
 
-        (new TemplateGroupAction([$group], 'delete'))->executeAction();
+        new TemplateGroupAction([$group], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

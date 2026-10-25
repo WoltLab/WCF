@@ -37,6 +37,6 @@ class TypedTagCloud extends TagCloud
     #[\Override]
     protected function loadCache()
     {
-        $this->tags = (new TagCloudCache($this->objectTypeIDs, $this->languageIDs))->getCache();
+        $this->tags = new TagCloudCache($this->objectTypeIDs, $this->languageIDs)->getCache();
     }
 }

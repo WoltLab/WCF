@@ -22,9 +22,9 @@ final class SetColorScheme
 
     public function __invoke(): void
     {
-        (new UpdateUser(
+        new UpdateUser(
             UserBuilder::forUpdate($this->user)
                 ->setUserOption(User::getUserOptionID('colorScheme'), $this->colorScheme)
-        ))();
+        )();
     }
 }

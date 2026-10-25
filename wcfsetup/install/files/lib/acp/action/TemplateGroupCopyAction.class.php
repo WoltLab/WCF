@@ -51,7 +51,7 @@ final class TemplateGroupCopyAction implements RequestHandlerInterface
             $data = $form->getData()['data'];
             $data['parentTemplateGroupID'] = $templateGroup->parentTemplateGroupID ?: null;
 
-            $returnValues = (new TemplateGroupAction([], 'create', ['data' => $data]))->executeAction();
+            $returnValues = new TemplateGroupAction([], 'create', ['data' => $data])->executeAction();
             /** @var TemplateGroup $templateGroup */
             $newTemplateGroup = $returnValues['returnValues'];
 
@@ -63,7 +63,7 @@ final class TemplateGroupCopyAction implements RequestHandlerInterface
             $templateList->readObjects();
 
             foreach ($templateList as $template) {
-                (new TemplateAction([], 'create', [
+                new TemplateAction([], 'create', [
                     'data' => [
                         'application' => $template->application,
                         'templateName' => $template->templateName,
@@ -71,7 +71,7 @@ final class TemplateGroupCopyAction implements RequestHandlerInterface
                         'templateGroupID' => $newTemplateGroup->templateGroupID,
                     ],
                     'source' => $template->getSource(),
-                ]))->executeAction();
+                ])->executeAction();
             }
 
             return new JsonResponse([

@@ -31,7 +31,7 @@ final class DeleteBBCode implements IController
 
         $this->assertBBCodeCanBeDeleted($bbCode);
 
-        (new BBCodeAction([$bbCode], 'delete'))->executeAction();
+        new BBCodeAction([$bbCode], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

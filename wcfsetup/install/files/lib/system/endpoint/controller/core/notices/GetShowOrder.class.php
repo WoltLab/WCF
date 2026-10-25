@@ -37,6 +37,6 @@ final class GetShowOrder implements IController
             $noticeList->getObjects()
         );
 
-        return (new ShowOrderHandler($items))->toJsonResponse();
+        return new ShowOrderHandler($items)->toJsonResponse();
     }
 }

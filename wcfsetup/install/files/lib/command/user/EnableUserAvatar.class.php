@@ -25,6 +25,6 @@ final class EnableUserAvatar
             ->setDisableAvatar(false)
             ->setDisableAvatarExpires(0);
 
-        return (new UpdateUser($builder))();
+        return new UpdateUser($builder)();
     }
 }

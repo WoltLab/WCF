@@ -59,7 +59,7 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
             'pageCheckboxID' => $this->fieldName,
             'pageCheckboxListContainerID' => $this->fieldName . 'Container',
             'pageIDs' => $this->fieldValue,
-            'pageNodeList' => (new PageNodeTree())->getNodeList(),
+            'pageNodeList' => new PageNodeTree()->getNodeList(),
         ]);
     }
 

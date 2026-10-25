@@ -29,7 +29,7 @@ final class ResendActivationMail
     {
         $builder = UserBuilder::forUpdate($this->user)
             ->setEmailConfirmed(Hex::encode(\random_bytes(20)));
-        $user = (new UpdateUser($builder))();
+        $user = new UpdateUser($builder)();
 
         $email = new Email();
         $email->addRecipient(new UserMailbox($user));

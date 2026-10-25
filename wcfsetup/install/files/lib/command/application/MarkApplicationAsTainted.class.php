@@ -27,6 +27,6 @@ final class MarkApplicationAsTainted
             ->setIsTainted(true)
             ->update();
 
-        (new ApplicationCache())->rebuild();
+        new ApplicationCache()->rebuild();
     }
 }

@@ -90,7 +90,7 @@ final class CaptchaQuestionBuilder extends DatabaseObjectBuilder
 
     private function saveL10nValues(CaptchaQuestion $question): void
     {
-        (new L10nStorage(CaptchaQuestion::getL10nDefinition()))->setValues(
+        new L10nStorage(CaptchaQuestion::getL10nDefinition())->setValues(
             $question->questionID,
             [
                 'question' => $this->question,

@@ -30,7 +30,7 @@ class HtmlToc
         /** @var HtmlTocItem[] $headings */
         $headings = [];
         /** @var \DOMElement $hElement */
-        foreach ((new \DOMXPath($document))->query('//h2 | //h3 | //h4') as $hElement) {
+        foreach (new \DOMXPath($document)->query('//h2 | //h3 | //h4') as $hElement) {
             $title = StringUtil::trim($hElement->textContent);
             if (empty($title)) {
                 continue;

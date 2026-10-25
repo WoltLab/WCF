@@ -95,7 +95,7 @@ final class MergeUsers
 
     private function reassign(UserColumn $column): void
     {
-        (new ReassignUserColumn($column, $this->destinationUser, $this->mergedUserIDs))();
+        new ReassignUserColumn($column, $this->destinationUser, $this->mergedUserIDs)();
     }
 
     private function updateProfileComments(): void

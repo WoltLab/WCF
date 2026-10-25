@@ -59,7 +59,7 @@ final class Xsrf implements MiddlewareInterface
         ) {
             $activeRequest = $this->requestHandler->getActiveRequest();
             if ($this->controllerRequiresXsrfCheck($activeRequest)) {
-                return (new XsrfValidationFailedHandler())->handle($request);
+                return new XsrfValidationFailedHandler()->handle($request);
             }
         }
 

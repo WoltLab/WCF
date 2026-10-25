@@ -29,6 +29,6 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction
      */
     public function import()
     {
-        (new ImportBlacklist())();
+        new ImportBlacklist()();
     }
 }

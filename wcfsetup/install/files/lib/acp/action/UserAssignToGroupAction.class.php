@@ -49,7 +49,7 @@ final class UserAssignToGroupAction implements RequestHandlerInterface
             ));
 
             foreach ($users as $user) {
-                (new AddUserToGroups($user, $groupIDs))();
+                new AddUserToGroups($user, $groupIDs)();
             }
 
             return new JsonResponse([]);

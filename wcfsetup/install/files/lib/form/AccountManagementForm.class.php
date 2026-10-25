@@ -474,7 +474,7 @@ class AccountManagementForm extends AbstractForm
             $builder->setCustomProperty($name, $value);
         }
 
-        (new UpdateUser($builder))();
+        new UpdateUser($builder)();
 
         if ($needsReactivation) {
             // Use user list to allow overriding of the fields without duplicating logic

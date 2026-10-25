@@ -67,7 +67,7 @@ final class UserDisableSignatureAction implements RequestHandlerInterface
             }
 
             if ($user->disableSignature === 0) {
-                (new DisableUserSignature($user, $data['disableSignatureReason'], $disableSignatureExpires))();
+                new DisableUserSignature($user, $data['disableSignatureReason'], $disableSignatureExpires)();
             }
 
             return new JsonResponse([]);

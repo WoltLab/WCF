@@ -69,7 +69,7 @@ class TagCloud
             ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.tagging.taggableObject')
         );
 
-        $this->tags = (new TagCloudCache($objectTypeIDs, $this->languageIDs))->getCache();
+        $this->tags = new TagCloudCache($objectTypeIDs, $this->languageIDs)->getCache();
     }
 
     /**

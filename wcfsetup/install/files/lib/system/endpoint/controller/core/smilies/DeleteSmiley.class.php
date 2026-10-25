@@ -31,7 +31,7 @@ final class DeleteSmiley implements IController
 
         $smiley = Helper::fetchObjectFromRequestParameter($variables['id'], Smiley::class);
 
-        (new SmileyAction([$smiley], 'delete'))->executeAction();
+        new SmileyAction([$smiley], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

@@ -990,7 +990,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
      */
     public function clearCache()
     {
-        (new LanguageCache())->rebuild();
+        new LanguageCache()->rebuild();
     }
 
     /**

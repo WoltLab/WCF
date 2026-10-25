@@ -147,7 +147,7 @@ final class UserRankBuilder extends DatabaseObjectBuilder
 
     private function saveL10nValues(UserRank $rank): void
     {
-        (new L10nStorage(UserRank::getL10nDefinition()))->setValues(
+        new L10nStorage(UserRank::getL10nDefinition())->setValues(
             $rank->rankID,
             [
                 'rankTitle' => $this->rankTitle,

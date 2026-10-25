@@ -61,7 +61,7 @@ final class HandleValinorMappingErrors implements MiddlewareInterface
                     \JSON_PRETTY_PRINT
                 ),
                 'text/html' => new HtmlResponse(
-                    (new HtmlErrorRenderer())->render(
+                    new HtmlErrorRenderer()->render(
                         WCF::getLanguage()->getDynamicVariable('wcf.global.error.title'),
                         $message,
                         $e

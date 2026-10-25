@@ -41,7 +41,7 @@ final class GetShowOrder implements IController
             $recipientList->getObjects()
         );
 
-        return (new ShowOrderHandler($items))->toJsonResponse();
+        return new ShowOrderHandler($items)->toJsonResponse();
     }
 
     private function assertRecipientCanBeSorted(): void

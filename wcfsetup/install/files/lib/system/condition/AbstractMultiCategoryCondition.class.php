@@ -31,7 +31,7 @@ abstract class AbstractMultiCategoryCondition extends AbstractMultiSelectConditi
     #[\Override]
     protected function getFieldElement()
     {
-        $categoryTree = (new $this->nodeTreeClassname($this->objectType))->getIterator();
+        $categoryTree = new $this->nodeTreeClassname($this->objectType)->getIterator();
         $categoryCount = \iterator_count($categoryTree);
 
         $size = \min(\max($categoryCount, 10), 3);

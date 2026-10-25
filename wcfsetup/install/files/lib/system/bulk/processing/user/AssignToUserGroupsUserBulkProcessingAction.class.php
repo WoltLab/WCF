@@ -22,6 +22,6 @@ class AssignToUserGroupsUserBulkProcessingAction extends AbstractUserGroupsUserB
     #[\Override]
     protected function executeUserAction(User $user)
     {
-        (new AddUserToGroups($user, $this->userGroupIDs))();
+        new AddUserToGroups($user, $this->userGroupIDs)();
     }
 }

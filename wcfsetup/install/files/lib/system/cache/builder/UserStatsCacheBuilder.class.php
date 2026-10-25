@@ -18,7 +18,7 @@ class UserStatsCacheBuilder extends AbstractLegacyCacheBuilder
     #[\Override]
     protected function rebuild(array $parameters): array
     {
-        $cache = (new UserStatsCache())->getCache();
+        $cache = new UserStatsCache()->getCache();
 
         return [
             'members' => $cache->members,
@@ -29,6 +29,6 @@ class UserStatsCacheBuilder extends AbstractLegacyCacheBuilder
     #[\Override]
     public function reset(array $parameters = [])
     {
-        (new UserStatsCache())->rebuild();
+        new UserStatsCache()->rebuild();
     }
 }

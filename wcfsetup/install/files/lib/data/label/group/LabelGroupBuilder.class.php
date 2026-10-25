@@ -113,7 +113,7 @@ final class LabelGroupBuilder extends DatabaseObjectBuilder
         $labelIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
         if ($labelIDs !== []) {
-            (new LabelAction($labelIDs, 'delete'))->executeAction();
+            new LabelAction($labelIDs, 'delete')->executeAction();
         }
 
         ACLHandler::getInstance()->removeValues(
@@ -124,7 +124,7 @@ final class LabelGroupBuilder extends DatabaseObjectBuilder
 
     private function saveL10nValues(LabelGroup $group): void
     {
-        (new L10nStorage(LabelGroup::getL10nDefinition()))->setValues(
+        new L10nStorage(LabelGroup::getL10nDefinition())->setValues(
             $group->groupID,
             [
                 'groupName' => $this->groupName,

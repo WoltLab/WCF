@@ -69,12 +69,12 @@ final class UpdateUser
             }
 
             if (\MODULE_USER_RANK !== 0) {
-                (new RefreshUserRanks([$user]))();
+                new RefreshUserRanks([$user])();
             }
         }
 
         if ($groupsChanged && \MODULE_USERS_ONLINE !== 0) {
-            (new RefreshUserOnlineMarkings([$user]))();
+            new RefreshUserOnlineMarkings([$user])();
         }
 
         EventHandler::getInstance()->fire(new UserUpdated($user, $this->builder));
@@ -106,7 +106,7 @@ final class UpdateUser
 
         WCF::getDB()->beginTransaction();
         foreach ([...$this->getUsernameColumns(), ...$event->getUsernameColumns()] as $column) {
-            (new UpdateUsernameColumn($column, $user))();
+            new UpdateUsernameColumn($column, $user)();
         }
         WCF::getDB()->commitTransaction();
     }

@@ -35,7 +35,7 @@ final class CheckUserBan implements MiddlewareInterface
                 WCF::getSession()->deleteUserSessionsExcept($user);
             }
 
-            return (new PermissionDeniedHandler())->handle(
+            return new PermissionDeniedHandler()->handle(
                 ErrorDetail::fromMessage(
                     HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'))
                 )->attachToRequest($request)

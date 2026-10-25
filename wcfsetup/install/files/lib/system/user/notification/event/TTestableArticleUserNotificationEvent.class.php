@@ -25,7 +25,7 @@ trait TTestableArticleUserNotificationEvent
      */
     public static function getTestArticle(Category $category, UserProfile $author)
     {
-        return (new ArticleAction([], 'create', [
+        return new ArticleAction([], 'create', [
             'data' => [
                 'time' => \TIME_NOW,
                 'categoryID' => $category->categoryID,
@@ -46,6 +46,6 @@ trait TTestableArticleUserNotificationEvent
                     'teaserImageID' => null,
                 ],
             ],
-        ]))->executeAction()['returnValues'];
+        ])->executeAction()['returnValues'];
     }
 }

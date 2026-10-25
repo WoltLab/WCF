@@ -23,7 +23,7 @@ class RemoveFromUserGroupsUserBulkProcessingAction extends AbstractUserGroupsUse
     #[\Override]
     protected function executeUserAction(User $user)
     {
-        (new RemoveUserFromGroups($user, $this->userGroupIDs))();
+        new RemoveUserFromGroups($user, $this->userGroupIDs)();
     }
 
     #[\Override]

@@ -28,7 +28,7 @@ final class CheckSystemEnvironment implements MiddlewareInterface
         if (!(80400 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80599)) {
             if (!RequestHandler::getInstance()->isACPRequest()) {
                 return new HtmlResponse(
-                    (new HtmlErrorRenderer())->render(
+                    new HtmlErrorRenderer()->render(
                         WCF::getLanguage()->getDynamicVariable('wcf.global.error.title'),
                         WCF::getLanguage()->get('wcf.global.incompatiblePhpVersion'),
                     ),

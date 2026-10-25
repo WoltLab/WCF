@@ -21,7 +21,7 @@ final class EnableMenuItem
 
     public function __invoke(): void
     {
-        (new MenuItemEditor($this->menuItem))->update([
+        new MenuItemEditor($this->menuItem)->update([
             'isDisabled' => 0,
         ]);
 

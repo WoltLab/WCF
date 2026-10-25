@@ -125,7 +125,7 @@ final class UserUtil
      */
     public static function usesMobileBrowser(): bool
     {
-        return (new UserAgent(self::getUserAgent()))->isMobileBrowser();
+        return new UserAgent(self::getUserAgent())->isMobileBrowser();
     }
 
     /**

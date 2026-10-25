@@ -30,7 +30,7 @@ final class DeleteQuestion implements IController
 
         $this->assertQuestionCanBeDeleted();
 
-        (new CaptchaQuestionAction([$question], 'delete'))->executeAction();
+        new CaptchaQuestionAction([$question], 'delete')->executeAction();
 
         return new JsonResponse([]);
     }

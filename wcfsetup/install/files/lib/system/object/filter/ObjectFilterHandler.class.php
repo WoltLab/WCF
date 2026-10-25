@@ -95,7 +95,7 @@ class ObjectFilterHandler
         }
 
         /** @var list<array{0: string, 1: string}> $values */
-        $values = (new MapperBuilder())->mapper()->map(
+        $values = new MapperBuilder()->mapper()->map(
             <<<'EOT'
                 list<array{0: string, 1: string}>
                 EOT,

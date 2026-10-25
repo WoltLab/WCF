@@ -164,7 +164,7 @@ final class NewPasswordForm extends AbstractFormBuilderForm
         foreach ($this->additionalFields as $name => $value) {
             $builder->setCustomProperty($name, $value);
         }
-        (new UpdateUser($builder))();
+        new UpdateUser($builder)();
     }
 
     private function forwardToIndexPage(): void

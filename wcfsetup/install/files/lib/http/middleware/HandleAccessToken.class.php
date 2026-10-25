@@ -30,7 +30,7 @@ final class HandleAccessToken implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (!$this->handleAccessToken($request->getQueryParams()['at'] ?? '')) {
-            return (new NotFoundHandler())->handle($request);
+            return new NotFoundHandler()->handle($request);
         }
 
         return $handler->handle($request);

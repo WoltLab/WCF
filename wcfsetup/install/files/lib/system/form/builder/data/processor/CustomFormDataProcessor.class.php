@@ -55,7 +55,7 @@ final class CustomFormDataProcessor extends AbstractFormDataProcessor
 
         // validate form data processor function
         if ($formDataProcessor !== null) {
-            $parameters = (new \ReflectionFunction($formDataProcessor))->getParameters();
+            $parameters = new \ReflectionFunction($formDataProcessor)->getParameters();
             if (\count($parameters) !== 2) {
                 throw new \InvalidArgumentException(
                     "The form data processor function must expect two parameters, instead " . \count($parameters)
@@ -96,7 +96,7 @@ final class CustomFormDataProcessor extends AbstractFormDataProcessor
 
         // validate object data processor function
         if ($objectDataProcessor !== null) {
-            $parameters = (new \ReflectionFunction($objectDataProcessor))->getParameters();
+            $parameters = new \ReflectionFunction($objectDataProcessor)->getParameters();
             if (\count($parameters) !== 3) {
                 throw new \InvalidArgumentException(
                     "The object data processor function must expect three parameters, instead " . \count($parameters)
