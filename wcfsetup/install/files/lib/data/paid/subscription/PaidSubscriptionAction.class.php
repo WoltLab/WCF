@@ -11,16 +11,12 @@ use wcf\data\IToggleAction;
 /**
  * Executes paid subscription-related actions.
  *
- * Paid subscriptions should be created, updated and deleted through the
- * `CreatePaidSubscription`, `UpdatePaidSubscription` and
- * `DeletePaidSubscription` commands, the `create`, `update` and `delete`
- * actions are `@deprecated 6.3`.
- *
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<PaidSubscription, PaidSubscriptionEditor>
+ * @deprecated 6.3 use `PaidSubscriptionBuilder` with the `CreatePaidSubscription` / `UpdatePaidSubscription` commands instead.
  */
 class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements IToggleAction
 {
