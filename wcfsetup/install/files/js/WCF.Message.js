@@ -808,110 +808,6 @@ if (COMPILER_TARGET_DEFAULT) {
 	});
 	
 	/**
-	 * Provides an inline message editor.
-	 *
-	 * @deprecated        3.0 - please use `WoltLabSuite/Core/Ui/Message/InlineEditor` instead
-	 *
-	 * @param        integer                containerID
-	 */
-	WCF.Message.InlineEditor = Class.extend({
-		/**
-		 * list of messages
-		 * @var        object
-		 */
-		_container: {},
-		
-		/**
-		 * container id
-		 * @var        int
-		 */
-		_containerID: 0,
-		
-		/**
-		 * list of dropdowns
-		 * @var        object
-		 */
-		_dropdowns: {},
-		
-		/**
-		 * CSS selector for the message container
-		 * @var        string
-		 */
-		_messageContainerSelector: '.jsMessage',
-		
-		/**
-		 * prefix of the message editor CSS id
-		 * @var        string
-		 */
-		_messageEditorIDPrefix: 'messageEditor',
-		
-		/**
-		 * Initializes a new WCF.Message.InlineEditor object.
-		 *
-		 * @param        integer                                containerID
-		 * @param        boolean                                supportExtendedForm
-		 * @param        WCF.Message.Quote.Manager        quoteManager
-		 */
-		init: function (containerID, supportExtendedForm, quoteManager) {
-			require(['WoltLabSuite/Core/Ui/Message/InlineEditor'], (function (UiMessageInlineEditor) {
-				new UiMessageInlineEditor({
-					className: this._getClassName(),
-					containerId: containerID,
-					editorPrefix: this._messageEditorIDPrefix,
-					
-					messageSelector: this._messageContainerSelector,
-					quoteManager: quoteManager || null,
-					
-					callbackDropdownInit: this._callbackDropdownInit.bind(this)
-				});
-			}).bind(this));
-		},
-		
-		/**
-		 * Loads WYSIWYG editor for selected message.
-		 *
-		 * @param        object                event
-		 * @param        integer                containerID
-		 * @return        boolean
-		 */
-		_click: function (event, containerID) {
-			containerID = (event === null) ? ~~containerID : ~~elData(event.currentTarget, 'container-id');
-			
-			require(['WoltLabSuite/Core/Ui/Message/InlineEditor'], (function (UiMessageInlineEditor) {
-				UiMessageInlineEditor.legacyEdit(containerID);
-			}).bind(this));
-			
-			if (event) {
-				event.preventDefault();
-			}
-		},
-		
-		/**
-		 * Initializes the inline edit dropdown menu.
-		 *
-		 * @param        integer                containerID
-		 * @param        jQuery                dropdownMenu
-		 */
-		_initDropdownMenu: function (containerID, dropdownMenu) {
-		},
-		
-		_callbackDropdownInit: function (element, dropdownMenu) {
-			this._initDropdownMenu($(element).wcfIdentify(), $(dropdownMenu));
-			
-			return null;
-		},
-		
-		/**
-		 * Returns message action class name.
-		 *
-		 * @return        string
-		 */
-		_getClassName: function () {
-			return '';
-		}
-	});
-	
-	/**
 	 * Handles submit buttons for forms with an embedded WYSIWYG editor.
 	 * 
 	 * @deprecated 6.2 Not (or no longer) used in the software.
@@ -1009,19 +905,6 @@ else {
 		_editorId: "",
 		init: function() {},
 		_smileyClick: function() {}
-	});
-	
-	WCF.Message.InlineEditor = Class.extend({
-		_container: {},
-		_containerID: 0,
-		_dropdowns: {},
-		_messageContainerSelector: "",
-		_messageEditorIDPrefix: "",
-		init: function() {},
-		_click: function() {},
-		_initDropdownMenu: function() {},
-		_callbackDropdownInit: function() {},
-		_getClassName: function() {}
 	});
 	
 	WCF.Message.Submit = {

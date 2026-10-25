@@ -550,10 +550,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
                 silent: true,
             };
         }
-        /** @deprecated  3.0 - used only for backward compatibility with `WCF.Message.InlineEditor` */
-        legacyEdit(containerId) {
-            this._click(document.getElementById(containerId), null);
-        }
     }
     return UiMessageInlineEditor;
 });
