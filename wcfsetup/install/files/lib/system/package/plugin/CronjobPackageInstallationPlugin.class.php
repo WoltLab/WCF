@@ -6,9 +6,9 @@ use Cron\CronExpression;
 use wcf\acp\form\CronjobAddForm;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobBuilder;
-use wcf\data\cronjob\CronjobEditor;
 use wcf\data\cronjob\CronjobList;
 use wcf\data\language\LanguageList;
+use wcf\system\cache\builder\CronjobCacheBuilder;
 use wcf\system\cronjob\ICronjob;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
@@ -45,7 +45,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
     /**
      * @inheritDoc
      */
-    public $className = CronjobEditor::class;
+    public $tableName = 'cronjob';
 
     #[\Override]
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
@@ -322,12 +322,18 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 
         foreach ($cronjobList as $cronjob) {
             $nextExec = $cronjob->getNextExec(\TIME_NOW);
-            (new CronjobEditor($cronjob))->update([
-                'nextExec' => $nextExec,
+            CronjobBuilder::forUpdate($cronjob)
+                ->setNextExec($nextExec)
                 // Offset taken from `CronjobScheduler`
-                'afterNextExec' => $cronjob->getNextExec($nextExec + 120),
-            ]);
+                ->setAfterNextExec($cronjob->getNextExec($nextExec + 120))
+                ->update();
         }
+    }
+
+    #[\Override]
+    protected function postImport()
+    {
+        CronjobCacheBuilder::getInstance()->reset();
     }
 
     #[\Override]

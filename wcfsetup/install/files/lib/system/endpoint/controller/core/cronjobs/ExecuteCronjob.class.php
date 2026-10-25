@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\cronjobs;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\cronjob\ExecuteCronjob as ExecuteCronjobCommand;
 use wcf\data\cronjob\Cronjob;
-use wcf\data\cronjob\CronjobAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
@@ -30,7 +30,7 @@ final class ExecuteCronjob implements IController
 
         $this->assertCronjobCanBeExecuted();
 
-        (new CronjobAction([$cronjob], 'execute'))->executeAction();
+        new ExecuteCronjobCommand($cronjob)();
 
         return new JsonResponse([]);
     }

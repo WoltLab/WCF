@@ -9,8 +9,6 @@ use wcf\system\cache\builder\CronjobCacheBuilder;
 /**
  * Provides functions to edit cronjobs.
  *
- * The localized description is written by `CronjobBuilder`.
- *
  * @author  Alexander Ebert, Matthias Schmidt
  * @copyright   2001-2020 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -18,6 +16,7 @@ use wcf\system\cache\builder\CronjobCacheBuilder;
  * @mixin   Cronjob
  * @extends DatabaseObjectEditor<Cronjob>
  * @implements IEditableCachedObject<Cronjob>
+ * @deprecated 6.3 use `CronjobBuilder` instead.
  */
 class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObject
 {

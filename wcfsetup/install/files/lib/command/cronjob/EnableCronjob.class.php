@@ -3,9 +3,10 @@
 namespace wcf\command\cronjob;
 
 use wcf\data\cronjob\Cronjob;
-use wcf\data\cronjob\CronjobEditor;
+use wcf\data\cronjob\CronjobBuilder;
 use wcf\event\cronjob\CronjobEnabled;
 use wcf\event\IPsr14Event;
+use wcf\system\cache\builder\CronjobCacheBuilder;
 use wcf\system\event\EventHandler;
 
 /**
@@ -22,11 +23,11 @@ final class EnableCronjob implements IPsr14Event
 
     public function __invoke(): void
     {
-        (new CronjobEditor($this->cronjob))->update([
-            'isDisabled' => 0,
-        ]);
+        CronjobBuilder::forUpdate($this->cronjob)
+            ->setIsDisabled(false)
+            ->update();
 
-        CronjobEditor::resetCache();
+        CronjobCacheBuilder::getInstance()->reset();
 
         $event = new CronjobEnabled($this->cronjob);
         EventHandler::getInstance()->fire($event);

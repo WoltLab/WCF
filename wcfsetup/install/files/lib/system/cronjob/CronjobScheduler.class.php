@@ -3,7 +3,7 @@
 namespace wcf\system\cronjob;
 
 use wcf\data\cronjob\Cronjob;
-use wcf\data\cronjob\CronjobEditor;
+use wcf\data\cronjob\CronjobBuilder;
 use wcf\data\cronjob\log\CronjobLog;
 use wcf\data\cronjob\log\CronjobLogBuilder;
 use wcf\data\user\User;
@@ -55,7 +55,7 @@ final class CronjobScheduler extends SingletonFactory
         $this->resetFailedCronjobs();
 
         // get outstanding cronjobs
-        $cronjobEditors = $this->loadCronjobs();
+        $cronjobs = $this->loadCronjobs();
 
         // clear cache
         self::clearCache();
@@ -64,20 +64,20 @@ final class CronjobScheduler extends SingletonFactory
         try {
             SessionHandler::getInstance()->changeUser(User::getGuestUser(), true);
 
-            foreach ($cronjobEditors as $cronjobEditor) {
+            foreach ($cronjobs as $cronjob) {
                 // Reset the memory usage for each cronjob, allowing to measure each individual
                 // cronjob's memory usage without a memory-heavy cronjob skewing the numbers for
                 // the following cronjobs.
                 \memory_reset_peak_usage();
 
                 // mark cronjob as being executed
-                $cronjobEditor->update([
-                    'state' => Cronjob::EXECUTING,
-                ]);
+                CronjobBuilder::forUpdate($cronjob)
+                    ->setState(Cronjob::EXECUTING)
+                    ->update();
 
                 // create log entry
                 $log = CronjobLogBuilder::forCreate()
-                    ->setCronjobID($cronjobEditor->cronjobID)
+                    ->setCronjobID($cronjob->cronjobID)
                     ->setExecTime(\TIME_NOW)
                     ->create();
 
@@ -85,9 +85,9 @@ final class CronjobScheduler extends SingletonFactory
                 // note: a general log is created to avoid confusion why a cronjob
                 // apparently is not executed while that is indeed the correct internal
                 // behavior
-                if ($cronjobEditor->validateOptions()) {
+                if ($cronjob->validateOptions()) {
                     try {
-                        $this->executeCronjob($cronjobEditor, $log);
+                        $this->executeCronjob($cronjob, $log);
                     } catch (\Throwable $e) {
                         $this->logResult($log, $e);
                     }
@@ -96,10 +96,10 @@ final class CronjobScheduler extends SingletonFactory
                 }
 
                 // mark cronjob as done
-                $cronjobEditor->update([
-                    'failCount' => 0,
-                    'state' => Cronjob::READY,
-                ]);
+                CronjobBuilder::forUpdate($cronjob)
+                    ->setFailCount(0)
+                    ->setState(Cronjob::READY)
+                    ->update();
             }
         } finally {
             SessionHandler::getInstance()->changeUser($user, true);
@@ -156,7 +156,10 @@ final class CronjobScheduler extends SingletonFactory
                         // The cronjob spent two periods in the PENDING state, which proves that the
                         // request that loaded it died before reaching it. This is not the fault of
                         // this cronjob, it is rescheduled without being reported.
-                        $this->rescheduleCronjob($cronjob, ['state' => Cronjob::READY]);
+                        $this->rescheduleCronjob(
+                            $cronjob,
+                            CronjobBuilder::forUpdate($cronjob)->setState(Cronjob::READY)
+                        );
 
                         // The cronjob that was executing when the request died is the one that
                         // crashed. All cronjobs of that request share the same `lastExec`, there is
@@ -197,24 +200,24 @@ final class CronjobScheduler extends SingletonFactory
      */
     private function resetCrashedCronjob(Cronjob $cronjob): void
     {
-        $data = [
-            'state' => Cronjob::READY,
-            'failCount' => $cronjob->failCount + 1,
-        ];
+        $failCount = $cronjob->failCount + 1;
+        $builder = CronjobBuilder::forUpdate($cronjob)
+            ->setState(Cronjob::READY);
 
         // The cronjob exceeded the maximum fail count.
         // Cronjobs that can be disabled, should be disabled.
-        if ($data['failCount'] >= Cronjob::MAX_FAIL_COUNT) {
+        if ($failCount >= Cronjob::MAX_FAIL_COUNT) {
             if ($cronjob->canBeDisabled !== 0) {
-                $data['isDisabled'] = 1;
-                $data['failCount'] = 0;
+                $builder->setIsDisabled(true);
+                $failCount = 0;
             } else {
                 // Reset failCount for cronjobs, which can't be disabled to
                 // MAX_FAIL_COUNT - 1, because the column has a max length
                 // which should not be reached.
-                $data['failCount'] = Cronjob::MAX_FAIL_COUNT - 1;
+                $failCount = Cronjob::MAX_FAIL_COUNT - 1;
             }
         }
+        $builder->setFailCount($failCount);
 
         $log = CronjobLogBuilder::forCreate()
             ->setCronjob($cronjob)
@@ -232,7 +235,7 @@ final class CronjobScheduler extends SingletonFactory
         );
         $this->logResult($log, new \Exception($errorMessage));
 
-        $this->rescheduleCronjob($cronjob, $data);
+        $this->rescheduleCronjob($cronjob, $builder);
     }
 
     /**
@@ -240,14 +243,16 @@ final class CronjobScheduler extends SingletonFactory
      * implementation was executing the cronjob immediately, which may be undesirable if
      * the cronjob is expected to be executed in a specific time window only.
      *
-     * @param array<string, mixed> $data
+     * The given builder may carry additional changes that are written alongside.
      */
-    private function rescheduleCronjob(Cronjob $cronjob, array $data): void
+    private function rescheduleCronjob(Cronjob $cronjob, CronjobBuilder $builder): void
     {
-        $data['nextExec'] = $cronjob->getNextExec(\TIME_NOW);
-        $data['afterNextExec'] = $cronjob->getNextExec($data['nextExec'] + 120);
+        $nextExec = $cronjob->getNextExec(\TIME_NOW);
 
-        (new CronjobEditor($cronjob))->update($data);
+        $builder
+            ->setNextExec($nextExec)
+            ->setAfterNextExec($cronjob->getNextExec($nextExec + 120))
+            ->update();
     }
 
     /**
@@ -277,7 +282,10 @@ final class CronjobScheduler extends SingletonFactory
     /**
      * Loads outstanding cronjobs.
      *
-     * @return CronjobEditor[]
+     * The returned objects reflect the state prior to the scheduling, i.e.
+     * a cronjob observes the `lastExec` of its previous execution.
+     *
+     * @return Cronjob[]
      */
     private function loadCronjobs(): array
     {
@@ -298,30 +306,29 @@ final class CronjobScheduler extends SingletonFactory
                 \TIME_NOW,
             ]);
 
-            $cronjobEditors = [];
+            $cronjobs = [];
             while ($cronjob = $statement->fetchObject(Cronjob::class)) {
-                $cronjobEditor = new CronjobEditor($cronjob);
-
-                // Mark the cronjob as pending to prevent concurrent requests from executing it.
-                $data = ['state' => Cronjob::PENDING];
-
                 // Update next execution time.
                 // This needs to be done before executing the job to allow for a proper detection of
                 // stuck jobs. If the timestamps are updated after executing then concurrent requests
                 // might believe that a cronjob is stuck, despite the cronjob just having started just
                 // a few milliseconds before.
-                $data['nextExec'] = $cronjob->getNextExec();
-                $data['afterNextExec'] = $cronjob->getNextExec($data['nextExec'] + 120);
-                $data['lastExec'] = \TIME_NOW;
+                $nextExec = $cronjob->getNextExec();
 
-                $cronjobEditor->update($data);
+                CronjobBuilder::forUpdate($cronjob)
+                    // Mark the cronjob as pending to prevent concurrent requests from executing it.
+                    ->setState(Cronjob::PENDING)
+                    ->setNextExec($nextExec)
+                    ->setAfterNextExec($cronjob->getNextExec($nextExec + 120))
+                    ->setLastExec(\TIME_NOW)
+                    ->update();
 
-                $cronjobEditors[] = $cronjobEditor;
+                $cronjobs[] = $cronjob;
             }
             WCF::getDB()->commitTransaction();
             $committed = true;
 
-            return $cronjobEditors;
+            return $cronjobs;
         } finally {
             if (!$committed) {
                 WCF::getDB()->rollBackTransaction();
@@ -334,9 +341,9 @@ final class CronjobScheduler extends SingletonFactory
      *
      * @throws  SystemException
      */
-    private function executeCronjob(CronjobEditor $cronjobEditor, CronjobLog $log): void
+    private function executeCronjob(Cronjob $cronjob, CronjobLog $log): void
     {
-        $className = $cronjobEditor->className;
+        $className = $cronjob->className;
         if (!\class_exists($className)) {
             throw new ClassNotFoundException($className);
         }
@@ -347,9 +354,9 @@ final class CronjobScheduler extends SingletonFactory
         }
 
         // execute cronjob
-        /** @var ICronjob $cronjob */
-        $cronjob = new $className();
-        $cronjob->execute($cronjobEditor->getDecoratedObject());
+        /** @var ICronjob $executable */
+        $executable = new $className();
+        $executable->execute($cronjob);
 
         $this->logResult($log);
     }

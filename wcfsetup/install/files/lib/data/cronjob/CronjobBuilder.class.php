@@ -112,6 +112,30 @@ final class CronjobBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    public function setLastExec(int $lastExec): static
+    {
+        $this->properties['lastExec'] = $lastExec;
+
+        return $this;
+    }
+
+    /**
+     * @param Cronjob::READY|Cronjob::PENDING|Cronjob::EXECUTING $state
+     */
+    public function setState(int $state): static
+    {
+        $this->properties['state'] = $state;
+
+        return $this;
+    }
+
+    public function setFailCount(int $failCount): static
+    {
+        $this->properties['failCount'] = $failCount;
+
+        return $this;
+    }
+
     public function setIsDisabled(bool $isDisabled): static
     {
         $this->properties['isDisabled'] = $isDisabled ? 1 : 0;
