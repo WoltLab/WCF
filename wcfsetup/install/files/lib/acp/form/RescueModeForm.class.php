@@ -4,11 +4,11 @@ namespace wcf\acp\form;
 
 use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\command\application\SynchronizeCookieDomain;
+use wcf\command\user\authentication\failure\LogUserAuthenticationFailure;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationBuilder;
 use wcf\data\application\ApplicationList;
 use wcf\data\user\authentication\failure\UserAuthenticationFailure;
-use wcf\data\user\authentication\failure\UserAuthenticationFailureAction;
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
 use wcf\system\application\ApplicationHandler;
@@ -249,18 +249,12 @@ final class RescueModeForm extends AbstractForm
             );
 
             if (\ENABLE_USER_AUTHENTICATION_FAILURE !== 0) {
-                $action = new UserAuthenticationFailureAction([], 'create', [
-                    'data' => [
-                        'environment' => 'admin',
-                        'userID' => $this->user !== null ? $this->user->userID : null,
-                        'username' => \mb_substr($this->username, 0, 100),
-                        'time' => \TIME_NOW,
-                        'ipAddress' => UserUtil::getIpAddress(),
-                        'userAgent' => UserUtil::getUserAgent(),
-                        'validationError' => 'invalid' . \ucfirst($this->errorField),
-                    ],
-                ]);
-                $action->executeAction();
+                new LogUserAuthenticationFailure(
+                    'admin',
+                    $this->user,
+                    $this->username,
+                    'invalid' . \ucfirst($this->errorField)
+                )();
             }
         }
     }

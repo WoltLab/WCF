@@ -12,6 +12,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<UserAuthenticationFailure, UserAuthenticationFailureEditor>
+ * @deprecated 6.3 use the `LogUserAuthenticationFailure` command or `UserAuthenticationFailureBuilder` instead.
  */
 class UserAuthenticationFailureAction extends AbstractDatabaseObjectAction
 {

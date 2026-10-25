@@ -13,6 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  *
  * @mixin       UserAuthenticationFailure
  * @extends DatabaseObjectEditor<UserAuthenticationFailure>
+ * @deprecated 6.3 use `UserAuthenticationFailureBuilder` instead.
  */
 class UserAuthenticationFailureEditor extends DatabaseObjectEditor
 {

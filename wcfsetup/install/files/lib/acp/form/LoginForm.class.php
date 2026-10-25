@@ -2,8 +2,8 @@
 
 namespace wcf\acp\form;
 
+use wcf\command\user\authentication\failure\LogUserAuthenticationFailure;
 use wcf\data\user\authentication\failure\UserAuthenticationFailure;
-use wcf\data\user\authentication\failure\UserAuthenticationFailureAction;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\event\user\authentication\UserLoggedIn;
@@ -267,18 +267,12 @@ class LoginForm extends AbstractFormBuilderForm
             $user = User::getUserByEmail($username);
         }
 
-        $action = new UserAuthenticationFailureAction([], 'create', [
-            'data' => [
-                'environment' => RequestHandler::getInstance()->isACPRequest() ? 'admin' : 'user',
-                'userID' => $user->userID ?: null,
-                'username' => \mb_substr($username, 0, 100),
-                'time' => \TIME_NOW,
-                'ipAddress' => UserUtil::getIpAddress(),
-                'userAgent' => UserUtil::getUserAgent(),
-                'validationError' => 'invalid' . \ucfirst($errorField),
-            ],
-        ]);
-        $action->executeAction();
+        new LogUserAuthenticationFailure(
+            RequestHandler::getInstance()->isACPRequest() ? 'admin' : 'user',
+            $user,
+            $username,
+            'invalid' . \ucfirst($errorField)
+        )();
     }
 
     #[\Override]
