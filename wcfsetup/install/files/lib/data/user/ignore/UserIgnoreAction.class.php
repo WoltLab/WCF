@@ -26,6 +26,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  *
  * @extends AbstractDatabaseObjectAction<UserIgnore, UserIgnoreEditor>
+ * @deprecated 6.3 use the `IgnoreUser` / `UnignoreUser` commands or `UserIgnoreBuilder` instead.
  */
 class UserIgnoreAction extends AbstractDatabaseObjectAction
 {

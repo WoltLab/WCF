@@ -4,6 +4,7 @@ namespace wcf\command\user;
 
 use wcf\data\user\User;
 use wcf\data\user\ignore\UserIgnore;
+use wcf\data\user\ignore\UserIgnoreBuilder;
 use wcf\event\user\UserIgnored;
 use wcf\system\event\EventHandler;
 use wcf\system\user\command\Unfollow;
@@ -45,18 +46,41 @@ final class IgnoreUser
         UserStorageHandler::getInstance()->reset([$target->userID], 'ignoredByUserIDs');
     }
 
+    /**
+     * @param UserIgnore::TYPE_BLOCK_DIRECT_CONTACT|UserIgnore::TYPE_HIDE_MESSAGES $type
+     */
     private function ignoreUser(User $user, User $target, int $type): void
     {
-        $sql = "INSERT INTO wcf1_user_ignore
-                            (userID, ignoreUserID, type, time)
-                VALUES      (?, ?, ?, ?)
-                ON DUPLICATE KEY UPDATE type = VALUES(type), time = VALUES(time)";
+        $ignore = $this->getIgnore($user, $target);
+        if ($ignore !== null) {
+            UserIgnoreBuilder::forUpdate($ignore)
+                ->setType($type)
+                ->setTime(\TIME_NOW)
+                ->update();
+
+            return;
+        }
+
+        UserIgnoreBuilder::forCreate()
+            ->setUserID($user->userID)
+            ->setIgnoreUserID($target->userID)
+            ->setType($type)
+            ->setTime(\TIME_NOW)
+            ->createOrIgnore();
+    }
+
+    private function getIgnore(User $user, User $target): ?UserIgnore
+    {
+        $sql = "SELECT  *
+                FROM    wcf1_user_ignore
+                WHERE   userID = ?
+                    AND ignoreUserID = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $user->userID,
             $target->userID,
-            $type,
-            \TIME_NOW,
         ]);
+
+        return $statement->fetchSingleObject(UserIgnore::class);
     }
 }

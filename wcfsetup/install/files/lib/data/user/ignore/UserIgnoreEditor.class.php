@@ -13,6 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  *
  * @mixin       UserIgnore
  * @extends DatabaseObjectEditor<UserIgnore>
+ * @deprecated 6.3 use `UserIgnoreBuilder` instead.
  */
 class UserIgnoreEditor extends DatabaseObjectEditor
 {

@@ -24,7 +24,7 @@
 							<nav class="jsMobileNavigation buttonGroupNavigation">
 								<ul class="buttonList iconList jsOnly">
 									<li>
-										<a class="pointer jsTooltip jsEditIgnoreButton" title="{lang}wcf.global.button.edit{/lang}">
+										<a class="pointer jsTooltip jsEditIgnoreButton" title="{lang}wcf.global.button.edit{/lang}" data-endpoint="{link controller='UserIgnore' id=$user->userID}{/link}">
 											{icon name='pencil'}
 											<span class="invisible">{lang}wcf.global.button.edit{/lang}</span>
 										</a>
@@ -61,8 +61,6 @@
 	
 	<script data-relocate="true">
 		require(['WoltLabSuite/Core/Ui/User/Ignore/List'], ({ UiUserIgnoreList }) => {
-			{jsphrase name='wcf.user.button.ignore'}
-			
 			new UiUserIgnoreList();
 		});
 	</script>

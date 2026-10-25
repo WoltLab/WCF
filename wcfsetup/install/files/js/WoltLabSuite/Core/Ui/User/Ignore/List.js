@@ -1,45 +1,30 @@
 /**
  * Shows the ignore dialogs when editing users on the page listing ignored users.
  *
- * @author  Matthias Schmidt
- * @copyright  2001-2021 WoltLab GmbH
+ * @author  Matthias Schmidt, Marcel Werk
+ * @copyright  2001-2026 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Snackbar", "../../../Form/Builder/Dialog", "WoltLabSuite/Core/Language"], function (require, exports, tslib_1, Snackbar_1, Dialog_1, Language_1) {
+define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Helper/PromiseMutex"], function (require, exports, Dialog_1, Snackbar_1, PromiseMutex_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiUserIgnoreList = void 0;
-    Dialog_1 = tslib_1.__importDefault(Dialog_1);
     class UiUserIgnoreList {
-        dialogs = new Map();
         constructor() {
-            document
-                .querySelectorAll(".jsEditIgnoreButton")
-                .forEach((el) => el.addEventListener("click", (ev) => this.openDialog(ev)));
+            document.querySelectorAll(".jsEditIgnoreButton").forEach((button) => {
+                button.addEventListener("click", (0, PromiseMutex_1.promiseMutex)(() => this.openDialog(button)));
+            });
         }
-        openDialog(event) {
-            const button = event.currentTarget;
-            const userId = ~~button.closest(".jsIgnoredUser").dataset.objectId;
-            if (!this.dialogs.has(userId)) {
-                this.dialogs.set(userId, new Dialog_1.default("ignoreDialog", "wcf\\data\\user\\ignore\\UserIgnoreAction", "getDialog", {
-                    dialog: {
-                        title: (0, Language_1.getPhrase)("wcf.user.button.ignore"),
-                    },
-                    actionParameters: {
-                        userID: userId,
-                    },
-                    submitActionName: "submitDialog",
-                    successCallback(data) {
-                        (0, Snackbar_1.showDefaultSuccessSnackbar)().addEventListener("snackbar:close", () => {
-                            if (!data.isIgnoredUser) {
-                                window.location.reload();
-                            }
-                        });
-                    },
-                }));
+        async openDialog(button) {
+            const { ok, result } = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(button.dataset.endpoint);
+            if (!ok) {
+                return;
             }
-            this.dialogs.get(userId).open();
+            (0, Snackbar_1.showDefaultSuccessSnackbar)();
+            if (!result.type) {
+                button.closest(".jsIgnoredUser").remove();
+            }
         }
     }
     exports.UiUserIgnoreList = UiUserIgnoreList;
