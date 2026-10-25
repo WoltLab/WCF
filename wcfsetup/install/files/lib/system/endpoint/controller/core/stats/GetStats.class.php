@@ -15,6 +15,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\stat\IStatDailyHandler;
 use wcf\system\WCF;
+use wcf\util\DateUtil;
 
 /**
  * Returns the daily statistics of the requested types, grouped by the requested time unit.
@@ -79,7 +80,7 @@ final class GetStats implements IController
      * @param array<int, ObjectType> $objectTypes
      * @param 'daily'|'weekly'|'monthly'|'yearly' $dateGrouping
      * @param 'counter'|'total' $value
-     * @return list<array{label: string, data: list<array{date: string, value: mixed}>}>
+     * @return list<array{objectTypeID: int, label: string, data: list<array{date: string, value: mixed}>}>
      */
     private function getSeries(
         array $objectTypes,
@@ -92,6 +93,10 @@ final class GetStats implements IController
         $conditionBuilder->add('objectTypeID IN (?)', [\array_keys($objectTypes)]);
         $conditionBuilder->add('date BETWEEN ? AND ?', [$startDate, $endDate]);
 
+        $firstDayOfTheWeek = DateUtil::getFirstDayOfTheWeek();
+        // Mode 3 starts the week on Monday, mode 0 on Sunday.
+        $weekMode = $firstDayOfTheWeek === 1 ? 3 : 0;
+
         $sql = match ($dateGrouping) {
             'daily' => "SELECT      date, counter, total, objectTypeID
                         FROM        wcf1_stat_daily
@@ -100,7 +105,7 @@ final class GetStats implements IController
             'weekly' => "SELECT     MIN(date) AS date, SUM(counter) AS counter, MAX(total) AS total, objectTypeID
                          FROM       wcf1_stat_daily
                          " . $conditionBuilder . "
-                         GROUP BY   EXTRACT(YEAR FROM date), EXTRACT(WEEK FROM date), objectTypeID
+                         GROUP BY   YEARWEEK(date, " . $weekMode . "), objectTypeID
                          ORDER BY   date",
             'monthly' => "SELECT    MIN(date) AS date, SUM(counter) AS counter, MAX(total) AS total, objectTypeID
                           FROM      wcf1_stat_daily
@@ -129,6 +134,7 @@ final class GetStats implements IController
             $objectType = $objectTypes[$row['objectTypeID']];
             if (!isset($series[$row['objectTypeID']])) {
                 $series[$row['objectTypeID']] = [
+                    'objectTypeID' => $row['objectTypeID'],
                     'label' => WCF::getLanguage()->get('wcf.acp.stat.' . $objectType->objectType),
                     'data' => [],
                 ];
@@ -141,12 +147,36 @@ final class GetStats implements IController
             $counter = (int)($value === 'total' ? $row['total'] : $row['counter']);
 
             $series[$row['objectTypeID']]['data'][] = [
-                'date' => $row['date'],
+                'date' => $this->getPeriodStart($row['date'], $dateGrouping, $firstDayOfTheWeek),
                 'value' => $processor->getFormattedCounter($counter),
             ];
         }
 
         return \array_values($series);
+    }
+
+    /**
+     * Returns the first day of the period containing the given date, which places
+     * the points of all series at the same positions.
+     *
+     * @param 'daily'|'weekly'|'monthly'|'yearly' $dateGrouping
+     */
+    private function getPeriodStart(string $date, string $dateGrouping, int $firstDayOfTheWeek): string
+    {
+        return match ($dateGrouping) {
+            'daily' => $date,
+            'weekly' => $this->getWeekStart($date, $firstDayOfTheWeek),
+            'monthly' => \substr($date, 0, 8) . '01',
+            'yearly' => \substr($date, 0, 5) . '01-01',
+        };
+    }
+
+    private function getWeekStart(string $date, int $firstDayOfTheWeek): string
+    {
+        $day = new \DateTimeImmutable($date, new \DateTimeZone('UTC'));
+        $offset = ((int)$day->format('w') - $firstDayOfTheWeek + 7) % 7;
+
+        return $day->sub(new \DateInterval("P{$offset}D"))->format('Y-m-d');
     }
 }
 

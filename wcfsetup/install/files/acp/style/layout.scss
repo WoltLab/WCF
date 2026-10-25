@@ -1090,3 +1090,21 @@ html[data-color-scheme="dark"] {
 		height: 150px;
 	}
 }
+
+/* statistics */
+.acpStatChart {
+	height: 400px;
+	position: relative;
+}
+
+.acpStatTable {
+	margin-top: 20px;
+
+	> summary {
+		cursor: pointer;
+	}
+
+	> .tabularBox {
+		margin-top: 10px;
+	}
+}

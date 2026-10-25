@@ -2674,10 +2674,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.stat.value.counter"><![CDATA[Change]]></item>
 		<item name="wcf.acp.stat.value.total"><![CDATA[Total]]></item>
 		<item name="wcf.acp.stat.types"><![CDATA[Data]]></item>
-		<item name="wcf.acp.stat.timeFormat.daily"><![CDATA[%Y-%m-%d]]></item>
-		<item name="wcf.acp.stat.timeFormat.weekly"><![CDATA[%Y-%m-%d]]></item>
-		<item name="wcf.acp.stat.timeFormat.monthly"><![CDATA[%b %Y]]></item>
-		<item name="wcf.acp.stat.timeFormat.yearly"><![CDATA[%Y]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[Attachments storage usage (MB)]]></item>
@@ -2691,6 +2687,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.general"><![CDATA[General Data]]></item>
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.user"><![CDATA[User Data]]></item>
 		<item name="wcf.acp.stat.noData"><![CDATA[There is no data available for the set period.]]></item>
+		<item name="wcf.acp.stat.tableView"><![CDATA[Show as Table]]></item>
 	</category>
 	<category name="wcf.acp.systemCheck">
 		<item name="wcf.acp.systemCheck"><![CDATA[System Check]]></item>
