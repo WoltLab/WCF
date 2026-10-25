@@ -1500,50 +1500,6 @@ WCF.Action.Delete = Class.extend({
 
 if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * Basic implementation for deletion of nested elements.
-	 *
-	 * The implementation requires the nested elements to be grouped as numbered lists
-	 * (ol lists). The child elements of the deleted elements are moved to the parent
-	 * element of the deleted element.
-	 *
-	 * @see        WCF.Action.Delete
-	 *
-	 * @deprecated  5.4 Use `WoltLabSuite/Core/Ui/Object/Action/Delete` instead
-	 */
-	WCF.Action.NestedDelete = WCF.Action.Delete.extend({
-		/**
-		 * @see        WCF.Action.Delete.triggerEffect()
-		 */
-		triggerEffect: function (objectIDs) {
-			for (var $index in this._containers) {
-				var $container = $('#' + this._containers[$index]);
-				if (WCF.inArray($container.find(this._buttonSelector).data('objectID'), objectIDs)) {
-					// move children up
-					if ($container.has('ol').has('li').length) {
-						if ($container.is(':only-child')) {
-							$container.parent().replaceWith($container.find('> ol'));
-						}
-						else {
-							$container.replaceWith($container.find('> ol > li'));
-						}
-						
-						this._containers.splice(this._containers.indexOf($container.wcfIdentify()), 1);
-						this._didTriggerEffect($container);
-					}
-					else {
-						var self = this;
-						$container.wcfBlindOut('up', function () {
-							$(this).remove();
-							self._containers.splice(self._containers.indexOf($(this).wcfIdentify()), 1);
-							self._didTriggerEffect($(this));
-						});
-					}
-				}
-			}
-		}
-	});
-	
-	/**
 	 * Basic implementation for AJAXProxy-based toggle actions.
 	 *
 	 * @param        string                className
@@ -1715,23 +1671,6 @@ if (COMPILER_TARGET_DEFAULT) {
 	});
 }
 else {
-	WCF.Action.NestedDelete = WCF.Action.Delete.extend({
-		triggerEffect: function() {},
-		_buttonSelector: "",
-		_callback: {},
-		_className: "",
-		_containerSelector: "",
-		_containers: {},
-		init: function() {},
-		_initElements: function() {},
-		_click: function() {},
-		_didTriggerEffect: function() {},
-		_execute: function() {},
-		_sendRequest: function() {},
-		_success: function() {},
-		setCallback: function() {}
-	});
-	
 	WCF.Action.Toggle = Class.extend({
 		_buttonSelector: "",
 		_className: "",
