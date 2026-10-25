@@ -5,8 +5,8 @@ namespace wcf\system\endpoint\controller\core\paidSubscriptions\users;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\paid\subscription\user\DeletePaidSubscriptionUser;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
-use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
 use wcf\http\Helper;
 use wcf\system\endpoint\DeleteRequest;
 use wcf\system\endpoint\IController;
@@ -31,7 +31,7 @@ final class DeleteSubscriptionUser implements IController
 
         $user = Helper::fetchObjectFromRequestParameter($variables['id'], PaidSubscriptionUser::class);
 
-        (new PaidSubscriptionUserAction([$user], 'delete'))->executeAction();
+        new DeletePaidSubscriptionUser($user)();
 
         return new JsonResponse([]);
     }

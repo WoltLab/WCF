@@ -4,7 +4,7 @@ namespace wcf\command\paid\subscription\user;
 
 use wcf\command\paid\subscription\AddGroupMembership;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
-use wcf\data\paid\subscription\user\PaidSubscriptionUserEditor;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserBuilder;
 use wcf\event\paid\subscription\user\PaidSubscriptionUserRestored;
 use wcf\system\event\EventHandler;
 
@@ -37,6 +37,6 @@ final class RestorePaidSubscriptionUser
 
     private function restoreSubscription(PaidSubscriptionUser $subscriptionUser): void
     {
-        (new PaidSubscriptionUserEditor($subscriptionUser))->update(['isActive' => 1]);
+        PaidSubscriptionUserBuilder::forUpdate($subscriptionUser)->setIsActive(true)->update();
     }
 }

@@ -6,7 +6,7 @@ use wcf\command\paid\subscription\AddGroupMembership;
 use wcf\command\paid\subscription\RemoveGroupMembership;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
-use wcf\data\paid\subscription\user\PaidSubscriptionUserEditor;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserBuilder;
 use wcf\event\paid\subscription\user\PaidSubscriptionUserRevoked;
 use wcf\system\event\EventHandler;
 use wcf\system\WCF;
@@ -42,7 +42,7 @@ final class RevokePaidSubscriptionUser
 
     private function revokeSubscription(PaidSubscriptionUser $subscriptionUser): void
     {
-        (new PaidSubscriptionUserEditor($subscriptionUser))->update(['isActive' => 0]);
+        PaidSubscriptionUserBuilder::forUpdate($subscriptionUser)->setIsActive(false)->update();
     }
 
     /**

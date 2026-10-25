@@ -4,6 +4,7 @@ namespace wcf\data\paid\subscription\user;
 
 use wcf\command\paid\subscription\AddGroupMembership;
 use wcf\command\paid\subscription\RemoveGroupMembership;
+use wcf\command\paid\subscription\user\DeletePaidSubscriptionUser;
 use wcf\command\paid\subscription\user\ExtendPaidSubscriptionUser;
 use wcf\command\paid\subscription\user\RestorePaidSubscriptionUser;
 use wcf\command\paid\subscription\user\RevokePaidSubscriptionUser;
@@ -20,6 +21,7 @@ use wcf\util\DateUtil;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @deprecated  6.3 Use `PaidSubscriptionUserBuilder` with the `CreatePaidSubscriptionUser` / `UpdatePaidSubscriptionUser` commands instead.
  *
  * @extends AbstractDatabaseObjectAction<PaidSubscriptionUser, PaidSubscriptionUserEditor>
  */
@@ -112,12 +114,21 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
         }
     }
 
+    /**
+     * @deprecated 6.3 Use the `DeletePaidSubscriptionUser` command instead.
+     */
     #[\Override]
     public function delete()
     {
-        $this->revoke();
+        if ($this->objects === []) {
+            $this->readObjects();
+        }
 
-        return parent::delete();
+        foreach ($this->getObjects() as $editor) {
+            new DeletePaidSubscriptionUser($editor->getDecoratedObject())();
+        }
+
+        return \count($this->objects);
     }
 
     /**

@@ -3,9 +3,9 @@
 namespace wcf\system\user\notification\event;
 
 use wcf\command\paid\subscription\CreatePaidSubscription;
+use wcf\command\paid\subscription\user\CreatePaidSubscriptionUser;
 use wcf\data\paid\subscription\PaidSubscriptionBuilder;
-use wcf\data\paid\subscription\user\PaidSubscriptionUser;
-use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserBuilder;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 use wcf\data\user\UserProfile;
 use wcf\page\PaidSubscriptionListPage;
@@ -88,17 +88,13 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
                 ->setGroupIDs([])
         ))();
 
-        /** @var PaidSubscriptionUser $paidSubscriptionUser */
-        $paidSubscriptionUser = (new PaidSubscriptionUserAction([], 'create', [
-            'data' => [
-                'startDate' => \TIME_NOW - 24 * 24 * 60 * 60,
-                'endDate' => \TIME_NOW + 24 * 60 * 60,
-                'isActive' => 1,
-                'sentExpirationNotification' => 0,
-            ],
-            'subscription' => $paidSubscription,
-            'user' => $recipient,
-        ]))->executeAction()['returnValues'];
+        $paidSubscriptionUser = (new CreatePaidSubscriptionUser(
+            PaidSubscriptionUserBuilder::forCreate()
+                ->setSubscription($paidSubscription)
+                ->setUserID($recipient->userID)
+                ->setStartDate(\TIME_NOW - 24 * 24 * 60 * 60)
+                ->setEndDate(\TIME_NOW + 24 * 60 * 60)
+        ))();
 
         $paidSubscriptionUser->setSubscription($paidSubscription);
 

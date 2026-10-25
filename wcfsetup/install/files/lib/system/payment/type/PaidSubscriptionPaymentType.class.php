@@ -2,6 +2,7 @@
 
 namespace wcf\system\payment\type;
 
+use wcf\command\paid\subscription\user\CreatePaidSubscriptionUser;
 use wcf\command\paid\subscription\user\ExtendPaidSubscriptionUser;
 use wcf\command\paid\subscription\user\RestorePaidSubscriptionUser;
 use wcf\command\paid\subscription\user\RevokePaidSubscriptionUser;
@@ -9,7 +10,7 @@ use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLog;
 use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLogBuilder;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
-use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserBuilder;
 use wcf\data\user\User;
 use wcf\system\exception\SystemException;
 
@@ -77,12 +78,11 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
                 // active/extend subscription
                 if ($userSubscription === null) {
                     // create new subscription
-                    $action = new PaidSubscriptionUserAction([], 'create', [
-                        'user' => $user,
-                        'subscription' => $subscription,
-                    ]);
-                    $returnValues = $action->executeAction();
-                    $userSubscription = $returnValues['returnValues'];
+                    $userSubscription = (new CreatePaidSubscriptionUser(
+                        PaidSubscriptionUserBuilder::forCreate()
+                            ->setSubscription($subscription)
+                            ->setUser($user)
+                    ))();
                 } else {
                     new ExtendPaidSubscriptionUser($userSubscription)();
                 }

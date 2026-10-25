@@ -3,103 +3,33 @@
 namespace wcf\acp\form;
 
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
-use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
-use wcf\form\AbstractForm;
+use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\WCF;
-use wcf\util\DateUtil;
 
 /**
  * Shows the user subscription edit form.
  *
  * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 class PaidSubscriptionUserEditForm extends PaidSubscriptionUserAddForm
 {
     /**
-     * subscription user id
-     * @var int
+     * @inheritDoc
      */
-    public $subscriptionUserID = 0;
-
-    /**
-     * subscription user object
-     * @var ?PaidSubscriptionUser
-     */
-    public $subscriptionUser;
-
-    /**
-     * subscription end date
-     * @var string
-     */
-    public $endDate = '';
-
-    /**
-     * subscription end date
-     * @var ?\DateTime
-     */
-    public $endDateTime;
+    public string $formAction = 'edit';
 
     #[\Override]
     public function readParameters()
     {
-        AbstractForm::readParameters();
+        parent::readParameters();
 
-        if (isset($_REQUEST['id'])) {
-            $this->subscriptionUserID = \intval($_REQUEST['id']);
-        }
-        $this->subscriptionUser = new PaidSubscriptionUser($this->subscriptionUserID);
-        if ($this->subscriptionUser->isNil() || $this->subscriptionUser->endDate === 0 || $this->subscriptionUser->isActive === 0) {
+        $this->formObject = Helper::fetchObjectFromQueryParameter(PaidSubscriptionUser::class);
+        if ($this->formObject->endDate === 0 || $this->formObject->isActive === 0) {
             throw new IllegalLinkException();
         }
-        $this->subscription = $this->subscriptionUser->getSubscription();
-    }
 
-    #[\Override]
-    protected function validateUsername()
-    {
-    }
-
-    #[\Override]
-    public function save()
-    {
-        AbstractForm::save();
-
-        $data = [
-            'endDate' => $this->endDateTime->getTimestamp(),
-        ];
-        $this->objectAction = new PaidSubscriptionUserAction([$this->subscriptionUser], 'update', [
-            'data' => $data,
-        ]);
-        $this->objectAction->executeAction();
-        $this->saved();
-
-        // show success message
-        WCF::getTPL()->assign('success', true);
-    }
-
-    #[\Override]
-    public function readData()
-    {
-        AbstractForm::readData();
-
-        if ($_POST === []) {
-            $d = DateUtil::getDateTimeByTimestamp($this->subscriptionUser->endDate);
-            $this->endDate = $d->format('Y-m-d');
-        }
-    }
-
-    #[\Override]
-    public function assignVariables()
-    {
-        parent::assignVariables();
-
-        WCF::getTPL()->assign([
-            'subscriptionUserID' => $this->subscriptionUserID,
-            'subscriptionUser' => $this->subscriptionUser,
-            'action' => 'edit',
-        ]);
+        $this->subscription = $this->formObject->getSubscription();
     }
 }

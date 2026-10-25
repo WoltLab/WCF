@@ -2,26 +2,33 @@
 
 namespace wcf\acp\form;
 
+use wcf\command\paid\subscription\user\CreatePaidSubscriptionUser;
 use wcf\command\paid\subscription\user\ExtendPaidSubscriptionUser;
+use wcf\command\paid\subscription\user\UpdatePaidSubscriptionUser;
+use wcf\data\DatabaseObjectBuilder;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
-use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
-use wcf\data\user\User;
-use wcf\form\AbstractForm;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserBuilder;
+use wcf\form\AbstractDatabaseObjectBuilderForm;
 use wcf\http\Helper;
-use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\DateFormField;
+use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\user\UserFormField;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
-use wcf\util\StringUtil;
 
 /**
  * Shows the user subscription add form.
  *
  * @author  Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @extends AbstractDatabaseObjectBuilderForm<PaidSubscriptionUser, PaidSubscriptionUserBuilder>
  */
-class PaidSubscriptionUserAddForm extends AbstractForm
+class PaidSubscriptionUserAddForm extends AbstractDatabaseObjectBuilderForm
 {
     /**
      * @inheritDoc
@@ -39,157 +46,125 @@ class PaidSubscriptionUserAddForm extends AbstractForm
     public $neededPermissions = ['admin.paidSubscription.canManageSubscription'];
 
     /**
-     * subscription object
-     * @var ?PaidSubscription
+     * paid subscription the user is subscribed to
      */
-    public $subscription;
-
-    /**
-     * username
-     * @var string
-     */
-    public $username = '';
-
-    /**
-     * user object
-     * @var ?User
-     */
-    public $user;
-
-    /**
-     * subscription end date
-     * @var string
-     */
-    public $endDate = '';
-
-    /**
-     * subscription end date
-     * @var ?\DateTime
-     */
-    public $endDateTime;
+    public PaidSubscription $subscription;
 
     #[\Override]
     public function readParameters()
     {
         parent::readParameters();
 
-        $this->subscription = Helper::fetchObjectFromQueryParameter(PaidSubscription::class);
-    }
-
-    #[\Override]
-    public function readFormParameters()
-    {
-        parent::readFormParameters();
-
-        if (isset($_POST['username'])) {
-            $this->username = StringUtil::trim($_POST['username']);
-        }
-        if (isset($_POST['endDate'])) {
-            $this->endDate = $_POST['endDate'];
+        if ($this->formAction === 'create') {
+            $this->subscription = Helper::fetchObjectFromQueryParameter(PaidSubscription::class);
         }
     }
 
     #[\Override]
-    public function validate()
+    protected function getDatabaseObjectBuilder(): PaidSubscriptionUserBuilder
     {
-        parent::validate();
-
-        $this->validateUsername();
-        $this->validateEndDate();
-    }
-
-    /**
-     * Validates given username.
-     *
-     * @return void
-     * @throws UserInputException
-     */
-    protected function validateUsername()
-    {
-        if (empty($this->username)) {
-            throw new UserInputException('username');
+        if ($this->formObject !== null) {
+            return PaidSubscriptionUserBuilder::forUpdate($this->formObject);
         }
-        $this->user = User::getUserByUsername($this->username);
-        if ($this->user->isGuest()) {
-            throw new UserInputException('username', 'notFound');
-        }
-    }
 
-    /**
-     * Validates given end date.
-     *
-     * @return void
-     * @throws UserInputException
-     */
-    protected function validateEndDate()
-    {
-        if ($this->subscription->subscriptionLength !== 0) {
-            $this->endDateTime = \DateTime::createFromFormat('Y-m-d', $this->endDate, new \DateTimeZone('UTC'));
-            if ($this->endDateTime === false || $this->endDateTime->getTimestamp() < \TIME_NOW) {
-                throw new UserInputException('endDate');
-            }
-        }
+        return PaidSubscriptionUserBuilder::forCreate()
+            ->setSubscription($this->subscription)
+            ->setStartDate(\TIME_NOW);
     }
 
     #[\Override]
-    public function save()
+    protected function getCommand(DatabaseObjectBuilder $builder): callable
     {
-        parent::save();
+        if ($this->formObject !== null) {
+            return new UpdatePaidSubscriptionUser($builder);
+        }
 
-        $userSubscription = PaidSubscriptionUser::getSubscriptionUser(
+        $subscriptionUser = PaidSubscriptionUser::getSubscriptionUser(
             $this->subscription->subscriptionID,
-            $this->user->userID
+            (int)$builder->properties['userID']
         );
-        $data = [];
-        if ($this->subscription->subscriptionLength !== 0) {
-            $data['endDate'] = $this->endDateTime->getTimestamp();
+        if ($subscriptionUser === null) {
+            return new CreatePaidSubscriptionUser($builder);
         }
-        if ($userSubscription === null) {
-            // create new subscription
-            $this->objectAction = new PaidSubscriptionUserAction([], 'create', [
-                'user' => $this->user,
-                'subscription' => $this->subscription,
-                'data' => $data,
-            ]);
-            $this->objectAction->executeAction();
-        } else {
-            new ExtendPaidSubscriptionUser(
-                $userSubscription,
-                $data['endDate'] ?? null,
-            )();
-        }
-        $this->saved();
 
-        // reset values
-        $this->username = '';
-        $this->setDefaultEndDate();
+        // The user is already subscribed, extend the existing subscription instead.
+        $endDate = isset($builder->properties['endDate']) ? (int)$builder->properties['endDate'] : null;
 
-        // show success message
-        WCF::getTPL()->assign('success', true);
+        return static function () use ($subscriptionUser, $endDate): PaidSubscriptionUser {
+            new ExtendPaidSubscriptionUser($subscriptionUser, $endDate)();
+
+            return new PaidSubscriptionUser($subscriptionUser->subscriptionUserID);
+        };
     }
 
     #[\Override]
-    public function readData()
+    protected function createForm(): void
     {
-        parent::readData();
+        parent::createForm();
 
-        if ($_POST === []) {
-            $this->setDefaultEndDate();
+        $container = FormContainer::create('data');
+
+        if ($this->formObject === null) {
+            $container->appendChildren([
+                UserFormField::create('user')
+                    ->label('wcf.user.username')
+                    ->required()
+                    ->autoFocus()
+                    ->saveValueCallback(static function (PaidSubscriptionUserBuilder $builder, UserFormField $field): void {
+                        $builder->setUserID((int)$field->getSaveValue());
+                    }),
+            ]);
         }
+
+        // Subscriptions without a length never expire, existing subscriptions
+        // with an end date can only be edited if they expire.
+        if ($this->formObject !== null || $this->subscription->subscriptionLength !== 0) {
+            $endDateField = DateFormField::create('endDate')
+                ->label('wcf.acp.paidSubscription.user.endDate')
+                ->required()
+                // The selected day ends the subscription at midnight UTC, the
+                // current day would therefore result in an expired subscription.
+                ->earliestDate(\TIME_NOW + 86400)
+                ->saveValueCallback(static function (PaidSubscriptionUserBuilder $builder, DateFormField $field): void {
+                    $builder->setEndDate((int)$field->getSaveValue());
+                })
+                ->loadValueCallback(static function (PaidSubscriptionUser $object, IFormField $field): void {
+                    $field->value($object->endDate);
+                });
+
+            if ($this->formObject === null) {
+                $endDateField->value($this->getDefaultEndDate());
+            }
+
+            $container->appendChildren([$endDateField]);
+        }
+
+        $this->form->appendChildren([$container]);
     }
 
     /**
-     * Sets the default value for the end date.
-     *
-     * @return void
+     * Returns the end date of a subscription that starts now.
      */
-    protected function setDefaultEndDate()
+    protected function getDefaultEndDate(): int
     {
-        if ($this->subscription->subscriptionLength !== 0) {
-            $d = DateUtil::getDateTimeByTimestamp(\TIME_NOW);
-            $d->add($this->subscription->getDateInterval());
-            $this->endDate = $d->format('Y-m-d');
+        $d = DateUtil::getDateTimeByTimestamp(\TIME_NOW);
+        $d->add($this->subscription->getDateInterval());
+
+        return $d->getTimestamp();
+    }
+
+    #[\Override]
+    protected function setFormAction(): void
+    {
+        if ($this->formObject !== null) {
+            parent::setFormAction();
+
+            return;
         }
+
+        $this->form->action(LinkHandler::getInstance()->getControllerLink(static::class, [
+            'id' => $this->subscription->subscriptionID,
+        ]));
     }
 
     #[\Override]
@@ -198,11 +173,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'subscriptionID' => $this->subscription->subscriptionID,
             'subscription' => $this->subscription,
-            'username' => $this->username,
-            'endDate' => $this->endDate,
-            'action' => 'add',
         ]);
     }
 }

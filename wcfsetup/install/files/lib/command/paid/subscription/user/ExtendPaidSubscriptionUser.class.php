@@ -5,7 +5,7 @@ namespace wcf\command\paid\subscription\user;
 use wcf\command\paid\subscription\AddGroupMembership;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
-use wcf\data\paid\subscription\user\PaidSubscriptionUserEditor;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserBuilder;
 use wcf\event\paid\subscription\user\PaidSubscriptionUserExtended;
 use wcf\system\event\EventHandler;
 use wcf\util\DateUtil;
@@ -60,10 +60,10 @@ final class ExtendPaidSubscriptionUser
 
     private function extendSubscription(PaidSubscriptionUser $subscriptionUser, int $endDate): void
     {
-        (new PaidSubscriptionUserEditor($subscriptionUser))->update([
-            'endDate' => $endDate,
-            'isActive' => 1,
-            'sentExpirationNotification' => 0,
-        ]);
+        PaidSubscriptionUserBuilder::forUpdate($subscriptionUser)
+            ->setEndDate($endDate)
+            ->setIsActive(true)
+            ->setSentExpirationNotification(false)
+            ->update();
     }
 }

@@ -3,7 +3,7 @@
 namespace wcf\system\cronjob;
 
 use wcf\data\cronjob\Cronjob;
-use wcf\data\paid\subscription\user\PaidSubscriptionUserEditor;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserBuilder;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\user\notification\object\PaidSubscriptionUserUserNotificationObject;
@@ -72,9 +72,9 @@ class ExpiringPaidSubscriptionUserCronjob extends AbstractCronjob
         // considered if the user does not want to receive notifications)
         WCF::getDB()->beginTransaction();
         foreach ($paidSubscriptionUserList as $paidSubscriptionUser) {
-            (new PaidSubscriptionUserEditor($paidSubscriptionUser))->update([
-                'sentExpirationNotification' => 1,
-            ]);
+            PaidSubscriptionUserBuilder::forUpdate($paidSubscriptionUser)
+                ->setSentExpirationNotification(true)
+                ->update();
         }
         WCF::getDB()->commitTransaction();
     }
