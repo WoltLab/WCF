@@ -1,19 +1,17 @@
 {include file='header' pageTitle='wcf.acp.group.'|concat:$action}
 
 <script data-relocate="true">
-	$(function() {
-		{if $action === 'add' && $isBlankForm}
-			elBySelAll('.jsBbcodeSelectOptionHtml input[type="checkbox"]', undefined, function (checkbox) {
-				checkbox.checked = true;
-			});
-		{elseif $action == 'edit' && ($groupIsEveryone || $groupIsGuest || $groupIsUsers)}
-			elBySelAll('.jsBbcodeSelectOptionHtml', undefined, function (bbcodeHtml) {
-				elBySel('input[type="checkbox"]', bbcodeHtml).checked = true;
-				
-				elHide(bbcodeHtml);
-			});
-		{/if}
-	});
+	{if $action === 'add' && $isBlankForm}
+		document.querySelectorAll('.jsBbcodeSelectOptionHtml input[type="checkbox"]').forEach((checkbox) => {
+			checkbox.checked = true;
+		});
+	{elseif $action == 'edit' && ($groupIsEveryone || $groupIsGuest || $groupIsUsers)}
+		document.querySelectorAll(".jsBbcodeSelectOptionHtml").forEach((bbcodeHtml) => {
+			bbcodeHtml.querySelector('input[type="checkbox"]').checked = true;
+			
+			bbcodeHtml.hidden = true;
+		});
+	{/if}
 </script>
 
 <header class="contentHeader">

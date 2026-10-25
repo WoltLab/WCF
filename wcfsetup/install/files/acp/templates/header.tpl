@@ -133,11 +133,11 @@
 	{js application='wcf' file='WCF.Label' bundle='WCF.Combined'}
 	<script>
 		$(function() {
-			if (jQuery.browser.touch) $('html').addClass('touch');
-
 			{event name='javascriptInit'}
 			
-			$('form[method=get]').attr('method', 'post');
+			document.querySelectorAll('form[method="get"]').forEach((form) => {
+				form.method = "post";
+			});
 			
 			// rewrites legacy links using the `dereferrer.php` service
 			// see https://github.com/WoltLab/WCF/issues/2557

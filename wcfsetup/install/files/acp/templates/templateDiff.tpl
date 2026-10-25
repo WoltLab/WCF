@@ -125,19 +125,29 @@
 		</div>
 	</div>
 	<script data-relocate="true">
-	$(function() {
+	{
 		// sync scrolling
-		var sync = $('#left, #right');
-		function syncPosition() {
-			var other = sync.not(this);
-			other.off('scroll');
-			other.prop('scrollLeft', $(this).prop('scrollLeft'));
-			other.prop('scrollTop', $(this).prop('scrollTop'));
-			setTimeout(function () { other.on('scroll', syncPosition); }, 150);
+		const left = document.getElementById("left");
+		const right = document.getElementById("right");
+		let syncTarget = null;
+		let syncTimer = 0;
+		function syncPosition(source, target) {
+			// Ignore the scroll event caused by synchronizing the other side.
+			if (syncTarget === source) {
+				return;
+			}
+			
+			syncTarget = target;
+			target.scrollLeft = source.scrollLeft;
+			target.scrollTop = source.scrollTop;
+			
+			window.clearTimeout(syncTimer);
+			syncTimer = window.setTimeout(() => { syncTarget = null; }, 150);
 		}
 		
-		sync.on('scroll', syncPosition);
-	});
+		left.addEventListener("scroll", () => syncPosition(left, right), { passive: true });
+		right.addEventListener("scroll", () => syncPosition(right, left), { passive: true });
+	}
 	</script>
 {/if}
 
