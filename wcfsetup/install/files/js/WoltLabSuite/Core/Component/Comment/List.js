@@ -190,7 +190,9 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
                     });
                 }
                 else {
-                    comment.querySelector(".commentLoadNextResponses__button").textContent = phrase;
+                    const button = comment.querySelector(".commentLoadNextResponses__button");
+                    button.textContent = phrase;
+                    button.disabled = false;
                 }
             }
             else {
