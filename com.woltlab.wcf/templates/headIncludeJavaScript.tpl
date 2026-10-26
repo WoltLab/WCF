@@ -118,10 +118,10 @@ window.addEventListener('pageshow', function(event) {
 	require(["WoltLabSuite/Core/Devtools/Style/LiveReload"], (LiveReload) => LiveReload.watch());
 </script>
 <style>
-button:not([type]) {
+button:not([type]):not(.fancybox__container *) {
 	border: 5px solid red !important;
 }
-button:not([type])::before {
+button:not([type]):not(.fancybox__container *)::before {
 	background-color: #fff !important;
 	color: red !important;
 	content: "BUTTON_WITHOUT_TYPE";
