@@ -114,7 +114,7 @@ final class AttachmentBBCode extends AbstractBBCode
             );
         } else {
             $result = \sprintf(
-                '<span title="%s" class="%s" style="width: %s; display: inline-flex;">%s</span>',
+                '<span title="%s" class="%s" style="width: %s; display: inline-flex; vertical-align: middle">%s</span>',
                 $title,
                 $class,
                 $width,
@@ -176,7 +176,7 @@ final class AttachmentBBCode extends AbstractBBCode
             );
         } else {
             $result = \sprintf(
-                '<span class="%s" style="width: %s; display: inline-flex">%s%s</span>',
+                '<span class="%s" style="width: %s; display: inline-flex; vertical-align: middle">%s%s</span>',
                 $class,
                 $width,
                 $imageElement,
