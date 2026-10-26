@@ -2989,8 +2989,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a different template.]]></item>
 		<item name="wcf.acp.template.name.error.invalid"><![CDATA[This name is invalid.]]></item>
 		<item name="wcf.acp.template.name.error.systemCritical"><![CDATA[This template is required by the system and cannot be customized.]]></item>
-		<item name="wcf.acp.template.group.error.shared"><![CDATA[The template must be in the “Shared templates” template group.]]></item>
-		<item name="wcf.acp.template.group.error.notShared"><![CDATA[The template must not be in the “Shared templates” template group.]]></item>
+		<item name="wcf.acp.template.name.error.reservedPrefix"><![CDATA[Templates whose name begins with “email_” or “shared_” can only be created by copying an existing template.]]></item>
 		<item name="wcf.acp.template.group.button.showTemplates"><![CDATA[Show Templates]]></item>
 	</category>
 	<category name="wcf.acp.user">
@@ -5907,5 +5906,7 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.style.protected.title"/>
 	<item name="wcf.user.following.noUsers"/>
 	<item name="wcf.user.ignoredUsers.noUsers"/>
+	<item name="wcf.acp.template.group.error.shared"/>
+	<item name="wcf.acp.template.group.error.notShared"/>
 </delete>
 </language>

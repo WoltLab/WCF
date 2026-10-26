@@ -3060,8 +3060,7 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[Der eingegebene Name wird bereits von einem anderen Template verwendet.]]></item>
 		<item name="wcf.acp.template.name.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Namen eingegeben.]]></item>
 		<item name="wcf.acp.template.name.error.systemCritical"><![CDATA[Dieses Template wird vom System benötigt und kann nicht angepasst werden.]]></item>
-		<item name="wcf.acp.template.group.error.shared"><![CDATA[Das Template muss in die Templategruppe „Geteilte-Templates“.]]></item>
-		<item name="wcf.acp.template.group.error.notShared"><![CDATA[Das Template darf nicht in die Templategruppe „Geteilte-Templates“.]]></item>
+		<item name="wcf.acp.template.name.error.reservedPrefix"><![CDATA[Templates, deren Name mit „email_“ oder „shared_“ beginnt, können nur durch das Kopieren eines vorhandenen Templates erstellt werden.]]></item>
 		<item name="wcf.acp.template.group.button.showTemplates"><![CDATA[Templates anzeigen]]></item>
 	</category>
 	<category name="wcf.acp.user">
@@ -5905,5 +5904,7 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.style.protected.title"/>
 	<item name="wcf.user.following.noUsers"/>
 	<item name="wcf.user.ignoredUsers.noUsers"/>
+	<item name="wcf.acp.template.group.error.shared"/>
+	<item name="wcf.acp.template.group.error.notShared"/>
 </delete>
 </language>

@@ -75,111 +75,114 @@ class TemplateAddForm extends AbstractFormBuilderForm
     {
         parent::createForm();
 
+        $specialTemplateGroups = $this->getSpecialTemplateGroups();
+        $fixedTemplateGroup = $this->getFixedTemplateGroup();
+
+        $templateGroupFormField = SingleSelectionFormField::create('templateGroupID')
+            ->label('wcf.acp.template.group');
+
+        $templateNameFormField = TextFormField::create('templateName')
+            ->required()
+            ->label('wcf.global.name')
+            ->addValidator(
+                new FormFieldValidator('fileName', function (TextFormField $formField) {
+                    $tplName = $formField->getSaveValue();
+                    if (!\preg_match('/^[a-z0-9_\-]+$/i', $tplName)) {
+                        $formField->addValidationError(
+                            new FormFieldValidationError('invalid', 'wcf.acp.template.name.error.invalid')
+                        );
+                    }
+                })
+            )
+            ->addValidator(
+                new FormFieldValidator('systemCritical', static function (TextFormField $formField) {
+                    if (Template::isSystemCritical($formField->getSaveValue())) {
+                        $formField->addValidationError(
+                            new FormFieldValidationError(
+                                'systemCritical',
+                                'wcf.acp.template.name.error.systemCritical'
+                            )
+                        );
+                    }
+                })
+            );
+
+        if ($fixedTemplateGroup !== null) {
+            $templateGroupFormField
+                ->options([$fixedTemplateGroup->templateGroupID => $fixedTemplateGroup->templateGroupName])
+                ->immutable()
+                ->value($fixedTemplateGroup->templateGroupID);
+
+            $templateNameFormField->immutable();
+            if (isset($this->copiedTemplate)) {
+                // Immutable fields are not read from the request.
+                $templateNameFormField->value($this->copiedTemplate->templateName);
+            }
+        } else {
+            $templateGroupFormField->options(
+                new TemplateGroupNodeTree(0, \array_keys($specialTemplateGroups)),
+                true
+            );
+
+            $templateNameFormField->addValidator(
+                new FormFieldValidator('reservedPrefix', function (TextFormField $formField) {
+                    if ($this->getRequiredTemplateGroup($formField->getSaveValue()) !== null) {
+                        $formField->addValidationError(
+                            new FormFieldValidationError(
+                                'reservedPrefix',
+                                'wcf.acp.template.name.error.reservedPrefix'
+                            )
+                        );
+                    }
+                })
+            );
+        }
+
+        $templateNameFormField->addValidator(
+            new FormFieldValidator('unique', function (TextFormField $formField) {
+                $templateGroupIDFormField = $formField->getDocument()->getFormField('templateGroupID');
+                $conditionBuilder = new PreparedStatementConditionBuilder();
+                $conditionBuilder->add('templateName = ?', [$formField->getSaveValue()]);
+                $conditionBuilder->add('templateGroupID = ?', [
+                    $templateGroupIDFormField->getSaveValue()
+                ]);
+
+                if (isset($this->copiedTemplate)) {
+                    $conditionBuilder->add(
+                        '(packageID = ? OR application = ?)',
+                        [$this->copiedTemplate->packageID, $this->copiedTemplate->application]
+                    );
+                } else {
+                    $conditionBuilder->add('packageID = ?', [1]);
+                }
+
+                if ($this->formAction === 'edit') {
+                    \assert($this->formObject instanceof DatabaseObject);
+                    $conditionBuilder->add('templateID <> ?', [$this->formObject->getObjectID()]);
+                }
+
+                $sql = "SELECT  COUNT(*)
+                        FROM    wcf1_template
+                        " . $conditionBuilder;
+                $statement = WCF::getDB()->prepare($sql);
+                $statement->execute($conditionBuilder->getParameters());
+
+                if ($statement->fetchSingleColumn() > 0) {
+                    $formField->addValidationError(
+                        new FormFieldValidationError(
+                            'notUnique',
+                            'wcf.acp.template.name.error.notUnique'
+                        )
+                    );
+                }
+            })
+        );
+
         $this->form->appendChildren([
             FormContainer::create('general')
                 ->appendChildren([
-                    SingleSelectionFormField::create('templateGroupID')
-                        ->label('wcf.acp.template.group')
-                        ->options(new TemplateGroupNodeTree(), true)
-                        ->addValidator(
-                            new FormFieldValidator('sharedTemplate', function (SingleSelectionFormField $formField) {
-                                $templateGroupID = $formField->getSaveValue();
-                                $templateGroup = TemplateGroupCacheBuilder::getInstance()->getData(
-                                    [],
-                                    $templateGroupID
-                                );
-                                \assert($templateGroup instanceof TemplateGroup);
-
-                                $tplNameFormField = $formField->getDocument()->getFormField('templateName');
-                                $tplName = $tplNameFormField->getSaveValue();
-
-                                if (
-                                    TemplateEngine::isSharedTemplate($tplName)
-                                    && $templateGroup->templateGroupFolderName !== '_wcf_shared/'
-                                ) {
-                                    $formField->addValidationError(
-                                        new FormFieldValidationError(
-                                            'invalid',
-                                            'wcf.acp.template.group.error.shared'
-                                        )
-                                    );
-                                } elseif (
-                                    !TemplateEngine::isSharedTemplate($tplName)
-                                    && $templateGroup->templateGroupFolderName === '_wcf_shared/'
-                                ) {
-                                    $formField->addValidationError(
-                                        new FormFieldValidationError(
-                                            'invalid',
-                                            'wcf.acp.template.group.error.notShared'
-                                        )
-                                    );
-                                }
-                            })
-                        ),
-                    TextFormField::create('templateName')
-                        ->required()
-                        ->label('wcf.global.name')
-                        ->addValidator(
-                            new FormFieldValidator('fileName', function (TextFormField $formField) {
-                                $tplName = $formField->getSaveValue();
-                                if (!\preg_match('/^[a-z0-9_\-]+$/i', $tplName)) {
-                                    $formField->addValidationError(
-                                        new FormFieldValidationError('invalid', 'wcf.acp.template.name.error.invalid')
-                                    );
-                                }
-                            })
-                        )
-                        ->addValidator(
-                            new FormFieldValidator('systemCritical', static function (TextFormField $formField) {
-                                if (Template::isSystemCritical($formField->getSaveValue())) {
-                                    $formField->addValidationError(
-                                        new FormFieldValidationError(
-                                            'systemCritical',
-                                            'wcf.acp.template.name.error.systemCritical'
-                                        )
-                                    );
-                                }
-                            })
-                        )
-                        ->addValidator(
-                            new FormFieldValidator('unique', function (TextFormField $formField) {
-                                $templateGroupIDFormField = $formField->getDocument()->getFormField('templateGroupID');
-                                $conditionBuilder = new PreparedStatementConditionBuilder();
-                                $conditionBuilder->add('templateName = ?', [$formField->getSaveValue()]);
-                                $conditionBuilder->add('templateGroupID = ?', [
-                                    $templateGroupIDFormField->getSaveValue()
-                                ]);
-
-                                if (isset($this->copiedTemplate)) {
-                                    $conditionBuilder->add(
-                                        '(packageID = ? OR application = ?)',
-                                        [$this->copiedTemplate->packageID, $this->copiedTemplate->application]
-                                    );
-                                } else {
-                                    $conditionBuilder->add('packageID = ?', [1]);
-                                }
-
-                                if ($this->formAction === 'edit') {
-                                    \assert($this->formObject instanceof DatabaseObject);
-                                    $conditionBuilder->add('templateID <> ?', [$this->formObject->getObjectID()]);
-                                }
-
-                                $sql = "SELECT  COUNT(*)
-                                        FROM    wcf1_template
-                                        " . $conditionBuilder;
-                                $statement = WCF::getDB()->prepare($sql);
-                                $statement->execute($conditionBuilder->getParameters());
-
-                                if ($statement->fetchSingleColumn() > 0) {
-                                    $formField->addValidationError(
-                                        new FormFieldValidationError(
-                                            'notUnique',
-                                            'wcf.acp.template.name.error.notUnique'
-                                        )
-                                    );
-                                }
-                            })
-                        ),
+                    $templateGroupFormField,
+                    $templateNameFormField,
                 ]),
             FormContainer::create('source')
                 ->label('wcf.acp.template.source')
@@ -279,5 +282,82 @@ class TemplateAddForm extends AbstractFormBuilderForm
             $templateName = $this->form->getFormField('templateName');
             $templateName->value($this->copiedTemplate->templateName);
         }
+    }
+
+    #[\Override]
+    public function validate()
+    {
+        // An unavailable selection is skipped entirely, which would save the
+        // template without a template group, shadowing the default template.
+        if (!$this->hasTemplateGroups()) {
+            throw new IllegalLinkException();
+        }
+
+        parent::validate();
+    }
+
+    #[\Override]
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'hasTemplateGroups' => $this->hasTemplateGroups(),
+        ]);
+    }
+
+    private function hasTemplateGroups(): bool
+    {
+        return $this->form->getFormField('templateGroupID')->isAvailable();
+    }
+
+    /**
+     * Returns the template group that the template is bound to, or `null` if
+     * any regular template group may be selected.
+     */
+    private function getFixedTemplateGroup(): ?TemplateGroup
+    {
+        if (isset($this->copiedTemplate)) {
+            return $this->getRequiredTemplateGroup($this->copiedTemplate->templateName);
+        }
+
+        if ($this->formObject instanceof Template) {
+            return $this->getSpecialTemplateGroups()[$this->formObject->templateGroupID] ?? null;
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the special template group that templates with the given name
+     * must be placed in, or `null` for regular templates.
+     */
+    private function getRequiredTemplateGroup(string $templateName): ?TemplateGroup
+    {
+        $folderName = match (true) {
+            \str_starts_with($templateName, 'email_') => '_wcf_email/',
+            TemplateEngine::isSharedTemplate($templateName) => '_wcf_shared/',
+            default => null,
+        };
+
+        if ($folderName === null) {
+            return null;
+        }
+
+        return \array_find(
+            $this->getSpecialTemplateGroups(),
+            static fn(TemplateGroup $templateGroup) => $templateGroup->templateGroupFolderName === $folderName
+        );
+    }
+
+    /**
+     * @return array<int, TemplateGroup>
+     */
+    private function getSpecialTemplateGroups(): array
+    {
+        return \array_filter(
+            TemplateGroupCacheBuilder::getInstance()->getData(),
+            static fn(TemplateGroup $templateGroup) => $templateGroup->isImmutable()
+        );
     }
 }
