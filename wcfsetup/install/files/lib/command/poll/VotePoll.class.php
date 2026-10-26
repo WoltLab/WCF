@@ -30,24 +30,34 @@ final class VotePoll
 
     public function __invoke(): void
     {
-        $sql = "SELECT  optionID
-                FROM    wcf1_poll_option_vote
-                WHERE   pollID = ?
-                    AND userID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $this->poll->pollID,
-            $this->user->userID,
-        ]);
-        $previousOptionIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-        $alreadyVoted = $previousOptionIDs !== [];
-
-        $addedOptionIDs = \array_values(\array_diff($this->optionIDs, $previousOptionIDs));
-        $removedOptionIDs = \array_values(\array_diff($previousOptionIDs, $this->optionIDs));
-
         WCF::getDB()->beginTransaction();
         $committed = false;
         try {
+            // Lock the poll to serialize concurrent votes, otherwise duplicate
+            // requests would read the same previous vote and apply their
+            // changes to the vote counters twice.
+            $sql = "SELECT  pollID
+                    FROM    wcf1_poll
+                    WHERE   pollID = ?
+                    FOR UPDATE";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([$this->poll->pollID]);
+
+            $sql = "SELECT  optionID
+                    FROM    wcf1_poll_option_vote
+                    WHERE   pollID = ?
+                        AND userID = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([
+                $this->poll->pollID,
+                $this->user->userID,
+            ]);
+            $previousOptionIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+            $alreadyVoted = $previousOptionIDs !== [];
+
+            $addedOptionIDs = \array_values(\array_diff($this->optionIDs, $previousOptionIDs));
+            $removedOptionIDs = \array_values(\array_diff($previousOptionIDs, $this->optionIDs));
+
             if ($addedOptionIDs !== []) {
                 $sql = "INSERT IGNORE INTO  wcf1_poll_option_vote
                                             (pollID, optionID, userID)
@@ -65,7 +75,9 @@ final class VotePoll
                         $optionID,
                         $this->user->userID,
                     ]);
-                    $updateStatement->execute([$optionID]);
+                    if ($insertStatement->getAffectedRows() !== 0) {
+                        $updateStatement->execute([$optionID]);
+                    }
                 }
             }
 
@@ -85,7 +97,9 @@ final class VotePoll
                         $optionID,
                         $this->user->userID,
                     ]);
-                    $updateStatement->execute([$optionID]);
+                    if ($deleteStatement->getAffectedRows() !== 0) {
+                        $updateStatement->execute([$optionID]);
+                    }
                 }
             }
 
