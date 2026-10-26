@@ -3506,7 +3506,7 @@ return [
             DatabaseTableIndex::create('uniqueUserID')
                 ->type(DatabaseTableIndex::UNIQUE_TYPE)
                 ->columns(['userID']),
-            DatabaseTableIndex::create('packageID')
+            DatabaseTableIndex::create('lastActivityTime')
                 ->columns(['lastActivityTime', 'spiderIdentifier']),
             DatabaseTableIndex::create('pageID')
                 ->columns(['pageID', 'pageObjectID']),

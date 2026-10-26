@@ -374,6 +374,13 @@ return [
             BinaryDatabaseTableColumn::create('sessionID')
                 ->notNull()
                 ->length(40),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('packageID')
+                ->columns(['lastActivityTime', 'spiderIdentifier'])
+                ->drop(),
+            DatabaseTableIndex::create('lastActivityTime')
+                ->columns(['lastActivityTime', 'spiderIdentifier']),
         ]),
     PartialDatabaseTable::create('wcf1_user_session')
         ->columns([
