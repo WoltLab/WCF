@@ -3508,6 +3508,8 @@ return [
                 ->columns(['userID']),
             DatabaseTableIndex::create('lastActivityTime')
                 ->columns(['lastActivityTime', 'spiderIdentifier']),
+            DatabaseTableIndex::create('spiderIdentifier')
+                ->columns(['spiderIdentifier', 'userID']),
             DatabaseTableIndex::create('pageID')
                 ->columns(['pageID', 'pageObjectID']),
             DatabaseTableIndex::create('parentPageID')

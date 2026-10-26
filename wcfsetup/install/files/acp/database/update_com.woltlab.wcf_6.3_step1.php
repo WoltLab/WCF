@@ -381,6 +381,8 @@ return [
                 ->drop(),
             DatabaseTableIndex::create('lastActivityTime')
                 ->columns(['lastActivityTime', 'spiderIdentifier']),
+            DatabaseTableIndex::create('spiderIdentifier')
+                ->columns(['spiderIdentifier', 'userID']),
         ]),
     PartialDatabaseTable::create('wcf1_user_session')
         ->columns([
