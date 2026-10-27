@@ -110,6 +110,12 @@
 	}
 }
 
+/* Prevents the fading out popover from catching the pointer. The selector must
+   outweigh `#pageOverlayContainer > *:not(.dropdownMenuContainer)`. */
+#pageOverlayContainer > .popoverContainer[aria-hidden="true"] {
+	pointer-events: none;
+}
+
 @media (hover: hover) {
 	.popoverContainer {
 		display: block;

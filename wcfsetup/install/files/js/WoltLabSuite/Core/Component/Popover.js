@@ -20,6 +20,7 @@ define(["require", "exports", "tslib", "../Devtools", "../Dom/Util", "../Helper/
     Simple_1 = tslib_1.__importDefault(Simple_1);
     SharedCache_1 = tslib_1.__importDefault(SharedCache_1);
     class Popover {
+        #activated = false;
         #cache;
         #container = undefined;
         #enabled = true;
@@ -35,8 +36,17 @@ define(["require", "exports", "tslib", "../Devtools", "../Dom/Util", "../Helper/
                 this.#showPopover();
             });
             element.addEventListener("mouseleave", () => {
+                this.#activated = false;
                 this.#hidePopover();
             });
+            // Links opened in a new tab or through the context menu keep the page in
+            // place, leaving the popover to cover the adjacent elements.
+            for (const eventName of ["click", "auxclick", "contextmenu"]) {
+                element.addEventListener(eventName, () => {
+                    this.#activated = true;
+                    this.#hidePopoverImmediately();
+                });
+            }
             const mq = window.matchMedia("(hover:hover)");
             this.#setEnabled(mq.matches);
             mq.addEventListener("change", (event) => {
@@ -61,7 +71,8 @@ define(["require", "exports", "tslib", "../Devtools", "../Dom/Util", "../Helper/
                         return;
                     }
                     void this.#cache.get(objectId).then((content) => {
-                        if (content === "") {
+                        // The element may have been activated while the request was pending.
+                        if (content === "" || this.#activated) {
                             return;
                         }
                         const container = this.#getContainer();
@@ -93,6 +104,11 @@ define(["require", "exports", "tslib", "../Devtools", "../Dom/Util", "../Helper/
             else {
                 this.#timerHide.restart();
             }
+        }
+        #hidePopoverImmediately() {
+            this.#timerShouldShow?.stop();
+            this.#timerHide?.stop();
+            this.#container?.setAttribute("aria-hidden", "true");
         }
         #setEnabled(enabled) {
             this.#enabled = enabled;
