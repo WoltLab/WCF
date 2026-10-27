@@ -20,12 +20,12 @@ define(["require", "exports", "tslib", "../Devtools", "../Dom/Util", "../Helper/
     Simple_1 = tslib_1.__importDefault(Simple_1);
     SharedCache_1 = tslib_1.__importDefault(SharedCache_1);
     class Popover {
-        #activated = false;
         #cache;
         #container = undefined;
         #enabled = true;
         #element;
         #identifier;
+        #shouldShow = false;
         #timerShouldShow = undefined;
         #timerHide = undefined;
         constructor(cache, element, identifier) {
@@ -36,14 +36,12 @@ define(["require", "exports", "tslib", "../Devtools", "../Dom/Util", "../Helper/
                 this.#showPopover();
             });
             element.addEventListener("mouseleave", () => {
-                this.#activated = false;
                 this.#hidePopover();
             });
             // Links opened in a new tab or through the context menu keep the page in
             // place, leaving the popover to cover the adjacent elements.
             for (const eventName of ["click", "auxclick", "contextmenu"]) {
                 element.addEventListener(eventName, () => {
-                    this.#activated = true;
                     this.#hidePopoverImmediately();
                 });
             }
@@ -70,9 +68,10 @@ define(["require", "exports", "tslib", "../Devtools", "../Dom/Util", "../Helper/
                         console.error("Missing attribute `data-object-id` for element", this.#element);
                         return;
                     }
+                    this.#shouldShow = true;
                     void this.#cache.get(objectId).then((content) => {
-                        // The element may have been activated while the request was pending.
-                        if (content === "" || this.#activated) {
+                        // The popover may have been hidden while the request was pending.
+                        if (content === "" || !this.#shouldShow) {
                             return;
                         }
                         const container = this.#getContainer();
@@ -94,10 +93,11 @@ define(["require", "exports", "tslib", "../Devtools", "../Dom/Util", "../Helper/
             this.#timerShouldShow?.stop();
             if (this.#timerHide === undefined) {
                 this.#timerHide = new Repeating_1.default((timer) => {
-                    if (this.#container?.querySelector(".dropdown.dropdownOpen") !== null) {
+                    if (this.#container !== undefined && this.#container.querySelector(".dropdown.dropdownOpen") !== null) {
                         return;
                     }
                     timer.stop();
+                    this.#shouldShow = false;
                     this.#container?.setAttribute("aria-hidden", "true");
                 }, 500 /* Delay.Hide */);
             }
@@ -108,10 +108,12 @@ define(["require", "exports", "tslib", "../Devtools", "../Dom/Util", "../Helper/
         #hidePopoverImmediately() {
             this.#timerShouldShow?.stop();
             this.#timerHide?.stop();
+            this.#shouldShow = false;
             this.#container?.setAttribute("aria-hidden", "true");
         }
         #setEnabled(enabled) {
             this.#enabled = enabled;
+            this.#shouldShow = false;
             this.#container?.setAttribute("aria-hidden", "true");
         }
         #getObjectId() {

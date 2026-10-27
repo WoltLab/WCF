@@ -23,12 +23,12 @@ const enum Delay {
 }
 
 class Popover {
-  #activated = false;
   readonly #cache: SharedCache;
   #container: HTMLElement | undefined = undefined;
   #enabled = true;
   readonly #element: HTMLElement;
   readonly #identifier: string;
+  #shouldShow = false;
   #timerShouldShow: RepeatingTimer | undefined = undefined;
   #timerHide: RepeatingTimer | undefined = undefined;
 
@@ -41,7 +41,6 @@ class Popover {
       this.#showPopover();
     });
     element.addEventListener("mouseleave", () => {
-      this.#activated = false;
       this.#hidePopover();
     });
 
@@ -49,7 +48,6 @@ class Popover {
     // place, leaving the popover to cover the adjacent elements.
     for (const eventName of ["click", "auxclick", "contextmenu"]) {
       element.addEventListener(eventName, () => {
-        this.#activated = true;
         this.#hidePopoverImmediately();
       });
     }
@@ -85,9 +83,11 @@ class Popover {
           return;
         }
 
+        this.#shouldShow = true;
+
         void this.#cache.get(objectId).then((content) => {
-          // The element may have been activated while the request was pending.
-          if (content === "" || this.#activated) {
+          // The popover may have been hidden while the request was pending.
+          if (content === "" || !this.#shouldShow) {
             return;
           }
 
@@ -114,12 +114,13 @@ class Popover {
 
     if (this.#timerHide === undefined) {
       this.#timerHide = new RepeatingTimer((timer) => {
-        if (this.#container?.querySelector(".dropdown.dropdownOpen") !== null) {
+        if (this.#container !== undefined && this.#container.querySelector(".dropdown.dropdownOpen") !== null) {
           return;
         }
 
         timer.stop();
 
+        this.#shouldShow = false;
         this.#container?.setAttribute("aria-hidden", "true");
       }, Delay.Hide);
     } else {
@@ -131,12 +132,14 @@ class Popover {
     this.#timerShouldShow?.stop();
     this.#timerHide?.stop();
 
+    this.#shouldShow = false;
     this.#container?.setAttribute("aria-hidden", "true");
   }
 
   #setEnabled(enabled: boolean): void {
     this.#enabled = enabled;
 
+    this.#shouldShow = false;
     this.#container?.setAttribute("aria-hidden", "true");
   }
 
