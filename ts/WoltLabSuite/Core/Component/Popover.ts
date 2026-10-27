@@ -192,6 +192,11 @@ const cacheByIdentifier = new Map<string, SharedCache>();
 export function setupFor(configuration: Configuration): void {
   const { identifier, endpoint, selector } = configuration;
 
+  // `resetCache()` can only reach a single cache per identifier.
+  if (cacheByIdentifier.has(identifier)) {
+    throw new Error(`The popover identifier '${identifier}' has already been registered.`);
+  }
+
   const cache = new SharedCache(endpoint);
   cacheByIdentifier.set(identifier, cache);
 

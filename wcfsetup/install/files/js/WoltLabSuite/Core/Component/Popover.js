@@ -150,6 +150,10 @@ define(["require", "exports", "tslib", "../Devtools", "../Dom/Util", "../Helper/
     const cacheByIdentifier = new Map();
     function setupFor(configuration) {
         const { identifier, endpoint, selector } = configuration;
+        // `resetCache()` can only reach a single cache per identifier.
+        if (cacheByIdentifier.has(identifier)) {
+            throw new Error(`The popover identifier '${identifier}' has already been registered.`);
+        }
         const cache = new SharedCache_1.default(endpoint);
         cacheByIdentifier.set(identifier, cache);
         (0, Selector_1.wheneverFirstSeen)(selector, (element) => {
