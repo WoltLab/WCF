@@ -6,11 +6,12 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GetObject", "WoltLabSuite/Core/Api/Interactions/GetContextMenuOptions", "WoltLabSuite/Core/Ui/Dropdown/Simple"], function (require, exports, tslib_1, GetObject_1, GetContextMenuOptions_1, Simple_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GetObject", "WoltLabSuite/Core/Api/Interactions/GetContextMenuOptions", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, GetObject_1, GetContextMenuOptions_1, Simple_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.StandaloneButton = void 0;
     Simple_1 = tslib_1.__importDefault(Simple_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class StandaloneButton {
         #container;
         #providerClassName;
@@ -47,7 +48,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GetObject", "WoltL
             if (!result.ok) {
                 return;
             }
-            header.outerHTML = result.value.template;
+            const fragment = Util_1.default.createFragmentFromHtml(result.value.template);
+            // The header may also provide an updated icon, which is a sibling of the title.
+            const icon = fragment.querySelector(".contentHeaderIcon");
+            if (icon !== null) {
+                icon.remove();
+                document.querySelector(".contentHeaderIcon")?.replaceWith(icon);
+            }
+            header.replaceWith(fragment);
         }
         #getDropdownMenu() {
             const button = this.#container.querySelector(".dropdownToggle");

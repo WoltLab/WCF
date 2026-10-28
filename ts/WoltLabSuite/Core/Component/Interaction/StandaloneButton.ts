@@ -10,6 +10,7 @@
 import { getObject } from "WoltLabSuite/Core/Api/GetObject";
 import { getContextMenuOptions } from "WoltLabSuite/Core/Api/Interactions/GetContextMenuOptions";
 import UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
+import DomUtil from "WoltLabSuite/Core/Dom/Util";
 
 interface HeaderContent {
   template: string;
@@ -69,7 +70,16 @@ export class StandaloneButton {
       return;
     }
 
-    header.outerHTML = result.value.template;
+    const fragment = DomUtil.createFragmentFromHtml(result.value.template);
+
+    // The header may also provide an updated icon, which is a sibling of the title.
+    const icon = fragment.querySelector(".contentHeaderIcon");
+    if (icon !== null) {
+      icon.remove();
+      document.querySelector(".contentHeaderIcon")?.replaceWith(icon);
+    }
+
+    header.replaceWith(fragment);
   }
 
   #getDropdownMenu(): HTMLElement | undefined {
