@@ -236,7 +236,9 @@ class CommentList {
           void this.#loadNextResponses(comment);
         });
       } else {
-        comment.querySelector(".commentLoadNextResponses__button")!.textContent = phrase;
+        const button = comment.querySelector<HTMLButtonElement>(".commentLoadNextResponses__button")!;
+        button.textContent = phrase;
+        button.disabled = false;
       }
     } else {
       comment.querySelector(".commentLoadNextResponses")?.remove();
