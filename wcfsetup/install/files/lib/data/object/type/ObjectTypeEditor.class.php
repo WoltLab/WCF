@@ -4,6 +4,7 @@ namespace wcf\data\object\type;
 
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
+use wcf\system\cache\eager\ObjectTypeRowCache;
 
 /**
  * Provides functions to edit object types.
@@ -26,6 +27,6 @@ class ObjectTypeEditor extends DatabaseObjectEditor implements IEditableCachedOb
     #[\Override]
     public static function resetCache()
     {
-        ObjectTypeCache::getInstance()->resetCache();
+        new ObjectTypeRowCache()->rebuild();
     }
 }

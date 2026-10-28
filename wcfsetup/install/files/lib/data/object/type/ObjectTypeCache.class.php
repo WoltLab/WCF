@@ -3,7 +3,7 @@
 namespace wcf\data\object\type;
 
 use wcf\data\object\type\definition\ObjectTypeDefinition;
-use wcf\system\cache\builder\ObjectTypeCacheBuilder;
+use wcf\system\cache\eager\ObjectTypeRowCache;
 use wcf\system\SingletonFactory;
 
 /**
@@ -13,51 +13,66 @@ use wcf\system\SingletonFactory;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class ObjectTypeCache extends SingletonFactory
+final class ObjectTypeCache extends SingletonFactory
 {
-    /**
-     * object type definitions
-     * @var array<int, ObjectTypeDefinition>
-     */
-    protected $definitions = [];
-
     /**
      * object type definition ids grouped by category name
      * @var array<string, list<int>>
      */
-    protected $definitionsByCategory = [];
+    private array $definitionsByCategory = [];
 
     /**
-     * object type definitions sorted by name
-     * @var array<string, ObjectTypeDefinition>
+     * database rows of the object type definitions
+     * @var array<int, array<string, mixed>>
      */
-    protected $definitionsByName = [];
+    private array $definitionRows = [];
 
     /**
-     * object types
+     * object type definition ids by definition name
+     * @var array<string, int>
+     */
+    private array $definitionIDs = [];
+
+    /**
+     * object type definitions created so far
+     * @var array<int, ObjectTypeDefinition>
+     */
+    private array $definitions = [];
+
+    /**
+     * database rows of the object types
+     * @var array<int, array<string, mixed>>
+     */
+    private array $objectTypeRows = [];
+
+    /**
+     * object type ids grouped by definition name and object type name
+     * @var array<string, array<string, int>>
+     */
+    private array $objectTypeIDs = [];
+
+    /**
+     * object types created so far
      * @var array<int, ObjectType>
      */
-    protected $objectTypes = [];
+    private array $objectTypes = [];
 
     /**
-     * object types grouped by definition
+     * object types grouped by definition name, for the definitions requested so far
      * @var array<string, array<string, ObjectType>>
      */
-    protected $groupedObjectTypes = [];
+    private array $groupedObjectTypes = [];
 
     #[\Override]
     protected function init()
     {
-        // get definition cache
-        $this->definitionsByCategory = ObjectTypeCacheBuilder::getInstance()->getData([], 'categories');
-        $this->definitions = ObjectTypeCacheBuilder::getInstance()->getData([], 'definitions');
-        foreach ($this->definitions as $definition) {
-            $this->definitionsByName[$definition->definitionName] = $definition;
-        }
+        $data = new ObjectTypeRowCache()->getCache();
 
-        // get object type cache
-        $this->objectTypes = ObjectTypeCacheBuilder::getInstance()->getData([], 'objectTypes');
-        $this->groupedObjectTypes = ObjectTypeCacheBuilder::getInstance()->getData([], 'groupedObjectTypes');
+        $this->definitionsByCategory = $data['categories'];
+        $this->definitionRows = $data['definitions'];
+        $this->definitionIDs = $data['definitionIDs'];
+        $this->objectTypeRows = $data['objectTypes'];
+        $this->objectTypeIDs = $data['objectTypeIDs'];
     }
 
     /**
@@ -68,7 +83,15 @@ class ObjectTypeCache extends SingletonFactory
      */
     public function getDefinition(int $definitionID)
     {
-        return $this->definitions[$definitionID] ?? null;
+        if (!isset($this->definitions[$definitionID])) {
+            if (!isset($this->definitionRows[$definitionID])) {
+                return null;
+            }
+
+            $this->definitions[$definitionID] = new ObjectTypeDefinition(null, $this->definitionRows[$definitionID]);
+        }
+
+        return $this->definitions[$definitionID];
     }
 
     /**
@@ -79,7 +102,11 @@ class ObjectTypeCache extends SingletonFactory
      */
     public function getDefinitionByName(string $definitionName)
     {
-        return $this->definitionsByName[$definitionName] ?? null;
+        if (isset($this->definitionIDs[$definitionName])) {
+            return $this->getDefinition($this->definitionIDs[$definitionName]);
+        }
+
+        return null;
     }
 
     /**
@@ -110,7 +137,15 @@ class ObjectTypeCache extends SingletonFactory
      */
     public function getObjectType(int $objectTypeID)
     {
-        return $this->objectTypes[$objectTypeID] ?? null;
+        if (!isset($this->objectTypes[$objectTypeID])) {
+            if (!isset($this->objectTypeRows[$objectTypeID])) {
+                return null;
+            }
+
+            $this->objectTypes[$objectTypeID] = new ObjectType(null, $this->objectTypeRows[$objectTypeID]);
+        }
+
+        return $this->objectTypes[$objectTypeID];
     }
 
     /**
@@ -120,11 +155,18 @@ class ObjectTypeCache extends SingletonFactory
      */
     public function getObjectTypes(string $definitionName)
     {
-        if (isset($this->groupedObjectTypes[$definitionName])) {
-            return $this->groupedObjectTypes[$definitionName];
+        if (!isset($this->groupedObjectTypes[$definitionName])) {
+            if (!isset($this->objectTypeIDs[$definitionName])) {
+                return [];
+            }
+
+            $this->groupedObjectTypes[$definitionName] = \array_map(
+                $this->getObjectType(...),
+                $this->objectTypeIDs[$definitionName]
+            );
         }
 
-        return [];
+        return $this->groupedObjectTypes[$definitionName];
     }
 
     /**
@@ -135,11 +177,9 @@ class ObjectTypeCache extends SingletonFactory
      */
     public function getObjectTypeByName(string $definitionName, string $objectTypeName)
     {
-        if (
-            isset($this->groupedObjectTypes[$definitionName])
-            && isset($this->groupedObjectTypes[$definitionName][$objectTypeName])
-        ) {
-            return $this->groupedObjectTypes[$definitionName][$objectTypeName];
+        $objectTypeID = $this->getObjectTypeIDByName($definitionName, $objectTypeName);
+        if ($objectTypeID !== null) {
+            return $this->getObjectType($objectTypeID);
         }
 
         return null;
@@ -152,22 +192,17 @@ class ObjectTypeCache extends SingletonFactory
      */
     public function getObjectTypeIDByName(string $definitionName, string $objectTypeName)
     {
-        $objectType = $this->getObjectTypeByName($definitionName, $objectTypeName);
-        if ($objectType !== null) {
-            return $objectType->objectTypeID;
-        }
-
-        return null;
+        return $this->objectTypeIDs[$definitionName][$objectTypeName] ?? null;
     }
 
     /**
-     * Resets and reloads the object type cache.
+     * Rebuilds the object type cache, the changes become visible with the next
+     * request.
      *
      * @return void
      */
     public function resetCache()
     {
-        ObjectTypeCacheBuilder::getInstance()->reset();
-        $this->init();
+        new ObjectTypeRowCache()->rebuild();
     }
 }
