@@ -582,6 +582,8 @@ return [
                 ->columns(['objectTypeID', 'tmpHash']),
             DatabaseTableIndex::create('objectID')
                 ->columns(['objectID', 'uploadTime']),
+            DatabaseTableIndex::create('uploadTime')
+                ->columns(['uploadTime']),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()
@@ -1528,6 +1530,8 @@ return [
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['fileID']),
+            DatabaseTableIndex::create('objectTypeID')
+                ->columns(['objectTypeID', 'mimeType']),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()

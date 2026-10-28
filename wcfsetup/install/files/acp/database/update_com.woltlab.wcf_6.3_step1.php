@@ -636,4 +636,14 @@ return [
             DatabaseTableIndex::create('languageCustomItemDisableTime')
                 ->columns(['languageCustomItemDisableTime']),
         ]),
+    PartialDatabaseTable::create('wcf1_attachment')
+        ->indices([
+            DatabaseTableIndex::create('uploadTime')
+                ->columns(['uploadTime']),
+        ]),
+    PartialDatabaseTable::create('wcf1_file')
+        ->indices([
+            DatabaseTableIndex::create('objectTypeID')
+                ->columns(['objectTypeID', 'mimeType']),
+        ]),
 ];

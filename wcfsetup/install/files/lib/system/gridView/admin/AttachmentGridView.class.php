@@ -8,7 +8,7 @@ use wcf\data\attachment\AttachmentList;
 use wcf\data\DatabaseObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\event\gridView\admin\AttachmentGridViewInitialized;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\file\processor\FileProcessor;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
@@ -198,18 +198,19 @@ final class AttachmentGridView extends AbstractGridView
             return [];
         }
 
-        $conditionBuilder = new PreparedStatementConditionBuilder();
-        $conditionBuilder->add('attachment.fileID IS NOT NULL');
-        $conditionBuilder->add('attachment.objectTypeID IN (?)', [$objectTypeIDs]);
-        $conditionBuilder->add('attachment.tmpHash = ?', ['']);
+        $objectType = FileProcessor::getInstance()->getObjectType('com.woltlab.wcf.attachment');
+        \assert($objectType !== null);
 
-        $sql = "SELECT    DISTINCT file_table.mimeType
-                FROM      wcf1_attachment attachment
-                LEFT JOIN wcf1_file file_table
-                ON        (file_table.fileID = attachment.fileID)
-                " . $conditionBuilder;
+        // Reading the files directly avoids scanning every attachment, at the
+        // expense of including types only used by private or temporary
+        // attachments. Grouping by the full index prefix instead of using
+        // `DISTINCT` lets MySQL skip through the index.
+        $sql = "SELECT    mimeType
+                FROM      wcf1_file
+                WHERE     objectTypeID = ?
+                GROUP BY  objectTypeID, mimeType";
         $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditionBuilder->getParameters());
+        $statement->execute([$objectType->objectTypeID]);
         $fileTypes = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
         \sort($fileTypes);
