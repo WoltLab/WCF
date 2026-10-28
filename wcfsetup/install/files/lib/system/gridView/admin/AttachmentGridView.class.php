@@ -239,6 +239,19 @@ final class AttachmentGridView extends AbstractGridView
     }
 
     #[\Override]
+    protected function applyFilters(): void
+    {
+        parent::applyFilters();
+
+        // The joins only serve the filter conditions, a left join on the
+        // primary key never changes the number of rows. MySQL does not
+        // eliminate them on its own and looks up every single row instead.
+        if ($this->getActiveFilters() === []) {
+            $this->objectList->sqlConditionJoins = '';
+        }
+    }
+
+    #[\Override]
     protected function getInitializedEvent(): AttachmentGridViewInitialized
     {
         return new AttachmentGridViewInitialized($this);
