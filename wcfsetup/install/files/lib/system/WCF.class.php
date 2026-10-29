@@ -384,7 +384,8 @@ class WCF
             $dbPort,
             false,
             false,
-            $defaultDriverOptions
+            $defaultDriverOptions,
+            connectImmediately: false
         );
     }
 

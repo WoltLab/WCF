@@ -116,6 +116,7 @@ abstract class Database
      * @param bool $failsafeTest
      * @param bool $tryToCreateDatabase
      * @param mixed[] $defaultDriverOptions
+     * @param bool $connectImmediately connect in the constructor, otherwise on first use, which defers connection errors to the first query
      */
     public function __construct(
         string $host,
@@ -126,7 +127,8 @@ abstract class Database
         int $port,
         bool $failsafeTest = false,
         bool $tryToCreateDatabase = false,
-        array $defaultDriverOptions = []
+        array $defaultDriverOptions = [],
+        bool $connectImmediately = true
     ) {
         $this->host = $host;
         $this->port = $port;
@@ -137,8 +139,9 @@ abstract class Database
         $this->tryToCreateDatabase = $tryToCreateDatabase;
         $this->defaultDriverOptions = $defaultDriverOptions;
 
-        // connect database
-        $this->connect();
+        if ($connectImmediately) {
+            $this->connect();
+        }
     }
 
     /**
@@ -165,7 +168,7 @@ abstract class Database
     public function getInsertID(string $table, string $field)
     {
         try {
-            $lastInsertID = $this->pdo->lastInsertId();
+            $lastInsertID = $this->getPdo()->lastInsertId();
 
             // The only supported implementation `MySQLDatabase` sets the error
             // mode to “exception” which prevents `false` ever being returned
@@ -192,7 +195,7 @@ abstract class Database
                 if (WCF::benchmarkIsEnabled()) {
                     Benchmark::getInstance()->start("BEGIN", Benchmark::TYPE_SQL_QUERY);
                 }
-                $result = $this->pdo->beginTransaction();
+                $result = $this->getPdo()->beginTransaction();
             } else {
                 if (WCF::benchmarkIsEnabled()) {
                     Benchmark::getInstance()->start(
@@ -200,7 +203,7 @@ abstract class Database
                         Benchmark::TYPE_SQL_QUERY
                     );
                 }
-                $result = $this->pdo->exec("SAVEPOINT level" . $this->activeTransactions) !== false;
+                $result = $this->getPdo()->exec("SAVEPOINT level" . $this->activeTransactions) !== false;
             }
             if (WCF::benchmarkIsEnabled()) {
                 Benchmark::getInstance()->stop();
@@ -233,7 +236,7 @@ abstract class Database
                 if (WCF::benchmarkIsEnabled()) {
                     Benchmark::getInstance()->start("COMMIT", Benchmark::TYPE_SQL_QUERY);
                 }
-                $result = $this->pdo->commit();
+                $result = $this->getPdo()->commit();
             } else {
                 if (WCF::benchmarkIsEnabled()) {
                     Benchmark::getInstance()->start(
@@ -241,7 +244,7 @@ abstract class Database
                         Benchmark::TYPE_SQL_QUERY
                     );
                 }
-                $result = $this->pdo->exec("RELEASE SAVEPOINT level" . $this->activeTransactions) !== false;
+                $result = $this->getPdo()->exec("RELEASE SAVEPOINT level" . $this->activeTransactions) !== false;
             }
 
             if (WCF::benchmarkIsEnabled()) {
@@ -272,7 +275,7 @@ abstract class Database
                 if (WCF::benchmarkIsEnabled()) {
                     Benchmark::getInstance()->start("ROLLBACK", Benchmark::TYPE_SQL_QUERY);
                 }
-                $result = $this->pdo->rollBack();
+                $result = $this->getPdo()->rollBack();
             } else {
                 if (WCF::benchmarkIsEnabled()) {
                     Benchmark::getInstance()->start(
@@ -280,7 +283,7 @@ abstract class Database
                         Benchmark::TYPE_SQL_QUERY
                     );
                 }
-                $result = $this->pdo->exec("ROLLBACK TO SAVEPOINT level" . $this->activeTransactions) !== false;
+                $result = $this->getPdo()->exec("ROLLBACK TO SAVEPOINT level" . $this->activeTransactions) !== false;
             }
 
             if (WCF::benchmarkIsEnabled()) {
@@ -336,8 +339,9 @@ abstract class Database
                 }
             }
 
-            $pdoStatement = $this->pdo->prepare(
-                $statement . ($requestInformation ? " -- " . $this->pdo->quote($requestInformation) : '')
+            $pdo = $this->getPdo();
+            $pdoStatement = $pdo->prepare(
+                $statement . ($requestInformation ? " -- " . $pdo->quote($requestInformation) : '')
             );
 
             return new $this->preparedStatementClassName($this, $pdoStatement, $statement);
@@ -474,9 +478,7 @@ abstract class Database
     public function getVersion()
     {
         try {
-            if ($this->pdo !== null) {
-                return $this->pdo->getAttribute(\PDO::ATTR_SERVER_VERSION);
-            }
+            return $this->getPdo()->getAttribute(\PDO::ATTR_SERVER_VERSION);
         } catch (\PDOException $e) {
         }
 
@@ -553,6 +555,19 @@ abstract class Database
     public static function isSupported()
     {
         return false;
+    }
+
+    /**
+     * Returns the PDO object, connecting to the database server on first use.
+     */
+    private function getPdo(): \PDO
+    {
+        if ($this->pdo === null) {
+            $this->connect();
+        }
+        \assert($this->pdo !== null);
+
+        return $this->pdo;
     }
 
     /**
