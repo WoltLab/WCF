@@ -13,7 +13,7 @@ use wcf\data\template\group\TemplateGroupAction;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateEditor;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\builder\StyleCacheBuilder;
+use wcf\system\cache\eager\StyleCache;
 use wcf\system\exception\SystemException;
 use wcf\system\io\Tar;
 use wcf\system\io\TarWriter;
@@ -1419,6 +1419,6 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
     #[\Override]
     public static function resetCache(): void
     {
-        StyleCacheBuilder::getInstance()->reset();
+        new StyleCache()->rebuild();
     }
 }

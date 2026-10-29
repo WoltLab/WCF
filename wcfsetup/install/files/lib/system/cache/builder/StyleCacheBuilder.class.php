@@ -2,8 +2,8 @@
 
 namespace wcf\system\cache\builder;
 
-use wcf\data\style\Style;
-use wcf\system\WCF;
+use wcf\system\cache\eager\StyleCache;
+use wcf\system\style\StyleHandler;
 
 /**
  * Caches the styles and style variables.
@@ -11,33 +11,23 @@ use wcf\system\WCF;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @deprecated 6.3 use `StyleHandler` instead
  */
-class StyleCacheBuilder extends AbstractCacheBuilder
+class StyleCacheBuilder extends AbstractLegacyCacheBuilder
 {
     #[\Override]
-    public function rebuild(array $parameters)
+    public function rebuild(array $parameters): array
     {
-        $data = [
-            'default' => 0,
-            'styles' => [],
+        return [
+            'default' => new StyleCache()->getCache()['default'],
+            'styles' => StyleHandler::getInstance()->getStyles(),
         ];
+    }
 
-        // get all styles
-        $sql = "SELECT      *
-                FROM        wcf1_style
-                ORDER BY    styleName ASC";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute();
-        while ($row = $statement->fetchArray()) {
-            if ($row['isDefault'] !== 0) {
-                $data['default'] = $row['styleID'];
-            }
-            $style = new Style(null, $row);
-            $style->loadVariables();
-
-            $data['styles'][$row['styleID']] = $style;
-        }
-
-        return $data;
+    #[\Override]
+    public function reset(array $parameters = [])
+    {
+        new StyleCache()->rebuild();
     }
 }

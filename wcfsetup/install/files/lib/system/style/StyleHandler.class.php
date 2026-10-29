@@ -5,7 +5,7 @@ namespace wcf\system\style;
 use wcf\data\style\ActiveStyle;
 use wcf\data\style\Style;
 use wcf\data\style\StyleEditor;
-use wcf\system\cache\builder\StyleCacheBuilder;
+use wcf\system\cache\eager\StyleCache;
 use wcf\system\exception\SystemException;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
@@ -35,8 +35,18 @@ class StyleHandler extends SingletonFactory
     #[\Override]
     protected function init()
     {
-        // load cache
-        $this->cache = StyleCacheBuilder::getInstance()->getData();
+        $cache = new StyleCache()->getCache();
+
+        $this->cache = [
+            'default' => $cache['default'],
+            'styles' => [],
+        ];
+        foreach ($cache['styles'] as $styleID => $styleData) {
+            $style = new Style(null, $styleData['data']);
+            $style->importCacheData($styleData);
+
+            $this->cache['styles'][$styleID] = $style;
+        }
     }
 
     /**

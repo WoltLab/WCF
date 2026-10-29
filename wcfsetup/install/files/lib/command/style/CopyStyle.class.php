@@ -5,7 +5,7 @@ namespace wcf\command\style;
 use wcf\data\style\Style;
 use wcf\data\style\StyleEditor;
 use wcf\event\style\StyleCopied;
-use wcf\system\cache\builder\StyleCacheBuilder;
+use wcf\system\cache\eager\StyleCache;
 use wcf\system\event\EventHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
@@ -153,7 +153,7 @@ final class CopyStyle
             }
         }
 
-        StyleCacheBuilder::getInstance()->reset();
+        new StyleCache()->rebuild();
     }
 
     private function getUniqueStyleName(Style $style): string

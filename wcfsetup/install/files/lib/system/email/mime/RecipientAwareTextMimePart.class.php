@@ -4,8 +4,9 @@ namespace wcf\system\email\mime;
 
 use Pelago\Emogrifier\CssInliner;
 use wcf\data\style\ActiveStyle;
-use wcf\system\cache\builder\StyleCacheBuilder;
+use wcf\system\cache\eager\StyleCache;
 use wcf\system\email\Mailbox;
+use wcf\system\style\StyleHandler;
 use wcf\system\template\EmailTemplateEngine;
 use wcf\system\WCF;
 
@@ -98,13 +99,13 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
      */
     protected function getTemplateVariables()
     {
-        $styleCache = StyleCacheBuilder::getInstance()->getData();
+        $defaultStyleID = new StyleCache()->getCache()['default'];
 
         $result = [
             'content' => $this->content,
             'mimeType' => $this->mimeType,
             'mailbox' => $this->mailbox,
-            'style' => new ActiveStyle($styleCache['styles'][$styleCache['default']]),
+            'style' => new ActiveStyle(StyleHandler::getInstance()->getStyles()[$defaultStyleID]),
         ];
 
         if (\is_array($this->content)) {

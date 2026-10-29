@@ -392,6 +392,56 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
     }
 
     /**
+     * Returns the style variables and the image dimensions derived from them
+     * for the style cache.
+     *
+     * @return array{
+     *     variables: array<string, ?string>,
+     *     coverPhotoHeight: int,
+     *     coverPhotoWidth: int,
+     *     pageLogoSmallHeight: int,
+     *     pageLogoSmallWidth: int,
+     * }
+     * @internal
+     * @since 6.3
+     */
+    public function exportCacheData(): array
+    {
+        $this->loadVariables();
+
+        return [
+            'variables' => $this->variables,
+            'coverPhotoHeight' => $this->coverPhotoHeight,
+            'coverPhotoWidth' => $this->coverPhotoWidth,
+            'pageLogoSmallHeight' => $this->pageLogoSmallHeight,
+            'pageLogoSmallWidth' => $this->pageLogoSmallWidth,
+        ];
+    }
+
+    /**
+     * Restores the data returned by `exportCacheData()`, avoiding the queries
+     * and file accesses of `loadVariables()`.
+     *
+     * @param array{
+     *     variables: array<string, ?string>,
+     *     coverPhotoHeight: int,
+     *     coverPhotoWidth: int,
+     *     pageLogoSmallHeight: int,
+     *     pageLogoSmallWidth: int,
+     * } $data
+     * @internal
+     * @since 6.3
+     */
+    public function importCacheData(array $data): void
+    {
+        $this->variables = $data['variables'];
+        $this->coverPhotoHeight = $data['coverPhotoHeight'];
+        $this->coverPhotoWidth = $data['coverPhotoWidth'];
+        $this->pageLogoSmallHeight = $data['pageLogoSmallHeight'];
+        $this->pageLogoSmallWidth = $data['pageLogoSmallWidth'];
+    }
+
+    /**
      * Returns the style preview image path.
      *
      * @return  string

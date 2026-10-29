@@ -4,7 +4,7 @@ namespace wcf\acp\form;
 
 use wcf\data\style\StyleEditor;
 use wcf\form\AbstractForm;
-use wcf\system\cache\builder\StyleCacheBuilder;
+use wcf\system\cache\eager\StyleCache;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageArchive;
@@ -132,7 +132,7 @@ class StyleImportForm extends AbstractForm
     {
         parent::save();
 
-        StyleCacheBuilder::getInstance()->reset();
+        new StyleCache()->rebuild();
 
         @\unlink($this->source['tmp_name']);
         $this->saved();
