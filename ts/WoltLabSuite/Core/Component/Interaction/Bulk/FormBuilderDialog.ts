@@ -9,40 +9,78 @@
 
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
+import { InteractionEffect } from "../InteractionEffect";
+
+type Payload = Record<string, string>;
 
 async function handleFormBuilderDialogAction(
   container: HTMLElement,
   objectIds: number[],
   endpoint: string,
+  interactionEffect: InteractionEffect = InteractionEffect.ReloadItem,
 ): Promise<void> {
-  const { ok } = await dialogFactory().usingFormBuilder().fromEndpoint(endpoint);
+  const { ok, result } = await dialogFactory().usingFormBuilder().fromEndpoint<Payload>(endpoint);
 
   if (!ok) {
     return;
   }
 
-  for (let i = 0; i < objectIds.length; i++) {
-    const element = container.querySelector(`[data-object-id="${objectIds[i]}"]`);
-    if (!element) {
-      continue;
+  container.dispatchEvent(new CustomEvent("interaction:reset-selection"));
+
+  if (interactionEffect === InteractionEffect.Redirect) {
+    const { redirectUrl } = result;
+    if (redirectUrl) {
+      showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
+        window.location.href = redirectUrl;
+      });
+
+      return;
     }
 
-    element.dispatchEvent(
-      new CustomEvent("interaction:invalidate", {
-        bubbles: true,
-      }),
-    );
+    // The endpoint did not provide a target, reload the page instead.
+    interactionEffect = InteractionEffect.ReloadPage;
+  }
+
+  if (interactionEffect === InteractionEffect.ReloadPage) {
+    showDefaultSuccessSnackbar().addEventListener("snackbar:close", () => {
+      window.location.reload();
+    });
+
+    return;
+  }
+
+  if (interactionEffect === InteractionEffect.ReloadList) {
+    container.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
+  } else {
+    const eventName =
+      interactionEffect === InteractionEffect.RemoveItem ? "interaction:remove" : "interaction:invalidate";
+
+    for (let i = 0; i < objectIds.length; i++) {
+      const element = container.querySelector(`[data-object-id="${objectIds[i]}"]`);
+      if (!element) {
+        continue;
+      }
+
+      element.dispatchEvent(
+        new CustomEvent(eventName, {
+          bubbles: true,
+        }),
+      );
+    }
   }
 
   showDefaultSuccessSnackbar();
-
-  container.dispatchEvent(new CustomEvent("interaction:reset-selection"));
 }
 
 export function setup(identifier: string, container: HTMLElement): void {
   container.addEventListener("bulk-interaction", (event: CustomEvent) => {
     if (event.detail.bulkInteraction === identifier) {
-      void handleFormBuilderDialogAction(container, JSON.parse(event.detail.objectIds), event.detail.endpoint);
+      void handleFormBuilderDialogAction(
+        container,
+        JSON.parse(event.detail.objectIds),
+        event.detail.endpoint,
+        event.detail.interactionEffect as InteractionEffect,
+      );
     }
   });
 }

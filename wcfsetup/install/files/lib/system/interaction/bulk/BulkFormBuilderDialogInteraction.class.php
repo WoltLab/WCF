@@ -3,9 +3,9 @@
 namespace wcf\system\interaction\bulk;
 
 use wcf\data\DatabaseObject;
+use wcf\system\interaction\InteractionEffect;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-
 use wcf\util\StringUtil;
 
 /**
@@ -22,7 +22,8 @@ class BulkFormBuilderDialogInteraction extends AbstractBulkInteraction
         string $identifier,
         protected readonly string $controller,
         protected readonly string | \Closure $languageItem,
-        ?\Closure $isAvailableCallback = null
+        ?\Closure $isAvailableCallback = null,
+        protected readonly InteractionEffect $interactionEffect = InteractionEffect::ReloadItem,
     ) {
         parent::__construct($identifier, $isAvailableCallback);
     }
@@ -49,6 +50,7 @@ class BulkFormBuilderDialogInteraction extends AbstractBulkInteraction
                 data-bulk-interaction="{$identifier}"
                 data-endpoint="{$endpoint}"
                 data-object-ids="{$jsonObjectIDs}"
+                data-interaction-effect="{$this->interactionEffect->toString()}"
             >
                 {$label}
             </button>

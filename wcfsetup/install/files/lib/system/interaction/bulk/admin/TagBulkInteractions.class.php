@@ -9,6 +9,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
 use wcf\system\interaction\bulk\BulkFormBuilderDialogInteraction;
+use wcf\system\interaction\InteractionEffect;
 use wcf\system\WCF;
 
 /**
@@ -35,7 +36,9 @@ final class TagBulkInteractions extends AbstractBulkInteractionProvider
             new class(
                 "set-as-synonyms",
                 TagSynonymAction::class,
-                "wcf.acp.tag.setAsSynonyms"
+                "wcf.acp.tag.setAsSynonyms",
+                null,
+                InteractionEffect::ReloadList
             ) extends BulkFormBuilderDialogInteraction {
                 #[\Override]
                 public function render(array $objects): string

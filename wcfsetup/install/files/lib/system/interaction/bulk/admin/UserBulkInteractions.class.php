@@ -19,6 +19,7 @@ use wcf\system\interaction\bulk\BulkFormBuilderDialogInteraction;
 use wcf\system\interaction\bulk\BulkLinkInteraction;
 use wcf\system\interaction\bulk\BulkRpcInteraction;
 use wcf\system\interaction\InteractionConfirmationType;
+use wcf\system\interaction\InteractionEffect;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -86,7 +87,8 @@ final class UserBulkInteractions extends AbstractBulkInteractionProvider
                 'merge',
                 UserMergeAction::class,
                 'wcf.acp.user.action.merge',
-                static fn(User $user) => $user->canEdit()
+                static fn(User $user) => $user->canEdit(),
+                InteractionEffect::ReloadList
             ) extends BulkFormBuilderDialogInteraction {
                 #[\Override]
                 public function render(array $objects): string
