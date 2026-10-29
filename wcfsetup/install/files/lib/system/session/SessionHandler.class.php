@@ -716,18 +716,38 @@ final class SessionHandler extends SingletonFactory
      */
     private function getExistingSession(string $sessionID): bool
     {
-        $sql = "SELECT  *
-                FROM    wcf1_user_session
-                WHERE   sessionID = ?";
+        // The user and the legacy session of a logged-in user are fetched along with
+        // the session to save the queries, the columns are split up by their table.
+        if ($this->isACP) {
+            $sql = "SELECT      user_session.*, user_option_value.*, user_table.*
+                    FROM        wcf1_user_session user_session
+                    LEFT JOIN   wcf1_user user_table
+                    ON          user_table.userID = user_session.userID
+                    LEFT JOIN   wcf1_user_option_value user_option_value
+                    ON          user_option_value.userID = user_table.userID
+                    WHERE       user_session.sessionID = ?";
+        } else {
+            $sql = "SELECT      user_session.*, user_option_value.*, user_table.*, legacy_session.*
+                    FROM        wcf1_user_session user_session
+                    LEFT JOIN   wcf1_user user_table
+                    ON          user_table.userID = user_session.userID
+                    LEFT JOIN   wcf1_user_option_value user_option_value
+                    ON          user_option_value.userID = user_table.userID
+                    LEFT JOIN   wcf1_session legacy_session
+                    ON          legacy_session.userID = user_session.userID
+                    WHERE       user_session.sessionID = ?";
+        }
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
             $sessionID,
         ]);
-        $row = $statement->fetchSingleRow();
+        $tables = $statement->fetchSingleRowByTable();
 
-        if ($row === false) {
+        if ($tables === false) {
             return false;
         }
+
+        $row = $tables['user_session'];
 
         // Check whether the session technically already expired.
         $lifetime = ($row['userID'] !== null ? self::USER_SESSION_LIFETIME : self::GUEST_SESSION_LIFETIME);
@@ -747,7 +767,9 @@ final class SessionHandler extends SingletonFactory
         }
 
         $this->sessionID = $sessionID;
-        $this->user = $row['userID'] === null ? User::getGuestUser() : new User($row['userID']);
+        $this->user = $row['userID'] === null
+            ? User::getGuestUser()
+            : new User(null, [...$tables['user_option_value'], ...$tables['user_table']]);
         $this->variables = $variables;
         $this->isPersisted = true;
 
@@ -773,25 +795,13 @@ final class SessionHandler extends SingletonFactory
 
         // Guests with on-demand sessions are not tracked in the users online list.
         if (!$this->isACP && ($row['userID'] !== null || !$this->onDemand)) {
-            // Fetch legacy session.
-            $condition = new PreparedStatementConditionBuilder();
-
             if ($row['userID'] !== null) {
-                // The `userID IS NOT NULL` condition technically is redundant, but is added for
-                // clarity and consistency with the guest case below.
-                $condition->add('userID IS NOT NULL');
-                $condition->add('userID = ?', [$row['userID']]);
+                $this->legacySession = $tables['legacy_session']['sessionID'] !== null
+                    ? new LegacySession(null, $tables['legacy_session'])
+                    : null;
             } else {
-                $condition->add('userID IS NULL');
-                $condition->add('sessionID = ?', [$row['sessionID']]);
+                $this->legacySession = $this->fetchLegacySession($row['userID'], $row['sessionID']);
             }
-
-            $sql = "SELECT  *
-                    FROM    wcf1_session
-                    {$condition}";
-            $legacySessionStatement = WCF::getDB()->prepare($sql);
-            $legacySessionStatement->execute($condition->getParameters());
-            $this->legacySession = $legacySessionStatement->fetchSingleObject(LegacySession::class);
 
             // The legacy session already stores the spider identifier, the detection is only
             // required without one. Spiders share a single legacy session that can belong to
@@ -816,8 +826,7 @@ final class SessionHandler extends SingletonFactory
                         // not required for proper request processing and consumers of the values stored
                         // within the legacy session (`page*`) cannot rely on any (valid) values being stored
                         // anyway.
-                        $legacySessionStatement->execute($condition->getParameters());
-                        $this->legacySession = $legacySessionStatement->fetchSingleObject(LegacySession::class);
+                        $this->legacySession = $this->fetchLegacySession($row['userID'], $row['sessionID']);
                     } else {
                         throw $e;
                     }
@@ -1004,6 +1013,32 @@ final class SessionHandler extends SingletonFactory
                 ORDER BY    lastActivityTime DESC";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$spiderIdentifier]);
+
+        return $statement->fetchSingleObject(LegacySession::class);
+    }
+
+    /**
+     * Returns the legacy session of the given user, or of the given session for guests.
+     */
+    private function fetchLegacySession(?int $userID, string $sessionID): ?LegacySession
+    {
+        $condition = new PreparedStatementConditionBuilder();
+
+        if ($userID !== null) {
+            // The `userID IS NOT NULL` condition technically is redundant, but is added for
+            // clarity and consistency with the guest case below.
+            $condition->add('userID IS NOT NULL');
+            $condition->add('userID = ?', [$userID]);
+        } else {
+            $condition->add('userID IS NULL');
+            $condition->add('sessionID = ?', [$sessionID]);
+        }
+
+        $sql = "SELECT  *
+                FROM    wcf1_session
+                {$condition}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($condition->getParameters());
 
         return $statement->fetchSingleObject(LegacySession::class);
     }

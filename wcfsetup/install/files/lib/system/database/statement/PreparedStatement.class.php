@@ -179,6 +179,36 @@ class PreparedStatement
     }
 
     /**
+     * Fetches the next row with its columns grouped by the alias of the table
+     * they originate from, allowing a joined query to feed several objects
+     * without mixing up their columns. Columns that do not belong to a table,
+     * such as expressions, are grouped under an empty string.
+     *
+     * @return array<string, array<string, mixed>>|false
+     * @since 6.3
+     */
+    public function fetchSingleRowByTable(): array|false
+    {
+        $row = $this->fetchArray(\PDO::FETCH_NUM);
+        if ($row === false) {
+            $this->closeCursor();
+
+            return false;
+        }
+
+        $tables = [];
+        foreach ($row as $index => $value) {
+            $column = $this->pdoStatement->getColumnMeta($index);
+            \assert($column !== false);
+
+            $tables[$column['table']][$column['name']] = $value;
+        }
+        $this->closeCursor();
+
+        return $tables;
+    }
+
+    /**
      * Returns the specified column of the next row of a result set.
      * Closes the 'cursor' afterwards to free up the connection
      * for new queries.
