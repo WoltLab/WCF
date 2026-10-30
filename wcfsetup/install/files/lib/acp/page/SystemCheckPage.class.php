@@ -101,7 +101,7 @@ class SystemCheckPage extends AbstractPage
      * }
      */
     public $phpVersions = [
-        'minimum' => '8.4.23',
+        'minimum' => '8.4.27',
         'deprecated' => [],
         'sufficient' => ['8.4'],
         'recommended' => ['8.5'],
@@ -418,7 +418,11 @@ class SystemCheckPage extends AbstractPage
         $comparePhpVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $phpVersion);
         // Do not use the "raw" version, it usually contains a lot of noise.
         $this->results['php']['version']['value'] = $comparePhpVersion;
-        if (\version_compare($comparePhpVersion, $this->phpVersions['minimum']) >= 0) {
+        if (
+            \version_compare($comparePhpVersion, $this->phpVersions['minimum']) >= 0
+            && (\version_compare($comparePhpVersion, '8.5.0', '<')
+                || \version_compare($comparePhpVersion, '8.5.12', '>='))
+        ) {
             $majorMinor = \preg_replace('~^(\d+\.\d+).*$~', '\\1', $phpVersion);
             foreach (['recommended', 'sufficient', 'deprecated'] as $type) {
                 foreach ($this->phpVersions[$type] as $version) {

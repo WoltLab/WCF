@@ -26,7 +26,8 @@ $requiredExtensions = [
     'pdo_mysql',
     'zlib',
 ];
-$phpVersionLowerBound = '8.4.23';
+$phpVersionLowerBound = '8.4.27';
+$phpVersion85LowerBound = '8.5.12';
 $phpVersionUpperBound = '8.5.x';
 $phrases = [
     'php_requirements' => [
@@ -38,8 +39,8 @@ $phrases = [
         'en' => 'PHP version %s',
     ],
     'php_version_failure' => [
-        'de' => 'Gefundene PHP-Version %s ist inkompatibel. PHP %s – %s wird benötigt.',
-        'en' => 'PHP version %s is incompatible. PHP %s – %s is required.',
+        'de' => 'Gefundene PHP-Version %s ist inkompatibel. PHP %s – 8.4.x / %s – %s wird benötigt.',
+        'en' => 'PHP version %s is incompatible. PHP %s – 8.4.x / %s – %s is required.',
     ],
     'php_x64_success' => [
         'de' => '64-Bit-Unterstützung',
@@ -118,12 +119,14 @@ function getPhrase($phrase, array $values = [])
 }
 function checkPHPVersion()
 {
-    global $phpVersionLowerBound, $phpVersionUpperBound;
+    global $phpVersionLowerBound, $phpVersion85LowerBound, $phpVersionUpperBound;
 
     $comparePhpVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', \PHP_VERSION);
 
     return \version_compare($comparePhpVersion, $phpVersionLowerBound, '>=')
-        && \version_compare($comparePhpVersion, \str_replace('x', '999', $phpVersionUpperBound), '<=');
+        && \version_compare($comparePhpVersion, \str_replace('x', '999', $phpVersionUpperBound), '<=')
+        && (\version_compare($comparePhpVersion, '8.5.0', '<')
+            || \version_compare($comparePhpVersion, $phpVersion85LowerBound, '>='));
 }
 function getMemoryLimit()
 {
@@ -525,7 +528,7 @@ function checkTls()
                         <li class="failure"><?= getPhrase('tls_failure') ?></li>
                     <?php } ?>
                 <?php } else { ?>
-                    <li class="failure"><?= getPhrase('php_version_failure', [\PHP_VERSION, $phpVersionLowerBound, $phpVersionUpperBound]) ?></li>
+                    <li class="failure"><?= getPhrase('php_version_failure', [\PHP_VERSION, $phpVersionLowerBound, $phpVersion85LowerBound, $phpVersionUpperBound]) ?></li>
                 <?php } ?>
             </ul>
 
