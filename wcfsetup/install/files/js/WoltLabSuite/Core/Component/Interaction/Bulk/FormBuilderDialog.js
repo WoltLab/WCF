@@ -48,6 +48,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
                 }));
             }
         }
+        container.dispatchEvent(new CustomEvent("interaction:bulk-completed"));
         (0, Snackbar_1.showDefaultSuccessSnackbar)();
     }
     function setup(identifier, container) {

@@ -26,6 +26,7 @@ export class GridView {
   readonly #noItemsNotice: HTMLElement;
   readonly #bulkInteractionProviderClassName: string;
   #gridViewParameters?: Map<string, string>;
+  readonly #reloadEmptyTable = promiseMutex(() => this.#loadRows(StateChangeCause.Change));
 
   constructor(
     gridId: string,
@@ -218,6 +219,6 @@ export class GridView {
       return;
     }
 
-    void this.#loadRows(StateChangeCause.Change);
+    this.#reloadEmptyTable();
   }
 }

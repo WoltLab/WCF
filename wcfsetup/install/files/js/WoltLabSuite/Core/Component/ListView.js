@@ -23,6 +23,7 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
         #allowInteractions;
         #allowBulkInteractions;
         #listViewParameters;
+        #reloadEmptyList = (0, PromiseMutex_1.promiseMutex)(() => this.#loadItems(0 /* StateChangeCause.Change */));
         constructor(viewId, viewClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC", defaultSortField = "", defaultSortOrder = "ASC", bulkInteractionProviderClassName, allowFiltering = true, allowSorting = true, allowInteractions = true, allowBulkInteractions = true, listViewParameters) {
             this.#viewClassName = viewClassName;
             this.#viewElement = document.getElementById(`${viewId}_items`);
@@ -95,6 +96,9 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
             this.#viewElement.addEventListener("interaction:reset-selection", () => {
                 this.#state.resetSelection();
             });
+            this.#viewElement.addEventListener("interaction:bulk-completed", () => {
+                this.#checkEmptyList();
+            });
             this.#viewElement.addEventListener("interaction:set-parameters", (event) => {
                 for (const key of Object.keys(event.detail)) {
                     if (this.#listViewParameters === undefined) {
@@ -126,7 +130,7 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
             if (this.#viewElement.querySelectorAll(".listView__item").length > 0) {
                 return;
             }
-            void this.#loadItems(0 /* StateChangeCause.Change */);
+            this.#reloadEmptyList();
         }
     }
     exports.ListView = ListView;

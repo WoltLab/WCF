@@ -30,6 +30,7 @@ export class ListView {
   readonly #allowInteractions: boolean;
   readonly #allowBulkInteractions: boolean;
   #listViewParameters?: Map<string, string>;
+  readonly #reloadEmptyList = promiseMutex(() => this.#loadItems(StateChangeCause.Change));
 
   constructor(
     viewId: string,
@@ -152,6 +153,10 @@ export class ListView {
       this.#state.resetSelection();
     });
 
+    this.#viewElement.addEventListener("interaction:bulk-completed", () => {
+      this.#checkEmptyList();
+    });
+
     this.#viewElement.addEventListener("interaction:set-parameters", (event: CustomEvent) => {
       for (const key of Object.keys(event.detail)) {
         if (this.#listViewParameters === undefined) {
@@ -209,6 +214,6 @@ export class ListView {
       return;
     }
 
-    void this.#loadItems(StateChangeCause.Change);
+    this.#reloadEmptyList();
   }
 }

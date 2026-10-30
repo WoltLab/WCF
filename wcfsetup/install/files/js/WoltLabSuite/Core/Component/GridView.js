@@ -20,6 +20,7 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridVi
         #noItemsNotice;
         #bulkInteractionProviderClassName;
         #gridViewParameters;
+        #reloadEmptyTable = (0, PromiseMutex_1.promiseMutex)(() => this.#loadRows(0 /* StateChangeCause.Change */));
         constructor(gridId, gridClassName, pageNo, baseUrl = "", sortField = "", sortOrder = "ASC", defaultSortField = "", defaultSortOrder = "ASC", bulkInteractionProviderClassName, gridViewParameters, visibleColumns) {
             this.#gridClassName = gridClassName;
             this.#table = document.getElementById(`${gridId}_table`);
@@ -124,7 +125,7 @@ define(["require", "exports", "tslib", "../Api/GridViews/GetRow", "../Api/GridVi
             if (this.#table.querySelectorAll("tbody tr").length > 0) {
                 return;
             }
-            void this.#loadRows(0 /* StateChangeCause.Change */);
+            this.#reloadEmptyTable();
         }
     }
     exports.GridView = GridView;

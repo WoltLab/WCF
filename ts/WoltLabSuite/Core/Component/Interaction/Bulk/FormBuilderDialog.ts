@@ -69,6 +69,8 @@ async function handleFormBuilderDialogAction(
     }
   }
 
+  container.dispatchEvent(new CustomEvent("interaction:bulk-completed"));
+
   showDefaultSuccessSnackbar();
 }
 
