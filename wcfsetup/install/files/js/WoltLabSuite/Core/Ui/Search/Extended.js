@@ -6,25 +6,21 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../../Dom/Util", "../../StringUtil", "./Input", "../Scroll", "../ItemList"], function (require, exports, tslib_1, Ajax_1, Picker_1, DomUtil, StringUtil_1, Input_1, UiScroll, ItemList_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../../Dom/Util", "./Input", "../ItemList"], function (require, exports, tslib_1, Ajax_1, Picker_1, DomUtil, Input_1, ItemList_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UiSearchExtended = void 0;
     Picker_1 = tslib_1.__importDefault(Picker_1);
     DomUtil = tslib_1.__importStar(DomUtil);
     Input_1 = tslib_1.__importDefault(Input_1);
-    UiScroll = tslib_1.__importStar(UiScroll);
     class UiSearchExtended {
         form;
         queryInput;
         typeInput;
         delimiter;
         filtersContainer;
-        searchID = undefined;
-        pages = 0;
         activePage = 1;
         lastSearchRequest = undefined;
-        lastSearchResultRequest = undefined;
         searchParameters = [];
         constructor() {
             this.form = document.getElementById("extendedSearchForm");
@@ -85,12 +81,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.lastSearchRequest?.abort();
             const request = (0, Ajax_1.dboAction)("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
             this.lastSearchRequest = request.getAbortController();
-            const { count, searchID, title, pages, pageNo, template } = (await request.dispatch());
+            const { count, title, pageNo, template } = (await request.dispatch());
             document.querySelector(".contentTitle").textContent = title;
-            this.searchID = searchID;
             this.removeSearchResults();
             if (count > 0) {
-                this.pages = pages;
                 this.activePage = pageNo;
                 this.showSearchResults(template);
             }
@@ -191,69 +185,21 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.typeInput.dispatchEvent(new Event("change"));
             void this.search(2 /* SearchAction.Init */);
         }
-        initPagination(position) {
-            const wrapperDiv = document.createElement("div");
-            wrapperDiv.classList.add("pagination" + (0, StringUtil_1.ucfirst)(position));
-            this.form.parentElement.insertBefore(wrapperDiv, this.delimiter);
-            const pagination = document.createElement("woltlab-core-pagination");
-            pagination.page = this.activePage;
-            pagination.count = this.pages;
-            pagination.behavior = "button";
-            pagination.url = this.getPaginationUrl();
-            pagination.addEventListener("switchPage", (event) => {
-                void this.changePage(event.detail).then(() => {
-                    if (position === "bottom") {
-                        UiScroll.element(this.form.nextElementSibling, undefined, "auto");
-                    }
-                });
-            });
-            wrapperDiv.append(pagination);
-        }
-        getPaginationUrl() {
-            const url = new URL(this.form.action);
-            url.search += url.search !== "" ? "&" : "?";
-            const searchParameters = [];
-            new FormData(this.form).forEach((value, key) => {
-                // eslint-disable-next-line @typescript-eslint/no-base-to-string
-                const trimmed = value.toString().trim();
-                if (trimmed) {
-                    searchParameters.push([key, trimmed]);
-                }
-            });
-            const parameters = searchParameters.slice();
-            if (this.activePage > 1) {
-                parameters.push(["pageNo", this.activePage.toString()]);
-            }
-            url.search += new URLSearchParams(parameters).toString();
-            return url.toString();
-        }
-        async changePage(pageNo) {
-            this.lastSearchResultRequest?.abort();
-            const request = (0, Ajax_1.dboAction)("getSearchResults", "wcf\\data\\search\\SearchAction").payload({
-                searchID: this.searchID,
-                pageNo,
-            });
-            this.lastSearchResultRequest = request.getAbortController();
-            const { template } = (await request.dispatch());
-            this.activePage = pageNo;
-            this.removeSearchResults();
-            this.showSearchResults(template);
-            this.updateQueryString(1 /* SearchAction.Navigation */);
-        }
         removeSearchResults() {
             while (this.form.nextSibling !== null && this.form.nextSibling !== this.delimiter) {
                 this.form.parentElement.removeChild(this.form.nextSibling);
             }
         }
         showSearchResults(template) {
-            if (this.pages > 1) {
-                this.initPagination("top");
-            }
-            const fragment = DomUtil.createFragmentFromHtml(template);
-            this.form.parentElement.insertBefore(fragment, this.delimiter);
-            if (this.pages > 1) {
-                this.initPagination("bottom");
-            }
+            const container = document.createElement("div");
+            container.classList.add("section");
+            this.form.parentElement.insertBefore(container, this.delimiter);
+            DomUtil.setInnerHtml(container, template);
+            // The list view handles the pagination, but the page number is part of the search url.
+            container.querySelector("woltlab-core-pagination")?.addEventListener("switchPage", (event) => {
+                this.activePage = event.detail;
+                this.updateQueryString(1 /* SearchAction.Navigation */);
+            });
         }
     }
     exports.UiSearchExtended = UiSearchExtended;
