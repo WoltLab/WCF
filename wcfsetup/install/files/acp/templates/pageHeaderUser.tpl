@@ -5,8 +5,11 @@
 				<li id="userMenu" class="dropdown">
 					<a href="#" class="dropdownToggle jsTooltip" title="{$__wcf->user->username}">{unsafe:$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)}</a>
 					<ul class="dropdownMenu dropdownMenuUserPanel" data-dropdown-alignment-horizontal="right">
-						<li><a href="{link controller='Logout'}t={csrfToken type=url}{/link}">{lang}wcf.user.logout{/lang}</a></li>
+						<li><button type="submit" form="userMenuLogout">{lang}wcf.user.logout{/lang}</button></li>
 					</ul>
+					<form id="userMenuLogout" method="post" action="{link controller='Logout'}{/link}" hidden>
+						{csrfToken}
+					</form>
 				</li>
 				
 				<li id="jumpToPage">
