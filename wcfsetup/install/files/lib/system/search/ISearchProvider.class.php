@@ -3,7 +3,9 @@
 namespace wcf\system\search;
 
 use wcf\data\search\ISearchResultObject;
+use wcf\data\search\Search;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\listView\AbstractListView;
 
 /**
  * Interface for full-text search providers.
@@ -116,4 +118,14 @@ interface ISearchProvider
      * @since 6.0
      */
     public function getCustomIconName(): ?string;
+
+    /**
+     * Can optionally return a list view that renders the results of the given search.
+     * Returns `null` to use the default `SearchResultListView`.
+     * This method is only called, if this provider is the only provider that is searched.
+     *
+     * @return ?AbstractListView<*, *>
+     * @since 6.3
+     */
+    public function getResultListView(Search $search): ?AbstractListView;
 }

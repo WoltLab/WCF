@@ -95,10 +95,9 @@ class SearchAction extends AbstractDatabaseObjectAction
      * @return array{
      *  count: int,
      *  title: string,
-     *  pages: int,
      *  pageNo: int,
-     *  searchID: int,
      *  template: string,
+     *  containerCssClassName: string,
      * }|array{count: int, title: string}
      * @since 5.5
      */
@@ -117,34 +116,25 @@ class SearchAction extends AbstractDatabaseObjectAction
             ];
         }
 
-        $startIndex = 0;
-        if ($this->parameters['pageNo'] > 1) {
-            $startIndex = \SEARCH_RESULTS_PER_PAGE * ($this->parameters['pageNo'] - 1);
-        }
-        $resultHandler = new SearchResultHandler($search, $startIndex);
-        $resultHandler->loadSearchResults();
-        $templateName = $resultHandler->getTemplateName();
-        SearchResultTextParser::getInstance()->setSearchQuery($resultHandler->getQuery());
+        $resultHandler = new SearchResultHandler($search);
+        $listView = $resultHandler->getResultListView();
+        $listView->setPageNo(\max(1, $this->parameters['pageNo']));
 
         return [
-            'count' => $resultHandler->countSearchResults(),
+            'count' => $listView->countItems(),
             'title' => WCF::getLanguage()->getDynamicVariable('wcf.search.results.title', [
-                'count' => $resultHandler->countSearchResults(),
+                'count' => $listView->countItems(),
                 'query' => $resultHandler->getQuery(),
             ]),
-            'pages' => (int)\ceil($resultHandler->countSearchResults() / \SEARCH_RESULTS_PER_PAGE),
-            'pageNo' => $this->parameters['pageNo'] ?: 1,
-            'searchID' => $search->searchID,
-            'template' => WCF::getTPL()->render($templateName['application'], $templateName['templateName'], [
-                'objects' => $resultHandler->getSearchResults(),
-                'query' => $resultHandler->getQuery(),
-                'customIcons' => $resultHandler->getCustomIcons(),
-            ]),
+            'pageNo' => $listView->getPageNo(),
+            'template' => $listView->render(),
+            'containerCssClassName' => $listView->getContainerCssClassName(),
         ];
     }
 
     /**
      * @since 5.5
+     * @deprecated 6.3 The search results are paginated by `SearchResultListView`.
      */
     public function validateGetSearchResults(): void
     {
@@ -152,10 +142,7 @@ class SearchAction extends AbstractDatabaseObjectAction
         $this->readInteger('pageNo');
 
         $search = new Search($this->parameters['searchID']);
-        if ($search->isNil() || $search->searchType !== 'messages') {
-            throw new IllegalLinkException();
-        }
-        if ($search->userID !== null && $search->userID !== WCF::getUser()->userID) {
+        if (!$search->canAccess()) {
             throw new IllegalLinkException();
         }
     }
@@ -163,6 +150,7 @@ class SearchAction extends AbstractDatabaseObjectAction
     /**
      * @return array{template: string}
      * @since 5.5
+     * @deprecated 6.3 The search results are paginated by `SearchResultListView`.
      */
     public function getSearchResults(): array
     {

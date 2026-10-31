@@ -10,22 +10,15 @@
 import { dboAction } from "../../Ajax";
 import DatePicker from "../../Date/Picker";
 import * as DomUtil from "../../Dom/Util";
-import { ucfirst } from "../../StringUtil";
 import UiSearchInput from "./Input";
-import * as UiScroll from "../Scroll";
 import { setValues as setItemListValues } from "../ItemList";
 
 type ResponseSearch = {
   count: number;
   title: string;
-  pages?: number;
   pageNo?: number;
-  searchID?: number;
   template?: string;
-};
-
-type ResponseSearchResults = {
-  template: string;
+  containerCssClassName?: string;
 };
 
 type SearchParameters = string[][];
@@ -42,11 +35,8 @@ export class UiSearchExtended {
   private readonly typeInput: HTMLSelectElement;
   private readonly delimiter: HTMLDivElement;
   private readonly filtersContainer: HTMLDetailsElement;
-  private searchID: number | undefined = undefined;
-  private pages = 0;
   private activePage = 1;
   private lastSearchRequest: AbortController | undefined = undefined;
-  private lastSearchResultRequest: AbortController | undefined = undefined;
   private searchParameters: SearchParameters = [];
 
   constructor() {
@@ -117,17 +107,15 @@ export class UiSearchExtended {
 
     const request = dboAction("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
     this.lastSearchRequest = request.getAbortController();
-    const { count, searchID, title, pages, pageNo, template } = (await request.dispatch()) as ResponseSearch;
+    const { count, title, pageNo, template, containerCssClassName } = (await request.dispatch()) as ResponseSearch;
 
     document.querySelector(".contentTitle")!.textContent = title;
-    this.searchID = searchID;
 
     this.removeSearchResults();
 
     if (count > 0) {
-      this.pages = pages!;
       this.activePage = pageNo!;
-      this.showSearchResults(template!);
+      this.showSearchResults(template!, containerCssClassName!);
     } else if (Object.keys(this.getFormData()).length > 4) {
       // Show the advanced filters when there are no results
       // but advanced filters are applied.
@@ -237,81 +225,23 @@ export class UiSearchExtended {
     void this.search(SearchAction.Init);
   }
 
-  private initPagination(position: "top" | "bottom"): void {
-    const wrapperDiv = document.createElement("div");
-    wrapperDiv.classList.add("pagination" + ucfirst(position));
-    this.form.parentElement!.insertBefore(wrapperDiv, this.delimiter);
-
-    const pagination = document.createElement("woltlab-core-pagination");
-    pagination.page = this.activePage;
-    pagination.count = this.pages;
-    pagination.behavior = "button";
-    pagination.url = this.getPaginationUrl();
-    pagination.addEventListener("switchPage", (event: CustomEvent) => {
-      void this.changePage(event.detail).then(() => {
-        if (position === "bottom") {
-          UiScroll.element(this.form.nextElementSibling as HTMLElement, undefined, "auto");
-        }
-      });
-    });
-
-    wrapperDiv.append(pagination);
-  }
-
-  private getPaginationUrl(): string {
-    const url = new URL(this.form.action);
-    url.search += url.search !== "" ? "&" : "?";
-
-    const searchParameters: SearchParameters = [];
-    new FormData(this.form).forEach((value, key) => {
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string
-      const trimmed = value.toString().trim();
-      if (trimmed) {
-        searchParameters.push([key, trimmed]);
-      }
-    });
-    const parameters = searchParameters.slice();
-
-    if (this.activePage > 1) {
-      parameters.push(["pageNo", this.activePage.toString()]);
-    }
-    url.search += new URLSearchParams(parameters).toString();
-
-    return url.toString();
-  }
-
-  private async changePage(pageNo: number): Promise<void> {
-    this.lastSearchResultRequest?.abort();
-
-    const request = dboAction("getSearchResults", "wcf\\data\\search\\SearchAction").payload({
-      searchID: this.searchID,
-      pageNo,
-    });
-    this.lastSearchResultRequest = request.getAbortController();
-    const { template } = (await request.dispatch()) as ResponseSearchResults;
-    this.activePage = pageNo;
-    this.removeSearchResults();
-    this.showSearchResults(template);
-    this.updateQueryString(SearchAction.Navigation);
-  }
-
   private removeSearchResults(): void {
     while (this.form.nextSibling !== null && this.form.nextSibling !== this.delimiter) {
       this.form.parentElement!.removeChild(this.form.nextSibling);
     }
   }
 
-  private showSearchResults(template: string): void {
-    if (this.pages > 1) {
-      this.initPagination("top");
-    }
+  private showSearchResults(template: string, containerCssClassName: string): void {
+    const container = document.createElement("div");
+    container.classList.add("section", ...containerCssClassName.split(" ").filter((className) => className !== ""));
+    this.form.parentElement!.insertBefore(container, this.delimiter);
+    DomUtil.setInnerHtml(container, template);
 
-    const fragment = DomUtil.createFragmentFromHtml(template);
-    this.form.parentElement!.insertBefore(fragment, this.delimiter);
-
-    if (this.pages > 1) {
-      this.initPagination("bottom");
-    }
+    // The list view handles the pagination, but the page number is part of the search url.
+    container.querySelector("woltlab-core-pagination")?.addEventListener("switchPage", (event: CustomEvent) => {
+      this.activePage = event.detail;
+      this.updateQueryString(SearchAction.Navigation);
+    });
   }
 }
 

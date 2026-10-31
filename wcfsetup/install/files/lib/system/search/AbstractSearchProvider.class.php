@@ -3,7 +3,9 @@
 namespace wcf\system\search;
 
 use wcf\data\object\type\AbstractObjectTypeProcessor;
+use wcf\data\search\Search;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\listView\AbstractListView;
 
 /**
  * This class provides default implementations for the ISearchProvider interface.
@@ -96,6 +98,12 @@ abstract class AbstractSearchProvider extends AbstractObjectTypeProcessor implem
 
     #[\Override]
     public function getCustomIconName(): ?string
+    {
+        return null;
+    }
+
+    #[\Override]
+    public function getResultListView(Search $search): ?AbstractListView
     {
         return null;
     }
