@@ -35,6 +35,7 @@ use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\object\watch\UserObjectWatchHandler;
 use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Executes article related actions.
@@ -110,6 +111,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                     'slug' => $content['slug'] ?? '',
                     'teaser' => $content['teaser'],
                     'content' => $content['content'],
+                    'numberOfWords' => StringUtil::countWords($content['content']),
                     'imageID' => $content['imageID'],
                     'teaserImageID' => $content['teaserImageID'],
                     'metaTitle' => $content['metaTitle'] ?? '',
@@ -210,6 +212,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                             'slug' => $isRevert ? $articleContent->slug : ($content['slug'] ?? ''),
                             'teaser' => $content['teaser'],
                             'content' => $content['content'],
+                            'numberOfWords' => StringUtil::countWords($content['content']),
                             'imageID' => ($isRevert) ? $articleContent->imageID : $content['imageID'],
                             'teaserImageID' => ($isRevert) ? $articleContent->teaserImageID : $content['teaserImageID'],
                             'metaTitle' => $content['metaTitle'] ?? '',
@@ -244,6 +247,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
                             'slug' => $isRevert ? '' : ($content['slug'] ?? ''),
                             'teaser' => $content['teaser'],
                             'content' => $content['content'],
+                            'numberOfWords' => StringUtil::countWords($content['content']),
                             'imageID' => ($isRevert) ? null : $content['imageID'],
                             'teaserImageID' => ($isRevert) ? null : $content['teaserImageID'],
                             'metaTitle' => $content['metaTitle'] ?? '',

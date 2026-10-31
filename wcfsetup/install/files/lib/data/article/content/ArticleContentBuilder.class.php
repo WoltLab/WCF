@@ -9,6 +9,7 @@ use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\tagging\TagEngine;
+use wcf\util\StringUtil;
 
 /**
  * Builder for creating and updating article contents.
@@ -69,6 +70,14 @@ final class ArticleContentBuilder extends DatabaseObjectBuilder
     public function setContent(string $content): static
     {
         $this->properties['content'] = $content;
+        $this->setNumberOfWords(StringUtil::countWords($content));
+
+        return $this;
+    }
+
+    public function setNumberOfWords(int $numberOfWords): static
+    {
+        $this->properties['numberOfWords'] = $numberOfWords;
 
         return $this;
     }

@@ -9,6 +9,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\language\LanguageFactory;
 use wcf\system\tagging\TagEngine;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Imports cms articles.
@@ -110,6 +111,7 @@ class ArticleImporter extends AbstractImporter
                 'title' => $contentData['title'],
                 'teaser' => $contentData['teaser'],
                 'content' => $contentData['content'],
+                'numberOfWords' => StringUtil::countWords($contentData['content']),
                 'imageID' => $contentData['imageID'],
                 'teaserImageID' => $contentData['teaserImageID'],
                 'metaTitle' => $contentData['metaTitle'],

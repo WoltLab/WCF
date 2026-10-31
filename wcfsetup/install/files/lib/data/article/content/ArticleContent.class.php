@@ -40,6 +40,7 @@ use wcf\util\StringUtil;
  * @property-read   string  $metaDescription    meta description of the article
  * @property-read   int     $comments           number of comments
  * @property-read   int     $attachments        number of attachments
+ * @property-read   int     $numberOfWords      number of words in the content
  *
  * @extends CollectionDatabaseObject<ArticleContentCollection>
  */
@@ -279,6 +280,16 @@ class ArticleContent extends CollectionDatabaseObject implements IMessage, ITitl
         }
 
         return null;
+    }
+
+    /**
+     * Returns the estimated reading time in minutes.
+     *
+     * @since 6.3
+     */
+    public function getReadingTime(): int
+    {
+        return (int)\ceil($this->numberOfWords / 200);
     }
 
     /**

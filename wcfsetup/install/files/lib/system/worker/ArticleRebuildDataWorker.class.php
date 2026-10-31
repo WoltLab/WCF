@@ -13,6 +13,7 @@ use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Worker implementation for updating articles.
@@ -127,6 +128,9 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
             // count attachments
             $attachmentStatement->execute([$attachmentObjectType->objectTypeID, $articleContent->articleContentID]);
             $builder->setAttachments($attachmentStatement->fetchSingleColumn());
+
+            // count words
+            $builder->setNumberOfWords(StringUtil::countWords($articleContent->content ?? ''));
 
             $builder->update();
         }

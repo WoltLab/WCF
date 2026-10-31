@@ -18,6 +18,15 @@
 			<meta itemprop="datePublished" content="{$article->time|date:'c'}">
 		</li>
 
+		{if $articleContent->getReadingTime()}
+			<li>
+				{icon name='hourglass'}
+				<span>{lang minutes=$articleContent->getReadingTime()}wcf.page.readingTime{/lang}</span>
+				<meta itemprop="timeRequired" content="PT{$articleContent->getReadingTime()}M">
+				<meta itemprop="wordCount" content="{$articleContent->numberOfWords}">
+			</li>
+		{/if}
+
 		{if $article->hasLabels}
 			<li>
 				{icon name='tags'}
