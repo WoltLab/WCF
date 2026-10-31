@@ -6,7 +6,6 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\flood\FloodControl;
-use wcf\system\listView\user\SearchResultListView;
 use wcf\system\search\SearchEngine;
 use wcf\system\search\SearchHandler;
 use wcf\system\search\SearchResultHandler;
@@ -98,6 +97,7 @@ class SearchAction extends AbstractDatabaseObjectAction
      *  title: string,
      *  pageNo: int,
      *  template: string,
+     *  containerCssClassName: string,
      * }|array{count: int, title: string}
      * @since 5.5
      */
@@ -116,17 +116,19 @@ class SearchAction extends AbstractDatabaseObjectAction
             ];
         }
 
-        $listView = new SearchResultListView($search->searchID);
+        $resultHandler = new SearchResultHandler($search);
+        $listView = $resultHandler->getResultListView();
         $listView->setPageNo(\max(1, $this->parameters['pageNo']));
 
         return [
             'count' => $listView->countItems(),
             'title' => WCF::getLanguage()->getDynamicVariable('wcf.search.results.title', [
                 'count' => $listView->countItems(),
-                'query' => $listView->getQuery(),
+                'query' => $resultHandler->getQuery(),
             ]),
             'pageNo' => $listView->getPageNo(),
             'template' => $listView->render(),
+            'containerCssClassName' => $listView->getContainerCssClassName(),
         ];
     }
 
@@ -140,10 +142,7 @@ class SearchAction extends AbstractDatabaseObjectAction
         $this->readInteger('pageNo');
 
         $search = new Search($this->parameters['searchID']);
-        if ($search->isNil() || $search->searchType !== 'messages') {
-            throw new IllegalLinkException();
-        }
-        if ($search->userID !== null && $search->userID !== WCF::getUser()->userID) {
+        if (!$search->canAccess()) {
             throw new IllegalLinkException();
         }
     }

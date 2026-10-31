@@ -48,11 +48,7 @@ final class SearchResultListView extends AbstractListView
     #[\Override]
     public function isAccessible(): bool
     {
-        if ($this->search->isNil() || $this->search->searchType !== 'messages') {
-            return false;
-        }
-
-        return $this->search->userID === null || $this->search->userID === WCF::getUser()->userID;
+        return $this->search->canAccess();
     }
 
     #[\Override]

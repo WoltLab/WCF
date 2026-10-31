@@ -18,6 +18,7 @@ type ResponseSearch = {
   title: string;
   pageNo?: number;
   template?: string;
+  containerCssClassName?: string;
 };
 
 type SearchParameters = string[][];
@@ -106,7 +107,7 @@ export class UiSearchExtended {
 
     const request = dboAction("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
     this.lastSearchRequest = request.getAbortController();
-    const { count, title, pageNo, template } = (await request.dispatch()) as ResponseSearch;
+    const { count, title, pageNo, template, containerCssClassName } = (await request.dispatch()) as ResponseSearch;
 
     document.querySelector(".contentTitle")!.textContent = title;
 
@@ -114,7 +115,7 @@ export class UiSearchExtended {
 
     if (count > 0) {
       this.activePage = pageNo!;
-      this.showSearchResults(template!);
+      this.showSearchResults(template!, containerCssClassName!);
     } else if (Object.keys(this.getFormData()).length > 4) {
       // Show the advanced filters when there are no results
       // but advanced filters are applied.
@@ -230,9 +231,9 @@ export class UiSearchExtended {
     }
   }
 
-  private showSearchResults(template: string): void {
+  private showSearchResults(template: string, containerCssClassName: string): void {
     const container = document.createElement("div");
-    container.classList.add("section");
+    container.classList.add("section", ...containerCssClassName.split(" ").filter((className) => className !== ""));
     this.form.parentElement!.insertBefore(container, this.delimiter);
     DomUtil.setInnerHtml(container, template);
 

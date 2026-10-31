@@ -7,6 +7,8 @@ use wcf\data\search\Search;
 use wcf\page\SearchResultPage;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
+use wcf\system\listView\AbstractListView;
+use wcf\system\listView\user\SearchResultListView;
 
 /**
  * Provides the results of a full-text search.
@@ -15,18 +17,15 @@ use wcf\system\exception\SystemException;
  * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 5.5
+ *
+ * @phpstan-import-type SearchData from Search
  */
 final class SearchResultHandler
 {
     private readonly Search $search;
 
     /**
-     * @var array{
-     *  query: string,
-     *  objectTypeNames: string[],
-     *  results: list<array{objectID: int, objectType: string}>,
-     *  additionalData: array<string, mixed>
-     * }
+     * @var SearchData
      */
     private array $searchData;
 
@@ -46,7 +45,7 @@ final class SearchResultHandler
         $this->search = $search;
         $this->startIndex = $startIndex;
         $this->limit = $limit;
-        $this->searchData = \unserialize($this->search->searchData);
+        $this->searchData = $this->search->getSearchData();
     }
 
     public function countSearchResults(): int
@@ -137,6 +136,27 @@ final class SearchResultHandler
         }
 
         return $this->getLegacyTemplateName();
+    }
+
+    /**
+     * Returns the list view that renders the search results.
+     *
+     * @return AbstractListView<*, *>
+     * @since 6.3
+     */
+    public function getResultListView(): AbstractListView
+    {
+        if (\count($this->searchData['objectTypeNames']) === 1) {
+            $objectType = SearchEngine::getInstance()->getObjectType($this->searchData['objectTypeNames'][0]);
+            if ($objectType instanceof ISearchProvider) {
+                $listView = $objectType->getResultListView($this->search);
+                if ($listView !== null) {
+                    return $listView;
+                }
+            }
+        }
+
+        return new SearchResultListView($this->search->searchID);
     }
 
     /**

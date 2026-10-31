@@ -81,12 +81,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
             this.lastSearchRequest?.abort();
             const request = (0, Ajax_1.dboAction)("search", "wcf\\data\\search\\SearchAction").payload(this.getFormData());
             this.lastSearchRequest = request.getAbortController();
-            const { count, title, pageNo, template } = (await request.dispatch());
+            const { count, title, pageNo, template, containerCssClassName } = (await request.dispatch());
             document.querySelector(".contentTitle").textContent = title;
             this.removeSearchResults();
             if (count > 0) {
                 this.activePage = pageNo;
-                this.showSearchResults(template);
+                this.showSearchResults(template, containerCssClassName);
             }
             else if (Object.keys(this.getFormData()).length > 4) {
                 // Show the advanced filters when there are no results
@@ -190,9 +190,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Date/Picker", "../..
                 this.form.parentElement.removeChild(this.form.nextSibling);
             }
         }
-        showSearchResults(template) {
+        showSearchResults(template, containerCssClassName) {
             const container = document.createElement("div");
-            container.classList.add("section");
+            container.classList.add("section", ...containerCssClassName.split(" ").filter((className) => className !== ""));
             this.form.parentElement.insertBefore(container, this.delimiter);
             DomUtil.setInnerHtml(container, template);
             // The list view handles the pagination, but the page number is part of the search url.
