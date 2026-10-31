@@ -42,6 +42,9 @@ return [
                 ->defaultValue(0),
             NotNullVarchar255DatabaseTableColumn::create('slug')
                 ->defaultValue(''),
+            IntDatabaseTableColumn::create('numberOfWords')
+                ->notNull()
+                ->defaultValue(0),
         ]),
     PartialDatabaseTable::create('wcf1_label_group')
         ->columns([

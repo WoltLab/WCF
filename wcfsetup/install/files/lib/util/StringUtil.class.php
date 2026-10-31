@@ -485,6 +485,21 @@ final class StringUtil
     }
 
     /**
+     * Returns the number of words in the given HTML. Tags are treated as word
+     * boundaries and words may contain letters of any script.
+     *
+     * @since 6.3
+     */
+    public static function countWords(string $html): int
+    {
+        $text = \preg_replace('~<!--.*?-->~s', '', $html);
+        $text = \preg_replace('/<\/?[a-zA-Z](?:[^>"\']+|"[^"]*"|\'[^\']*\')*+>/', ' ', $text);
+        $text = \html_entity_decode($text, \ENT_QUOTES | \ENT_HTML5, 'UTF-8');
+
+        return \preg_match_all('~[\p{L}\p{N}\p{M}]+(?:[\'\x{2019}-][\p{L}\p{N}\p{M}]+)*~u', $text);
+    }
+
+    /**
      * Returns false if the given word is forbidden by given word filter.
      */
     public static function executeWordFilter(string $word, string $filter): bool

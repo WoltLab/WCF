@@ -479,6 +479,9 @@ return [
             SmallintDatabaseTableColumn::create('attachments')
                 ->notNull()
                 ->defaultValue(0),
+            IntDatabaseTableColumn::create('numberOfWords')
+                ->notNull()
+                ->defaultValue(0),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
