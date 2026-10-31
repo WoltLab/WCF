@@ -122,6 +122,16 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
     }
 
     /**
+     * Category types are shared by all categories of an object type and do not
+     * take the category as a constructor argument, unlike other processors.
+     */
+    #[\Override]
+    public function getProcessor(): ICategoryType
+    {
+        return $this->getObjectType()->getProcessor();
+    }
+
+    /**
      * Returns the direct child categories of this category.
      *
      * @return  Category[]

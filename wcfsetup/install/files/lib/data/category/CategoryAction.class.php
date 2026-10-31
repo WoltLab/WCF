@@ -44,6 +44,10 @@ class CategoryAction extends AbstractDatabaseObjectAction implements
     #[\Override]
     public function delete()
     {
+        if ($this->objects === []) {
+            $this->readObjects();
+        }
+
         // call category types
         foreach ($this->getObjects() as $categoryEditor) {
             $categoryEditor->getProcessor()->beforeDeletion($categoryEditor);
