@@ -5,11 +5,9 @@ namespace wcf\system\endpoint\controller\core\devtools\projects;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use wcf\command\devtools\project\SyncPackageVersion;
 use wcf\data\devtools\project\DevtoolsProject;
-use wcf\data\package\Package;
-use wcf\data\package\PackageEditor;
 use wcf\http\Helper;
-use wcf\system\cache\builder\PackageCacheBuilder;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\PermissionDeniedException;
@@ -40,23 +38,12 @@ final class SyncVersion implements IController
             throw new UserInputException('projectID');
         }
 
-        $this->syncVersion($project, $package);
+        new SyncPackageVersion(
+            $package,
+            $project->getPackageArchive()->getPackageInfo('version'),
+        )();
 
         return new JsonResponse([]);
-    }
-
-    private function syncVersion(DevtoolsProject $project, Package $package): void
-    {
-        $projectVersion = $project->getPackageArchive()->getPackageInfo('version');
-        if (Package::compareVersion($package->packageVersion, $projectVersion, '>=')) {
-            return;
-        }
-
-        new PackageEditor($package)->update([
-            'packageVersion' => $projectVersion,
-        ]);
-
-        PackageCacheBuilder::getInstance()->reset();
     }
 
     private function assertProjectCanBeManaged(): void

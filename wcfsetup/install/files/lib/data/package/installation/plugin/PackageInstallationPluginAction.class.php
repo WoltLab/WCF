@@ -2,27 +2,12 @@
 
 namespace wcf\data\package\installation\plugin;
 
-use wcf\command\package\RebuildBootstrapper;
-use wcf\command\package\SetLastUpdateTime;
+use wcf\command\devtools\project\SyncPackageInstallationPlugin;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\devtools\project\DevtoolsProject;
-use wcf\data\option\OptionEditor;
-use wcf\event\package\PackageInstallationPluginSynced;
-use wcf\system\cache\builder\ApiEndpointCacheBuilder;
-use wcf\system\cache\CacheHandler;
-use wcf\system\devtools\pip\DevtoolsPackageInstallationDispatcher;
 use wcf\system\devtools\pip\DevtoolsPip;
-use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
-use wcf\system\language\LanguageFactory;
-use wcf\system\package\plugin\DatabasePackageInstallationPlugin;
-use wcf\system\package\plugin\IPackageInstallationPlugin;
-use wcf\system\package\plugin\OptionPackageInstallationPlugin;
-use wcf\system\package\SplitNodeException;
-use wcf\system\search\SearchIndexManager;
-use wcf\system\style\StyleHandler;
-use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
 /**
@@ -109,84 +94,13 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
      */
     public function invoke()
     {
-        $dispatcher = new DevtoolsPackageInstallationDispatcher($this->project);
-        $className = $this->packageInstallationPlugin->className;
-        if ($className === DatabasePackageInstallationPlugin::class) {
-            $pip = new DatabasePackageInstallationPlugin(
-                $dispatcher,
-                $this->devtoolsPip->getInstructions($this->project, $this->parameters['target']),
-                $this->project,
-            );
-        } else {
-            /** @var IPackageInstallationPlugin $pip */
-            $pip = new $this->packageInstallationPlugin->className(
-                $dispatcher,
-                $this->devtoolsPip->getInstructions($this->project, $this->parameters['target'])
-            );
-        }
-
-        $bootstrapPathname = \sprintf(
-            '%slib/bootstrap/%s.php',
-            \WCF_DIR,
-            $this->project->getPackage()->package,
-        );
-        $hadBootstrapFile = \file_exists($bootstrapPathname);
-
         $start = \microtime(true);
 
-        $invokeAgain = false;
-        try {
-            $pip->update();
-        } catch (SplitNodeException $e) {
-            if (!\in_array($this->parameters['pluginName'], ['database', 'script'], true)) {
-                throw new \RuntimeException("PIP '{$this->packageInstallationPlugin->pluginName}' is not allowed to throw a 'SplitNodeException'.");
-            }
-
-            $invokeAgain = true;
-        }
-
-        SearchIndexManager::getInstance()->createSearchIndices();
-
-        VersionTracker::getInstance()->createStorageTables();
-
-        CacheHandler::getInstance()->flushAll();
-
-        if ($pip instanceof OptionPackageInstallationPlugin) {
-            OptionEditor::resetCache();
-        }
-
-        switch ($this->packageInstallationPlugin->pluginName) {
-            case 'file':
-                ApiEndpointCacheBuilder::getInstance()->reset();
-                StyleHandler::resetStylesheets(false);
-
-                new SetLastUpdateTime()();
-
-                if (!$hadBootstrapFile) {
-                    \clearstatcache(filename: $bootstrapPathname);
-                    if (\file_exists($bootstrapPathname)) {
-                        new RebuildBootstrapper()();
-                    }
-                }
-                break;
-
-            case 'language':
-            case 'menuItem':
-                LanguageFactory::getInstance()->clearCache();
-                LanguageFactory::getInstance()->deleteLanguageCache();
-                break;
-
-            case 'acpTemplate':
-            case 'template':
-            case 'templateListener':
-                // resets the compiled templates
-                LanguageFactory::getInstance()->deleteLanguageCache();
-                break;
-        }
-
-        EventHandler::getInstance()->fire(
-            new PackageInstallationPluginSynced($this->packageInstallationPlugin->pluginName, $invokeAgain)
-        );
+        $invokeAgain = new SyncPackageInstallationPlugin(
+            $this->project,
+            $this->devtoolsPip,
+            $this->parameters['target'],
+        )();
 
         return [
             'invokeAgain' => $invokeAgain,
