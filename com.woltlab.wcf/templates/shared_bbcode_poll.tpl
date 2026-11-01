@@ -104,7 +104,7 @@
 							{lang}wcf.poll.button.vote{/lang}
 						</button>
 					{/if}
-					{if $poll->canSeeResult()}
+					{if $poll->canVote() && $poll->canSeeResult()}
 						<button type="button" class="pollWidget__link pollWidget__showResults">
 							{lang}wcf.poll.button.showResult{/lang}
 						</button>
