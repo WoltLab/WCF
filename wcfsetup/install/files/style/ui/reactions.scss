@@ -236,3 +236,19 @@ html[data-color-scheme="dark"] .reactionPopover {
 		font-weight: 600;
 	}
 }
+
+.topReactionsSummary {
+	display: flex;
+	column-gap: 5px;
+	align-items: center;
+}
+
+.topReactionsSummary__reactions {
+	display: flex;
+	column-gap: 2px;
+	align-items: center;
+}
+
+.entryCardList__item__meta__icon .topReactionsSummary .reactionType {
+	margin-right: 0;
+}

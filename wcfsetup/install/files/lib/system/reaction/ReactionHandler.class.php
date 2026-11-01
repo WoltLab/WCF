@@ -428,6 +428,40 @@ final class ReactionHandler extends SingletonFactory
     }
 
     /**
+     * Returns the number of total reactions and the top 3 reaction types.
+     *
+     * @return ?array{count: int, reactions: list<ReactionType>}
+     * @since 6.3
+     */
+    public function getTopReactionsSummary(?string $cachedReactionsJson): ?array
+    {
+        if ($cachedReactionsJson !== null && $cachedReactionsJson !== '') {
+            $cachedReactions = \json_decode($cachedReactionsJson, true, flags: \JSON_THROW_ON_ERROR);
+
+            if (\is_array($cachedReactions)) {
+                $cachedReactions = self::cleanUpCachedReactions($cachedReactions);
+
+                if ($cachedReactions !== []) {
+                    \arsort($cachedReactions, \SORT_NUMERIC);
+
+                    $count = \array_sum($cachedReactions);
+                    $reactions = \array_map(
+                        static fn($reactionTypeID) => ReactionTypeCache::getInstance()->getReactionTypeByID($reactionTypeID),
+                        \array_slice(\array_keys($cachedReactions), 0, 3)
+                    );
+
+                    return [
+                        'count' => $count,
+                        'reactions' => $reactions,
+                    ];
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Renders an inline list of reaction counts.
      *
      * @param int[] $reactionCounts format: `[reactionID => count]`

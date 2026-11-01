@@ -80,7 +80,7 @@
 			<div class="entryCardList__item__meta__icons">
 				{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && $article->cumulativeLikes}
 					<div class="entryCardList__item__meta__icon">
-						{include file='shared_topReaction' cachedReactions=$article->getCachedReactions() render='short'}
+						{include file='shared_topReactionsSummary' cachedReactions=$article->getCachedReactions()}
 					</div>
 				{/if}
 				{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}{* empty phrase indicates that comments are disabled *}

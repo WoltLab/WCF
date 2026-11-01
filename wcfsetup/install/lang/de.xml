@@ -4515,6 +4515,7 @@ Dateianhänge:
 		<item name="wcf.reactions.summary.listReactions"><![CDATA[Reaktionen auflisten]]></item>
 		<item name="wcf.reactions.react"><![CDATA[Reagieren]]></item>
 		<item name="wcf.reactions.reactionTypeCount"><![CDATA[{@$reaction->renderIcon()}&#x202F;×&#x202F;{#$count}]]></item>
+		<item name="wcf.reactions.topReactionsSummary"><![CDATA[{plural value=$count one='# Reaktion' other='# Reaktionen'}, am häufigsten: {implode from=$reactions item=reaction}{$reaction->getTitle()}{/implode}]]></item>
 	</category>
 	<category name="wcf.reactionType">
 		<item name="wcf.reactionType.title1"><![CDATA[Gefällt mir]]></item>
