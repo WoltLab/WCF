@@ -4,7 +4,7 @@ namespace wcf\data\event\listener;
 
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\cache\builder\EventListenerCacheBuilder;
+use wcf\system\cache\eager\EventListenerCache;
 
 /**
  * Provides functions to edit event listener.
@@ -30,6 +30,6 @@ class EventListenerEditor extends DatabaseObjectEditor implements IEditableCache
     #[\Override]
     public static function resetCache()
     {
-        EventListenerCacheBuilder::getInstance()->reset();
+        new EventListenerCache()->rebuild();
     }
 }

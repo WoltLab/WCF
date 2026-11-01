@@ -3,77 +3,53 @@
 namespace wcf\system\cache\builder;
 
 use wcf\data\event\listener\EventListener;
-use wcf\system\event\EventHandler;
-use wcf\system\WCF;
+use wcf\system\cache\eager\EventListenerCache;
 
 /**
  * Caches the event listeners.
  *
- * Important: You cannot use \wcf\data\event\listener\EventListenerList here as
- * \wcf\data\DatabaseObjectList fires an event.
- *
  * @author  Matthias Schmidt, Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @deprecated 6.3 use `EventListenerCache` instead
  */
-class EventListenerCacheBuilder extends AbstractCacheBuilder
+class EventListenerCacheBuilder extends AbstractLegacyCacheBuilder
 {
     #[\Override]
-    public function rebuild(array $parameters)
+    public function rebuild(array $parameters): array
     {
-        $actions = [
-            'admin' => [],
-            'user' => [],
+        $cache = new EventListenerCache()->getCache();
+
+        $listeners = \array_map(
+            static fn(array $row) => new EventListener(null, $row),
+            $cache['listeners']
+        );
+        $toListeners = static fn(array $listenerIDs) => \array_map(
+            static fn(int $listenerID) => $listeners[$listenerID],
+            $listenerIDs
+        );
+
+        $data = [
+            'actions' => [],
+            'inheritedActions' => [],
         ];
-
-        $inheritedActions = [
-            'admin' => [],
-            'user' => [],
-        ];
-
-        $sql = "SELECT      *
-                FROM        wcf1_event_listener
-                ORDER BY    niceValue ASC, listenerClassName ASC";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute();
-
-        while ($eventListener = $statement->fetchObject(EventListener::class)) {
-            $eventNames = $eventListener->getEventNames();
-            $environments = $eventListener->environment === 'all' ? ['admin', 'user'] : [$eventListener->environment];
-
-            foreach ($environments as $environment) {
-                if ($eventListener->inherit === 0) {
-                    if (!isset($actions[$environment])) {
-                        $actions[$environment] = [];
-                    }
-
-                    foreach ($eventNames as $eventName) {
-                        $key = EventHandler::generateKey($eventListener->eventClassName, $eventName);
-                        if (!isset($actions[$environment][$key])) {
-                            $actions[$environment][$key] = [];
-                        }
-
-                        $actions[$environment][$key][] = $eventListener;
-                    }
-                } else {
-                    if (!isset($inheritedActions[$environment])) {
-                        $inheritedActions[$environment] = [];
-                    }
-
-                    foreach ($eventNames as $eventName) {
-                        if (!isset($inheritedActions[$environment][$eventListener->eventClassName])) {
-                            $inheritedActions[$environment][$eventListener->eventClassName] = [];
-                        }
-
-                        $inheritedActions[$environment][$eventListener->eventClassName][$eventName][] = $eventListener;
-                    }
-                }
-            }
+        foreach ($cache['actions'] as $environment => $actions) {
+            $data['actions'][$environment] = \array_map($toListeners, $actions);
+        }
+        foreach ($cache['inheritedActions'] as $environment => $classNames) {
+            $data['inheritedActions'][$environment] = \array_map(
+                static fn(array $eventNames) => \array_map($toListeners, $eventNames),
+                $classNames
+            );
         }
 
-        return [
-            'actions' => $actions,
-            'inheritedActions' => $inheritedActions,
-        ];
+        return $data;
+    }
+
+    #[\Override]
+    public function reset(array $parameters = [])
+    {
+        new EventListenerCache()->rebuild();
     }
 }
