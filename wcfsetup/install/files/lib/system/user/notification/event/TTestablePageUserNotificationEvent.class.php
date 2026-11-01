@@ -6,8 +6,8 @@ use wcf\data\page\content\PageContentEditor;
 use wcf\data\page\Page;
 use wcf\data\page\PageAction;
 use wcf\data\page\PageCache;
-use wcf\system\cache\builder\PageCacheBuilder;
 use wcf\system\cache\builder\RoutingCacheBuilder;
+use wcf\system\cache\eager\PageRowCache;
 use wcf\system\request\ControllerMap;
 use wcf\system\user\notification\TestableUserNotificationEventHandler;
 
@@ -67,13 +67,14 @@ trait TTestablePageUserNotificationEvent
     private static function resetPageCache(): void
     {
         // reset cache builders
-        TestableUserNotificationEventHandler::getInstance()->resetCacheBuilder(PageCacheBuilder::getInstance());
         TestableUserNotificationEventHandler::getInstance()->resetCacheBuilder(RoutingCacheBuilder::getInstance());
 
         // reset page cache
+        TestableUserNotificationEventHandler::getInstance()->resetCacheHandler(new PageRowCache());
+        new PageRowCache()->rebuild();
         $reflectionClass = new \ReflectionClass(PageCache::class);
-        $reflectionProperty = $reflectionClass->getProperty('cache');
-        $reflectionProperty->setValue(PageCache::getInstance(), PageCacheBuilder::getInstance()->getData());
+        $reflectionMethod = $reflectionClass->getMethod('init');
+        $reflectionMethod->invoke(PageCache::getInstance());
 
         // reset controller map
         $reflectionClass = new \ReflectionClass(ControllerMap::class);

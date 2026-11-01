@@ -5,7 +5,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\event\listener\EventListenerEditor;
 use wcf\data\event\listener\EventListenerList;
 use wcf\event\IPsr14Event;
-use wcf\system\cache\builder\EventListenerCacheBuilder;
+use wcf\system\cache\eager\EventListenerCache;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
@@ -144,7 +144,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
         parent::uninstall();
 
         // clear cache immediately
-        EventListenerCacheBuilder::getInstance()->reset();
+        new EventListenerCache()->rebuild();
     }
 
     #[\Override]

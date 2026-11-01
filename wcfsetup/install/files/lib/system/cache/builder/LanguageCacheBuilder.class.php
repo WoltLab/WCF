@@ -5,6 +5,7 @@ namespace wcf\system\cache\builder;
 use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\Language;
 use wcf\system\cache\eager\LanguageCache;
+use wcf\system\language\LanguageFactory;
 
 /**
  * Caches languages and the id of the default language.
@@ -36,15 +37,19 @@ class LanguageCacheBuilder extends AbstractLegacyCacheBuilder
     public function rebuild(array $parameters): array
     {
         $cacheData = new LanguageCache()->getCache();
+        $languageFactory = LanguageFactory::getInstance();
 
         return [
-            'codes' => $cacheData->codes,
-            'countryCodes' => $cacheData->countryCodes,
-            'languages' => $cacheData->languages,
-            'default' => $cacheData->default,
-            'categories' => $cacheData->categories,
-            'categoryIDs' => $cacheData->categoryIDs,
-            'multilingualismEnabled' => $cacheData->multilingualismEnabled,
+            'codes' => $cacheData['codes'],
+            'countryCodes' => \array_map(
+                static fn(array $language) => $language['countryCode'],
+                $cacheData['languages']
+            ),
+            'languages' => $languageFactory->getLanguages(),
+            'default' => $cacheData['default'],
+            'categories' => $languageFactory->getCategories(),
+            'categoryIDs' => $cacheData['categoryNames'],
+            'multilingualismEnabled' => $cacheData['multilingualismEnabled'],
         ];
     }
 }

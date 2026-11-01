@@ -3,7 +3,7 @@
 namespace wcf\system\event;
 
 use wcf\data\event\listener\EventListener;
-use wcf\system\cache\builder\EventListenerCacheBuilder;
+use wcf\system\cache\eager\EventListenerCache;
 use wcf\system\event\IEventListener as ILegacyEventListener;
 use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\exception\ClassNotFoundException;
@@ -15,6 +15,8 @@ use wcf\system\SingletonFactory;
  * @author  Tim Duesterhus, Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @phpstan-import-type EventListenerRow from EventListenerCache
  */
 final class EventHandler extends SingletonFactory
 {
@@ -24,12 +26,23 @@ final class EventHandler extends SingletonFactory
     public const DEFAULT_EVENT_NAME = ':default';
 
     /**
-     * @var array<string, EventListener[]>
+     * @var array<int, EventListenerRow>
+     */
+    private array $listenerRows = [];
+
+    /**
+     * event listeners created so far
+     * @var array<int, EventListener>
+     */
+    private array $listeners = [];
+
+    /**
+     * @var array<string, list<int>>
      */
     private array $actions = [];
 
     /**
-     * @var array<class-string, array<string, EventListener[]>>
+     * @var array<string, array<string, list<int>>>
      */
     private array $inheritedActions = [];
 
@@ -68,10 +81,20 @@ final class EventHandler extends SingletonFactory
             'wcf\system\CLIWCF',
             false
         )) ? 'admin' : 'user');
-        $cache = EventListenerCacheBuilder::getInstance()->getData();
+        $cache = new EventListenerCache()->getCache();
 
+        $this->listenerRows = $cache['listeners'];
         $this->actions = $cache['actions'][$environment];
         $this->inheritedActions = $cache['inheritedActions'][$environment];
+    }
+
+    private function getEventListener(int $listenerID): EventListener
+    {
+        if (!isset($this->listeners[$listenerID])) {
+            $this->listeners[$listenerID] = new EventListener(null, $this->listenerRows[$listenerID]);
+        }
+
+        return $this->listeners[$listenerID];
     }
 
     /**
@@ -99,7 +122,8 @@ final class EventHandler extends SingletonFactory
                     continue;
                 }
 
-                foreach ($this->inheritedActions[$member][$eventName] as $eventListener) {
+                foreach ($this->inheritedActions[$member][$eventName] as $listenerID) {
+                    $eventListener = $this->getEventListener($listenerID);
                     if (
                         $eventListener->validateOptions()
                         && $eventListener->validatePermissions()
@@ -213,7 +237,8 @@ final class EventHandler extends SingletonFactory
             }
 
             $this->actionsObjects[$name] = [];
-            foreach ($this->actions[$name] as $eventListener) {
+            foreach ($this->actions[$name] as $listenerID) {
+                $eventListener = $this->getEventListener($listenerID);
                 if (
                     $eventListener->validateOptions()
                     && $eventListener->validatePermissions()

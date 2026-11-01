@@ -5,22 +5,45 @@ namespace wcf\system\cache\eager;
 use wcf\data\DatabaseObject;
 use wcf\data\language\category\LanguageCategoryList;
 use wcf\data\language\LanguageList;
-use wcf\system\cache\eager\data\LanguageCacheData;
 
 /**
- * Eager cache implementation for languages.
+ * Eager cache implementation for languages. It consists of plain arrays only,
+ * which allows the OPcache to keep it in shared memory, the `Language` and
+ * `LanguageCategory` objects are created on demand by `LanguageFactory`.
  *
  * @author Olaf Braun
  * @copyright 2001-2025 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.2
  *
- * @extends AbstractEagerCache<LanguageCacheData>
+ * @phpstan-type LanguageRow array{
+ *     languageID: int,
+ *     languageCode: string,
+ *     languageName: string,
+ *     countryCode: string,
+ *     isDefault: int,
+ *     hasContent: int,
+ *     isDisabled: int,
+ *     locale: string,
+ * }
+ * @phpstan-type LanguageCategoryRow array{
+ *     languageCategoryID: int,
+ *     languageCategory: string,
+ * }
+ *
+ * @extends AbstractEagerCache<array{
+ *     languages: array<int, LanguageRow>,
+ *     codes: array<string, int>,
+ *     default: int,
+ *     categories: array<string, LanguageCategoryRow>,
+ *     categoryNames: array<int, string>,
+ *     multilingualismEnabled: bool,
+ * }>
  */
 final class LanguageCache extends AbstractEagerCache
 {
     #[\Override]
-    protected function getCacheData(): LanguageCacheData
+    protected function getCacheData(): array
     {
         $languageList = new LanguageList();
         $languageList->getConditionBuilder()->add('language.isDisabled = ?', [0]);
@@ -30,9 +53,8 @@ final class LanguageCache extends AbstractEagerCache
         $default = 0;
         $multilingualismEnabled = false;
         $codes = [];
-        $countryCodes = [];
 
-        foreach ($languageList->getObjects() as $language) {
+        foreach ($languages as $language) {
             if ($language->isDefault !== 0) {
                 $default = $language->languageID;
             }
@@ -42,7 +64,6 @@ final class LanguageCache extends AbstractEagerCache
             }
 
             $codes[$language->languageCode] = $language->languageID;
-            $countryCodes[$language->languageID] = $language->countryCode;
         }
 
         DatabaseObject::sort($languages, 'languageName');
@@ -51,24 +72,23 @@ final class LanguageCache extends AbstractEagerCache
         $languageCategoryList->readObjects();
 
         $categories = [];
-        $categoryIDs = [];
+        $categoryNames = [];
         foreach ($languageCategoryList->getObjects() as $languageCategory) {
-            $categories[$languageCategory->languageCategory] = $languageCategory;
-            $categoryIDs[$languageCategory->languageCategoryID] = $languageCategory->languageCategory;
+            $categories[$languageCategory->languageCategory] = $languageCategory->getData();
+            $categoryNames[$languageCategory->languageCategoryID] = $languageCategory->languageCategory;
         }
 
         if (!isset($languages[$default])) {
             throw new \RuntimeException('No default language defined!');
         }
 
-        return new LanguageCacheData(
-            $codes,
-            $countryCodes,
-            $languages,
-            $default,
-            $categories,
-            $categoryIDs,
-            $multilingualismEnabled
-        );
+        return [
+            'languages' => \array_map(static fn($language) => $language->getData(), $languages),
+            'codes' => $codes,
+            'default' => $default,
+            'categories' => $categories,
+            'categoryNames' => $categoryNames,
+            'multilingualismEnabled' => $multilingualismEnabled,
+        ];
     }
 }
