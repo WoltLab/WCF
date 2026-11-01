@@ -1083,10 +1083,6 @@
 		width: 12px;
 	}
 
-	html[dir="rtl"] .pageNavigation .breadcrumbs__item:not(:last-child)::after {
-		transform: scaleX(-1);
-	}
-
 	.pageNavigation .breadcrumbs__item:not(:last-child) .breadcrumbs__link {
 		margin-right: 0;
 	}

@@ -939,9 +939,6 @@ class StyleAddForm extends AbstractForm
             if (\file_exists($this->styleTestFileDir . '/style.css')) {
                 \unlink($this->styleTestFileDir . '/style.css');
             }
-            if (\file_exists($this->styleTestFileDir . '/style-rtl.css')) {
-                \unlink($this->styleTestFileDir . '/style-rtl.css');
-            }
             if (\file_exists($this->styleTestFileDir . '/style-preload.json')) {
                 \unlink($this->styleTestFileDir . '/style-preload.json');
             }
