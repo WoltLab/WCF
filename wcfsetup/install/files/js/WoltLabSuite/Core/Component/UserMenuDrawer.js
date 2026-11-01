@@ -127,14 +127,13 @@ define(["require", "exports", "tslib", "../Ui/User/Menu/Manager", "../Ui/User/Me
         const index = tabs.indexOf(tab);
         const previous = index === 0 ? tabs.length - 1 : index - 1;
         const next = index === tabs.length - 1 ? 0 : index + 1;
-        const isRtl = document.documentElement.dir === "rtl";
         let target;
         switch (event.key) {
             case "ArrowLeft":
-                target = isRtl ? next : previous;
+                target = previous;
                 break;
             case "ArrowRight":
-                target = isRtl ? previous : next;
+                target = next;
                 break;
             case "Home":
                 target = 0;

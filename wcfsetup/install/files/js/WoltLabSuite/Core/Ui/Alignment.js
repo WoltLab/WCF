@@ -5,7 +5,7 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Util", "WoltLabSuite/Core/Language", "../Environment"], function (require, exports, tslib_1, Core, DomTraverse, Util_1, Language_1, Environment) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Util", "../Environment"], function (require, exports, tslib_1, Core, DomTraverse, Util_1, Environment) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.set = set;
@@ -169,10 +169,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
                     horizontal.result = true;
                 }
             }
-        }
-        // in rtl languages we simply swap the value for 'horizontal'
-        if ((0, Language_1.getPhrase)("wcf.global.pageDirection") === "rtl") {
-            options.horizontal = options.horizontal === "left" ? "right" : "left";
         }
         if (horizontal === null || !horizontal.result) {
             const horizontalCenter = horizontal;

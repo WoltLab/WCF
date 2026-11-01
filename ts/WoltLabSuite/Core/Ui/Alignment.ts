@@ -9,7 +9,6 @@
 import * as Core from "../Core";
 import * as DomTraverse from "../Dom/Traverse";
 import DomUtil from "../Dom/Util";
-import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as Environment from "../Environment";
 
 type HorizontalAlignment = "center" | "left" | "right";
@@ -230,11 +229,6 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
         horizontal.result = true;
       }
     }
-  }
-
-  // in rtl languages we simply swap the value for 'horizontal'
-  if (getPhrase("wcf.global.pageDirection") === "rtl") {
-    options.horizontal = options.horizontal === "left" ? "right" : "left";
   }
 
   if (horizontal === null || !horizontal.result) {
