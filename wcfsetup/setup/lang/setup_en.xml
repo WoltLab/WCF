@@ -2,7 +2,6 @@
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/6.0/language.xsd" languagecode="en" languagename="English">
 	<category name="wcf.global">
 		<item name="wcf.global.title"><![CDATA[WoltLab Suite&trade; Installation]]></item>
-		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.button.next"><![CDATA[Next »]]></item>
 		<item name="wcf.global.progressBar"><![CDATA[{@$progress}% complete]]></item>
 		<item name="wcf.global.welcome"><![CDATA[Thank you for choosing WoltLab Suite&trade;!]]></item>

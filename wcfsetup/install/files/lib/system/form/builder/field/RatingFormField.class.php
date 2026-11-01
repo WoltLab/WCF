@@ -3,7 +3,6 @@
 namespace wcf\system\form\builder\field;
 
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\WCF;
 
 /**
  * Implementation of a form field to set the rating of an object.
@@ -59,10 +58,6 @@ final class RatingFormField extends AbstractFormField implements
      */
     public function getRatings(): array
     {
-        if (WCF::getLanguage()->get('wcf.global.pageDirection') === 'rtl') {
-            return \range($this->maximum, $this->minimum, -1);
-        }
-
         return \range($this->minimum, $this->maximum);
     }
 

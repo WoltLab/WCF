@@ -85,10 +85,12 @@ class Language extends DatabaseObject implements \Stringable
 
     /**
      * Returns the page direction of this language.
+     *
+     * @deprecated 6.3 Right-to-left languages are no longer supported, the page direction is always `ltr`.
      */
     public function getPageDirection(): string
     {
-        return $this->get('wcf.global.pageDirection');
+        return 'ltr';
     }
 
     /**
@@ -237,6 +239,11 @@ class Language extends DatabaseObject implements \Stringable
 
         // include language file
         @include_once($filename);
+
+        if ($category === 'wcf.global') {
+            // RTL is no longer supported, this overrides language packs that still ship `rtl`.
+            $this->items['wcf.global.pageDirection'] = 'ltr';
+        }
 
         return true;
     }

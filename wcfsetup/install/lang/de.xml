@@ -3912,8 +3912,6 @@ Dateianhänge:
 		<item name="wcf.global.page.next"><![CDATA[Nächste Seite]]></item>
 		<item name="wcf.global.page.pagination"><![CDATA[Navigation]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Vorherige Seite]]></item>
-		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
-		<!-- system variable; do not translate -->
 		<item name="wcf.global.scrollDown"><![CDATA[Zum Seitenende]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Zum Seitenanfang]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Suchbegriff eingeben]]></item>
@@ -5907,5 +5905,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.ignoredUsers.noUsers"/>
 	<item name="wcf.acp.template.group.error.shared"/>
 	<item name="wcf.acp.template.group.error.notShared"/>
+	<item name="wcf.global.pageDirection"/>
 </delete>
 </language>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="{$__wcf->getLanguage()->getPageDirection()}" lang="{$__wcf->getLanguage()->getFixedLanguageCode()}">
+<html dir="ltr" lang="{$__wcf->getLanguage()->getFixedLanguageCode()}">
 <head>
 	<meta charset="utf-8">
 	<meta name="robots" content="noindex">

@@ -3858,8 +3858,6 @@ Attachments:
 		<item name="wcf.global.page.next"><![CDATA[Next Page]]></item>
 		<item name="wcf.global.page.pagination"><![CDATA[Navigation]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Previous Page]]></item>
-		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
-		<!-- system variable; do not translate -->
 		<item name="wcf.global.scrollDown"><![CDATA[Go to Page Bottom]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Go to Page Top]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Search …]]></item>
@@ -5909,5 +5907,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.ignoredUsers.noUsers"/>
 	<item name="wcf.acp.template.group.error.shared"/>
 	<item name="wcf.acp.template.group.error.notShared"/>
+	<item name="wcf.global.pageDirection"/>
 </delete>
 </language>
