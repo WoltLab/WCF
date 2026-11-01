@@ -1535,6 +1535,11 @@ final class SessionHandler extends SingletonFactory
             $this->variablesChanged = false;
         }
 
+        // The page location is only stored in the legacy session, resolving it loads the page cache.
+        if ($this->legacySession === null) {
+            return;
+        }
+
         $data = [
             'ipAddress' => UserUtil::getIpAddress(),
             'userAgent' => UserUtil::getUserAgent(),
@@ -1561,7 +1566,7 @@ final class SessionHandler extends SingletonFactory
             }
         }
 
-        if ($this->legacySession !== null && $this->legacySessionNeedsUpdate($data)) {
+        if ($this->legacySessionNeedsUpdate($data)) {
             $sessionEditor = new SessionEditor($this->legacySession);
             $sessionEditor->update($data);
         }
