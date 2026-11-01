@@ -84,7 +84,8 @@ define(["require", "exports", "tslib", "../Ui/CloseOverlay", "../Ui/Screen"], fu
         const { left, right } = menu.getBoundingClientRect();
         // The toggles overlap the edge of their item, therefore the items are measured
         // instead of relying on the scroll width of the menu. Both edges are checked
-        // because the items overflow to the left in RTL.
+        // because a style may center or right-align the items, which then overflow
+        // to the left as well.
         return Array.from(menu.children).some((item) => {
             if (item.hidden) {
                 return false;

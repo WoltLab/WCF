@@ -17,7 +17,7 @@ function getStep(track: HTMLElement, slides: HTMLElement[]): number {
     return track.clientWidth;
   }
 
-  return Math.abs(slides[1].offsetLeft - slides[0].offsetLeft);
+  return slides[1].offsetLeft - slides[0].offsetLeft;
 }
 
 function initGallery(gallery: HTMLElement): void {
@@ -28,9 +28,6 @@ function initGallery(gallery: HTMLElement): void {
   const counter = controls.querySelector<HTMLElement>(".mediaGallery__counter")!;
   const slides = Array.from(track.querySelectorAll<HTMLElement>(".mediaGallery__slide"));
 
-  // The scroll position is negative for right-to-left languages.
-  const isRtl = () => window.getComputedStyle(track).direction === "rtl";
-
   const update = () => {
     const isScrollable = track.scrollWidth > track.clientWidth + 1;
     controls.hidden = !isScrollable;
@@ -38,7 +35,7 @@ function initGallery(gallery: HTMLElement): void {
       return;
     }
 
-    const scrollPosition = Math.abs(track.scrollLeft);
+    const scrollPosition = track.scrollLeft;
     const index = Math.min(Math.round(scrollPosition / getStep(track, slides)), slides.length - 1);
 
     counter.textContent = `${index + 1} / ${slides.length}`;
@@ -50,8 +47,8 @@ function initGallery(gallery: HTMLElement): void {
     track.scrollBy({ left: count * getStep(track, slides) });
   };
 
-  previousButton.addEventListener("click", () => scrollBySlides(isRtl() ? 1 : -1));
-  nextButton.addEventListener("click", () => scrollBySlides(isRtl() ? -1 : 1));
+  previousButton.addEventListener("click", () => scrollBySlides(-1));
+  nextButton.addEventListener("click", () => scrollBySlides(1));
 
   track.addEventListener("keydown", (event) => {
     if (event.target !== track) {

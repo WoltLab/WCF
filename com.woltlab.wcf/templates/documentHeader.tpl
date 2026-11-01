@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html
-	dir="{lang}wcf.global.pageDirection{/lang}"
+	dir="ltr"
 	lang="{$__wcf->language->getBcp47()}"
 	data-color-scheme="{$__wcf->getStyleHandler()->getColorScheme()}"
 >

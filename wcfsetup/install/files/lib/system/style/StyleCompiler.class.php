@@ -21,7 +21,6 @@ use wcf\command\style\CreateManifest;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
-use wcf\util\StyleUtil;
 use wcf\util\Url;
 
 /**
@@ -776,27 +775,6 @@ final class StyleCompiler extends SingletonFactory
     }
 
     /**
-     * Converts the given CSS into the RTL variant.
-     *
-     * This method differs from StyleUtil::convertCSSToRTL() in that it includes some fixes
-     * for elements that need to remain LTR.
-     *
-     * @see StyleUtil::convertCSSToRTL()
-     */
-    private function convertToRtl(string $css): string
-    {
-        $css = StyleUtil::convertCSSToRTL($css);
-
-        // force code boxes to be always LTR
-        $css .= "\n/* RTL fix for code boxes */\n";
-        $css .= ".codeBoxCode { direction: ltr; } \n";
-        $css .= ".codeBox .codeBoxCode { padding-left: 7ch; padding-right: 0; } \n";
-        $css .= ".codeBox .codeBoxCode > code .codeBoxLine > a { margin-left: -7ch; margin-right: 0; text-align: right; } \n";
-
-        return $css;
-    }
-
-    /**
      * Writes the given css into the file with the given prefix.
      *
      * @param ?array{http: list<string>, html: list<string>} $preloadManifest
@@ -805,9 +783,6 @@ final class StyleCompiler extends SingletonFactory
     {
         \file_put_contents($filePrefix . '.css', $css);
         FileUtil::makeWritable($filePrefix . '.css');
-
-        \file_put_contents($filePrefix . '-rtl.css', $this->convertToRtl($css));
-        FileUtil::makeWritable($filePrefix . '-rtl.css');
 
         if ($preloadManifest !== null) {
             \file_put_contents($filePrefix . '-preload.json', \json_encode($preloadManifest, \JSON_THROW_ON_ERROR));

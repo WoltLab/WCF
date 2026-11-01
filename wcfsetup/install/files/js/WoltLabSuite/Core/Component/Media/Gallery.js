@@ -17,7 +17,7 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/Selector"], function (re
         if (slides.length < 2) {
             return track.clientWidth;
         }
-        return Math.abs(slides[1].offsetLeft - slides[0].offsetLeft);
+        return slides[1].offsetLeft - slides[0].offsetLeft;
     }
     function initGallery(gallery) {
         const track = gallery.querySelector(".mediaGallery__track");
@@ -26,15 +26,13 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/Selector"], function (re
         const nextButton = controls.querySelector(".mediaGallery__button--next");
         const counter = controls.querySelector(".mediaGallery__counter");
         const slides = Array.from(track.querySelectorAll(".mediaGallery__slide"));
-        // The scroll position is negative for right-to-left languages.
-        const isRtl = () => window.getComputedStyle(track).direction === "rtl";
         const update = () => {
             const isScrollable = track.scrollWidth > track.clientWidth + 1;
             controls.hidden = !isScrollable;
             if (!isScrollable) {
                 return;
             }
-            const scrollPosition = Math.abs(track.scrollLeft);
+            const scrollPosition = track.scrollLeft;
             const index = Math.min(Math.round(scrollPosition / getStep(track, slides)), slides.length - 1);
             counter.textContent = `${index + 1} / ${slides.length}`;
             previousButton.disabled = scrollPosition <= 1;
@@ -43,8 +41,8 @@ define(["require", "exports", "WoltLabSuite/Core/Helper/Selector"], function (re
         const scrollBySlides = (count) => {
             track.scrollBy({ left: count * getStep(track, slides) });
         };
-        previousButton.addEventListener("click", () => scrollBySlides(isRtl() ? 1 : -1));
-        nextButton.addEventListener("click", () => scrollBySlides(isRtl() ? -1 : 1));
+        previousButton.addEventListener("click", () => scrollBySlides(-1));
+        nextButton.addEventListener("click", () => scrollBySlides(1));
         track.addEventListener("keydown", (event) => {
             if (event.target !== track) {
                 return;

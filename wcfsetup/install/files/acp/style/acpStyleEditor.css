@@ -13,9 +13,6 @@
 html[dir="ltr"] #spWindow {
 	margin-right: 40px;
 }
-html[dir="rtl"] #spWindow {
-	margin-left: 40px;
-}
 #spSidebar {
 	flex: 0 0 300px;
 }
@@ -89,9 +86,6 @@ html[dir="rtl"] #spWindow {
 html[dir="ltr"] #spHeaderPanel ol.inlineList > li {
 	margin-right: 0;
 }
-html[dir="rtl"] #spHeaderPanel ol.inlineList > li {
-	margin-left: 0;
-}
 #spHeaderPanel ol.inlineList > li > a {
 	align-items: center;
 	background-color: var(--wcfHeaderMenuLinkBackground);
@@ -104,9 +98,6 @@ html[dir="rtl"] #spHeaderPanel ol.inlineList > li {
 }
 html[dir="ltr"] #spHeaderPanel ol.inlineList > li.active > a::after {
 	margin-left: 5px;
-}
-html[dir="rtl"] #spHeaderPanel ol.inlineList > li.active > a::after {
-	margin-right: 5px;
 }
 #spHeaderPanel ol.inlineList > li.active > a,
 #spHeaderPanel ol.inlineList > li:hover > a {
@@ -313,9 +304,6 @@ html[dir="rtl"] #spHeaderPanel ol.inlineList > li.active > a::after {
 html[dir="ltr"] #spNavigation li:first-child::after {
 	margin-left: 5px;
 }
-html[dir="rtl"] #spNavigation li:first-child::after {
-	margin-right: 5px;
-}
 
 /* ### navigation (new page header layouts) ### */
 #spWindow:not([data-page-header-layout="classic"]) #spNavigation {
@@ -340,9 +328,6 @@ html[dir="rtl"] #spNavigation li:first-child::after {
 	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E")
 		center / contain no-repeat;
 	width: 12px;
-}
-html[dir="rtl"] #spWindow:not([data-page-header-layout="classic"]) #spNavigation li:first-child::after {
-	transform: scaleX(-1);
 }
 #spWindow:not([data-page-header-layout="classic"]) #spContent {
 	padding-top: 10px;
@@ -415,9 +400,6 @@ html[dir="rtl"] #spWindow:not([data-page-header-layout="classic"]) #spNavigation
 }
 html[dir="ltr"] #spTable th {
 	text-align: left;
-}
-html[dir="rtl"] #spTable th {
-	text-align: right;
 }
 #spTable th,
 #spTable td {
@@ -871,9 +853,6 @@ html[dir="rtl"] #spTable th {
 }
 html[dir="ltr"] #spContentSidebar {
 	margin-left: 20px;
-}
-html[dir="rtl"] #spContentSidebar {
-	margin-right: 20px;
 }
 #spContentSidebar .spContentSidebarBox {
 	padding: 20px;
