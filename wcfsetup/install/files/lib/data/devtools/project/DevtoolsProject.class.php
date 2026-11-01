@@ -84,6 +84,77 @@ class DevtoolsProject extends DatabaseObject
     }
 
     /**
+     * Returns the PIP targets of a full sync in the order they must be synced,
+     * as pairs of the PIP name and the target. A PIP is synced after the PIPs
+     * it depends on, dependencies on PIPs without targets are ignored. Unsafe
+     * PIPs are never part of a full sync.
+     *
+     * @return list<array{string, string}>
+     * @since 6.3
+     */
+    public function getFullSyncQueue(): array
+    {
+        $resolved = [];
+        $pending = [];
+        foreach ($this->getPips() as $pip) {
+            if ($pip->isUnsafe()) {
+                continue;
+            }
+
+            $targets = $pip->getTargets($this);
+            if ($targets === []) {
+                continue;
+            }
+
+            $dependencies = $pip->getSyncDependencies();
+            if ($dependencies === []) {
+                $resolved[$pip->pluginName] = $targets;
+            } else {
+                $pending[$pip->pluginName] = [$dependencies, $targets];
+            }
+        }
+
+        $available = \array_merge(\array_keys($resolved), \array_keys($pending));
+        while ($pending !== []) {
+            $next = null;
+            foreach ($pending as $pluginName => [$dependencies]) {
+                $openDependencies = \array_filter(
+                    $dependencies,
+                    static fn (string $dependency) => \in_array($dependency, $available, true)
+                        && !isset($resolved[$dependency])
+                );
+
+                if ($openDependencies === []) {
+                    $next = $pluginName;
+                    break;
+                }
+            }
+
+            if ($next === null) {
+                // Circular dependencies cannot be resolved, sync the remaining
+                // PIPs last and hope that they complete anyway.
+                foreach ($pending as $pluginName => [, $targets]) {
+                    $resolved[$pluginName] = $targets;
+                }
+
+                break;
+            }
+
+            $resolved[$next] = $pending[$next][1];
+            unset($pending[$next]);
+        }
+
+        $queue = [];
+        foreach ($resolved as $pluginName => $targets) {
+            foreach ($targets as $target) {
+                $queue[] = [$pluginName, $target];
+            }
+        }
+
+        return $queue;
+    }
+
+    /**
      * Validates the repository and returns the first error message, or
      * an empty string on success.
      *

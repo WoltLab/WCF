@@ -69,9 +69,6 @@
 						data-is-important="{if $pip->isImportant()}true{else}false{/if}"
 						{if $_targetCount}
 							class="jsHasPipTargets"
-							{if !$_isUnsafe}
-								data-sync-dependencies="{$pip->getSyncDependencies(true)}"
-							{/if}
 						{/if}
 					>
 						<td class="columnText"{if $_targetCount > 0} rowspan="{$_targetCount}"{/if}>
@@ -118,7 +115,7 @@
 			{jsphrase name='wcf.acp.devtools.sync.status.failure'}
 			{jsphrase name='wcf.acp.devtools.sync.syncAll'}
 			
-			AcpUiDevtoolsProjectSync.init({$object->projectID});
+			AcpUiDevtoolsProjectSync.init({$object->projectID}, {unsafe:$fullSyncQueue|json});
 		});
 	</script>
 	

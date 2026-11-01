@@ -8,13 +8,14 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
         buttonStatus = new Map();
         buttonSyncAll = document.getElementById("devtoolsSyncAll");
         container = document.getElementById("syncPipMatches");
-        pips = [];
+        #fullSyncQueue;
         projectId;
         queue = [];
         #allowUnsafe = false;
         #syncVersionAfterCompletion = false;
-        constructor(projectId) {
+        constructor(projectId, fullSyncQueue) {
             this.projectId = projectId;
+            this.#fullSyncQueue = fullSyncQueue;
             const restrictedSync = document.getElementById("syncShowOnlyMatches");
             restrictedSync.addEventListener("change", () => {
                 this.container.classList.toggle("jsShowOnlyMatches");
@@ -27,19 +28,14 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
             showUnsafePips.addEventListener("change", () => updateUnsafePips());
             // Browsers may restore the checked state on reload.
             updateUnsafePips();
-            const existingPips = [];
-            const knownPips = [];
-            const tmpPips = [];
             this.container
                 .querySelectorAll(".jsHasPipTargets:not(.jsSkipTargetDetection)")
                 .forEach((pip) => {
                 const pluginName = pip.dataset.pluginName;
-                const targets = [];
                 this.container
                     .querySelectorAll(`.jsHasPipTargets[data-plugin-name="${pluginName}"] .jsInvokePip`)
                     .forEach((button) => {
                     const target = button.dataset.target;
-                    targets.push(target);
                     button.addEventListener("click", (event) => {
                         event.preventDefault();
                         if (this.queue.length > 0) {
@@ -51,58 +47,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
                     this.buttons.set(identifier, button);
                     this.buttonStatus.set(identifier, this.container.querySelector(`.jsHasPipTargets[data-plugin-name="${pluginName}"] .jsInvokePipResult[data-target="${target}"]`));
                 });
-                // Unsafe PIPs must never be part of a full sync.
-                if (pip.dataset.isUnsafe === "true") {
-                    return;
-                }
-                const data = {
-                    dependencies: JSON.parse(pip.dataset.syncDependencies),
-                    pluginName,
-                    targets,
-                };
-                if (data.dependencies.length > 0) {
-                    tmpPips.push(data);
-                }
-                else {
-                    this.pips.push(data);
-                    knownPips.push(pluginName);
-                }
-                existingPips.push(pluginName);
             });
-            let resolvedDependency = false;
-            while (tmpPips.length > 0) {
-                resolvedDependency = false;
-                tmpPips.forEach((item, index) => {
-                    if (resolvedDependency) {
-                        return;
-                    }
-                    const openDependencies = item.dependencies.filter((dependency) => {
-                        // Ignore any dependencies that are not present.
-                        if (existingPips.indexOf(dependency) === -1) {
-                            window.console.info(`The dependency "${dependency}" does not exist and has been ignored.`);
-                            return false;
-                        }
-                        return !knownPips.includes(dependency);
-                    });
-                    if (openDependencies.length === 0) {
-                        knownPips.push(item.pluginName);
-                        this.pips.push(item);
-                        tmpPips.splice(index, 1);
-                        resolvedDependency = true;
-                    }
-                });
-                if (!resolvedDependency) {
-                    // We could not resolve any dependency, either because there is no more pip
-                    // in `tmpPips` or we're facing a circular dependency. In case there are items
-                    // left, we simply append them to the end and hope for the operation to
-                    // complete anyway, despite unmatched dependencies.
-                    tmpPips.forEach((pip) => {
-                        window.console.warn("Unable to resolve dependencies for", pip);
-                        this.pips.push(pip);
-                    });
-                    break;
-                }
-            }
             this.buttonSyncAll.addEventListener("click", () => this.syncAll());
         }
         sync(pluginName, target) {
@@ -123,12 +68,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
             }
             this.buttonSyncAll.classList.add("disabled");
             this.#syncVersionAfterCompletion = true;
-            this.queue = [];
-            this.pips.forEach((pip) => {
-                pip.targets.forEach((target) => {
-                    this.queue.push([pip.pluginName, target]);
-                });
-            });
+            this.queue = [...this.#fullSyncQueue];
             this.syncNext();
         }
         syncNext() {
@@ -216,9 +156,9 @@ define(["require", "exports", "tslib", "../../../../Ajax", "WoltLabSuite/Core/La
         }
     }
     let acpUiDevtoolsProjectSync;
-    function init(projectId) {
+    function init(projectId, fullSyncQueue) {
         if (!acpUiDevtoolsProjectSync) {
-            acpUiDevtoolsProjectSync = new AcpUiDevtoolsProjectSync(projectId);
+            acpUiDevtoolsProjectSync = new AcpUiDevtoolsProjectSync(projectId, fullSyncQueue);
         }
     }
 });

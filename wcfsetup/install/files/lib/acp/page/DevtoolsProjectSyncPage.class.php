@@ -54,6 +54,7 @@ class DevtoolsProjectSyncPage extends AbstractPage
             'objectID' => $this->object->projectID,
             'object' => $this->object,
             'project' => $this->object,
+            'fullSyncQueue' => $this->object->getFullSyncQueue(),
         ]);
     }
 }
