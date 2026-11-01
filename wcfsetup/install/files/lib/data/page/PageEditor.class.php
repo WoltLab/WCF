@@ -7,8 +7,8 @@ use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\data\package\PackageCache;
 use wcf\system\cache\builder\MenuCacheBuilder;
-use wcf\system\cache\builder\PageCacheBuilder;
 use wcf\system\cache\builder\RoutingCacheBuilder;
+use wcf\system\cache\eager\PageRowCache;
 use wcf\system\request\ControllerMap;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -51,7 +51,7 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject
     public static function resetCache()
     {
         RoutingCacheBuilder::getInstance()->reset();
-        PageCacheBuilder::getInstance()->reset();
+        new PageRowCache()->rebuild();
         MenuCacheBuilder::getInstance()->reset();
 
         // Pages carry the box assignments and custom box show order.

@@ -2,7 +2,7 @@
 
 namespace wcf\data\page;
 
-use wcf\system\cache\builder\PageCacheBuilder;
+use wcf\system\cache\eager\PageRowCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -12,25 +12,63 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @phpstan-import-type PageRow from PageRowCache
  */
-class PageCache extends SingletonFactory
+final class PageCache extends SingletonFactory
 {
     /**
-     * @var array{
-     *  identifier: array<string, int>,
-     *  controller: array<string, int>,
-     *  pages: array<int, Page>,
-     *  pageTitles: array<int, array<int, string>>,
-     *  landingPage: Page,
-     *  pageMetaDescriptions: array<int, array<int, string>>,
-     * }|null
+     * database rows of the pages
+     * @var array<int, PageRow>
      */
-    protected $cache;
+    private array $pageRows = [];
+
+    /**
+     * page ids by identifier
+     * @var array<string, int>
+     */
+    private array $pageIDsByIdentifier = [];
+
+    /**
+     * page ids by controller
+     * @var array<string, int>
+     */
+    private array $pageIDsByController = [];
+
+    /**
+     * localized page titles by page id and language id
+     * @var array<int, array<int, string>>
+     */
+    private array $pageTitles = [];
+
+    /**
+     * localized page meta descriptions by page id and language id
+     * @var array<int, array<int, string>>
+     */
+    private array $pageMetaDescriptions = [];
+
+    private ?int $landingPageID = null;
+
+    /**
+     * pages created so far
+     * @var array<int, Page>
+     */
+    private array $pages = [];
 
     #[\Override]
     protected function init()
     {
-        $this->cache = PageCacheBuilder::getInstance()->getData();
+        $data = new PageRowCache()->getCache();
+
+        $this->pageRows = $data['pages'];
+        $this->pageIDsByIdentifier = $data['identifier'];
+        $this->pageIDsByController = $data['controller'];
+        $this->pageTitles = $data['pageTitles'];
+        $this->pageMetaDescriptions = $data['pageMetaDescriptions'];
+        $this->landingPageID = $data['landingPageID'];
+
+        // `TTestablePageUserNotificationEvent` re-runs this to reload the cache within the request.
+        $this->pages = [];
     }
 
     /**
@@ -40,7 +78,12 @@ class PageCache extends SingletonFactory
      */
     public function getPages()
     {
-        return $this->cache['pages'];
+        $pages = [];
+        foreach (\array_keys($this->pageRows) as $pageID) {
+            $pages[$pageID] = $this->getPage($pageID);
+        }
+
+        return $pages;
     }
 
     /**
@@ -52,7 +95,15 @@ class PageCache extends SingletonFactory
             return null;
         }
 
-        return $this->cache['pages'][$pageID] ?? null;
+        if (!isset($this->pages[$pageID])) {
+            if (!isset($this->pageRows[$pageID])) {
+                return null;
+            }
+
+            $this->pages[$pageID] = new Page(null, $this->pageRows[$pageID]);
+        }
+
+        return $this->pages[$pageID];
     }
 
     /**
@@ -62,8 +113,8 @@ class PageCache extends SingletonFactory
      */
     public function getPageByController(string $controller)
     {
-        if (isset($this->cache['controller'][$controller])) {
-            return $this->getPage($this->cache['controller'][$controller]);
+        if (isset($this->pageIDsByController[$controller])) {
+            return $this->getPage($this->pageIDsByController[$controller]);
         }
 
         return null;
@@ -76,8 +127,8 @@ class PageCache extends SingletonFactory
      */
     public function getPageByIdentifier(string $identifier)
     {
-        if (isset($this->cache['identifier'][$identifier])) {
-            return $this->getPage($this->cache['identifier'][$identifier]);
+        if (isset($this->pageIDsByIdentifier[$identifier])) {
+            return $this->getPage($this->pageIDsByIdentifier[$identifier]);
         }
 
         return null;
@@ -91,16 +142,16 @@ class PageCache extends SingletonFactory
      */
     public function getPageTitle(int $pageID, ?int $languageID = null)
     {
-        if (isset($this->cache['pageTitles'][$pageID])) {
+        if (isset($this->pageTitles[$pageID])) {
             $page = $this->getPage($pageID);
             if ($page->isMultilingual !== 0 || $page->pageType === 'system') {
-                if ($languageID !== null && isset($this->cache['pageTitles'][$pageID][$languageID])) {
-                    return $this->cache['pageTitles'][$pageID][$languageID];
-                } elseif (isset($this->cache['pageTitles'][$pageID][WCF::getLanguage()->languageID])) {
-                    return $this->cache['pageTitles'][$pageID][WCF::getLanguage()->languageID];
+                if ($languageID !== null && isset($this->pageTitles[$pageID][$languageID])) {
+                    return $this->pageTitles[$pageID][$languageID];
+                } elseif (isset($this->pageTitles[$pageID][WCF::getLanguage()->languageID])) {
+                    return $this->pageTitles[$pageID][WCF::getLanguage()->languageID];
                 }
             } else {
-                return $this->cache['pageTitles'][$pageID][0];
+                return $this->pageTitles[$pageID][0];
             }
         }
 
@@ -115,16 +166,16 @@ class PageCache extends SingletonFactory
      */
     public function getPageMetaDescription(int $pageID, ?int $languageID = null): string
     {
-        if (isset($this->cache['pageMetaDescriptions'][$pageID])) {
+        if (isset($this->pageMetaDescriptions[$pageID])) {
             $page = $this->getPage($pageID);
             if ($page->isMultilingual !== 0 || $page->pageType === 'system') {
-                if ($languageID !== null && isset($this->cache['pageMetaDescriptions'][$pageID][$languageID])) {
-                    return $this->cache['pageMetaDescriptions'][$pageID][$languageID];
-                } elseif (isset($this->cache['pageMetaDescriptions'][$pageID][WCF::getLanguage()->languageID])) {
-                    return $this->cache['pageMetaDescriptions'][$pageID][WCF::getLanguage()->languageID];
+                if ($languageID !== null && isset($this->pageMetaDescriptions[$pageID][$languageID])) {
+                    return $this->pageMetaDescriptions[$pageID][$languageID];
+                } elseif (isset($this->pageMetaDescriptions[$pageID][WCF::getLanguage()->languageID])) {
+                    return $this->pageMetaDescriptions[$pageID][WCF::getLanguage()->languageID];
                 }
             } else {
-                return $this->cache['pageMetaDescriptions'][$pageID][0];
+                return $this->pageMetaDescriptions[$pageID][0];
             }
         }
 
@@ -138,6 +189,6 @@ class PageCache extends SingletonFactory
      */
     public function getLandingPage()
     {
-        return $this->cache['landingPage'];
+        return $this->getPage($this->landingPageID);
     }
 }

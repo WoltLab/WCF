@@ -2,9 +2,8 @@
 
 namespace wcf\system\cache\builder;
 
-use wcf\data\page\Page;
-use wcf\data\page\PageList;
-use wcf\system\WCF;
+use wcf\data\page\PageCache;
+use wcf\system\cache\eager\PageRowCache;
 
 /**
  * Caches the page data.
@@ -12,63 +11,30 @@ use wcf\system\WCF;
  * @author  Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @deprecated 6.3 use `PageCache` instead
  */
-class PageCacheBuilder extends AbstractCacheBuilder
+class PageCacheBuilder extends AbstractLegacyCacheBuilder
 {
     #[\Override]
-    public function rebuild(array $parameters)
+    public function rebuild(array $parameters): array
     {
-        $data = [
-            'identifier' => [],
-            'controller' => [],
-            'pages' => [],
-            'pageTitles' => [],
-            'landingPage' => null,
-            'pageMetaDescriptions' => [],
+        $cache = new PageRowCache()->getCache();
+        $pageCache = PageCache::getInstance();
+
+        return [
+            'identifier' => $cache['identifier'],
+            'controller' => $cache['controller'],
+            'pages' => $pageCache->getPages(),
+            'pageTitles' => $cache['pageTitles'],
+            'landingPage' => $pageCache->getLandingPage(),
+            'pageMetaDescriptions' => $cache['pageMetaDescriptions'],
         ];
+    }
 
-        $pageList = new PageList();
-        $pageList->readObjects();
-        $data['pages'] = $pageList->getObjects();
-
-        // get page titles
-        $sql = "SELECT  pageID, languageID, title, metaDescription
-                FROM    wcf1_page_content";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute();
-        while ($row = $statement->fetchArray()) {
-            $pageID = $row['pageID'];
-
-            if (!isset($data['pageTitles'][$pageID])) {
-                $data['pageTitles'][$pageID] = [];
-            }
-
-            $data['pageTitles'][$pageID][$row['languageID'] ?: 0] = $row['title'];
-
-            if (!isset($data['pageMetaDescriptions'][$pageID])) {
-                $data['pageMetaDescriptions'][$pageID] = [];
-            }
-            $data['pageMetaDescriptions'][$pageID][$row['languageID'] ?: 0] = $row['metaDescription'];
-        }
-
-        $sql = "SELECT  landingPageID
-                FROM    wcf1_application
-                WHERE   packageID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([1]);
-        $landingPageID = $statement->fetchSingleColumn();
-
-        // build lookup table
-        /** @var Page $page */
-        foreach ($pageList as $page) {
-            $data['identifier'][$page->identifier] = $page->pageID;
-            $data['controller'][$page->controller] = $page->pageID;
-
-            if ($page->pageID === $landingPageID || ($data['landingPage'] === null && $page->identifier === 'com.woltlab.wcf.ArticleList')) {
-                $data['landingPage'] = $page;
-            }
-        }
-
-        return $data;
+    #[\Override]
+    public function reset(array $parameters = [])
+    {
+        new PageRowCache()->rebuild();
     }
 }
