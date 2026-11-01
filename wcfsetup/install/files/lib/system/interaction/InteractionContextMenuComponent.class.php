@@ -52,7 +52,7 @@ class InteractionContextMenuComponent
             'wcf',
             'shared_interactionButton',
             [
-                'contextMenuOptions' => $this->renderContextMenuOptions($object),
+                'contextMenuOptions' => $options,
                 'configuration' => $this->configuration,
             ]
         );
