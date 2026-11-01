@@ -2701,7 +2701,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.mysql"><![CDATA[MySQL]]></item>
 		<item name="wcf.acp.systemCheck.directories"><![CDATA[Filesystem]]></item>
 		<item name="wcf.acp.systemCheck.php.version"><![CDATA[Version]]></item>
-		<item name="wcf.acp.systemCheck.php.version.description"><![CDATA[PHP {$phpVersions[minimum]} or newer is required, the following PHP series are strongly recommended: {implode from=$phpVersions[recommended] item=$recommended}{$recommended}{/implode}.]]></item>
+		<item name="wcf.acp.systemCheck.php.version.description"><![CDATA[PHP {$phpVersions[minimum]} or newer in the PHP 8.4 series, or PHP 8.5.12 or newer in the PHP 8.5 series is required, the following PHP series are strongly recommended: {implode from=$phpVersions[recommended] item=$recommended}{$recommended}{/implode}.]]></item>
 		<item name="wcf.acp.systemCheck.php.version.deprecated"><![CDATA[The PHP version used is severely outdated and has limited support, proper operation is not guaranteed with this version. It is strongly recommended to switch to a modern PHP version ({implode from=$phpVersions[recommended] item=$recommended}{$recommended}{/implode}).]]></item>
 		<item name="wcf.acp.systemCheck.mysql.version"><![CDATA[MySQL]]></item>
 		<item name="wcf.acp.systemCheck.mysql.version.description"><![CDATA[MySQL {$mysqlVersions[mysql][8]} or MariaDB {$mysqlVersions[mariadb][10]} are required at minimum, but it’s strongly recommended to always use the latest available version.]]></item>
@@ -3906,7 +3906,7 @@ Attachments:
 		<item name="wcf.global.rss.accessToken.info"><![CDATA[The link to the anonymous RSS feed only contains contents that guests can access. The link to the personalized RSS feed contains all contents that you can access.]]></item>
 		<item name="wcf.global.rss.withAccessToken"><![CDATA[Personalized RSS Feed]]></item>
 		<item name="wcf.global.rss.withoutAccessToken"><![CDATA[Anonymous RSS Feed]]></item>
-		<item name="wcf.global.incompatiblePhpVersion"><![CDATA[Bad server configuration: The configured version of “PHP” is not compatible, operation is not possible. At least PHP in version 8.1 is required, versions up to PHP 8.4 are supported. For the use of higher PHP versions the software must be updated to a current version.]]></item>
+		<item name="wcf.global.incompatiblePhpVersion"><![CDATA[Bad server configuration: The configured version of “PHP” is not compatible, operation is not possible. PHP 8.4.27 or newer in the PHP 8.4 series, or PHP 8.5.12 or newer in the PHP 8.5 series is required. For the use of higher PHP versions the software must be updated to a current version.]]></item>
 		<item name="wcf.global.snackbar.progress"><![CDATA[{$label}: {#$iteration} of {#$length}]]></item>
 		<item name="wcf.global.changeShowOrder"><![CDATA[Change Display Order]]></item>
 	</category>
