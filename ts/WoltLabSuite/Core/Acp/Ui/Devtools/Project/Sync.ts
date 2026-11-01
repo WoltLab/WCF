@@ -6,12 +6,6 @@ import { dialogFactory } from "../../../../Component/Dialog";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 import { syncVersion } from "WoltLabSuite/Core/Api/Devtools/Projects/SyncVersion";
 
-interface PipData {
-  dependencies: string[];
-  pluginName: string;
-  targets: string[];
-}
-
 type PendingPip = [string, string];
 
 interface AjaxResponse {
@@ -36,14 +30,15 @@ class AcpUiDevtoolsProjectSync {
   private readonly buttonStatus = new Map<string, HTMLElement>();
   private readonly buttonSyncAll: HTMLButtonElement = document.getElementById("devtoolsSyncAll") as HTMLButtonElement;
   private readonly container = document.getElementById("syncPipMatches")!;
-  private readonly pips: PipData[] = [];
+  readonly #fullSyncQueue: PendingPip[];
   private readonly projectId: number;
   private queue: PendingPip[] = [];
   #allowUnsafe = false;
   #syncVersionAfterCompletion = false;
 
-  constructor(projectId: number) {
+  constructor(projectId: number, fullSyncQueue: PendingPip[]) {
     this.projectId = projectId;
+    this.#fullSyncQueue = fullSyncQueue;
 
     const restrictedSync = document.getElementById("syncShowOnlyMatches") as HTMLInputElement;
     restrictedSync.addEventListener("change", () => {
@@ -59,20 +54,15 @@ class AcpUiDevtoolsProjectSync {
     // Browsers may restore the checked state on reload.
     updateUnsafePips();
 
-    const existingPips: string[] = [];
-    const knownPips: string[] = [];
-    const tmpPips: PipData[] = [];
     this.container
       .querySelectorAll(".jsHasPipTargets:not(.jsSkipTargetDetection)")
       .forEach((pip: HTMLTableRowElement) => {
         const pluginName = pip.dataset.pluginName!;
-        const targets: string[] = [];
 
         this.container
           .querySelectorAll(`.jsHasPipTargets[data-plugin-name="${pluginName}"] .jsInvokePip`)
           .forEach((button: HTMLButtonElement) => {
             const target = button.dataset.target!;
-            targets.push(target);
 
             button.addEventListener("click", (event) => {
               event.preventDefault();
@@ -93,70 +83,7 @@ class AcpUiDevtoolsProjectSync {
               ) as HTMLElement,
             );
           });
-
-        // Unsafe PIPs must never be part of a full sync.
-        if (pip.dataset.isUnsafe === "true") {
-          return;
-        }
-
-        const data: PipData = {
-          dependencies: JSON.parse(pip.dataset.syncDependencies!),
-          pluginName,
-          targets,
-        };
-
-        if (data.dependencies.length > 0) {
-          tmpPips.push(data);
-        } else {
-          this.pips.push(data);
-          knownPips.push(pluginName);
-        }
-
-        existingPips.push(pluginName);
       });
-
-    let resolvedDependency = false;
-    while (tmpPips.length > 0) {
-      resolvedDependency = false;
-
-      tmpPips.forEach((item, index) => {
-        if (resolvedDependency) {
-          return;
-        }
-
-        const openDependencies = item.dependencies.filter((dependency) => {
-          // Ignore any dependencies that are not present.
-          if (existingPips.indexOf(dependency) === -1) {
-            window.console.info(`The dependency "${dependency}" does not exist and has been ignored.`);
-            return false;
-          }
-
-          return !knownPips.includes(dependency);
-        });
-
-        if (openDependencies.length === 0) {
-          knownPips.push(item.pluginName);
-          this.pips.push(item);
-          tmpPips.splice(index, 1);
-
-          resolvedDependency = true;
-        }
-      });
-
-      if (!resolvedDependency) {
-        // We could not resolve any dependency, either because there is no more pip
-        // in `tmpPips` or we're facing a circular dependency. In case there are items
-        // left, we simply append them to the end and hope for the operation to
-        // complete anyway, despite unmatched dependencies.
-        tmpPips.forEach((pip) => {
-          window.console.warn("Unable to resolve dependencies for", pip);
-
-          this.pips.push(pip);
-        });
-
-        break;
-      }
-    }
 
     this.buttonSyncAll.addEventListener("click", () => this.syncAll());
   }
@@ -183,12 +110,7 @@ class AcpUiDevtoolsProjectSync {
     this.buttonSyncAll.classList.add("disabled");
     this.#syncVersionAfterCompletion = true;
 
-    this.queue = [];
-    this.pips.forEach((pip) => {
-      pip.targets.forEach((target) => {
-        this.queue.push([pip.pluginName, target]);
-      });
-    });
+    this.queue = [...this.#fullSyncQueue];
     this.syncNext();
   }
 
@@ -296,8 +218,8 @@ class AcpUiDevtoolsProjectSync {
 
 let acpUiDevtoolsProjectSync: AcpUiDevtoolsProjectSync;
 
-export function init(projectId: number): void {
+export function init(projectId: number, fullSyncQueue: PendingPip[]): void {
   if (!acpUiDevtoolsProjectSync) {
-    acpUiDevtoolsProjectSync = new AcpUiDevtoolsProjectSync(projectId);
+    acpUiDevtoolsProjectSync = new AcpUiDevtoolsProjectSync(projectId, fullSyncQueue);
   }
 }

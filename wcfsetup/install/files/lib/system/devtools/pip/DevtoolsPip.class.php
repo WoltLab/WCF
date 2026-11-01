@@ -131,13 +131,11 @@ class DevtoolsPip extends DatabaseObjectDecorator
     }
 
     /**
-     * @return string|string[]
+     * @return list<string>
      */
-    public function getSyncDependencies(bool $toJson = true)
+    public function getSyncDependencies(): array
     {
-        $dependencies = \call_user_func([$this->getDecoratedObject()->className, 'getSyncDependencies']);
-
-        return ($toJson) ? \json_encode($dependencies, \JSON_THROW_ON_ERROR) : $dependencies;
+        return \call_user_func([$this->getDecoratedObject()->className, 'getSyncDependencies']);
     }
 
     /**
