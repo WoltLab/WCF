@@ -5573,7 +5573,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.upload.error.fileExtensionNotPermitted"><![CDATA[Der Dateityp von „{$filename}“ ist unzulässig.]]></item>
 		<item name="wcf.upload.error.fileSizeTooLarge"><![CDATA[Die Datei ist zu groß.]]></item>
 		<item name="wcf.upload.error.maximumCountReached"><![CDATA[Es {plural value=$maximumCount 1='darf nur eine Datei' other='dürfen nur # Dateien'} hochgeladen werden.]]></item>
-		<item name="wcf.upload.error.adopt"><![CDATA[Die Datei „{$filename}“ kann nicht zugewiesen werden.]]></item>
 		<item name="wcf.upload.error.delete.unknownError"><![CDATA[Beim Löschen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 		<item name="wcf.upload.error.delete.permissionDenied"><![CDATA[Die Datei kann nicht gelöscht werden, {if LANGUAGE_USE_INFORMAL_VARIANT}verwende{else}verwenden Sie{/if} stattdessen <strong>Ersetzen</strong>, um die Datei zu ersetzen.]]></item>
 		<item name="wcf.upload.validation.error.noImage"><![CDATA[Die Datei ist kein Bild.]]></item>
@@ -7584,5 +7583,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 	<item name="wcf.user.notification.userRegistration.message.stacked"/>
 	<item name="wcf.user.notification.userRegistration.mail.plaintext"/>
 	<item name="wcf.user.notification.userRegistration.mail.html"/>
+	<item name="wcf.upload.error.adopt"/>
 </delete>
 </language>

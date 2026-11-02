@@ -58,6 +58,16 @@ final class FileProcessorFormField extends AbstractFormField
             } else {
                 $this->value(ArrayUtil::toIntegerArray($value));
             }
+
+            // Files that cannot be adopted may belong to someone else, they must neither be
+            // rendered again nor be saved.
+            $fileProcessor = $this->getFileProcessor();
+            foreach ($this->files as $fileID => $file) {
+                if (!FileProcessor::getInstance()->canAdopt($fileProcessor, $file, $this->context)) {
+                    unset($this->files[$fileID]);
+                }
+            }
+            parent::value($this->isSingleFileUpload() ? \array_key_first($this->files) : \array_keys($this->files));
         }
 
         return $this;
@@ -162,6 +172,7 @@ final class FileProcessorFormField extends AbstractFormField
                 $this->files = [$file->fileID => $file];
                 $fileIDs[] = $value;
             } else {
+                $this->files = [];
                 $value = null;
             }
         } else {
@@ -210,18 +221,6 @@ final class FileProcessorFormField extends AbstractFormField
                     ]
                 )
             );
-        }
-
-        foreach ($this->files as $file) {
-            if (!FileProcessor::getInstance()->canAdopt($fileProcessor, $file, $this->context)) {
-                $this->addValidationError(
-                    new FormFieldValidationError(
-                        'adopt',
-                        'wcf.upload.error.adopt',
-                        ['filename' => $file->filename]
-                    )
-                );
-            }
         }
 
         parent::validate();
