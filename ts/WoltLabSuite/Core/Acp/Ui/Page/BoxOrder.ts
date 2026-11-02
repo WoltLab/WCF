@@ -41,19 +41,22 @@ class AcpUiPageBoxOrder {
         const item = document.createElement("li");
         item.dataset.boxId = box.boxId.toString();
 
-        let icon = "";
-        if (box.isDisabled) {
-          icon = ` <span class="jsTooltip" title="${getPhrase("wcf.acp.box.isDisabled")}">
-            <fa-icon name="triangle-exclamation" solid></fa-icon>
-          </span>`;
-        }
-
-        item.innerHTML = box.name + icon;
-
         const sortableIndicator = document.createElement("fa-icon");
         sortableIndicator.setIcon("up-down");
 
-        item.prepend(sortableIndicator);
+        item.append(sortableIndicator, box.name);
+
+        if (box.isDisabled) {
+          const disabledIcon = document.createElement("fa-icon");
+          disabledIcon.setIcon("triangle-exclamation", true);
+
+          const tooltip = document.createElement("span");
+          tooltip.classList.add("jsTooltip");
+          tooltip.title = getPhrase("wcf.acp.box.isDisabled");
+          tooltip.append(disabledIcon);
+
+          item.append(" ", tooltip);
+        }
 
         container.appendChild(item);
       });
