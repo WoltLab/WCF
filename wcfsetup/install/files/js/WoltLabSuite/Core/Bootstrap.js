@@ -96,16 +96,16 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
                 /* Prevent "Back navigation caching" (http://msdn.microsoft.com/en-us/library/ie/dn265017%28v=vs.85%29.aspx) */
             };
         }
+        // The 'jump to top' button triggers a style recalculation/"layout".
+        // Deferring it avoids trashing the layout too early and thus delaying
+        // the page initialization.
+        window.setTimeout(() => {
+            UiPageAction.setup();
+        }, 0);
         let interval = 0;
         interval = window.setInterval(() => {
             if (typeof window.jQuery === "function") {
                 window.clearInterval(interval);
-                // The 'jump to top' button triggers a style recalculation/"layout".
-                // Placing it at the end of the jQuery queue avoids trashing the
-                // layout too early and thus delaying the page initialization.
-                window.jQuery(() => {
-                    UiPageAction.setup();
-                });
                 // jQuery.browser.mobile is a deprecated legacy property that was used
                 // to determine the class of devices being used.
                 const jq = window.jQuery;
