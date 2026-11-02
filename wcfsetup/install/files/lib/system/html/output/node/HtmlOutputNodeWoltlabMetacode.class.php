@@ -2,8 +2,11 @@
 
 namespace wcf\system\html\output\node;
 
+use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
+use wcf\util\DOMUtil;
+use wcf\util\StringUtil;
 
 /**
  * Processes bbcodes represented by `<woltlab-metacode>`.
@@ -28,7 +31,11 @@ class HtmlOutputNodeWoltlabMetacode extends AbstractHtmlOutputNode
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             $name = $element->getAttribute('data-name');
-            $attributes = $element->getAttribute('data-attributes');
+            $attributes = $htmlNodeProcessor->parseAttributes($element->getAttribute('data-attributes'));
+
+            if ($name === 'media' && $this->outputType === 'text/html') {
+                $attributes = $this->liftMediaOutOfParagraph($element, $attributes);
+            }
 
             [$nodeIdentifier, $tagName] = $htmlNodeProcessor->getWcfNodeIdentifier();
 
@@ -36,10 +43,53 @@ class HtmlOutputNodeWoltlabMetacode extends AbstractHtmlOutputNode
 
             $htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
                 'name' => $name,
-                'attributes' => $htmlNodeProcessor->parseAttributes($attributes),
+                'attributes' => $attributes,
                 'element' => $element,
             ]);
         }
+    }
+
+    /**
+     * Moves an embedded media element out of its parent paragraph, because the
+     * output is a `<div>` which may not be placed inside a `<p>`. The alignment
+     * of the paragraph is carried over unless the media has its own alignment.
+     *
+     * @param list<mixed> $attributes
+     * @return list<mixed>
+     */
+    private function liftMediaOutOfParagraph(\DOMElement $element, array $attributes): array
+    {
+        $paragraph = DOMUtil::closest($element, 'p');
+        if ($paragraph === null) {
+            return $attributes;
+        }
+
+        // Unsupported URLs are rendered as plain text and can stay inline.
+        $url = StringUtil::trim($element->textContent);
+        if (!\preg_match('~^https?://~i', $url) || !BBCodeMediaProvider::isMediaURL($url)) {
+            return $attributes;
+        }
+
+        \assert($paragraph instanceof \DOMElement);
+        if (($attributes[0] ?? 'none') === 'none') {
+            $classNames = \explode(' ', $paragraph->getAttribute('class'));
+            if (\in_array('text-center', $classNames)) {
+                $attributes[0] = 'center';
+            } elseif (\in_array('text-right', $classNames)) {
+                $attributes[0] = 'right';
+            }
+        }
+
+        $ancestor = $paragraph->parentNode;
+        \assert($ancestor instanceof \DOMElement);
+
+        DOMUtil::splitParentsUntil($element, $ancestor);
+        $paragraph = DOMUtil::splitParentsUntil($element, $ancestor, false);
+
+        DOMUtil::insertBefore($element, $paragraph);
+        $ancestor->removeChild($paragraph);
+
+        return $attributes;
     }
 
     /**
