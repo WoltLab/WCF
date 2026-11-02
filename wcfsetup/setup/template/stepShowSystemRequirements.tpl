@@ -10,7 +10,7 @@
 			<div class="row rowColGap formGrid">
 				<dl class="col-xs-12 col-md-6">
 					<dt>{lang}wcf.global.systemRequirements.element.required{/lang}</dt>
-					<dd>{$phpVersionLowerBound} – 8.4.x / {$phpVersion85LowerBound} – {$phpVersionUpperBound}</dd>
+					<dd>{implode from=$minimumPhpVersions item=$minimumVersion}{$minimumVersion}+{/implode}</dd>
 				</dl>
 				
 				<dl class="col-xs-12 col-md-6">

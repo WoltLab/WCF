@@ -24,10 +24,9 @@ final class CheckSystemEnvironment implements MiddlewareInterface
     #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        // @phpstan-ignore smallerOrEqual.alwaysTrue, smallerOrEqual.alwaysTrue
         if (!(
             (80427 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80499)
-            || (80512 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80599)
+            || (80512 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80599) // @phpstan-ignore smallerOrEqual.alwaysTrue
         )) {
             if (!RequestHandler::getInstance()->isACPRequest()) {
                 return new HtmlResponse(

@@ -80,10 +80,9 @@ final class StatusMessageAcpDashboardBox extends AbstractAcpDashboardBox
     private function getBasicMessages(): array
     {
         $messages = [];
-        // @phpstan-ignore smallerOrEqual.alwaysTrue, smallerOrEqual.alwaysTrue
         if (!(
             (80427 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80499)
-            || (80512 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80599)
+            || (80512 <= \PHP_VERSION_ID && \PHP_VERSION_ID <= 80599) // @phpstan-ignore smallerOrEqual.alwaysTrue
         )) {
             $messages[] = new StatusMessage(
                 StatusMessageType::Error,

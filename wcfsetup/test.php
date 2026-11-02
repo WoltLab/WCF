@@ -26,9 +26,7 @@ $requiredExtensions = [
     'pdo_mysql',
     'zlib',
 ];
-$phpVersionLowerBound = '8.4.27';
-$phpVersion85LowerBound = '8.5.12';
-$phpVersionUpperBound = '8.5.x';
+$minimumPhpVersions = ['8.4.27', '8.5.12'];
 $phrases = [
     'php_requirements' => [
         'de' => 'PHP',
@@ -39,8 +37,8 @@ $phrases = [
         'en' => 'PHP version %s',
     ],
     'php_version_failure' => [
-        'de' => 'Gefundene PHP-Version %s ist inkompatibel. PHP %s – 8.4.x / %s – %s wird benötigt.',
-        'en' => 'PHP version %s is incompatible. PHP %s – 8.4.x / %s – %s is required.',
+        'de' => 'Gefundene PHP-Version %s ist inkompatibel. Eine der folgenden PHP-Versionen oder neuer innerhalb derselben Versionsreihe wird benötigt: %s.',
+        'en' => 'PHP version %s is incompatible. One of the following PHP versions or newer within the same series is required: %s.',
     ],
     'php_x64_success' => [
         'de' => '64-Bit-Unterstützung',
@@ -119,14 +117,20 @@ function getPhrase($phrase, array $values = [])
 }
 function checkPHPVersion()
 {
-    global $phpVersionLowerBound, $phpVersion85LowerBound, $phpVersionUpperBound;
+    global $minimumPhpVersions;
 
     $comparePhpVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', \PHP_VERSION);
+    foreach ($minimumPhpVersions as $minimumVersion) {
+        $versionPrefix = \preg_replace('~\.\d+$~', '.', $minimumVersion);
+        if (
+            \str_starts_with($comparePhpVersion, $versionPrefix)
+            && \version_compare($comparePhpVersion, $minimumVersion) >= 0
+        ) {
+            return true;
+        }
+    }
 
-    return \version_compare($comparePhpVersion, $phpVersionLowerBound, '>=')
-        && \version_compare($comparePhpVersion, \str_replace('x', '999', $phpVersionUpperBound), '<=')
-        && (\version_compare($comparePhpVersion, '8.5.0', '<')
-            || \version_compare($comparePhpVersion, $phpVersion85LowerBound, '>='));
+    return false;
 }
 function getMemoryLimit()
 {
@@ -528,7 +532,7 @@ function checkTls()
                         <li class="failure"><?= getPhrase('tls_failure') ?></li>
                     <?php } ?>
                 <?php } else { ?>
-                    <li class="failure"><?= getPhrase('php_version_failure', [\PHP_VERSION, $phpVersionLowerBound, $phpVersion85LowerBound, $phpVersionUpperBound]) ?></li>
+                    <li class="failure"><?= getPhrase('php_version_failure', [\PHP_VERSION, \implode(', ', $minimumPhpVersions)]) ?></li>
                 <?php } ?>
             </ul>
 

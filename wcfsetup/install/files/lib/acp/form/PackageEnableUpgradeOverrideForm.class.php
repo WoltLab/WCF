@@ -114,50 +114,49 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
 
     /**
      * @return ?array{title: string, description: string}
+     * @phpstan-ignore return.unusedType
      */
     private function checkMinimumPhpVersion(): ?array
     {
-        // Minimum: PHP 8.4.27 or PHP 8.5.12 for the respective series.
+        // Minimum: PHP 8.1.2
         // @phpstan-ignore greaterOrEqual.alwaysTrue
-        if (\PHP_VERSION_ID >= 80427 && !(80500 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 80512)) {
-            return null;
-        }
-
-        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
-            return [
-                'title' => 'Unzureichende PHP-Version',
-                'description' => 'Es wird mindestens PHP 8.4.27 bzw. PHP 8.5.12 benötigt.',
-            ];
-        } else {
-            return [
-                'title' => 'Insufficient PHP version',
-                'description' => 'PHP 8.4.27 or newer in the PHP 8.4 series, or PHP 8.5.12 or newer in the PHP 8.5 series is required.',
-            ];
-        }
-    }
-
-    /**
-     * @return ?array{title: string, description: string}
-     * @phpstan-ignore return.unusedType
-     */
-    private function checkMaximumPhpVersion(): ?array
-    {
-        // Maximum: PHP 8.5.x
-        // @phpstan-ignore smallerOrEqual.alwaysTrue
-        if (\PHP_VERSION_ID <= 80599) {
+        if (\PHP_VERSION_ID >= 80102) {
             return null;
         }
 
         // @phpstan-ignore deadCode.unreachable
         if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
             return [
+                'title' => 'Unzureichende PHP-Version',
+                'description' => 'Es wird mindestens PHP 8.1.2 benötigt.',
+            ];
+        } else {
+            return [
+                'title' => 'Insufficient PHP version',
+                'description' => 'PHP 8.1.2 or newer is required.',
+            ];
+        }
+    }
+
+    /**
+     * @return ?array{title: string, description: string}
+     */
+    private function checkMaximumPhpVersion(): ?array
+    {
+        // Maximum: PHP 8.4.x
+        if (\PHP_VERSION_ID < 80499) {
+            return null;
+        }
+
+        if (WCF::getLanguage()->getFixedLanguageCode() === 'de') {
+            return [
                 'title' => 'Inkompatible PHP-Version',
-                'description' => 'Es wird nur PHP 8.4 oder 8.5 unterstützt.',
+                'description' => 'Es wird nur PHP 8.1, 8.2, 8.3 oder 8.4 unterstützt.',
             ];
         } else {
             return [
                 'title' => 'Incompatible PHP version',
-                'description' => 'Only PHP 8.4 or 8.5 are supported.',
+                'description' => 'Only PHP 8.1, 8.2, 8.3 or 8.4 are supported.',
             ];
         }
     }
