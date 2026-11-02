@@ -98,15 +98,15 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
                         {
                             \assert($row instanceof PaidSubscriptionTransactionLog);
 
-                            if (!$row->subscriptionID) {
+                            if (!$row->subscriptionTitle) {
                                 return '';
                             }
 
-                            $subscription = PaidSubscriptionCacheBuilder::getInstance()->getData()[$row->subscriptionID];
-                            return StringUtil::encodeHTML($subscription->getTitle());
+                            return StringUtil::encodeHTML(WCF::getLanguage()->get($row->subscriptionTitle));
                         }
                     }
-                ),
+                )
+                ->sortable(sortByDatabaseColumn: 'paid_subscription.title'),
             GridViewColumn::for('paymentMethodObjectTypeID')
                 ->label('wcf.acp.paidSubscription.transactionLog.paymentMethod')
                 ->filter(new SelectFilter(
@@ -189,9 +189,12 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
     protected function createObjectList(): PaidSubscriptionTransactionLogList
     {
         $list = new PaidSubscriptionTransactionLogList();
+        $list->sqlSelects = "paid_subscription.title AS subscriptionTitle";
         $list->sqlJoins = "
             LEFT JOIN   wcf1_user user_table
-            ON          user_table.userID = paid_subscription_transaction_log.userID";
+            ON          user_table.userID = paid_subscription_transaction_log.userID
+            LEFT JOIN   wcf1_paid_subscription paid_subscription
+            ON          paid_subscription.subscriptionID = paid_subscription_transaction_log.subscriptionID";
 
         return $list;
     }
