@@ -5,13 +5,14 @@
  * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Listener", "WoltLabSuite/Core/Language", "../../../Ui/Confirmation", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, Ajax, Listener_1, Language_1, UiConfirmation, Snackbar_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Listener", "WoltLabSuite/Core/Language", "../../../Ui/Confirmation", "WoltLabSuite/Core/Component/Snackbar", "sortablejs"], function (require, exports, tslib_1, Ajax, Listener_1, Language_1, UiConfirmation, Snackbar_1, sortablejs_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = init;
     Ajax = tslib_1.__importStar(Ajax);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
+    sortablejs_1 = tslib_1.__importDefault(sortablejs_1);
     class AcpUiPageBoxOrder {
         pageId;
         pbo;
@@ -39,9 +40,11 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
                     container.appendChild(item);
                 });
                 if (boxData.length > 1) {
-                    window.jQuery(container).sortable({
-                        opacity: 0.6,
-                        placeholder: "sortablePlaceholder",
+                    container.classList.add("pboSortable");
+                    new sortablejs_1.default(container, {
+                        animation: 150,
+                        draggable: "li",
+                        ghostClass: "sortablePlaceholder",
                     });
                 }
                 const wrapper = this.pbo.querySelector(`[data-placeholder="${position}"]`);

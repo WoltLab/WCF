@@ -12,6 +12,7 @@ import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as UiConfirmation from "../../../Ui/Confirmation";
 import { AjaxCallbackSetup } from "../../../Ajax/Data";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
+import Sortable from "sortablejs";
 
 interface AjaxResponse {
   actionName: string;
@@ -58,9 +59,12 @@ class AcpUiPageBoxOrder {
       });
 
       if (boxData.length > 1) {
-        window.jQuery(container).sortable({
-          opacity: 0.6,
-          placeholder: "sortablePlaceholder",
+        container.classList.add("pboSortable");
+
+        new Sortable(container, {
+          animation: 150,
+          draggable: "li",
+          ghostClass: "sortablePlaceholder",
         });
       }
 

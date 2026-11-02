@@ -56,7 +56,7 @@
 		padding: 5px;
 	}
 	
-	#pbo [data-placeholder] .ui-sortable > li {
+	#pbo [data-placeholder] .pboSortable > li {
 		cursor: move;
 	}
 	
@@ -74,12 +74,6 @@
 	#pbo [data-placeholder="footerBoxes"] > ul > li {
 		flex: 0 0 calc(25% - 10px);
 		max-width: calc(25% - 10px);
-	}
-	
-	#pbo [data-placeholder] .sortablePlaceholder::before {
-		/* this avoids the icon from being displayed, but will also
-		   enforce a matching height for the placeholder */
-		visibility: hidden;
 	}
 	
 	#pboContentContainer:first-child:not(:last-child),
