@@ -18,6 +18,14 @@
 	<div class="error">{lang}wcf.acp.package.application.isTainted{/lang}</div>
 {/foreach}
 
+{if TIME_NOW < 1798797600}
+	<div class="warning">{lang}wcf.acp.package.upgradeRequired.expiring{/lang}</div>
+{elseif TIME_NOW < 1814436000}
+	<div class="error">{lang}wcf.acp.package.upgradeRequired.expiring{/lang}</div>
+{else}
+	<div class="error">{lang}wcf.acp.package.upgradeRequired.expired{/lang}</div>
+{/if}
+
 {if $systemIdMismatch}
 	{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && (!ENABLE_ENTERPRISE_MODE || $__wcf->user->hasOwnerAccess())}
 		<p class="info">{lang}wcf.acp.index.systemIdMismatch{/lang}</p>

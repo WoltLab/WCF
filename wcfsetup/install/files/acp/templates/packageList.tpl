@@ -58,6 +58,14 @@
 	<div class="error">{lang}wcf.acp.package.application.isTainted{/lang}</div>
 {/foreach}
 
+{if TIME_NOW < 1798797600}
+	<div class="warning">{lang}wcf.acp.package.upgradeRequired.expiring{/lang}</div>
+{elseif TIME_NOW < 1814436000}
+	<div class="error">{lang}wcf.acp.package.upgradeRequired.expiring{/lang}</div>
+{else}
+	<div class="error">{lang}wcf.acp.package.upgradeRequired.expired{/lang}</div>
+{/if}
+
 {if $recentlyDisabledCustomValues > 0}
 	<p class="warning">{lang}wcf.acp.language.item.hasRecentlyDisabledCustomValues{/lang}</p>
 {/if}

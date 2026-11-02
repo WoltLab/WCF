@@ -2010,6 +2010,16 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.package.quickInstallation.code"><![CDATA[StoreCode]]></item>
 		<item name="wcf.acp.package.quickInstallation.code.error.invalid"><![CDATA[The provided StoreCode is invalid.]]></item>
 		<item name="wcf.acp.package.quickInstallation.code.description"><![CDATA[Paste the StoreCode from the official Plugin-Store from your clipboard to start the installation.]]></item>
+		<item name="wcf.acp.package.upgradeRequired.expiring"><![CDATA[<p style="font-size: 18px; font-weight: 600">The security support is expiring!</p>
+<p><br></p>
+<p>This version is severely outdated and will only receive security updates until <strong>July 1, 2027</strong> before this version is permanently discontinued. It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>
+<p><br></p>
+<p>Have you heard about our managed hosting offer? We will handle the technical operation of your forum for you, keep the software up to date and the license fees are already included. Learn more at <a href="https://www.woltlab.com/en/">woltlab.com</a> and contact us if you are interested!</p>]]></item>
+		<item name="wcf.acp.package.upgradeRequired.expired"><![CDATA[<p style="font-size: 18px; font-weight: 600">The security support has expired!</p>
+<p><br></p>
+<p>This version is severely outdated and will no longer receive security updates since <strong>July 1, 2027</strong>! It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>
+<p><br></p>
+<p>Have you heard about our managed hosting offer? We will handle the technical operation of your forum for you, keep the software up to date and the license fees are already included. Learn more at <a href="https://www.woltlab.com/en/">woltlab.com</a> and contact us if you are interested!</p>]]></item>
 		<item name="wcf.acp.package.pluginStore.file"><![CDATA[WoltLab® Plugin-Store]]></item>
 		<item name="wcf.acp.package.pluginStore.file.link"><![CDATA[Show listing in the Plugin-Store]]></item>
 	</category>
@@ -6320,8 +6330,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	<item name="wcf.acp.packageUpdate.updateVersion"/>
 	<item name="wcf.acp.package.upgradeAvailable"/>
 	<item name="wcf.acp.package.upgradeRequired.error"/>
-	<item name="wcf.acp.package.upgradeRequired.expired"/>
-	<item name="wcf.acp.package.upgradeRequired.expiring"/>
 	<item name="wcf.acp.package.upgradeRequired.warning"/>
 	<item name="wcf.acp.package.view.author"/>
 	<item name="wcf.acp.package.view.button.makeActive"/>
