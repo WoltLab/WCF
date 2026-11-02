@@ -27,5 +27,20 @@ define(["require", "exports", "tslib", "../Core", "../Bootstrap", "./Ui/Page/Men
         (0, Bootstrap_1.setup)(options.bootstrap);
         UiPageMenu.init();
         (0, Search_1.setup)();
+        rewriteLinks();
+    }
+    function rewriteLinks() {
+        document.querySelectorAll("a").forEach((link) => {
+            // Legacy links using the `dereferrer.php` service, see https://github.com/WoltLab/WCF/issues/2557
+            if (/\/dereferrer\.php$/.test(link.pathname)) {
+                const match = /^\?url=([^&=]+)$/.exec(link.search);
+                if (match !== null) {
+                    link.href = unescape(match[1]);
+                }
+            }
+            if (link.classList.contains("externalURL")) {
+                link.relList.add("noopener");
+            }
+        });
     }
 });

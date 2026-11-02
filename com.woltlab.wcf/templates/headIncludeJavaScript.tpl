@@ -187,16 +187,18 @@ button:not([type]):not(.fancybox__container *)::before {
 <script data-relocate="true">
 	$(function() {
 		{event name='javascriptInit'}
-		
-		{if ENABLE_POLLING && !$__wcf->user->isGuest()}
-			require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
-				NotificationHandler.setup({
-					icon: '{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}',
-				});
-			});
-		{/if}
 	});
 </script>
+
+{if ENABLE_POLLING && !$__wcf->user->isGuest()}
+	<script data-relocate="true">
+		require(["WoltLabSuite/Core/Notification/Handler"], (NotificationHandler) => {
+			NotificationHandler.setup({
+				icon: "{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}",
+			});
+		});
+	</script>
+{/if}
 
 {include file='shared_imageViewer'}
 {include file='headIncludeJsonLd'}

@@ -135,25 +135,6 @@
 		$(function() {
 			{event name='javascriptInit'}
 			
-			document.querySelectorAll('form[method="get"]').forEach((form) => {
-				form.method = "post";
-			});
-			
-			// rewrites legacy links using the `dereferrer.php` service
-			// see https://github.com/WoltLab/WCF/issues/2557
-			elBySelAll('a', undefined, function(link) {
-				if (/\/dereferrer.php$/.test(link.pathname) && link.search.match(/^\?url=([^&=]+)$/)) {
-					link.href = unescape(RegExp.$1);
-				}
-				
-				if (link.classList.contains('externalURL')) {
-					var rel = (link.rel === '') ? [] : link.rel.split(' ');
-					if (rel.indexOf('noopener') === -1) rel.push('noopener');
-					
-					link.rel = rel.join(' ');
-				}
-			});
-			
 			WCF.DOMNodeInsertedHandler.execute();
 		});
 	</script>

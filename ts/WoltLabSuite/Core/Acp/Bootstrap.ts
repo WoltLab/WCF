@@ -35,4 +35,21 @@ export function setup(options: AcpBootstrapOptions): void {
   bootstrapSetup(options.bootstrap);
   UiPageMenu.init();
   setupAcpSearch();
+  rewriteLinks();
+}
+
+function rewriteLinks(): void {
+  document.querySelectorAll("a").forEach((link) => {
+    // Legacy links using the `dereferrer.php` service, see https://github.com/WoltLab/WCF/issues/2557
+    if (/\/dereferrer\.php$/.test(link.pathname)) {
+      const match = /^\?url=([^&=]+)$/.exec(link.search);
+      if (match !== null) {
+        link.href = unescape(match[1]);
+      }
+    }
+
+    if (link.classList.contains("externalURL")) {
+      link.relList.add("noopener");
+    }
+  });
 }
