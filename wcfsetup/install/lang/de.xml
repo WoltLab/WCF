@@ -5606,7 +5606,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.upload.error.fileExtensionNotPermitted"><![CDATA[Der Dateityp von „{$filename}“ ist unzulässig.]]></item>
 		<item name="wcf.upload.error.fileSizeTooLarge"><![CDATA[Die Datei ist zu groß.]]></item>
 		<item name="wcf.upload.error.maximumCountReached"><![CDATA[Es {plural value=$maximumCount 1='darf nur eine Datei' other='dürfen nur # Dateien'} hochgeladen werden.]]></item>
-		<item name="wcf.upload.error.adopt"><![CDATA[Die Datei „{$filename}“ kann nicht zugewiesen werden.]]></item>
 		<item name="wcf.upload.error.image.tooSmall"><![CDATA[Das Bild ist zu klein. Es muss mindestens {$width} x {$height} Pixel groß sein.]]></item>
 		<item name="wcf.upload.error.delete.unknownError"><![CDATA[Beim Löschen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 		<item name="wcf.upload.error.delete.permissionDenied"><![CDATA[Die Datei kann nicht gelöscht werden, {if LANGUAGE_USE_INFORMAL_VARIANT}verwende{else}verwenden Sie{/if} stattdessen <strong>Ersetzen</strong>, um die Datei zu ersetzen.]]></item>
@@ -5738,5 +5737,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.user.avatar.type.none"/>
 	<item name="wcf.user.avatar.type.custom"/>
 	<item name="wcf.acp.attachment.button.goToContent"/>
+	<item name="wcf.upload.error.adopt"/>
 </delete>
 </language>
