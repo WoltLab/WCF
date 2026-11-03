@@ -23,7 +23,14 @@ define(["require", "exports", "tslib", "./Abstract", "./Manager"], function (req
                 if (DependencyManager.isHiddenByDependencies(this._field)) {
                     return false;
                 }
-                values.push(this._field.value);
+                if (this._field.tagName === "WOLTLAB-CORE-TOGGLE-BUTTON") {
+                    // The value of a toggle button is always set, regardless of its state.
+                    const toggleButton = this._field;
+                    values.push(toggleButton.checked ? toggleButton.value : "0");
+                }
+                else {
+                    values.push(this._field.value);
+                }
             }
             else {
                 let hasCheckedField = true;
