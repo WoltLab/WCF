@@ -148,6 +148,12 @@ declare global {
     toggle(): void;
     get checked(): boolean;
     set checked(checked: boolean);
+    get value(): string;
+    get name(): string;
+    get form(): HTMLFormElement | null;
+    get disabled(): boolean;
+    set disabled(disabled: boolean);
+    get required(): boolean;
   }
 
   interface HTMLElementTagNameMap {

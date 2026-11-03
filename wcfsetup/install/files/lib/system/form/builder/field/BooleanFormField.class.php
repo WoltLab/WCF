@@ -4,6 +4,7 @@ namespace wcf\system\form\builder\field;
 
 use wcf\system\form\builder\exception\InvalidFormFieldValue;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\WCF;
 
 /**
  * Implementation of a form field for boolean values.
@@ -46,9 +47,9 @@ class BooleanFormField extends AbstractFormField implements
     #[\Override]
     public function readValue()
     {
-        if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
-            $this->value = \intval($this->getDocument()->getRequestData($this->getPrefixedId())) === 1;
-        }
+        // An unchecked toggle button does not submit any value.
+        $this->value = $this->getDocument()->hasRequestData($this->getPrefixedId())
+            && (int)$this->getDocument()->getRequestData($this->getPrefixedId()) === 1;
 
         return $this;
     }
@@ -82,5 +83,21 @@ class BooleanFormField extends AbstractFormField implements
         }
 
         return parent::value($value);
+    }
+
+    #[\Override]
+    public function getHtml()
+    {
+        if ($this->requiresLabel() && $this->getLabel() === null) {
+            throw new \UnexpectedValueException("Form field '{$this->getPrefixedId()}' requires a label.");
+        }
+
+        return WCF::getTPL()->render(
+            'wcf',
+            'shared_inlineLabelFormField',
+            [
+                'field' => $this,
+            ]
+        );
     }
 }

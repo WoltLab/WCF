@@ -2,6 +2,9 @@
  * `<woltlab-core-toggle-button>` creates a toggle button.
  * Usage: `<woltlab-core-toggle-button name="foo" checked></woltlab-core-toggle-button>`
  *
+ * The element is form-associated and submits its `value` (defaults to `1`)
+ * when checked, behaving like a regular checkbox.
+ *
  * @author Marcel Werk
  * @copyright 2001-2024 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -10,12 +13,19 @@
 
 {
   class WoltlabCoreToggleButtonElement extends HTMLElement {
+    static formAssociated = true;
+
     static get observedAttributes() {
-      return ["checked"];
+      return ["checked", "required"];
     }
+
+    readonly #internals: ElementInternals;
+    #defaultChecked: boolean | undefined = undefined;
 
     constructor() {
       super();
+
+      this.#internals = this.attachInternals();
 
       const shadow = this.attachShadow({ mode: "open" });
       const style = document.createElement("style");
@@ -24,7 +34,11 @@
           display: inline-flex;
           vertical-align: middle;
         }
-      
+
+        :host(:disabled) {
+          opacity: 0.54;
+        }
+
         [part="track"] {
           position: relative;
           border-radius: 14px;
@@ -33,6 +47,10 @@
           cursor: pointer;
           background-color: var(--wcfToggleButtonBackground);
           transition: 0.4s;
+        }
+
+        :host(:disabled) [part="track"] {
+          cursor: default;
         }
 
         :host([checked]) [part="track"] {
@@ -74,46 +92,49 @@
       const iconSlot = document.createElement("slot");
       iconSlot.name = "icon";
       slider.append(iconSlot);
-      const checkboxSlot = document.createElement("slot");
-      checkboxSlot.name = "checkbox";
-      shadow.append(style, track, checkboxSlot);
+      shadow.append(style, track);
 
+      // Clicks on an associated `<label>` are forwarded to the host element.
       this.addEventListener("click", (event) => {
         event.stopPropagation();
         event.preventDefault();
-        this.toggle();
+
+        if (!this.matches(":disabled")) {
+          this.toggle();
+        }
       });
       this.addEventListener("keydown", (event) => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
-          this.toggle();
+
+          if (!this.matches(":disabled")) {
+            this.toggle();
+          }
         }
       });
     }
 
     connectedCallback() {
+      if (this.#defaultChecked === undefined) {
+        this.#defaultChecked = this.checked;
+      }
+
       this.innerHTML = "";
 
-      this.#renderCheckbox();
       this.#renderIcon();
 
       this.setAttribute("role", "switch");
-      this.setAttribute("tabindex", "0");
+      this.setAttribute("aria-checked", this.checked.toString());
+      this.#updateDisabledState(this.matches(":disabled"));
+      this.#updateFormValue();
     }
 
-    #renderCheckbox(): void {
-      if (!this.hasAttribute("name")) {
-        return;
-      }
+    formDisabledCallback(disabled: boolean): void {
+      this.#updateDisabledState(disabled);
+    }
 
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.name = this.getAttribute("name")!;
-      checkbox.value = this.hasAttribute("value") ? this.getAttribute("value")! : "1";
-      checkbox.checked = this.checked;
-      checkbox.hidden = true;
-      checkbox.slot = "checkbox";
-      this.append(checkbox);
+    formResetCallback(): void {
+      this.checked = this.#defaultChecked === true;
     }
 
     #renderIcon(): void {
@@ -121,6 +142,29 @@
       icon.setIcon(this.checked ? "check" : "xmark");
       icon.slot = "icon";
       this.append(icon);
+    }
+
+    #updateDisabledState(disabled: boolean): void {
+      if (disabled) {
+        this.removeAttribute("tabindex");
+        this.setAttribute("aria-disabled", "true");
+      } else {
+        this.setAttribute("tabindex", "0");
+        this.removeAttribute("aria-disabled");
+      }
+    }
+
+    #updateFormValue(): void {
+      this.#internals.setFormValue(this.checked ? this.value : null);
+
+      if (this.required && !this.checked) {
+        this.#internals.setValidity(
+          { valueMissing: true },
+          window.WoltLabLanguage.getPhrase("wcf.global.form.error.empty"),
+        );
+      } else {
+        this.#internals.setValidity({});
+      }
     }
 
     get checked(): boolean {
@@ -132,20 +176,52 @@
       this.querySelector("fa-icon")?.setIcon(value ? "check" : "xmark");
     }
 
+    get value(): string {
+      return this.getAttribute("value") ?? "1";
+    }
+
+    get name(): string {
+      return this.getAttribute("name") || "";
+    }
+
+    get form(): HTMLFormElement | null {
+      return this.#internals.form;
+    }
+
+    get disabled(): boolean {
+      return this.hasAttribute("disabled");
+    }
+
+    set disabled(disabled: boolean) {
+      this.toggleAttribute("disabled", disabled);
+    }
+
+    get required(): boolean {
+      return this.hasAttribute("required");
+    }
+
     toggle(): void {
       this.checked = !this.checked;
+      this.dispatchEvent(new Event("input", { bubbles: true }));
     }
 
     attributeChangedCallback(name: string) {
-      if (name === "checked") {
-        this.setAttribute("aria-checked", this.checked.toString());
-        this.dispatchEvent(
-          new CustomEvent("change", {
-            detail: {
-              checked: this.checked,
-            },
-          }),
-        );
+      switch (name) {
+        case "checked":
+          this.setAttribute("aria-checked", this.checked.toString());
+          this.#updateFormValue();
+          this.dispatchEvent(
+            new CustomEvent("change", {
+              detail: {
+                checked: this.checked,
+              },
+            }),
+          );
+          break;
+
+        case "required":
+          this.#updateFormValue();
+          break;
       }
     }
   }

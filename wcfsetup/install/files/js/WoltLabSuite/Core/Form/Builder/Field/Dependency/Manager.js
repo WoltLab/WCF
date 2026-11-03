@@ -83,7 +83,8 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
                 }
             });
         }
-        node.querySelectorAll("input, select, textarea").forEach((validatedField) => {
+        const validatedFields = "input, select, textarea, woltlab-core-toggle-button";
+        node.querySelectorAll(validatedFields).forEach((validatedField) => {
             // if a container is shown, ignore all fields that
             // have a hidden parent element within the container
             let parentNode = validatedField.parentNode;
@@ -132,10 +133,12 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
             const id = Util_1.default.identify(field);
             if (!_fields.has(id)) {
                 _fields.set(id, field);
-                if (field.tagName === "INPUT" &&
-                    (field.type === "checkbox" ||
-                        field.type === "radio" ||
-                        field.type === "hidden")) {
+                // Toggle buttons fire `change` on every state change, including programmatic ones.
+                if (field.tagName === "WOLTLAB-CORE-TOGGLE-BUTTON" ||
+                    (field.tagName === "INPUT" &&
+                        (field.type === "checkbox" ||
+                            field.type === "radio" ||
+                            field.type === "hidden"))) {
                     field.addEventListener("change", () => checkDependencies());
                 }
                 else {

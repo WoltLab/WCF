@@ -92,7 +92,8 @@ function _show(node: HTMLElement): void {
       });
   }
 
-  node.querySelectorAll("input, select, textarea").forEach((validatedField: HTMLInputElement | HTMLSelectElement) => {
+  const validatedFields = "input, select, textarea, woltlab-core-toggle-button";
+  node.querySelectorAll(validatedFields).forEach((validatedField: HTMLInputElement | HTMLSelectElement) => {
     // if a container is shown, ignore all fields that
     // have a hidden parent element within the container
     let parentNode = validatedField.parentNode! as HTMLElement;
@@ -149,11 +150,13 @@ export function addDependency(dependency: FormBuilderFormFieldDependency): void 
     if (!_fields.has(id)) {
       _fields.set(id, field);
 
+      // Toggle buttons fire `change` on every state change, including programmatic ones.
       if (
-        field.tagName === "INPUT" &&
-        ((field as HTMLInputElement).type === "checkbox" ||
-          (field as HTMLInputElement).type === "radio" ||
-          (field as HTMLInputElement).type === "hidden")
+        field.tagName === "WOLTLAB-CORE-TOGGLE-BUTTON" ||
+        (field.tagName === "INPUT" &&
+          ((field as HTMLInputElement).type === "checkbox" ||
+            (field as HTMLInputElement).type === "radio" ||
+            (field as HTMLInputElement).type === "hidden"))
       ) {
         field.addEventListener("change", () => checkDependencies());
       } else {

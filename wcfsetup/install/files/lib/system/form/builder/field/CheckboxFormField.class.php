@@ -2,8 +2,6 @@
 
 namespace wcf\system\form\builder\field;
 
-use wcf\system\WCF;
-
 /**
  * Implementation of a checkbox form field for boolean values.
  *
@@ -20,6 +18,11 @@ class CheckboxFormField extends BooleanFormField implements INullableFormField
      * @inheritDoc
      */
     protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/CheckedVoid';
+
+    /**
+     * @inheritDoc
+     */
+    protected $templateName = 'shared_checkboxFormField';
 
     #[\Override]
     public function readValue()
@@ -41,22 +44,6 @@ class CheckboxFormField extends BooleanFormField implements INullableFormField
         }
 
         return parent::getSaveValue();
-    }
-
-    #[\Override]
-    public function getHtml()
-    {
-        if ($this->requiresLabel() && $this->getLabel() === null) {
-            throw new \UnexpectedValueException("Form field '{$this->getPrefixedId()}' requires a label.");
-        }
-
-        return WCF::getTPL()->render(
-            'wcf',
-            'shared_checkboxFormField',
-            [
-                'field' => $this,
-            ]
-        );
     }
 
     #[\Override]

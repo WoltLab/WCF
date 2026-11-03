@@ -16,7 +16,6 @@
 		}
 		
 		boxVisibleEverywhere.addEventListener('change', updateVisibilityExceptions);
-		elById('boxVisibleEverywhere_no').addEventListener('change', updateVisibilityExceptions);
 		
 		updateVisibilityExceptions();
 	});

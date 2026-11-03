@@ -26,7 +26,13 @@ class Value extends Abstract {
         return false;
       }
 
-      values.push((this._field as HTMLInputElement).value);
+      if (this._field.tagName === "WOLTLAB-CORE-TOGGLE-BUTTON") {
+        // The value of a toggle button is always set, regardless of its state.
+        const toggleButton = this._field as WoltlabCoreToggleButtonElement;
+        values.push(toggleButton.checked ? toggleButton.value : "0");
+      } else {
+        values.push((this._field as HTMLInputElement).value);
+      }
     } else {
       let hasCheckedField = true;
       this._fields.forEach((field: HTMLInputElement) => {
