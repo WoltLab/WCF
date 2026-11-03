@@ -83,7 +83,8 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
                 }
             });
         }
-        node.querySelectorAll("input, select, textarea").forEach((validatedField) => {
+        const validatedFields = "input, select, textarea, woltlab-core-toggle-button";
+        node.querySelectorAll(validatedFields).forEach((validatedField) => {
             // if a container is shown, ignore all fields that
             // have a hidden parent element within the container
             let parentNode = validatedField.parentNode;

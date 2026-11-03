@@ -16,7 +16,6 @@
 		}
 		
 		visibleEverywhere.addEventListener('change', updateVisibilityExceptions);
-		elById('visibleEverywhere_no').addEventListener('change', updateVisibilityExceptions);
 		
 		updateVisibilityExceptions();
 	});

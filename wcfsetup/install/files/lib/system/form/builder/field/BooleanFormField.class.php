@@ -46,9 +46,9 @@ class BooleanFormField extends AbstractFormField implements
     #[\Override]
     public function readValue()
     {
-        if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
-            $this->value = \intval($this->getDocument()->getRequestData($this->getPrefixedId())) === 1;
-        }
+        // An unchecked toggle button does not submit any value.
+        $this->value = $this->getDocument()->hasRequestData($this->getPrefixedId())
+            && (int)$this->getDocument()->getRequestData($this->getPrefixedId()) === 1;
 
         return $this;
     }
