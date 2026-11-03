@@ -2,6 +2,7 @@
 
 namespace wcf\data;
 
+use wcf\data\file\File;
 use wcf\data\file\FileList;
 use wcf\data\file\thumbnail\FileThumbnailList;
 use wcf\system\image\cover\photo\FileCoverPhoto;
@@ -50,10 +51,16 @@ trait TCollectionCoverPhotos
         $fileList = new FileList();
         $fileList->setObjectIDs($coverPhotoIDs);
         $fileList->readObjects();
-        $files = $fileList->getObjects();
+        $files = \array_filter(
+            $fileList->getObjects(),
+            static fn(File $file) => $file->isImage(),
+        );
+        if ($files === []) {
+            return;
+        }
 
         $thumbnailList = new FileThumbnailList();
-        $thumbnailList->getConditionBuilder()->add("fileID IN (?)", [$fileList->getObjectIDs()]);
+        $thumbnailList->getConditionBuilder()->add("fileID IN (?)", [\array_keys($files)]);
         $thumbnailList->readObjects();
         foreach ($thumbnailList as $thumbnail) {
             $files[$thumbnail->fileID]->addThumbnail($thumbnail);
