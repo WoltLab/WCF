@@ -150,11 +150,13 @@ export function addDependency(dependency: FormBuilderFormFieldDependency): void 
     if (!_fields.has(id)) {
       _fields.set(id, field);
 
+      // Toggle buttons fire `change` on every state change, including programmatic ones.
       if (
-        field.tagName === "INPUT" &&
-        ((field as HTMLInputElement).type === "checkbox" ||
-          (field as HTMLInputElement).type === "radio" ||
-          (field as HTMLInputElement).type === "hidden")
+        field.tagName === "WOLTLAB-CORE-TOGGLE-BUTTON" ||
+        (field.tagName === "INPUT" &&
+          ((field as HTMLInputElement).type === "checkbox" ||
+            (field as HTMLInputElement).type === "radio" ||
+            (field as HTMLInputElement).type === "hidden"))
       ) {
         field.addEventListener("change", () => checkDependencies());
       } else {
