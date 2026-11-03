@@ -159,13 +159,20 @@ class ACLHandler extends SingletonFactory
      * Note: This method primarily only exists for form builder. If you are not
      * using form builder, you do not need this method.
      *
+     * By default, previously read values of the object type are replaced. With
+     * `$merge`, the values are merged into the previously read values instead,
+     * which allows multiple form fields to provide the values of different acl
+     * option categories of the same object type.
+     *
      * @param ?mixed[] $valuesSource array used to read the values from (if `null`, `$_POST['aclValues']` is used)
      * @return void
      * @since 5.2
      */
-    public function readValues(int $objectTypeID, ?array $valuesSource = null)
+    public function readValues(int $objectTypeID, ?array $valuesSource = null, bool $merge = false)
     {
-        $this->__readValues[$objectTypeID] = [];
+        $previousValues = $merge ? ($this->__readValues[$objectTypeID] ?? []) : [];
+
+        $this->__readValues[$objectTypeID] = $previousValues;
 
         if ($valuesSource === null && isset($_POST['aclValues'])) {
             $valuesSource = $_POST['aclValues'];
@@ -177,6 +184,9 @@ class ACLHandler extends SingletonFactory
             foreach (['group', 'user'] as $type) {
                 if (isset($valuesSource[$type]) && \is_string($valuesSource[$type])) {
                     $this->__readValues[$objectTypeID][$type] = [];
+                    if (isset($previousValues[$type])) {
+                        $this->__readValues[$objectTypeID][$type] = \json_decode($previousValues[$type], true, flags: \JSON_THROW_ON_ERROR);
+                    }
 
                     $typeData = \json_decode($valuesSource[$type], true, flags: \JSON_THROW_ON_ERROR);
                     if (!\is_array($typeData)) {
@@ -188,7 +198,9 @@ class ACLHandler extends SingletonFactory
                             continue;
                         }
 
-                        $this->__readValues[$objectTypeID][$type][$typeID] = [];
+                        if (!isset($this->__readValues[$objectTypeID][$type][$typeID])) {
+                            $this->__readValues[$objectTypeID][$type][$typeID] = [];
+                        }
 
                         foreach ($optionData as $optionID => $optionValue) {
                             if (isset($options[$optionID])) {
