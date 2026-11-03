@@ -2,6 +2,7 @@
 
 namespace wcf\system\form\builder\field\acl;
 
+use wcf\data\acl\option\ACLOption;
 use wcf\data\IStorableObject;
 use wcf\system\acl\ACLHandler;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
@@ -50,6 +51,13 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
     protected static bool $includedAclJavaScript = false;
 
     private bool $valuesRead = false;
+
+    /**
+     * keys of the documents and object types for which acl values have already
+     * been read by a field, the values of further fields are merged
+     * @var array<string, true>
+     */
+    private static array $readDocumentObjectTypes = [];
 
     /**
      * Sets the name of/filter for the name(s) of the shown acl option categories and
@@ -177,10 +185,76 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
             }
         }
 
-        ACLHandler::getInstance()->readValues($this->getObjectType()->objectTypeID, $valueSource);
+        $objectTypeID = $this->getObjectType()->objectTypeID;
+        if ($this->categoryName !== null) {
+            $valueSource = $this->filterValuesByCategory($objectTypeID, $valueSource);
+        }
+
+        // Multiple fields for the same object type, for example showing different
+        // option categories, provide parts of the values that are merged.
+        $key = $this->getDocumentObjectTypeKey($objectTypeID);
+        ACLHandler::getInstance()->readValues(
+            $objectTypeID,
+            $valueSource,
+            isset(self::$readDocumentObjectTypes[$key])
+        );
+        self::$readDocumentObjectTypes[$key] = true;
         $this->valuesRead = true;
 
         return $this;
+    }
+
+    /**
+     * Removes the values of options that do not belong to the categories shown
+     * by this field. The acl list submits the values of all options, including
+     * the values of options handled by other fields.
+     *
+     * @param mixed[] $valueSource
+     * @return mixed[]
+     */
+    private function filterValuesByCategory(int $objectTypeID, array $valueSource): array
+    {
+        $optionIDs = [];
+        foreach (ACLOption::getOptions($objectTypeID)->getObjects() as $option) {
+            if ($this->matchesCategory($option->categoryName)) {
+                $optionIDs[$option->optionID] = true;
+            }
+        }
+
+        foreach (['group', 'user'] as $type) {
+            if (!isset($valueSource[$type]) || !\is_string($valueSource[$type])) {
+                continue;
+            }
+
+            $typeData = \json_decode($valueSource[$type], true, flags: \JSON_THROW_ON_ERROR);
+            if (!\is_array($typeData)) {
+                continue;
+            }
+
+            foreach ($typeData as $typeID => $optionData) {
+                if (\is_array($optionData)) {
+                    $typeData[$typeID] = \array_intersect_key($optionData, $optionIDs);
+                }
+            }
+
+            $valueSource[$type] = \json_encode($typeData, \JSON_THROW_ON_ERROR);
+        }
+
+        return $valueSource;
+    }
+
+    private function matchesCategory(string $categoryName): bool
+    {
+        if (\str_ends_with($this->categoryName, '.*')) {
+            return \str_starts_with($categoryName, \substr($this->categoryName, 0, -1));
+        }
+
+        return $categoryName === $this->categoryName;
+    }
+
+    private function getDocumentObjectTypeKey(int $objectTypeID): string
+    {
+        return \spl_object_id($this->getDocument()) . '-' . $objectTypeID;
     }
 
     /**
@@ -213,6 +287,7 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
     public function cleanup(): static
     {
         ACLHandler::getInstance()->resetValues($this->getObjectType()->objectTypeID);
+        unset(self::$readDocumentObjectTypes[$this->getDocumentObjectTypeKey($this->getObjectType()->objectTypeID)]);
 
         return $this;
     }
