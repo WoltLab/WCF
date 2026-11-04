@@ -15,6 +15,7 @@
 						{unsafe:$field->getFieldHtml()}
 
 						{include file='shared_formFieldErrors'}
+						{include file='shared_formFieldDescription'}
 						{include file='shared_formFieldDependencies'}
 						{include file='shared_formFieldDataHandler'}
 					</div>
