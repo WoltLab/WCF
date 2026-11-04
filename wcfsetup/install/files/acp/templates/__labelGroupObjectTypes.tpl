@@ -4,11 +4,11 @@
 	});
 </script>
 
-<div id="connect">
+<div id="connect" class="formSection">
 	{foreach from=$labelObjectTypeContainers item=container}
-		<dl>
-			<dt>{$container->getTitle()}</dt>
-			<dd>
+		<div class="formField" role="group" aria-labelledby="labelObjectTypes{$container->objectTypeID}Label">
+			<div class="formField__label"><span id="labelObjectTypes{$container->objectTypeID}Label">{$container->getTitle()}</span></div>
+			<div class="formField__input">
 				<ul class="structuredList">
 					{foreach from=$container item=objectType}
 						<li class="{if $objectType->isCategory()} category{/if}"{if $objectType->getDepth()} style="padding-left: {$objectType->getDepth() * 20}px"{/if} data-depth="{$objectType->getDepth()}">
@@ -17,7 +17,7 @@
 						</li>
 					{/foreach}
 				</ul>
-			</dd>
-		</dl>
+			</div>
+		</div>
 	{/foreach}
 </div>
