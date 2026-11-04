@@ -37,7 +37,6 @@
     "html-parsed-element": "^0.4.1",
     "perfect-scrollbar": "^1.5.6",
     "qr-creator": "^1.0.0",
-    "reflect-metadata": "^0.2.2",
     "sortablejs": "^1.15.7",
     "tabbable": "^6.5.0",
     "tslib": "^2.8.1"

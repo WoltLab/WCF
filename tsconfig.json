@@ -7,8 +7,6 @@
     "ts/WoltLabSuite/WebComponent/**"
   ],
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "allowJs": true,
     "target": "ES2022",
     "module": "amd",
