@@ -42,7 +42,7 @@ export function setupSubmitShortcut(ckeditor: CKEditor): void {
     return;
   }
 
-  const formSubmit = container.querySelector(".formSubmit");
+  const formSubmit = container.querySelector(".formSubmit, .formBuilder__submit");
   if (formSubmit === null) {
     return;
   }

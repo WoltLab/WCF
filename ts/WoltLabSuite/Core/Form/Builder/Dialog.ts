@@ -179,7 +179,7 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
     }
 
     this._additionalSubmitButtons = Array.from(
-      dialogData.content.querySelectorAll(':not(.formSubmit) button[type="submit"]'),
+      dialogData.content.querySelectorAll(':not(.formSubmit, .formBuilder__submit) button[type="submit"]'),
     );
     this._additionalSubmitButtons.forEach((submit) => {
       submit.addEventListener("click", () => {

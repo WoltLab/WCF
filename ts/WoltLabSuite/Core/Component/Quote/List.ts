@@ -184,7 +184,7 @@ class QuoteList {
   }
 
   #formSubmitted(): void {
-    const formSubmit = this.#editor.closest("form")!.querySelector(".formSubmit")!;
+    const formSubmit = this.#editor.closest("form")!.querySelector(".formSubmit, .formBuilder__submit")!;
 
     getUsedQuotes(this.#editorId).forEach((uuid) => {
       formSubmit.append(

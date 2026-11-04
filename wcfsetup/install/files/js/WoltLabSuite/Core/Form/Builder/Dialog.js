@@ -130,7 +130,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../A
                 cancelButton.addEventListener("click", () => this._closeDialog());
                 cancelButton.dataset.hasEventListener = "1";
             }
-            this._additionalSubmitButtons = Array.from(dialogData.content.querySelectorAll(':not(.formSubmit) button[type="submit"]'));
+            this._additionalSubmitButtons = Array.from(dialogData.content.querySelectorAll(':not(.formSubmit, .formBuilder__submit) button[type="submit"]'));
             this._additionalSubmitButtons.forEach((submit) => {
                 submit.addEventListener("click", () => {
                     // Mark the button that was clicked so that the button data handlers know

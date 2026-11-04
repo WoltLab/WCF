@@ -511,7 +511,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 return;
             }
             const contentContainer = data.content.parentNode;
-            const formSubmit = data.content.querySelector(".formSubmit");
+            const formSubmit = data.content.querySelector(".formSubmit, .formBuilder__submit");
             let unavailableHeight = 0;
             if (formSubmit !== null) {
                 contentContainer.classList.add("dialogForm");
@@ -538,7 +538,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             //noinspection JSUnresolvedVariable
             if (callbackObject !== undefined && typeof callbackObject._dialogSubmit === "function") {
                 const inputFields = data.content.querySelectorAll('input[data-dialog-submit-on-enter="true"]');
-                const submitButton = data.content.querySelector('.formSubmit > input[type="submit"], .formSubmit > button[data-type="submit"]');
+                const submitButton = data.content.querySelector(':is(.formSubmit, .formBuilder__submit) > :is(input[type="submit"], button[data-type="submit"])');
                 if (submitButton === null) {
                     // check if there is at least one input field with submit handling,
                     // otherwise we'll assume the dialog has not been populated yet

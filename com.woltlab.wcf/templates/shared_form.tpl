@@ -51,7 +51,7 @@
 	{/foreach}
 	
 	{if !$form->getButtons()|empty}
-		<div class="formSubmit">
+		<div class="formBuilder__submit">
 			{foreach from=$form->getButtons() item=button}
 				{if $button->isAvailable()}
 					{unsafe:$button->getHtml()}

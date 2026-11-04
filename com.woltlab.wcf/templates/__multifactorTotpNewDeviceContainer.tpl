@@ -28,7 +28,7 @@
 			{/foreach}
 			
 			{if $container->getNodeById('submitButton')->isAvailable()}
-				<div class="formSubmit">
+				<div class="formBuilder__submit">
 					{unsafe:$container->getNodeById('submitButton')->getHtml()}
 				</div>
 			{/if}

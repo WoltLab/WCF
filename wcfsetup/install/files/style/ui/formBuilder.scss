@@ -2,31 +2,57 @@
 .formBuilder {
 	display: flex;
 	flex-direction: column;
-	row-gap: 40px;
+	row-gap: 20px;
+}
 
-	/* the spacing is provided by `row-gap` */
-	> .formSubmit:not(:first-child) {
-		margin-top: 0;
+/* Form builder buttons: `.formBuilder > .formBuilder__submit` */
+.formBuilder__submit {
+	display: flex;
+	flex-direction: row-reverse;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+
+	@include screen-xs {
+		input[type="button"],
+		input[type="reset"],
+		input[type="submit"],
+		.button {
+			flex: 1 0 auto;
+		}
 	}
 }
 
 /* Form builder sections: `.formSection > .formSection__header > .formSection__title + .formSection__description` */
-.formSection,
+.formSection {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+
 .formSection > .tabMenuContent {
 	display: flex;
 	flex-direction: column;
 	row-gap: 20px;
 }
 
+.formSection ~ .formSection:not(.tabMenuContainer) {
+	border-top: 1px solid var(--wcfContentBorderInner);
+	padding-top: 20px;
+}
+
 .formSection > .formSection__header {
-	border-bottom: 1px solid var(--wcfContentBorderInner);
-	padding-bottom: 10px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 2px;
 }
 
 .formSection__title {
-	color: var(--wcfContentHeadlineText);
+	@include wcfFontHeadline;
 
-	@include wcfFontSection;
+	& {
+		font-weight: 600;
+	}
 
 	a {
 		color: var(--wcfContentHeadlineLink);
@@ -35,14 +61,6 @@
 			color: var(--wcfContentHeadlineLinkActive);
 		}
 	}
-
-	.badge {
-		top: -2px;
-	}
-}
-
-:is(.section, .formSection) .formSection .formSection__title {
-	@include wcfFontHeadline;
 }
 
 .formSection__description {
@@ -50,11 +68,8 @@
 }
 
 .formSection__required {
-	color: rgba(204, 0, 1, 1);
-}
-
-html[data-color-scheme="dark"] .formSection__required {
-	color: #ff4444;
+	color: var(--wcfContentDimmedText);
+	font-weight: 400;
 }
 
 /* Form builder fields: `.formField > .formField__label + .formField__input + .formField__errors + .formField__description` */
@@ -68,16 +83,18 @@ html[data-color-scheme="dark"] .formSection__required {
 	}
 }
 
+/* `HiddenFormField` has no visible output, the wrapper must not take part in the `row-gap` */
+.formField:has(> .formField__input > input[type="hidden"]:only-child) {
+	display: none;
+}
+
 .formField__label {
 	color: var(--wcfInputLabel);
+	font-weight: 500;
 
 	&:empty {
 		display: none;
 	}
-}
-
-.formError .formField__label {
-	color: var(--color-error) !important;
 }
 
 .formSuccess .formField__label {
@@ -104,11 +121,8 @@ html[data-color-scheme="dark"] .formSection__required {
 }
 
 .formField__required {
-	color: rgba(204, 0, 1, 1);
-}
-
-html[data-color-scheme="dark"] .formField__required {
-	color: #ff4444;
+	color: var(--wcfContentDimmedText);
+	font-weight: 400;
 }
 
 .formField__inlineLabel {
@@ -152,12 +166,13 @@ html[data-color-scheme="dark"] .formField__error {
 	row-gap: 5px;
 }
 
+/* the tab menu of a `WysiwygFormContainer` is attached to the editor, offsets the `row-gap` of `.formSection` */
+.formSection > .formField + .messageTabMenu {
+	margin-top: -20px;
+}
+
 /* Form builder forms inside dialogs */
 :is(.dialogContent, .dialog__content) {
-	.formBuilder {
-		row-gap: 20px;
-	}
-
 	.formSection__title {
 		border-bottom-width: 0;
 		padding-bottom: 0;
@@ -174,7 +189,7 @@ html[data-color-scheme="dark"] .formField__error {
 		padding-bottom: 0;
 	}
 
-	.formSection ~ .formSection {
+	.formSection ~ .formSection:not(.tabMenuContainer) {
 		border-top: 1px solid var(--wcfContentBorderInner);
 		padding-top: 20px;
 	}

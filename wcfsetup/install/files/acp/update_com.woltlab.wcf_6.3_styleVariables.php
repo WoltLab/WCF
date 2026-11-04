@@ -22,6 +22,7 @@ $styleVariables = [
     ['wcfFooterLink', 'rgba(38, 113, 166, 1)', 'rgba(29, 155, 209, 1)'],
     ['wcfFooterLinkActive', 'rgba(22, 81, 124, 1)', 'rgba(64, 179, 228, 1)'],
     ['wcfFooterText', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)'],
+    ['wcfInputLabel', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)'],
 ];
 
 // Existing styles keep the footer colors of earlier versions, the new defaults
