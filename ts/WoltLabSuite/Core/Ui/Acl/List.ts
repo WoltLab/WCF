@@ -86,7 +86,8 @@ class AclList {
     this.#container.classList.add("aclContainer");
 
     // insert container elements
-    const elementContainer = this.#container.querySelector("dd")!;
+    const elementContainer =
+      this.#container.querySelector<HTMLElement>(":scope > .formField__input") ?? this.#container.querySelector("dd")!;
     this.#aclList = document.createElement("ul");
     this.#aclList.classList.add("aclList");
     elementContainer.appendChild(this.#aclList);
