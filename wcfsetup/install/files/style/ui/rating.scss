@@ -1,15 +1,89 @@
-.ratingList {
-	font-size: 0;
+.ratingField {
+	align-items: center;
+	display: inline-flex;
+	gap: 5px;
+}
 
-	> li {
-		display: inline-block;
+.ratingField__stars {
+	display: inline-flex;
+}
+
+.ratingField__star,
+.ratingField__reset {
+	cursor: pointer;
+	display: inline-flex;
+	position: relative;
+
+	&:has(.ratingField__input:disabled) {
+		cursor: default;
 	}
 
-	fa-icon[name="star"][solid] {
-		color: #f90;
+	&:has(.ratingField__input:focus-visible) {
+		border-radius: var(--wcfBorderRadius);
+		outline: 2px solid var(--wcfInputBorderActive);
+		outline-offset: 1px;
+	}
+}
+
+.ratingField__reset {
+	color: var(--wcfContentDimmedText);
+	order: 1;
+
+	&:hover {
+		color: var(--wcfContentText);
+	}
+}
+
+.ratingField__icon--full {
+	color: #f90;
+}
+
+/* Stars up to and including the selected rating are filled, all following stars are empty. */
+.ratingField__star {
+	.ratingField__icon--empty {
+		display: none;
 	}
 
-	.ratingMetaButton {
-		margin-left: 5px;
+	&:has(.ratingField__input:checked) ~ .ratingField__star {
+		.ratingField__icon--empty {
+			display: inline-flex;
+		}
+
+		.ratingField__icon--full {
+			display: none;
+		}
+	}
+}
+
+.ratingField__stars:not(:has(.ratingField__input:checked)) .ratingField__star {
+	.ratingField__icon--empty {
+		display: inline-flex;
+	}
+
+	.ratingField__icon--full {
+		display: none;
+	}
+}
+
+/* Preview the rating while hovering a star. */
+.ratingField__stars:not(:has(.ratingField__input:disabled)):hover {
+	.ratingField__star {
+		.ratingField__icon--empty {
+			display: none;
+		}
+
+		.ratingField__icon--full {
+			display: inline-flex;
+		}
+	}
+
+	.ratingField__star:hover ~ .ratingField__star {
+		.ratingField__icon--empty {
+			display: inline-flex;
+		}
+
+		.ratingField__icon--full {
+			display: none;
+		}
 	}
 }

@@ -192,4 +192,10 @@ class NumericRangeFormField extends AbstractFormField implements
             return 'any';
         }
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

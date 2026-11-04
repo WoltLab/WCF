@@ -1,0 +1,181 @@
+/* Form builder forms: `.formBuilder > .formSection > .formField` */
+.formBuilder {
+	display: flex;
+	flex-direction: column;
+	row-gap: 40px;
+
+	/* the spacing is provided by `row-gap` */
+	> .formSubmit:not(:first-child) {
+		margin-top: 0;
+	}
+}
+
+/* Form builder sections: `.formSection > .formSection__header > .formSection__title + .formSection__description` */
+.formSection,
+.formSection > .tabMenuContent {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+
+.formSection > .formSection__header {
+	border-bottom: 1px solid var(--wcfContentBorderInner);
+	padding-bottom: 10px;
+}
+
+.formSection__title {
+	color: var(--wcfContentHeadlineText);
+
+	@include wcfFontSection;
+
+	a {
+		color: var(--wcfContentHeadlineLink);
+
+		&:hover {
+			color: var(--wcfContentHeadlineLinkActive);
+		}
+	}
+
+	.badge {
+		top: -2px;
+	}
+}
+
+:is(.section, .formSection) .formSection .formSection__title {
+	@include wcfFontHeadline;
+}
+
+.formSection__description {
+	color: var(--wcfContentDimmedText);
+}
+
+.formSection__required {
+	color: rgba(204, 0, 1, 1);
+}
+
+html[data-color-scheme="dark"] .formSection__required {
+	color: #ff4444;
+}
+
+/* Form builder fields: `.formField > .formField__label + .formField__input + .formField__errors + .formField__description` */
+.formField {
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
+
+	&.wide > .formField__label {
+		display: none;
+	}
+}
+
+.formField__label {
+	color: var(--wcfInputLabel);
+
+	&:empty {
+		display: none;
+	}
+}
+
+.formError .formField__label {
+	color: var(--color-error) !important;
+}
+
+.formSuccess .formField__label {
+	color: var(--color-success) !important;
+}
+
+.formGrid .formField__label {
+	display: none;
+}
+
+/* lists of radio buttons or checkboxes */
+.formField__input:has(> label) {
+	align-items: flex-start;
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
+}
+
+.formField.floated > .formField__input {
+	column-gap: 10px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.formField__required {
+	color: rgba(204, 0, 1, 1);
+}
+
+html[data-color-scheme="dark"] .formField__required {
+	color: #ff4444;
+}
+
+.formField__inlineLabel {
+	align-items: flex-start;
+	display: inline-flex;
+	gap: 8px;
+}
+
+.formField__description {
+	color: var(--wcfContentDimmedText);
+
+	@include wcfFontSmall;
+}
+
+.formField__errors {
+	display: flex;
+	flex-direction: column;
+	row-gap: 3px;
+}
+
+.formField__error {
+	color: var(--color-error, #c00);
+	font-weight: 600;
+
+	@include wcfFontSmall;
+
+	a {
+		color: inherit;
+		text-decoration: underline;
+	}
+}
+
+html[data-color-scheme="dark"] .formField__error {
+	color: var(--color-error, #ff4747);
+}
+
+/* fields inside a `RowFormFieldContainer` */
+.formField__gridItem {
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
+}
+
+/* Form builder forms inside dialogs */
+:is(.dialogContent, .dialog__content) {
+	.formBuilder {
+		row-gap: 20px;
+	}
+
+	.formSection__title {
+		border-bottom-width: 0;
+		padding-bottom: 0;
+
+		@include wcfFontDefault;
+
+		& {
+			font-weight: 600;
+		}
+	}
+
+	.formSection > .formSection__header {
+		border-bottom-width: 0;
+		padding-bottom: 0;
+	}
+
+	.formSection ~ .formSection {
+		border-top: 1px solid var(--wcfContentBorderInner);
+		padding-top: 20px;
+	}
+}

@@ -1016,4 +1016,10 @@ class UploadFormField extends AbstractFormField
 
         return $this;
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

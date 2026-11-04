@@ -23,7 +23,7 @@ class WysiwygTabMenuFormContainer extends TabMenuFormContainer
     // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
-        $this->removeClass('section')
+        $this->removeClass('formSection')
             ->removeClass('tabMenuContainer')
             ->addClass('messageTabMenu');
     }

@@ -713,12 +713,12 @@ const UiDialog = {
       if (inputField.required) {
         if (inputField.value.trim() === "") {
           DomUtil.innerError(inputField, getPhrase("wcf.global.form.error.empty"));
-          inputField.closest("dl")?.classList.add("formError");
+          inputField.closest("dl, .formField")?.classList.add("formError");
 
           isValid = false;
         } else {
           DomUtil.innerError(inputField, false);
-          inputField.closest("dl")?.classList.remove("formError");
+          inputField.closest("dl, .formField")?.classList.remove("formError");
         }
       }
     });

@@ -1,10 +1,9 @@
-<dl id="{$element->getField()->getPrefixedId()}Container"{*
-	*}{if !$element->getField()->getClasses()|empty} class="{implode from=$element->getField()->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
+<div id="{$element->getField()->getPrefixedId()}Container" class="formField{foreach from=$element->getField()->getClasses() item='class'} {$class}{/foreach}"{*
 	*}{foreach from=$element->getField()->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}{if !$element->getField()->checkDependencies()} style="display: none;"{/if}{*
 *}>
-	<dt>{if $element->getLabel() !== null}<label for="{$element->getField()->getPrefixedId()}">{unsafe:$element->getLabel()}</label>{/if}</dt>
-	<dd>
+	<div class="formField__label">{if $element->getLabel() !== null}<label id="{$element->getField()->getPrefixedId()}Label" for="{$element->getField()->getPrefixedId()}">{unsafe:$element->getLabel()}</label>{/if}</div>
+	<div class="formField__input">
 		<div class="inputAddon">
 			{unsafe:$element->getField()->getFieldHtml()}
 			
@@ -30,23 +29,21 @@
 				{/if}
 			{/if}
 		</div>
-		
-		{if $element->getDescription() !== null}
-			<small>{unsafe:$element->getDescription()}</small>
-		{/if}
-		
-		{include file='shared_formFieldErrors' field=$element->getField()}
-		
-		{if $element->getSuffixField() !== null && $element->getSuffixField()->isAvailable()}
-			{foreach from=$element->getSuffixField()->getValidationErrors() item='validationError'}
-				{unsafe:$validationError->getHtml()}
-			{/foreach}
-		{/if}
-		
-		{include file='shared_formFieldDependencies' field=$element->getField()}
-		{include file='shared_formFieldDataHandler' field=$element->getField()}
-	</dd>
-</dl>
+	</div>
+	
+	{include file='shared_formFieldErrors' field=$element->getField()}
+	
+	{if $element->getSuffixField() !== null && $element->getSuffixField()->isAvailable()}
+		{include file='shared_formFieldErrors' field=$element->getSuffixField()}
+	{/if}
+	
+	{if $element->getDescription() !== null}
+		<div id="{$element->getField()->getPrefixedId()}Description" class="formField__description">{unsafe:$element->getDescription()}</div>
+	{/if}
+	
+	{include file='shared_formFieldDependencies' field=$element->getField()}
+	{include file='shared_formFieldDataHandler' field=$element->getField()}
+</div>
 
 {if $element->getSuffixField() !== null && $element->getSuffixField()->isAvailable() && !$element->getSuffixField()->isImmutable() && $element->suffixHasSelectableOptions()}
 <script data-relocate="true">

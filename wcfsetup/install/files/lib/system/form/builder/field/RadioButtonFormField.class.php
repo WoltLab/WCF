@@ -69,4 +69,10 @@ class RadioButtonFormField extends AbstractFormField implements
 
         parent::validate();
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

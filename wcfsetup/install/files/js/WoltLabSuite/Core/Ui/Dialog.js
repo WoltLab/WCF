@@ -585,12 +585,12 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 if (inputField.required) {
                     if (inputField.value.trim() === "") {
                         Util_1.default.innerError(inputField, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
-                        inputField.closest("dl")?.classList.add("formError");
+                        inputField.closest("dl, .formField")?.classList.add("formError");
                         isValid = false;
                     }
                     else {
                         Util_1.default.innerError(inputField, false);
-                        inputField.closest("dl")?.classList.remove("formError");
+                        inputField.closest("dl, .formField")?.classList.remove("formError");
                     }
                 }
             });

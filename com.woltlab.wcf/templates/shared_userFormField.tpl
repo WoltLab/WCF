@@ -5,6 +5,7 @@
 	*}class="long"{*
 	*}{if $field->isAutofocused()} autofocus{/if}{*
 	*}{if $field->isImmutable()} disabled{/if}{*
+	*}{foreach from=$field->getAriaAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 *}>
 
 <script data-relocate="true">

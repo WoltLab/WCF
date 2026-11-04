@@ -54,7 +54,7 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer implements IWys
                         FormContainer::create(
                             $this->getId() . '_smileyCategoryContainer' . $smileyCategory->categoryID
                         )
-                            ->removeClass('section')
+                            ->removeClass('formSection')
                             ->appendChild(
                                 WysiwygSmileyFormNode::create(
                                     $this->getId() . '_smileyCategory' . $smileyCategory->categoryID

@@ -53,10 +53,17 @@ trait TAttributeFormField
     /**
      * Returns all additional attributes of the actual field element.
      *
+     * If the actual field element is the element labelled by the field's label, the ARIA
+     * attributes linking it to the field's error messages and description are included.
+     *
      * @return array<string, ?string>
      */
     public function getFieldAttributes(): array
     {
+        if ($this instanceof AbstractFormField && $this->getLabelTarget() === $this->getPrefixedId()) {
+            return \array_merge($this->getAriaAttributes(), $this->fieldAttributes);
+        }
+
         return $this->fieldAttributes;
     }
 

@@ -291,4 +291,10 @@ final class AclFormField extends AbstractFormField implements IObjectTypeFormNod
 
         return $this;
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

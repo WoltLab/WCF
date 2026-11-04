@@ -33,15 +33,14 @@
 {/if}
 
 {if $form->isAjax()}
-	<section id="{$form->getId()}"{*
-		*}{if !$form->getClasses()|empty} class="{implode from=$form->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
+	<section id="{$form->getId()}" class="formBuilder{foreach from=$form->getClasses() item='class'} {$class}{/foreach}"{*
 		*}{foreach from=$form->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}>
 {else}
 	<form method="{$form->getMethod()}" {*
 		*}action="{$form->getAction()}" {*
-		*}id="{$form->getId()}"{*
-		*}{if !$form->getClasses()|empty} class="{implode from=$form->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
+		*}id="{$form->getId()}" {*
+		*}class="formBuilder{foreach from=$form->getClasses() item='class'} {$class}{/foreach}"{*
 		*}{foreach from=$form->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}>
 {/if}

@@ -172,4 +172,10 @@ final class TrophyBadgeFormField extends AbstractFormField implements IImmutable
 
         return FontAwesomeIcon::fromString(self::DEFAULT_ICON_NAME);
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

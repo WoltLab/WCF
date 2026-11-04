@@ -1,17 +1,16 @@
 <section id="{$container->getPrefixedId()}Container"{*
 	*}{if !$container->getClasses()|empty} class="{implode from=$container->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 	*}{foreach from=$container->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
+	*}{if $container->getLabel() !== null} aria-labelledby="{$container->getPrefixedId()}Title"{/if}{*
 	*}{if !$container->checkDependencies()} style="display: none;"{/if}{*
 *}>
 	{if $container->getLabel() !== null}
-		{if $container->getDescription() !== null}
-			<header class="sectionHeader">
-				<h2 class="sectionTitle">{unsafe:$container->getLabel()}{if $container->markAsRequired()} <span class="formFieldRequired">*</span>{/if}</h2>
-				<p class="sectionDescription">{unsafe:$container->getDescription()}</p>
-			</header>
-		{else}
-			<h2 class="sectionTitle">{unsafe:$container->getLabel()}{if $container->markAsRequired()} <span class="formFieldRequired">*</span>{/if}</h2>
-		{/if}
+		<header class="formSection__header">
+			<h2 id="{$container->getPrefixedId()}Title" class="formSection__title">{unsafe:$container->getLabel()}{if $container->markAsRequired()} <span class="formSection__required">*</span>{/if}</h2>
+			{if $container->getDescription() !== null}
+				<p class="formSection__description">{unsafe:$container->getDescription()}</p>
+			{/if}
+		</header>
 	{/if}
 	
 	<div class="tabularBox">

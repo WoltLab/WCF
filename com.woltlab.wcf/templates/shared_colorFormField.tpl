@@ -9,6 +9,7 @@
 		id="{$field->getPrefixedId()}_colorPickerButton"
 		title="{lang}wcf.style.colorPicker.button.changeColor{/lang}"
 		data-store="{$field->getPrefixedId()}"
+		{foreach from=$field->getAriaAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}
 	>
 		<span{if $field->getValue()} style="background-color: {$field->getValue()}"{/if}></span>
 	</button>

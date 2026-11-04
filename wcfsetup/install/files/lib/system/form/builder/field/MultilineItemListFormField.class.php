@@ -46,4 +46,10 @@ class MultilineItemListFormField extends ItemListFormField implements INullableF
     {
         return $this->filterable;
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

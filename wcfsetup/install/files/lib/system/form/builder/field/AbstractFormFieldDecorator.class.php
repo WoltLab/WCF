@@ -308,6 +308,42 @@ abstract class AbstractFormFieldDecorator implements IFormField
         return $this->field->getHtml();
     }
 
+    /**
+     * @see AbstractFormField::getLabelTarget()
+     * @since 6.3
+     */
+    public function getLabelTarget(): ?string
+    {
+        if ($this->field instanceof AbstractFormField || $this->field instanceof self) {
+            return $this->field->getLabelTarget();
+        }
+
+        return $this->field->getPrefixedId();
+    }
+
+    /**
+     * @see AbstractFormField::isGroup()
+     * @since 6.3
+     */
+    public function isGroup(): bool
+    {
+        return $this->getLabelTarget() === null;
+    }
+
+    /**
+     * @see AbstractFormField::getAriaAttributes()
+     * @return array<string, string>
+     * @since 6.3
+     */
+    public function getAriaAttributes(): array
+    {
+        if ($this->field instanceof AbstractFormField || $this->field instanceof self) {
+            return $this->field->getAriaAttributes();
+        }
+
+        return [];
+    }
+
     #[\Override]
     public function getHtmlVariables()
     {

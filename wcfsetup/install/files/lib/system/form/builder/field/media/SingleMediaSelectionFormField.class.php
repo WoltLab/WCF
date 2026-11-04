@@ -121,4 +121,10 @@ final class SingleMediaSelectionFormField extends AbstractFormField implements I
             $this->addValidationError(new FormFieldValidationError('empty'));
         }
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

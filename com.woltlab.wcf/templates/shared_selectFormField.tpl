@@ -7,6 +7,7 @@
 	{elseif $field->isRequired()}
 		required
 	{/if}
+	{foreach from=$field->getAriaAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}
 >
 	{if !$field->hasDefaultValue()}
 		<option value="">{lang}wcf.global.noSelection{/lang}</option>

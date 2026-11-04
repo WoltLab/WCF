@@ -185,4 +185,10 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
     {
         return \in_array(BadgeColorFormField::CUSTOM_CSS_CLASSNAME, $this->options, true);
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

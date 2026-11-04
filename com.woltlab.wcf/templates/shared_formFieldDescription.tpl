@@ -1,3 +1,3 @@
 {if $field->getDescription() !== null}
-	<small>{unsafe:$field->getDescription()}</small>
+	<div id="{$field->getPrefixedId()}Description" class="formField__description">{unsafe:$field->getDescription()}</div>
 {/if}

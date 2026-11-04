@@ -4,7 +4,7 @@
  * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since     6.1
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Component/File/Helper", "WoltLabSuite/Core/Component/File/Upload", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Component/Confirmation"], function (require, exports, tslib_1, Language_1, DeleteFile_1, Listener_1, Helper_1, Upload_1, Util_1, Confirmation_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Api/Files/DeleteFile", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Component/File/Helper", "WoltLabSuite/Core/Component/File/Upload", "WoltLabSuite/Core/Form/Builder/Field/Error", "WoltLabSuite/Core/Component/Confirmation"], function (require, exports, tslib_1, Language_1, DeleteFile_1, Listener_1, Helper_1, Upload_1, Error_1, Confirmation_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.FileProcessor = void 0;
@@ -110,6 +110,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             replaceButton.addEventListener("click", () => {
                 const oldContext = this.#startReplaceFile(element);
                 (0, Upload_1.clearPreviousErrors)(this.#uploadButton);
+                (0, Error_1.setFieldError)(this.#fieldId, null);
                 const changeEventListener = () => {
                     this.#fileInput.removeEventListener("cancel", cancelEventListener);
                     // Wait until the upload starts,
@@ -143,7 +144,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             else {
                 errorMessage = (0, Helper_1.getErrorMessageFromFile)(element);
             }
-            (0, Util_1.innerError)(this.#uploadButton, errorMessage);
+            (0, Error_1.setFieldError)(this.#fieldId, errorMessage);
             element.remove();
             if (reason instanceof Error) {
                 throw reason;
@@ -164,15 +165,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
                     notifyValueChange(this.#fieldId, this.values);
                 }
                 else {
-                    let container = element;
-                    if (!this.#useBigPreview) {
-                        container = container.parentElement;
-                    }
                     if (result.error.code === "permission_denied") {
-                        (0, Util_1.innerError)(container, (0, Language_1.getPhrase)("wcf.upload.error.delete.permissionDenied"), true);
+                        (0, Error_1.setFieldError)(this.#fieldId, (0, Language_1.getPhrase)("wcf.upload.error.delete.permissionDenied"), true);
                     }
                     else {
-                        (0, Util_1.innerError)(container, result.error.message ?? (0, Language_1.getPhrase)("wcf.upload.error.delete.unknownError"));
+                        (0, Error_1.setFieldError)(this.#fieldId, result.error.message ?? (0, Language_1.getPhrase)("wcf.upload.error.delete.unknownError"));
                     }
                 }
             });

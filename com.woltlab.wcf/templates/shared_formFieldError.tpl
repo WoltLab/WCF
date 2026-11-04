@@ -1,1 +1,1 @@
-<small class="innerError">{unsafe:$error->getMessage()}</small>
+<p class="formField__error">{unsafe:$error->getMessage()}</p>

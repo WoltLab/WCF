@@ -456,4 +456,10 @@ final class FileProcessorFormField extends AbstractFormField
     {
         return $this->thumbnailSize;
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

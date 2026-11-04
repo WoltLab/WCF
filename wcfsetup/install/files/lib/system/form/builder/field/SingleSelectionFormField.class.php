@@ -106,4 +106,10 @@ class SingleSelectionFormField extends AbstractFormField implements
 
         return parent::value($value);
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return $this->isFilterable() ? null : $this->getPrefixedId();
+    }
 }

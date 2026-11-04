@@ -4,7 +4,7 @@
 		{jsphrase name='wcf.acp.pip.box.visibilityExceptions.visibleEverywhere'}
 		
 		var visibleEverywhere = elById('visibleEverywhere');
-		var visibilityExceptionsLabel = elBySel('#visibilityExceptionsContainer > dt > label');
+		var visibilityExceptionsLabel = elById('visibilityExceptionsLabel');
 		
 		function updateVisibilityExceptions() {
 			if (visibleEverywhere.checked) {
