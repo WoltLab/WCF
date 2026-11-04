@@ -34,6 +34,7 @@
 		<file>js/WoltLabSuite/Core/Media/Manager/Search.js</file>
 		<file>js/WoltLabSuite/Core/Media/Replace.js</file>
 		<file>js/WoltLabSuite/Core/Media/Upload.js</file>
+		<file>js/WoltLabSuite/Core/Form/Builder/Field/Controller/Rating.js</file>
 		<file>lib/system/clipboard/action/MediaClipboardAction.class.php</file>
 		<file>lib/system/upload/MediaReplaceUploadFileValidationStrategy.class.php</file>
 		<file>lib/system/upload/MediaUploadFileValidationStrategy.class.php</file>
