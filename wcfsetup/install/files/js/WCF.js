@@ -1849,7 +1849,7 @@ if (window.WCF.Language == null) {
 
 /**
  * Number utilities.
- * @deprecated Use WoltLabSuite/Core/NumberUtil
+ * @deprecated Use `Number.toLocaleString()` or `Number.toFixed()` as appropriate.
  */
 WCF.Number = {
 	/**

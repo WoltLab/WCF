@@ -1068,7 +1068,7 @@ $.widget('wcf.messageTabMenu', {
 	 */
 	_create: function() {
 		var $nav = this.element.find('> nav');
-		var $tabs = $nav.find('> ul > li:not(.jsFlexibleMenuDropdown)');
+		var $tabs = $nav.find('> ul > li');
 		var $tabContainers = this.element.find('> div, > fieldset');
 		
 		if ($tabs.length != $tabContainers.length) {
