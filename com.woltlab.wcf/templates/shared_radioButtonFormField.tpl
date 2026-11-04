@@ -1,5 +1,5 @@
 {if !$field->isRequired()}
-	<label>
+	<label class="formField__inlineLabel">
 		<input {*
 			*}type="radio" {*
 			*}name="{$field->getPrefixedId()}" {*
@@ -12,7 +12,7 @@
 	</label>
 {/if}
 {foreach from=$field->getOptions() key=$__fieldValue item=__fieldLabel}
-	<label>
+	<label class="formField__inlineLabel">
 		<input {*
 			*}type="radio" {*
 			*}name="{$field->getPrefixedId()}" {*
