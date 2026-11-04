@@ -58,7 +58,6 @@ class ContactOptionAddForm extends AbstractFormOptionAddForm
             MultilineTextFormField::create('optionDescription')
                 ->label('wcf.global.description')
                 ->maximumLength(5000)
-                ->rows(5)
                 ->i18n()
                 ->languageItemPattern('wcf.contact.optionDescription\d+'),
             ShowOrderFormField::create('showOrder')
