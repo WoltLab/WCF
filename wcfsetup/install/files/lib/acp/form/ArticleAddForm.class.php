@@ -195,119 +195,116 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
                 ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
                     $builder->setIsMultilingual((bool)$field->getSaveValue());
                 }),
-            FormContainer::create('information')
-                ->label('wcf.global.category')
-                ->appendChildren([
-                    SingleSelectionFormField::create('categoryID')
-                        ->filterable(\iterator_count($this->categoryNodeTree->getIterator()) > 10)
-                        ->required()
-                        ->options($this->getCategoryOptions(), true)
-                        ->value($this->categoryID ?: null)
-                        ->label('wcf.global.category')
-                        ->addValidator(new FormFieldValidator('accessible', static function (IFormField $field) {
-                            $category = ArticleCategory::getCategory($field->getSaveValue());
-                            if ($category === null || !$category->canUseCategory()) {
-                                $field->addValidationError(new FormFieldValidationError('invalid'));
-                            }
-                        }))
-                        ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
-                            $builder->setCategory(ArticleCategory::getCategory((int)$field->getSaveValue()));
-                        })
-                        ->loadValueCallback(static function (Article $object, IFormField $field) {
-                            $field->value($object->categoryID);
-                        }),
-                    ...$labelFormFields,
-                    UserFormField::create('userID')
-                        ->label('wcf.acp.article.author')
-                        ->required()
-                        ->value(WCF::getUser()->userID)
-                        ->saveValueCallback(static function (ArticleBuilder $builder, UserFormField $field) {
-                            $builder->setUser(new User((int)$field->getSaveValue()));
-                        })
-                        ->loadValueCallback(static function (Article $object, IFormField $field) {
-                            $field->value($object->userID);
-                        }),
-                    DateFormField::create('time')
-                        ->supportTime()
-                        ->required()
-                        ->label('wcf.global.date')
-                        ->value(\TIME_NOW)
-                        ->addValidator(new FormFieldValidator('futureCheck', function (IFormField $field) {
-                            $statusField = $field->getDocument()->getFormField('publicationStatus');
-                            $status = $statusField !== null
-                                ? (int)$statusField->getSaveValue()
-                                : Article::UNPUBLISHED;
-                            if ($status === Article::PUBLISHED && (int)$field->getSaveValue() > \TIME_NOW) {
-                                $field->addValidationError(new FormFieldValidationError('invalid'));
-                            }
-                        }))
-                        ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
-                            $builder->setTime((int)$field->getSaveValue());
-                        })
-                        ->loadValueCallback(static function (Article $object, IFormField $field) {
-                            $field->value($object->time);
-                        }),
-                    RadioButtonFormField::create('publicationStatus')
-                        ->label('wcf.acp.article.publicationStatus')
-                        ->options([
-                            Article::PUBLISHED => 'wcf.acp.article.publicationStatus.published',
-                            Article::UNPUBLISHED => 'wcf.acp.article.publicationStatus.unpublished',
-                            Article::DELAYED_PUBLICATION => 'wcf.acp.article.publicationStatus.delayed',
-                        ])
-                        ->available($canManage)
-                        ->value(Article::PUBLISHED)
-                        ->required()
-                        // The publication status drives the publication date; the
-                        // date is only relevant for a delayed publication.
-                        ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
-                            $status = (int)$field->getSaveValue();
-                            $builder->setPublicationStatus($status);
 
-                            $dateField = $field->getDocument()->getFormField('publicationDate');
-                            $builder->setPublicationDate(
-                                $status === Article::DELAYED_PUBLICATION
-                                    && $dateField !== null
-                                    && $dateField->getSaveValue() !== null
-                                    ? (int)$dateField->getSaveValue()
-                                    : 0
-                            );
-                        })
-                        ->loadValueCallback(static function (Article $object, IFormField $field) {
-                            $field->value($object->publicationStatus);
-                        }),
-                    DateFormField::create('publicationDate')
-                        ->supportTime()
-                        ->required()
-                        ->label('wcf.acp.article.publicationDate')
-                        ->addDependency(
-                            ValueFormFieldDependency::create('publicationStatus')
-                                ->fieldId('publicationStatus')
-                                ->values([Article::DELAYED_PUBLICATION])
-                        )
-                        ->addValidator(new FormFieldValidator('futureCheck', static function (IFormField $field) {
-                            if (
-                                $field->getValue() !== null
-                                && $field->getValue() !== ''
-                                && (int)$field->getSaveValue() < \TIME_NOW
-                            ) {
-                                $field->addValidationError(new FormFieldValidationError('invalid'));
-                            }
-                        }))
-                        ->loadValueCallback(static function (Article $object, IFormField $field) {
-                            if ($object->publicationDate !== 0) {
-                                $field->value($object->publicationDate);
-                            }
-                        }),
-                    BooleanFormField::create('enableComments')
-                        ->label('wcf.acp.article.enableComments')
-                        ->value(\ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE)
-                        ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
-                            $builder->setEnableComments((bool)$field->getSaveValue());
-                        })
-                        ->loadValueCallback(static function (Article $object, IFormField $field) {
-                            $field->value((bool)$object->enableComments);
-                        }),
-                ]),
+            SingleSelectionFormField::create('categoryID')
+                ->filterable(\iterator_count($this->categoryNodeTree->getIterator()) > 10)
+                ->required()
+                ->options($this->getCategoryOptions(), true)
+                ->value($this->categoryID ?: null)
+                ->label('wcf.global.category')
+                ->addValidator(new FormFieldValidator('accessible', static function (IFormField $field) {
+                    $category = ArticleCategory::getCategory($field->getSaveValue());
+                    if ($category === null || !$category->canUseCategory()) {
+                        $field->addValidationError(new FormFieldValidationError('invalid'));
+                    }
+                }))
+                ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
+                    $builder->setCategory(ArticleCategory::getCategory((int)$field->getSaveValue()));
+                })
+                ->loadValueCallback(static function (Article $object, IFormField $field) {
+                    $field->value($object->categoryID);
+                }),
+            ...$labelFormFields,
+            UserFormField::create('userID')
+                ->label('wcf.acp.article.author')
+                ->required()
+                ->value(WCF::getUser()->userID)
+                ->saveValueCallback(static function (ArticleBuilder $builder, UserFormField $field) {
+                    $builder->setUser(new User((int)$field->getSaveValue()));
+                })
+                ->loadValueCallback(static function (Article $object, IFormField $field) {
+                    $field->value($object->userID);
+                }),
+            DateFormField::create('time')
+                ->supportTime()
+                ->required()
+                ->label('wcf.global.date')
+                ->value(\TIME_NOW)
+                ->addValidator(new FormFieldValidator('futureCheck', function (IFormField $field) {
+                    $statusField = $field->getDocument()->getFormField('publicationStatus');
+                    $status = $statusField !== null
+                        ? (int)$statusField->getSaveValue()
+                        : Article::UNPUBLISHED;
+                    if ($status === Article::PUBLISHED && (int)$field->getSaveValue() > \TIME_NOW) {
+                        $field->addValidationError(new FormFieldValidationError('invalid'));
+                    }
+                }))
+                ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
+                    $builder->setTime((int)$field->getSaveValue());
+                })
+                ->loadValueCallback(static function (Article $object, IFormField $field) {
+                    $field->value($object->time);
+                }),
+            RadioButtonFormField::create('publicationStatus')
+                ->label('wcf.acp.article.publicationStatus')
+                ->options([
+                    Article::PUBLISHED => 'wcf.acp.article.publicationStatus.published',
+                    Article::UNPUBLISHED => 'wcf.acp.article.publicationStatus.unpublished',
+                    Article::DELAYED_PUBLICATION => 'wcf.acp.article.publicationStatus.delayed',
+                ])
+                ->available($canManage)
+                ->value(Article::PUBLISHED)
+                ->required()
+                // The publication status drives the publication date; the
+                // date is only relevant for a delayed publication.
+                ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
+                    $status = (int)$field->getSaveValue();
+                    $builder->setPublicationStatus($status);
+
+                    $dateField = $field->getDocument()->getFormField('publicationDate');
+                    $builder->setPublicationDate(
+                        $status === Article::DELAYED_PUBLICATION
+                            && $dateField !== null
+                            && $dateField->getSaveValue() !== null
+                            ? (int)$dateField->getSaveValue()
+                            : 0
+                    );
+                })
+                ->loadValueCallback(static function (Article $object, IFormField $field) {
+                    $field->value($object->publicationStatus);
+                }),
+            DateFormField::create('publicationDate')
+                ->supportTime()
+                ->required()
+                ->label('wcf.acp.article.publicationDate')
+                ->addDependency(
+                    ValueFormFieldDependency::create('publicationStatus')
+                        ->fieldId('publicationStatus')
+                        ->values([Article::DELAYED_PUBLICATION])
+                )
+                ->addValidator(new FormFieldValidator('futureCheck', static function (IFormField $field) {
+                    if (
+                        $field->getValue() !== null
+                        && $field->getValue() !== ''
+                        && (int)$field->getSaveValue() < \TIME_NOW
+                    ) {
+                        $field->addValidationError(new FormFieldValidationError('invalid'));
+                    }
+                }))
+                ->loadValueCallback(static function (Article $object, IFormField $field) {
+                    if ($object->publicationDate !== 0) {
+                        $field->value($object->publicationDate);
+                    }
+                }),
+            BooleanFormField::create('enableComments')
+                ->label('wcf.acp.article.enableComments')
+                ->value(\ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE)
+                ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
+                    $builder->setEnableComments((bool)$field->getSaveValue());
+                })
+                ->loadValueCallback(static function (Article $object, IFormField $field) {
+                    $field->value((bool)$object->enableComments);
+                }),
         ]);
 
         if ($this->isMultilingual !== 0) {
