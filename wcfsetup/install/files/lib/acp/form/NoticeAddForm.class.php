@@ -146,8 +146,12 @@ class NoticeAddForm extends AbstractDatabaseObjectBuilderForm
                         ->loadValueCallback(static function (Notice $object, IFormField $field) {
                             $field->value($object->isCustom() ? $object->cssClassName : '');
                         }),
-                    TemplateFormNode::create('cssClassNameExample')
-                        ->templateName('__noticeCssClassNameExample'),
+                    ...\array_map(
+                        static fn(string $type) => TemplateFormNode::create('cssClassNameExample' . \ucfirst($type))
+                            ->templateName('__noticeCssClassNameExample')
+                            ->variables(['type' => $type]),
+                        Notice::TYPES
+                    ),
                     BooleanFormField::create('isDisabled')
                         ->label('wcf.acp.notice.isDisabled')
                         ->saveValueCallback(static function (NoticeBuilder $builder, IFormField $field) {
@@ -181,6 +185,14 @@ class NoticeAddForm extends AbstractDatabaseObjectBuilderForm
                 ->field($this->form->getFormField('cssClassName'))
                 ->values(['custom'])
         );
+
+        foreach (Notice::TYPES as $type) {
+            $this->form->getNodeById('cssClassNameExample' . \ucfirst($type))->addDependency(
+                ValueFormFieldDependency::create('cssClassName')
+                    ->field($this->form->getFormField('cssClassName'))
+                    ->values([$type])
+            );
+        }
     }
 
     /**

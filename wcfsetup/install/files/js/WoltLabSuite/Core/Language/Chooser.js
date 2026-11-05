@@ -24,7 +24,8 @@ define(["require", "exports", "tslib", "../Core", "WoltLabSuite/Core/Language", 
     function initElement(chooserId, element, languageId, languages, callback, allowEmptyValue) {
         let container;
         const parent = element.parentElement;
-        if (parent.nodeName === "DD") {
+        const isFormFieldInput = parent.nodeName === "DD" || parent.classList.contains("formField__input");
+        if (isFormFieldInput) {
             container = document.createElement("div");
             container.className = "dropdown";
             // language chooser is the first child so that descriptions and error messages
@@ -38,7 +39,7 @@ define(["require", "exports", "tslib", "../Core", "WoltLabSuite/Core/Language", 
         Util_1.default.hide(element);
         const dropdownToggle = document.createElement("a");
         dropdownToggle.className = "dropdownToggle boxFlag box24 inputPrefix";
-        if (parent.nodeName === "DD") {
+        if (isFormFieldInput) {
             dropdownToggle.classList.add("button");
         }
         container.appendChild(dropdownToggle);

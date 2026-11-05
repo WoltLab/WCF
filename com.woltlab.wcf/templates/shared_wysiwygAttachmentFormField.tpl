@@ -7,13 +7,12 @@
 		{/foreach}
 	</div>
 
-	<dl class="wide">
-		<dt></dt>
-		<dd>
+	<div class="formField wide">
+		<div class="formField__input">
 			<div data-max-size="{$field->getAttachmentHandler()->getMaxSize()}"></div>
-			<small>{lang attachmentHandler=$field->getAttachmentHandler()}wcf.attachment.upload.limits{/lang}</small>
-		</dd>
-	</dl>
+		</div>
+		<div class="formField__description">{lang attachmentHandler=$field->getAttachmentHandler()}wcf.attachment.upload.limits{/lang}</div>
+	</div>
 
 	{foreach from=$field->getAttachmentHandler()->getTmpHashes() item=tmpHash}
 		<input type="hidden" name="{$field->getPrefixedID()}_tmpHash[]" value="{$tmpHash}">

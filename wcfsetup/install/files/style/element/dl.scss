@@ -8,8 +8,8 @@ dl {
 
 		> dt {
 			color: var(--wcfInputLabel);
-
 			display: block;
+			font-weight: 500;
 
 			&:not(:empty) {
 				margin-bottom: 5px;

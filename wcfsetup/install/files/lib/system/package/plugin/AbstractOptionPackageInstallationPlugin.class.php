@@ -566,8 +566,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                     MultilineTextFormField::create('defaultValue')
                         ->objectProperty('defaultvalue')
                         ->label('wcf.acp.pip.abstractOption.options.defaultValue')
-                        ->description('wcf.acp.pip.abstractOption.options.defaultValue.description')
-                        ->rows(5),
+                        ->description('wcf.acp.pip.abstractOption.options.defaultValue.description'),
 
                     TextFormField::create('validationPattern')
                         ->objectProperty('validationpattern')
@@ -589,8 +588,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                     MultilineTextFormField::create('enableOptions')
                         ->objectProperty('enableoptions')
                         ->label('wcf.acp.pip.abstractOption.options.enableOptions')
-                        ->description('wcf.acp.pip.abstractOption.options.enableOptions.description')
-                        ->rows(5),
+                        ->description('wcf.acp.pip.abstractOption.options.enableOptions.description'),
 
                     IntegerFormField::create('showOrder')
                         ->objectProperty('showorder')

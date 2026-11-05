@@ -278,20 +278,17 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
                 MultilineTextFormField::create('adminDefaultValue')
                     ->objectProperty('admindefaultvalue')
                     ->label('wcf.acp.pip.userGroupOption.options.adminDefaultValue')
-                    ->description('wcf.acp.pip.userGroupOption.options.adminDefaultValue.description')
-                    ->rows(5),
+                    ->description('wcf.acp.pip.userGroupOption.options.adminDefaultValue.description'),
 
                 MultilineTextFormField::create('modDefaultValue')
                     ->objectProperty('moddefaultvalue')
                     ->label('wcf.acp.pip.userGroupOption.options.modDefaultValue')
-                    ->description('wcf.acp.pip.userGroupOption.options.modDefaultValue.description')
-                    ->rows(5),
+                    ->description('wcf.acp.pip.userGroupOption.options.modDefaultValue.description'),
 
                 MultilineTextFormField::create('userDefaultValue')
                     ->objectProperty('userdefaultvalue')
                     ->label('wcf.acp.pip.userGroupOption.options.userDefaultValue')
-                    ->description('wcf.acp.pip.userGroupOption.options.userDefaultValue.description')
-                    ->rows(5),
+                    ->description('wcf.acp.pip.userGroupOption.options.userDefaultValue.description'),
 
                 BooleanFormField::create('usersOnly')
                     ->objectProperty('usersonly')

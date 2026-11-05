@@ -6,7 +6,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.0
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/ItemList/LineBreakSeparatedText", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Dom/Util"], function (require, exports, tslib_1, UiItemList, Language_1, Util_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/ItemList/LineBreakSeparatedText", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Form/Builder/Field/Error"], function (require, exports, tslib_1, UiItemList, Language_1, Util_1, Error_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.MultilineItemListFormField = void 0;
@@ -29,6 +29,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/ItemList/LineBreakS
         }
         getItems() {
             return this.items;
+        }
+        getFieldId() {
+            return this.itemList.id.replace(/^lineBreakSeparatedTextOption_/, "");
         }
         /**
          * @inheritDoc
@@ -90,11 +93,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/ItemList/LineBreakS
                 }
                 const newValue = input.value.trim();
                 if (newValue === "") {
-                    Util_1.default.innerError(input.parentElement, (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
+                    (0, Error_1.setFieldError)(this.getFieldId(), (0, Language_1.getPhrase)("wcf.global.form.error.empty"));
                 }
                 else if (!this.items.has(newValue) || newValue === value) {
                     //remove error message
-                    Util_1.default.innerError(input.parentElement, "");
+                    (0, Error_1.setFieldError)(this.getFieldId(), null);
                     //insert new value
                     button.closest("li").dataset.value = newValue;
                     valueSpan.textContent = newValue;
@@ -103,7 +106,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/ItemList/LineBreakS
                     endCallback();
                 }
                 else {
-                    Util_1.default.innerError(input.parentElement, (0, Language_1.getPhrase)("wcf.acp.option.type.lineBreakSeparatedText.error.duplicate", {
+                    (0, Error_1.setFieldError)(this.getFieldId(), (0, Language_1.getPhrase)("wcf.acp.option.type.lineBreakSeparatedText.error.duplicate", {
                         item: newValue,
                     }), true);
                 }

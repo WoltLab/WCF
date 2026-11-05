@@ -49,7 +49,8 @@ function initElement(
   let container: HTMLElement;
 
   const parent = element.parentElement!;
-  if (parent.nodeName === "DD") {
+  const isFormFieldInput = parent.nodeName === "DD" || parent.classList.contains("formField__input");
+  if (isFormFieldInput) {
     container = document.createElement("div");
     container.className = "dropdown";
 
@@ -65,7 +66,7 @@ function initElement(
 
   const dropdownToggle = document.createElement("a");
   dropdownToggle.className = "dropdownToggle boxFlag box24 inputPrefix";
-  if (parent.nodeName === "DD") {
+  if (isFormFieldInput) {
     dropdownToggle.classList.add("button");
   }
   container.appendChild(dropdownToggle);

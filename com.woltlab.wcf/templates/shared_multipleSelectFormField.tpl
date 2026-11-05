@@ -4,6 +4,7 @@
 	{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}
 	{if $field->isRequired()} required{/if}
 	multiple
+	{foreach from=$field->getAriaAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}
 >
 	{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
 		<option

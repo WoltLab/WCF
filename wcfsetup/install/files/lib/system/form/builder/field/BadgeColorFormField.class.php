@@ -47,7 +47,11 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
 
     public function __construct()
     {
+        parent::__construct();
+
+        // the colors are laid out by `.labelSelection`
         $this
+            ->removeClass('floated')
             ->addFieldClass('labelSelection__radio')
             ->defaultLabelText(WCF::getLanguage()->get('wcf.acp.label.defaultValue'))
             ->options(\array_combine(self::AVAILABLE_CSS_CLASSNAMES, self::AVAILABLE_CSS_CLASSNAMES))
@@ -184,5 +188,11 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
     public function supportsCustomClassName(): bool
     {
         return \in_array(BadgeColorFormField::CUSTOM_CSS_CLASSNAME, $this->options, true);
+    }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
     }
 }

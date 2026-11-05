@@ -22,4 +22,10 @@ class MultipleSelectFormField extends MultipleSelectionFormField
      * @inheritDoc
      */
     protected $templateName = 'shared_multipleSelectFormField';
+
+    #[\Override]
+    public function getLabelTarget(): string
+    {
+        return $this->getPrefixedId();
+    }
 }

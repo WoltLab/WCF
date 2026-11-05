@@ -108,4 +108,10 @@ class IconFormField extends AbstractFormField implements IImmutableFormField
 
         return null;
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

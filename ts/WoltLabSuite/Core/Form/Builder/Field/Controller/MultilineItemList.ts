@@ -10,6 +10,7 @@
 import * as UiItemList from "WoltLabSuite/Core/Ui/ItemList/LineBreakSeparatedText";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import DomUtil from "WoltLabSuite/Core/Dom/Util";
+import { setFieldError } from "WoltLabSuite/Core/Form/Builder/Field/Error";
 
 const _data = new Map<string, MultilineItemListFormField>();
 
@@ -28,6 +29,10 @@ export class MultilineItemListFormField extends UiItemList.UiItemListLineBreakSe
 
   public getItems(): Set<string> {
     return this.items;
+  }
+
+  protected getFieldId(): string {
+    return this.itemList.id.replace(/^lineBreakSeparatedTextOption_/, "");
   }
 
   /**
@@ -96,10 +101,10 @@ export class MultilineItemListFormField extends UiItemList.UiItemListLineBreakSe
       const newValue = input.value.trim();
 
       if (newValue === "") {
-        DomUtil.innerError(input.parentElement!, getPhrase("wcf.global.form.error.empty"));
+        setFieldError(this.getFieldId(), getPhrase("wcf.global.form.error.empty"));
       } else if (!this.items.has(newValue) || newValue === value) {
         //remove error message
-        DomUtil.innerError(input.parentElement!, "");
+        setFieldError(this.getFieldId(), null);
 
         //insert new value
         button.closest("li")!.dataset.value = newValue;
@@ -109,8 +114,8 @@ export class MultilineItemListFormField extends UiItemList.UiItemListLineBreakSe
 
         endCallback();
       } else {
-        DomUtil.innerError(
-          input.parentElement!,
+        setFieldError(
+          this.getFieldId(),
           getPhrase("wcf.acp.option.type.lineBreakSeparatedText.error.duplicate", {
             item: newValue,
           }),

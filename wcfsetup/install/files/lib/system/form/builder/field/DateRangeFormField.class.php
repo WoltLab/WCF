@@ -234,4 +234,10 @@ class DateRangeFormField extends AbstractFormField implements
     {
         return $this->value['to'] ?? '';
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

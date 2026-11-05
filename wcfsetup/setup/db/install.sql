@@ -124,7 +124,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMod
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfInputDisabledBackground', 'rgba(245, 245, 245, 1)', 'rgba(34, 37, 41, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfInputDisabledBorder', 'rgba(174, 176, 179, 1)', 'rgba(56, 56, 57, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfInputDisabledText', 'rgba(125, 130, 100, 1)', 'rgba(118, 119, 121, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfInputLabel', 'rgba(59, 109, 169, 1)', 'rgba(144, 164, 174, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfInputLabel', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfInputText', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfInputTextActive', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfInputPlaceholder', 'rgba(169, 169, 169, 1)', 'rgba(122, 123, 125, 1)');

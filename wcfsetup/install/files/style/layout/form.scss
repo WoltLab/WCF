@@ -79,7 +79,7 @@ input[type="text"] {
 	select,
 	textarea {
 		font-size: 16px;
-		padding: 6px 8px;
+		padding: 8px 12px;
 	}
 }
 
@@ -98,6 +98,13 @@ textarea {
 		border-color: var(--wcfInputDisabledBorder) !important;
 		color: var(--wcfInputDisabledText) !important;
 	}
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+	accent-color: var(--wcfButtonPrimaryBackground);
+	height: 16px;
+	width: 16px;
 }
 
 input[disabled],
@@ -160,6 +167,7 @@ select {
 	> .inputPrefix,
 	> .inputSuffix {
 		align-items: center;
+		color: var(--wcfContentDimmedText);
 		display: flex;
 		flex: 0 0 auto;
 	}
@@ -228,10 +236,6 @@ input {
 .formError {
 	--color-error: #c00;
 
-	dt {
-		color: var(--color-error) !important;
-	}
-
 	input,
 	select,
 	textarea {
@@ -270,17 +274,14 @@ html[data-color-scheme="dark"] .formError {
 
 .formFieldRequired,
 .customOptionRequired {
-	color: rgba(204, 0, 1, 1) !important;
+	color: var(--wcfContentDimmedText) !important;
+	font-weight: 400;
 }
 
 .formFieldRequiredNotice {
 	color: var(--wcfContentDimmedText);
 	margin-top: 20px;
 	@include wcfFontSmall;
-}
-
-html[data-color-scheme="dark"] :is(.formFieldRequired, .customOptionRequired) {
-	color: #ff4444 !important;
 }
 
 /* password strength estimator */

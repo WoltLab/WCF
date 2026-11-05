@@ -33,6 +33,11 @@ class RadioButtonFormField extends AbstractFormField implements
      */
     protected $templateName = 'shared_radioButtonFormField';
 
+    public function __construct()
+    {
+        $this->addClass('floated');
+    }
+
     #[\Override]
     public function readValue()
     {
@@ -68,5 +73,11 @@ class RadioButtonFormField extends AbstractFormField implements
         }
 
         parent::validate();
+    }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
     }
 }

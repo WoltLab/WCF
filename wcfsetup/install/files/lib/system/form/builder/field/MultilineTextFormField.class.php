@@ -16,7 +16,7 @@ class MultilineTextFormField extends TextFormField
      * number of rows of the textarea
      * @var int
      */
-    protected $rows = 10;
+    protected $rows = 5;
 
     /**
      * @inheritDoc
@@ -38,7 +38,7 @@ class MultilineTextFormField extends TextFormField
 
     /**
      * Returns the number of rows of the textarea. If the number of rows has not been
-     * explicitly set, `10` is returned.
+     * explicitly set, `5` is returned.
      *
      * @return  int number of textarea rows
      */

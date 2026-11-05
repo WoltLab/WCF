@@ -5,6 +5,7 @@
 	value="{$field->getFromValue()}"
 	step="{$field->getDefaultStep()}"
 	placeholder="{lang}wcf.date.period.start{/lang}"
+	aria-label="{lang}wcf.date.period.start{/lang}"
 	{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}
 	{if $field->isAutofocused()} autofocus{/if}
 	{if $field->isRequired()} required{/if}
@@ -20,6 +21,7 @@
 	value="{$field->getToValue()}"
 	step="{$field->getDefaultStep()}"
 	placeholder="{lang}wcf.date.period.end{/lang}"
+	aria-label="{lang}wcf.date.period.end{/lang}"
 	{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}
 	{if $field->isRequired()} required{/if}
 	{if $field->isImmutable()} disabled{/if}

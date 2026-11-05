@@ -1,10 +1,9 @@
-<dl id="{$field->getPrefixedId()}Container"{*
-	*}{if !$field->getClasses()|empty} class="{implode from=$field->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
+<div id="{$field->getPrefixedId()}Container" class="formField{foreach from=$field->getClasses() item='class'} {$class}{/foreach}"{*
 	*}{foreach from=$field->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}{if !$field->checkDependencies()} style="display: none;"{/if}{*
 *}>
-	<dt>{if $field->getLabel() !== null}<label for="{$field->getPrefixedId()}">{unsafe:$field->getLabel()}</label>{/if}</dt>
-	<dd>
+	<div class="formField__label">{if $field->getLabel() !== null}<label id="{$field->getPrefixedId()}Label" for="{$field->getPrefixedId()}">{unsafe:$field->getLabel()}</label>{/if}</div>
+	<div class="formField__input">
 		<div class="row rowColGap formGrid">
 			<dl class="col-xs-12 col-md-10">
 				<dt></dt>
@@ -171,11 +170,12 @@
 			</div>
 		{/capture}
 		
-		{include file='shared_formFieldDescription'}
-		{include file='shared_formFieldDependencies'}
-		{include file='shared_formFieldDataHandler'}
-	</dd>
-</dl>
+	</div>
+	
+	{include file='shared_formFieldDescription'}
+	{include file='shared_formFieldDependencies'}
+	{include file='shared_formFieldDataHandler'}
+</div>
 
 
 <script data-relocate="true">

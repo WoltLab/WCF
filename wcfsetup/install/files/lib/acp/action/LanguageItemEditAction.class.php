@@ -123,7 +123,6 @@ final class LanguageItemEditAction implements RequestHandlerInterface
                 ->appendChildren([
                     MultilineTextFormField::create('languageItemValue')
                         ->label('wcf.acp.language.item.value')
-                        ->rows(5)
                         ->immutable((bool)$languageItem->languageItemOriginIsSystem)
                 ]),
             FormContainer::create('oldValueContainer')
@@ -138,7 +137,6 @@ final class LanguageItemEditAction implements RequestHandlerInterface
                 ])
                 ->appendChildren([
                     MultilineTextFormField::create('languageItemOldValue')
-                        ->rows(5)
                         ->immutable()
                 ]),
             FormContainer::create('customValueContainer')
@@ -148,7 +146,6 @@ final class LanguageItemEditAction implements RequestHandlerInterface
                     BooleanFormField::create('languageUseCustomValue')
                         ->label('wcf.acp.language.item.useCustomValue'),
                     MultilineTextFormField::create('languageCustomItemValue')
-                        ->rows(5)
                         ->addDependency(
                             NonEmptyFormFieldDependency::create('languageUseCustomValue')
                                 ->fieldId('languageUseCustomValue')

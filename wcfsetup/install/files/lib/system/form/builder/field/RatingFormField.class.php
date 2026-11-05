@@ -37,7 +37,7 @@ final class RatingFormField extends AbstractFormField implements
     /**
      * @inheritDoc
      */
-    protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+    protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/RadioButton';
 
     /**
      * @inheritDoc
@@ -118,5 +118,11 @@ final class RatingFormField extends AbstractFormField implements
                 ));
             }
         }
+    }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
     }
 }

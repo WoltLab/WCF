@@ -187,4 +187,10 @@ final class ObjectFilterFormField extends AbstractFormField
             )),
         );
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

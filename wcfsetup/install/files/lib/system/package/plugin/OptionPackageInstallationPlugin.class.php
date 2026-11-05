@@ -264,7 +264,6 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
                     ->objectProperty('selectoptions')
                     ->label('wcf.acp.pip.abstractOption.options.selectOptions')
                     ->description('wcf.acp.pip.option.abstractOption.selectOptions.description')
-                    ->rows(5)
                     ->addDependency(
                         ValueFormFieldDependency::create('optionType')
                             ->field($optionType)

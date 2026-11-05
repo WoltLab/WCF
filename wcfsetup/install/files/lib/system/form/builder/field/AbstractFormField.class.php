@@ -139,6 +139,67 @@ abstract class AbstractFormField implements IFormField
         );
     }
 
+    /**
+     * Returns the id of the element the label of this field refers to or `null` if this field
+     * consists of multiple elements and is thus rendered as a group labelled by its label.
+     *
+     * @since 6.3
+     */
+    public function getLabelTarget(): ?string
+    {
+        return $this->getPrefixedId();
+    }
+
+    /**
+     * Returns `true` if this field consists of multiple elements and is rendered as a group.
+     *
+     * @since 6.3
+     */
+    public function isGroup(): bool
+    {
+        return $this->getLabelTarget() === null;
+    }
+
+    /**
+     * Returns the ARIA attributes that link the labelled element of this field (or the group
+     * element in case of a group) to the field's error messages and description.
+     *
+     * @return array<string, string>
+     * @since 6.3
+     */
+    public function getAriaAttributes(): array
+    {
+        $attributes = [];
+        $describedBy = [];
+        $hasErrors = $this->getValidationErrors() !== [];
+
+        if ($this->isGroup()) {
+            // `aria-invalid` and `aria-errormessage` are not supported by `role="group"`
+            if ($hasErrors) {
+                $describedBy[] = $this->getPrefixedId() . 'Error';
+            }
+        } else {
+            if ($this->isRequired()) {
+                $attributes['aria-required'] = 'true';
+            }
+
+            if ($hasErrors) {
+                $attributes['aria-invalid'] = 'true';
+                $attributes['aria-errormessage'] = $this->getPrefixedId() . 'Error';
+            }
+        }
+
+        if ($this->getDescription() !== null) {
+            $describedBy[] = $this->getPrefixedId() . 'Description';
+        }
+
+        if ($describedBy !== []) {
+            $attributes['aria-describedby'] = \implode(' ', $describedBy);
+        }
+
+        return $attributes;
+    }
+
     #[\Override]
     public function getJavaScriptDataHandlerModule()
     {

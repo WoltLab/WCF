@@ -84,4 +84,10 @@ final class ContentLanguageFormField extends AbstractFormField implements IImmut
     {
         return 'languageID';
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

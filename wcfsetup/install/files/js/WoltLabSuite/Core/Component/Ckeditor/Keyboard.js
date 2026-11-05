@@ -36,7 +36,7 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
         if (container === null) {
             return;
         }
-        const formSubmit = container.querySelector(".formSubmit");
+        const formSubmit = container.querySelector(".formSubmit, .formBuilder__submit");
         if (formSubmit === null) {
             return;
         }

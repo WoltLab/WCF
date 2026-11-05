@@ -216,4 +216,10 @@ final class PollOptionListFormField extends AbstractFormField
             ),
         ];
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

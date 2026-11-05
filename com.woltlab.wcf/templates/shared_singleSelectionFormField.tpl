@@ -31,6 +31,7 @@
 	<select id="{$field->getPrefixedId()}" {*
 		*}name="{$field->getPrefixedId()}"{*
 		*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
+		*}{foreach from=$field->getAriaAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}>
 		{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
 			<option {*

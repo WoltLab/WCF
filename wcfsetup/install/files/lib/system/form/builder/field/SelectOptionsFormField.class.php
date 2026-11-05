@@ -128,4 +128,10 @@ final class SelectOptionsFormField extends AbstractFormField implements
             $knownKeys[$key] = true;
         }
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

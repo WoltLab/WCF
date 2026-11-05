@@ -476,7 +476,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
                 ->label('wcf.acp.pip.page.pageType')
                 ->description('wcf.acp.pip.page.pageType.description')
                 ->options(\array_combine(Page::$availablePageTypes, Page::$availablePageTypes))
-                ->addClass('floated')
                 ->required(),
 
             TextFormField::create('name')

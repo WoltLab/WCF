@@ -113,4 +113,10 @@ final class SimpleAclFormField extends AbstractFormField
     {
         return $this->supportInvertedPermissions && !empty($this->value['invertPermissions']);
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

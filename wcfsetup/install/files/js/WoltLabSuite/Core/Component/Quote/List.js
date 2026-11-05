@@ -145,7 +145,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor", "
             this.#container.prepend(buttons);
         }
         #formSubmitted() {
-            const formSubmit = this.#editor.closest("form").querySelector(".formSubmit");
+            const formSubmit = this.#editor.closest("form").querySelector(".formSubmit, .formBuilder__submit");
             (0, Storage_1.getUsedQuotes)(this.#editorId).forEach((uuid) => {
                 formSubmit.append(Util_1.default.createFragmentFromHtml(`<input type="hidden" name="__removeQuoteIDs[${(0, StringUtil_1.escapeHTML)(this.#editorId)}][]" value="${(0, StringUtil_1.escapeHTML)(uuid)}">`));
             });

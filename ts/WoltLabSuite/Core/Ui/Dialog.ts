@@ -618,7 +618,7 @@ const UiDialog = {
 
     const contentContainer = data.content.parentNode as HTMLElement;
 
-    const formSubmit = data.content.querySelector(".formSubmit") as HTMLElement;
+    const formSubmit = data.content.querySelector(".formSubmit, .formBuilder__submit") as HTMLElement;
     let unavailableHeight = 0;
     if (formSubmit !== null) {
       contentContainer.classList.add("dialogForm");
@@ -653,7 +653,7 @@ const UiDialog = {
       const inputFields = data.content.querySelectorAll<HTMLInputElement>('input[data-dialog-submit-on-enter="true"]');
 
       const submitButton = data.content.querySelector(
-        '.formSubmit > input[type="submit"], .formSubmit > button[data-type="submit"]',
+        ':is(.formSubmit, .formBuilder__submit) > :is(input[type="submit"], button[data-type="submit"])',
       );
       if (submitButton === null) {
         // check if there is at least one input field with submit handling,
@@ -713,12 +713,12 @@ const UiDialog = {
       if (inputField.required) {
         if (inputField.value.trim() === "") {
           DomUtil.innerError(inputField, getPhrase("wcf.global.form.error.empty"));
-          inputField.closest("dl")?.classList.add("formError");
+          inputField.closest("dl, .formField")?.classList.add("formError");
 
           isValid = false;
         } else {
           DomUtil.innerError(inputField, false);
-          inputField.closest("dl")?.classList.remove("formError");
+          inputField.closest("dl, .formField")?.classList.remove("formError");
         }
       }
     });

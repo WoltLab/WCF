@@ -18,7 +18,7 @@ import {
   updateFileInformation,
 } from "WoltLabSuite/Core/Component/File/Helper";
 import { clearPreviousErrors } from "WoltLabSuite/Core/Component/File/Upload";
-import { innerError } from "WoltLabSuite/Core/Dom/Util";
+import { setFieldError } from "WoltLabSuite/Core/Form/Builder/Field/Error";
 import { confirmationFactory } from "WoltLabSuite/Core/Component/Confirmation";
 
 type FileId = string;
@@ -155,6 +155,7 @@ export class FileProcessor {
       const oldContext = this.#startReplaceFile(element);
 
       clearPreviousErrors(this.#uploadButton);
+      setFieldError(this.#fieldId, null);
 
       const changeEventListener = () => {
         this.#fileInput.removeEventListener("cancel", cancelEventListener);
@@ -194,7 +195,7 @@ export class FileProcessor {
       errorMessage = getErrorMessageFromFile(element);
     }
 
-    innerError(this.#uploadButton, errorMessage);
+    setFieldError(this.#fieldId, errorMessage);
 
     element.remove();
 
@@ -219,15 +220,10 @@ export class FileProcessor {
 
         notifyValueChange(this.#fieldId, this.values);
       } else {
-        let container: HTMLElement = element;
-        if (!this.#useBigPreview) {
-          container = container.parentElement!;
-        }
-
         if (result.error.code === "permission_denied") {
-          innerError(container, getPhrase("wcf.upload.error.delete.permissionDenied"), true);
+          setFieldError(this.#fieldId, getPhrase("wcf.upload.error.delete.permissionDenied"), true);
         } else {
-          innerError(container, result.error.message ?? getPhrase("wcf.upload.error.delete.unknownError"));
+          setFieldError(this.#fieldId, result.error.message ?? getPhrase("wcf.upload.error.delete.unknownError"));
         }
       }
     });

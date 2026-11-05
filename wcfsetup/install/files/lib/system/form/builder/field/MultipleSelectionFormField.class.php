@@ -151,4 +151,10 @@ class MultipleSelectionFormField extends AbstractFormField implements
 
         return $this;
     }
+
+    #[\Override]
+    public function getLabelTarget(): ?string
+    {
+        return null;
+    }
 }

@@ -1,0 +1,196 @@
+/* Form builder forms: `.formBuilder > .formSection > .formField` */
+.formBuilder {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+
+/* Form builder buttons: `.formBuilder > .formBuilder__submit` */
+.formBuilder__submit {
+	display: flex;
+	flex-direction: row-reverse;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+
+	@include screen-xs {
+		input[type="button"],
+		input[type="reset"],
+		input[type="submit"],
+		.button {
+			flex: 1 0 auto;
+		}
+	}
+}
+
+/* Form builder sections: `.formSection > .formSection__header > .formSection__title + .formSection__description` */
+.formSection {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+
+.formSection > .tabMenuContent {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+
+.formSection ~ .formSection:not(.tabMenuContainer) {
+	border-top: 1px solid var(--wcfContentBorderInner);
+	padding-top: 20px;
+}
+
+.formSection > .formSection__header {
+	display: flex;
+	flex-direction: column;
+	row-gap: 2px;
+}
+
+.formSection__title {
+	@include wcfFontHeadline;
+
+	& {
+		font-weight: 600;
+	}
+
+	a {
+		color: var(--wcfContentHeadlineLink);
+
+		&:hover {
+			color: var(--wcfContentHeadlineLinkActive);
+		}
+	}
+}
+
+.formSection__description {
+	color: var(--wcfContentDimmedText);
+}
+
+.formSection__required {
+	color: var(--wcfContentDimmedText);
+	font-weight: 400;
+}
+
+/* Form builder fields: `.formField > .formField__label + .formField__input + .formField__errors + .formField__description` */
+.formField {
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
+
+	&.wide > .formField__label {
+		display: none;
+	}
+}
+
+/* `HiddenFormField` has no visible output, the wrapper must not take part in the `row-gap` */
+.formField:has(> .formField__input > input[type="hidden"]:only-child) {
+	display: none;
+}
+
+.formField__label {
+	color: var(--wcfInputLabel);
+	font-weight: 500;
+
+	&:empty {
+		display: none;
+	}
+}
+
+.formSuccess .formField__label {
+	color: var(--color-success) !important;
+}
+
+.formGrid .formField__label {
+	display: none;
+}
+
+/* lists of radio buttons or checkboxes */
+.formField__input:has(> label) {
+	align-items: flex-start;
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
+}
+
+.formField.floated > .formField__input {
+	column-gap: 10px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.formField__required {
+	color: var(--wcfContentDimmedText);
+	font-weight: 400;
+}
+
+.formField__inlineLabel {
+	align-items: flex-start;
+	display: inline-flex;
+	gap: 8px;
+}
+
+.formField__description {
+	color: var(--wcfContentDimmedText);
+
+	@include wcfFontSmall;
+}
+
+.formField__errors {
+	display: flex;
+	flex-direction: column;
+	row-gap: 3px;
+}
+
+.formField__error {
+	color: var(--color-error, #c00);
+	font-weight: 600;
+
+	@include wcfFontSmall;
+
+	a {
+		color: inherit;
+		text-decoration: underline;
+	}
+}
+
+html[data-color-scheme="dark"] .formField__error {
+	color: var(--color-error, #ff4747);
+}
+
+/* fields inside a `RowFormFieldContainer` */
+.formField__gridItem {
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
+}
+
+/* the tab menu of a `WysiwygFormContainer` is attached to the editor, offsets the `row-gap` of `.formSection` */
+.formSection > .formField + .messageTabMenu {
+	margin-top: -20px;
+}
+
+/* Form builder forms inside dialogs */
+:is(.dialogContent, .dialog__content) {
+	.formSection__title {
+		border-bottom-width: 0;
+		padding-bottom: 0;
+
+		@include wcfFontDefault;
+
+		& {
+			font-weight: 600;
+		}
+	}
+
+	.formSection > .formSection__header {
+		border-bottom-width: 0;
+		padding-bottom: 0;
+	}
+
+	.formSection ~ .formSection:not(.tabMenuContainer) {
+		border-top: 1px solid var(--wcfContentBorderInner);
+		padding-top: 20px;
+	}
+}

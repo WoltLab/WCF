@@ -43,7 +43,7 @@ class FormContainer implements IFormContainer
 
     public function __construct()
     {
-        $this->addClass('section');
+        $this->addClass('formSection');
     }
 
     #[\Override]
