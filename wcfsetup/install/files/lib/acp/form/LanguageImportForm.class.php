@@ -4,8 +4,6 @@ namespace wcf\acp\form;
 
 use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
-use wcf\data\package\Package;
-use wcf\data\package\PackageCache;
 use wcf\event\language\LanguageImported;
 use wcf\form\AbstractForm;
 use wcf\system\cache\CacheHandler;
@@ -65,12 +63,6 @@ class LanguageImportForm extends AbstractForm
      */
     public $sourceLanguageID = 0;
 
-    /**
-     * @var int
-     * @since   5.4
-     */
-    public $packageID = 0;
-
     #[\Override]
     public function readParameters()
     {
@@ -89,9 +81,6 @@ class LanguageImportForm extends AbstractForm
         }
         if (isset($_POST['sourceLanguageID'])) {
             $this->sourceLanguageID = \intval($_POST['sourceLanguageID']);
-        }
-        if (isset($_POST['packageID'])) {
-            $this->packageID = \intval($_POST['packageID']);
         }
     }
 
@@ -115,10 +104,6 @@ class LanguageImportForm extends AbstractForm
             throw new UserInputException('sourceLanguageID');
         }
 
-        if (PackageCache::getInstance()->getPackage($this->packageID) === null) {
-            throw new UserInputException('packageID');
-        }
-
         // try to import
         try {
             // open xml document
@@ -126,7 +111,7 @@ class LanguageImportForm extends AbstractForm
             $xml->load($this->filename);
 
             // import xml document
-            $this->language = LanguageEditor::importFromXML($xml, $this->packageID, $this->sourceLanguage);
+            $this->language = LanguageEditor::importLocalization($xml, $this->sourceLanguage);
 
             // copy content
             if (!isset($this->languages[$this->language->languageID])) {
@@ -156,7 +141,6 @@ class LanguageImportForm extends AbstractForm
 
         // reset fields
         $this->sourceLanguageID = 0;
-        $this->packageID = 0;
 
         // show success message
         WCF::getTPL()->assign('success', true);
@@ -167,18 +151,9 @@ class LanguageImportForm extends AbstractForm
     {
         parent::assignVariables();
 
-        $packages = PackageCache::getInstance()->getPackages();
-        $collator = new \Collator(WCF::getLanguage()->getLocale());
-        \usort(
-            $packages,
-            static fn(Package $a, Package $b) => $collator->compare($a->getName(), $b->getName())
-        );
-
         WCF::getTPL()->assign([
             'languages' => $this->languages,
             'sourceLanguageID' => $this->sourceLanguageID,
-            'packages' => $packages,
-            'packageID' => $this->packageID,
         ]);
     }
 }

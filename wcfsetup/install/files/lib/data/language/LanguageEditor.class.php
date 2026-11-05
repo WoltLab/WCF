@@ -409,37 +409,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $elements = $xpath->query('child::*', $category);
 
             if ($categoryName === 'shadow.invalid.page') {
-                /** @var \DOMElement $element */
-                foreach ($elements as $element) {
-                    if (
-                        \preg_match(
-                            '/^shadow\.invalid\.page\.(.*)\.(title|content)/',
-                            $element->getAttribute('name'),
-                            $match
-                        )
-                    ) {
-                        if (!isset($pageContents[$match[1]])) {
-                            $pageContents[$match[1]] = [];
-                        }
-                        $pageContents[$match[1]][$match[2]] = $element->nodeValue;
-                    }
-                }
+                $pageContents = self::readShadowContents($elements, 'page', $pageContents);
             } elseif ($categoryName === 'shadow.invalid.box') {
-                /** @var \DOMElement $element */
-                foreach ($elements as $element) {
-                    if (
-                        \preg_match(
-                            '/^shadow\.invalid\.box\.(.*)\.(title|content)/',
-                            $element->getAttribute('name'),
-                            $match
-                        )
-                    ) {
-                        if (!isset($boxContents[$match[1]])) {
-                            $boxContents[$match[1]] = [];
-                        }
-                        $boxContents[$match[1]][$match[2]] = $element->nodeValue;
-                    }
-                }
+                $boxContents = self::readShadowContents($elements, 'box', $boxContents);
             } else {
                 $categoryID = $usedCategories[$categoryName];
 
@@ -576,108 +548,12 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             WCF::getDB()->commitTransaction();
         }
 
-        // save page content
         if ($pageContents !== []) {
-            // get page ids
-            $pageIDs = [];
-            $conditions = new PreparedStatementConditionBuilder();
-            $conditions->add("identifier IN (?)", [\array_keys($pageContents)]);
-            $sql = "SELECT  pageID, identifier
-                    FROM    wcf1_page
-                    " . $conditions;
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditions->getParameters());
-            while ($row = $statement->fetchArray()) {
-                $pageIDs[$row['identifier']] = $row['pageID'];
-            }
-
-            $sql = "INSERT IGNORE INTO  wcf1_page_content
-                                        (pageID, languageID, title, content, metaDescription, customURL, hasEmbeddedObjects)
-                    SELECT              pageID, ?, title, content, metaDescription, CASE WHEN customURL <> '' THEN CONCAT(customURL, '_', ?) ELSE '' END, hasEmbeddedObjects
-                    FROM                wcf1_page_content
-                    WHERE               pageID = ?
-                                    AND languageID = ?";
-            $createLanguageVersionStatement = WCF::getDB()->prepare($sql);
-            $sql = "UPDATE  wcf1_page_content
-                    SET     title = ?
-                    WHERE   pageID = ?
-                        AND languageID = ?";
-            $updateTitleStatement = WCF::getDB()->prepare($sql);
-            $sql = "UPDATE  wcf1_page_content
-                    SET     content = ?
-                    WHERE   pageID = ?
-                        AND languageID = ?";
-            $updateContentStatement = WCF::getDB()->prepare($sql);
-
-            foreach ($pageContents as $identifier => $pageContent) {
-                if (!isset($pageIDs[$identifier])) {
-                    continue; // unknown page
-                }
-
-                $createLanguageVersionStatement->execute([
-                    $this->languageID,
-                    $this->languageID,
-                    $pageIDs[$identifier],
-                    LanguageFactory::getInstance()->getDefaultLanguageID(),
-                ]);
-                if (isset($pageContent['title'])) {
-                    $updateTitleStatement->execute([$pageContent['title'], $pageIDs[$identifier], $this->languageID]);
-                }
-                if (isset($pageContent['content'])) {
-                    $updateContentStatement->execute([
-                        $pageContent['content'],
-                        $pageIDs[$identifier],
-                        $this->languageID,
-                    ]);
-                }
-            }
+            $this->savePageContents($pageContents);
         }
 
-        // save box content
         if ($boxContents !== []) {
-            // get box ids
-            $boxIDs = [];
-            $conditions = new PreparedStatementConditionBuilder();
-            $conditions->add("identifier IN (?)", [\array_keys($boxContents)]);
-            $sql = "SELECT  boxID, identifier
-                    FROM    wcf1_box
-                    " . $conditions;
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditions->getParameters());
-            while ($row = $statement->fetchArray()) {
-                $boxIDs[$row['identifier']] = $row['boxID'];
-            }
-
-            $sql = "INSERT IGNORE INTO  wcf1_box_content
-                                        (boxID, languageID)
-                    VALUES              (?, ?)";
-            $createLanguageVersionStatement = WCF::getDB()->prepare($sql);
-            $sql = "UPDATE  wcf1_box_content
-                    SET     title = ?
-                    WHERE   boxID = ?
-                        AND languageID = ?";
-            $updateTitleStatement = WCF::getDB()->prepare($sql);
-            $sql = "UPDATE  wcf1_box_content
-                    SET     content = ?
-                    WHERE   boxID = ?
-                        AND languageID = ?";
-            $updateContentStatement = WCF::getDB()->prepare($sql);
-
-            foreach ($boxContents as $identifier => $boxContent) {
-                if (!isset($boxIDs[$identifier])) {
-                    continue; // unknown box
-                }
-
-                $createLanguageVersionStatement->execute([$boxIDs[$identifier], $this->languageID]);
-                if (isset($boxContent['title'])) {
-                    $updateTitleStatement->execute([$boxContent['title'], $boxIDs[$identifier], $this->languageID]);
-                }
-                if (isset($boxContent['content'])) {
-                    $updateContentStatement->execute([$boxContent['content'], $boxIDs[$identifier], $this->languageID]);
-                }
-            }
-
-            BoxEditor::resetCache();
+            $this->saveBoxContents($boxContents);
         }
 
         // update the relevant language files
@@ -687,6 +563,316 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 
         // delete relevant template compilations
         $this->deleteCompiledTemplates();
+    }
+
+    /**
+     * Reads the localized title and content of pages or boxes from the shadow
+     * phrases `shadow.invalid.<type>.<identifier>.(title|content)`.
+     *
+     * @param \DOMNodeList<\DOMNode> $elements
+     * @param 'page'|'box' $type
+     * @param array<string, array<string, string>> $contents
+     * @return array<string, array<string, string>>
+     */
+    private static function readShadowContents(\DOMNodeList $elements, string $type, array $contents): array
+    {
+        /** @var \DOMElement $element */
+        foreach ($elements as $element) {
+            if (
+                \preg_match(
+                    '/^shadow\.invalid\.' . $type . '\.(.*)\.(title|content)/',
+                    $element->getAttribute('name'),
+                    $match
+                )
+            ) {
+                if (!isset($contents[$match[1]])) {
+                    $contents[$match[1]] = [];
+                }
+                $contents[$match[1]][$match[2]] = $element->nodeValue;
+            }
+        }
+
+        return $contents;
+    }
+
+    /**
+     * @param array<string, array<string, string>> $pageContents
+     */
+    private function savePageContents(array $pageContents): void
+    {
+        // get page ids
+        $pageIDs = [];
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("identifier IN (?)", [\array_keys($pageContents)]);
+        $sql = "SELECT  pageID, identifier
+                FROM    wcf1_page
+                " . $conditions;
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+        while ($row = $statement->fetchArray()) {
+            $pageIDs[$row['identifier']] = $row['pageID'];
+        }
+
+        $sql = "INSERT IGNORE INTO  wcf1_page_content
+                                    (pageID, languageID, title, content, metaDescription, customURL, hasEmbeddedObjects)
+                SELECT              pageID, ?, title, content, metaDescription, CASE WHEN customURL <> '' THEN CONCAT(customURL, '_', ?) ELSE '' END, hasEmbeddedObjects
+                FROM                wcf1_page_content
+                WHERE               pageID = ?
+                                AND languageID = ?";
+        $createLanguageVersionStatement = WCF::getDB()->prepare($sql);
+        $sql = "UPDATE  wcf1_page_content
+                SET     title = ?
+                WHERE   pageID = ?
+                    AND languageID = ?";
+        $updateTitleStatement = WCF::getDB()->prepare($sql);
+        $sql = "UPDATE  wcf1_page_content
+                SET     content = ?
+                WHERE   pageID = ?
+                    AND languageID = ?";
+        $updateContentStatement = WCF::getDB()->prepare($sql);
+
+        foreach ($pageContents as $identifier => $pageContent) {
+            if (!isset($pageIDs[$identifier])) {
+                continue; // unknown page
+            }
+
+            $createLanguageVersionStatement->execute([
+                $this->languageID,
+                $this->languageID,
+                $pageIDs[$identifier],
+                LanguageFactory::getInstance()->getDefaultLanguageID(),
+            ]);
+            if (isset($pageContent['title'])) {
+                $updateTitleStatement->execute([$pageContent['title'], $pageIDs[$identifier], $this->languageID]);
+            }
+            if (isset($pageContent['content'])) {
+                $updateContentStatement->execute([
+                    $pageContent['content'],
+                    $pageIDs[$identifier],
+                    $this->languageID,
+                ]);
+            }
+        }
+    }
+
+    /**
+     * @param array<string, array<string, string>> $boxContents
+     */
+    private function saveBoxContents(array $boxContents): void
+    {
+        // get box ids
+        $boxIDs = [];
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("identifier IN (?)", [\array_keys($boxContents)]);
+        $sql = "SELECT  boxID, identifier
+                FROM    wcf1_box
+                " . $conditions;
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+        while ($row = $statement->fetchArray()) {
+            $boxIDs[$row['identifier']] = $row['boxID'];
+        }
+
+        $sql = "INSERT IGNORE INTO  wcf1_box_content
+                                    (boxID, languageID)
+                VALUES              (?, ?)";
+        $createLanguageVersionStatement = WCF::getDB()->prepare($sql);
+        $sql = "UPDATE  wcf1_box_content
+                SET     title = ?
+                WHERE   boxID = ?
+                    AND languageID = ?";
+        $updateTitleStatement = WCF::getDB()->prepare($sql);
+        $sql = "UPDATE  wcf1_box_content
+                SET     content = ?
+                WHERE   boxID = ?
+                    AND languageID = ?";
+        $updateContentStatement = WCF::getDB()->prepare($sql);
+
+        foreach ($boxContents as $identifier => $boxContent) {
+            if (!isset($boxIDs[$identifier])) {
+                continue; // unknown box
+            }
+
+            $createLanguageVersionStatement->execute([$boxIDs[$identifier], $this->languageID]);
+            if (isset($boxContent['title'])) {
+                $updateTitleStatement->execute([$boxContent['title'], $boxIDs[$identifier], $this->languageID]);
+            }
+            if (isset($boxContent['content'])) {
+                $updateContentStatement->execute([$boxContent['content'], $boxIDs[$identifier], $this->languageID]);
+            }
+        }
+
+        BoxEditor::resetCache();
+    }
+
+    /**
+     * Imports the phrases of a localization into this language.
+     *
+     * A localization provides values for existing phrases only. A phrase is
+     * known if a package has installed it into one of the authoritative
+     * languages `de` and `en`; the package and category of the phrase are
+     * taken from there. Unknown phrases, phrases not installed by a package
+     * and the `delete` section of the XML document are ignored.
+     *
+     * @throws \InvalidArgumentException if the XML document is invalid
+     * @since 6.3
+     */
+    public function updateFromLocalization(XML $xml): void
+    {
+        $this->validateXMLStructure($xml);
+
+        $xpath = $xml->xpath();
+
+        $categories = $xpath->query('/ns:language/ns:import/ns:category');
+        if ($categories->length === 0) {
+            // Fallback for the old, deprecated version before WSC 5.5, which only supported imports.
+            $categories = $xpath->query('/ns:language/ns:category');
+        }
+
+        $items = $pageContents = $boxContents = [];
+
+        /** @var \DOMElement $category */
+        foreach ($categories as $category) {
+            $categoryName = $category->getAttribute('name');
+
+            self::validateCategoryName($categoryName);
+
+            $elements = $xpath->query('child::*', $category);
+
+            if ($categoryName === 'shadow.invalid.page') {
+                $pageContents = self::readShadowContents($elements, 'page', $pageContents);
+            } elseif ($categoryName === 'shadow.invalid.box') {
+                $boxContents = self::readShadowContents($elements, 'box', $boxContents);
+            } else {
+                /** @var \DOMElement $element */
+                foreach ($elements as $element) {
+                    $itemName = $element->getAttribute('name');
+
+                    self::validateItemName($itemName, $categoryName);
+
+                    $items[$itemName] = $element->nodeValue;
+                }
+            }
+        }
+
+        if ($items !== []) {
+            $this->saveLocalizedItems($items);
+        }
+
+        if ($pageContents !== []) {
+            $this->savePageContents($pageContents);
+        }
+
+        if ($boxContents !== []) {
+            $this->saveBoxContents($boxContents);
+        }
+
+        self::deleteLanguageFiles((string)$this->languageID);
+
+        $this->deleteCompiledTemplates();
+    }
+
+    /**
+     * @param array<string, string> $items
+     */
+    private function saveLocalizedItems(array $items): void
+    {
+        // The number of phrases in a localization of all packages can exceed
+        // the limit of placeholders per statement.
+        $itemNameChunks = \array_chunk(\array_keys($items), 1_000);
+
+        $knownItems = [];
+        foreach ($itemNameChunks as $itemNames) {
+            $conditions = new PreparedStatementConditionBuilder();
+            $conditions->add("language_item.languageItem IN (?)", [$itemNames]);
+            $conditions->add("language_item.languageItemOriginIsSystem = ?", [1]);
+            $conditions->add("language.languageCode IN (?)", [['de', 'en']]);
+
+            $sql = "SELECT      language_item.languageItem,
+                                language_item.languageCategoryID,
+                                language_item.packageID
+                    FROM        wcf1_language_item language_item
+                    INNER JOIN  wcf1_language language
+                    ON          language.languageID = language_item.languageID
+                    {$conditions}";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute($conditions->getParameters());
+            while ($row = $statement->fetchArray()) {
+                // The collation matches phrase names case-insensitively, a
+                // differently cased name in the localization is unknown.
+                if (!isset($items[$row['languageItem']])) {
+                    continue;
+                }
+
+                $knownItems[$row['languageItem']] = $row;
+            }
+        }
+
+        if ($knownItems === []) {
+            return;
+        }
+
+        // A changed value disables the custom value of the phrase, which flags
+        // it for review in the ACP, the same as an update of the package does.
+        $updatedItemIDs = [];
+        foreach (\array_chunk(\array_keys($knownItems), 1_000) as $itemNames) {
+            $conditions = new PreparedStatementConditionBuilder();
+            $conditions->add("languageItem IN (?)", [$itemNames]);
+            $conditions->add("languageID = ?", [$this->languageID]);
+            $conditions->add("languageUseCustomValue = ?", [1]);
+            $conditions->add("languageItemOriginIsSystem = ?", [1]);
+
+            $sql = "SELECT  languageItemID, languageItem, languageItemValue
+                    FROM    wcf1_language_item
+                    {$conditions}";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute($conditions->getParameters());
+            while ($row = $statement->fetchArray()) {
+                if ($row['languageItemValue'] !== $items[$row['languageItem']]) {
+                    $updatedItemIDs[] = $row['languageItemID'];
+                }
+            }
+        }
+
+        WCF::getDB()->beginTransaction();
+
+        if ($updatedItemIDs !== []) {
+            $sql = "UPDATE  wcf1_language_item
+                    SET     languageItemOldValue = languageItemValue,
+                            languageCustomItemDisableTime = ?,
+                            languageUseCustomValue = ?
+                    WHERE   languageItemID = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            foreach ($updatedItemIDs as $languageItemID) {
+                $statement->execute([
+                    \TIME_NOW,
+                    0,
+                    $languageItemID,
+                ]);
+            }
+        }
+
+        // insert/update a maximum of 50 items per run (prevents issues with max_allowed_packet)
+        foreach (\array_chunk($knownItems, 50, true) as $knownItemsChunk) {
+            $parameters = [];
+            foreach ($knownItemsChunk as $itemName => $knownItem) {
+                $parameters[] = $this->languageID;
+                $parameters[] = $itemName;
+                $parameters[] = $items[$itemName];
+                $parameters[] = $knownItem['languageCategoryID'];
+                $parameters[] = $knownItem['packageID'];
+            }
+
+            $placeholders = \implode(',', \array_fill(0, \count($knownItemsChunk), '(?, ?, ?, ?, ?)'));
+            $sql = "INSERT INTO             wcf1_language_item
+                                            (languageID, languageItem, languageItemValue, languageCategoryID, packageID)
+                    VALUES                  {$placeholders}
+                    ON DUPLICATE KEY UPDATE languageItemValue = IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue))";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute($parameters);
+        }
+
+        WCF::getDB()->commitTransaction();
     }
 
     /**
@@ -848,6 +1034,32 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
      */
     public static function importFromXML(XML $xml, int $packageID, ?Language $source = null)
     {
+        $languageEditor = new self(self::getOrCreateFromXML($xml, $source));
+        $languageEditor->updateFromXML($xml, $packageID);
+
+        return $languageEditor;
+    }
+
+    /**
+     * Imports a localization into a new or a current language.
+     *
+     * @see LanguageEditor::updateFromLocalization()
+     * @since 6.3
+     */
+    public static function importLocalization(XML $xml, Language $source): self
+    {
+        $languageEditor = new self(self::getOrCreateFromXML($xml, $source));
+        $languageEditor->updateFromLocalization($xml);
+
+        return $languageEditor;
+    }
+
+    /**
+     * Returns the language with the language code of the XML document. A new
+     * language is created as a copy of `$source`.
+     */
+    private static function getOrCreateFromXML(XML $xml, ?Language $source): Language
+    {
         $languageCode = self::readLanguageCodeFromXML($xml);
 
         // try to find an existing language with the given language code
@@ -874,12 +1086,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             }
         }
 
-        // import xml
-        $languageEditor = new self($language);
-        $languageEditor->updateFromXML($xml, $packageID);
-
-        // return language object
-        return $languageEditor;
+        return $language;
     }
 
     /**
