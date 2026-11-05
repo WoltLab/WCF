@@ -32,6 +32,8 @@ use wcf\system\WCF;
  */
 class ArticleListView extends AbstractListView
 {
+    protected bool $pinFeaturedArticles = true;
+
     public function __construct()
     {
         $this->addAvailableSortFields([
@@ -192,6 +194,26 @@ class ArticleListView extends AbstractListView
     protected function getInitializedEvent(): ArticleListViewInitialized
     {
         return new ArticleListViewInitialized($this);
+    }
+
+    #[\Override]
+    protected function getSqlOrderBy(): string
+    {
+        if (!$this->pinFeaturedArticles) {
+            return parent::getSqlOrderBy();
+        }
+
+        return 'article.isFeatured DESC, ' . parent::getSqlOrderBy();
+    }
+
+    /**
+     * Sets whether featured articles are pinned at the top of the list.
+     *
+     * @since 6.3
+     */
+    public function setPinFeaturedArticles(bool $pinFeaturedArticles): void
+    {
+        $this->pinFeaturedArticles = $pinFeaturedArticles;
     }
 
     public function canMarkAsRead(): bool

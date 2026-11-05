@@ -85,7 +85,10 @@ class ArticleListBoxController extends AbstractListViewBoxController
     #[\Override]
     protected function createListView(): ArticleListView
     {
-        return new ArticleListView();
+        $listView = new ArticleListView();
+        $listView->setPinFeaturedArticles(false);
+
+        return $listView;
     }
 
     #[\Override]

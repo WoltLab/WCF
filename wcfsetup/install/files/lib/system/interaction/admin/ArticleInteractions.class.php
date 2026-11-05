@@ -89,6 +89,30 @@ final class ArticleInteractions extends AbstractInteractionProvider
                     return $article->publicationStatus === Article::PUBLISHED;
                 }
             ),
+            new RpcInteraction(
+                'set-as-featured',
+                'core/articles/%s/set-as-featured',
+                'wcf.article.button.setAsFeatured',
+                isAvailableCallback: static function (Article $article): bool {
+                    if (!Article::canFeature()) {
+                        return false;
+                    }
+
+                    return $article->isFeatured === 0;
+                }
+            ),
+            new RpcInteraction(
+                'unset-as-featured',
+                'core/articles/%s/unset-as-featured',
+                'wcf.article.button.unsetAsFeatured',
+                isAvailableCallback: static function (Article $article): bool {
+                    if (!Article::canFeature()) {
+                        return false;
+                    }
+
+                    return $article->isFeatured !== 0;
+                }
+            ),
             new FormBuilderDialogInteraction(
                 'toggle-i18n',
                 LinkHandler::getInstance()->getControllerLink(

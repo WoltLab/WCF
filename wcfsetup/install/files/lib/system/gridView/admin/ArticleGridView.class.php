@@ -144,6 +144,15 @@ final class ArticleGridView extends AbstractGridView
                                     WCF::getLanguage()->get('wcf.acp.article.publicationStatus.delayed')
                                 );
                             }
+                            if ($row->isFeatured !== 0) {
+                                if ($badges !== '') {
+                                    $badges .= ' ';
+                                }
+                                $badges .= \sprintf(
+                                    '<span class="badge green">%s</span>',
+                                    WCF::getLanguage()->get('wcf.article.featured')
+                                );
+                            }
 
                             // @phpstan-ignore property.notFound
                             $articleTitle = StringUtil::encodeHTML($row->title);
@@ -203,6 +212,7 @@ final class ArticleGridView extends AbstractGridView
                 'wcf.acp.article.publicationStatus'
             ),
             new BooleanFilter('isDeleted', 'wcf.acp.article.isDeleted'),
+            new BooleanFilter('isFeatured', 'wcf.article.featured'),
         ]);
         $provider = new ArticleInteractions();
         $provider->addInteractions([

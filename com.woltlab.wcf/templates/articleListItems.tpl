@@ -30,6 +30,7 @@
 			{hascontent}
 				<div class="entryCardList__item__badges">
 					{content}
+						{if $article->isFeatured}<span class="badge green">{lang}wcf.article.featured{/lang}</span>{/if}
 						{if $article->isDeleted}<span class="badge red">{lang}wcf.message.status.deleted{/lang}</span>{/if}
 						{if !$article->isPublished()}<span class="badge green">{lang}wcf.message.status.disabled{/lang}</span>{/if}
 						

@@ -42,6 +42,7 @@ use wcf\system\WCF;
  * @property-read   int     $cumulativeLikes    cumulative result of likes for the article
  * @property-read   0|1     $isDeleted          is 1 if the article is in trash bin, otherwise 0
  * @property-read   0|1     $hasLabels          is `1` if labels are assigned to the article
+ * @property-read   0|1     $isFeatured         is `1` if the article is featured which pins it at the top, otherwise `0`
  *
  * @extends CollectionDatabaseObject<ArticleCollection>
  */
@@ -171,6 +172,16 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
         }
 
         return false;
+    }
+
+    /**
+     * Returns true if the active user can flag articles as featured.
+     *
+     * @since 6.3
+     */
+    public static function canFeature(): bool
+    {
+        return WCF::getSession()->hasPermission('admin.content.article.canManageArticle');
     }
 
     /**

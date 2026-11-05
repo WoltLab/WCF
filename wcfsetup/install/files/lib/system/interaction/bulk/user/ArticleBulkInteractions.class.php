@@ -85,6 +85,34 @@ final class ArticleBulkInteractions extends AbstractBulkInteractionProvider
                             return $article->publicationStatus === Article::PUBLISHED;
                         }
                     ),
+                    new BulkRpcInteraction(
+                        'set-as-featured',
+                        'core/articles/%s/set-as-featured',
+                        'wcf.article.button.setAsFeatured',
+                        InteractionConfirmationType::None,
+                        '',
+                        function (Article $article): bool {
+                            if (!Article::canFeature()) {
+                                return false;
+                            }
+
+                            return $article->isFeatured === 0;
+                        }
+                    ),
+                    new BulkRpcInteraction(
+                        'unset-as-featured',
+                        'core/articles/%s/unset-as-featured',
+                        'wcf.article.button.unsetAsFeatured',
+                        InteractionConfirmationType::None,
+                        '',
+                        function (Article $article): bool {
+                            if (!Article::canFeature()) {
+                                return false;
+                            }
+
+                            return $article->isFeatured !== 0;
+                        }
+                    ),
                 ]
             );
         }
