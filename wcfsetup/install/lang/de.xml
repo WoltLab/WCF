@@ -88,6 +88,9 @@
 		<item name="wcf.acp.article.copy.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Artikel „{$article->getTitle()}“ wirklich kopieren? Die Kopie wird nicht veröffentlicht.]]></item>
 		<item name="wcf.acp.article.copy.title"><![CDATA[{@$title} (Kopie)]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Kommentare aktivieren]]></item>
+		<item name="wcf.acp.article.flagAsUpdated"><![CDATA[Als aktualisiert markieren]]></item>
+		<item name="wcf.acp.article.flagAsUpdated.description"><![CDATA[Kennzeichnet den Artikel als aktualisiert und sortiert ihn anhand des Aktualisierungszeitpunkts in Artikel-Listen ein. Benutzern wird der Artikel erneut als ungelesen angezeigt.]]></item>
+		<item name="wcf.acp.article.lastUpdateTime"><![CDATA[Aktualisierungszeitpunkt]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Mehrsprachigkeit]]></item>
 		<item name="wcf.acp.article.i18n.none"><![CDATA[Einsprachiger Artikel]]></item>
 		<item name="wcf.acp.article.i18n.none.description"><![CDATA[Der Inhalt der Seite ist sprachneutral oder soll nur in einer Sprache verfasst werden.]]></item>
@@ -97,7 +100,6 @@
 		<item name="wcf.acp.article.image"><![CDATA[Artikel-Bild]]></item>
 		<item name="wcf.acp.article.teaserImage"><![CDATA[Teaser-Bild]]></item>
 		<item name="wcf.acp.article.publicationDate"><![CDATA[Veröffentlichungsdatum]]></item>
-		<item name="wcf.acp.article.publicationDate.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Veröffentlichungsdatum angegeben.]]></item>
 		<item name="wcf.acp.article.publicationStatus"><![CDATA[Status]]></item>
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unveröffentlicht]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Veröffentlicht]]></item>
@@ -3318,6 +3320,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.button.setAsFeatured"><![CDATA[Als „Empfohlen“ markieren]]></item>
 		<item name="wcf.article.button.unsetAsFeatured"><![CDATA[„Empfohlen“-Markierung entfernen]]></item>
 		<item name="wcf.article.featured"><![CDATA[Empfohlen]]></item>
+		<item name="wcf.article.updated"><![CDATA[Aktualisiert]]></item>
 		<item name="wcf.article.condition.isFeatured"><![CDATA[Nur empfohlene Artikel]]></item>
 		<item name="wcf.article.button.assignLabel"><![CDATA[Label zuweisen]]></item>
 		<item name="wcf.article.unreadArticles"><![CDATA[Ungelesene Artikel]]></item>
@@ -3974,6 +3977,7 @@ Dateianhänge:
 		<item name="wcf.global.form.data"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.global.form.error"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben sind ungültig. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}überprüfe{else}überprüfen Sie{/if} die markierten Eingabefelder.]]></item>
 		<item name="wcf.global.form.error.empty"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}fülle{else}füllen Sie{/if} dieses Eingabefeld aus.]]></item>
+		<item name="wcf.global.form.error.invalid"><![CDATA[Der eingegebene Wert ist ungültig.]]></item>
 		<item name="wcf.global.form.error.greaterThan"><![CDATA[Der eingegebene Wert muss größer sein als {#$greaterThan}.]]></item>
 		<item name="wcf.global.form.error.lessThan"><![CDATA[Der eingegebene Wert muss kleiner sein als {#$lessThan}.]]></item>
 		<item name="wcf.global.form.error.multilingual"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}fülle{else}füllen Sie{/if} dieses Eingabefeld für jede Sprache aus.]]></item>
@@ -5912,5 +5916,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.template.group.error.shared"/>
 	<item name="wcf.acp.template.group.error.notShared"/>
 	<item name="wcf.global.pageDirection"/>
+	<item name="wcf.acp.article.publicationDate.error.invalid"/>
 </delete>
 </language>

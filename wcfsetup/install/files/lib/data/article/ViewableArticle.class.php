@@ -162,12 +162,12 @@ class ViewableArticle extends DatabaseObjectDecorator
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('article.categoryID IN (?)', [$categoryIDs]);
         $conditionBuilder->add(
-            'article.time > ?',
+            'article.lastUpdateTime > ?',
             [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]
         );
         $conditionBuilder->add('article.isDeleted = ?', [0]);
         $conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
-        $conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
+        $conditionBuilder->add('(article.lastUpdateTime > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
 
         $sql = "SELECT      COUNT(*)
                 FROM        wcf1_article article
@@ -204,12 +204,12 @@ class ViewableArticle extends DatabaseObjectDecorator
                         $conditionBuilder = new PreparedStatementConditionBuilder();
                         $conditionBuilder->add('article.categoryID IN (?)', [$categoryIDs]);
                         $conditionBuilder->add(
-                            'article.time > ?',
+                            'article.lastUpdateTime > ?',
                             [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]
                         );
                         $conditionBuilder->add('article.isDeleted = ?', [0]);
                         $conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
-                        $conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
+                        $conditionBuilder->add('(article.lastUpdateTime > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
 
                         $sql = "SELECT      COUNT(*)
                                 FROM        wcf1_article article

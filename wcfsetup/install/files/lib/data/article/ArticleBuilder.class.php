@@ -58,7 +58,43 @@ final class ArticleBuilder extends DatabaseObjectBuilder
     {
         $this->properties['time'] = $time;
 
+        // The time of the last update follows the publication time unless the
+        // article is flagged as updated, it must never precede it though.
+        if ($this->isFlaggedAsUpdated()) {
+            $this->properties['lastUpdateTime'] = \max($this->getLastUpdateTime(), $time);
+        } else {
+            $this->properties['lastUpdateTime'] = $time;
+        }
+
         return $this;
+    }
+
+    /**
+     * Flags the article as updated at the given time, or removes the flag when
+     * passing `null`, causing the time of the last update to fall back to the
+     * publication time.
+     */
+    public function setLastUpdate(?int $lastUpdateTime): static
+    {
+        if ($lastUpdateTime === null) {
+            $this->properties['flagAsUpdated'] = 0;
+            $this->properties['lastUpdateTime'] = $this->properties['time'] ?? $this->existingObject->time ?? 0;
+        } else {
+            $this->properties['flagAsUpdated'] = 1;
+            $this->properties['lastUpdateTime'] = $lastUpdateTime;
+        }
+
+        return $this;
+    }
+
+    private function isFlaggedAsUpdated(): bool
+    {
+        return (bool)($this->properties['flagAsUpdated'] ?? $this->existingObject->flagAsUpdated ?? 0);
+    }
+
+    private function getLastUpdateTime(): int
+    {
+        return (int)($this->properties['lastUpdateTime'] ?? $this->existingObject->lastUpdateTime ?? 0);
     }
 
     public function setCategory(ArticleCategory $category): static

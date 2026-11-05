@@ -94,6 +94,10 @@ class ArticleAction extends AbstractDatabaseObjectAction
     #[\Override]
     public function create()
     {
+        if (!isset($this->parameters['data']['lastUpdateTime'])) {
+            $this->parameters['data']['lastUpdateTime'] = $this->parameters['data']['time'] ?? \TIME_NOW;
+        }
+
         $article = parent::create();
 
         // save article content

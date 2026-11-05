@@ -26,6 +26,7 @@ use wcf\system\form\builder\container\wysiwyg\WysiwygFormContainer;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\DateFormField;
+use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\HiddenFormField;
 use wcf\system\form\builder\field\IFormField;
@@ -244,6 +245,56 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
                 })
                 ->loadValueCallback(static function (Article $object, IFormField $field) {
                     $field->value($object->time);
+                }),
+            BooleanFormField::create('flagAsUpdated')
+                ->label('wcf.acp.article.flagAsUpdated')
+                ->description('wcf.acp.article.flagAsUpdated.description')
+                // The flag drives the time of the last update.
+                ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
+                    $dateField = $field->getDocument()->getFormField('lastUpdateTime');
+                    $builder->setLastUpdate(
+                        (bool)$field->getSaveValue()
+                            && $dateField !== null
+                            && $dateField->getSaveValue() !== null
+                            ? (int)$dateField->getSaveValue()
+                            : null
+                    );
+                })
+                ->loadValueCallback(static function (Article $object, IFormField $field) {
+                    $field->value((bool)$object->flagAsUpdated);
+                }),
+            DateFormField::create('lastUpdateTime')
+                ->supportTime()
+                ->required()
+                ->label('wcf.acp.article.lastUpdateTime')
+                ->value(\TIME_NOW)
+                ->addDependency(
+                    NonEmptyFormFieldDependency::create('flagAsUpdated')
+                        ->fieldId('flagAsUpdated')
+                )
+                ->addValidator(new FormFieldValidator('timeCheck', static function (IFormField $field) {
+                    $timeField = $field->getDocument()->getFormField('time');
+                    $time = $timeField !== null ? (int)$timeField->getSaveValue() : 0;
+                    $lastUpdateTime = (int)$field->getSaveValue();
+
+                    // Delayed articles may be flagged as updated in the future,
+                    // published articles must not.
+                    $statusField = $field->getDocument()->getFormField('publicationStatus');
+                    $status = $statusField !== null
+                        ? (int)$statusField->getSaveValue()
+                        : Article::UNPUBLISHED;
+
+                    if (
+                        $lastUpdateTime < $time
+                        || ($status === Article::PUBLISHED && $lastUpdateTime > \TIME_NOW)
+                    ) {
+                        $field->addValidationError(new FormFieldValidationError('invalid'));
+                    }
+                }))
+                ->loadValueCallback(static function (Article $object, IFormField $field) {
+                    if ($object->flagAsUpdated !== 0) {
+                        $field->value($object->lastUpdateTime);
+                    }
                 }),
             RadioButtonFormField::create('publicationStatus')
                 ->label('wcf.acp.article.publicationStatus')

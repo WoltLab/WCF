@@ -88,6 +88,9 @@
 		<item name="wcf.acp.article.copy.confirmMessage"><![CDATA[Are you sure you want to copy the article “{$article->getTitle()}”? The copy will not be published.]]></item>
 		<item name="wcf.acp.article.copy.title"><![CDATA[{@$title} (Copy)]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Enable comments]]></item>
+		<item name="wcf.acp.article.flagAsUpdated"><![CDATA[Flag as Updated]]></item>
+		<item name="wcf.acp.article.flagAsUpdated.description"><![CDATA[Flags the article as updated and sorts it by the time of the update in article lists. Users will see the article as unread again.]]></item>
+		<item name="wcf.acp.article.lastUpdateTime"><![CDATA[Time of Update]]></item>
 		<item name="wcf.acp.article.i18n"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.acp.article.i18n.none"><![CDATA[Monolingual article]]></item>
 		<item name="wcf.acp.article.i18n.none.description"><![CDATA[The content is not tied to a specific language or there should be no translation.]]></item>
@@ -97,7 +100,6 @@
 		<item name="wcf.acp.article.image"><![CDATA[Article Image]]></item>
 		<item name="wcf.acp.article.teaserImage"><![CDATA[Teaser Image]]></item>
 		<item name="wcf.acp.article.publicationDate"><![CDATA[Publication Date]]></item>
-		<item name="wcf.acp.article.publicationDate.error.invalid"><![CDATA[The publication date is invalid.]]></item>
 		<item name="wcf.acp.article.publicationStatus"><![CDATA[Status]]></item>
 		<item name="wcf.acp.article.publicationStatus.unpublished"><![CDATA[Unpublished]]></item>
 		<item name="wcf.acp.article.publicationStatus.published"><![CDATA[Published]]></item>
@@ -3243,6 +3245,7 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 		<item name="wcf.article.button.setAsFeatured"><![CDATA[Mark as Featured]]></item>
 		<item name="wcf.article.button.unsetAsFeatured"><![CDATA[Remove Featured Marking]]></item>
 		<item name="wcf.article.featured"><![CDATA[Featured]]></item>
+		<item name="wcf.article.updated"><![CDATA[Updated]]></item>
 		<item name="wcf.article.condition.isFeatured"><![CDATA[Featured articles only]]></item>
 		<item name="wcf.article.button.assignLabel"><![CDATA[Assign Labels]]></item>
 		<item name="wcf.article.unreadArticles"><![CDATA[Unread Articles]]></item>
@@ -3920,6 +3923,7 @@ Attachments:
 		<item name="wcf.global.form.data"><![CDATA[General Information]]></item>
 		<item name="wcf.global.form.error"><![CDATA[Please correct the erroneous fields marked below.]]></item>
 		<item name="wcf.global.form.error.empty"><![CDATA[Please fill in this field.]]></item>
+		<item name="wcf.global.form.error.invalid"><![CDATA[The value entered is invalid.]]></item>
 		<item name="wcf.global.form.error.greaterThan"><![CDATA[The entered value has to be greater than {#$greaterThan}.]]></item>
 		<item name="wcf.global.form.error.lessThan"><![CDATA[The entered value has to be less than {#$lessThan}.]]></item>
 		<item name="wcf.global.form.error.multilingual"><![CDATA[Please fill in this field for all languages.]]></item>
@@ -5914,5 +5918,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.template.group.error.shared"/>
 	<item name="wcf.acp.template.group.error.notShared"/>
 	<item name="wcf.global.pageDirection"/>
+	<item name="wcf.acp.article.publicationDate.error.invalid"/>
 </delete>
 </language>

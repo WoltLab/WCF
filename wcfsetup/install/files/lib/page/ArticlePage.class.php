@@ -171,10 +171,10 @@ class ArticlePage extends AbstractPage
     {
         $articleList = new CategoryArticleList($this->article->categoryID);
         $articleList->getConditionBuilder()->add(
-            'article.time ' . (\ARTICLE_SORT_ORDER === 'DESC' ? '>' : '<') . ' ?',
-            [$this->article->time]
+            'article.lastUpdateTime ' . (\ARTICLE_SORT_ORDER === 'DESC' ? '>' : '<') . ' ?',
+            [$this->article->lastUpdateTime]
         );
-        $articleList->sqlOrderBy = 'article.time ' . (\ARTICLE_SORT_ORDER === 'DESC' ? 'ASC' : 'DESC');
+        $articleList->sqlOrderBy = 'article.lastUpdateTime ' . (\ARTICLE_SORT_ORDER === 'DESC' ? 'ASC' : 'DESC');
         $articleList->sqlLimit = 1;
         $articleList->readObjects();
         foreach ($articleList as $article) {
@@ -186,10 +186,10 @@ class ArticlePage extends AbstractPage
     {
         $articleList = new CategoryArticleList($this->article->categoryID);
         $articleList->getConditionBuilder()->add(
-            'article.time ' . (\ARTICLE_SORT_ORDER === 'DESC' ? '<' : '>') . ' ?',
-            [$this->article->time]
+            'article.lastUpdateTime ' . (\ARTICLE_SORT_ORDER === 'DESC' ? '<' : '>') . ' ?',
+            [$this->article->lastUpdateTime]
         );
-        $articleList->sqlOrderBy = 'article.time ' . \ARTICLE_SORT_ORDER;
+        $articleList->sqlOrderBy = 'article.lastUpdateTime ' . \ARTICLE_SORT_ORDER;
         $articleList->sqlLimit = 1;
         $articleList->readObjects();
         foreach ($articleList as $article) {
@@ -227,7 +227,7 @@ class ArticlePage extends AbstractPage
         MetaTagHandler::getInstance()->addTag(
             'article:modified_time',
             'article:modified_time',
-            \gmdate('c', $this->article->time),
+            \gmdate('c', $this->article->lastUpdateTime),
             true
         );
         MetaTagHandler::getInstance()->addTag(

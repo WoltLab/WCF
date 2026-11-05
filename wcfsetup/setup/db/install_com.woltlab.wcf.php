@@ -436,12 +436,17 @@ return [
             DefaultFalseBooleanDatabaseTableColumn::create('isDeleted'),
             DefaultFalseBooleanDatabaseTableColumn::create('hasLabels'),
             DefaultFalseBooleanDatabaseTableColumn::create('isFeatured'),
+            DefaultFalseBooleanDatabaseTableColumn::create('flagAsUpdated'),
+            NotNullInt10DatabaseTableColumn::create('lastUpdateTime')
+                ->defaultValue(0),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['articleID']),
             DatabaseTableIndex::create('time')
                 ->columns(['time']),
+            DatabaseTableIndex::create('lastUpdateTime')
+                ->columns(['lastUpdateTime']),
         ])
         ->foreignKeys([
             DatabaseTableForeignKey::create()

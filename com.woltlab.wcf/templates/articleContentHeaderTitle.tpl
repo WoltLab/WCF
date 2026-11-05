@@ -16,7 +16,15 @@
 			{icon name='clock'}
 			<a href="{$article->getLink()}">{time time=$article->time}</a>
 			<meta itemprop="datePublished" content="{$article->time|date:'c'}">
+			<meta itemprop="dateModified" content="{$article->lastUpdateTime|date:'c'}">
 		</li>
+
+		{if $article->flagAsUpdated}
+			<li>
+				{icon name='arrows-rotate'}
+				<span>{time time=$article->lastUpdateTime}</span>
+			</li>
+		{/if}
 
 		{if $articleContent->getReadingTime()}
 			<li>
@@ -60,6 +68,9 @@
 				{content}
 					{if $article->isFeatured}
 						<span class="badge green">{lang}wcf.article.featured{/lang}</span>
+					{/if}
+					{if $article->flagAsUpdated}
+						<span class="badge">{lang}wcf.article.updated{/lang}</span>
 					{/if}
 					{if $article->isDeleted}
 						<span class="badge red">{lang}wcf.message.status.deleted{/lang}</span>

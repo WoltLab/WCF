@@ -35,6 +35,13 @@ return [
                 ->defaultValue(0)
                 ->drop(),
             DefaultFalseBooleanDatabaseTableColumn::create('isFeatured'),
+            DefaultFalseBooleanDatabaseTableColumn::create('flagAsUpdated'),
+            NotNullInt10DatabaseTableColumn::create('lastUpdateTime')
+                ->defaultValue(0),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('lastUpdateTime')
+                ->columns(['lastUpdateTime']),
         ]),
     PartialDatabaseTable::create('wcf1_article_content')
         ->columns([
