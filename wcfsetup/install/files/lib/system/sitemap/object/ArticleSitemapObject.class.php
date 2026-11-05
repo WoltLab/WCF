@@ -25,6 +25,25 @@ class ArticleSitemapObject extends AbstractSitemapObjectObjectType
     }
 
     #[\Override]
+    public function getObjectList()
+    {
+        $articleContentList = new ArticleContentList();
+        $articleContentList->sqlSelects = 'article.lastUpdateTime';
+        $articleContentList->sqlConditionJoins = '
+            INNER JOIN  wcf1_article article
+            ON          article.articleID = article_content.articleID';
+        $articleContentList->sqlJoins = $articleContentList->sqlConditionJoins;
+
+        return $articleContentList;
+    }
+
+    #[\Override]
+    public function getLastModifiedColumn(): string
+    {
+        return 'lastUpdateTime';
+    }
+
+    #[\Override]
     public function canView(DatabaseObject $object)
     {
         \assert($object instanceof ArticleContent);

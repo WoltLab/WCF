@@ -100,6 +100,10 @@ class ArticleImporter extends AbstractImporter
             $data['enableComments'] = \ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE !== 0 ? 1 : 0;
         }
 
+        if (!isset($data['lastUpdateTime'])) {
+            $data['lastUpdateTime'] = $data['time'] ?? \TIME_NOW;
+        }
+
         // save article
         $article = ArticleEditor::create($data);
 

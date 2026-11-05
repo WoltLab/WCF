@@ -37,7 +37,7 @@ class ArticleListView extends AbstractListView
     public function __construct()
     {
         $this->addAvailableSortFields([
-            new ListViewSortField('time', 'wcf.global.date', defaultSortOrder: 'DESC'),
+            new ListViewSortField('time', 'wcf.global.date', 'article.lastUpdateTime', 'DESC'),
             new ListViewSortField('title', 'wcf.global.title', 'title'),
             new ListViewSortField('views', 'wcf.article.sortField.views', defaultSortOrder: 'DESC'),
         ]);
@@ -160,7 +160,7 @@ class ArticleListView extends AbstractListView
             public function applyFilter(DatabaseObjectList $list, string $value): void
             {
                 $list->getConditionBuilder()->add(
-                    'article.time > ?',
+                    'article.lastUpdateTime > ?',
                     [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]
                 );
 
@@ -169,7 +169,7 @@ class ArticleListView extends AbstractListView
                     ON          tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
                             AND tracked_visit.objectID = article.articleID
                             AND tracked_visit.userID = " . WCF::getUser()->userID;
-                $list->getConditionBuilder()->add("(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
+                $list->getConditionBuilder()->add("(article.lastUpdateTime > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
                 $list->sqlConditionJoins .= $joins;
                 $list->sqlJoins .= $joins;
             }

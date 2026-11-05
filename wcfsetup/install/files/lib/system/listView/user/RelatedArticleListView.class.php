@@ -93,7 +93,7 @@ class RelatedArticleListView extends ArticleListView
                 " . $conditionBuilder . "
                 GROUP BY    tag_to_object.objectID
                 HAVING      COUNT(*) >= " . \round(\count($tags) * \ARTICLE_RELATED_ARTICLES_MATCH_THRESHOLD / 100) . "
-                ORDER BY    count DESC, MAX(article.time) DESC";
+                ORDER BY    count DESC, MAX(article.lastUpdateTime) DESC";
         $statement = WCF::getDB()->prepare($sql, \ARTICLE_RELATED_ARTICLES * 4);
         $statement->execute($conditionBuilder->getParameters());
 

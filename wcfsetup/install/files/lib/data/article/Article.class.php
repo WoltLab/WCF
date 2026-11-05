@@ -43,6 +43,8 @@ use wcf\system\WCF;
  * @property-read   0|1     $isDeleted          is 1 if the article is in trash bin, otherwise 0
  * @property-read   0|1     $hasLabels          is `1` if labels are assigned to the article
  * @property-read   0|1     $isFeatured         is `1` if the article is featured which pins it at the top, otherwise `0`
+ * @property-read   0|1     $flagAsUpdated      is `1` if the article is flagged as updated, otherwise `0`
+ * @property-read   int     $lastUpdateTime     timestamp of the last update or the publication time if the article is not flagged as updated
  *
  * @extends CollectionDatabaseObject<ArticleCollection>
  */
@@ -495,7 +497,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
      */
     public function isNew(): bool
     {
-        return $this->time > $this->getEffectiveVisitTime();
+        return $this->lastUpdateTime > $this->getEffectiveVisitTime();
     }
 
     /**
@@ -562,12 +564,12 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
                     $conditionBuilder = new PreparedStatementConditionBuilder();
                     $conditionBuilder->add('article.categoryID IN (?)', [$categoryIDs]);
                     $conditionBuilder->add(
-                        'article.time > ?',
+                        'article.lastUpdateTime > ?',
                         [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]
                     );
                     $conditionBuilder->add('article.isDeleted = ?', [0]);
                     $conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
-                    $conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
+                    $conditionBuilder->add('(article.lastUpdateTime > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
 
                     $sql = "SELECT      COUNT(*)
                             FROM        wcf1_article article
