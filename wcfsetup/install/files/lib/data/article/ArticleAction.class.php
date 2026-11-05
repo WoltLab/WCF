@@ -685,7 +685,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
         if ($category === null) {
             throw new UserInputException('categoryID');
         }
-        if (!$category->isAccessible()) {
+        if (!$category->canUseCategory()) {
             throw new UserInputException('categoryID');
         }
     }

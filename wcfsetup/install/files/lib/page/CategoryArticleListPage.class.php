@@ -2,6 +2,7 @@
 
 namespace wcf\page;
 
+use wcf\data\article\Article;
 use wcf\data\article\category\ArticleCategory;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -116,6 +117,7 @@ class CategoryArticleListPage extends ArticleListPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
+            'canManageArticles' => Article::canAdd() && $this->category->canUseCategory(),
             'categoryID' => $this->categoryID,
             'category' => $this->category,
         ]);

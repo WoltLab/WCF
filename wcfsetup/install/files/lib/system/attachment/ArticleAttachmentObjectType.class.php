@@ -6,7 +6,6 @@ use wcf\data\article\Article;
 use wcf\data\article\content\ArticleContent;
 use wcf\system\cache\runtime\ArticleContentRuntimeCache;
 use wcf\system\cache\runtime\ArticleRuntimeCache;
-use wcf\system\WCF;
 
 /**
  * Attachment object type implementation for cms articles.
@@ -38,13 +37,11 @@ class ArticleAttachmentObjectType extends AbstractAttachmentObjectType
     {
         if ($objectID !== 0) {
             $article = $this->getArticleByContentID($objectID);
-            if ($article !== null && $article->canEdit()) {
-                return true;
-            }
+
+            return $article !== null && $article->canEdit();
         }
 
-        return WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
-            || WCF::getSession()->hasPermission('admin.content.article.canContributeArticle');
+        return Article::canAdd();
     }
 
     #[\Override]

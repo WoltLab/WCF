@@ -25,6 +25,7 @@
 		<item name="wcf.acl.option.com.woltlab.wcf.poll.canVotePoll"><![CDATA[Can vote in poll]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canViewCategory"><![CDATA[Can access the category]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canReadArticle"><![CDATA[Can read articles]]></item>
+		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canUseCategory"><![CDATA[Can write articles in category]]></item>
 	</category>
 	<category name="wcf.acp.ad">
 		<item name="wcf.acp.ad.ad"><![CDATA[Ad]]></item>

@@ -2,6 +2,7 @@
 
 namespace wcf\page;
 
+use wcf\data\article\Article;
 use wcf\system\language\LanguageFactory;
 use wcf\system\listView\user\ArticleListView;
 use wcf\system\WCF;
@@ -49,9 +50,7 @@ class ArticleListPage extends AbstractListViewPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
-            'canManageArticles' => WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
-                || WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')
-                || WCF::getSession()->hasPermission('admin.content.article.canContributeArticle'),
+            'canManageArticles' => Article::canAdd(),
             'categoryID' => 0,
             'showArticleAddDialog' => $this->showArticleAddDialog,
             'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),

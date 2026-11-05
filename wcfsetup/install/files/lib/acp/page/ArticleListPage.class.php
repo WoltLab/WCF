@@ -2,6 +2,7 @@
 
 namespace wcf\acp\page;
 
+use wcf\data\article\Article;
 use wcf\page\AbstractGridViewPage;
 use wcf\system\gridView\admin\ArticleGridView;
 use wcf\system\language\LanguageFactory;
@@ -58,6 +59,7 @@ final class ArticleListPage extends AbstractGridViewPage
         parent::assignVariables();
 
         WCF::getTPL()->assign([
+            'canAddArticle' => Article::canAdd(),
             'showArticleAddDialog' => $this->showArticleAddDialog,
             'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
         ]);

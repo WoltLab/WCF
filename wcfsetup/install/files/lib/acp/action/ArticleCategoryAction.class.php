@@ -9,7 +9,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 use wcf\command\article\SetArticleCategory;
 use wcf\data\article\ArticleList;
 use wcf\data\article\category\ArticleCategory;
-use wcf\data\category\CategoryNodeTree;
+use wcf\data\article\category\ArticleCategoryNode;
+use wcf\data\article\category\ArticleCategoryNodeTree;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -48,7 +49,7 @@ final class ArticleCategoryAction implements RequestHandlerInterface
         }
 
         $articleList = new ArticleList();
-        $articleList->setObjectIDs($parameters['objectIDs']);
+        $articleList->setObjectIDs($parameters['ids']);
         $articleList->readObjects();
 
         $form = $this->getForm();
@@ -87,7 +88,7 @@ final class ArticleCategoryAction implements RequestHandlerInterface
         $form->appendChildren([
             SingleSelectionFormField::create('categoryID')
                 ->label('wcf.global.category')
-                ->options(new CategoryNodeTree('com.woltlab.wcf.article.category')->getIterator(), true)
+                ->options($this->getCategoryOptions(), true)
                 ->required()
         ]);
 
@@ -95,5 +96,25 @@ final class ArticleCategoryAction implements RequestHandlerInterface
         $form->build();
 
         return $form;
+    }
+
+    /**
+     * @return list<array{depth: int, isSelectable: bool, label: ArticleCategoryNode, value: int}>
+     */
+    private function getCategoryOptions(): array
+    {
+        $options = [];
+        foreach (new ArticleCategoryNodeTree(ArticleCategory::OBJECT_TYPE_NAME) as $categoryNode) {
+            \assert($categoryNode instanceof ArticleCategoryNode);
+
+            $options[] = [
+                'depth' => $categoryNode->getDepth() - 1,
+                'isSelectable' => $categoryNode->canUseCategory(),
+                'label' => $categoryNode,
+                'value' => $categoryNode->categoryID,
+            ];
+        }
+
+        return $options;
     }
 }

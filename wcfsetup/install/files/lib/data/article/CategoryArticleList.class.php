@@ -46,7 +46,10 @@ class CategoryArticleList extends AccessibleArticleList
         $this->getConditionBuilder()->add('article.categoryID IN (?)', [$categoryIDs]);
 
         if (!WCF::getSession()->hasPermission('admin.content.article.canManageArticle')) {
-            if (WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')) {
+            if (
+                WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')
+                || WCF::getSession()->hasPermission('admin.content.article.canContributeArticle')
+            ) {
                 $this->getConditionBuilder()->add(
                     '(article.userID = ? OR (article.isDeleted = ? AND article.publicationStatus = ?))',
                     [WCF::getUser()->userID, 0, Article::PUBLISHED]

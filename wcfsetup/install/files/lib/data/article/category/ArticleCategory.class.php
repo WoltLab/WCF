@@ -88,6 +88,11 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
             return $this->getParentCategory()->getPermission($permission, $user);
         }
 
+        // Categories can be used by default unless explicitly configured.
+        if ($permission === 'canUseCategory') {
+            return true;
+        }
+
         if ($user->userID === WCF::getSession()->getUser()->userID) {
             return WCF::getSession()->getPermission('user.article.' . $permission);
         } else {
@@ -95,6 +100,16 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 
             return $userProfile->getPermission('user.article.' . $permission);
         }
+    }
+
+    /**
+     * Returns true if the given user can write articles in this category.
+     *
+     * @since 6.3
+     */
+    public function canUseCategory(?User $user = null): bool
+    {
+        return $this->isAccessible($user) && (bool)$this->getPermission('canUseCategory', $user);
     }
 
     #[\Override]
@@ -136,6 +151,17 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
         }
 
         return $categoryIDs;
+    }
+
+    /**
+     * Returns the ids of the categories in which the active user can write articles.
+     *
+     * @return int[]
+     * @since 6.3
+     */
+    public static function getWritableCategoryIDs(): array
+    {
+        return self::getAccessibleCategoryIDs(['canViewCategory', 'canUseCategory']);
     }
 
     /**

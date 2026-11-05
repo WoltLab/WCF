@@ -7,10 +7,12 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			{if $availableLanguages|count > 1}
-				<li><a href="#" class="button buttonPrimary jsButtonArticleAdd">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
-			{else}
-				<li><a href="{link controller='ArticleAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+			{if $canAddArticle}
+				{if $availableLanguages|count > 1}
+					<li><a href="#" class="button buttonPrimary jsButtonArticleAdd">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+				{else}
+					<li><a href="{link controller='ArticleAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+				{/if}
 			{/if}
 			
 			{event name='contentHeaderNavigation'}
@@ -22,6 +24,8 @@
 	{unsafe:$gridView->render()}
 </div>
 
-{include file='shared_articleAddDialog' categoryID=0}
+{if $canAddArticle}
+	{include file='shared_articleAddDialog' categoryID=0}
+{/if}
 
 {include file='footer'}

@@ -8,6 +8,8 @@ use wcf\command\article\UpdateArticle;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleBuilder;
 use wcf\data\article\category\ArticleCategory;
+use wcf\data\article\category\ArticleCategoryNode;
+use wcf\data\article\category\ArticleCategoryNodeTree;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\DatabaseObjectBuilder;
@@ -16,6 +18,7 @@ use wcf\data\user\User;
 use wcf\form\AbstractDatabaseObjectBuilderForm;
 use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\exception\NamedUserException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
 use wcf\system\form\builder\container\TabMenuFormContainer;
@@ -106,9 +109,47 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
 
         if (isset($_REQUEST['categoryID'])) {
             $this->categoryID = \intval($_REQUEST['categoryID']);
+
+            $category = ArticleCategory::getCategory($this->categoryID);
+            if ($category === null || !$category->canUseCategory()) {
+                $this->categoryID = 0;
+            }
         }
 
         $this->readMultilingualSetting();
+    }
+
+    #[\Override]
+    public function checkPermissions(): void
+    {
+        if ($this->formAction === 'create' && !Article::canAdd()) {
+            throw new PermissionDeniedException();
+        }
+
+        parent::checkPermissions();
+    }
+
+    /**
+     * Returns the nested category options, only categories in which the active
+     * user can write articles are selectable.
+     *
+     * @return list<array{depth: int, isSelectable: bool, label: ArticleCategoryNode, value: int}>
+     */
+    protected function getCategoryOptions(): array
+    {
+        $options = [];
+        foreach (new ArticleCategoryNodeTree(ArticleCategory::OBJECT_TYPE_NAME) as $categoryNode) {
+            \assert($categoryNode instanceof ArticleCategoryNode);
+
+            $options[] = [
+                'depth' => $categoryNode->getDepth() - 1,
+                'isSelectable' => $categoryNode->canUseCategory(),
+                'label' => $categoryNode,
+                'value' => $categoryNode->categoryID,
+            ];
+        }
+
+        return $options;
     }
 
     /**
@@ -160,12 +201,12 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
                     SingleSelectionFormField::create('categoryID')
                         ->filterable(\iterator_count($this->categoryNodeTree->getIterator()) > 10)
                         ->required()
-                        ->options($this->categoryNodeTree, true)
+                        ->options($this->getCategoryOptions(), true)
                         ->value($this->categoryID ?: null)
                         ->label('wcf.global.category')
                         ->addValidator(new FormFieldValidator('accessible', static function (IFormField $field) {
                             $category = ArticleCategory::getCategory($field->getSaveValue());
-                            if ($category === null || !$category->isAccessible()) {
+                            if ($category === null || !$category->canUseCategory()) {
                                 $field->addValidationError(new FormFieldValidationError('invalid'));
                             }
                         }))

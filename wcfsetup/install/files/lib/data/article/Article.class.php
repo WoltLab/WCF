@@ -120,7 +120,7 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
             return (bool)$this->getCategory()->getPermission('canReadArticle', $user->getDecoratedObject());
         }
 
-        return $user->hasPermission('user.article.canAddComment');
+        return $user->hasPermission('user.article.canReadArticle');
     }
 
     /**
@@ -131,6 +131,10 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
     public function canEdit(): bool
     {
         if (!$this->canRead()) {
+            return false;
+        }
+
+        if ($this->getCategory() !== null && !$this->getCategory()->canUseCategory()) {
             return false;
         }
 
@@ -167,6 +171,24 @@ class Article extends CollectionDatabaseObject implements ILinkableObject, IPopo
         }
 
         return false;
+    }
+
+    /**
+     * Returns true if the active user can create articles in at least one category.
+     *
+     * @since 6.3
+     */
+    public static function canAdd(): bool
+    {
+        if (
+            !WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
+            && !WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles')
+            && !WCF::getSession()->hasPermission('admin.content.article.canContributeArticle')
+        ) {
+            return false;
+        }
+
+        return ArticleCategory::getWritableCategoryIDs() !== [];
     }
 
     #[\Override]
