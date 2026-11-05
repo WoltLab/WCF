@@ -3315,6 +3315,10 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.button.publish"><![CDATA[Veröffentlichen]]></item>
 		<item name="wcf.article.button.unpublish"><![CDATA[Veröffentlichung zurückziehen]]></item>
 		<item name="wcf.article.button.setCategory"><![CDATA[Kategorie ändern]]></item>
+		<item name="wcf.article.button.setAsFeatured"><![CDATA[Als „Empfohlen“ markieren]]></item>
+		<item name="wcf.article.button.unsetAsFeatured"><![CDATA[„Empfohlen“-Markierung entfernen]]></item>
+		<item name="wcf.article.featured"><![CDATA[Empfohlen]]></item>
+		<item name="wcf.article.condition.isFeatured"><![CDATA[Nur empfohlene Artikel]]></item>
 		<item name="wcf.article.unreadArticles"><![CDATA[Ungelesene Artikel]]></item>
 		<item name="wcf.article.userArticles"><![CDATA[Artikel von {$user->username}]]></item>
 		<item name="wcf.article.watchedArticles"><![CDATA[Abonnierte Artikel]]></item>

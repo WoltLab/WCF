@@ -435,6 +435,7 @@ return [
                 ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('isDeleted'),
             DefaultFalseBooleanDatabaseTableColumn::create('hasLabels'),
+            DefaultFalseBooleanDatabaseTableColumn::create('isFeatured'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()

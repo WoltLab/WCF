@@ -26,6 +26,7 @@ class RelatedArticleListView extends ArticleListView
         $this->setAllowFiltering(false);
         $this->setAllowSorting(false);
         $this->setAllowInteractions(false);
+        $this->setPinFeaturedArticles(false);
     }
 
     #[\Override]

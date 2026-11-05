@@ -96,6 +96,13 @@ final class ArticleBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    public function setIsFeatured(bool $isFeatured): static
+    {
+        $this->properties['isFeatured'] = $isFeatured ? 1 : 0;
+
+        return $this;
+    }
+
     public function setIsDeleted(bool $isDeleted): static
     {
         $this->properties['isDeleted'] = $isDeleted ? 1 : 0;
