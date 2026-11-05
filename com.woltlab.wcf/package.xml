@@ -56,6 +56,8 @@
 
 	<!--
 	Required order of the following steps for the update to 6.3:
+	The following step must run before the `*L10n.php` scripts and before the `language` PIP:
+	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_authoritativeLanguages.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_likeObject.php</instruction>
 	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.3_step1.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_articleLastUpdateTime.php</instruction>
