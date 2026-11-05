@@ -3244,6 +3244,7 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 		<item name="wcf.article.button.unsetAsFeatured"><![CDATA[Remove Featured Marking]]></item>
 		<item name="wcf.article.featured"><![CDATA[Featured]]></item>
 		<item name="wcf.article.condition.isFeatured"><![CDATA[Featured articles only]]></item>
+		<item name="wcf.article.button.assignLabel"><![CDATA[Assign Labels]]></item>
 		<item name="wcf.article.unreadArticles"><![CDATA[Unread Articles]]></item>
 		<item name="wcf.article.userArticles"><![CDATA[Articles by {$user->username}]]></item>
 		<item name="wcf.article.watchedArticles"><![CDATA[Subscribed Articles]]></item>

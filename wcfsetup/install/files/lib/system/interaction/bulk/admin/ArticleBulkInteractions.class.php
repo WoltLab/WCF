@@ -3,6 +3,7 @@
 namespace wcf\system\interaction\bulk\admin;
 
 use wcf\acp\action\ArticleCategoryAction;
+use wcf\action\ArticleBulkAssignLabelDialogAction;
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\Article;
 use wcf\event\interaction\bulk\admin\ArticleBulkInteractionCollecting;
@@ -121,7 +122,19 @@ final class ArticleBulkInteractions extends AbstractBulkInteractionProvider
                 'setCategory',
                 ArticleCategoryAction::class,
                 'wcf.article.button.setCategory'
-            )
+            ),
+            new BulkFormBuilderDialogInteraction(
+                'assign-label',
+                ArticleBulkAssignLabelDialogAction::class,
+                'wcf.article.button.assignLabel',
+                static function (Article $article): bool {
+                    if (!$article->canEdit()) {
+                        return false;
+                    }
+
+                    return ($article->getCategory()?->getLabelGroups() ?? []) !== [];
+                }
+            ),
         ]);
 
         EventHandler::getInstance()->fire(

@@ -3319,6 +3319,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.button.unsetAsFeatured"><![CDATA[„Empfohlen“-Markierung entfernen]]></item>
 		<item name="wcf.article.featured"><![CDATA[Empfohlen]]></item>
 		<item name="wcf.article.condition.isFeatured"><![CDATA[Nur empfohlene Artikel]]></item>
+		<item name="wcf.article.button.assignLabel"><![CDATA[Label zuweisen]]></item>
 		<item name="wcf.article.unreadArticles"><![CDATA[Ungelesene Artikel]]></item>
 		<item name="wcf.article.userArticles"><![CDATA[Artikel von {$user->username}]]></item>
 		<item name="wcf.article.watchedArticles"><![CDATA[Abonnierte Artikel]]></item>
