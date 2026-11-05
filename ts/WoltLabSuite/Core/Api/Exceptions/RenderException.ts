@@ -14,7 +14,7 @@ type Response = {
   template: string;
 };
 
-export async function renderException(exceptionId: string): Promise<Response> {
+export function renderException(exceptionId: string): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/exceptions/${exceptionId}/render`);
 
   return fromInfallibleApiRequest(() => {

@@ -11,7 +11,7 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { fromInfallibleApiRequest } from "../../Result";
 
-export async function subscribe(objectType: string, objectID: number, enableNotification: boolean): Promise<void> {
+export function subscribe(objectType: string, objectID: number, enableNotification: boolean): Promise<void> {
   return fromInfallibleApiRequest(() => {
     return prepareRequest(`${window.WSC_RPC_API_URL}core/users/object-watches/subscribe`)
       .post({

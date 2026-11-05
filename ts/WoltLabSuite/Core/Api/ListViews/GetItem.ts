@@ -14,7 +14,7 @@ type Response = {
   template: string;
 };
 
-export async function getItem(
+export function getItem(
   listViewClass: string,
   objectId: string | number,
   filters?: Map<string, string>,

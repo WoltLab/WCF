@@ -15,7 +15,7 @@ export type VoteResponse = {
   template: string;
 };
 
-export async function vote(pollId: number, optionIDs: number[]): Promise<VoteResponse> {
+export function vote(pollId: number, optionIDs: number[]): Promise<VoteResponse> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/polls/${pollId}/vote`);
 
   return fromInfallibleApiRequest(() => {

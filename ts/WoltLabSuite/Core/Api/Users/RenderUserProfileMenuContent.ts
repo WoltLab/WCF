@@ -14,7 +14,7 @@ type Response = {
   template: string;
 };
 
-export async function renderUserProfileMenuContent(userId: number, menuItem: string): Promise<Response> {
+export function renderUserProfileMenuContent(userId: number, menuItem: string): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/users/${userId}/profile-menu-content`);
   url.searchParams.set("menuItem", menuItem);
 

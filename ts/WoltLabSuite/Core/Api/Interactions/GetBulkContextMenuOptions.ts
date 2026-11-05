@@ -14,7 +14,7 @@ type Response = {
   template: string;
 };
 
-export async function getBulkContextMenuOptions(providerClassName: string, objectIds: number[]): Promise<Response> {
+export function getBulkContextMenuOptions(providerClassName: string, objectIds: number[]): Promise<Response> {
   return fromInfallibleApiRequest(() => {
     return prepareRequest(`${window.WSC_RPC_API_URL}core/interactions/bulk-context-menu-options`)
       .post({ provider: providerClassName, objectIDs: objectIds })

@@ -10,7 +10,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getMedia = getMedia;
-    async function getMedia(mediaId) {
+    function getMedia(mediaId) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/media/${mediaId}`);
         return (0, Result_1.fromInfallibleApiRequest)(() => {
             return (0, Backend_1.prepareRequest)(url).get().fetchAsJson();

@@ -15,7 +15,7 @@ type Response = {
   reactions: Record<number, number>;
 };
 
-export async function setReaction(objectType: string, objectID: number, reactionTypeID: number): Promise<Response> {
+export function setReaction(objectType: string, objectID: number, reactionTypeID: number): Promise<Response> {
   return fromInfallibleApiRequest(() => {
     return prepareRequest(`${window.WSC_RPC_API_URL}core/reactions/set`)
       .post({

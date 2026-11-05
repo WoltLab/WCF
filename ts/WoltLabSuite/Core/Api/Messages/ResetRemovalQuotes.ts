@@ -11,7 +11,7 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { fromInfallibleApiRequest } from "../Result";
 
-export async function resetRemovalQuotes(): Promise<[]> {
+export function resetRemovalQuotes(): Promise<[]> {
   const url = new URL(window.WSC_RPC_API_URL + "core/messages/reset-removal-quotes");
 
   return fromInfallibleApiRequest(() => {

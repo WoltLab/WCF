@@ -14,7 +14,7 @@ type Response = {
   template: string;
 };
 
-export async function getContextMenuOptions(providerClassName: string, objectId: number | string): Promise<Response> {
+export function getContextMenuOptions(providerClassName: string, objectId: number | string): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/interactions/context-menu-options`);
   url.searchParams.set("provider", providerClassName);
   url.searchParams.set("objectID", objectId.toString());

@@ -14,7 +14,7 @@ type Response = {
   template: string;
 };
 
-export async function getAdminUserProfileHeader(userId: number): Promise<Response> {
+export function getAdminUserProfileHeader(userId: number): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/users/${userId}/admin-profile-header`);
 
   return fromInfallibleApiRequest(() => {

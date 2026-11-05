@@ -10,7 +10,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getBulkContextMenuOptions = getBulkContextMenuOptions;
-    async function getBulkContextMenuOptions(providerClassName, objectIds) {
+    function getBulkContextMenuOptions(providerClassName, objectIds) {
         return (0, Result_1.fromInfallibleApiRequest)(() => {
             return (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/interactions/bulk-context-menu-options`)
                 .post({ provider: providerClassName, objectIDs: objectIds })

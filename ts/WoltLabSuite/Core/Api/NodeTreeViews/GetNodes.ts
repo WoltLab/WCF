@@ -14,10 +14,7 @@ type Response = {
   template: string;
 };
 
-export async function getNodes(
-  nodeTreeViewClass: string,
-  nodeTreeViewParameters?: Map<string, string>,
-): Promise<Response> {
+export function getNodes(nodeTreeViewClass: string, nodeTreeViewParameters?: Map<string, string>): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/node-tree-views/nodes`);
   url.searchParams.set("nodeTreeView", nodeTreeViewClass);
   if (nodeTreeViewParameters) {

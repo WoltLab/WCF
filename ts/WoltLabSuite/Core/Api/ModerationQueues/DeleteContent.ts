@@ -11,7 +11,7 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { fromInfallibleApiRequest } from "../Result";
 
-export async function deleteContent(queueId: number, reason: string): Promise<[]> {
+export function deleteContent(queueId: number, reason: string): Promise<[]> {
   return fromInfallibleApiRequest(() => {
     return prepareRequest(`${window.WSC_RPC_API_URL}core/moderation-queues/${queueId}/delete-content`)
       .post({

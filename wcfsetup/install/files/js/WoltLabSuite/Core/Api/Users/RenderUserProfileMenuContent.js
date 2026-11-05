@@ -10,7 +10,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.renderUserProfileMenuContent = renderUserProfileMenuContent;
-    async function renderUserProfileMenuContent(userId, menuItem) {
+    function renderUserProfileMenuContent(userId, menuItem) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/users/${userId}/profile-menu-content`);
         url.searchParams.set("menuItem", menuItem);
         return (0, Result_1.fromInfallibleApiRequest)(() => {

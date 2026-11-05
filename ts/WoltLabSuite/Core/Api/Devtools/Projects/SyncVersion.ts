@@ -12,7 +12,7 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { fromInfallibleApiRequest } from "../../Result";
 
-export async function syncVersion(projectId: number): Promise<[]> {
+export function syncVersion(projectId: number): Promise<[]> {
   return fromInfallibleApiRequest(() => {
     return prepareRequest(`${window.WSC_RPC_API_URL}core/devtools/projects/${projectId}/sync-version`).post().fetchAsJson();
   });

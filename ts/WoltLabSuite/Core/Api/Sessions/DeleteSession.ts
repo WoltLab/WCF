@@ -12,7 +12,7 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { fromInfallibleApiRequest } from "../Result";
 
-export async function deleteSession(sessionId: string): Promise<[]> {
+export function deleteSession(sessionId: string): Promise<[]> {
   return fromInfallibleApiRequest(() => {
     return prepareRequest(`${window.WSC_RPC_API_URL}core/sessions/${sessionId}`).delete().fetchAsJson();
   });

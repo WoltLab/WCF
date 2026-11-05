@@ -29,7 +29,7 @@ export type MediaData = {
   largeThumbnailLink: string;
 };
 
-export async function getMedia(mediaId: number): Promise<MediaData> {
+export function getMedia(mediaId: number): Promise<MediaData> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/media/${mediaId}`);
 
   return fromInfallibleApiRequest(() => {

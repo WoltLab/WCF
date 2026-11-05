@@ -17,7 +17,7 @@ type Response = {
   filterLabels: ArrayLike<string>;
 };
 
-export async function getItems(
+export function getItems(
   listViewClass: string,
   pageNo: number,
   sortField: string = "",

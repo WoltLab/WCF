@@ -33,7 +33,7 @@ export type MapBoundaries = {
   westLongitude: number;
 };
 
-export async function getMapMarkers(
+export function getMapMarkers(
   endpoint: string,
   boundaries: MapBoundaries,
   excludedObjectIDs: number[],

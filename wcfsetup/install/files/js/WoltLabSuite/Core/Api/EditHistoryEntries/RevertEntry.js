@@ -11,7 +11,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.revertEntry = revertEntry;
-    async function revertEntry(entryId) {
+    function revertEntry(entryId) {
         return (0, Result_1.fromInfallibleApiRequest)(() => {
             return (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/edit-history-entries/${entryId}/revert`).post().fetchAsJson();
         });

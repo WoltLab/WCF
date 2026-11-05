@@ -14,7 +14,7 @@ type Response = {
   template: string;
 };
 
-export async function getNode(
+export function getNode(
   nodeTreeViewClass: string,
   objectId: string | number,
   nodeTreeViewParameters?: Map<string, string>,

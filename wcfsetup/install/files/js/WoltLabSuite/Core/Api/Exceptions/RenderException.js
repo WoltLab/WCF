@@ -10,7 +10,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.renderException = renderException;
-    async function renderException(exceptionId) {
+    function renderException(exceptionId) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/exceptions/${exceptionId}/render`);
         return (0, Result_1.fromInfallibleApiRequest)(() => {
             return (0, Backend_1.prepareRequest)(url).get().fetchAsJson();

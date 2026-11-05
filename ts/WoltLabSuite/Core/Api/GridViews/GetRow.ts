@@ -14,7 +14,7 @@ type Response = {
   template: string;
 };
 
-export async function getRow(
+export function getRow(
   gridViewClass: string,
   objectId: string | number,
   filters?: Map<string, string>,

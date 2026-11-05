@@ -12,7 +12,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.deleteSession = deleteSession;
-    async function deleteSession(sessionId) {
+    function deleteSession(sessionId) {
         return (0, Result_1.fromInfallibleApiRequest)(() => {
             return (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/sessions/${sessionId}`).delete().fetchAsJson();
         });

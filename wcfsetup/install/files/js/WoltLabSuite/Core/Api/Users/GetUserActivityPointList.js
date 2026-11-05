@@ -10,7 +10,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getUserActivityPointList = getUserActivityPointList;
-    async function getUserActivityPointList(userId) {
+    function getUserActivityPointList(userId) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/users/${userId}/activity-points`);
         return (0, Result_1.fromInfallibleApiRequest)(() => {
             return (0, Backend_1.prepareRequest)(url).get().fetchAsJson();

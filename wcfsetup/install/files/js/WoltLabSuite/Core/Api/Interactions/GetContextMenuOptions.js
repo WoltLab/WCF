@@ -10,7 +10,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getContextMenuOptions = getContextMenuOptions;
-    async function getContextMenuOptions(providerClassName, objectId) {
+    function getContextMenuOptions(providerClassName, objectId) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/interactions/context-menu-options`);
         url.searchParams.set("provider", providerClassName);
         url.searchParams.set("objectID", objectId.toString());

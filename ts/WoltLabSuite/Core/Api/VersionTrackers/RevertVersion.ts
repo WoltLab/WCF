@@ -11,7 +11,7 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { fromInfallibleApiRequest } from "../Result";
 
-export async function revertVersion(objectType: string, objectId: number, versionId: number): Promise<[]> {
+export function revertVersion(objectType: string, objectId: number, versionId: number): Promise<[]> {
   return fromInfallibleApiRequest(() => {
     return prepareRequest(`${window.WSC_RPC_API_URL}core/version-trackers/revert`)
       .post({

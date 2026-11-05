@@ -11,7 +11,7 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { fromInfallibleApiRequest } from "../Result";
 
-export async function revertEntry(entryId: number): Promise<[]> {
+export function revertEntry(entryId: number): Promise<[]> {
   return fromInfallibleApiRequest(() => {
     return prepareRequest(`${window.WSC_RPC_API_URL}core/edit-history-entries/${entryId}/revert`).post().fetchAsJson();
   });

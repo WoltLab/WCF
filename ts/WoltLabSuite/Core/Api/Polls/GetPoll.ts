@@ -19,7 +19,7 @@ export type PollData = {
   isFinished: boolean;
 };
 
-export async function getPoll(pollId: number): Promise<PollData> {
+export function getPoll(pollId: number): Promise<PollData> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/polls/${pollId}`);
 
   return fromInfallibleApiRequest(() => {

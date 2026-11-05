@@ -14,7 +14,7 @@ type Response = {
   template: string;
 };
 
-export async function getUserActivityPointList(userId: number): Promise<Response> {
+export function getUserActivityPointList(userId: number): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/users/${userId}/activity-points`);
 
   return fromInfallibleApiRequest(() => {

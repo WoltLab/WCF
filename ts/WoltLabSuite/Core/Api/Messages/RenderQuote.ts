@@ -20,7 +20,7 @@ type Response = {
   rawMessage: string | null;
 };
 
-export async function renderQuote(objectType: string, objectID: number, isFullQuote: boolean): Promise<Response> {
+export function renderQuote(objectType: string, objectID: number, isFullQuote: boolean): Promise<Response> {
   const url = new URL(window.WSC_RPC_API_URL + "core/messages/render-quote");
   url.searchParams.set("objectType", objectType);
   url.searchParams.set("isFullQuote", String(isFullQuote));

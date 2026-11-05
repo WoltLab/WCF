@@ -14,7 +14,7 @@ type Response = {
   template: string;
 };
 
-export async function getWidget(pollId: number): Promise<Response> {
+export function getWidget(pollId: number): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/polls/${pollId}/widget`);
 
   return fromInfallibleApiRequest(() => {

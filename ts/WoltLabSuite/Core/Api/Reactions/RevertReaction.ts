@@ -15,7 +15,7 @@ type Response = {
   reactions: Record<number, number>;
 };
 
-export async function revertReaction(objectType: string, objectID: number): Promise<Response> {
+export function revertReaction(objectType: string, objectID: number): Promise<Response> {
   return fromInfallibleApiRequest(() => {
     return prepareRequest(`${window.WSC_RPC_API_URL}core/reactions/revert`)
       .post({

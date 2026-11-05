@@ -15,7 +15,7 @@ type Response = {
   template: string;
 };
 
-export async function testNotificationEvent(eventId: number): Promise<Response> {
+export function testNotificationEvent(eventId: number): Promise<Response> {
   return fromInfallibleApiRequest(() => {
     return prepareRequest(`${window.WSC_RPC_API_URL}core/devtools/notifications/${eventId}/test`).post().fetchAsJson();
   });

@@ -10,7 +10,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getItems = getItems;
-    async function getItems(listViewClass, pageNo, sortField = "", sortOrder = "ASC", filters, listViewParameters, allowFiltering = true, allowSorting = true, allowInteractions = true, allowBulkInteractions = true) {
+    function getItems(listViewClass, pageNo, sortField = "", sortOrder = "ASC", filters, listViewParameters, allowFiltering = true, allowSorting = true, allowInteractions = true, allowBulkInteractions = true) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/list-views/items`);
         url.searchParams.set("listView", listViewClass);
         url.searchParams.set("pageNo", pageNo.toString());

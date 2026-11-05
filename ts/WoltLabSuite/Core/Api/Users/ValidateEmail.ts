@@ -19,7 +19,7 @@ type Response =
       error: "invalid" | "notUnique";
     };
 
-export async function validateEmail(email: string): Promise<Response> {
+export function validateEmail(email: string): Promise<Response> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/users/validate-email`);
 
   return fromInfallibleApiRequest(() => {

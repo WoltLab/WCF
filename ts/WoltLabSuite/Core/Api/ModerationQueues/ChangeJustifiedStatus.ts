@@ -11,7 +11,7 @@
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
 import { fromInfallibleApiRequest } from "../Result";
 
-export async function changeJustifiedStatus(queueId: number, markAsJustified: boolean): Promise<[]> {
+export function changeJustifiedStatus(queueId: number, markAsJustified: boolean): Promise<[]> {
   return fromInfallibleApiRequest(() => {
     return prepareRequest(`${window.WSC_RPC_API_URL}core/moderation-queues/${queueId}/change-justified-status`)
       .post({

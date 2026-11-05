@@ -10,7 +10,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../Result"], fu
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getNodes = getNodes;
-    async function getNodes(nodeTreeViewClass, nodeTreeViewParameters) {
+    function getNodes(nodeTreeViewClass, nodeTreeViewParameters) {
         const url = new URL(`${window.WSC_RPC_API_URL}core/node-tree-views/nodes`);
         url.searchParams.set("nodeTreeView", nodeTreeViewClass);
         if (nodeTreeViewParameters) {

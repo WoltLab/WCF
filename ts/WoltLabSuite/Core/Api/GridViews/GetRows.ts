@@ -18,7 +18,7 @@ type Response = {
   header?: string;
 };
 
-export async function getRows(
+export function getRows(
   gridViewClass: string,
   pageNo: number,
   sortField: string = "",

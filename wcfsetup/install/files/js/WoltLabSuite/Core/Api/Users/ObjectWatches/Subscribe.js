@@ -11,7 +11,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "../../Result"],
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.subscribe = subscribe;
-    async function subscribe(objectType, objectID, enableNotification) {
+    function subscribe(objectType, objectID, enableNotification) {
         return (0, Result_1.fromInfallibleApiRequest)(() => {
             return (0, Backend_1.prepareRequest)(`${window.WSC_RPC_API_URL}core/users/object-watches/subscribe`)
                 .post({
