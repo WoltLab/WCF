@@ -153,6 +153,15 @@ final class ArticleGridView extends AbstractGridView
                                     WCF::getLanguage()->get('wcf.article.featured')
                                 );
                             }
+                            if ($row->flagAsUpdated !== 0) {
+                                if ($badges !== '') {
+                                    $badges .= ' ';
+                                }
+                                $badges .= \sprintf(
+                                    '<span class="badge">%s</span>',
+                                    WCF::getLanguage()->get('wcf.article.updated')
+                                );
+                            }
 
                             // @phpstan-ignore property.notFound
                             $articleTitle = StringUtil::encodeHTML($row->title);
@@ -185,6 +194,25 @@ final class ArticleGridView extends AbstractGridView
                 ->sortable(defaultSortOrder: 'DESC')
                 ->renderer(new TimeColumnRenderer())
                 ->filter(TimeFilter::class),
+            GridViewColumn::for('lastUpdateTime')
+                ->label('wcf.acp.article.lastUpdateTime')
+                ->sortable(defaultSortOrder: 'DESC')
+                ->renderer(new class extends TimeColumnRenderer {
+                    #[\Override]
+                    public function render(mixed $value, DatabaseObject $row): string
+                    {
+                        \assert($row instanceof Article);
+
+                        // Articles that are not flagged as updated use the
+                        // publication time, which the `time` column already shows.
+                        if ($row->flagAsUpdated === 0) {
+                            return '';
+                        }
+
+                        return parent::render($value, $row);
+                    }
+                })
+                ->filter(TimeFilter::class),
         ]);
 
         $this->addAvailableFilters([
@@ -213,6 +241,7 @@ final class ArticleGridView extends AbstractGridView
             ),
             new BooleanFilter('isDeleted', 'wcf.acp.article.isDeleted'),
             new BooleanFilter('isFeatured', 'wcf.article.featured'),
+            new BooleanFilter('flagAsUpdated', 'wcf.article.updated'),
         ]);
         $provider = new ArticleInteractions();
         $provider->addInteractions([
