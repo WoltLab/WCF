@@ -2,12 +2,14 @@
 
 namespace wcf\system\interaction\bulk\user;
 
+use wcf\action\ArticleBulkAssignLabelDialogAction;
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\article\Article;
 use wcf\event\interaction\bulk\user\ArticleBulkInteractionCollecting;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\bulk\AbstractBulkInteractionProvider;
 use wcf\system\interaction\bulk\BulkDeleteInteraction;
+use wcf\system\interaction\bulk\BulkFormBuilderDialogInteraction;
 use wcf\system\interaction\bulk\BulkRestoreInteraction;
 use wcf\system\interaction\bulk\BulkRpcInteraction;
 use wcf\system\interaction\bulk\BulkSoftDeleteInteraction;
@@ -111,6 +113,18 @@ final class ArticleBulkInteractions extends AbstractBulkInteractionProvider
                             }
 
                             return $article->isFeatured !== 0;
+                        }
+                    ),
+                    new BulkFormBuilderDialogInteraction(
+                        'assign-label',
+                        ArticleBulkAssignLabelDialogAction::class,
+                        'wcf.article.button.assignLabel',
+                        static function (Article $article): bool {
+                            if (!$article->canEdit()) {
+                                return false;
+                            }
+
+                            return ($article->getCategory()?->getLabelGroups() ?? []) !== [];
                         }
                     ),
                 ]
