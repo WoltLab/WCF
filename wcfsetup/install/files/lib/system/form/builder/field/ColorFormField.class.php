@@ -72,4 +72,15 @@ final class ColorFormField extends AbstractFormField implements IImmutableFormFi
 
         return $this->getPrefixedId() . '_colorPickerButton';
     }
+
+    #[\Override]
+    public function getAriaAttributes(): array
+    {
+        $attributes = parent::getAriaAttributes();
+
+        // `aria-required` is not supported by buttons
+        unset($attributes['aria-required']);
+
+        return $attributes;
+    }
 }
