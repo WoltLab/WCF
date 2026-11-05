@@ -58,6 +58,9 @@
 			<li>
 				{icon name='flag'}
 				{content}
+					{if $article->isFeatured}
+						<span class="badge green">{lang}wcf.article.featured{/lang}</span>
+					{/if}
 					{if $article->isDeleted}
 						<span class="badge red">{lang}wcf.message.status.deleted{/lang}</span>
 					{/if}

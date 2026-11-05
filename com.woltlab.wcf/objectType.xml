@@ -979,6 +979,11 @@
 			<definitionname>com.woltlab.wcf.box.articleList.condition</definitionname>
 			<classname>wcf\system\condition\article\ArticleCategoryCondition</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.articleFeatured</name>
+			<definitionname>com.woltlab.wcf.box.articleList.condition</definitionname>
+			<classname>wcf\system\condition\article\ArticleFeaturedCondition</classname>
+		</type>
 		<!-- /article list box condition -->
 		<!-- recent activity list box condition -->
 		<type>

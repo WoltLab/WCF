@@ -33,7 +33,8 @@ return [
             SmallintDatabaseTableColumn::create('attachments')
                 ->notNull()
                 ->defaultValue(0)
-                ->drop()
+                ->drop(),
+            DefaultFalseBooleanDatabaseTableColumn::create('isFeatured'),
         ]),
     PartialDatabaseTable::create('wcf1_article_content')
         ->columns([
