@@ -9,12 +9,13 @@
 import { openMediaManager } from "../../../Component/Media/Manager";
 import { chooseImageSize, getEffectiveSize } from "../../../Component/Media/Insert";
 import { promiseMutex } from "../../../Helper/PromiseMutex";
+import { insertText } from "../../../Component/CodeMirror";
 
 class AcpUiCodeMirrorMedia {
-  protected readonly element: HTMLElement;
+  protected readonly element: HTMLTextAreaElement;
 
   constructor(elementId: string) {
-    this.element = document.getElementById(elementId) as HTMLElement;
+    this.element = document.getElementById(elementId) as HTMLTextAreaElement;
 
     const button = document.getElementById(`codemirror-${elementId}-media`)!;
     button.addEventListener(
@@ -43,7 +44,7 @@ class AcpUiCodeMirrorMedia {
       })
       .join("");
 
-    (this.element as any).codemirror.replaceSelection(content);
+    insertText(this.element, content);
   }
 }
 

@@ -20,10 +20,6 @@ let _isVisible = true;
 let _isSmartphone = false;
 let _updateRegionMarker: () => void;
 
-interface StyleEditorOptions {
-  isTainted: boolean;
-}
-
 /**
  * Compares two colors regardless of their notation, e.g. `.8` and `0.8` for the alpha channel.
  */
@@ -66,36 +62,6 @@ function handleLayoutWidth(): void {
   useFluidLayout.addEventListener("change", change);
 
   change();
-}
-
-/**
- * Handles SCSS input fields.
- */
-function handleScss(isTainted: boolean): void {
-  const individualScss = document.getElementById("individualScss")!;
-  const overrideScss = document.getElementById("overrideScss")!;
-
-  const refreshCodeMirror = (element: any): void => {
-    element.codemirror.refresh();
-    element.codemirror.setCursor(element.codemirror.getCursor(), undefined, { scroll: false });
-  };
-
-  if (isTainted) {
-    EventHandler.add("com.woltlab.wcf.simpleTabMenu_styleTabMenuContainer", "select", () => {
-      refreshCodeMirror(individualScss);
-      refreshCodeMirror(overrideScss);
-    });
-  } else {
-    EventHandler.add("com.woltlab.wcf.simpleTabMenu_advanced", "select", (data: { activeName: string }) => {
-      if (data.activeName === "advanced-custom") {
-        refreshCodeMirror(document.getElementById("individualScssCustom"));
-        refreshCodeMirror(document.getElementById("overrideScssCustom"));
-      } else if (data.activeName === "advanced-original") {
-        refreshCodeMirror(individualScss);
-        refreshCodeMirror(overrideScss);
-      }
-    });
-  }
 }
 
 /**
@@ -292,9 +258,8 @@ function initVisualEditor(): void {
 /**
  * Sets up dynamic style options.
  */
-export function setup(options: StyleEditorOptions): void {
+export function setup(): void {
   handleLayoutWidth();
-  handleScss(options.isTainted);
 
   initVisualEditor();
   handleStyleOptions();

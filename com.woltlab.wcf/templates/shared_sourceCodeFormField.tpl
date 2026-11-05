@@ -7,9 +7,3 @@
 *}>{$field->getValue()}</textarea>
 
 {include file='shared_codemirror' codemirrorMode=$field->getLanguage() codemirrorSelector='#'|concat:$field->getPrefixedId()}
-
-<script data-relocate="true">
-	(() => {
-		document.getElementById('{unsafe:$field->getPrefixedId()|encodeJS}').parentNode.dir = 'ltr';
-	})();
-</script>

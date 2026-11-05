@@ -1,0 +1,95 @@
+/* Token colors of the code editor, matching the Prism themes of `bbcode/code.scss`. */
+.codeMirrorToken--strong {
+	font-weight: 600;
+}
+
+.codeMirrorToken--emphasis {
+	font-style: italic;
+}
+
+.codeMirrorToken--link {
+	text-decoration: underline;
+}
+
+.codeMirrorToken--strikethrough {
+	text-decoration: line-through;
+}
+
+.codeMirrorToken--invalid {
+	color: var(--wcfStatusErrorText);
+}
+
+html[data-color-scheme="light"] {
+	.codeMirrorToken--comment {
+		color: slategray;
+	}
+
+	.codeMirrorToken--punctuation {
+		color: #999;
+	}
+
+	.codeMirrorToken--property,
+	.codeMirrorToken--number {
+		color: #905;
+	}
+
+	.codeMirrorToken--string {
+		color: #690;
+	}
+
+	.codeMirrorToken--operator {
+		color: #9a6e3a;
+	}
+
+	.codeMirrorToken--keyword,
+	.codeMirrorToken--attributeValue {
+		color: #07a;
+	}
+
+	.codeMirrorToken--function {
+		color: #dd4a68;
+	}
+
+	.codeMirrorToken--variable,
+	.codeMirrorToken--regexp {
+		color: #e90;
+	}
+}
+
+html[data-color-scheme="dark"] {
+	.codeMirrorToken--comment {
+		color: #8292a2;
+	}
+
+	.codeMirrorToken--punctuation,
+	.codeMirrorToken--operator {
+		color: #f8f8f2;
+	}
+
+	.codeMirrorToken--property {
+		color: #f92672;
+	}
+
+	.codeMirrorToken--number {
+		color: #ae81ff;
+	}
+
+	.codeMirrorToken--string {
+		color: #a6e22e;
+	}
+
+	.codeMirrorToken--keyword {
+		color: #66d9ef;
+	}
+
+	.codeMirrorToken--attributeValue,
+	.codeMirrorToken--function {
+		color: #e6db74;
+	}
+
+	/* Okaidia uses the text color for variables, which hides them in templates. */
+	.codeMirrorToken--variable,
+	.codeMirrorToken--regexp {
+		color: #fd971f;
+	}
+}

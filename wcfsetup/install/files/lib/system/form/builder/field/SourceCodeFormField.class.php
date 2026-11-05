@@ -35,7 +35,9 @@ final class SourceCodeFormField extends AbstractFormField implements
     protected $templateName = 'shared_sourceCodeFormField';
 
     public const LANGUAGES = [
-        // Languages supported by CodeMirror itself.
+        // Mode names of CodeMirror 5, mapped to CodeMirror 6 by `@woltlab/codemirror`.
+        // `haml`, `haskell-literate`, `rst` and `slim` have no counterpart and
+        // fall back to plain text.
         'apl',
         'asciiarmor',
         'asn.1',

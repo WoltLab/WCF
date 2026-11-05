@@ -23,9 +23,9 @@ requirejs.config({
 	},
 	packages: [
 		{
-			name: "codemirror",
-			location: "3rdParty/codemirror",
-			main: "lib/codemirror",
+			name: "@woltlab/codemirror",
+			location: "3rdParty/codemirror6",
+			main: "codemirror",
 		},
 		{
 			name: "@woltlab/visual-dom-diff",

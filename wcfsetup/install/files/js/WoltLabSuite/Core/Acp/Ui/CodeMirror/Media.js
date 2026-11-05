@@ -5,7 +5,7 @@
  * @copyright 2001-2026 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "../../../Component/Media/Manager", "../../../Component/Media/Insert", "../../../Helper/PromiseMutex"], function (require, exports, Manager_1, Insert_1, PromiseMutex_1) {
+define(["require", "exports", "../../../Component/Media/Manager", "../../../Component/Media/Insert", "../../../Helper/PromiseMutex", "../../../Component/CodeMirror"], function (require, exports, Manager_1, Insert_1, PromiseMutex_1, CodeMirror_1) {
     "use strict";
     class AcpUiCodeMirrorMedia {
         element;
@@ -30,7 +30,7 @@ define(["require", "exports", "../../../Component/Media/Manager", "../../../Comp
                 return `{{ media="${item.mediaID}"${sizeArgument} }}`;
             })
                 .join("");
-            this.element.codemirror.replaceSelection(content);
+            (0, CodeMirror_1.insertText)(this.element, content);
         }
     }
     return AcpUiCodeMirrorMedia;

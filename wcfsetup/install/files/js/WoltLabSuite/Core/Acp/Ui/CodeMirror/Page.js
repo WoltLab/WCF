@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "../../../Ui/Page/Search"], function (require, exports, tslib_1, UiPageSearch) {
+define(["require", "exports", "tslib", "../../../Ui/Page/Search", "../../../Component/CodeMirror"], function (require, exports, tslib_1, UiPageSearch, CodeMirror_1) {
     "use strict";
     UiPageSearch = tslib_1.__importStar(UiPageSearch);
     class AcpUiCodeMirrorPage {
@@ -12,7 +12,7 @@ define(["require", "exports", "tslib", "../../../Ui/Page/Search"], function (req
             UiPageSearch.open((pageID) => this._insert(pageID));
         }
         _insert(pageID) {
-            this.element.codemirror.replaceSelection(`{{ page="${pageID}" }}`);
+            (0, CodeMirror_1.insertText)(this.element, `{{ page="${pageID}" }}`);
         }
     }
     return AcpUiCodeMirrorPage;

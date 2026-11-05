@@ -96,6 +96,10 @@
 		if (/js\/3rdParty\/ckeditor\/ckeditor5\.bundle\.js$/.test(url)) {
 			return false;
 		}
+
+		if (/js\/3rdParty\/codemirror6\//.test(url)) {
+			return false;
+		}
 		
 		if (Object.keys(config.rawText).map(function (item) { return (process.cwd() + '/' + item + '.js').replace(/\\/g, '/'); }).indexOf(url.replace(/\\/g, '/')) !== -1) return result;
 

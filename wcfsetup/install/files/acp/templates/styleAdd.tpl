@@ -6,9 +6,7 @@
 
 <script data-relocate="true">
 	require(["WoltLabSuite/Core/Acp/Ui/Style/Editor", "WoltLabSuite/Core/Ui/Color/Picker"], (AcpUiStyleEditor, ColorPicker) => {
-		AcpUiStyleEditor.setup({
-			isTainted: {if $isTainted}true{else}false{/if},
-		});
+		AcpUiStyleEditor.setup();
 
 		ColorPicker.fromSelector(".jsColorPicker");
 

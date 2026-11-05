@@ -60,35 +60,6 @@ define(["require", "exports", "tslib", "../../../Core", "../../../ColorUtil", ".
         change();
     }
     /**
-     * Handles SCSS input fields.
-     */
-    function handleScss(isTainted) {
-        const individualScss = document.getElementById("individualScss");
-        const overrideScss = document.getElementById("overrideScss");
-        const refreshCodeMirror = (element) => {
-            element.codemirror.refresh();
-            element.codemirror.setCursor(element.codemirror.getCursor(), undefined, { scroll: false });
-        };
-        if (isTainted) {
-            EventHandler.add("com.woltlab.wcf.simpleTabMenu_styleTabMenuContainer", "select", () => {
-                refreshCodeMirror(individualScss);
-                refreshCodeMirror(overrideScss);
-            });
-        }
-        else {
-            EventHandler.add("com.woltlab.wcf.simpleTabMenu_advanced", "select", (data) => {
-                if (data.activeName === "advanced-custom") {
-                    refreshCodeMirror(document.getElementById("individualScssCustom"));
-                    refreshCodeMirror(document.getElementById("overrideScssCustom"));
-                }
-                else if (data.activeName === "advanced-original") {
-                    refreshCodeMirror(individualScss);
-                    refreshCodeMirror(overrideScss);
-                }
-            });
-        }
-    }
-    /**
      * Mirrors the selected style options in the preview, e.g. `data-page-header-layout`.
      */
     function handleStyleOptions() {
@@ -249,9 +220,8 @@ define(["require", "exports", "tslib", "../../../Core", "../../../ColorUtil", ".
     /**
      * Sets up dynamic style options.
      */
-    function setup(options) {
+    function setup() {
         handleLayoutWidth();
-        handleScss(options.isTainted);
         initVisualEditor();
         handleStyleOptions();
         UiScreen.on("screen-sm-down", {

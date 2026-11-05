@@ -1,10 +1,11 @@
 import * as UiPageSearch from "../../../Ui/Page/Search";
+import { insertText } from "../../../Component/CodeMirror";
 
 class AcpUiCodeMirrorPage {
-  private element: HTMLElement;
+  private element: HTMLTextAreaElement;
 
   constructor(elementId: string) {
-    this.element = document.getElementById(elementId)!;
+    this.element = document.getElementById(elementId) as HTMLTextAreaElement;
 
     const insertButton = document.getElementById(`codemirror-${elementId}-page`)!;
     insertButton.addEventListener("click", () => this._click());
@@ -15,7 +16,7 @@ class AcpUiCodeMirrorPage {
   }
 
   _insert(pageID: string): void {
-    (this.element as any).codemirror.replaceSelection(`{{ page="${pageID}" }}`);
+    insertText(this.element, `{{ page="${pageID}" }}`);
   }
 }
 
