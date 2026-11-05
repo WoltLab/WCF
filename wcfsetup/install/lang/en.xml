@@ -1072,8 +1072,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.language.item.languageCategory.description"><![CDATA[The entered language category identifier is used to group phrases.]]></item>
 		<item name="wcf.acp.language.item.languageCategory.error.notUnique"><![CDATA[This identifier is already used by an existing language category.]]></item>
 		<item name="wcf.acp.language.item.languageCategory.error.tooFewSegments"><![CDATA[This category only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
-		<item name="wcf.acp.language.add.package"><![CDATA[Package]]></item>
-		<item name="wcf.acp.language.add.package.description"><![CDATA[The imported phrases will be assigned to the selected package.]]></item>
 		<item name="wcf.acp.language.locale"><![CDATA[Region]]></item>
 		<item name="wcf.acp.language.locale.description"><![CDATA[The selected region affects dates and the formatting of numbers.]]></item>
 	</category>
@@ -5919,5 +5917,7 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.template.group.error.notShared"/>
 	<item name="wcf.global.pageDirection"/>
 	<item name="wcf.acp.article.publicationDate.error.invalid"/>
+	<item name="wcf.acp.language.add.package"/>
+	<item name="wcf.acp.language.add.package.description"/>
 </delete>
 </language>
