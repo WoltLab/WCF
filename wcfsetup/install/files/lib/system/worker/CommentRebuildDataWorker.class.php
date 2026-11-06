@@ -56,6 +56,8 @@ final class CommentRebuildDataWorker extends AbstractLinearRebuildDataWorker
 
             $commentEditor->updateResponseIDs();
             $commentEditor->updateUnfilteredResponseIDs();
+            $commentEditor->updateResponses();
+            $commentEditor->updateUnfilteredResponses();
 
             BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
                 ',',

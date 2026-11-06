@@ -278,6 +278,13 @@ class CommentList {
 
     const fragment = DomUtil.createFragmentFromHtml(response.template);
 
+    // The response counter can be out of sync with the actual responses, stop
+    // offering to load more responses if the server has none left.
+    if (fragment.querySelector(".commentResponseList__item") === null) {
+      comment.querySelector(".commentLoadNextResponses")?.remove();
+      return;
+    }
+
     fragment.querySelectorAll<HTMLElement>(".commentResponseList__item").forEach((element) => {
       comment.querySelector(`.commentResponseList__item[data-response-id="${element.dataset.responseId!}"]`)?.remove();
     });
