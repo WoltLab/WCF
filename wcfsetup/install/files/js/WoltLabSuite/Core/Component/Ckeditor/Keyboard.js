@@ -32,7 +32,7 @@ define(["require", "exports", "./Event"], function (require, exports, Event_1) {
         };
     }
     function setupSubmitShortcut(ckeditor) {
-        const container = ckeditor.element.closest("form, .message, .jsOuterEditorContainer");
+        const container = ckeditor.element.closest("form, .formBuilder, .message, .jsOuterEditorContainer");
         if (container === null) {
             return;
         }

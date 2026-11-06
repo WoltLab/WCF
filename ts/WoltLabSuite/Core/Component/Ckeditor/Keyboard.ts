@@ -37,7 +37,7 @@ function getSubmitShortcut(submitButton: HTMLElement): (event: KeyboardEvent) =>
 }
 
 export function setupSubmitShortcut(ckeditor: CKEditor): void {
-  const container = ckeditor.element.closest("form, .message, .jsOuterEditorContainer");
+  const container = ckeditor.element.closest("form, .formBuilder, .message, .jsOuterEditorContainer");
   if (container === null) {
     return;
   }
