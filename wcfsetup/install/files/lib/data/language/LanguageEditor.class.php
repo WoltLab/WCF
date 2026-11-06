@@ -248,7 +248,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $boxes[] = $row;
         }
 
-        if ($pages !== []) {
+        if ($boxes !== []) {
             echo "\t<category name=\"shadow.invalid.box\">\n";
 
             foreach ($boxes as $box) {
@@ -500,7 +500,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     $statement = WCF::getDB()->prepare($sql);
 
                     WCF::getDB()->beginTransaction();
-                    foreach ($updateValues as $languageItemID) {
+                    foreach ($customLanguageItemIDs as $languageItemID) {
                         $statement->execute([
                             0,
                             1,
