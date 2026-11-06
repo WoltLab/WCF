@@ -363,15 +363,23 @@ final class WCFSetup extends WCF
      */
     protected function showSystemRequirements(): ResponseInterface
     {
-        $phpVersionLowerBound = '8.4.23';
-        $phpVersionUpperBound = '8.5.x';
+        $minimumPhpVersions = ['8.4.27', '8.5.12'];
         $system = [];
 
         // php version
         $system['phpVersion']['value'] = \PHP_VERSION;
         $comparePhpVersion = \preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $system['phpVersion']['value']);
-        $system['phpVersion']['result'] = \version_compare($comparePhpVersion, $phpVersionLowerBound, '>=')
-            && \version_compare($comparePhpVersion, \str_replace('x', '999', $phpVersionUpperBound), '<=');
+        $system['phpVersion']['result'] = false;
+        foreach ($minimumPhpVersions as $minimumVersion) {
+            $versionPrefix = \preg_replace('~\.\d+$~', '.', $minimumVersion);
+            if (
+                \str_starts_with($comparePhpVersion, $versionPrefix)
+                && \version_compare($comparePhpVersion, $minimumVersion) >= 0
+            ) {
+                $system['phpVersion']['result'] = true;
+                break;
+            }
+        }
 
         $system['x64']['result'] = \PHP_INT_SIZE === 8;
 
@@ -432,8 +440,7 @@ final class WCFSetup extends WCF
                         [
                             'system' => $system,
                             'nextStep' => 'configureDB',
-                            'phpVersionLowerBound' => $phpVersionLowerBound,
-                            'phpVersionUpperBound' => $phpVersionUpperBound,
+                            'minimumPhpVersions' => $minimumPhpVersions,
                         ]
                     )
                 );
