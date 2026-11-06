@@ -144,7 +144,8 @@
 	top: -30px; /* see wsc31.scss */
 }
 
-.dialogContent .codeBox .codeBoxHeader {
+.dialogContent .codeBox .codeBoxHeader,
+.dialog__content .codeBox .codeBoxHeader {
 	/* Prevent the header being sticky inside dialogs, which doesn't really work.  */
 	position: static;
 }
