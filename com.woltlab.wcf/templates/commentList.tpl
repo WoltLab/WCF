@@ -11,7 +11,7 @@
 			data-comment-id="{$comment->commentID}"
 			{unsafe:$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment', $comment->commentID)}
 			data-can-edit="{if $comment->isEditable()}true{else}false{/if}" data-can-delete="{if $comment->isDeletable()}true{else}false{/if}"
-			data-responses="{$comment->responses}" data-last-response-time="{if $ignoreLastResponseTime|empty}{$comment->getLastResponseTime()}{else}1{/if}" data-is-disabled="{$comment->isDisabled}"
+			data-responses="{if $commentCanModerate}{$comment->unfilteredResponses}{else}{$comment->responses}{/if}" data-last-response-time="{if $ignoreLastResponseTime|empty}{$comment->getLastResponseTime()}{else}1{/if}" data-is-disabled="{$comment->isDisabled}"
 			data-last-response-id="{if $ignoreLastResponseTime|empty}{$comment->getLastResponseID()}{else}0{/if}"
 		>
 			<woltlab-core-comment class="comment" comment-id="{$comment->commentID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
