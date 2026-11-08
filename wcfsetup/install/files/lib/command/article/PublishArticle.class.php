@@ -6,6 +6,7 @@ use wcf\data\article\Article;
 use wcf\data\article\ArticleBuilder;
 use wcf\event\article\ArticlePublished;
 use wcf\system\event\EventHandler;
+use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
 use wcf\system\user\object\watch\UserObjectWatchHandler;
@@ -38,6 +39,11 @@ final class PublishArticle
         }
 
         new ResetUserStorageForUnreadArticles()();
+
+        ModerationQueueActivationManager::getInstance()->removeModeratedContent(
+            'com.woltlab.wcf.article',
+            [$this->article->articleID]
+        );
 
         $event = new ArticlePublished($this->article);
         EventHandler::getInstance()->fire($event);

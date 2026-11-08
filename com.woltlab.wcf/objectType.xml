@@ -87,6 +87,11 @@
 			<classname>wcf\system\moderation\queue\report\ArticleModerationQueueReportHandler</classname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.moderation.activation</definitionname>
+			<classname>wcf\system\moderation\queue\activation\ArticleModerationQueueActivationHandler</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.article.category</name>
 			<definitionname>com.woltlab.wcf.user.objectWatch</definitionname>
 			<classname>wcf\system\user\object\watch\ArticleCategoryUserObjectWatch</classname>

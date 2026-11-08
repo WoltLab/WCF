@@ -6,6 +6,7 @@ use wcf\data\article\Article;
 use wcf\data\article\ArticleBuilder;
 use wcf\event\article\ArticleCreated;
 use wcf\system\event\EventHandler;
+use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
@@ -23,6 +24,7 @@ final class CreateArticle
 {
     public function __construct(
         private readonly ArticleBuilder $builder,
+        private readonly bool $addToModerationQueue = false,
     ) {}
 
     public function __invoke(): Article
@@ -56,6 +58,11 @@ final class CreateArticle
             );
 
             new MarkArticleAsRead($article)();
+        } elseif ($this->addToModerationQueue) {
+            ModerationQueueActivationManager::getInstance()->addModeratedContent(
+                'com.woltlab.wcf.article',
+                $article->articleID
+            );
         }
 
         EventHandler::getInstance()->fire(new ArticleCreated($article, $this->builder));

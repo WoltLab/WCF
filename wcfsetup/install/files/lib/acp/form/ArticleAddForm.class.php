@@ -695,7 +695,10 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
             return new UpdateArticle($builder);
         }
 
-        return new CreateArticle($builder);
+        $canManage = WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
+            || WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles');
+
+        return new CreateArticle($builder, !$canManage);
     }
 
     protected function getAttachmentObjectID(?int $languageID = null): ?int
