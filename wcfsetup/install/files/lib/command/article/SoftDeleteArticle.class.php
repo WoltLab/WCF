@@ -6,6 +6,7 @@ use wcf\data\article\Article;
 use wcf\data\article\ArticleBuilder;
 use wcf\event\article\ArticleSoftDeleted;
 use wcf\system\event\EventHandler;
+use wcf\system\moderation\queue\ModerationQueueActivationManager;
 
 /**
  * Soft-deletes an article.
@@ -26,6 +27,11 @@ final class SoftDeleteArticle
             ->update();
 
         new ResetUserStorageForUnreadArticles()();
+
+        ModerationQueueActivationManager::getInstance()->removeModeratedContent(
+            'com.woltlab.wcf.article',
+            [$this->article->articleID]
+        );
 
         $event = new ArticleSoftDeleted($this->article);
         EventHandler::getInstance()->fire($event);

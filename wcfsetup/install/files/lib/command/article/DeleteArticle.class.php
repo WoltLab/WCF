@@ -10,6 +10,7 @@ use wcf\system\attachment\AttachmentHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -69,6 +70,11 @@ final class DeleteArticle
                 ArticleBuilder::incrementArticleCounter($this->article->userID, -1);
             }
         }
+        // delete moderation queue entries
+        ModerationQueueActivationManager::getInstance()->removeModeratedContent(
+            'com.woltlab.wcf.article',
+            [$this->article->articleID]
+        );
         // delete attachments
         if ($attachmentArticleContentIDs !== []) {
             AttachmentHandler::removeAttachments(

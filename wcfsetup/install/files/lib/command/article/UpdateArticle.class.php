@@ -8,6 +8,7 @@ use wcf\data\article\ArticleVersionTracker;
 use wcf\data\article\content\ArticleContent;
 use wcf\event\article\ArticleUpdated;
 use wcf\system\event\EventHandler;
+use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
@@ -116,6 +117,13 @@ final class UpdateArticle
             );
             UserActivityEventHandler::getInstance()->removeEvents(
                 'com.woltlab.wcf.article.recentActivityEvent',
+                [$article->articleID]
+            );
+        }
+
+        if ($newStatus !== Article::UNPUBLISHED) {
+            ModerationQueueActivationManager::getInstance()->removeModeratedContent(
+                'com.woltlab.wcf.article',
                 [$article->articleID]
             );
         }
