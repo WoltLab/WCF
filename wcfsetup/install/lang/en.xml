@@ -4291,6 +4291,10 @@ Attachments:
 		<item name="wcf.moderation.activation.notification.commentResponse.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to comments on <strong>{$moderationQueue}</strong> waiting for approval.]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} replied to {@$commentAuthor}’s comment on {@$moderationQueue->getTitle()} [URL:{@$moderationQueue->getLink()}] waiting for approval{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} replied to <strong>{$commentAuthor}</strong>’s comment on <a href="{$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> waiting for approval:</p>]]></item>
+		<item name="wcf.moderation.activation.notification.mail.plaintext"><![CDATA[{$title} ({$typeName}) by {if $author->userID}{$author}{else}a guest{/if} is awaiting approval [URL:{$objectLink}].]]></item>
+		<item name="wcf.moderation.activation.notification.mail.html"><![CDATA[<p><a href="{$objectLink}">{$title}</a> ({$typeName}) by {if $author->userID}{$author}{else}a guest{/if} is awaiting approval{if $affectedObject}:{else}.{/if}</p>]]></item>
+		<item name="wcf.moderation.activation.notification.message"><![CDATA[<strong>{$title}</strong> ({$typeName}) by {if $author->userID}<strong>{$author}</strong>{else}a guest{/if} is awaiting approval.]]></item>
+		<item name="wcf.moderation.activation.notification.title"><![CDATA[Content awaiting approval]]></item>
 		<item name="wcf.moderation.activation.removeContent"><![CDATA[Delete Content]]></item>
 		<item name="wcf.moderation.activation.removeContent.confirmMessage"><![CDATA[Do you really want to delete {if !$moderationQueueCount|isset || $moderationQueueCount == 1}this content{else}these contents{/if}?]]></item>
 	</category>
@@ -5334,6 +5338,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.notification.com.woltlab.wcf.administration"><![CDATA[Administration]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.report"><![CDATA[New report]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.activation"><![CDATA[New content awaiting approval]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[New comment on a moderation entry]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[New reply to a comment on a moderation entry]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page"><![CDATA[Pages]]></item>

@@ -7,6 +7,7 @@ use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\form\ModerationActivationForm;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\moderation\queue\activation\IModerationQueueActivationHandler;
+use wcf\system\WCF;
 
 /**
  * Moderation queue implementation for moderated content.
@@ -69,6 +70,20 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager
             $this->getProcessor($objectType)->getContainerID($objectID),
             $additionalData
         );
+    }
+
+    #[\Override]
+    protected function addEntry(int $objectTypeID, int $objectID, int $containerID = 0, array $additionalData = [])
+    {
+        $queue = parent::addEntry($objectTypeID, $objectID, $containerID, $additionalData);
+
+        // Content disabled by a moderator does not require a notification.
+        $user = WCF::getUser();
+        if ($user->isGuest() || !$this->getProcessor(null, $objectTypeID)->isAffectedUser($queue, $user->userID)) {
+            $this->notifyModerators($queue, 'activation');
+        }
+
+        return $queue;
     }
 
     /**
