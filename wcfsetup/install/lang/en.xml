@@ -1452,7 +1452,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.option.category.user.signature"><![CDATA[Signature]]></item>
 		<item name="wcf.acp.option.category.user.title"><![CDATA[User Title]]></item>
 		<item name="wcf.acp.option.category.user.cleanup"><![CDATA[Cleanup]]></item>
-		<item name="wcf.acp.option.category.user.list"><![CDATA[Member Lists]]></item>
+		<item name="wcf.acp.option.category.user.list"><![CDATA[Members Lists]]></item>
 		<item name="wcf.acp.option.category.user.list.members"><![CDATA[Members List]]></item>
 		<item name="wcf.acp.option.category.user.list.online"><![CDATA[Users Online List]]></item>
 		<item name="wcf.acp.option.category.user.register"><![CDATA[Registration]]></item>
@@ -1498,9 +1498,9 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Previous usernames will be displayed for the following days. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Members per Page]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Sort by]]></item>
-		<item name="wcf.acp.option.members_list_default_sort_field.description"><![CDATA[Choose default sort option of member list.]]></item>
+		<item name="wcf.acp.option.members_list_default_sort_field.description"><![CDATA[Choose default sort option of the members list.]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_order"><![CDATA[Sort Order]]></item>
-		<item name="wcf.acp.option.members_list_default_sort_order.description"><![CDATA[Choose default sort order of member list.]]></item>
+		<item name="wcf.acp.option.members_list_default_sort_order.description"><![CDATA[Choose default sort order of the members list.]]></item>
 		<item name="wcf.acp.option.users_online_show_guests"><![CDATA[Display guests]]></item>
 		<item name="wcf.acp.option.users_online_show_robots"><![CDATA[Display search engine spiders]]></item>
 		<item name="wcf.acp.option.users_online_default_sort_field"><![CDATA[Sort by]]></item>
