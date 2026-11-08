@@ -24,7 +24,7 @@ final class CreateArticle
 {
     public function __construct(
         private readonly ArticleBuilder $builder,
-        private readonly bool $addToModerationQueue = false,
+        private readonly bool $isContribution = false,
     ) {}
 
     public function __invoke(): Article
@@ -58,7 +58,7 @@ final class CreateArticle
             );
 
             new MarkArticleAsRead($article)();
-        } elseif ($this->addToModerationQueue) {
+        } elseif ($this->isContribution) {
             ModerationQueueActivationManager::getInstance()->addModeratedContent(
                 'com.woltlab.wcf.article',
                 $article->articleID
