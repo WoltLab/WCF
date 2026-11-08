@@ -49,6 +49,13 @@
 			<preset>1</preset>
 		</event>
 		<event>
+			<name>activation</name>
+			<objecttype>com.woltlab.wcf.moderation.queue</objecttype>
+			<classname>wcf\system\user\notification\event\ActivationModerationQueueUserNotificationEvent</classname>
+			<permissions>mod.general.canUseModeration</permissions>
+			<preset>0</preset>
+		</event>
+		<event>
 			<name>comment</name>
 			<objecttype>com.woltlab.wcf.moderation.queue.notification</objecttype>
 			<classname>wcf\system\user\notification\event\ModerationQueueCommentUserNotificationEvent</classname>

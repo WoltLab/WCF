@@ -5,14 +5,9 @@ namespace wcf\system\moderation\queue;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ViewableModerationQueue;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\ModerationReportForm;
-use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
-use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
-use wcf\system\user\notification\object\ModerationQueueUserNotificationObject;
-use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 
 /**
@@ -182,74 +177,8 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
 
         ModerationQueueManager::getInstance()->resetModerationCount();
 
-        $this->notifyModerators($queue);
-    }
+        $this->notifyModerators($queue, 'report');
 
-    private function notifyModerators(ModerationQueue $queue): void
-    {
-        /** @see TMultiRecipientModerationQueueCommentUserNotificationObjectType::loadModerators() */
-        $userGroupOptionCache = UserGroupOptionCacheBuilder::getInstance()->getData();
-        $canUseModerationOption = $userGroupOptionCache['options']['mod.general.canUseModeration'];
-
-        $sql = "SELECT  DISTINCT userID
-                FROM    (
-                            SELECT  userID
-                            FROM    wcf1_user_to_group
-                            WHERE   groupID IN (
-                                SELECT  groupID
-                                FROM    wcf1_user_group_option_value
-                                WHERE   optionID = ?
-                                    AND optionValue = ?
-                            )
-                        ) users_in_groups_with_access
-                WHERE   userID NOT IN (
-                            SELECT  userID
-                            FROM    wcf1_user_to_group
-                            WHERE   groupID IN (
-                                        SELECT  groupID
-                                        FROM    wcf1_user_group_option_value
-                                        WHERE   optionID = ?
-                                            AND optionValue = ?
-                                    )
-                        )
-                    AND userID NOT IN (
-                            SELECT  userID
-                            FROM    wcf1_moderation_queue_to_user
-                            WHERE   queueID = ?
-                        )";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            $canUseModerationOption->optionID,
-            1,
-            $canUseModerationOption->optionID,
-            -1,
-            $queue->queueID,
-        ]);
-        $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-        if ($userIDs === []) {
-            return;
-        }
-        UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
-        $objectType = ObjectTypeCache::getInstance()->getObjectType($queue->objectTypeID);
-        $processor = $objectType->getProcessor();
-        \assert($processor instanceof IModerationQueueHandler);
-
-        $userIDs = \array_filter($userIDs, function ($userID) use ($processor, $queue) {
-            return $processor->isAffectedUser($queue, $userID);
-        });
-        if ($userIDs === []) {
-            return;
-        }
-        foreach ($userIDs as $userID) {
-            $user = UserProfileRuntimeCache::getInstance()->getObject($userID);
-            ModerationQueueManager::getInstance()->setAssignment([$queue->queueID => true], $user->getDecoratedObject());
-        }
-
-        UserNotificationHandler::getInstance()->fireEvent(
-            'report',
-            'com.woltlab.wcf.moderation.queue',
-            new ModerationQueueUserNotificationObject($queue),
-            $userIDs
-        );
+        return $queue;
     }
 }

@@ -6,10 +6,15 @@ use wcf\command\moderation\queue\MarkModerationQueueAsDone;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ModerationQueueList;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\NotImplementedException;
 use wcf\system\request\LinkHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\user\notification\object\ModerationQueueUserNotificationObject;
+use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 
 /**
@@ -77,7 +82,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
      * Adds an entry to moderation queue.
      *
      * @param mixed[] $additionalData
-     * @return void
+     * @return ModerationQueue
      */
     protected function addEntry(int $objectTypeID, int $objectID, int $containerID = 0, array $additionalData = [])
     {
@@ -104,6 +109,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
                 ],
             ]);
             $objectAction->executeAction();
+            $queue = $objectAction->getReturnValues()['returnValues'];
         } else {
             $objectAction = new ModerationQueueAction([$row['queueID']], 'update', [
                 'data' => [
@@ -115,9 +121,86 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
                 ],
             ]);
             $objectAction->executeAction();
+            $queue = new ModerationQueue($row['queueID']);
         }
 
         ModerationQueueManager::getInstance()->resetModerationCount();
+
+        return $queue;
+    }
+
+    /**
+     * Notifies all moderators affected by the given queue entry by firing the given
+     * user notification event of the `com.woltlab.wcf.moderation.queue` object type.
+     *
+     * @since 6.3
+     */
+    protected function notifyModerators(ModerationQueue $queue, string $eventName): void
+    {
+        /** @see TMultiRecipientModerationQueueCommentUserNotificationObjectType::loadModerators() */
+        $userGroupOptionCache = UserGroupOptionCacheBuilder::getInstance()->getData();
+        $canUseModerationOption = $userGroupOptionCache['options']['mod.general.canUseModeration'];
+
+        $sql = "SELECT  DISTINCT userID
+                FROM    (
+                            SELECT  userID
+                            FROM    wcf1_user_to_group
+                            WHERE   groupID IN (
+                                SELECT  groupID
+                                FROM    wcf1_user_group_option_value
+                                WHERE   optionID = ?
+                                    AND optionValue = ?
+                            )
+                        ) users_in_groups_with_access
+                WHERE   userID NOT IN (
+                            SELECT  userID
+                            FROM    wcf1_user_to_group
+                            WHERE   groupID IN (
+                                        SELECT  groupID
+                                        FROM    wcf1_user_group_option_value
+                                        WHERE   optionID = ?
+                                            AND optionValue = ?
+                                    )
+                        )
+                    AND userID NOT IN (
+                            SELECT  userID
+                            FROM    wcf1_moderation_queue_to_user
+                            WHERE   queueID = ?
+                        )";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $canUseModerationOption->optionID,
+            1,
+            $canUseModerationOption->optionID,
+            -1,
+            $queue->queueID,
+        ]);
+        $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+        if ($userIDs === []) {
+            return;
+        }
+        UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
+        $objectType = ObjectTypeCache::getInstance()->getObjectType($queue->objectTypeID);
+        $processor = $objectType->getProcessor();
+        \assert($processor instanceof IModerationQueueHandler);
+
+        $userIDs = \array_filter($userIDs, function ($userID) use ($processor, $queue) {
+            return $processor->isAffectedUser($queue, $userID);
+        });
+        if ($userIDs === []) {
+            return;
+        }
+        foreach ($userIDs as $userID) {
+            $user = UserProfileRuntimeCache::getInstance()->getObject($userID);
+            ModerationQueueManager::getInstance()->setAssignment([$queue->queueID => true], $user->getDecoratedObject());
+        }
+
+        UserNotificationHandler::getInstance()->fireEvent(
+            $eventName,
+            'com.woltlab.wcf.moderation.queue',
+            new ModerationQueueUserNotificationObject($queue),
+            $userIDs
+        );
     }
 
     /**
