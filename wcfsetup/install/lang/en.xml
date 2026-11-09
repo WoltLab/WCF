@@ -4092,7 +4092,7 @@ Attachments:
 		<item name="wcf.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.label.labels"><![CDATA[Labels]]></item>
 		<item name="wcf.label.none"><![CDATA[No Selection]]></item>
-		<item name="wcf.label.picker.maxSelection"><![CDATA[Select up to {#$max} labels.]]></item>
+		<item name="wcf.label.picker.maxSelection"><![CDATA[Up to {#$max} labels]]></item>
 		<item name="wcf.label.withoutSelection"><![CDATA[Without Label]]></item>
 	</category>
 	<category name="wcf.like">

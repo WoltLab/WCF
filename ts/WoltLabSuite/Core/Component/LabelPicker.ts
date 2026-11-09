@@ -31,6 +31,10 @@ function setupPicker(picker: WoltlabCoreLabelPickerElement): void {
     }
 
     const button = picker.querySelector<HTMLElement>(":scope > .labelPicker__toggle")!;
+
+    // The popover is at least as wide as the toggle button.
+    popover.style.setProperty("min-width", `${button.offsetWidth}px`);
+
     UiAlignment.set(popover, button, {
       verticalOffset: 4,
     });

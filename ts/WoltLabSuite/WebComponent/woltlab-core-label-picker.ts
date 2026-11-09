@@ -9,7 +9,8 @@
  * selected label is submitted as `name[]`.
  *
  * The labels are presented as a listbox inside a native popover. The popover
- * is positioned by `WoltLabSuite/Core/Component/LabelPicker`.
+ * is positioned by `WoltLabSuite/Core/Component/LabelPicker`. When selecting
+ * multiple labels, a footer names the limit and offers to reset the selection.
  *
  * Usage: `<woltlab-core-label-picker name="labelIDs[1]" labels="[[1,&quot;…&quot;]]" value="1"></woltlab-core-label-picker>`
  *
@@ -26,12 +27,14 @@
     static formAssociated = true;
 
     readonly #internals: ElementInternals;
+    #badges: HTMLElement | undefined = undefined;
     #button: HTMLButtonElement | undefined = undefined;
     #defaultValue = "";
     #labels = new Map<number, string>();
     #listbox: HTMLElement | undefined = undefined;
     #options = new Map<number, HTMLElement>();
     #popover: HTMLElement | undefined = undefined;
+    #resetButton: HTMLButtonElement | undefined = undefined;
     #typeahead = "";
     #typeaheadTimer: number | undefined = undefined;
 
@@ -71,6 +74,12 @@
           this.#closed();
         }
       });
+      this.#popover.addEventListener("focusout", (event) => {
+        // Moving the focus out of the picker, e.g. by tabbing, closes the popover.
+        if (event.relatedTarget instanceof Node && !this.contains(event.relatedTarget) && this.#isOpen()) {
+          this.#popover!.hidePopover();
+        }
+      });
 
       this.#button = document.createElement("button");
       this.#button.type = "button";
@@ -78,6 +87,15 @@
       this.#button.disabled = this.matches(":disabled");
       this.#button.popoverTargetElement = this.#popover;
       this.#button.setAttribute("aria-haspopup", "listbox");
+
+      this.#badges = document.createElement("span");
+      this.#badges.classList.add("labelPicker__badges");
+
+      const chevron = document.createElement("fa-icon");
+      chevron.classList.add("labelPicker__chevron");
+      chevron.setIcon("chevron-down");
+
+      this.#button.append(this.#badges, chevron);
       this.#button.addEventListener("keydown", (event) => {
         if ((event.key === "ArrowDown" || event.key === "ArrowUp") && !this.#isOpen()) {
           event.preventDefault();
@@ -155,15 +173,32 @@
       }
 
       if (this.multiple) {
-        const limit = document.createElement("p");
+        const limit = document.createElement("span");
         limit.id = `${id}Limit`;
         limit.classList.add("labelPicker__limit");
         limit.textContent = window.WoltLabLanguage.getPhrase("wcf.label.picker.maxSelection", { max: this.max });
 
+        this.#resetButton = document.createElement("button");
+        this.#resetButton.type = "button";
+        this.#resetButton.classList.add("labelPicker__reset");
+        this.#resetButton.textContent = window.WoltLabLanguage.getPhrase("wcf.global.button.reset");
+        this.#resetButton.addEventListener("click", () => this.#reset());
+        this.#resetButton.addEventListener("keydown", (event) => {
+          if (event.key === "Tab" && event.shiftKey) {
+            event.preventDefault();
+
+            this.#focusOption();
+          }
+        });
+
+        const footer = document.createElement("div");
+        footer.classList.add("labelPicker__footer");
+        footer.append(limit, this.#resetButton);
+
         this.#listbox.setAttribute("aria-multiselectable", "true");
         this.#listbox.setAttribute("aria-describedby", limit.id);
 
-        return [limit, this.#listbox];
+        return [this.#listbox, footer];
       }
 
       // Selecting multiple labels deselects them individually instead.
@@ -184,9 +219,11 @@
     }
 
     #createOption(labelId: number, html: string): HTMLElement {
-      const icon = document.createElement("fa-icon");
-      icon.classList.add("labelPicker__check");
-      icon.setIcon("check");
+      const indicator = document.createElement("span");
+      indicator.classList.add(
+        "labelPicker__indicator",
+        this.multiple ? "labelPicker__indicator--checkbox" : "labelPicker__indicator--radio",
+      );
 
       const label = document.createElement("span");
       label.classList.add("labelPicker__label");
@@ -196,7 +233,7 @@
       option.classList.add("labelPicker__option");
       option.setAttribute("role", "option");
       option.tabIndex = -1;
-      option.append(icon, label);
+      option.append(indicator, label);
       option.addEventListener("click", () => this.#selectOption(labelId));
       this.#options.set(labelId, option);
 
@@ -213,12 +250,23 @@
         this.#listbox!.setAttribute("aria-label", label);
       }
 
+      this.#button!.classList.add("labelPicker__toggle--open");
+
+      this.#focusOption();
+    }
+
+    /**
+     * Focuses the first selected label or the first label if none is selected.
+     */
+    #focusOption(): void {
       const options = Array.from(this.#options.values());
       const option = options.find((option) => option.getAttribute("aria-selected") === "true") ?? options[0];
       option?.focus();
     }
 
     #closed(): void {
+      this.#button!.classList.remove("labelPicker__toggle--open");
+
       this.#typeahead = "";
       window.clearTimeout(this.#typeaheadTimer);
     }
@@ -268,6 +316,12 @@
           break;
 
         case "Tab":
+          // Tabbing forward moves the focus to the reset button or out of
+          // the picker, which closes the popover.
+          if (!event.shiftKey) {
+            return;
+          }
+
           this.#close();
           break;
 
@@ -331,6 +385,18 @@
       this.#dispatchChange();
     }
 
+    #reset(): void {
+      if (this.values.length === 0) {
+        return;
+      }
+
+      this.values = [];
+      this.#dispatchChange();
+
+      // The reset button is disabled without any selected labels.
+      this.#focusOption();
+    }
+
     #dispatchChange(): void {
       this.dispatchEvent(new Event("input", { bubbles: true }));
       this.dispatchEvent(new Event("change", { bubbles: true }));
@@ -355,11 +421,11 @@
     #renderSingle(): void {
       const value = this.value;
 
-      if (this.#button !== undefined) {
+      if (this.#badges !== undefined) {
         if (value === -1) {
-          this.#button.innerHTML = this.#getBadge("wcf.label.withoutSelection");
+          this.#badges.innerHTML = this.#getBadge("wcf.label.withoutSelection");
         } else {
-          this.#button.innerHTML = this.#labels.get(value) ?? this.#getBadge("wcf.label.none");
+          this.#badges.innerHTML = this.#labels.get(value) ?? this.#getBadge("wcf.label.none");
         }
       }
 
@@ -374,9 +440,13 @@
     #renderMultiple(): void {
       const values = this.values;
 
-      if (this.#button !== undefined) {
-        const html = values.map((labelId) => this.#labels.get(labelId)!).join(" ");
-        this.#button.innerHTML = html || this.#getBadge("wcf.label.none");
+      if (this.#badges !== undefined) {
+        const html = values.map((labelId) => this.#labels.get(labelId)!).join("");
+        this.#badges.innerHTML = html || this.#getBadge("wcf.label.none");
+      }
+
+      if (this.#resetButton !== undefined) {
+        this.#resetButton.disabled = values.length === 0;
       }
 
       const limitReached = values.length >= this.max;

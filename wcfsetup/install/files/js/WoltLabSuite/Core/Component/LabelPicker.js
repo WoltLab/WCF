@@ -28,6 +28,8 @@ define(["require", "exports", "tslib", "../Helper/Selector", "../Ui/Alignment"],
                 return;
             }
             const button = picker.querySelector(":scope > .labelPicker__toggle");
+            // The popover is at least as wide as the toggle button.
+            popover.style.setProperty("min-width", `${button.offsetWidth}px`);
             UiAlignment.set(popover, button, {
                 verticalOffset: 4,
             });
