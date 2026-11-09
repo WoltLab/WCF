@@ -85,23 +85,44 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
         $validationErrors = [];
         $satisfiedGroups = [];
         foreach ($labelIDs as $groupID => $labelID) {
-            // only one label per group is allowed
-            // @phpstan-ignore function.impossibleType
-            if (\is_array($labelID)) {
-                $validationErrors[$groupID] = 'invalid';
-                continue;
-            }
-
             // label group id is unknown
             if (!isset($this->labelGroups[$groupID])) {
                 $validationErrors[0] = 'invalid';
                 continue;
             }
 
-            // label id is invalid for this group
-            if (!$this->labelGroups[$groupID]->isValid($labelID)) {
+            if (\is_array($labelID)) {
+                // only handlers that support multiple labels per group accept a list
+                if (!($this instanceof IMultipleLabelsObjectHandler)) {
+                    $validationErrors[$groupID] = 'invalid';
+                    continue;
+                }
+
+                $groupLabelIDs = $labelID;
+            } else {
+                $groupLabelIDs = [$labelID];
+            }
+
+            if ($groupLabelIDs === []) {
+                continue;
+            }
+
+            if (\count($groupLabelIDs) !== \count(\array_unique($groupLabelIDs))) {
                 $validationErrors[$groupID] = 'invalid';
                 continue;
+            }
+
+            if (\count($groupLabelIDs) > $this->getMaxSelection($this->labelGroups[$groupID])) {
+                $validationErrors[$groupID] = 'tooMany';
+                continue;
+            }
+
+            // label id is invalid for this group
+            foreach ($groupLabelIDs as $groupLabelID) {
+                if (!$this->labelGroups[$groupID]->isValid($groupLabelID)) {
+                    $validationErrors[$groupID] = 'invalid';
+                    continue 2;
+                }
             }
 
             // check permission
@@ -139,6 +160,17 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
             // WCF 2.1+: detailed error report (empty array if validation passed)
             return $validationErrors;
         }
+    }
+
+    /**
+     * Returns the maximum number of labels of the given label group that can
+     * be assigned to a single object.
+     *
+     * @since 6.3
+     */
+    public function getMaxSelection(ViewableLabelGroup $labelGroup): int
+    {
+        return LabelHandler::getInstance()->getMaxSelection($labelGroup, $this->objectType);
     }
 
     #[\Override]

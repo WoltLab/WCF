@@ -397,25 +397,30 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
                         || $labelGroup->getPermission($optionID)
                 )
                 ->required($labelGroup->forceSelection !== 0)
+                ->maxSelection(ArticleLabelObjectHandler::getInstance()->getMaxSelection($labelGroup))
                 ->addDependency(
                     ValueFormFieldDependency::create('categoryID')
                         ->fieldId('categoryID')
                         ->values($categoryIDs)
                 )
                 ->labelGroup($labelGroup)
-                ->saveValueCallback(static function (ArticleBuilder $builder, IFormField $field) {
-                    // `-1` and `0` are special values that are irrelevant for saving.
-                    $labelID = (int)$field->getSaveValue();
-                    if ($labelID > 0) {
+                ->saveValueCallback(static function (ArticleBuilder $builder, LabelFormField $field) {
+                    foreach ($field->getSelectedLabelIDs() as $labelID) {
                         $builder->setLabelID($labelID);
                     }
                 })
                 ->loadValueCallback(static function (Article $object, LabelFormField $field) use ($groupID) {
+                    $labelIDs = [];
                     foreach ($object->getLabels() as $label) {
                         if ($label->groupID === $groupID) {
-                            $field->value($label->labelID);
-                            break;
+                            $labelIDs[] = $label->labelID;
                         }
+                    }
+
+                    if ($field->getMaxSelection() > 1) {
+                        $field->value($labelIDs);
+                    } elseif ($labelIDs !== []) {
+                        $field->value($labelIDs[0]);
                     }
                 });
         }

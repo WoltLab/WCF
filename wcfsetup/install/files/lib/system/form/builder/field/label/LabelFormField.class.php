@@ -28,7 +28,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     /**
      * @inheritDoc
      */
-    protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+    protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Label';
 
     /**
      * `true` if the value `-1` can be selected for objects without any label of the label group
@@ -45,6 +45,13 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
      * @inheritDoc
      */
     protected $templateName = 'shared_labelFormField';
+
+    /**
+     * maximum number of labels that can be selected, the value is a list of label ids if more
+     * than one label can be selected
+     * @since 6.3
+     */
+    protected int $maxSelection = 1;
 
     /**
      * loaded labels grouped by label object type and object id to avoid loading the same labels
@@ -89,6 +96,10 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
      */
     public function invertible(bool $invertible = true): static
     {
+        if ($invertible && $this->maxSelection > 1) {
+            throw new \BadMethodCallException("Field '{$this->getId()}' cannot be invertible if more than one label can be selected.");
+        }
+
         $this->invertible = $invertible;
 
         return $this;
@@ -103,6 +114,53 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     public function isInvertible(): bool
     {
         return $this->invertible;
+    }
+
+    /**
+     * Sets the maximum number of labels that can be selected and returns this form field.
+     *
+     * If more than one label can be selected, the value of this field is a list of label ids.
+     * Per default, only a single label can be selected.
+     *
+     * @since 6.3
+     */
+    public function maxSelection(int $maxSelection): static
+    {
+        if ($maxSelection < 1) {
+            throw new \InvalidArgumentException("The maximum selection of field '{$this->getId()}' must be at least 1.");
+        }
+        if ($maxSelection > 1 && $this->isInvertible()) {
+            throw new \BadMethodCallException("Field '{$this->getId()}' cannot select more than one label because it is invertible.");
+        }
+
+        $this->maxSelection = $maxSelection;
+
+        return $this;
+    }
+
+    /**
+     * Returns the maximum number of labels that can be selected.
+     *
+     * @since 6.3
+     */
+    public function getMaxSelection(): int
+    {
+        return $this->maxSelection;
+    }
+
+    /**
+     * Returns the ids of the selected labels, ignoring the special values `0` and `-1`.
+     *
+     * @return list<int>
+     * @since 6.3
+     */
+    public function getSelectedLabelIDs(): array
+    {
+        if (\is_array($this->getValue())) {
+            return $this->getValue();
+        }
+
+        return $this->getValue() > 0 ? [$this->getValue()] : [];
     }
 
     /**
@@ -143,11 +201,18 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
             }
 
             $labelIDs = $this->getLabelGroup()->getLabelIDs();
+            $selectedLabelIDs = [];
             /** @var Label $label */
             foreach (static::$loadedLabels[$objectTypeID][$objectID] as $label) {
                 if (\in_array($label->labelID, $labelIDs, true)) {
-                    $this->value($label->labelID);
+                    $selectedLabelIDs[] = $label->labelID;
                 }
+            }
+
+            if ($this->maxSelection > 1) {
+                $this->value($selectedLabelIDs);
+            } elseif ($selectedLabelIDs !== []) {
+                $this->value(\end($selectedLabelIDs));
             }
         }
 
@@ -162,11 +227,20 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
         $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
             'label',
             function (IFormDocument $document, array $parameters) {
+                if (!$this->checkDependencies()) {
+                    return $parameters;
+                }
+
+                if ($this->maxSelection > 1) {
+                    if ($this->getSelectedLabelIDs() !== []) {
+                        $parameters[$this->getObjectProperty()][$this->getLabelGroup()->groupID] = $this->getSelectedLabelIDs();
+                    }
+
+                    return $parameters;
+                }
+
                 // `0` is irrelevant for saving, `-1` is only relevant for invertible fields.
-                if (
-                    $this->checkDependencies()
-                    && ($this->getValue() > 0 || ($this->getValue() === -1 && $this->isInvertible()))
-                ) {
+                if ($this->getValue() > 0 || ($this->getValue() === -1 && $this->isInvertible())) {
                     if (!isset($parameters[$this->getObjectProperty()])) {
                         $parameters[$this->getObjectProperty()] = [];
                     }
@@ -185,7 +259,17 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     public function readValue(): static
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
-            $this->value = \intval($this->getDocument()->getRequestData($this->getPrefixedId()));
+            $value = $this->getDocument()->getRequestData($this->getPrefixedId());
+
+            if ($this->maxSelection > 1) {
+                $labelIDs = \array_map(static fn($labelID) => (int)$labelID, (array)$value);
+                $this->value = \array_values(\array_unique(\array_filter(
+                    $labelIDs,
+                    static fn(int $labelID) => $labelID > 0
+                )));
+            } elseif (!\is_array($value)) {
+                $this->value = (int)$value;
+            }
         }
 
         return $this;
@@ -194,6 +278,35 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     #[\Override]
     public function validate(): void
     {
+        if ($this->maxSelection > 1) {
+            $labelIDs = $this->getSelectedLabelIDs();
+            if ($labelIDs === []) {
+                if ($this->isRequired()) {
+                    $this->addValidationError(new FormFieldValidationError('empty'));
+                }
+
+                return;
+            }
+
+            if (\array_diff($labelIDs, $this->getLabelGroup()->getLabelIDs()) !== []) {
+                $this->addValidationError(new FormFieldValidationError(
+                    'invalidValue',
+                    'wcf.global.form.error.noValidSelection'
+                ));
+            } elseif (\count($labelIDs) > $this->maxSelection) {
+                $this->addValidationError(new FormFieldValidationError(
+                    'maximumMultiples',
+                    'wcf.form.field.label.error.maximumMultiples',
+                    [
+                        'count' => \count($labelIDs),
+                        'maximumCount' => $this->maxSelection,
+                    ]
+                ));
+            }
+
+            return;
+        }
+
         if ($this->value > 0) {
             if (!\in_array($this->value, $this->getLabelGroup()->getLabelIDs())) {
                 $this->addValidationError(new FormFieldValidationError(
@@ -226,6 +339,7 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
                 ->objectProperty($objectProperty)
                 ->objectType($objectType)
                 ->required((bool)$labelGroup->forceSelection)
+                ->maxSelection(LabelHandler::getInstance()->getMaxSelection($labelGroup, $objectType))
                 ->labelGroup($labelGroup);
         }
 

@@ -175,6 +175,10 @@ export function setup(options: BoostrapOptions): void {
     void import("./Ui/Pagination/JumpToPage").then(({ setup }) => setup());
   });
 
+  whenFirstSeen("woltlab-core-label-picker", () => {
+    void import("./Component/LabelPicker").then(({ setup }) => setup());
+  });
+
   whenFirstSeen("woltlab-core-google-maps", () => {
     void import("./Component/GoogleMaps/woltlab-core-google-maps");
   });

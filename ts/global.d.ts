@@ -123,6 +123,10 @@ declare global {
   interface WoltlabCoreLabelPickerElement extends HTMLElement {
     get value(): number;
     set value(value: number);
+    get values(): number[];
+    set values(values: number[]);
+    get max(): number;
+    get multiple(): boolean;
     get name(): string;
     get form(): HTMLFormElement | null;
     get disabled(): boolean;

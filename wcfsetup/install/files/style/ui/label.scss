@@ -51,6 +51,174 @@
 	cursor: pointer;
 }
 
+.labelPicker__toggle {
+	@include input;
+
+	align-items: center;
+	box-sizing: border-box;
+	cursor: pointer;
+	display: inline-flex;
+	gap: 8px;
+	max-width: 100%;
+	min-width: 250px;
+
+	&.labelPicker__toggle--open {
+		background-color: var(--wcfInputBackgroundActive);
+		border-color: var(--wcfInputBorderActive);
+		color: var(--wcfInputTextActive);
+	}
+
+	&:disabled {
+		background-color: var(--wcfInputDisabledBackground);
+		border-color: var(--wcfInputDisabledBorder);
+		color: var(--wcfInputDisabledText);
+		cursor: not-allowed;
+	}
+}
+
+.labelPicker__badges {
+	display: flex;
+	flex: 1 1 auto;
+	flex-wrap: wrap;
+	gap: 5px;
+	min-width: 0;
+}
+
+.labelPicker__chevron {
+	color: var(--wcfContentDimmedText);
+	flex: 0 0 auto;
+}
+
+.labelPicker__popover {
+	background-color: var(--wcfDropdownBackground);
+	border: 0;
+	border-radius: 4px;
+	box-shadow: var(--wcfBoxShadow);
+	color: var(--wcfDropdownText);
+	inset: auto;
+	margin: 0;
+	max-height: 300px;
+	max-width: min(350px, calc(100vw - 20px));
+	min-width: 160px;
+	overflow: auto;
+	padding: 4px 0;
+}
+
+.labelPicker__option {
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	gap: 8px;
+	padding: 6px 12px;
+	user-select: none;
+
+	&:hover,
+	&:focus-visible {
+		background-color: var(--wcfDropdownBackgroundActive);
+		color: var(--wcfDropdownLinkActive);
+		outline: 0;
+	}
+
+	&[aria-disabled="true"] {
+		color: var(--wcfContentDimmedText);
+		cursor: not-allowed;
+
+		.labelPicker__indicator {
+			background-color: var(--wcfInputDisabledBackground);
+			border-color: var(--wcfInputDisabledBorder);
+		}
+
+		.labelPicker__label {
+			opacity: 0.5;
+		}
+	}
+}
+
+.labelPicker__option--separated {
+	border-top: 1px solid var(--wcfDropdownBorderInner);
+	margin-top: 4px;
+}
+
+/* Checkbox (multiple labels) or radio button (single label) look. */
+.labelPicker__indicator {
+	background-color: var(--wcfInputBackground);
+	border: 1px solid var(--wcfInputBorder);
+	box-sizing: border-box;
+	flex: 0 0 auto;
+	height: 16px;
+	position: relative;
+	width: 16px;
+}
+
+.labelPicker__indicator--checkbox {
+	border-radius: 3px;
+
+	.labelPicker__option[aria-selected="true"] & {
+		background-color: var(--wcfButtonPrimaryBackground);
+		border-color: var(--wcfButtonPrimaryBackground);
+
+		&::after {
+			border: solid var(--wcfButtonPrimaryText);
+			border-width: 0 2px 2px 0;
+			box-sizing: border-box;
+			content: "";
+			height: 9px;
+			left: 4px;
+			position: absolute;
+			top: 1px;
+			transform: rotate(45deg);
+			width: 6px;
+		}
+	}
+}
+
+.labelPicker__indicator--radio {
+	border-radius: 50%;
+
+	.labelPicker__option[aria-selected="true"] & {
+		border: 5px solid var(--wcfButtonPrimaryBackground);
+	}
+}
+
+.labelPicker__label {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.labelPicker__footer {
+	align-items: center;
+	border-top: 1px solid var(--wcfDropdownBorderInner);
+	display: flex;
+	gap: 12px;
+	justify-content: space-between;
+	margin-top: 4px;
+	padding: 6px 12px 2px;
+
+	@include wcfFontSmall;
+}
+
+.labelPicker__limit {
+	color: var(--wcfContentDimmedText);
+}
+
+.labelPicker__reset {
+	color: var(--wcfDropdownLink);
+	cursor: pointer;
+
+	&:hover {
+		color: var(--wcfDropdownLinkActive);
+		text-decoration: underline;
+	}
+
+	&:disabled {
+		color: var(--wcfContentDimmedText);
+		cursor: default;
+		text-decoration: none;
+	}
+}
+
 .labelSelection {
 	column-gap: 10px;
 	display: grid;

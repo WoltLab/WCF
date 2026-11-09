@@ -1,8 +1,16 @@
 /**
- * `<woltlab-core-label-picker>` provides a dropdown to select a single label
+ * `<woltlab-core-label-picker>` provides a popover to select a single label
  * out of a label group. The element is form-associated and submits the id of
  * the selected label, `0` for no selection or `-1` for objects without any
  * label of this group (requires `invertible`).
+ *
+ * Setting `max` to a value greater than 1 allows the selection of up to `max`
+ * labels. The value is then a comma-separated list of label ids and each
+ * selected label is submitted as `name[]`.
+ *
+ * The labels are presented as a listbox inside a native popover. The popover
+ * is positioned by `WoltLabSuite/Core/Component/LabelPicker`. When selecting
+ * multiple labels, a footer names the limit and offers to reset the selection.
  *
  * Usage: `<woltlab-core-label-picker name="labelIDs[1]" labels="[[1,&quot;…&quot;]]" value="1"></woltlab-core-label-picker>`
  *
@@ -13,14 +21,22 @@
  */
 
 {
+  let pickerCount = 0;
+
   class WoltlabCoreLabelPickerElement extends HTMLElement {
     static formAssociated = true;
 
     readonly #internals: ElementInternals;
+    #badges: HTMLElement | undefined = undefined;
     #button: HTMLButtonElement | undefined = undefined;
-    #defaultValue = 0;
-    #items = new Map<number, HTMLLIElement>();
+    #defaultValue = "";
     #labels = new Map<number, string>();
+    #listbox: HTMLElement | undefined = undefined;
+    #options = new Map<number, HTMLElement>();
+    #popover: HTMLElement | undefined = undefined;
+    #resetButton: HTMLButtonElement | undefined = undefined;
+    #typeahead = "";
+    #typeaheadTimer: number | undefined = undefined;
 
     constructor() {
       super();
@@ -29,8 +45,7 @@
     }
 
     connectedCallback() {
-      // The dropdown menu is moved into a global container, building the
-      // element again when it is moved within the DOM would orphan it.
+      // Moving the element within the DOM must not build it again.
       if (this.#button !== undefined) {
         return;
       }
@@ -40,17 +55,59 @@
         this.removeAttribute("labels");
       }
 
-      this.#defaultValue = this.value;
+      if (this.multiple && this.invertible) {
+        throw new Error("A label picker cannot be invertible if more than one label can be selected.");
+      }
 
-      this.innerHTML = "";
-      this.classList.add("dropdown");
+      this.#defaultValue = this.getAttribute("value") || "";
+
+      const id = `labelPicker${++pickerCount}`;
+
+      this.#popover = document.createElement("div");
+      this.#popover.id = id;
+      this.#popover.popover = "auto";
+      this.#popover.classList.add("labelPicker__popover");
+      this.#popover.addEventListener("toggle", (event) => {
+        if (event.newState === "open") {
+          this.#open();
+        } else {
+          this.#closed();
+        }
+      });
+      this.#popover.addEventListener("focusout", (event) => {
+        // Moving the focus out of the picker, e.g. by tabbing, closes the popover.
+        if (event.relatedTarget instanceof Node && !this.contains(event.relatedTarget) && this.#isOpen()) {
+          this.#popover!.hidePopover();
+        }
+      });
 
       this.#button = document.createElement("button");
       this.#button.type = "button";
-      this.#button.classList.add("dropdownToggle");
+      this.#button.classList.add("labelPicker__toggle");
       this.#button.disabled = this.matches(":disabled");
+      this.#button.popoverTargetElement = this.#popover;
+      this.#button.setAttribute("aria-haspopup", "listbox");
 
-      this.append(this.#button, this.#buildMenu());
+      this.#badges = document.createElement("span");
+      this.#badges.classList.add("labelPicker__badges");
+
+      const chevron = document.createElement("fa-icon");
+      chevron.classList.add("labelPicker__chevron");
+      chevron.setIcon("chevron-down");
+
+      this.#button.append(this.#badges, chevron);
+      this.#button.addEventListener("keydown", (event) => {
+        if ((event.key === "ArrowDown" || event.key === "ArrowUp") && !this.#isOpen()) {
+          event.preventDefault();
+
+          this.#popover!.showPopover({ source: this.#button });
+        }
+      });
+
+      this.#popover.append(...this.#buildContent(id));
+
+      this.innerHTML = "";
+      this.append(this.#button, this.#popover);
 
       // Clicks on an associated `<label>` are forwarded to the host element.
       this.addEventListener("click", (event) => {
@@ -66,10 +123,14 @@
       if (this.#button !== undefined) {
         this.#button.disabled = disabled;
       }
+
+      if (disabled && this.#isOpen()) {
+        this.#popover!.hidePopover();
+      }
     }
 
     formResetCallback(): void {
-      this.setAttribute("value", this.#defaultValue.toString());
+      this.setAttribute("value", this.#defaultValue);
       this.#render();
     }
 
@@ -79,9 +140,9 @@
       }
 
       // The restored state might reference a label that no longer exists.
-      const value = parseInt(state);
-      if (this.#isValidValue(value)) {
-        this.setAttribute("value", value.toString());
+      const values = this.#parseValues(state);
+      if (values.every((value) => this.#isValidValue(value))) {
+        this.setAttribute("value", values.join(","));
         this.#render();
       }
     }
@@ -94,57 +155,251 @@
       return value === 0 || this.#labels.has(value);
     }
 
-    #buildMenu(): HTMLElement {
-      const labelList = document.createElement("ul");
-      labelList.classList.add("scrollableDropdownMenu");
-      for (const [labelId, html] of this.#labels) {
-        labelList.append(this.#createItem(labelId, html));
-      }
-
-      const dropdownMenu = document.createElement("div");
-      dropdownMenu.classList.add("dropdownMenu");
-      dropdownMenu.append(labelList);
-
-      if (this.invertible || !this.required) {
-        const divider = document.createElement("li");
-        divider.classList.add("dropdownDivider");
-
-        const optionList = document.createElement("ul");
-        optionList.append(divider);
-
-        if (this.invertible) {
-          optionList.append(this.#createItem(-1, this.#getBadge("wcf.label.withoutSelection")));
-        }
-
-        if (!this.required) {
-          optionList.append(this.#createItem(0, this.#getBadge("wcf.label.none")));
-        }
-
-        dropdownMenu.append(optionList);
-      }
-
-      return dropdownMenu;
+    #parseValues(value: string): number[] {
+      return value
+        .split(",")
+        .map((labelId) => parseInt(labelId))
+        .filter((labelId) => !Number.isNaN(labelId) && labelId !== 0);
     }
 
-    #createItem(labelId: number, html: string): HTMLLIElement {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.innerHTML = html;
-      button.addEventListener("click", () => {
-        if (this.value === labelId) {
+    #buildContent(id: string): HTMLElement[] {
+      this.#listbox = document.createElement("div");
+      this.#listbox.classList.add("labelPicker__listbox");
+      this.#listbox.setAttribute("role", "listbox");
+      this.#listbox.addEventListener("keydown", (event) => this.#keydown(event));
+
+      for (const [labelId, html] of this.#labels) {
+        this.#listbox.append(this.#createOption(labelId, html));
+      }
+
+      if (this.multiple) {
+        const limit = document.createElement("span");
+        limit.id = `${id}Limit`;
+        limit.classList.add("labelPicker__limit");
+        limit.textContent = window.WoltLabLanguage.getPhrase("wcf.label.picker.maxSelection", { max: this.max });
+
+        this.#resetButton = document.createElement("button");
+        this.#resetButton.type = "button";
+        this.#resetButton.classList.add("labelPicker__reset");
+        this.#resetButton.textContent = window.WoltLabLanguage.getPhrase("wcf.global.button.reset");
+        this.#resetButton.addEventListener("click", () => this.#reset());
+        this.#resetButton.addEventListener("keydown", (event) => {
+          if (event.key === "Tab" && event.shiftKey) {
+            event.preventDefault();
+
+            this.#focusOption();
+          }
+        });
+
+        const footer = document.createElement("div");
+        footer.classList.add("labelPicker__footer");
+        footer.append(limit, this.#resetButton);
+
+        this.#listbox.setAttribute("aria-multiselectable", "true");
+        this.#listbox.setAttribute("aria-describedby", limit.id);
+
+        return [this.#listbox, footer];
+      }
+
+      // Selecting multiple labels deselects them individually instead.
+      const options: HTMLElement[] = [];
+      if (this.invertible) {
+        options.push(this.#createOption(-1, this.#getBadge("wcf.label.withoutSelection")));
+      }
+      if (!this.required) {
+        options.push(this.#createOption(0, this.#getBadge("wcf.label.none")));
+      }
+
+      if (options.length > 0) {
+        options[0].classList.add("labelPicker__option--separated");
+        this.#listbox.append(...options);
+      }
+
+      return [this.#listbox];
+    }
+
+    #createOption(labelId: number, html: string): HTMLElement {
+      const indicator = document.createElement("span");
+      indicator.classList.add(
+        "labelPicker__indicator",
+        this.multiple ? "labelPicker__indicator--checkbox" : "labelPicker__indicator--radio",
+      );
+
+      const label = document.createElement("span");
+      label.classList.add("labelPicker__label");
+      label.innerHTML = html;
+
+      const option = document.createElement("div");
+      option.classList.add("labelPicker__option");
+      option.setAttribute("role", "option");
+      option.tabIndex = -1;
+      option.append(indicator, label);
+      option.addEventListener("click", () => this.#selectOption(labelId));
+      this.#options.set(labelId, option);
+
+      return option;
+    }
+
+    #isOpen(): boolean {
+      return this.#popover?.matches(":popover-open") ?? false;
+    }
+
+    #open(): void {
+      const label = this.#internals.labels[0]?.textContent?.trim() ?? "";
+      if (label !== "") {
+        this.#listbox!.setAttribute("aria-label", label);
+      }
+
+      this.#button!.classList.add("labelPicker__toggle--open");
+
+      this.#focusOption();
+    }
+
+    /**
+     * Focuses the first selected label or the first label if none is selected.
+     */
+    #focusOption(): void {
+      const options = Array.from(this.#options.values());
+      const option = options.find((option) => option.getAttribute("aria-selected") === "true") ?? options[0];
+      option?.focus();
+    }
+
+    #closed(): void {
+      this.#button!.classList.remove("labelPicker__toggle--open");
+
+      this.#typeahead = "";
+      window.clearTimeout(this.#typeaheadTimer);
+    }
+
+    #close(): void {
+      this.#popover!.hidePopover();
+      this.#button!.focus();
+    }
+
+    #keydown(event: KeyboardEvent): void {
+      const options = Array.from(this.#options.values());
+      const option = (event.target as HTMLElement).closest<HTMLElement>(".labelPicker__option");
+      if (option === null) {
+        return;
+      }
+
+      const index = options.indexOf(option);
+      const labelId = Array.from(this.#options.keys())[index];
+
+      switch (event.key) {
+        case "ArrowDown":
+          options[Math.min(index + 1, options.length - 1)].focus();
+          break;
+
+        case "ArrowUp":
+          options[Math.max(index - 1, 0)].focus();
+          break;
+
+        case "Home":
+          options[0].focus();
+          break;
+
+        case "End":
+          options[options.length - 1].focus();
+          break;
+
+        case " ":
+          this.#selectOption(labelId);
+          break;
+
+        case "Enter":
+          if (this.multiple) {
+            this.#close();
+          } else {
+            this.#selectOption(labelId);
+          }
+          break;
+
+        case "Tab":
+          // Tabbing forward moves the focus to the reset button or out of
+          // the picker, which closes the popover.
+          if (!event.shiftKey) {
+            return;
+          }
+
+          this.#close();
+          break;
+
+        default:
+          if (event.key.length !== 1 || event.altKey || event.ctrlKey || event.metaKey) {
+            return;
+          }
+
+          this.#findByTypeahead(event.key, index)?.focus();
+          break;
+      }
+
+      event.preventDefault();
+    }
+
+    #findByTypeahead(key: string, index: number): HTMLElement | undefined {
+      this.#typeahead += key.toLowerCase();
+      window.clearTimeout(this.#typeaheadTimer);
+      this.#typeaheadTimer = window.setTimeout(() => {
+        this.#typeahead = "";
+      }, 500);
+
+      // A single character cycles through the labels, more characters refine
+      // the search starting at the current label.
+      const options = Array.from(this.#options.values());
+      const start = this.#typeahead.length === 1 ? index + 1 : index;
+      const orderedOptions = [...options.slice(start), ...options.slice(0, start)];
+
+      return orderedOptions.find((option) => option.textContent.trim().toLowerCase().startsWith(this.#typeahead));
+    }
+
+    #selectOption(labelId: number): void {
+      if (this.multiple) {
+        this.#toggleLabel(labelId);
+
+        return;
+      }
+
+      if (this.value !== labelId) {
+        this.value = labelId;
+        this.#dispatchChange();
+      }
+
+      this.#close();
+    }
+
+    #toggleLabel(labelId: number): void {
+      const values = this.values;
+      const index = values.indexOf(labelId);
+      if (index === -1) {
+        if (values.length >= this.max) {
           return;
         }
 
-        this.value = labelId;
-        this.dispatchEvent(new Event("input", { bubbles: true }));
-        this.dispatchEvent(new Event("change", { bubbles: true }));
-      });
+        values.push(labelId);
+      } else {
+        values.splice(index, 1);
+      }
 
-      const listItem = document.createElement("li");
-      listItem.append(button);
-      this.#items.set(labelId, listItem);
+      this.values = values;
+      this.#dispatchChange();
+    }
 
-      return listItem;
+    #reset(): void {
+      if (this.values.length === 0) {
+        return;
+      }
+
+      this.values = [];
+      this.#dispatchChange();
+
+      // The reset button is disabled without any selected labels.
+      this.#focusOption();
+    }
+
+    #dispatchChange(): void {
+      this.dispatchEvent(new Event("input", { bubbles: true }));
+      this.dispatchEvent(new Event("change", { bubbles: true }));
     }
 
     #getBadge(phrase: string): string {
@@ -156,26 +411,66 @@
     }
 
     #render(): void {
+      if (this.multiple) {
+        this.#renderMultiple();
+      } else {
+        this.#renderSingle();
+      }
+    }
+
+    #renderSingle(): void {
       const value = this.value;
 
-      if (this.#button !== undefined) {
+      if (this.#badges !== undefined) {
         if (value === -1) {
-          this.#button.innerHTML = this.#getBadge("wcf.label.withoutSelection");
+          this.#badges.innerHTML = this.#getBadge("wcf.label.withoutSelection");
         } else {
-          this.#button.innerHTML = this.#labels.get(value) ?? this.#getBadge("wcf.label.none");
+          this.#badges.innerHTML = this.#labels.get(value) ?? this.#getBadge("wcf.label.none");
         }
       }
 
-      for (const [labelId, listItem] of this.#items) {
-        listItem.classList.toggle("active", labelId === value);
+      for (const [labelId, option] of this.#options) {
+        option.setAttribute("aria-selected", (labelId === value).toString());
       }
 
       this.#internals.setFormValue(value.toString());
-      this.#updateValidity(value);
+      this.#updateValidity(value === 0);
     }
 
-    #updateValidity(value: number): void {
-      if (this.required && value === 0) {
+    #renderMultiple(): void {
+      const values = this.values;
+
+      if (this.#badges !== undefined) {
+        const html = values.map((labelId) => this.#labels.get(labelId)!).join("");
+        this.#badges.innerHTML = html || this.#getBadge("wcf.label.none");
+      }
+
+      if (this.#resetButton !== undefined) {
+        this.#resetButton.disabled = values.length === 0;
+      }
+
+      const limitReached = values.length >= this.max;
+      for (const [labelId, option] of this.#options) {
+        const selected = values.includes(labelId);
+        option.setAttribute("aria-selected", selected.toString());
+
+        if (!selected && limitReached) {
+          option.setAttribute("aria-disabled", "true");
+        } else {
+          option.removeAttribute("aria-disabled");
+        }
+      }
+
+      const formData = new FormData();
+      for (const labelId of values) {
+        formData.append(`${this.name}[]`, labelId.toString());
+      }
+      this.#internals.setFormValue(formData, values.join(","));
+      this.#updateValidity(values.length === 0);
+    }
+
+    #updateValidity(isEmpty: boolean): void {
+      if (this.required && isEmpty) {
         this.#internals.setValidity(
           { valueMissing: true },
           window.WoltLabLanguage.getPhrase("wcf.global.form.error.empty"),
@@ -187,9 +482,7 @@
     }
 
     get value(): number {
-      const value = parseInt(this.getAttribute("value") || "0");
-
-      return Number.isNaN(value) ? 0 : value;
+      return this.#parseValues(this.getAttribute("value") || "")[0] ?? 0;
     }
 
     set value(value: number) {
@@ -199,6 +492,41 @@
 
       this.setAttribute("value", value.toString());
       this.#render();
+    }
+
+    get values(): number[] {
+      const values = this.#parseValues(this.getAttribute("value") || "");
+
+      return this.multiple ? values : values.slice(0, 1);
+    }
+
+    set values(values: number[]) {
+      if (values.length > this.max) {
+        throw new Error(`Cannot select more than ${this.max} labels.`);
+      }
+
+      if (new Set(values).size !== values.length) {
+        throw new Error("The list of labels contains duplicates.");
+      }
+
+      for (const value of values) {
+        if (value === 0 || !this.#isValidValue(value)) {
+          throw new Error(`There is no label with the id ${value}.`);
+        }
+      }
+
+      this.setAttribute("value", values.join(","));
+      this.#render();
+    }
+
+    get max(): number {
+      const max = parseInt(this.getAttribute("max") || "1");
+
+      return Number.isNaN(max) || max < 1 ? 1 : max;
+    }
+
+    get multiple(): boolean {
+      return this.max > 1;
     }
 
     get name(): string {

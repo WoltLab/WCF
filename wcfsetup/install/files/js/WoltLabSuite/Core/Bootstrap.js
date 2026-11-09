@@ -138,43 +138,46 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Devtools", 
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-pagination", () => {
             void new Promise((resolve_5, reject_5) => { require(["./Ui/Pagination/JumpToPage"], resolve_5, reject_5); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
+        (0, LazyLoader_1.whenFirstSeen)("woltlab-core-label-picker", () => {
+            void new Promise((resolve_6, reject_6) => { require(["./Component/LabelPicker"], resolve_6, reject_6); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+        });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-google-maps", () => {
-            void new Promise((resolve_6, reject_6) => { require(["./Component/GoogleMaps/woltlab-core-google-maps"], resolve_6, reject_6); }).then(tslib_1.__importStar);
+            void new Promise((resolve_7, reject_7) => { require(["./Component/GoogleMaps/woltlab-core-google-maps"], resolve_7, reject_7); }).then(tslib_1.__importStar);
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-google-maps-geocoding]", () => {
-            void new Promise((resolve_7, reject_7) => { require(["./Component/GoogleMaps/Geocoding"], resolve_7, reject_7); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_8, reject_8) => { require(["./Component/GoogleMaps/Geocoding"], resolve_8, reject_8); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-file", () => {
-            void new Promise((resolve_8, reject_8) => { require(["./Component/File/woltlab-core-file"], resolve_8, reject_8); }).then(tslib_1.__importStar);
+            void new Promise((resolve_9, reject_9) => { require(["./Component/File/woltlab-core-file"], resolve_9, reject_9); }).then(tslib_1.__importStar);
         });
         (0, LazyLoader_1.whenFirstSeen)("woltlab-core-file-upload", () => {
-            void new Promise((resolve_9, reject_9) => { require(["./Component/File/woltlab-core-file"], resolve_9, reject_9); }).then(tslib_1.__importStar);
-            void new Promise((resolve_10, reject_10) => { require(["./Component/File/Upload"], resolve_10, reject_10); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_10, reject_10) => { require(["./Component/File/woltlab-core-file"], resolve_10, reject_10); }).then(tslib_1.__importStar);
+            void new Promise((resolve_11, reject_11) => { require(["./Component/File/Upload"], resolve_11, reject_11); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)(".activityPointsDisplay", () => {
-            void new Promise((resolve_11, reject_11) => { require(["./Component/User/ActivityPointList"], resolve_11, reject_11); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_12, reject_12) => { require(["./Component/User/ActivityPointList"], resolve_12, reject_12); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)(".userTrophyOverlayList", () => {
-            void new Promise((resolve_12, reject_12) => { require(["./Component/User/TrophyList"], resolve_12, reject_12); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_13, reject_13) => { require(["./Component/User/TrophyList"], resolve_13, reject_13); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)(".mediaGallery", () => {
-            void new Promise((resolve_13, reject_13) => { require(["./Component/Media/Gallery"], resolve_13, reject_13); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_14, reject_14) => { require(["./Component/Media/Gallery"], resolve_14, reject_14); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)(".pollWidget", () => {
-            void new Promise((resolve_14, reject_14) => { require(["./Component/Poll/Widget"], resolve_14, reject_14); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_15, reject_15) => { require(["./Component/Poll/Widget"], resolve_15, reject_15); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-fancybox]", () => {
-            void new Promise((resolve_15, reject_15) => { require(["./Component/Image/Viewer"], resolve_15, reject_15); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_16, reject_16) => { require(["./Component/Image/Viewer"], resolve_16, reject_16); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)(".jsImageViewer", () => {
             console.warn("The class `jsImageViewer` is deprecated. Use the attribute `data-fancybox` instead.");
-            void new Promise((resolve_16, reject_16) => { require(["./Component/Image/Viewer"], resolve_16, reject_16); }).then(tslib_1.__importStar).then(({ setupLegacy }) => setupLegacy());
+            void new Promise((resolve_17, reject_17) => { require(["./Component/Image/Viewer"], resolve_17, reject_17); }).then(tslib_1.__importStar).then(({ setupLegacy }) => setupLegacy());
         });
         (0, LazyLoader_1.whenFirstSeen)(".jsEnablesOptions", () => {
-            void new Promise((resolve_17, reject_17) => { require(["./Component/Option/Enable"], resolve_17, reject_17); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_18, reject_18) => { require(["./Component/Option/Enable"], resolve_18, reject_18); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         (0, LazyLoader_1.whenFirstSeen)("[data-edit-cover-photo]", () => {
-            void new Promise((resolve_18, reject_18) => { require(["./Component/User/CoverPhoto"], resolve_18, reject_18); }).then(tslib_1.__importStar).then(({ setup }) => setup());
+            void new Promise((resolve_19, reject_19) => { require(["./Component/User/CoverPhoto"], resolve_19, reject_19); }).then(tslib_1.__importStar).then(({ setup }) => setup());
         });
         // Move the reCAPTCHA widget overlay to the `pageOverlayContainer`
         // when widget form elements are placed in a dialog.

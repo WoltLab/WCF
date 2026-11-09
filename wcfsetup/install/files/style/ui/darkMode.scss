@@ -120,7 +120,8 @@ html[data-color-scheme="dark"] {
 		border: 1px solid var(--wcfContentBorderInner);
 	}
 
-	.dropdownMenu {
+	.dropdownMenu,
+	.labelPicker__popover {
 		border: 1px solid var(--wcfDropdownBorderInner);
 	}
 
