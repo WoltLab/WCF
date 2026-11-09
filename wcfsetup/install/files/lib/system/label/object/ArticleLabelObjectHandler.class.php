@@ -12,7 +12,7 @@ use wcf\system\label\LabelHandler;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-class ArticleLabelObjectHandler extends AbstractLabelObjectHandler
+class ArticleLabelObjectHandler extends AbstractLabelObjectHandler implements IMultipleLabelsObjectHandler
 {
     /**
      * @inheritDoc

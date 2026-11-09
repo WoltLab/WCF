@@ -56,7 +56,10 @@ return [
         ]),
     PartialDatabaseTable::create('wcf1_label_group')
         ->columns([
-            DefaultFalseBooleanDatabaseTableColumn::create('sortAlphabetically')
+            DefaultFalseBooleanDatabaseTableColumn::create('sortAlphabetically'),
+            SmallintDatabaseTableColumn::create('maxSelection')
+                ->notNull()
+                ->defaultValue(1),
         ]),
     PartialDatabaseTable::create('wcf1_trophy')
         ->columns([

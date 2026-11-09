@@ -62,6 +62,20 @@ final class LabelGroupBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    /**
+     * @since 6.3
+     */
+    public function setMaxSelection(int $maxSelection): static
+    {
+        if ($maxSelection < 1) {
+            throw new \InvalidArgumentException("The maximum selection must be at least 1.");
+        }
+
+        $this->properties['maxSelection'] = $maxSelection;
+
+        return $this;
+    }
+
     public function setShowOrder(int $showOrder): static
     {
         $this->properties['showOrder'] = $showOrder;

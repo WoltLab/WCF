@@ -33,7 +33,11 @@ interface ILabelObjectHandler
     /**
      * Returns true, if all given label ids are valid and accessible.
      *
-     * @param int[] $labelIDs
+     * Expects a `groupID => labelID` map, implementations of
+     * `IMultipleLabelsObjectHandler` additionally accept a list of label ids
+     * per group.
+     *
+     * @param array<int, int|list<int>> $labelIDs
      * @return mixed
      */
     public function validateLabelIDs(array $labelIDs, string $optionName = '', bool $legacyReturnValue = true);

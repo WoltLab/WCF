@@ -1708,6 +1708,9 @@ return [
                 ->defaultValue(''),
             DefaultFalseBooleanDatabaseTableColumn::create('forceSelection'),
             DefaultFalseBooleanDatabaseTableColumn::create('sortAlphabetically'),
+            SmallintDatabaseTableColumn::create('maxSelection')
+                ->notNull()
+                ->defaultValue(1),
             NotNullInt10DatabaseTableColumn::create('showOrder')
                 ->defaultValue(0),
         ])

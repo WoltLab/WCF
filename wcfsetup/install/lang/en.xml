@@ -1001,6 +1001,8 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.label.group.error.invalid"><![CDATA[The selected label group is invalid.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
 		<item name="wcf.acp.label.group.sortAlphabetically"><![CDATA[Sort labels alphabetically]]></item>
+		<item name="wcf.acp.label.group.maxSelection"><![CDATA[Maximum number of labels]]></item>
+		<item name="wcf.acp.label.group.maxSelection.description"><![CDATA[Maximum number of labels of this group that can be assigned to a single item. Content types that do not support multiple labels per group always allow only one label.]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Label Groups]]></item>
 		<item name="wcf.acp.label.group.permanentSelection"><![CDATA[The selected label group cannot be modified and is permanent for this label.]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
@@ -4003,6 +4005,7 @@ Attachments:
 		<item name="wcf.form.field.time.error.earliestTime"><![CDATA[The entered time may not be earlier than {$earliestTime}.]]></item>
 		<item name="wcf.form.field.time.error.latestTime"><![CDATA[The entered time may not be later than {$latestTime}.]]></item>
 		<item name="wcf.form.field.itemList.error.maximumMultiples"><![CDATA[You may not enter more than {#$maximumCount} {if $maximumCount == 1}entry{else}entries{/if} but {#$count} {if $count == 1}entry is{else}entries are{/if} given.]]></item>
+		<item name="wcf.form.field.label.error.maximumMultiples"><![CDATA[You may not select more than {#$maximumCount} label{if $maximumCount != 1}s{/if} but {#$count} label{if $count != 1}s are{else} is{/if} selected.]]></item>
 		<item name="wcf.form.field.itemList.error.minimumMultiples"><![CDATA[You have to entered at least {#$minimumCount} {if $minimumCount == 1}entry{else}entries{/if} but only {#$count} {if $count == 1}entry is{else}entries are{/if} given.]]></item>
 		<item name="wcf.form.field.email"><![CDATA[Email Address]]></item>
 		<item name="wcf.form.field.email.error.invalidEmail"><![CDATA[The entered text is no valid email address.]]></item>
@@ -4085,6 +4088,7 @@ Attachments:
 		<item name="wcf.label.all"><![CDATA[All]]></item>
 		<item name="wcf.label.error.missing"><![CDATA[You are required to select a label.]]></item>
 		<item name="wcf.label.error.invalid"><![CDATA[The label selection is invalid.]]></item>
+		<item name="wcf.label.error.tooMany"><![CDATA[You have selected too many labels.]]></item>
 		<item name="wcf.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.label.labels"><![CDATA[Labels]]></item>
 		<item name="wcf.label.none"><![CDATA[No Selection]]></item>

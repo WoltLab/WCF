@@ -1023,6 +1023,8 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.label.group.error.invalid"><![CDATA[Die gewählte Labelgruppe ist ungültig.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Label aus dieser Gruppe muss zwingend ausgewählt werden]]></item>
 		<item name="wcf.acp.label.group.sortAlphabetically"><![CDATA[Labels alphabetisch sortieren]]></item>
+		<item name="wcf.acp.label.group.maxSelection"><![CDATA[Maximale Anzahl an Labels]]></item>
+		<item name="wcf.acp.label.group.maxSelection.description"><![CDATA[Maximale Anzahl an Labels dieser Gruppe, die einem einzelnen Inhalt zugewiesen werden können. Inhaltstypen, die keine Mehrfachauswahl unterstützen, erlauben unabhängig davon nur ein Label.]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Labelgruppen]]></item>
 		<item name="wcf.acp.label.group.permanentSelection"><![CDATA[Die ausgewählte Labelgruppe kann nachträglich nicht mehr verändert werden.]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
@@ -4057,6 +4059,7 @@ Dateianhänge:
 		<item name="wcf.form.field.time.error.earliestTime"><![CDATA[Die angegebene Uhrzeit darf nicht früher sein als {$earliestTime}.]]></item>
 		<item name="wcf.form.field.time.error.latestTime"><![CDATA[Die angegebene Uhrzeit darf nicht später sein als {$latestTime}.]]></item>
 		<item name="wcf.form.field.itemList.error.maximumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du darfst{else}Sie dürfen{/if} nicht mehr als {#$maximumCount} {if $maximumCount == 1}Eintrag{else}Einträge{/if} angeben, es wurde{if $count != 1}n{/if} aber {#$count} {if $count == 1}Eintrag{else}Einträge{/if} angegeben.]]></item>
+		<item name="wcf.form.field.label.error.maximumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du darfst{else}Sie dürfen{/if} nicht mehr als {#$maximumCount} Label{if $maximumCount != 1}s{/if} auswählen, es wurde{if $count != 1}n{/if} aber {#$count} Label{if $count != 1}s{/if} ausgewählt.]]></item>
 		<item name="wcf.form.field.itemList.error.minimumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} zumindest {#$minimumCount} {if $minimumCount == 1}Eintrag{else}Einträge{/if} angeben, es wurde{if $count != 1}n{/if} aber nur {#$count} {if $count == 1}Eintrag{else}Einträge{/if} angegeben.]]></item>
 		<item name="wcf.form.field.email"><![CDATA[E-Mail-Adresse]]></item>
 		<item name="wcf.form.field.email.error.invalidEmail"><![CDATA[Die Eingabe ist keine gültige E-Mail-Adresse.]]></item>
@@ -4139,6 +4142,7 @@ Dateianhänge:
 		<item name="wcf.label.all"><![CDATA[Alle]]></item>
 		<item name="wcf.label.error.missing"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} ein Label auswählen.]]></item>
 		<item name="wcf.label.error.invalid"><![CDATA[Die Labelauswahl ist ungültig.]]></item>
+		<item name="wcf.label.error.tooMany"><![CDATA[Es wurden zu viele Labels ausgewählt.]]></item>
 		<item name="wcf.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.label.labels"><![CDATA[Labels]]></item>
 		<item name="wcf.label.none"><![CDATA[Keine Auswahl]]></item>

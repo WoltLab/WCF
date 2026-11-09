@@ -51,6 +51,12 @@
 	cursor: pointer;
 }
 
+woltlab-core-label-picker[max] > .dropdownToggle {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 5px;
+}
+
 .labelSelection {
 	column-gap: 10px;
 	display: grid;

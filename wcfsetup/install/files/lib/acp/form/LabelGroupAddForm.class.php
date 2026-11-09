@@ -160,6 +160,19 @@ class LabelGroupAddForm extends AbstractDatabaseObjectBuilderForm
                                 ->loadValueCallback(static function (LabelGroup $object, IFormField $field): void {
                                     $field->value($object->forceSelection);
                                 }),
+                            IntegerFormField::create('maxSelection')
+                                ->label('wcf.acp.label.group.maxSelection')
+                                ->description('wcf.acp.label.group.maxSelection.description')
+                                ->minimum(1)
+                                ->maximum(100)
+                                ->value(1)
+                                ->required()
+                                ->saveValueCallback(static function (LabelGroupBuilder $builder, IntegerFormField $field): void {
+                                    $builder->setMaxSelection($field->getSaveValue());
+                                })
+                                ->loadValueCallback(static function (LabelGroup $object, IFormField $field): void {
+                                    $field->value($object->maxSelection);
+                                }),
                             BooleanFormField::create('sortAlphabetically')
                                 ->label('wcf.acp.label.group.sortAlphabetically')
                                 ->saveValueCallback(static function (LabelGroupBuilder $builder, BooleanFormField $field): void {

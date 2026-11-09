@@ -266,23 +266,36 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
      *
      * The selected value is `0` or `null` for no selection, `-1` for objects
      * without any label of this group (requires `$invertible`) or a label id.
+     * If `$maxSelection` is greater than 1, the value is a list of label ids.
      * Invalid values are treated as no selection.
      *
+     * @param int|list<int>|null $value
      * @since 6.3
      */
     public function renderPicker(
         string $name,
-        ?int $value = null,
+        int|array|null $value = null,
         bool $required = false,
         bool $invertible = false,
         string $id = '',
+        int $maxSelection = 1,
     ): string {
+        if ($invertible && $maxSelection > 1) {
+            throw new \InvalidArgumentException("A label picker cannot be invertible if more than one label can be selected.");
+        }
+
         $labels = [];
         foreach ($this->labels as $label) {
             $labels[] = [$label->labelID, $label->render()];
         }
 
-        if ($value === null || ($value === -1 ? !$invertible : !$this->isValid($value))) {
+        if ($maxSelection > 1) {
+            $labelIDs = \array_filter(
+                \array_unique((array)$value),
+                fn(int $labelID) => $this->isValid($labelID)
+            );
+            $value = \implode(',', \array_slice($labelIDs, 0, $maxSelection));
+        } elseif (\is_array($value) || $value === null || ($value === -1 ? !$invertible : !$this->isValid($value))) {
             $value = 0;
         }
 
@@ -291,6 +304,9 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
             'labels' => JSON::encode($labels),
             'value' => $value,
         ];
+        if ($maxSelection > 1) {
+            $attributes['max'] = $maxSelection;
+        }
         if ($id !== '') {
             $attributes['id'] = $id;
         }

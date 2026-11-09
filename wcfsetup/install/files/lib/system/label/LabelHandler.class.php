@@ -11,6 +11,7 @@ use wcf\data\user\User;
 use wcf\system\cache\builder\LabelCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\label\object\IMultipleLabelsObjectHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -88,6 +89,41 @@ class LabelHandler extends SingletonFactory
         }
 
         return null;
+    }
+
+    /**
+     * Returns the maximum number of labels of the given label group that can
+     * be assigned to a single object of the given label object type.
+     *
+     * @since 6.3
+     */
+    public function getMaxSelection(ViewableLabelGroup $labelGroup, string $objectType): int
+    {
+        $className = $this->getObjectType($objectType)?->className;
+        if ($className === null || !\is_subclass_of($className, IMultipleLabelsObjectHandler::class)) {
+            return 1;
+        }
+
+        return \max(1, $labelGroup->maxSelection);
+    }
+
+    /**
+     * Flattens a `groupID => labelID|labelID[]` map into a list of label ids.
+     *
+     * @param array<int, int|list<int>> $labelIDs
+     * @return list<int>
+     * @since 6.3
+     */
+    public static function flattenLabelIDs(array $labelIDs): array
+    {
+        $flattened = [];
+        foreach ($labelIDs as $labelID) {
+            foreach ((array)$labelID as $value) {
+                $flattened[] = $value;
+            }
+        }
+
+        return \array_values(\array_unique($flattened));
     }
 
     /**
@@ -311,18 +347,23 @@ class LabelHandler extends SingletonFactory
             }
         }
 
-        // order label ids by label group
+        // order label ids by label group and by their position within the group
         $labelGroups = &$this->labelGroups;
+        $labelPositions = [];
+        $getLabelPosition = function (Label $label) use (&$labelPositions): int {
+            if (!isset($labelPositions[$label->groupID])) {
+                $labelPositions[$label->groupID] = \array_flip($this->getLabelGroup($label->groupID)->getLabelIDs());
+            }
+
+            return $labelPositions[$label->groupID][$label->labelID];
+        };
         foreach ($data as &$labels) {
-            \uasort($labels, static function ($a, $b) use ($labelGroups) {
+            \uasort($labels, static function (Label $a, Label $b) use ($labelGroups, $getLabelPosition) {
                 $groupA = $labelGroups['groups'][$a->groupID];
                 $groupB = $labelGroups['groups'][$b->groupID];
 
-                if ($groupA->showOrder === $groupB->showOrder) {
-                    return ($groupA->groupID > $groupB->groupID) ? 1 : -1;
-                }
-
-                return ($groupA->showOrder > $groupB->showOrder) ? 1 : -1;
+                return [$groupA->showOrder, $groupA->groupID, $getLabelPosition($a)]
+                    <=> [$groupB->showOrder, $groupB->groupID, $getLabelPosition($b)];
             });
         }
         unset($labels);
