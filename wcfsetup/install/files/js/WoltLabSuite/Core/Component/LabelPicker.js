@@ -1,0 +1,66 @@
+/**
+ * Positions the popover of `<woltlab-core-label-picker>` relative to its
+ * toggle button while it is open.
+ *
+ * @author Marcel Werk
+ * @copyright 2001-2026 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @since 6.3
+ */
+define(["require", "exports", "tslib", "../Helper/Selector", "../Ui/Alignment"], function (require, exports, tslib_1, Selector_1, UiAlignment) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.setup = setup;
+    UiAlignment = tslib_1.__importStar(UiAlignment);
+    function setupPicker(picker) {
+        let popover = undefined;
+        const updatePosition = (event) => {
+            if (popover === undefined) {
+                return;
+            }
+            // Removing the picker from the DOM hides the popover without any events.
+            if (!popover.matches(":popover-open")) {
+                stopTracking();
+                return;
+            }
+            // Scrolling the list of labels does not affect the position.
+            if (event?.type === "scroll" && popover.contains(event.target)) {
+                return;
+            }
+            const button = picker.querySelector(":scope > .labelPicker__toggle");
+            UiAlignment.set(popover, button, {
+                verticalOffset: 4,
+            });
+        };
+        const stopTracking = () => {
+            popover = undefined;
+            window.removeEventListener("resize", updatePosition);
+            window.removeEventListener("scroll", updatePosition, { capture: true });
+        };
+        // The popover is created by the web component, which might not have been
+        // upgraded yet. `beforetoggle` does not bubble, but can be captured.
+        picker.addEventListener("beforetoggle", (event) => {
+            const target = event.target;
+            if (!target.classList.contains("labelPicker__popover")) {
+                return;
+            }
+            if (event.newState === "open") {
+                popover = target;
+                // The popover is shown after this event, position it before the next paint.
+                window.requestAnimationFrame(() => updatePosition());
+                window.addEventListener("resize", updatePosition, { passive: true });
+                window.addEventListener("scroll", updatePosition, { capture: true, passive: true });
+            }
+            else {
+                stopTracking();
+            }
+        }, { capture: true });
+        // The size of the toggle button depends on the selected labels.
+        picker.addEventListener("change", () => updatePosition());
+    }
+    function setup() {
+        (0, Selector_1.wheneverFirstSeen)("woltlab-core-label-picker", (picker) => {
+            setupPicker(picker);
+        });
+    }
+});

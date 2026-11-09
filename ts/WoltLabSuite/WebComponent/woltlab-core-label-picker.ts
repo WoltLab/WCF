@@ -8,8 +8,8 @@
  * labels. The value is then a comma-separated list of label ids and each
  * selected label is submitted as `name[]`.
  *
- * The labels are presented as a listbox inside a native popover that is
- * anchored to the toggle button.
+ * The labels are presented as a listbox inside a native popover. The popover
+ * is positioned by `WoltLabSuite/Core/Component/LabelPicker`.
  *
  * Usage: `<woltlab-core-label-picker name="labelIDs[1]" labels="[[1,&quot;…&quot;]]" value="1"></woltlab-core-label-picker>`
  *
@@ -20,7 +20,6 @@
  */
 
 {
-  const supportsAnchorPositioning = CSS.supports("position-area", "block-end");
   let pickerCount = 0;
 
   class WoltlabCoreLabelPickerElement extends HTMLElement {
@@ -33,7 +32,6 @@
     #listbox: HTMLElement | undefined = undefined;
     #options = new Map<number, HTMLElement>();
     #popover: HTMLElement | undefined = undefined;
-    readonly #updatePosition = () => this.#setPosition();
     #typeahead = "";
     #typeaheadTimer: number | undefined = undefined;
 
@@ -66,7 +64,6 @@
       this.#popover.id = id;
       this.#popover.popover = "auto";
       this.#popover.classList.add("labelPicker__popover");
-      this.#popover.style.setProperty("position-anchor", `--${id}`);
       this.#popover.addEventListener("toggle", (event) => {
         if (event.newState === "open") {
           this.#open();
@@ -81,7 +78,6 @@
       this.#button.disabled = this.matches(":disabled");
       this.#button.popoverTargetElement = this.#popover;
       this.#button.setAttribute("aria-haspopup", "listbox");
-      this.#button.style.setProperty("anchor-name", `--${id}`);
       this.#button.addEventListener("keydown", (event) => {
         if ((event.key === "ArrowDown" || event.key === "ArrowUp") && !this.#isOpen()) {
           event.preventDefault();
@@ -217,24 +213,12 @@
         this.#listbox!.setAttribute("aria-label", label);
       }
 
-      if (!supportsAnchorPositioning) {
-        this.#setPosition();
-
-        window.addEventListener("resize", this.#updatePosition, { passive: true });
-        window.addEventListener("scroll", this.#updatePosition, { capture: true, passive: true });
-      }
-
       const options = Array.from(this.#options.values());
       const option = options.find((option) => option.getAttribute("aria-selected") === "true") ?? options[0];
       option?.focus();
     }
 
     #closed(): void {
-      if (!supportsAnchorPositioning) {
-        window.removeEventListener("resize", this.#updatePosition);
-        window.removeEventListener("scroll", this.#updatePosition, { capture: true });
-      }
-
       this.#typeahead = "";
       window.clearTimeout(this.#typeaheadTimer);
     }
@@ -242,26 +226,6 @@
     #close(): void {
       this.#popover!.hidePopover();
       this.#button!.focus();
-    }
-
-    /**
-     * Fallback for browsers without support for CSS anchor positioning.
-     */
-    #setPosition(): void {
-      const spacing = 4;
-      const rect = this.#button!.getBoundingClientRect();
-      const { offsetHeight: height, offsetWidth: width } = this.#popover!;
-
-      let top = rect.bottom + spacing;
-      if (top + height > window.innerHeight && rect.top - spacing - height >= 0) {
-        top = rect.top - spacing - height;
-      }
-
-      let left = document.documentElement.dir === "rtl" ? rect.right - width : rect.left;
-      left = Math.max(spacing, Math.min(left, document.documentElement.clientWidth - width - spacing));
-
-      this.#popover!.style.setProperty("top", `${top}px`);
-      this.#popover!.style.setProperty("left", `${left}px`);
     }
 
     #keydown(event: KeyboardEvent): void {
@@ -385,11 +349,6 @@
         this.#renderMultiple();
       } else {
         this.#renderSingle();
-      }
-
-      // The size of the toggle depends on the selected labels.
-      if (!supportsAnchorPositioning && this.#isOpen()) {
-        this.#setPosition();
       }
     }
 

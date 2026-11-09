@@ -68,21 +68,12 @@
 	box-shadow: var(--wcfBoxShadow);
 	color: var(--wcfDropdownText);
 	inset: auto;
-	margin: 4px 0;
+	margin: 0;
 	max-height: 300px;
 	max-width: min(350px, calc(100vw - 20px));
 	min-width: 160px;
 	overflow: auto;
 	padding: 4px 0;
-	position-area: block-end span-inline-end;
-	position-try-fallbacks: flip-block, flip-inline;
-}
-
-/* The position is calculated by the label picker instead. */
-@supports not (position-area: block-end) {
-	.labelPicker__popover {
-		margin: 0;
-	}
 }
 
 .labelPicker__limit {
