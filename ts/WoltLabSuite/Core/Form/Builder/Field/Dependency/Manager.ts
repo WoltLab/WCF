@@ -92,7 +92,7 @@ function _show(node: HTMLElement): void {
       });
   }
 
-  const validatedFields = "input, select, textarea, woltlab-core-toggle-button";
+  const validatedFields = "input, select, textarea, woltlab-core-label-picker, woltlab-core-toggle-button";
   node.querySelectorAll(validatedFields).forEach((validatedField: HTMLInputElement | HTMLSelectElement) => {
     // if a container is shown, ignore all fields that
     // have a hidden parent element within the container

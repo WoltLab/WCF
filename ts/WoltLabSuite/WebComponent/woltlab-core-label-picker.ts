@@ -26,6 +26,10 @@
   class WoltlabCoreLabelPickerElement extends HTMLElement {
     static formAssociated = true;
 
+    static get observedAttributes() {
+      return ["required"];
+    }
+
     readonly #internals: ElementInternals;
     #badges: HTMLElement | undefined = undefined;
     #button: HTMLButtonElement | undefined = undefined;
@@ -117,6 +121,20 @@
       });
 
       this.#render();
+    }
+
+    attributeChangedCallback(name: string): void {
+      // Initial attributes are handled when the element is built.
+      if (this.#button === undefined) {
+        return;
+      }
+
+      switch (name) {
+        case "required":
+          // Hidden form fields drop `required`, which affects the validity.
+          this.#render();
+          break;
+      }
     }
 
     formDisabledCallback(disabled: boolean): void {
