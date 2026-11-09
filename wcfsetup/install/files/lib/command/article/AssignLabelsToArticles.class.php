@@ -19,7 +19,7 @@ final class AssignLabelsToArticles
     /**
      * @param list<Article> $articles
      * @param list<int> $labelGroupIDs
-     * @param array<int, int> $labelIDs
+     * @param array<int, int|list<int>> $labelIDs
      */
     public function __construct(
         private readonly array $articles,

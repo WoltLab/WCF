@@ -15,6 +15,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\label\LabelFormField;
 use wcf\system\form\builder\Psr15DialogForm;
+use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\WCF;
 
 /**
@@ -124,6 +125,7 @@ final class ArticleBulkAssignLabelDialogAction implements RequestHandlerInterfac
                     ->objectProperty('labelIDs')
                     ->objectType('com.woltlab.wcf.article')
                     ->required($labelGroup->forceSelection !== 0)
+                    ->maxSelection(ArticleLabelObjectHandler::getInstance()->getMaxSelection($labelGroup))
                     ->labelGroup($labelGroup)
             );
         }

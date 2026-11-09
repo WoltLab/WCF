@@ -408,20 +408,6 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
                     foreach ($field->getSelectedLabelIDs() as $labelID) {
                         $builder->setLabelID($labelID);
                     }
-                })
-                ->loadValueCallback(static function (Article $object, LabelFormField $field) use ($groupID) {
-                    $labelIDs = [];
-                    foreach ($object->getLabels() as $label) {
-                        if ($label->groupID === $groupID) {
-                            $labelIDs[] = $label->labelID;
-                        }
-                    }
-
-                    if ($field->getMaxSelection() > 1) {
-                        $field->value($labelIDs);
-                    } elseif ($labelIDs !== []) {
-                        $field->value($labelIDs[0]);
-                    }
                 });
         }
 

@@ -185,6 +185,10 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
     #[\Override]
     public function updatedObject(array $data, IStorableObject $object, bool $loadValues = true): static
     {
+        if ($this->loadValueCallback !== null) {
+            return parent::updatedObject($data, $object, $loadValues);
+        }
+
         if ($loadValues) {
             $objectTypeID = $this->getObjectType()->objectTypeID;
             $objectID = $object->{$object::getDatabaseTableIndexName()};

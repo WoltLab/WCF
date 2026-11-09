@@ -207,11 +207,16 @@ class LabelHandler extends SingletonFactory
      * Sets labels for given object id, pass an empty array to remove all previously
      * assigned labels.
      *
-     * @param int[] $labelIDs
+     * Since 6.3, the label ids may also be grouped by label group, with a list of
+     * label ids per group.
+     *
+     * @param array<int, int|list<int>> $labelIDs
      * @return void
      */
     public function setLabels(array $labelIDs, int $objectTypeID, int $objectID, bool $validatePermissions = true)
     {
+        $labelIDs = self::flattenLabelIDs($labelIDs);
+
         // get accessible label ids to prevent inaccessible ones to be removed
         $accessibleLabelIDs = $this->getAccessibleLabelIDs();
 
@@ -252,8 +257,11 @@ class LabelHandler extends SingletonFactory
      * label for any of the given label group is given, an existing label from this group will
      * be removed.
      *
+     * Since 6.3, the label ids may also be grouped by label group, with a list of
+     * label ids per group.
+     *
      * @param int[] $groupIDs ids of the relevant label groups
-     * @param int[] $labelIDs ids of the new labels
+     * @param array<int, int|list<int>> $labelIDs ids of the new labels
      * @param string $objectType label object type of the updated object
      * @param int $objectID id of the updated object
      * @return void
@@ -261,6 +269,8 @@ class LabelHandler extends SingletonFactory
      */
     public function replaceLabels(array $groupIDs, array $labelIDs, string $objectType, int $objectID)
     {
+        $labelIDs = self::flattenLabelIDs($labelIDs);
+
         $objectTypeID = $this->getObjectType($objectType)->objectTypeID;
 
         // get the ids of the labels in the relevant label groups
