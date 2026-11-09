@@ -81,3 +81,6 @@ jobs:
     - name: "Check 'exifreader'"
       run: |
         diff -wu wcfsetup/install/files/js/3rdParty/exif-reader.js node_modules/exifreader/dist/exif-reader.js
+    - name: "Check 'tslib'"
+      run: |
+        diff -wu wcfsetup/install/files/js/3rdParty/tslib.js node_modules/tslib/tslib.js
