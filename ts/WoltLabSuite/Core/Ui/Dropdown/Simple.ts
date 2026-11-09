@@ -274,10 +274,7 @@ function toggle(
         const activeListItem = nonEmptyListItems.find((listItem) => listItem.classList.contains("active"));
         firstListItem = activeListItem || nonEmptyListItems[0] || null;
         nonEmptyListItems.forEach((listItem) => {
-          // Preserve more specific roles, such as `menuitemcheckbox`.
-          if (!listItem.hasAttribute("role")) {
-            listItem.setAttribute("role", "menuitem");
-          }
+          listItem.setAttribute("role", "menuitem");
           listItem.tabIndex = -1;
         });
       }

@@ -51,10 +51,86 @@
 	cursor: pointer;
 }
 
-woltlab-core-label-picker[max] > .dropdownToggle {
-	display: inline-flex;
-	flex-wrap: wrap;
-	gap: 5px;
+.labelPicker__toggle {
+	cursor: pointer;
+
+	woltlab-core-label-picker[max] > & {
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 5px;
+	}
+}
+
+.labelPicker__popover {
+	background-color: var(--wcfDropdownBackground);
+	border: 0;
+	border-radius: 4px;
+	box-shadow: var(--wcfBoxShadow);
+	color: var(--wcfDropdownText);
+	inset: auto;
+	margin: 4px 0;
+	max-height: 300px;
+	max-width: min(350px, calc(100vw - 20px));
+	min-width: 160px;
+	overflow: auto;
+	padding: 4px 0;
+	position-area: block-end span-inline-end;
+	position-try-fallbacks: flip-block, flip-inline;
+}
+
+/* The position is calculated by the label picker instead. */
+@supports not (position-area: block-end) {
+	.labelPicker__popover {
+		margin: 0;
+	}
+}
+
+.labelPicker__limit {
+	color: var(--wcfContentDimmedText);
+	padding: 6px 12px;
+
+	@include wcfFontSmall;
+}
+
+.labelPicker__option {
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	gap: 6px;
+	padding: 6px 12px;
+	user-select: none;
+
+	&:hover,
+	&:focus-visible {
+		background-color: var(--wcfDropdownBackgroundActive);
+		color: var(--wcfDropdownLinkActive);
+		outline: 0;
+	}
+
+	&[aria-selected="false"] .labelPicker__check {
+		visibility: hidden;
+	}
+
+	&[aria-disabled="true"] {
+		color: var(--wcfContentDimmedText);
+		cursor: not-allowed;
+
+		.labelPicker__label {
+			opacity: 0.5;
+		}
+	}
+}
+
+.labelPicker__option--separated {
+	border-top: 1px solid var(--wcfDropdownBorderInner);
+	margin-top: 4px;
+}
+
+.labelPicker__label {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .labelSelection {

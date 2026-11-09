@@ -1,5 +1,5 @@
 /**
- * `<woltlab-core-label-picker>` provides a dropdown to select a single label
+ * `<woltlab-core-label-picker>` provides a popover to select a single label
  * out of a label group. The element is form-associated and submits the id of
  * the selected label, `0` for no selection or `-1` for objects without any
  * label of this group (requires `invertible`).
@@ -7,6 +7,9 @@
  * Setting `max` to a value greater than 1 allows the selection of up to `max`
  * labels. The value is then a comma-separated list of label ids and each
  * selected label is submitted as `name[]`.
+ *
+ * The labels are presented as a listbox inside a native popover that is
+ * anchored to the toggle button.
  *
  * Usage: `<woltlab-core-label-picker name="labelIDs[1]" labels="[[1,&quot;…&quot;]]" value="1"></woltlab-core-label-picker>`
  *
@@ -17,14 +20,22 @@
  */
 
 {
+  const supportsAnchorPositioning = CSS.supports("position-area", "block-end");
+  let pickerCount = 0;
+
   class WoltlabCoreLabelPickerElement extends HTMLElement {
     static formAssociated = true;
 
     readonly #internals: ElementInternals;
     #button: HTMLButtonElement | undefined = undefined;
     #defaultValue = "";
-    #items = new Map<number, HTMLLIElement>();
     #labels = new Map<number, string>();
+    #listbox: HTMLElement | undefined = undefined;
+    #options = new Map<number, HTMLElement>();
+    #popover: HTMLElement | undefined = undefined;
+    readonly #updatePosition = () => this.#setPosition();
+    #typeahead = "";
+    #typeaheadTimer: number | undefined = undefined;
 
     constructor() {
       super();
@@ -33,8 +44,7 @@
     }
 
     connectedCallback() {
-      // The dropdown menu is moved into a global container, building the
-      // element again when it is moved within the DOM would orphan it.
+      // Moving the element within the DOM must not build it again.
       if (this.#button !== undefined) {
         return;
       }
@@ -50,15 +60,40 @@
 
       this.#defaultValue = this.getAttribute("value") || "";
 
-      this.innerHTML = "";
-      this.classList.add("dropdown");
+      const id = `labelPicker${++pickerCount}`;
+
+      this.#popover = document.createElement("div");
+      this.#popover.id = id;
+      this.#popover.popover = "auto";
+      this.#popover.classList.add("labelPicker__popover");
+      this.#popover.style.setProperty("position-anchor", `--${id}`);
+      this.#popover.addEventListener("toggle", (event) => {
+        if (event.newState === "open") {
+          this.#open();
+        } else {
+          this.#closed();
+        }
+      });
 
       this.#button = document.createElement("button");
       this.#button.type = "button";
-      this.#button.classList.add("dropdownToggle");
+      this.#button.classList.add("labelPicker__toggle");
       this.#button.disabled = this.matches(":disabled");
+      this.#button.popoverTargetElement = this.#popover;
+      this.#button.setAttribute("aria-haspopup", "listbox");
+      this.#button.style.setProperty("anchor-name", `--${id}`);
+      this.#button.addEventListener("keydown", (event) => {
+        if ((event.key === "ArrowDown" || event.key === "ArrowUp") && !this.#isOpen()) {
+          event.preventDefault();
 
-      this.append(this.#button, this.#buildMenu());
+          this.#popover!.showPopover({ source: this.#button });
+        }
+      });
+
+      this.#popover.append(...this.#buildContent(id));
+
+      this.innerHTML = "";
+      this.append(this.#button, this.#popover);
 
       // Clicks on an associated `<label>` are forwarded to the host element.
       this.addEventListener("click", (event) => {
@@ -73,6 +108,10 @@
     formDisabledCallback(disabled: boolean): void {
       if (this.#button !== undefined) {
         this.#button.disabled = disabled;
+      }
+
+      if (disabled && this.#isOpen()) {
+        this.#popover!.hidePopover();
       }
     }
 
@@ -109,79 +148,206 @@
         .filter((labelId) => !Number.isNaN(labelId) && labelId !== 0);
     }
 
-    #buildMenu(): HTMLElement {
-      const labelList = document.createElement("ul");
-      labelList.classList.add("scrollableDropdownMenu");
+    #buildContent(id: string): HTMLElement[] {
+      this.#listbox = document.createElement("div");
+      this.#listbox.classList.add("labelPicker__listbox");
+      this.#listbox.setAttribute("role", "listbox");
+      this.#listbox.addEventListener("keydown", (event) => this.#keydown(event));
+
       for (const [labelId, html] of this.#labels) {
-        labelList.append(this.#createItem(labelId, html));
+        this.#listbox.append(this.#createOption(labelId, html));
       }
 
-      const dropdownMenu = document.createElement("div");
-      dropdownMenu.classList.add("dropdownMenu");
-      dropdownMenu.append(labelList);
+      if (this.multiple) {
+        const limit = document.createElement("p");
+        limit.id = `${id}Limit`;
+        limit.classList.add("labelPicker__limit");
+        limit.textContent = window.WoltLabLanguage.getPhrase("wcf.label.picker.maxSelection", { max: this.max });
 
-      // Labels are deselected individually when selecting multiple labels.
-      if (!this.multiple && (this.invertible || !this.required)) {
-        const divider = document.createElement("li");
-        divider.classList.add("dropdownDivider");
+        this.#listbox.setAttribute("aria-multiselectable", "true");
+        this.#listbox.setAttribute("aria-describedby", limit.id);
 
-        const optionList = document.createElement("ul");
-        optionList.append(divider);
-
-        if (this.invertible) {
-          optionList.append(this.#createItem(-1, this.#getBadge("wcf.label.withoutSelection")));
-        }
-
-        if (!this.required) {
-          optionList.append(this.#createItem(0, this.#getBadge("wcf.label.none")));
-        }
-
-        dropdownMenu.append(optionList);
+        return [limit, this.#listbox];
       }
 
-      return dropdownMenu;
+      // Selecting multiple labels deselects them individually instead.
+      const options: HTMLElement[] = [];
+      if (this.invertible) {
+        options.push(this.#createOption(-1, this.#getBadge("wcf.label.withoutSelection")));
+      }
+      if (!this.required) {
+        options.push(this.#createOption(0, this.#getBadge("wcf.label.none")));
+      }
+
+      if (options.length > 0) {
+        options[0].classList.add("labelPicker__option--separated");
+        this.#listbox.append(...options);
+      }
+
+      return [this.#listbox];
     }
 
-    #createItem(labelId: number, html: string): HTMLLIElement {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.innerHTML = html;
+    #createOption(labelId: number, html: string): HTMLElement {
+      const icon = document.createElement("fa-icon");
+      icon.classList.add("labelPicker__check");
+      icon.setIcon("check");
 
-      const listItem = document.createElement("li");
-      listItem.append(button);
-      this.#items.set(labelId, listItem);
+      const label = document.createElement("span");
+      label.classList.add("labelPicker__label");
+      label.innerHTML = html;
 
-      if (!this.multiple) {
-        button.addEventListener("click", () => {
-          if (this.value === labelId) {
+      const option = document.createElement("div");
+      option.classList.add("labelPicker__option");
+      option.setAttribute("role", "option");
+      option.tabIndex = -1;
+      option.append(icon, label);
+      option.addEventListener("click", () => this.#selectOption(labelId));
+      this.#options.set(labelId, option);
+
+      return option;
+    }
+
+    #isOpen(): boolean {
+      return this.#popover?.matches(":popover-open") ?? false;
+    }
+
+    #open(): void {
+      const label = this.#internals.labels[0]?.textContent?.trim() ?? "";
+      if (label !== "") {
+        this.#listbox!.setAttribute("aria-label", label);
+      }
+
+      if (!supportsAnchorPositioning) {
+        this.#setPosition();
+
+        window.addEventListener("resize", this.#updatePosition, { passive: true });
+        window.addEventListener("scroll", this.#updatePosition, { capture: true, passive: true });
+      }
+
+      const options = Array.from(this.#options.values());
+      const option = options.find((option) => option.getAttribute("aria-selected") === "true") ?? options[0];
+      option?.focus();
+    }
+
+    #closed(): void {
+      if (!supportsAnchorPositioning) {
+        window.removeEventListener("resize", this.#updatePosition);
+        window.removeEventListener("scroll", this.#updatePosition, { capture: true });
+      }
+
+      this.#typeahead = "";
+      window.clearTimeout(this.#typeaheadTimer);
+    }
+
+    #close(): void {
+      this.#popover!.hidePopover();
+      this.#button!.focus();
+    }
+
+    /**
+     * Fallback for browsers without support for CSS anchor positioning.
+     */
+    #setPosition(): void {
+      const spacing = 4;
+      const rect = this.#button!.getBoundingClientRect();
+      const { offsetHeight: height, offsetWidth: width } = this.#popover!;
+
+      let top = rect.bottom + spacing;
+      if (top + height > window.innerHeight && rect.top - spacing - height >= 0) {
+        top = rect.top - spacing - height;
+      }
+
+      let left = document.documentElement.dir === "rtl" ? rect.right - width : rect.left;
+      left = Math.max(spacing, Math.min(left, document.documentElement.clientWidth - width - spacing));
+
+      this.#popover!.style.setProperty("top", `${top}px`);
+      this.#popover!.style.setProperty("left", `${left}px`);
+    }
+
+    #keydown(event: KeyboardEvent): void {
+      const options = Array.from(this.#options.values());
+      const option = (event.target as HTMLElement).closest<HTMLElement>(".labelPicker__option");
+      if (option === null) {
+        return;
+      }
+
+      const index = options.indexOf(option);
+      const labelId = Array.from(this.#options.keys())[index];
+
+      switch (event.key) {
+        case "ArrowDown":
+          options[Math.min(index + 1, options.length - 1)].focus();
+          break;
+
+        case "ArrowUp":
+          options[Math.max(index - 1, 0)].focus();
+          break;
+
+        case "Home":
+          options[0].focus();
+          break;
+
+        case "End":
+          options[options.length - 1].focus();
+          break;
+
+        case " ":
+          this.#selectOption(labelId);
+          break;
+
+        case "Enter":
+          if (this.multiple) {
+            this.#close();
+          } else {
+            this.#selectOption(labelId);
+          }
+          break;
+
+        case "Tab":
+          this.#close();
+          break;
+
+        default:
+          if (event.key.length !== 1 || event.altKey || event.ctrlKey || event.metaKey) {
             return;
           }
 
-          this.value = labelId;
-          this.#dispatchChange();
-        });
-
-        return listItem;
+          this.#findByTypeahead(event.key, index)?.focus();
+          break;
       }
 
-      listItem.setAttribute("role", "menuitemcheckbox");
-      button.addEventListener("click", (event) => {
-        // Keep the menu open to allow the selection of further labels.
-        event.stopPropagation();
+      event.preventDefault();
+    }
 
+    #findByTypeahead(key: string, index: number): HTMLElement | undefined {
+      this.#typeahead += key.toLowerCase();
+      window.clearTimeout(this.#typeaheadTimer);
+      this.#typeaheadTimer = window.setTimeout(() => {
+        this.#typeahead = "";
+      }, 500);
+
+      // A single character cycles through the labels, more characters refine
+      // the search starting at the current label.
+      const options = Array.from(this.#options.values());
+      const start = this.#typeahead.length === 1 ? index + 1 : index;
+      const orderedOptions = [...options.slice(start), ...options.slice(0, start)];
+
+      return orderedOptions.find((option) => option.textContent.trim().toLowerCase().startsWith(this.#typeahead));
+    }
+
+    #selectOption(labelId: number): void {
+      if (this.multiple) {
         this.#toggleLabel(labelId);
-      });
-      listItem.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          // Prevent the dropdown from closing and moving the focus to the toggle.
-          event.preventDefault();
-          event.stopPropagation();
 
-          this.#toggleLabel(labelId);
-        }
-      });
+        return;
+      }
 
-      return listItem;
+      if (this.value !== labelId) {
+        this.value = labelId;
+        this.#dispatchChange();
+      }
+
+      this.#close();
     }
 
     #toggleLabel(labelId: number): void {
@@ -220,6 +386,11 @@
       } else {
         this.#renderSingle();
       }
+
+      // The size of the toggle depends on the selected labels.
+      if (!supportsAnchorPositioning && this.#isOpen()) {
+        this.#setPosition();
+      }
     }
 
     #renderSingle(): void {
@@ -233,8 +404,8 @@
         }
       }
 
-      for (const [labelId, listItem] of this.#items) {
-        listItem.classList.toggle("active", labelId === value);
+      for (const [labelId, option] of this.#options) {
+        option.setAttribute("aria-selected", (labelId === value).toString());
       }
 
       this.#internals.setFormValue(value.toString());
@@ -250,14 +421,15 @@
       }
 
       const limitReached = values.length >= this.max;
-      for (const [labelId, listItem] of this.#items) {
-        const checked = values.includes(labelId);
-        listItem.classList.toggle("active", checked);
-        listItem.setAttribute("aria-checked", checked.toString());
+      for (const [labelId, option] of this.#options) {
+        const selected = values.includes(labelId);
+        option.setAttribute("aria-selected", selected.toString());
 
-        const disabled = !checked && limitReached;
-        listItem.classList.toggle("disabled", disabled);
-        listItem.setAttribute("aria-disabled", disabled.toString());
+        if (!selected && limitReached) {
+          option.setAttribute("aria-disabled", "true");
+        } else {
+          option.removeAttribute("aria-disabled");
+        }
       }
 
       const formData = new FormData();
