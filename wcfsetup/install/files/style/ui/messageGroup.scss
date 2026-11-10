@@ -118,7 +118,8 @@
 			}
 		}
 
-		> .labelList {
+		> .labelList,
+		> .labelBadgeInlineList {
 			float: right;
 			padding-left: 7px;
 		}
@@ -294,7 +295,8 @@
 					display: none;
 				}
 
-				.labelList {
+				.labelList,
+				.labelBadgeInlineList {
 					float: none;
 					padding-bottom: 2px;
 					padding-left: 0;

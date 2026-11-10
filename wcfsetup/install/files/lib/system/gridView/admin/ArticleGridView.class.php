@@ -103,11 +103,11 @@ final class ArticleGridView extends AbstractGridView
 
                             $labels = '';
                             if ($row->hasLabels === 1) {
-                                $labels = '<br><ul class="labelList">';
+                                $labels = '<div class="labelBadgeList">';
                                 foreach ($row->getLabels() as $label) {
-                                    $labels .= '<li>' . $label->render() . '</li>';
+                                    $labels .= $label->render();
                                 }
-                                $labels .= '</ul>';
+                                $labels .= '</div>';
                             }
                             $badges = '';
                             if ($row->isDeleted !== 0) {

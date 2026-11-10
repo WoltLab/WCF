@@ -98,7 +98,7 @@ a.labelBadge:hover {
 	text-decoration: none;
 }
 
-/* label list */
+/* @deprecated 6.3 Use `.labelBadgeList` or `.labelBadgeInlineList` instead */
 .labelList {
 	@include inlineList;
 
@@ -331,4 +331,21 @@ a.labelBadge:hover {
 
 .labelSelection__custom .labelSelection__span {
 	flex: 1 1 auto;
+}
+
+.labelBadgeList,
+.labelBadgeInlineList {
+	align-items: center;
+	column-gap: 6px;
+	flex-wrap: wrap;
+	row-gap: 3px;
+	white-space: nowrap;
+}
+
+.labelBadgeList {
+	display: flex;
+}
+
+.labelBadgeInlineList {
+	display: inline-flex;
 }

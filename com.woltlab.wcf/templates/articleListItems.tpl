@@ -44,11 +44,11 @@
 
 		<div class="entryCardList__item__content">
 			{if $article->hasLabels}
-				<ul class="entryCardList__item__labels labelList">
+				<div class="entryCardList__item__labels labelBadgeList">
 					{foreach from=$article->getLabels() item=label}
-						<li>{unsafe:$label->render()}</li>
+						{unsafe:$label->render()}
 					{/foreach}
-				</ul>
+				</div>
 			{/if}
 			
 			<h2 class="entryCardList__item__title">
