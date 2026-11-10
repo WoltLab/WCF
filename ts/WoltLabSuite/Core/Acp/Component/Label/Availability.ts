@@ -29,7 +29,9 @@ function observeListItem(listItem: HTMLLIElement): void {
 }
 
 export function setup(): void {
-  const listItems = Array.from(document.querySelectorAll<HTMLLIElement>("#connect .structuredList li"));
+  const listItems = Array.from(
+    document.querySelectorAll<HTMLLIElement>(".labelGroupAvailability .scrollableCheckboxList > li"),
+  );
   if (listItems.length === 0) {
     return;
   }

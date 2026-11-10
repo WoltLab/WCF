@@ -167,5 +167,6 @@
 		<template>mediaEditor</template>
 		<template>mediaListItems</template>
 		<template>mediaJavaScript</template>
+		<template>__labelGroupObjectTypes</template>
 	</delete>
 </data>
