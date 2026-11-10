@@ -32,6 +32,13 @@ final class LabelGroupBuilder extends DatabaseObjectBuilder
     private array $groupName;
 
     /**
+     * ids of the objects the label group is available for, grouped by the id
+     * of the label object type
+     * @var array<int, list<int>>
+     */
+    private array $objectIDs = [];
+
+    /**
      * @param L10nValue $groupName
      */
     public function setGroupName(array $groupName): static
@@ -83,6 +90,28 @@ final class LabelGroupBuilder extends DatabaseObjectBuilder
         return $this;
     }
 
+    /**
+     * Sets the objects of the given label object type the label group is
+     * available for, replacing the existing ones. Object types without
+     * objects use `0` for a simple true/false state.
+     *
+     * @param list<int> $objectIDs
+     */
+    public function setObjectIDs(int $objectTypeID, array $objectIDs): static
+    {
+        $this->objectIDs[$objectTypeID] = $objectIDs;
+
+        return $this;
+    }
+
+    /**
+     * @return array<int, list<int>>
+     */
+    public function getObjectIDs(): array
+    {
+        return $this->objectIDs;
+    }
+
     #[\Override]
     protected function allowEmptyCreate(): bool
     {
@@ -101,6 +130,7 @@ final class LabelGroupBuilder extends DatabaseObjectBuilder
     protected function afterCreate(): void
     {
         $this->saveL10nValues($this->getObject());
+        $this->saveObjectIDs($this->getObject(), false);
     }
 
     #[\Override]
@@ -109,6 +139,8 @@ final class LabelGroupBuilder extends DatabaseObjectBuilder
         if (isset($this->groupName)) {
             $this->saveL10nValues($this->getObject());
         }
+
+        $this->saveObjectIDs($this->getObject(), true);
     }
 
     #[\Override]
@@ -144,5 +176,42 @@ final class LabelGroupBuilder extends DatabaseObjectBuilder
                 'groupName' => $this->groupName,
             ]
         );
+    }
+
+    private function saveObjectIDs(LabelGroup $group, bool $replace): void
+    {
+        if ($this->objectIDs === []) {
+            return;
+        }
+
+        WCF::getDB()->beginTransaction();
+
+        if ($replace) {
+            $conditions = new PreparedStatementConditionBuilder();
+            $conditions->add('groupID = ?', [$group->groupID]);
+            $conditions->add('objectTypeID IN (?)', [\array_keys($this->objectIDs)]);
+
+            $sql = "DELETE FROM wcf1_label_group_to_object
+                    " . $conditions;
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute($conditions->getParameters());
+        }
+
+        $sql = "INSERT INTO wcf1_label_group_to_object
+                            (groupID, objectTypeID, objectID)
+                VALUES      (?, ?, ?)";
+        $statement = WCF::getDB()->prepare($sql);
+        foreach ($this->objectIDs as $objectTypeID => $objectIDs) {
+            foreach ($objectIDs as $objectID) {
+                $statement->execute([
+                    $group->groupID,
+                    $objectTypeID,
+                    // `0` is stored as `NULL` for simple true/false states
+                    $objectID !== 0 ? $objectID : null,
+                ]);
+            }
+        }
+
+        WCF::getDB()->commitTransaction();
     }
 }

@@ -220,6 +220,12 @@ class LabelGroupAddForm extends AbstractDatabaseObjectBuilderForm
                 ->options($options, true, false)
                 ->filterable()
                 ->ignoreInvalidValues()
+                ->saveValueCallback(static function (LabelGroupBuilder $builder, MultipleSelectionFormField $field) use ($objectTypeID): void {
+                    $builder->setObjectIDs(
+                        $objectTypeID,
+                        \array_map(static fn($objectID) => (int)$objectID, $field->getValue())
+                    );
+                })
                 ->loadValueCallback(function (LabelGroup $object, IFormField $field) use ($objectTypeID): void {
                     $field->value($this->getObjectIDs($object->groupID, $objectTypeID));
                 });
@@ -258,53 +264,10 @@ class LabelGroupAddForm extends AbstractDatabaseObjectBuilderForm
         // Save ACL.
         ACLHandler::getInstance()->save($groupID, $this->form->getData()['aclPermissions_aclObjectTypeID']);
 
-        // Save object type relations.
-        $this->saveObjectTypeRelations($groupID);
-
         foreach ($this->labelObjectTypes as $labelObjectType) {
             $labelObjectType->save();
         }
 
         parent::saved();
-    }
-
-    /**
-     * Saves label group to object relations.
-     */
-    protected function saveObjectTypeRelations(int $groupID): void
-    {
-        WCF::getDB()->beginTransaction();
-
-        // remove old relations
-        $sql = "DELETE FROM wcf1_label_group_to_object
-                WHERE       groupID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$groupID]);
-
-        // insert new relations
-        $sql = "INSERT INTO wcf1_label_group_to_object
-                            (groupID, objectTypeID, objectID)
-                VALUES      (?, ?, ?)";
-        $statement = WCF::getDB()->prepare($sql);
-
-        foreach (\array_keys($this->labelObjectTypeContainers) as $objectTypeID) {
-            $field = $this->form->getNodeById('objectTypes' . $objectTypeID);
-            if (!($field instanceof MultipleSelectionFormField)) {
-                continue;
-            }
-
-            foreach ($field->getValue() as $objectID) {
-                $objectID = (int)$objectID;
-
-                $statement->execute([
-                    $groupID,
-                    $objectTypeID,
-                    // use "0" (stored as NULL) for simple true/false states
-                    $objectID !== 0 ? $objectID : null,
-                ]);
-            }
-        }
-
-        WCF::getDB()->commitTransaction();
     }
 }
