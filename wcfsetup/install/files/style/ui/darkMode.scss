@@ -108,48 +108,50 @@ html[data-color-scheme="dark"] {
 	}
 
 	.labelBadge {
-		--label-tint: 16%;
-		--label-tint-border: 42%;
-
 		&.yellow {
-			--label-color: #e3c645;
+			--label-background: #5c4d00;
+			--label-color: #ffe36b;
 		}
 
 		&.orange {
-			--label-color: #ffa04a;
+			--label-background: #6b3500;
+			--label-color: #ffbb7a;
 		}
 
 		&.brown {
-			--label-color: #d8a885;
+			--label-background: #4a3627;
+			--label-color: #e8cbb3;
 		}
 
 		&.red {
-			--label-color: #ff8f8f;
+			--label-background: #6b1a1a;
+			--label-color: #ffbaba;
 		}
 
 		&.pink {
-			--label-color: #ff8fce;
+			--label-background: #661547;
+			--label-color: #ffb3e2;
 		}
 
 		&.purple {
-			--label-color: #d3a9ff;
+			--label-background: #472966;
+			--label-color: #e2c8ff;
 		}
 
 		&.blue {
-			--label-color: #8fc6f0;
+			--label-background: #1a3f63;
+			--label-color: #b5dbf8;
 		}
 
 		&.green {
-			--label-color: #74d874;
+			--label-background: #1b4d1b;
+			--label-color: #a0e8a0;
 		}
 
 		&.black {
-			--label-color: #c3c6ca;
+			--label-background: #e1e2e3;
+			--label-color: #1a1d21;
 		}
-	}
-
-	a.labelBadge:hover {
-		--label-tint: 24%;
 	}
 
 	.contentItem {
