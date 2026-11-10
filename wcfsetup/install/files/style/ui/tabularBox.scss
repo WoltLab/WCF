@@ -94,7 +94,8 @@ html:not(.touch) .tabularListRow:not(.tabularListRowHead):hover {
 				display: block;
 			}
 
-			.badge {
+			.badge,
+			.labelBadge {
 				top: -2px;
 			}
 		}

@@ -21,7 +21,7 @@
 						*}>
 					</span>
 				{else}
-					<span class="labelSelection__span badge label{if $color != 'none'} {$color}{/if}">{$field->getDefaultLabelText()}</span>
+					<span class="labelSelection__span {$field->getPreviewClassName()}{if $color != 'none'} {$color}{/if}">{$field->getDefaultLabelText()}</span>
 				{/if}
 			</label>
 		</li>

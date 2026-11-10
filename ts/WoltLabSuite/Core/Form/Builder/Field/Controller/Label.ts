@@ -67,7 +67,7 @@ class Label {
       listItem.appendChild(span);
 
       const label = document.createElement("span");
-      label.classList.add("badge", "label");
+      label.classList.add("labelBadge");
       label.innerHTML = getPhrase("wcf.label.withoutSelection");
       span.appendChild(label);
     }
@@ -82,7 +82,7 @@ class Label {
       listItem.appendChild(span);
 
       const label = document.createElement("span");
-      label.classList.add("badge", "label");
+      label.classList.add("labelBadge");
       label.innerHTML = getPhrase("wcf.label.none");
       span.appendChild(label);
     }

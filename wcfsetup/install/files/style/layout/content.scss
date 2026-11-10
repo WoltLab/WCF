@@ -10,7 +10,8 @@
 		// deprecated
 		@include wcfFontTitle;
 
-		.badge {
+		.badge,
+		.labelBadge {
 			top: -2px;
 
 			@include wcfLineHeight;
@@ -149,7 +150,8 @@
 			}
 		}
 
-		.badge {
+		.badge,
+		.labelBadge {
 			top: -2px;
 		}
 	}
@@ -176,7 +178,8 @@
 			}
 		}
 
-		.badge {
+		.badge,
+		.labelBadge {
 			top: -2px;
 		}
 	}
@@ -257,7 +260,8 @@ fieldset {
 			}
 		}
 
-		.badge {
+		.badge,
+		.labelBadge {
 			top: -2px;
 		}
 
@@ -289,7 +293,8 @@ fieldset {
 	> h3 {
 		@include wcfFontHeadline;
 
-		> .badge {
+		> .badge,
+		> .labelBadge {
 			top: -2px;
 		}
 	}

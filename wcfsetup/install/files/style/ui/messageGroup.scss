@@ -83,7 +83,8 @@
 				@include wcfFontHeadline;
 			}
 
-			> .badge.label {
+			> .badge.label,
+			> .labelBadge {
 				top: -2px;
 			}
 		}

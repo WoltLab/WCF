@@ -107,6 +107,51 @@ html[data-color-scheme="dark"] {
 		}
 	}
 
+	.labelBadge {
+		--label-tint: 16%;
+		--label-tint-border: 42%;
+
+		&.yellow {
+			--label-color: #e3c645;
+		}
+
+		&.orange {
+			--label-color: #ffa04a;
+		}
+
+		&.brown {
+			--label-color: #d8a885;
+		}
+
+		&.red {
+			--label-color: #ff8f8f;
+		}
+
+		&.pink {
+			--label-color: #ff8fce;
+		}
+
+		&.purple {
+			--label-color: #d3a9ff;
+		}
+
+		&.blue {
+			--label-color: #8fc6f0;
+		}
+
+		&.green {
+			--label-color: #74d874;
+		}
+
+		&.black {
+			--label-color: #c3c6ca;
+		}
+	}
+
+	a.labelBadge:hover {
+		--label-tint: 24%;
+	}
+
 	.contentItem {
 		border: 1px solid var(--wcfContentBorderInner);
 	}

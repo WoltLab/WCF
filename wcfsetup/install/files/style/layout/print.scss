@@ -74,7 +74,8 @@
 		}
 	}
 
-	.badge {
+	.badge,
+	.labelBadge {
 		padding: 0 !important;
 
 		&::before {

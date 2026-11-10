@@ -44,6 +44,7 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
     protected ?string $textReferenceNodeId;
     protected string $defaultLabelText;
     protected string $customClassName = '';
+    protected string $previewClassName = 'badge';
 
     public function __construct()
     {
@@ -136,6 +137,27 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
         $this->textReferenceNodeId = $id;
 
         return $this;
+    }
+
+    /**
+     * Sets the CSS class of the color previews, `badge` for badges such as user
+     * ranks and `labelBadge` for labels.
+     *
+     * @since 6.3
+     */
+    public function previewClassName(string $className): self
+    {
+        $this->previewClassName = $className;
+
+        return $this;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getPreviewClassName(): string
+    {
+        return $this->previewClassName;
     }
 
     public function getDefaultLabelText(): string

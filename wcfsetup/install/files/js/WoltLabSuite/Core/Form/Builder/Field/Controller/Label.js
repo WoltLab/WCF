@@ -53,7 +53,7 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Dom/Util
                 const span = document.createElement("span");
                 listItem.appendChild(span);
                 const label = document.createElement("span");
-                label.classList.add("badge", "label");
+                label.classList.add("labelBadge");
                 label.innerHTML = (0, Language_1.getPhrase)("wcf.label.withoutSelection");
                 span.appendChild(label);
             }
@@ -65,7 +65,7 @@ define(["require", "exports", "tslib", "../../../../Core", "../../../../Dom/Util
                 const span = document.createElement("span");
                 listItem.appendChild(span);
                 const label = document.createElement("span");
-                label.classList.add("badge", "label");
+                label.classList.add("labelBadge");
                 label.innerHTML = (0, Language_1.getPhrase)("wcf.label.none");
                 span.appendChild(label);
             }

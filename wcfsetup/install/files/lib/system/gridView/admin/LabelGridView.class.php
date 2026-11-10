@@ -55,12 +55,8 @@ final class LabelGridView extends AbstractGridView
                         public function render(mixed $value, DatabaseObject $row): string
                         {
                             \assert($row instanceof Label);
-                            $badgeClassName = StringUtil::encodeHTML($row->getClassNames());
-                            $label = StringUtil::encodeHTML($row->getTitle());
 
-                            return <<<HTML
-                                <span class="badge label {$badgeClassName}">{$label}</span>
-                            HTML;
+                            return $row->render();
                         }
                     }
                 )

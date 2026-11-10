@@ -1,30 +1,82 @@
 /* #### Labels #### */
+/* A label is tinted with its color instead of being filled like a `.badge`,
+   so that admin-defined categories stand apart from status badges. */
+.labelBadge {
+	@include wcfFontSmall;
+
+	--label-color: var(--wcfContentText);
+	--label-tint: 12%;
+	--label-tint-border: 38%;
+
+	background-color: color-mix(in srgb, var(--label-color) var(--label-tint), transparent);
+	border-radius: 999px;
+	box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--label-color) var(--label-tint-border), transparent);
+	color: var(--label-color);
+	display: inline-block;
+	font-weight: 500;
+	line-height: 1.28;
+	max-width: 100%;
+	overflow: hidden;
+	padding: 2px 9px;
+	position: relative;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+	white-space: nowrap;
+	word-wrap: normal;
+
+	/* default label colors */
+	&.yellow {
+		--label-color: #7a5f00;
+	}
+
+	&.orange {
+		--label-color: #a84200;
+	}
+
+	&.brown {
+		--label-color: #8a4b2a;
+	}
+
+	&.red {
+		--label-color: #c00000;
+	}
+
+	&.pink {
+		--label-color: #b0086a;
+	}
+
+	&.purple {
+		--label-color: #8a14b8;
+	}
+
+	&.blue {
+		--label-color: #2f6496;
+	}
+
+	&.green {
+		--label-color: #0a730a;
+	}
+
+	&.black {
+		--label-color: #333;
+	}
+}
+
+a.labelBadge:hover {
+	--label-tint: 20%;
+
+	color: var(--label-color);
+	text-decoration: none;
+}
+
 /* label list */
 .labelList {
 	@include inlineList;
 
 	display: inline-flex;
 
-	> li {
-		&:not(:first-child) {
-			.label {
-				border-top-left-radius: 0;
-				border-bottom-left-radius: 0;
-			}
-		}
-
-		&:not(:last-child) {
-			margin-right: 1px;
-
-			.label {
-				border-top-right-radius: 0;
-				border-bottom-right-radius: 0;
-			}
-		}
-
-		.label {
-			top: -1px;
-		}
+	> li .labelBadge {
+		top: -1px;
 	}
 }
 
