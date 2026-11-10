@@ -119,7 +119,7 @@ class RewriteTest {
       const testFailureResults = document.getElementById("dialogRewriteTestFailureResults")!;
       testFailureResults.innerHTML = results
         .map((result) => {
-          return `<li><span class="badge label ${result.pass ? "green" : "red"}">${getPhrase(
+          return `<li><span class="badge ${result.pass ? "green" : "red"}">${getPhrase(
             "wcf.acp.option.url_omit_index_php.test.status." + (result.pass ? "success" : "failure"),
           )}</span> ${result.app}</li>`;
         })

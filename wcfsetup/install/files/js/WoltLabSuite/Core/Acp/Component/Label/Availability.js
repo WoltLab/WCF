@@ -28,7 +28,7 @@ define(["require", "exports"], function (require, exports) {
         });
     }
     function setup() {
-        const listItems = Array.from(document.querySelectorAll("#connect .structuredList li"));
+        const listItems = Array.from(document.querySelectorAll(".labelGroupAvailability .scrollableCheckboxList > li"));
         if (listItems.length === 0) {
             return;
         }

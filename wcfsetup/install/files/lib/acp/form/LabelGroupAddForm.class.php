@@ -17,12 +17,12 @@ use wcf\system\form\builder\field\acl\AclFormField;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
-use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\label\object\type\ILabelObjectTypeHandler;
 use wcf\system\label\object\type\LabelObjectTypeContainer;
 use wcf\system\WCF;
-use wcf\util\ArrayUtil;
+use wcf\util\StringUtil;
 
 /**
  * Shows the label group add form.
@@ -51,12 +51,6 @@ class LabelGroupAddForm extends AbstractDatabaseObjectBuilderForm
     public string $objectEditLinkController = LabelGroupEditForm::class;
 
     /**
-     * list of label group to object type relations
-     * @var array<int, int[]>
-     */
-    public array $objectTypes = [];
-
-    /**
      * list of label object type handlers
      * @var ILabelObjectTypeHandler[]
      */
@@ -74,8 +68,8 @@ class LabelGroupAddForm extends AbstractDatabaseObjectBuilderForm
         parent::readParameters();
 
         // Initialize label object types and containers before form building
-        // (which happens in checkPermissions), since the TemplateFormNode
-        // in createForm() needs the containers.
+        // (which happens in checkPermissions), since the selection fields
+        // in createForm() need the containers.
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType');
         foreach ($objectTypes as $objectType) {
             $handler = $objectType->getProcessor();
@@ -190,49 +184,76 @@ class LabelGroupAddForm extends AbstractDatabaseObjectBuilderForm
                 ->label('wcf.acp.label.group.category.connect')
                 ->appendChildren([
                     FormContainer::create('connectElements')
-                        ->appendChildren([
-                            TemplateFormNode::create('labelObjectTypes')
-                                ->templateName('__labelGroupObjectTypes')
-                                ->variables([
-                                    'labelObjectTypeContainers' => $this->labelObjectTypeContainers,
-                                ])
-                        ]),
+                        ->addClass('labelGroupAvailability')
+                        ->appendChildren($this->getObjectTypeFields()),
                 ]),
         ]);
 
         $this->form->appendChildren([$tabMenu]);
     }
 
-    #[\Override]
-    public function readFormParameters(): void
+    /**
+     * Returns one selection field per label object type container that lists
+     * the container's objects in tree order.
+     *
+     * @return list<MultipleSelectionFormField>
+     */
+    protected function getObjectTypeFields(): array
     {
-        parent::readFormParameters();
-
-        if (isset($_POST['objectTypes']) && \is_array($_POST['objectTypes'])) {
-            // @phpstan-ignore assign.propertyType
-            $this->objectTypes = ArrayUtil::toIntegerArray($_POST['objectTypes']);
-        }
-    }
-
-    #[\Override]
-    public function validate(): void
-    {
-        parent::validate();
-
-        // Sanitize object type relations.
-        foreach ($this->objectTypes as $objectTypeID => $data) {
-            if (!isset($this->labelObjectTypes[$objectTypeID])) {
-                unset($this->objectTypes[$objectTypeID]);
+        $fields = [];
+        foreach ($this->labelObjectTypeContainers as $objectTypeID => $container) {
+            if (\count($container) === 0) {
+                continue;
             }
+
+            $options = [];
+            foreach ($container as $objectType) {
+                $options[] = [
+                    'label' => StringUtil::encodeHTML($objectType->getLabel()),
+                    'value' => $objectType->getObjectID(),
+                    'depth' => $objectType->getDepth(),
+                ];
+            }
+
+            $fields[] = MultipleSelectionFormField::create('objectTypes' . $objectTypeID)
+                ->label($container->getTitle())
+                ->options($options, true, false)
+                ->filterable()
+                ->ignoreInvalidValues()
+                ->saveValueCallback(static function (LabelGroupBuilder $builder, MultipleSelectionFormField $field) use ($objectTypeID): void {
+                    $builder->setObjectIDs(
+                        $objectTypeID,
+                        \array_map(static fn($objectID) => (int)$objectID, $field->getValue())
+                    );
+                })
+                ->loadValueCallback(function (LabelGroup $object, IFormField $field) use ($objectTypeID): void {
+                    $field->value($this->getObjectIDs($object->groupID, $objectTypeID));
+                });
         }
+
+        return $fields;
     }
 
-    #[\Override]
-    public function readData(): void
+    /**
+     * Returns the ids of the objects of the given object type the label group is
+     * available for.
+     *
+     * @return list<int>
+     */
+    protected function getObjectIDs(int $groupID, int $objectTypeID): array
     {
-        parent::readData();
+        $sql = "SELECT  objectID
+                FROM    wcf1_label_group_to_object
+                WHERE   groupID = ?
+                    AND objectTypeID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([$groupID, $objectTypeID]);
 
-        $this->setObjectTypeRelations();
+        // `NULL` is stored for simple true/false states, the option value is `0`.
+        return \array_map(
+            static fn($objectID) => (int)$objectID,
+            $statement->fetchAll(\PDO::FETCH_COLUMN)
+        );
     }
 
     #[\Override]
@@ -243,83 +264,10 @@ class LabelGroupAddForm extends AbstractDatabaseObjectBuilderForm
         // Save ACL.
         ACLHandler::getInstance()->save($groupID, $this->form->getData()['aclPermissions_aclObjectTypeID']);
 
-        // Save object type relations.
-        $this->saveObjectTypeRelations($groupID);
-
         foreach ($this->labelObjectTypes as $labelObjectType) {
             $labelObjectType->save();
         }
 
-        // Reset object type selections for create form.
-        if ($this->formAction === 'create') {
-            $this->objectTypes = [];
-            $this->setObjectTypeRelations();
-        }
-
         parent::saved();
-    }
-
-    /**
-     * Saves label group to object relations.
-     */
-    protected function saveObjectTypeRelations(int $groupID): void
-    {
-        WCF::getDB()->beginTransaction();
-
-        // remove old relations
-        $sql = "DELETE FROM wcf1_label_group_to_object
-                WHERE       groupID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([$groupID]);
-
-        // insert new relations
-        if ($this->objectTypes !== []) {
-            $sql = "INSERT INTO wcf1_label_group_to_object
-                                (groupID, objectTypeID, objectID)
-                    VALUES      (?, ?, ?)";
-            $statement = WCF::getDB()->prepare($sql);
-
-            foreach ($this->objectTypes as $objectTypeID => $data) {
-                foreach ($data as $objectID) {
-                    // use "0" (stored as NULL) for simple true/false states
-                    if ($objectID === 0) {
-                        $objectID = null;
-                    }
-
-                    $statement->execute([
-                        $groupID,
-                        $objectTypeID,
-                        $objectID,
-                    ]);
-                }
-            }
-        }
-
-        WCF::getDB()->commitTransaction();
-    }
-
-    /**
-     * Sets object type relations.
-     *
-     * @param ?array<int, int[]> $data
-     */
-    protected function setObjectTypeRelations(?array $data = null): void
-    {
-        if ($_POST !== []) {
-            // use POST data
-            $data = &$this->objectTypes;
-        }
-
-        foreach ($this->labelObjectTypeContainers as $objectTypeID => $container) {
-            $hasData = isset($data[$objectTypeID]);
-            foreach ($container as $object) {
-                if (!$hasData) {
-                    $object->setOptionValue(0);
-                } else {
-                    $optionValue = \in_array($object->getObjectID(), $data[$objectTypeID], true) ? 1 : 0;
-                    $object->setOptionValue($optionValue);
-                }
-            }
-        }
     }
 }

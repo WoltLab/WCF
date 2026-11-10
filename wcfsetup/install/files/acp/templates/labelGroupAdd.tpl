@@ -23,6 +23,12 @@
 
 {unsafe:$form->getHtml()}
 
+<script data-relocate="true">
+	require(["WoltLabSuite/Core/Acp/Component/Label/Availability"], ({ setup }) => {
+		setup();
+	});
+</script>
+
 {if $action == 'edit' && !$formObject->sortAlphabetically}
 	<script data-relocate="true">
 		require(["WoltLabSuite/Core/Component/ChangeShowOrder"], ({ setup }) => {

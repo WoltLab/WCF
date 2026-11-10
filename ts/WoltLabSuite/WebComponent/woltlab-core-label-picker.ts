@@ -422,7 +422,7 @@
 
     #getBadge(phrase: string): string {
       const badge = document.createElement("span");
-      badge.classList.add("badge", "label");
+      badge.classList.add("labelBadge");
       badge.textContent = window.WoltLabLanguage.getPhrase(phrase);
 
       return badge.outerHTML;

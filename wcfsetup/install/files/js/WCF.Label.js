@@ -121,12 +121,12 @@ WCF.Label.Chooser = Class.extend({
 				}
 				
 				if (this._showWithoutSelection) {
-					var buttonWithoutSelection = $('<li data-label-id="-1"><span><span class="badge label">' + WCF.Language.get('wcf.label.withoutSelection') + '</span></span></li>').data('groupID', $groupID).appendTo($additionalList).click($.proxy(this._click, this));
+					var buttonWithoutSelection = $('<li data-label-id="-1"><span><span class="labelBadge">' + WCF.Language.get('wcf.label.withoutSelection') + '</span></span></li>').data('groupID', $groupID).appendTo($additionalList).click($.proxy(this._click, this));
 					blockPageScroll(buttonWithoutSelection[0]);
 				}
 				
 				if (!$group.data('forceSelection')) {
-					var $buttonEmpty = $('<li data-label-id="0"><span><span class="badge label">' + WCF.Language.get('wcf.label.none') + '</span></span></li>').data('groupID', $groupID).appendTo($additionalList);
+					var $buttonEmpty = $('<li data-label-id="0"><span><span class="labelBadge">' + WCF.Language.get('wcf.label.none') + '</span></span></li>').data('groupID', $groupID).appendTo($additionalList);
 					$buttonEmpty.click($.proxy(this._click, this));
 					blockPageScroll($buttonEmpty[0]);
 				}

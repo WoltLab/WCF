@@ -1,30 +1,111 @@
 /* #### Labels #### */
-/* label list */
+/* A label is a pastel pill instead of a saturated `.badge`, so that
+   admin-defined categories stand apart from status badges. Each color pairs a
+   background with a text color of at least 4.5:1 contrast. */
+.labelBadge {
+	@include wcfFontSmall;
+
+	--label-background: color-mix(in srgb, var(--wcfContentText) 9%, var(--wcfContentBackground));
+	--label-color: var(--wcfContentText);
+
+	background-color: var(--label-background);
+	border-radius: 999px;
+	box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--label-color) 20%, transparent);
+	color: var(--label-color);
+	display: inline-block;
+	font-weight: 500;
+	line-height: 1.28;
+	max-width: 100%;
+	overflow: hidden;
+	padding: 2px 9px;
+	position: relative;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+	white-space: nowrap;
+	word-wrap: normal;
+
+	/* default label colors */
+	&.yellow {
+		--label-background: #ffe45c;
+		--label-color: #574400;
+	}
+
+	&.orange {
+		--label-background: #ffc28a;
+		--label-color: #7d3100;
+	}
+
+	&.brown {
+		--label-background: #d9c0a8;
+		--label-color: #5a331b;
+	}
+
+	&.red {
+		--label-background: #ffbdbd;
+		--label-color: #9a0000;
+	}
+
+	&.pink {
+		--label-background: #ffc2e4;
+		--label-color: #8c0654;
+	}
+
+	&.purple {
+		--label-background: #dcc4ff;
+		--label-color: #5f0f96;
+	}
+
+	&.blue {
+		--label-background: #bfd9f7;
+		--label-color: #1a456e;
+	}
+
+	&.green {
+		--label-background: #bde8b5;
+		--label-color: #0a520a;
+	}
+
+	&.black {
+		--label-background: #3a3a3d;
+		--label-color: #fff;
+	}
+
+	/* label-only colors */
+	&.teal {
+		--label-background: #9fe5e3;
+		--label-color: #0a4d4b;
+	}
+
+	&.lime {
+		--label-background: #d6f57a;
+		--label-color: #3b5200;
+	}
+
+	&.navy {
+		--label-background: #1f3d7a;
+		--label-color: #fff;
+	}
+
+	&.maroon {
+		--label-background: #7a1f35;
+		--label-color: #fff;
+	}
+}
+
+a.labelBadge:hover {
+	background-color: color-mix(in srgb, var(--label-background) 90%, var(--label-color));
+	color: var(--label-color);
+	text-decoration: none;
+}
+
+/* @deprecated 6.3 Use `.labelBadgeList` or `.labelBadgeInlineList` instead */
 .labelList {
 	@include inlineList;
 
 	display: inline-flex;
 
-	> li {
-		&:not(:first-child) {
-			.label {
-				border-top-left-radius: 0;
-				border-bottom-left-radius: 0;
-			}
-		}
-
-		&:not(:last-child) {
-			margin-right: 1px;
-
-			.label {
-				border-top-right-radius: 0;
-				border-bottom-right-radius: 0;
-			}
-		}
-
-		.label {
-			top: -1px;
-		}
+	> li .labelBadge {
+		top: -1px;
 	}
 }
 
@@ -250,4 +331,21 @@
 
 .labelSelection__custom .labelSelection__span {
 	flex: 1 1 auto;
+}
+
+.labelBadgeList,
+.labelBadgeInlineList {
+	align-items: center;
+	column-gap: 6px;
+	flex-wrap: wrap;
+	row-gap: 3px;
+	white-space: nowrap;
+}
+
+.labelBadgeList {
+	display: flex;
+}
+
+.labelBadgeInlineList {
+	display: inline-flex;
 }

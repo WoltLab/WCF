@@ -107,6 +107,73 @@ html[data-color-scheme="dark"] {
 		}
 	}
 
+	.labelBadge {
+		&.yellow {
+			--label-background: #5c4d00;
+			--label-color: #ffe36b;
+		}
+
+		&.orange {
+			--label-background: #6b3500;
+			--label-color: #ffbb7a;
+		}
+
+		&.brown {
+			--label-background: #4a3627;
+			--label-color: #e8cbb3;
+		}
+
+		&.red {
+			--label-background: #6b1a1a;
+			--label-color: #ffbaba;
+		}
+
+		&.pink {
+			--label-background: #661547;
+			--label-color: #ffb3e2;
+		}
+
+		&.purple {
+			--label-background: #472966;
+			--label-color: #e2c8ff;
+		}
+
+		&.blue {
+			--label-background: #1a3f63;
+			--label-color: #b5dbf8;
+		}
+
+		&.green {
+			--label-background: #1b4d1b;
+			--label-color: #a0e8a0;
+		}
+
+		&.black {
+			--label-background: #e1e2e3;
+			--label-color: #1a1d21;
+		}
+
+		&.teal {
+			--label-background: #0b4a4a;
+			--label-color: #9ff0ee;
+		}
+
+		&.lime {
+			--label-background: #3d5400;
+			--label-color: #d9f78a;
+		}
+
+		&.navy {
+			--label-background: #b5ccff;
+			--label-color: #14285c;
+		}
+
+		&.maroon {
+			--label-background: #ffc7d2;
+			--label-color: #6b0f25;
+		}
+	}
+
 	.contentItem {
 		border: 1px solid var(--wcfContentBorderInner);
 	}

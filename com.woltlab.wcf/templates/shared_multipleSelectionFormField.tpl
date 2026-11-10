@@ -16,7 +16,7 @@
 
 <ul class="scrollableCheckboxList" id="{$field->getPrefixedId()}_list">
 	{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
-		<li{if $__fieldNestedOption[depth] > 0} style="padding-left: {$__fieldNestedOption[depth]*20}px"{/if}>
+		<li data-depth="{$__fieldNestedOption[depth]}"{if $__fieldNestedOption[depth] > 0} style="padding-left: {$__fieldNestedOption[depth]*20}px"{/if}>
 			<label>
 				<input {*
 					*}type="checkbox" {*

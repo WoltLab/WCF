@@ -50,29 +50,4 @@ class LabelGroupEditForm extends LabelGroupAddForm
             ),
         ]);
     }
-
-    #[\Override]
-    protected function setObjectTypeRelations(?array $data = null): void
-    {
-        if ($_POST === []) {
-            // read database values
-            $sql = "SELECT  objectTypeID, objectID
-                    FROM    wcf1_label_group_to_object
-                    WHERE   groupID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->formObject->groupID]);
-
-            $data = [];
-            while ($row = $statement->fetchArray()) {
-                if (!isset($data[$row['objectTypeID']])) {
-                    $data[$row['objectTypeID']] = [];
-                }
-
-                // prevent NULL values which confuse isset()
-                $data[$row['objectTypeID']][] = $row['objectID'] ?: 0;
-            }
-        }
-
-        parent::setObjectTypeRelations($data);
-    }
 }

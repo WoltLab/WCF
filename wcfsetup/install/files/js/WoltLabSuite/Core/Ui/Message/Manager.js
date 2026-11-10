@@ -172,7 +172,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                     return;
                 }
                 badge = document.createElement("span");
-                badge.className = `badge label ${badgeColor} ${className}`;
+                badge.className = `badge ${badgeColor} ${className}`;
                 badge.textContent = (0, Language_1.getPhrase)(phrase);
                 const listItem = document.createElement("li");
                 listItem.appendChild(badge);

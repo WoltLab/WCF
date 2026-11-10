@@ -61,7 +61,7 @@ final class UserRankGridView extends AbstractGridView
                         {
                             \assert($row instanceof UserRank);
 
-                            return '<span class="badge label' . ($row->cssClassName !== '' ? ' ' . $row->cssClassName : '') . '">'
+                            return '<span class="badge' . ($row->cssClassName !== '' ? ' ' . $row->cssClassName : '') . '">'
                                 . ($value ?? '')
                                 . '</span>';
                         }

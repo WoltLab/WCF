@@ -236,7 +236,7 @@ class UiMessageManager implements AjaxCallbackObject {
       }
 
       badge = document.createElement("span");
-      badge.className = `badge label ${badgeColor} ${className}`;
+      badge.className = `badge ${badgeColor} ${className}`;
       badge.textContent = getPhrase(phrase);
 
       const listItem = document.createElement("li");

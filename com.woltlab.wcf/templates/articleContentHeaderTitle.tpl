@@ -38,11 +38,11 @@
 		{if $article->hasLabels}
 			<li>
 				{icon name='tags'}
-				<ul class="labelList">
+				<div class="labelBadgeInlineList">
 					{foreach from=$article->getLabels() item=label}
-						<li>{unsafe:$label->render()}</li>
+						{unsafe:$label->render()}
 					{/foreach}
-				</ul>
+				</div>
 			</li>
 		{/if}
 		

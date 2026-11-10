@@ -89,6 +89,8 @@ class LabelAddForm extends AbstractFormBuilderForm
                         ->label('wcf.acp.label.cssClassName')
                         ->required()
                         ->textReferenceNodeId('label')
+                        ->previewClassName('labelBadge')
+                        ->additionalColors(BadgeColorFormField::LABEL_CSS_CLASSNAMES)
                 ])
         ]);
     }

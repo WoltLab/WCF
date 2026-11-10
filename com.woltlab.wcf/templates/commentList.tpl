@@ -34,11 +34,11 @@
 					</div>
 					<div class="comment__status">
 						{if $comment->isDisabled}
-							<span class="badge label green comment__status--disabled">{lang}wcf.message.status.disabled{/lang}</span>
+							<span class="badge green comment__status--disabled">{lang}wcf.message.status.disabled{/lang}</span>
 						{/if}
 						
 						{if $commentManager->isContentAuthor($comment->getDecoratedObject())}
-							<span class="badge label">{lang}wcf.comment.objectAuthor{/lang}</span>
+							<span class="badge">{lang}wcf.comment.objectAuthor{/lang}</span>
 						{/if}
 
 						{event name='commentStatus'}
