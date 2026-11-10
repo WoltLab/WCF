@@ -112,7 +112,7 @@ final class ArticleGridView extends AbstractGridView
                             $badges = '';
                             if ($row->isDeleted !== 0) {
                                 $badges .= \sprintf(
-                                    '<span class="badge label red">%s</span>',
+                                    '<span class="badge red">%s</span>',
                                     WCF::getLanguage()->get('wcf.message.status.deleted')
                                 );
                             }

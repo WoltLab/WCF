@@ -91,7 +91,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "../../../U
                 const testFailureResults = document.getElementById("dialogRewriteTestFailureResults");
                 testFailureResults.innerHTML = results
                     .map((result) => {
-                    return `<li><span class="badge label ${result.pass ? "green" : "red"}">${(0, Language_1.getPhrase)("wcf.acp.option.url_omit_index_php.test.status." + (result.pass ? "success" : "failure"))}</span> ${result.app}</li>`;
+                    return `<li><span class="badge ${result.pass ? "green" : "red"}">${(0, Language_1.getPhrase)("wcf.acp.option.url_omit_index_php.test.status." + (result.pass ? "success" : "failure"))}</span> ${result.app}</li>`;
                 })
                     .join("");
                 this.setStatus("failure");
