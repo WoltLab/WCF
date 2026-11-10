@@ -90,6 +90,7 @@ class LabelAddForm extends AbstractFormBuilderForm
                         ->required()
                         ->textReferenceNodeId('label')
                         ->previewClassName('labelBadge')
+                        ->additionalColors(BadgeColorFormField::LABEL_CSS_CLASSNAMES)
                 ])
         ]);
     }

@@ -69,6 +69,27 @@
 		--label-background: #3a3a3d;
 		--label-color: #fff;
 	}
+
+	/* label-only colors */
+	&.teal {
+		--label-background: #9fe5e3;
+		--label-color: #0a4d4b;
+	}
+
+	&.lime {
+		--label-background: #d6f57a;
+		--label-color: #3b5200;
+	}
+
+	&.navy {
+		--label-background: #1f3d7a;
+		--label-color: #fff;
+	}
+
+	&.maroon {
+		--label-background: #7a1f35;
+		--label-color: #fff;
+	}
 }
 
 a.labelBadge:hover {

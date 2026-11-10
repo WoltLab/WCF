@@ -152,6 +152,26 @@ html[data-color-scheme="dark"] {
 			--label-background: #e1e2e3;
 			--label-color: #1a1d21;
 		}
+
+		&.teal {
+			--label-background: #0b4a4a;
+			--label-color: #9ff0ee;
+		}
+
+		&.lime {
+			--label-background: #3d5400;
+			--label-color: #d9f78a;
+		}
+
+		&.navy {
+			--label-background: #b5ccff;
+			--label-color: #14285c;
+		}
+
+		&.maroon {
+			--label-background: #ffc7d2;
+			--label-color: #6b0f25;
+		}
 	}
 
 	.contentItem {

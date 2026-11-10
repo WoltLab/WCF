@@ -37,6 +37,18 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
     ];
 
     /**
+     * Colors that are only available for labels (`labelBadge`).
+     *
+     * @since 6.3
+     */
+    public const LABEL_CSS_CLASSNAMES = [
+        'teal',
+        'lime',
+        'navy',
+        'maroon',
+    ];
+
+    /**
      * @inheritDoc
      */
     protected $templateName = 'shared_badgeColorFormField';
@@ -95,7 +107,7 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
     #[\Override]
     public function value(mixed $value)
     {
-        if ($this->supportsCustomClassName() && !\in_array($value, self::AVAILABLE_CSS_CLASSNAMES, true)) {
+        if ($this->supportsCustomClassName() && !\in_array($value, $this->options, true)) {
             parent::value(BadgeColorFormField::CUSTOM_CSS_CLASSNAME);
             $this->customClassName = $value;
         } else {
@@ -150,6 +162,22 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
         $this->previewClassName = $className;
 
         return $this;
+    }
+
+    /**
+     * Adds colors in front of the `none` and custom options, e.g.
+     * `BadgeColorFormField::LABEL_CSS_CLASSNAMES` for labels.
+     *
+     * @param list<string> $classNames
+     * @since 6.3
+     */
+    public function additionalColors(array $classNames): self
+    {
+        $options = \array_keys($this->options);
+        $index = \array_search('none', $options, true);
+        \array_splice($options, $index === false ? \count($options) : $index, 0, $classNames);
+
+        return $this->options(\array_combine($options, $options));
     }
 
     /**
