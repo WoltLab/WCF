@@ -3,7 +3,9 @@
 namespace wcf\data\blacklist\entry;
 
 use wcf\data\DatabaseObject;
+use wcf\event\blacklist\LocalBlacklistUsageChecking;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\WCF;
 use wcf\util\IpAddress;
 
@@ -22,6 +24,30 @@ use wcf\util\IpAddress;
  */
 class BlacklistEntry extends DatabaseObject
 {
+    private static ?bool $isEnabled = null;
+
+    /**
+     * Returns true if the built-in Stop Forum Spam checks are active, which also
+     * covers updating the local copy of the data.
+     *
+     * @since 6.2
+     */
+    public static function isEnabled(): bool
+    {
+        if (self::$isEnabled === null) {
+            if (\BLACKLIST_SFS_ENABLE === 0) {
+                self::$isEnabled = false;
+            } else {
+                $event = new LocalBlacklistUsageChecking();
+                EventHandler::getInstance()->fire($event);
+
+                self::$isEnabled = !$event->defaultPrevented();
+            }
+        }
+
+        return self::$isEnabled;
+    }
+
     /**
      * @param string $username
      * @param string $email

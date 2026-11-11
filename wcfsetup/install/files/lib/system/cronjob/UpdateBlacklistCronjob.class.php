@@ -2,6 +2,7 @@
 
 namespace wcf\system\cronjob;
 
+use wcf\data\blacklist\entry\BlacklistEntry;
 use wcf\data\blacklist\entry\BlacklistEntryAction;
 use wcf\data\cronjob\Cronjob;
 
@@ -20,7 +21,7 @@ class UpdateBlacklistCronjob extends AbstractCronjob
      */
     public function execute(Cronjob $cronjob)
     {
-        if (!BLACKLIST_SFS_ENABLE) {
+        if (!BlacklistEntry::isEnabled()) {
             return;
         }
 
