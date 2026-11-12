@@ -53,7 +53,7 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
      */
     protected $templateName = 'shared_badgeColorFormField';
 
-    protected ?string $textReferenceNodeId;
+    protected ?string $textReferenceNodeId = null;
     protected string $defaultLabelText;
     protected string $customClassName = '';
     protected string $previewClassName = 'badge';
@@ -137,13 +137,18 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
         return $this;
     }
 
+    /**
+     * Sets the form field whose value is used as the text of the color previews.
+     */
     public function textReferenceNode(IFormField $field): self
     {
-        $this->textReferenceNodeId = $field->getId();
-
-        return $this;
+        return $this->textReferenceNodeId($field->getId());
     }
 
+    /**
+     * Sets the id of the form field whose value is used as the text of the color
+     * previews. The prefix of the form document is prepended when the id is read.
+     */
     public function textReferenceNodeId(string $id): self
     {
         $this->textReferenceNodeId = $id;
@@ -195,7 +200,11 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
 
     public function getTextReferenceNodeId(): ?string
     {
-        return $this->textReferenceNodeId;
+        if ($this->textReferenceNodeId === null) {
+            return null;
+        }
+
+        return $this->getDocument()->getPrefix() . $this->textReferenceNodeId;
     }
 
     public function hasCustomClassName(): bool
