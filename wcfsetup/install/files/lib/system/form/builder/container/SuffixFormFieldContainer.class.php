@@ -142,8 +142,9 @@ class SuffixFormFieldContainer extends FormContainer
             return '';
         }
 
-        if (isset($this->getSuffixField()->getOptions()[$this->getSuffixField()->getValue()])) {
-            return $this->getSuffixField()->getOptions()[$this->getSuffixField()->getValue()];
+        $value = $this->getSuffixField()->getValue() ?? '';
+        if (isset($this->getSuffixField()->getOptions()[$value])) {
+            return $this->getSuffixField()->getOptions()[$value];
         }
 
         return '';

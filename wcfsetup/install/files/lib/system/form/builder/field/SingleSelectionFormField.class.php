@@ -43,7 +43,7 @@ class SingleSelectionFormField extends AbstractFormField implements
     {
         if (
             empty($this->getValue())
-            && isset($this->getOptions()[$this->getValue()])
+            && isset($this->getOptions()[$this->getValue() ?? ''])
             && $this->isNullable()
         ) {
             return null;
@@ -81,7 +81,7 @@ class SingleSelectionFormField extends AbstractFormField implements
     #[\Override]
     public function validate()
     {
-        if (!isset($this->getOptions()[$this->getValue()])) {
+        if (!isset($this->getOptions()[$this->getValue() ?? ''])) {
             $this->addValidationError(new FormFieldValidationError(
                 'invalidValue',
                 'wcf.global.form.error.noValidSelection'
