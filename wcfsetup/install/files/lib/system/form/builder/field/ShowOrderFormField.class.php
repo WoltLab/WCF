@@ -30,9 +30,19 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-final class ShowOrderFormField extends SingleSelectionFormField
+final class ShowOrderFormField extends AbstractSingleSelectFormField
 {
     use TDefaultIdFormField;
+
+    /**
+     * @inheritDoc
+     */
+    protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+
+    /**
+     * @inheritDoc
+     */
+    protected $templateName = 'shared_selectFormField';
 
     /**
      * is `true` if `(first position)` option was added
@@ -47,17 +57,17 @@ final class ShowOrderFormField extends SingleSelectionFormField
     #[\Override]
     public function getSaveValue(): ?int
     {
-        if ($this->value !== null) {
-            $index = \array_search($this->value, \array_keys($this->getOptions()));
-
-            if ($index !== false) {
-                return $index + 1;
-            }
-
+        $value = $this->getValue();
+        if ($value === null) {
             return null;
         }
 
-        return $this->value;
+        $index = \array_search($value, \array_keys($this->getOptions()));
+        if ($index === false) {
+            return null;
+        }
+
+        return $index + 1;
     }
 
     /**
@@ -80,6 +90,7 @@ final class ShowOrderFormField extends SingleSelectionFormField
             ]);
 
             $this->addedFirstPositionOption = true;
+            $this->defaultValue(0);
         }
 
         return $this;

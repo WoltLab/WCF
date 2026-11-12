@@ -261,7 +261,6 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
             $positionFormField = ShowOrderFormField::create()
                 ->description($processor->getLanguageVariable('showOrder.description', true))
                 ->options($categoryNodeTree, true)
-                ->nullable()
                 ->required();
         } else {
             // Provide a simple integer input instead because we cannot

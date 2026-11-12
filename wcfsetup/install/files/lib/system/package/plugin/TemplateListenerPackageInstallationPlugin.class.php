@@ -15,9 +15,10 @@ use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\FilterableSelectFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\SourceCodeFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
@@ -220,7 +221,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
                     }
                 })),
 
-            SingleSelectionFormField::create('environment')
+            SelectFormField::create('environment')
                 ->label('wcf.acp.pip.templateListener.environment')
                 ->description('wcf.acp.pip.templateListener.environment.description')
                 ->required()
@@ -228,8 +229,8 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
                     'admin' => 'admin',
                     'user' => 'user',
                 ])
-                ->value('user')
-                ->addValidator(new FormFieldValidator('uniqueness', function (SingleSelectionFormField $formField) {
+                ->defaultValue('user')
+                ->addValidator(new FormFieldValidator('uniqueness', function (SelectFormField $formField) {
                     $nameField = $formField->getDocument()->getFormField('name');
                     $templateNameFormField = $formField->getDocument()->getFormField('frontendTemplateName');
                     $acpTemplateNameFormField = $formField->getDocument()->getFormField('acpTemplateName');
@@ -279,26 +280,24 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
                     }
                 })),
 
-            SingleSelectionFormField::create('frontendTemplateName')
+            FilterableSelectFormField::create('frontendTemplateName')
                 ->objectProperty('templatename')
                 ->label('wcf.acp.pip.templateListener.templateName')
                 ->description('wcf.acp.pip.templateListener.templateName.description')
                 ->required()
                 ->options(\array_combine(\array_keys($templateEvents), \array_keys($templateEvents)))
-                ->filterable()
                 ->addDependency(
                     ValueFormFieldDependency::create('environment')
                         ->fieldId('environment')
                         ->values(['user'])
                 ),
 
-            SingleSelectionFormField::create('acpTemplateName')
+            FilterableSelectFormField::create('acpTemplateName')
                 ->objectProperty('templatename')
                 ->label('wcf.acp.pip.templateListener.templateName')
                 ->description('wcf.acp.pip.templateListener.templateName.description')
                 ->required()
                 ->options(\array_combine(\array_keys($acpTemplateEvents), \array_keys($acpTemplateEvents)))
-                ->filterable()
                 ->addDependency(
                     ValueFormFieldDependency::create('environment')
                         ->fieldId('environment')
@@ -309,7 +308,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         $frontendTemplateName = $form->getFormField('frontendTemplateName');
         foreach ($templateEvents as $templateName => $events) {
             $dataContainer->appendChild(
-                SingleSelectionFormField::create($templateName . '_eventName')
+                SelectFormField::create($templateName . '_eventName')
                     ->objectProperty('eventname')
                     ->label('wcf.acp.pip.templateListener.eventName')
                     ->description('wcf.acp.pip.templateListener.eventName.description')
@@ -326,7 +325,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         $acpTemplateName = $form->getFormField('acpTemplateName');
         foreach ($acpTemplateEvents as $templateName => $events) {
             $dataContainer->appendChild(
-                SingleSelectionFormField::create('acp_' . $templateName . '_eventName')
+                SelectFormField::create('acp_' . $templateName . '_eventName')
                     ->objectProperty('eventname')
                     ->label('wcf.acp.pip.templateListener.eventName')
                     ->description('wcf.acp.pip.templateListener.eventName.description')

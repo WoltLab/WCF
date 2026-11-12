@@ -18,8 +18,8 @@ use wcf\system\devtools\pip\TMultiXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\FilterableSelectFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\SourceCodeFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -342,9 +342,10 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 ->value('automatic')
                 ->required(),
 
-            SingleSelectionFormField::create('languageCategoryID')
+            FilterableSelectFormField::create('languageCategoryID')
                 ->label('wcf.acp.language.item.languageCategoryID')
                 ->description('wcf.acp.language.item.languageCategoryID.description')
+                ->required()
                 ->options(static function () {
                     $categories = [];
 
@@ -356,7 +357,6 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
                     return $categories;
                 }, false, false)
-                ->filterable()
                 ->addDependency(
                     ValueFormFieldDependency::create('languageCategoryIDMode')
                         ->fieldId('languageCategoryIDMode')
@@ -425,6 +425,10 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
                         case 'selection':
                             $languageCategoryID = $formField->getDocument()->getFormField('languageCategoryID');
+                            if ($languageCategoryID->getSaveValue() === null) {
+                                break;
+                            }
+
                             $languageCategory = LanguageFactory::getInstance()->getCategoryByID($languageCategoryID->getSaveValue());
 
                             if (\strpos($formField->getSaveValue(), $languageCategory->languageCategory . '.') !== 0) {

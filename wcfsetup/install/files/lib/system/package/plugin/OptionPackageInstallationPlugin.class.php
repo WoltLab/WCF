@@ -14,8 +14,8 @@ use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\FilterableSelectFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -251,7 +251,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 
                 // add `hidden` pseudo-category
                 $categoryName = $form->getNodeById('categoryName');
-                \assert($categoryName instanceof SingleSelectionFormField);
+                \assert($categoryName instanceof FilterableSelectFormField);
                 $options = $categoryName->getNestedOptions();
                 $options[] = [
                     'depth' => 0,

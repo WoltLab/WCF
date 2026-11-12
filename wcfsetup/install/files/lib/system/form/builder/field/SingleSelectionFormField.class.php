@@ -11,6 +11,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
+ * @deprecated  6.3 Use `SelectFormField` or `FilterableSelectFormField` instead.
  */
 class SingleSelectionFormField extends AbstractFormField implements
     ICssClassFormField,
@@ -52,6 +53,9 @@ class SingleSelectionFormField extends AbstractFormField implements
         return parent::getSaveValue();
     }
 
+    /**
+     * @deprecated  6.3 Use `FilterableSelectFormField` instead.
+     */
     #[\Override]
     public function filterable(bool $filterable = true)
     {

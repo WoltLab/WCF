@@ -21,11 +21,11 @@ use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\FilterableSelectFormField;
 use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
@@ -499,20 +499,12 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
                 ->label('wcf.acp.pip.page.requireObjectID')
                 ->description('wcf.acp.pip.page.requireObjectID.description'),
 
-            SingleSelectionFormField::create('parent')
+            FilterableSelectFormField::create('parent')
                 ->label('wcf.acp.pip.page.parent')
-                ->required()
-                ->filterable()
                 ->options(function () {
                     $pageNodeList = new PageNodeTree()->getNodeList();
 
-                    $nestedOptions = [
-                        [
-                            'depth' => 0,
-                            'label' => 'wcf.global.noSelection',
-                            'value' => '',
-                        ],
-                    ];
+                    $nestedOptions = [];
 
                     $packageIDs = \array_merge(
                         [$this->installation->getPackage()->packageID],
@@ -534,7 +526,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
                 }, true)
                 ->addValidator(new FormFieldValidator(
                     'selfParent',
-                    static function (SingleSelectionFormField $formField) {
+                    static function (FilterableSelectFormField $formField) {
                         $identifier = $formField->getDocument()->getFormField('identifier');
                         if ($identifier->getSaveValue() === $formField->getValue()) {
                             $formField->addValidationError(

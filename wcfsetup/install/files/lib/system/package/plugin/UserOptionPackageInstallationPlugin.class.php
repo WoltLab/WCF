@@ -18,10 +18,11 @@ use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\FilterableSelectFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -505,17 +506,11 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                         ->label('wcf.acp.pip.abstractOption.categories.categoryName')
                         ->required(),
 
-                    SingleSelectionFormField::create('parentCategoryName')
+                    SelectFormField::create('parentCategoryName')
                         ->objectProperty('parent')
                         ->label('wcf.acp.pip.abstractOption.categories.parentCategoryName')
                         ->options(function () {
-                            $options = [
-                                [
-                                    'depth' => 0,
-                                    'label' => WCF::getLanguage()->get('wcf.global.noSelection'),
-                                    'value' => '',
-                                ],
-                            ];
+                            $options = [];
 
                             // The maximum nesting level is three.
                             foreach ($this->getCategoryOptions() as $option) {
@@ -554,11 +549,10 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                         ->description('wcf.acp.pip.abstractOption.options.optionName.description')
                         ->required(),
 
-                    SingleSelectionFormField::create('categoryName')
+                    FilterableSelectFormField::create('categoryName')
                         ->objectProperty('categoryname')
                         ->label('wcf.acp.pip.abstractOption.options.categoryName')
                         ->required()
-                        ->filterable()
                         ->options(function (): array {
                             $options = $this->getCategoryOptions();
 
@@ -572,7 +566,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                             return $options;
                         }, true, false),
 
-                    SingleSelectionFormField::create('optionType')
+                    SelectFormField::create('optionType')
                         ->objectProperty('optiontype')
                         ->label('wcf.acp.pip.abstractOption.options.optionType')
                         ->description('wcf.acp.pip.userOption.options.optionType.description')
@@ -621,7 +615,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                         ->label('wcf.acp.pip.userOption.options.askDuringRegistration')
                         ->description('wcf.acp.pip.userOption.options.askDuringRegistration.description'),
 
-                    SingleSelectionFormField::create('editable')
+                    SelectFormField::create('editable')
                         ->label('wcf.acp.pip.userOption.options.editable')
                         ->description('wcf.acp.pip.userOption.options.editable.description')
                         ->options([
@@ -630,9 +624,10 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                             2 => 'wcf.acp.user.option.editable.2',
                             3 => 'wcf.acp.user.option.editable.3',
                             6 => 'wcf.acp.user.option.editable.6',
-                        ]),
+                        ])
+                        ->defaultValue(0),
 
-                    SingleSelectionFormField::create('visible')
+                    SelectFormField::create('visible')
                         ->label('wcf.acp.pip.userOption.options.visible')
                         ->description('wcf.acp.pip.userOption.options.visible.description')
                         ->options([
@@ -642,7 +637,8 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                             3 => 'wcf.acp.user.option.visible.3',
                             7 => 'wcf.acp.user.option.visible.7',
                             15 => 'wcf.acp.user.option.visible.15',
-                        ]),
+                        ])
+                        ->defaultValue(0),
 
                     BooleanFormField::create('searchable')
                         ->label('wcf.acp.pip.userOption.options.searchable')

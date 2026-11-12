@@ -28,13 +28,14 @@ use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\FilterableSelectFormField;
 use wcf\system\form\builder\field\HiddenFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\label\LabelFormField;
 use wcf\system\form\builder\field\media\SingleMediaSelectionFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\tag\TagFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
@@ -190,6 +191,10 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
         $canManage = WCF::getSession()->hasPermission('admin.content.article.canManageArticle')
             || WCF::getSession()->hasPermission('admin.content.article.canManageOwnArticles');
 
+        $categoryFormField = \iterator_count($this->categoryNodeTree->getIterator()) > 10
+            ? FilterableSelectFormField::create('categoryID')
+            : SelectFormField::create('categoryID');
+
         $this->form->appendChildren([
             HiddenFormField::create('isMultilingual')
                 ->value($this->isMultilingual)
@@ -197,8 +202,7 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
                     $builder->setIsMultilingual((bool)$field->getSaveValue());
                 }),
 
-            SingleSelectionFormField::create('categoryID')
-                ->filterable(\iterator_count($this->categoryNodeTree->getIterator()) > 10)
+            $categoryFormField
                 ->required()
                 ->options($this->getCategoryOptions(), true)
                 ->value($this->categoryID ?: null)

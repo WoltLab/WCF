@@ -12,9 +12,9 @@ use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\ClassNameFormField;
+use wcf\system\form\builder\field\FilterableSelectFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -157,20 +157,11 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
                     }
                 })),
 
-            SingleSelectionFormField::create('parentMenuItem')
+            FilterableSelectFormField::create('parentMenuItem')
                 ->objectProperty('parent')
                 ->label('wcf.acp.pip.abstractMenu.parentMenuItem')
-                ->filterable()
                 ->options(function () {
                     $menuStructure = $this->getMenuStructureData()['structure'];
-
-                    $options = [
-                        [
-                            'depth' => 0,
-                            'label' => 'wcf.global.noSelection',
-                            'value' => '',
-                        ],
-                    ];
 
                     $buildOptions = static function ($parent = '', $depth = 0) use ($menuStructure, &$buildOptions) {
                         // only consider menu items until the third level (thus only parent
@@ -195,15 +186,14 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
                         return $options;
                     };
 
-                    return \array_merge($options, $buildOptions());
+                    return $buildOptions();
                 }, true)
-                ->value('')
                 ->addValidator(new FormFieldValidator(
                     'selfChildAsParent',
-                    function (SingleSelectionFormField $formField) {
+                    function (FilterableSelectFormField $formField) {
                         if (
                             $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE
-                            && $formField->getSaveValue() !== ''
+                            && $formField->getSaveValue() !== null
                         ) {
                             $menuItemField = $formField->getDocument()->getFormField('menuItem');
                             $menuItem = $menuItemField->getSaveValue();

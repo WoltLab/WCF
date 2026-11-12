@@ -16,8 +16,9 @@ use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\FilterableSelectFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -322,7 +323,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 ->i18nRequired()
                 ->languageItemPattern('__NONE__'),
 
-            SingleSelectionFormField::create('menu')
+            SelectFormField::create('menu')
                 ->label('wcf.acp.pip.menuItem.menu')
                 ->description('wcf.acp.pip.menuItem.menu.description')
                 ->required()
@@ -346,12 +347,11 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 ])
                 ->value('internal'),
 
-            SingleSelectionFormField::create('menuItemPage')
+            FilterableSelectFormField::create('menuItemPage')
                 ->objectProperty('page')
                 ->label('wcf.acp.pip.menuItem.page')
                 ->description('wcf.acp.pip.menuItem.page.description')
                 ->required()
-                ->filterable()
                 ->options(function () {
                     $pageNodeList = new PageNodeTree()->getNodeList();
 
@@ -405,17 +405,11 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         $menuField = $form->getFormField('menu');
         foreach ($menuList as $menu) {
             $dataContainer->insertBefore(
-                SingleSelectionFormField::create('parentMenuItem' . $menu->menuID)
+                SelectFormField::create('parentMenuItem' . $menu->menuID)
                     ->objectProperty('parent')
                     ->label('wcf.acp.pip.menuItem.parentMenuItem')
                     ->options(function () use ($menu) {
-                        $options = [
-                            [
-                                'depth' => 0,
-                                'label' => 'wcf.global.noSelection',
-                                'value' => '',
-                            ],
-                        ];
+                        $options = [];
 
                         $packageIDs = \array_merge(
                             [$this->installation->getPackage()->packageID],
@@ -431,10 +425,6 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                                     'value' => $menuItem->identifier,
                                 ];
                             }
-                        }
-
-                        if (\count($options) === 1) {
-                            return [];
                         }
 
                         return $options;

@@ -13,9 +13,19 @@ namespace wcf\system\form\builder\field;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-final class SortOrderFormField extends SingleSelectionFormField
+final class SortOrderFormField extends AbstractSingleSelectFormField
 {
     use TDefaultIdFormField;
+
+    /**
+     * @inheritDoc
+     */
+    protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+
+    /**
+     * @inheritDoc
+     */
+    protected $templateName = 'shared_selectFormField';
 
     public function __construct()
     {
@@ -24,6 +34,7 @@ final class SortOrderFormField extends SingleSelectionFormField
             'ASC' => 'wcf.global.sortOrder.ascending',
             'DESC' => 'wcf.global.sortOrder.descending',
         ]);
+        $this->defaultValue('ASC');
     }
 
     #[\Override]

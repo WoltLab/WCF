@@ -3,28 +3,36 @@
 namespace wcf\system\form\builder\field\media;
 
 use wcf\data\category\CategoryNodeTree;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\AbstractSingleSelectFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
-use wcf\system\WCF;
 
 /**
  * Implementation of a form field to select the category of media files, the
- * value `0` represents no category.
+ * value `null` represents no category.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  */
-final class MediaCategoryFormField extends SingleSelectionFormField
+final class MediaCategoryFormField extends AbstractSingleSelectFormField
 {
     use TDefaultIdFormField;
+
+    /**
+     * @inheritDoc
+     */
+    protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+
+    /**
+     * @inheritDoc
+     */
+    protected $templateName = 'shared_selectFormField';
 
     public function __construct()
     {
         $this->label('wcf.global.category');
         $this->options($this->getCategoryOptions(), true);
-        $this->value(0);
     }
 
     /**
@@ -40,13 +48,7 @@ final class MediaCategoryFormField extends SingleSelectionFormField
      */
     private function getCategoryOptions(): array
     {
-        $options = [
-            [
-                'depth' => 0,
-                'label' => WCF::getLanguage()->get('wcf.global.noSelection'),
-                'value' => 0,
-            ],
-        ];
+        $options = [];
 
         foreach (new CategoryNodeTree('com.woltlab.wcf.media.category') as $category) {
             $options[] = [

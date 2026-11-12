@@ -15,10 +15,11 @@ use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\FilterableSelectFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -432,7 +433,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                         ->label('wcf.acp.pip.abstractOption.categories.categoryName')
                         ->required(),
 
-                    SingleSelectionFormField::create('parentCategoryName')
+                    SelectFormField::create('parentCategoryName')
                         ->objectProperty('parent')
                         ->label('wcf.acp.pip.abstractOption.categories.parentCategoryName')
                         ->options(function () {
@@ -455,13 +456,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                                 return $depth;
                             };
 
-                            $options = [
-                                [
-                                    'depth' => 0,
-                                    'label' => WCF::getLanguage()->get('wcf.global.noSelection'),
-                                    'value' => '',
-                                ],
-                            ];
+                            $options = [];
                             /** @var OptionCategory $category */
                             foreach ($categories as $category) {
                                 $depth = $getDepth($category);
@@ -515,11 +510,10 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                         ->description('wcf.acp.pip.abstractOption.options.optionName.description')
                         ->required(),
 
-                    SingleSelectionFormField::create('categoryName')
+                    FilterableSelectFormField::create('categoryName')
                         ->objectProperty('categoryname')
                         ->label('wcf.acp.pip.abstractOption.options.categoryName')
                         ->required()
-                        ->filterable()
                         ->options(function (): array {
                             $categories = $this->getSortedCategories();
 
@@ -556,7 +550,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                             return $options;
                         }, true, false),
 
-                    SingleSelectionFormField::create('optionType')
+                    SelectFormField::create('optionType')
                         ->objectProperty('optiontype')
                         ->label('wcf.acp.pip.abstractOption.options.optionType')
                         ->description('wcf.acp.pip.' . \lcfirst($pipPrefix) . '.options.optionType.description')

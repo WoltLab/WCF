@@ -12,9 +12,9 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\data\processor\VoidFormDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\FilterableSelectFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -75,7 +75,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
                     ])
                     ->value('automatic'),
 
-                SingleSelectionFormField::create('languageCategoryID')
+                FilterableSelectFormField::create('languageCategoryID')
                     ->label('wcf.acp.language.item.languageCategoryID')
                     ->description('wcf.acp.language.item.languageCategoryID.description')
                     ->options(static function () {
@@ -84,8 +84,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
 
                         return $list;
                     }, false, false)
-                    ->required()
-                    ->filterable(),
+                    ->required(),
 
                 TextFormField::create('languageItem')
                     ->label('wcf.acp.language.item.languageItem')

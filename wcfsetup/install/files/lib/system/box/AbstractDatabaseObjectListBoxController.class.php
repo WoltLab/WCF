@@ -14,7 +14,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IntegerFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\SortOrderFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
@@ -151,21 +151,18 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
         /** @var FormContainer $dataContainer */
         $dataContainer = $form->getNodeById('dataTabData');
 
-        /** @var SingleSelectionFormField $objectTypeField */
+        /** @var SelectFormField $objectTypeField */
         $objectTypeField = $dataContainer->getNodeById('objectType');
 
         $prefix = \str_replace('.', '_', $objectType) . '_';
 
         if ($this->validSortFields !== null && $this->validSortFields !== []) {
             $dataContainer->appendChildren([
-                SingleSelectionFormField::create($prefix . 'sortField')
+                SelectFormField::create($prefix . 'sortField')
                     ->objectProperty('sortField')
                     ->label('wcf.acp.box.controller.sortField')
                     ->description('wcf.acp.box.controller.sortField.description')
-                    ->options(\array_merge(
-                        ['' => 'wcf.global.noSelection'],
-                        \array_combine($this->validSortFields, $this->validSortFields)
-                    ))
+                    ->options(\array_combine($this->validSortFields, $this->validSortFields))
                     ->addDependency(
                         ValueFormFieldDependency::create('boxType')
                             ->field($objectTypeField)
@@ -174,11 +171,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 
                 SortOrderFormField::create($prefix . 'sortOrder')
                     ->objectProperty('sortOrder')
-                    ->options([
-                        '' => 'wcf.global.noSelection',
-                        'ASC' => 'wcf.global.sortOrder.ascending',
-                        'DESC' => 'wcf.global.sortOrder.descending',
-                    ])
+                    ->defaultValue()
                     ->addDependency(
                         ValueFormFieldDependency::create('boxType')
                             ->field($objectTypeField)
