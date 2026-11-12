@@ -4,7 +4,9 @@ namespace wcf\system\form\builder\field;
 
 use wcf\data\IStorableObject;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
+use wcf\util\StringUtil;
 
 /**
  * Implementation of a form field for selecting map coordinates.
@@ -67,13 +69,16 @@ final class GoogleMapsFormField extends AbstractFormField implements
     public function readValue()
     {
         if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
-            $this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
+            $value = $this->getDocument()->getRequestData($this->getPrefixedId());
+
+            if (\is_string($value)) {
+                $this->value = StringUtil::trim($value);
+            }
         }
 
         if ($this->getDocument()->hasRequestData($this->getPrefixedId() . '_coordinates')) {
-            $coordinates = explode(',', $this->getDocument()->getRequestData(
-                $this->getPrefixedId() . '_coordinates'
-            ));
+            $coordinates = $this->getDocument()->getRequestData($this->getPrefixedId() . '_coordinates');
+            $coordinates = \is_string($coordinates) ? \explode(',', $coordinates) : [];
             if (\count($coordinates) === 2) {
                 $this->latitude = \floatval($coordinates[0]);
                 $this->longitude = \floatval($coordinates[1]);
@@ -81,6 +86,16 @@ final class GoogleMapsFormField extends AbstractFormField implements
         }
 
         return $this;
+    }
+
+    #[\Override]
+    public function validate()
+    {
+        if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '')) {
+            $this->addValidationError(new FormFieldValidationError('empty'));
+        }
+
+        parent::validate();
     }
 
     #[\Override]
