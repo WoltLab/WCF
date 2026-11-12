@@ -82,9 +82,13 @@ define(["require", "exports", "tslib", "../Core", "WoltLabSuite/Core/Language", 
             img.height = 15;
             img.width = 24;
             img.loading = "eager";
+            img.setAttribute("aria-hidden", "true");
             link.appendChild(img);
             const span = document.createElement("span");
             span.textContent = language.languageName;
+            if (language.bcp47 !== undefined) {
+                span.lang = language.bcp47;
+            }
             link.appendChild(span);
             if (+langId === languageId) {
                 dropdownToggle.innerHTML = link.innerHTML;

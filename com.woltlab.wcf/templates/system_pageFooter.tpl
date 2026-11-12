@@ -89,7 +89,7 @@
 								type="button"
 								data-switch-language="{$_language->languageID}"
 								data-language-code="{$_language->languageCode}"
-								lang="{$_language->languageCode}"
+								lang="{$_language->getBcp47()}"
 								{if $_language->languageID === $__wcf->getLanguage()->languageID} aria-current="true"{/if}
 							>
 								<img src="{$_language->getIconPath()}" alt="" class="iconFlag">

@@ -20,6 +20,7 @@
 			var languages = {
 				{implode from=$languages item=_language}
 					'{$_language->languageID}': {
+						bcp47: '{unsafe:$_language->getBcp47()|encodeJS}',
 						iconPath: '{unsafe:$_language->getIconPath()|encodeJS}',
 						languageName: '{unsafe:$_language|encodeJS}'
 					}

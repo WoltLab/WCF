@@ -16,6 +16,7 @@ type CallbackSelect = (listItem: HTMLElement) => void;
 type SelectFieldOrHiddenInput = HTMLInputElement | HTMLSelectElement;
 
 interface LanguageData {
+  bcp47?: string;
   iconPath: string;
   languageCode?: string;
   languageName: string;
@@ -118,10 +119,14 @@ function initElement(
     img.height = 15;
     img.width = 24;
     img.loading = "eager";
+    img.setAttribute("aria-hidden", "true");
     link.appendChild(img);
 
     const span = document.createElement("span");
     span.textContent = language.languageName;
+    if (language.bcp47 !== undefined) {
+      span.lang = language.bcp47;
+    }
     link.appendChild(span);
 
     if (+langId === languageId) {

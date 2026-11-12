@@ -10,10 +10,11 @@
 </noscript>
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Language/Chooser', 'Dom/Traverse', 'Dom/Util'], function(LanguageChooser, DomTraverse, DomUtil) {
+	require(['WoltLabSuite/Core/Language/Chooser', 'Dom/Util'], function(LanguageChooser, DomUtil) {
 		var languages = {
 			{implode from=$field->getContentLanguages() item=contentLanguage}
 				'{$contentLanguage->languageID}': {
+					bcp47: '{unsafe:$contentLanguage->getBcp47()|encodeJS}',
 					iconPath: '{unsafe:$contentLanguage->getIconPath()|encodeJS}',
 					languageName: '{unsafe:$contentLanguage|encodeJS}'
 				}
@@ -21,7 +22,7 @@
 		};
 		
 		LanguageChooser.init(
-			DomUtil.identify(DomTraverse.childByTag(elById('{unsafe:$field->getPrefixedId()|encodeJS}Container'), 'DD')),
+			DomUtil.identify(elById('{unsafe:$field->getPrefixedId()|encodeJS}Container').querySelector(':scope > .formField__input')),
 			'{unsafe:$field->getPrefixedId()|encodeJS}',
 			{if $field->getValue()}{$field->getValue()}{else}0{/if},
 			languages,
