@@ -18,7 +18,7 @@ final class MessageSpamCheckingSfsListener
 {
     public function __invoke(MessageSpamChecking $event): void
     {
-        if (\BLACKLIST_SFS_ENABLE === 0) {
+        if (!BlacklistEntry::isEnabled()) {
             return;
         }
 

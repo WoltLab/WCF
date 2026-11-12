@@ -49,10 +49,13 @@ class AbstractCommentResponseImporter extends AbstractImporter
         // update parent comment
         $sql = "UPDATE  wcf1_comment
                 SET     responseIDs = ?,
-                        responses = responses + 1
+                        responses = responses + 1,
+                        unfilteredResponseIDs = ?,
+                        unfilteredResponses = unfilteredResponses + 1
                 WHERE   commentID = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([
+            \serialize($responseIDs),
             \serialize($responseIDs),
             $response->commentID,
         ]);

@@ -54,7 +54,9 @@ final class CommentRebuildDataWorker extends AbstractLinearRebuildDataWorker
         foreach ($this->objectList as $comment) {
             $builder = CommentBuilder::forUpdate($comment)
                 ->recalculateResponseIDs()
-                ->recalculateUnfilteredResponseIDs();
+                ->recalculateUnfilteredResponseIDs()
+                ->recalculateResponses()
+                ->recalculateUnfilteredResponses();
 
             BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
                 ',',

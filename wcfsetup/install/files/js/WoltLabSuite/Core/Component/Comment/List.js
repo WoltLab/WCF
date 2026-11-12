@@ -189,6 +189,12 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
             button.disabled = true;
             const response = (await (0, RenderResponses_1.renderResponses)(parseInt(comment.dataset.commentId), parseInt(comment.dataset.lastResponseTime), parseInt(comment.dataset.lastResponseId), loadAllResponses)).unwrap();
             const fragment = Util_1.default.createFragmentFromHtml(response.template);
+            // The response counter can be out of sync with the actual responses, stop
+            // offering to load more responses if the server has none left.
+            if (fragment.querySelector(".commentResponseList__item") === null) {
+                comment.querySelector(".commentLoadNextResponses")?.remove();
+                return;
+            }
             fragment.querySelectorAll(".commentResponseList__item").forEach((element) => {
                 comment.querySelector(`.commentResponseList__item[data-response-id="${element.dataset.responseId}"]`)?.remove();
             });

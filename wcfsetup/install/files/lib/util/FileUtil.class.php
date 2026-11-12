@@ -29,8 +29,13 @@ final class FileUtil
      * additionally enables PCRE2_UCP, which would make `\b` Unicode-aware and
      * thus stop detecting links that directly follow a non-ASCII letter
      * (e.g. `詳細はhttp://example.com`).
+     *
+     * The body is the unrolled form of `(?:[^…]+|\(…\))+`. The nested
+     * quantifier of that form backtracks exponentially when no final character
+     * fits, so 17 trailing dots after a URL exhausted the backtrack limit and
+     * made the match fail.
      */
-    public const LINK_REGEX = "#(*UTF)(?i)\\b((?:https?://|www\\d{0,3}[.])(?:[^\\s()<>\\[\\]]+|\\([^\\s()<>\\[\\]]*\\))+(?:\\([^\\s()<>\\[\\]]*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))#iS";
+    public const LINK_REGEX = "#(*UTF)(?i)\\b((?:https?://|www\\d{0,3}[.])(?:[^\\s()<>\\[\\]]|\\([^\\s()<>\\[\\]]*\\))(?:[^\\s()<>\\[\\]]*(?:\\([^\\s()<>\\[\\]]*\\)[^\\s()<>\\[\\]]*)*)(?:\\([^\\s()<>\\[\\]]*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))#iS";
 
     /**
      * Prepares the temporary folder and returns its path.

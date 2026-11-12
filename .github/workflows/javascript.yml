@@ -78,3 +78,6 @@ jobs:
     - name: "Check 'chart.js'"
       run: |
         diff -wu wcfsetup/install/files/js/3rdParty/chart.js/chart.umd.min.js node_modules/chart.js/dist/chart.umd.min.js
+    - name: "Check 'tslib'"
+      run: |
+        diff -wu wcfsetup/install/files/js/3rdParty/tslib.js node_modules/tslib/tslib.js

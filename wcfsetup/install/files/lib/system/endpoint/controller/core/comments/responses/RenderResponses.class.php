@@ -67,22 +67,21 @@ final class RenderResponses implements IController
         }
         $responseList->readObjects();
 
-        $lastResponseTime = $lastResponseID = 0;
-        foreach ($responseList as $response) {
-            if ($lastResponseTime === 0) {
-                $lastResponseTime = $response->time;
-            }
-            if ($lastResponseID === 0) {
-                $lastResponseID = $response->responseID;
-            }
-
-            $lastResponseTime = \max($lastResponseTime, $response->time);
-            $lastResponseID = \max($lastResponseID, $response->responseID);
+        // The list is ordered by `time, responseID`, the last response is the
+        // cursor for the next request. Keep the current cursor if there are no
+        // further responses to prevent the client from resetting it.
+        $lastResponseTime = $parameters->lastResponseTime;
+        $lastResponseID = $parameters->lastResponseID;
+        $responses = $responseList->getObjects();
+        if ($responses !== []) {
+            $lastResponse = \end($responses);
+            $lastResponseTime = $lastResponse->time;
+            $lastResponseID = $lastResponse->responseID;
         }
 
         CommentHandler::getInstance()->markNotificationsAsConfirmedForResponses(
             CommentHandler::getInstance()->getObjectType($comment->objectTypeID)->objectType,
-            $responseList->getObjects()
+            $responses
         );
 
         return new JsonResponse([
@@ -104,7 +103,7 @@ final class RenderReponsesParameters
         /** @var positive-int **/
         public readonly int $commentID,
 
-        /** @var positive-int **/
+        /** @var non-negative-int **/
         public readonly int $lastResponseTime,
 
         public readonly int $lastResponseID,

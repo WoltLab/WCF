@@ -5432,7 +5432,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.user.profile.recentActivity.follow"><![CDATA[<strong>{$author}</strong> now follows <strong>{$user}</strong>.]]></item>
 		<item name="wcf.user.profile.visitors"><![CDATA[Profile Visitors]]></item>
 		<item name="wcf.user.profile.content.wall.comment"><![CDATA[Wall Comment]]></item>
-		<item name="wcf.user.profile.content.wall.commentResponse"><![CDATA[Reply to wall comment]]></item>
+		<item name="wcf.user.profile.content.wall.commentResponse"><![CDATA[Reply to Wall Comment]]></item>
 		<item name="wcf.user.profile.content.wall.noEntries"><![CDATA[There are no comments at the moment.]]></item>
 		<item name="wcf.user.profile.menu.wall"><![CDATA[Wall]]></item>
 		<item name="wcf.user.profile.menu.likes"><![CDATA[Reactions]]></item>
