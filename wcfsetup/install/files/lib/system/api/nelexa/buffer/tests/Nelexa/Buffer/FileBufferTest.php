@@ -13,7 +13,7 @@ class FileBufferTest extends BufferTestCase
     /**
      * Before test
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->outputFilename = tempnam(sys_get_temp_dir(), 'temp');
         parent::setUp();
@@ -22,7 +22,7 @@ class FileBufferTest extends BufferTestCase
     /**
      * After test
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

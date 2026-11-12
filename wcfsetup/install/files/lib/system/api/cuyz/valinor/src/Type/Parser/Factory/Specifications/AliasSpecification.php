@@ -6,6 +6,7 @@ namespace CuyZ\Valinor\Type\Parser\Factory\Specifications;
 
 use CuyZ\Valinor\Type\Parser\Lexer\Token\ObjectToken;
 use CuyZ\Valinor\Type\Parser\Lexer\Token\TraversingToken;
+use CuyZ\Valinor\Type\Parser\Lexer\Token\VacantToken;
 use CuyZ\Valinor\Utility\Reflection\PhpParser;
 use CuyZ\Valinor\Utility\Reflection\Reflection;
 use ReflectionClass;
@@ -16,6 +17,7 @@ use function array_shift;
 use function explode;
 use function implode;
 use function in_array;
+use function str_starts_with;
 use function strtolower;
 
 /** @internal */
@@ -30,6 +32,10 @@ final class AliasSpecification implements TypeParserSpecification
     {
         $symbol = $token->symbol();
 
+        if ($token instanceof ObjectToken || str_starts_with($symbol, '\\')) {
+            return $token;
+        }
+
         // Matches the case where a class extends a class with the same name but
         // in a different namespace.
         if ($symbol === $this->reflection->getShortName() && Reflection::classOrInterfaceExists($symbol)) {
@@ -39,7 +45,10 @@ final class AliasSpecification implements TypeParserSpecification
         $alias = $this->resolveAlias($symbol);
 
         if (strtolower($alias) !== strtolower($symbol)) {
-            /** @var class-string $alias */
+            if (! Reflection::classOrInterfaceExists($alias)) {
+                return new VacantToken($alias, []);
+            }
+
             return ObjectToken::from($alias);
         }
 

@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Pelago\Emogrifier\HtmlProcessor;
 
 use Pelago\Emogrifier\Utilities\DeclarationBlockParser;
-
-use function Safe\preg_match;
-use function Safe\preg_replace_callback;
+use Pelago\Emogrifier\Utilities\Preg;
 
 /**
  * This class can evaluate CSS custom properties that are defined and used in inline style attributes.
@@ -31,7 +29,41 @@ final class CssVariableEvaluator extends AbstractHtmlProcessor
      */
     public function evaluateVariables(): self
     {
-        return $this->evaluateVariablesInElementAndDescendants($this->getHtmlElement(), []);
+        /**
+         * @var list<array{element: \DOMElement, ancestorDefinitions: array<non-empty-string, string>}>
+         *      $elementsToEvaluate
+         */
+        $elementsToEvaluate = [['element' => $this->getHtmlElement(), 'ancestorDefinitions' => []]];
+
+        while (($currentElementData = \array_pop($elementsToEvaluate)) !== null) {
+            $currentElement = $currentElementData['element'];
+            $currentAncestorDefinitions = $currentElementData['ancestorDefinitions'];
+
+            $style = $currentElement->getAttribute('style');
+
+            // Avoid parsing declarations if none use or define a variable
+            if ((new Preg())->match('/(?<![\\w\\-])--[\\w\\-]/', $style) !== 0) {
+                $declarations = DeclarationBlockParser::parse($style);
+                $variableDefinitions
+                    = $this->getVariableDefinitionsFromDeclarations($declarations) + $currentAncestorDefinitions;
+                $this->currentVariableDefinitions = $variableDefinitions;
+
+                $newDeclarations = $this->replaceVariablesInDeclarations($declarations);
+                if ($newDeclarations !== null) {
+                    $currentElement->setAttribute('style', $this->getDeclarationsAsString($newDeclarations));
+                }
+            } else {
+                $variableDefinitions = $currentAncestorDefinitions;
+            }
+
+            foreach ($currentElement->childNodes as $child) {
+                if ($child instanceof \DOMElement) {
+                    $elementsToEvaluate[] = ['element' => $child, 'ancestorDefinitions' => $variableDefinitions];
+                }
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -46,17 +78,18 @@ final class CssVariableEvaluator extends AbstractHtmlProcessor
             static function (string $key): bool {
                 return \substr($key, 0, 2) === '--';
             },
-            ARRAY_FILTER_USE_KEY
+            ARRAY_FILTER_USE_KEY,
         );
     }
 
     /**
      * Callback function for {@see replaceVariablesInPropertyValue} performing regular expression replacement.
      *
-     * @param array<int, string> $matches
+     * @param non-empty-list<string> $matches
      */
     private function getPropertyValueReplacement(array $matches): string
     {
+        \assert(\is_string($matches[1] ?? null));
         $variableName = $matches[1];
 
         if (isset($this->currentVariableDefinitions[$variableName])) {
@@ -64,6 +97,7 @@ final class CssVariableEvaluator extends AbstractHtmlProcessor
         } else {
             $fallbackValueSeparator = $matches[2] ?? '';
             if ($fallbackValueSeparator !== '') {
+                \assert(\is_string($matches[3] ?? null));
                 $fallbackValue = $matches[3];
                 // The fallback value may use other CSS variables, so recurse
                 $variableValue = $this->replaceVariablesInPropertyValue($fallbackValue);
@@ -124,15 +158,8 @@ final class CssVariableEvaluator extends AbstractHtmlProcessor
             /x';
 
         $callable = \Closure::fromCallable([$this, 'getPropertyValueReplacement']);
-        if (\function_exists('Safe\\preg_replace_callback')) {
-            $result = preg_replace_callback($pattern, $callable, $propertyValue);
-        } else {
-            // @phpstan-ignore-next-line The safe version is only available in "thecodingmachine/safe" for PHP >= 8.1.
-            $result = \preg_replace_callback($pattern, $callable, $propertyValue);
-        }
-        \assert(\is_string($result));
 
-        return $result;
+        return (new Preg())->replaceCallback($pattern, $callable, $propertyValue);
     }
 
     /**
@@ -151,7 +178,7 @@ final class CssVariableEvaluator extends AbstractHtmlProcessor
                 }
                 return $newPropertyValue;
             },
-            $declarations
+            $declarations,
         );
 
         return $substitutionsMade ? $result : null;
@@ -167,44 +194,9 @@ final class CssVariableEvaluator extends AbstractHtmlProcessor
                 return $key . ': ' . $value;
             },
             \array_keys($declarations),
-            \array_values($declarations)
+            \array_values($declarations),
         );
 
         return \implode('; ', $declarationStrings) . ';';
-    }
-
-    /**
-     * @param array<non-empty-string, string> $ancestorVariableDefinitions
-     *
-     * @return $this
-     */
-    private function evaluateVariablesInElementAndDescendants(
-        \DOMElement $element,
-        array $ancestorVariableDefinitions
-    ): self {
-        $style = $element->getAttribute('style');
-
-        // Avoid parsing declarations if none use or define a variable
-        if (preg_match('/(?<![\\w\\-])--[\\w\\-]/', $style) !== 0) {
-            $declarations = (new DeclarationBlockParser())->parse($style);
-            $variableDefinitions =
-                $this->getVariableDefinitionsFromDeclarations($declarations) + $ancestorVariableDefinitions;
-            $this->currentVariableDefinitions = $variableDefinitions;
-
-            $newDeclarations = $this->replaceVariablesInDeclarations($declarations);
-            if ($newDeclarations !== null) {
-                $element->setAttribute('style', $this->getDeclarationsAsString($newDeclarations));
-            }
-        } else {
-            $variableDefinitions = $ancestorVariableDefinitions;
-        }
-
-        foreach ($element->childNodes as $child) {
-            if ($child instanceof \DOMElement) {
-                $this->evaluateVariablesInElementAndDescendants($child, $variableDefinitions);
-            }
-        }
-
-        return $this;
     }
 }

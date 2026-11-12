@@ -30,16 +30,14 @@ trait MessageTrait
     /**
      * List of all registered headers, as key => array of values.
      *
-     * @var array
-     * @psalm-var array<non-empty-string, list<string>>
+     * @var array<non-empty-string, list<string>>
      */
     protected $headers = [];
 
     /**
      * Map of normalized header name to original name used to register header.
      *
-     * @var array
-     * @psalm-var array<non-empty-string, non-empty-string>
+     * @var array<non-empty-string, non-empty-string>
      */
     protected $headerNames = [];
 
@@ -357,9 +355,9 @@ trait MessageTrait
             );
         }
 
-        // HTTP/1 uses a "<major>.<minor>" numbering scheme to indicate
-        // versions of the protocol, while HTTP/2 does not.
-        if (! preg_match('#^(1\.[01]|2(\.0)?)$#', $version)) {
+        // HTTP/1 uses a "<major>.<minor>" version schema while
+        // HTTP/2 and HTTP/3 use just "<major>" or "<major>.0".
+        if (! preg_match('#^(?:1\.[01]|[23](?:\.0)?)\z#', $version)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Unsupported HTTP protocol version "%s" provided',
                 $version

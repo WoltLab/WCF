@@ -4,6 +4,7 @@ namespace Nelexa\Buffer;
 
 use Nelexa\Buffer\BinaryFormat\BinaryFileItem;
 use Nelexa\Buffer\BinaryFormat\BinaryFileTestFormat;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Base class for tests all type buffers.
@@ -12,7 +13,7 @@ use Nelexa\Buffer\BinaryFormat\BinaryFileTestFormat;
  *
  * @package Nelexa\Buffer
  */
-abstract class BufferTestCase extends \PHPUnit_Framework_TestCase
+abstract class BufferTestCase extends TestCase
 {
 
     /**
@@ -25,7 +26,7 @@ abstract class BufferTestCase extends \PHPUnit_Framework_TestCase
      *
      * @throws \AssertionError
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->buffer = $this->createBuffer();
@@ -34,7 +35,7 @@ abstract class BufferTestCase extends \PHPUnit_Framework_TestCase
         }
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->buffer->close();
@@ -152,6 +153,9 @@ abstract class BufferTestCase extends \PHPUnit_Framework_TestCase
             $arrayBytes = [0x01, 0x02, 0x03, 0x4, Cast::toByte(Cast::INTEGER_MAX_VALUE)];
             $this->buffer->insertArrayBytes($arrayBytes);
 
+            $arrayUnsignedBytes = [0x01, 0x22, 0x7f, 0xee, Cast::toUnsignedByte(Cast::INTEGER_MAX_VALUE)];
+            $this->buffer->insertArrayBytes($arrayUnsignedBytes);
+
             $string = 'String... Строка... 串...
  😀 😬 😁 😂 😃 😄 😅 😆 😇 😉 😊 😊 🙂 🙃 ☺️ 😋 😌 😍 😘 
  🇦🇫 🇦🇽 🇦🇱 🇩🇿 🇦🇸 🇦🇩 🇦🇴 🇦🇮 🇦🇶 🇦🇬 🇦🇷 🇦🇲 🇦🇼 🇦🇺 🇦🇹
@@ -261,17 +265,20 @@ abstract class BufferTestCase extends \PHPUnit_Framework_TestCase
             $this->assertEquals($this->buffer->getArrayBytes(5), $arrayBytes);
             $this->assertEquals($this->buffer->position(), 76);
 
+            $this->assertEquals($this->buffer->getArrayUnsignedBytes(5), $arrayUnsignedBytes);
+            $this->assertEquals($this->buffer->position(), 81);
+
             $this->assertEquals($this->buffer->getString($lengthString), $string);
-            $this->assertEquals($this->buffer->position(), 76 + $lengthString);
+            $this->assertEquals($this->buffer->position(), 81 + $lengthString);
 
             $this->assertEquals($this->buffer->getUTF(), $string);
-            $this->assertEquals($this->buffer->position(), 78 + $lengthString * 2);
+            $this->assertEquals($this->buffer->position(), 83 + $lengthString * 2);
 
             $this->assertEquals($this->buffer->getUTF16($lengthString), $string);
-            $this->assertEquals($this->buffer->position(), 78 + $lengthString * 4);
+            $this->assertEquals($this->buffer->position(), 83 + $lengthString * 4);
 
             $this->assertEquals($this->buffer->getString($lengthString), $otherBuffer->toString());
-            $this->assertEquals($this->buffer->position(), 78 + $lengthString * 5);
+            $this->assertEquals($this->buffer->position(), 83 + $lengthString * 5);
         }
     }
 
@@ -323,56 +330,52 @@ abstract class BufferTestCase extends \PHPUnit_Framework_TestCase
         $this->buffer->setPosition(3);
         $this->buffer->remove(3);
         $this->assertEquals('123789', $this->buffer->toString());
+        $this->assertEquals(3, $this->buffer->position());
     }
 
-    /**
-     * @expectedException \Nelexa\Buffer\BufferException
-     * @expectedExceptionMessage put length > remaining
-     */
     public function testPutException()
     {
+        $this->expectException(BufferException::class);
+        $this->expectExceptionMessage('put length > remaining');
+
         $this->assertEquals($this->buffer->size(), 0);
         $this->buffer->putString('Test');
     }
 
-    /**
-     * @expectedException \Nelexa\Buffer\BufferException
-     * @expectedExceptionMessage put length > remaining
-     */
     public function testPutException2()
     {
+        $this->expectException(BufferException::class);
+        $this->expectExceptionMessage('put length > remaining');
+
         $this->buffer
             ->insertString('Test')
             ->rewind()
             ->putString('My Test');
     }
 
-    /**
-     * @expectedException \Nelexa\Buffer\BufferException
-     * @expectedExceptionMessage replace length > remaining
-     */
     public function testReplaceException()
     {
+        $this->expectException(BufferException::class);
+        $this->expectExceptionMessage('replace length > remaining');
+
         $this->assertEquals($this->buffer->size(), 0);
         $this->buffer->replaceString('Test', 5);
     }
 
-    /**
-     * @expectedException \Nelexa\Buffer\BufferException
-     * @expectedExceptionMessage remove length > remaining
-     */
     public function testRemoveException()
     {
+        $this->expectException(BufferException::class);
+        $this->expectExceptionMessage('remove length > remaining');
+
         $this->assertEquals($this->buffer->size(), 0);
         $this->buffer->remove(1);
     }
 
-    /**
-     * @expectedException \Nelexa\Buffer\BufferException
-     * @expectedExceptionMessage Read Only
-     */
     public function testReadOnly()
     {
+        $this->expectException(BufferException::class);
+        $this->expectExceptionMessage('Read Only');
+
         $this->assertEquals($this->buffer->isReadOnly(), false);
         $this->buffer->setReadOnly(true);
         $this->assertEquals($this->buffer->isReadOnly(), true);
@@ -533,7 +536,6 @@ abstract class BufferTestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * @throws BufferException
-     * @requires PHP 7.0.15
      */
     public function testDouble()
     {
@@ -554,11 +556,13 @@ abstract class BufferTestCase extends \PHPUnit_Framework_TestCase
 
         $buffer->rewind();
         $this->assertEquals($buffer->getArrayBytes(8), [64, 41, 85, 54, 37, 109, -74, 71]);
+
+        $buffer->rewind();
+        $this->assertEquals($buffer->getArrayUnsignedBytes(8), [64, 41, 85, 54, 37, 109, 182, 71]);
     }
 
     /**
      * @throws BufferException
-     * @requires PHP 7.0.15
      */
     public function testFloat()
     {
@@ -570,7 +574,7 @@ abstract class BufferTestCase extends \PHPUnit_Framework_TestCase
         $this->assertEquals($buffer->size(), 4);
 
         $buffer->rewind();
-        $this->assertEquals($buffer->getFloat(), $float);
+        $this->assertEqualsWithDelta($buffer->getFloat(), $float, 0.0001);
         $this->assertEquals($buffer->position(), 4);
 
         $buffer->rewind();
@@ -579,5 +583,8 @@ abstract class BufferTestCase extends \PHPUnit_Framework_TestCase
 
         $buffer->rewind();
         $this->assertEquals($buffer->getArrayBytes(4), [65, 74, -87, -79]);
+
+        $buffer->rewind();
+        $this->assertEquals($buffer->getArrayUnsignedBytes(4), [65, 74, 169, 177]);
     }
 }

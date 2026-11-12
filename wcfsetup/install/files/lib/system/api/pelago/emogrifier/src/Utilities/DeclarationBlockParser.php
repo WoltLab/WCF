@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Pelago\Emogrifier\Utilities;
 
-use function Safe\preg_match;
-use function Safe\preg_split;
-
 /**
  * Provides a common method for parsing CSS declaration blocks.
  * These might be from actual CSS, or from the `style` attribute of an HTML DOM element.
@@ -23,6 +20,17 @@ final class DeclarationBlockParser
     private static $cache = [];
 
     /**
+     * Clears the static cache of parsed declaration blocks.
+     *
+     * This is called by {@see CssInliner::inlineCss} to prevent unbounded memory growth
+     * when processing multiple HTML documents in a single PHP process.
+     */
+    public static function clearCache(): void
+    {
+        self::$cache = [];
+    }
+
+    /**
      * CSS custom properties (variables) have case-sensitive names, so their case must be preserved.
      * Standard CSS properties have case-insensitive names, which are converted to lowercase.
      *
@@ -30,7 +38,7 @@ final class DeclarationBlockParser
      *
      * @return non-empty-string
      */
-    public function normalizePropertyName(string $name): string
+    public static function normalizePropertyName(string $name): string
     {
         if (\substr($name, 0, 2) === '--') {
             return $name;
@@ -66,7 +74,7 @@ final class DeclarationBlockParser
      *
      * @throws \UnexpectedValueException if an empty property name is encountered (which cannot happen)
      */
-    public function parse(string $declarationBlock): array
+    public static function parse(string $declarationBlock): array
     {
         $trimmedDeclarationBlock = \trim($declarationBlock, "; \n\r\t\v\x00");
         if ($trimmedDeclarationBlock === '') {
@@ -77,22 +85,25 @@ final class DeclarationBlockParser
             return self::$cache[$trimmedDeclarationBlock];
         }
 
-        $declarations = preg_split('/;(?!base64|charset)/', $trimmedDeclarationBlock);
-        /** @var list<string> $declarations */
+        $preg = new Preg();
+
+        $declarations = $preg->split('/;(?!base64|charset)/', $trimmedDeclarationBlock);
         $properties = [];
         foreach ($declarations as $declaration) {
             $matches = [];
-            if (preg_match(
+            if ($preg->match(
                 '/^(-?+[a-zA-Z_][a-zA-Z_0-9\\-]*+|--[a-zA-Z_0-9\\-]++)\\s*+:\\s*+(.++)$/s',
                 \trim($declaration),
-                $matches
+                $matches,
             ) === 0) {
                 continue;
             }
 
+            \assert(\count($matches) >= 3);
             $propertyName = $matches[1];
+            \assert($propertyName !== '');
             $propertyValue = $matches[2];
-            $properties[$this->normalizePropertyName($propertyName)] = $propertyValue;
+            $properties[self::normalizePropertyName($propertyName)] = $propertyValue;
         }
         self::$cache[$trimmedDeclarationBlock] = $properties;
 

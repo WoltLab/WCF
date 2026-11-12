@@ -2,14 +2,13 @@
 
 [![Packagist Version](https://img.shields.io/packagist/v/nelexa/buffer.svg)](https://packagist.org/packages/nelexa/buffer)
 [![Packagist](https://img.shields.io/packagist/dt/nelexa/buffer.svg?color=%23ff007f)](https://packagist.org/packages/nelexa/buffer)
-[![Build Status](https://travis-ci.org/Ne-Lexa/php-byte-buffer.svg?branch=master)](https://travis-ci.org/Ne-Lexa/php-byte-buffer
-)
+[![CI](https://github.com/Ne-Lexa/php-byte-buffer/actions/workflows/ci.yml/badge.svg)](https://github.com/Ne-Lexa/php-byte-buffer/actions/workflows/ci.yml)
 [![License](https://img.shields.io/packagist/l/nelexa/buffer.svg)](https://packagist.org/packages/nelexa/buffer)
 
 This is classes defines methods for **reading and writing** values of all primitive types. Primitive values are translated to (or from) sequences of bytes according to the buffer's current byte order, which may be retrieved and modified via the order methods. The initial order of a byte buffer is always Buffer::BIG_ENDIAN.
  
 ### Requirements
-* PHP >= 5.4 (64 bit)
+* PHP >= 7.4 (64 bit)
 
 ### Installation
 ```bash
@@ -198,6 +197,7 @@ Method                            | Type                    | Values
 `$buffer->getFloat()`             | float (4 bytes)         | single-precision 32-bit IEEE 754 floating point number
 `$buffer->getDouble()`            | double (5 bytes)        | double-precision 64-bit IEEE 754 floating point number
 `$buffer->getArrayBytes($length)` | byte[]                  | `array`
+`$buffer->getArrayUnsignedBytes($length)` | unsigned byte[]         | `array`
 `$buffer->getString($length)`     | string (length bytes)   | `string`
 `$buffer->getUTF()`               | string                  | `string`
 `$buffer->getUTF16($length)`      | string (length * 2)     | `string`

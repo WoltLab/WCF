@@ -6,9 +6,7 @@ namespace Pelago\Emogrifier\HtmlProcessor;
 
 use Pelago\Emogrifier\CssInliner;
 use Pelago\Emogrifier\Utilities\ArrayIntersector;
-
-use function Safe\preg_match_all;
-use function Safe\preg_split;
+use Pelago\Emogrifier\Utilities\Preg;
 
 /**
  * This class can remove things from HTML.
@@ -32,14 +30,16 @@ final class HtmlPruner extends AbstractHtmlProcessor
      */
     public function removeElementsWithDisplayNone(): self
     {
-        $elementsWithStyleDisplayNone = $this->getXPath()->query(self::DISPLAY_NONE_MATCHER);
+        $elementsWithStyleDisplayNone = $this->xPath->query(self::DISPLAY_NONE_MATCHER);
+        \assert($elementsWithStyleDisplayNone instanceof \DOMNodeList);
         if ($elementsWithStyleDisplayNone->length === 0) {
             return $this;
         }
 
         foreach ($elementsWithStyleDisplayNone as $element) {
+            \assert($element instanceof \DOMElement);
             $parentNode = $element->parentNode;
-            if ($parentNode !== null) {
+            if ($parentNode instanceof \DOMElement) {
                 $parentNode->removeChild($element);
             }
         }
@@ -63,7 +63,7 @@ final class HtmlPruner extends AbstractHtmlProcessor
     public function removeRedundantClasses(array $classesToKeep = []): self
     {
         /** @var \DOMNodeList<\DOMElement> $elementsWithClassAttribute */
-        $elementsWithClassAttribute = $this->getXPath()->query('//*[@class]');
+        $elementsWithClassAttribute = $this->xPath->query('//*[@class]');
 
         if ($classesToKeep !== []) {
             $this->removeClassesFromElements($elementsWithClassAttribute, $classesToKeep);
@@ -86,8 +86,10 @@ final class HtmlPruner extends AbstractHtmlProcessor
     {
         $classesToKeepIntersector = new ArrayIntersector($classesToKeep);
 
+        $preg = new Preg();
         foreach ($elements as $element) {
-            $elementClasses = preg_split('/\\s++/', \trim($element->getAttribute('class')));
+            /** @var list<string> $elementClasses */
+            $elementClasses = $preg->split('/\\s++/', \trim($element->getAttribute('class')));
             $elementClassesToKeep = $classesToKeepIntersector->intersectWith($elementClasses);
             if ($elementClassesToKeep !== []) {
                 $element->setAttribute('class', \implode(' ', $elementClassesToKeep));
@@ -123,8 +125,12 @@ final class HtmlPruner extends AbstractHtmlProcessor
     public function removeRedundantClassesAfterCssInlined(CssInliner $cssInliner): self
     {
         $classesToKeepAsKeys = [];
+
+        $preg = new Preg();
         foreach ($cssInliner->getMatchingUninlinableSelectors() as $selector) {
-            preg_match_all('/\\.(-?+[_a-zA-Z][\\w\\-]*+)/', $selector, $matches);
+            $matches = null;
+            $preg->matchAll('/\\.(-?+[_a-zA-Z][\\w\\-]*+)/', $selector, $matches);
+            \assert(isset($matches[1]));
             $classesToKeepAsKeys += \array_fill_keys($matches[1], true);
         }
 

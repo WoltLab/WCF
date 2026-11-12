@@ -2,7 +2,9 @@
 
 namespace Nelexa\Buffer;
 
-class CastTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CastTest extends TestCase
 {
     public function testCastToByte()
     {

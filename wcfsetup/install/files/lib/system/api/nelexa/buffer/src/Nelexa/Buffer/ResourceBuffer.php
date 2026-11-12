@@ -242,7 +242,6 @@ class ResourceBuffer extends Buffer
             throw new BufferException('Not write all bytes. Length: ' . $lengthNewBuffer . ', write length: ' . $lengthWrite);
         }
         $this->newLimit($this->size() - $length);
-        $this->position += $position;
         return $this;
     }
 

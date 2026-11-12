@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Pelago\Emogrifier\HtmlProcessor;
 
 use Pelago\Emogrifier\Utilities\DeclarationBlockParser;
-
-use function Safe\preg_match;
-use function Safe\preg_replace;
-use function Safe\preg_split;
+use Pelago\Emogrifier\Utilities\Preg;
 
 /**
  * This HtmlProcessor can convert style HTML attributes to the corresponding other visual HTML attributes,
@@ -62,9 +59,8 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
      */
     public function convertCssToVisualAttributes(): self
     {
-        $declarationBlockParser = new DeclarationBlockParser();
         foreach ($this->getAllNodesWithStyleAttribute() as $node) {
-            $inlineStyleDeclarations = $declarationBlockParser->parse($node->getAttribute('style'));
+            $inlineStyleDeclarations = DeclarationBlockParser::parse($node->getAttribute('style'));
             $this->mapCssToHtmlAttributes($inlineStyleDeclarations, $node);
         }
 
@@ -78,7 +74,7 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
      */
     private function getAllNodesWithStyleAttribute(): \DOMNodeList
     {
-        $result = $this->getXPath()->query('//*[@style]');
+        $result = $this->xPath->query('//*[@style]');
         \assert($result instanceof \DOMNodeList);
         /** @var \DOMNodeList<\DOMElement> $result */
 
@@ -173,7 +169,6 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
     private function mapBackgroundProperty(\DOMElement $node, string $value): void
     {
         // parse out the color, if any
-        /** @var array<int, string> $styles */
         $styles = \explode(' ', $value, 2);
         $first = $styles[0];
         if (\is_numeric($first[0]) || \strncmp($first, 'url', 3) === 0) {
@@ -191,12 +186,14 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
      */
     private function mapWidthOrHeightProperty(\DOMElement $node, string $value, string $property): void
     {
+        $preg = new Preg();
+
         // only parse values in px and %, but not values like "auto"
-        if (preg_match('/^(\\d+)(\\.(\\d+))?(px|%)$/', $value) === 0) {
+        if ($preg->match('/^(\\d+)(\\.(\\d+))?(px|%)$/', $value) === 0) {
             return;
         }
 
-        $number = preg_replace('/[^0-9.%]/', '', $value);
+        $number = $preg->replace('/[^0-9.%]/', '', $value);
         $node->setAttribute($property, $number);
     }
 
@@ -246,9 +243,8 @@ final class CssToAttributeConverter extends AbstractHtmlProcessor
      */
     private function parseCssShorthandValue(string $value): array
     {
-        $values = preg_split('/\\s+/', $value);
+        $values = (new Preg())->split('/\\s+/', $value);
 
-        /** @var list<string> $values */
         $css = [];
         $css['top'] = $values[0];
         $css['right'] = (\count($values) > 1) ? $values[1] : $css['top'];

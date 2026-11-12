@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pelago\Emogrifier\Css;
 
+use Pelago\Emogrifier\Utilities\Preg;
 use Sabberworm\CSS\CSSList\AtRuleBlockList as CssAtRuleBlockList;
 use Sabberworm\CSS\CSSList\Document as SabberwormCssDocument;
 use Sabberworm\CSS\Parser as CssParser;
@@ -14,8 +15,6 @@ use Sabberworm\CSS\Renderable as CssRenderable;
 use Sabberworm\CSS\RuleSet\DeclarationBlock as CssDeclarationBlock;
 use Sabberworm\CSS\RuleSet\RuleSet as CssRuleSet;
 use Sabberworm\CSS\Settings as ParserSettings;
-
-use function Safe\preg_match;
 
 /**
  * Parses and stores a CSS document from a string of CSS, and provides methods to obtain the CSS in parts or as data
@@ -62,7 +61,8 @@ final class CssDocument
      */
     private function hasNestedAtRule(string $css): bool
     {
-        return preg_match('/@(?:media|supports|(?:-webkit-|-moz-|-ms-|-o-)?+(keyframes|document))\\b/', $css) !== 0;
+        return (new Preg())
+            ->match('/@(?:media|supports|(?:-webkit-|-moz-|-ms-|-o-)?+(keyframes|document))\\b/', $css) !== 0;
     }
 
     /**
@@ -134,10 +134,11 @@ final class CssDocument
                 static function (string $allowedMediaType): string {
                     return \preg_quote($allowedMediaType, '/');
                 },
-                $allowedMediaTypes
+                $allowedMediaTypes,
             );
             $mediaTypesMatcher = \implode('|', $escapedAllowedMediaTypes);
-            $isAllowed = preg_match('/^\\s*+(?:only\\s++)?+(?:' . $mediaTypesMatcher . ')/i', $mediaType) !== 0;
+            $isAllowed
+                = (new Preg())->match('/^\\s*+(?:only\\s++)?+(?:' . $mediaTypesMatcher . ')/i', $mediaType) !== 0;
         } else {
             $isAllowed = true;
         }
@@ -177,8 +178,8 @@ final class CssDocument
                 break;
             case 'font-face':
                 $result = $rule instanceof CssRuleSet
-                    && $rule->getRules('font-family') !== []
-                    && $rule->getRules('src') !== [];
+                    && $rule->getDeclarations('font-family') !== []
+                    && $rule->getDeclarations('src') !== [];
                 break;
             default:
                 $result = true;

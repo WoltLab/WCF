@@ -1,11 +1,10 @@
 <?php
 
-namespace Nelexa\Buffer\Nelexa\Buffer;
+namespace Nelexa\Buffer;
 
-use Nelexa\Buffer\Buffer;
-use Nelexa\Buffer\FileBuffer;
+use PHPUnit\Framework\TestCase;
 
-class GetInfoIcoFileTest extends \PHPUnit_Framework_TestCase
+class GetInfoIcoFileTest extends TestCase
 {
     /**
      * @see https://en.wikipedia.org/wiki/ICO_(file_format)

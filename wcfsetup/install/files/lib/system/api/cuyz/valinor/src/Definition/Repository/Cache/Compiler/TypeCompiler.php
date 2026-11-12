@@ -60,7 +60,7 @@ final class TypeCompiler
 
     public function compile(Type $type): string
     {
-        $class = $type::class;
+        $class = '\\' . $type::class;
 
         switch (true) {
             case $type instanceof NullType:
@@ -129,7 +129,7 @@ final class TypeCompiler
                     $optional = var_export($element->isOptional(), true);
                     $attributes = $this->attributesCompiler->compile($element->attributes());
 
-                    $elements[] = var_export($key, true) . ' => new ' . ShapedArrayElement::class . "($subkey, $subtype, $optional, $attributes)";
+                    $elements[] = var_export($key, true) . ' => new \\' . ShapedArrayElement::class . "($subkey, $subtype, $optional, $attributes)";
                 }
 
                 $elements = implode(', ', $elements);
@@ -188,7 +188,7 @@ final class TypeCompiler
                 $pattern = var_export($type->pattern(), true);
 
                 $cases = array_map(
-                    fn (string|int $key, UnitEnum $case) => var_export($key, true) . ' => ' . var_export($case, true),
+                    static fn (string|int $key, UnitEnum $case) => var_export($key, true) . ' => ' . var_export($case, true),
                     array_keys($type->cases()),
                     $type->cases()
                 );

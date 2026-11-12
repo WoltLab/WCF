@@ -34,13 +34,6 @@ abstract class Buffer
      */
     private $isReadOnly = false;
 
-    protected static function checkPhpSupport()
-    {
-        if (PHP_VERSION_ID < 70015 || PHP_VERSION_ID === 70100) {
-            throw new \RuntimeException('Operation not supported for PHP versions less than 7.0.15 and 7.1.1. Current version ' . PHP_VERSION);
-        }
-    }
-
     /**
      * Get buffer position
      *
@@ -356,7 +349,6 @@ abstract class Buffer
      */
     public function getFloat()
     {
-        self::checkPhpSupport();
         return unpack($this->orderLittleEndian ? 'g' : 'G', $this->get(4))[1];
     }
 
@@ -368,7 +360,6 @@ abstract class Buffer
      */
     public function getDouble()
     {
-        self::checkPhpSupport();
         return unpack($this->orderLittleEndian ? 'e' : 'E', $this->get(8))[1];
     }
 
@@ -384,6 +375,23 @@ abstract class Buffer
         if ($length > 0) {
             return array_values(
                 unpack('c*', $this->get($length))
+            );
+        }
+        return [];
+    }
+
+    /**
+     * Reads $length unsigned bytes from an input stream.
+     *
+     * @param $length int
+     * @return int[]
+     * @throws BufferException
+     */
+    public function getArrayUnsignedBytes($length)
+    {
+        if ($length > 0) {
+            return array_values(
+                unpack('C*', $this->get($length))
             );
         }
         return [];
@@ -611,7 +619,6 @@ abstract class Buffer
      */
     protected function writeFloat($v)
     {
-        self::checkPhpSupport();
         if ($v === null) {
             throw new BufferException('null float');
         }
@@ -637,7 +644,6 @@ abstract class Buffer
      */
     protected function writeDouble($v)
     {
-        self::checkPhpSupport();
         if ($v === null) {
             throw new BufferException('null double');
         }
