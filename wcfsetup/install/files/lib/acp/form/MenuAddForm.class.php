@@ -17,7 +17,7 @@ use wcf\system\form\builder\field\acl\simple\SimpleAclFormField;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\PagesFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\IFormDocument;
@@ -80,7 +80,7 @@ class MenuAddForm extends AbstractFormBuilderForm
                             ->required()
                             ->i18n()
                             ->languageItemPattern('wcf.menu.(com.woltlab.wcf.genericMenu\d+|[\w\.]+)'),
-                        SingleSelectionFormField::create('position')
+                        SelectFormField::create('position')
                             ->label('wcf.acp.box.position')
                             ->options(
                                 \array_combine(

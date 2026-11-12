@@ -19,7 +19,7 @@ use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\option\OptionFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\l10n\L10nStorage;
@@ -370,14 +370,15 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                 ->implementedInterface(ICronjob::class)
                 ->required(),
 
-            SingleSelectionFormField::create('expressionType')
+            SelectFormField::create('expressionType')
                 ->label('wcf.acp.cronjob.expressionType')
                 ->required()
                 ->options([
-                    '' => 'wcf.acp.cronjob.expressionType.default',
+                    'default' => 'wcf.acp.cronjob.expressionType.default',
                     'random' => 'wcf.acp.cronjob.expressionType.random',
-                ]),
-            SingleSelectionFormField::create('expression')
+                ])
+                ->defaultValue('default'),
+            SelectFormField::create('expression')
                 ->label('wcf.acp.cronjob.expressionRandom')
                 ->required()
                 ->options([
@@ -423,7 +424,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                     ->addDependency(
                         ValueFormFieldDependency::create($timeProperty . 'ExpressionType')
                             ->fieldId('expressionType')
-                            ->values([''])
+                            ->values(['default'])
                     )
                     ->addValidator(CronjobAddForm::getTimeFormFieldValidator()),
                 'expression'
@@ -630,7 +631,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                     $formData['startdow']
                 )
         );
-        if ($formData['expressionType'] !== '') {
+        if ($formData['expressionType'] !== 'default') {
             $expression->setAttribute('type', $formData['expressionType']);
         }
         $cronjob->appendChild($expression);

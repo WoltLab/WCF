@@ -25,7 +25,7 @@ use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -555,7 +555,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
                 ->value('text')
                 ->required(),
 
-            SingleSelectionFormField::create('objectType')
+            SelectFormField::create('objectType')
                 ->label('wcf.acp.pip.box.objectType')
                 ->description('wcf.acp.pip.box.objectType.description')
                 ->required()
@@ -577,8 +577,9 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
                         ->values(['system'])
                 ),
 
-            SingleSelectionFormField::create('position')
+            SelectFormField::create('position')
                 ->label('wcf.acp.pip.box.position')
+                ->required()
                 ->options(\array_combine(Box::$availablePositions, Box::$availablePositions)),
 
             BooleanFormField::create('showHeader')

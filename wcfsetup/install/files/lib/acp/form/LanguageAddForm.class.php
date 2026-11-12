@@ -9,7 +9,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -77,11 +77,6 @@ class LanguageAddForm extends AbstractFormBuilderForm
     {
         parent::createForm();
 
-        $locales = [
-            '' => WCF::getLanguage()->get('wcf.global.noSelection'),
-            ...$this->locales,
-        ];
-
         $this->form->appendChildren([
             FormContainer::create('data')
                 ->appendChildren([
@@ -121,14 +116,14 @@ class LanguageAddForm extends AbstractFormBuilderForm
                         ->required(),
                     BooleanFormField::create('isDisabled')
                         ->label('wcf.global.button.disable'),
-                    SingleSelectionFormField::create('locale')
+                    SelectFormField::create('locale')
                         ->label('wcf.acp.language.locale')
                         ->description('wcf.acp.language.locale.description')
-                        ->options($locales)
+                        ->options($this->locales)
                         ->addValidator(new FormFieldValidator(
                             'locale',
-                            static function (SingleSelectionFormField $formField) {
-                                if ($formField->getValue() === '') {
+                            static function (SelectFormField $formField) {
+                                if ($formField->getValue() === null) {
                                     return;
                                 }
 
@@ -151,7 +146,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
                                 }
                             }
                         )),
-                    SingleSelectionFormField::create('sourceLanguageID')
+                    SelectFormField::create('sourceLanguageID')
                         ->label('wcf.acp.language.add.source')
                         ->description('wcf.acp.language.add.source.description')
                         ->options(LanguageFactory::getInstance()->getLanguages())
@@ -171,6 +166,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
             static function (IFormDocument $document, array $parameters) {
                 $parameters['data']['languageCode'] = \mb_strtolower($parameters['data']['languageCode']);
                 $parameters['data']['countryCode'] = \mb_strtolower($parameters['data']['countryCode']);
+                $parameters['data']['locale'] ??= '';
 
                 return $parameters;
             }

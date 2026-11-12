@@ -16,7 +16,6 @@ use wcf\system\form\builder\field\FileProcessorFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\SelectFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\WCF;
 
@@ -145,12 +144,12 @@ class UserRankAddForm extends AbstractDatabaseObjectBuilderForm
             FormContainer::create('requirementsContainer')
                 ->label('wcf.acp.user.rank.requirement')
                 ->appendChildren([
-                    SingleSelectionFormField::create('groupID')
+                    SelectFormField::create('groupID')
                         ->label('wcf.user.group')
                         ->description('wcf.acp.user.rank.userGroup.description')
                         ->options(UserGroup::getSortedGroupsByType([], [UserGroup::GUESTS, UserGroup::EVERYONE]))
                         ->required()
-                        ->saveValueCallback(static function (UserRankBuilder $builder, SingleSelectionFormField $field): void {
+                        ->saveValueCallback(static function (UserRankBuilder $builder, SelectFormField $field): void {
                             $builder->setGroupID((int)$field->getSaveValue());
                         })
                         ->loadValueCallback(static function (UserRank $object, IFormField $field): void {

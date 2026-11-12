@@ -17,7 +17,7 @@ use wcf\event\gridView\admin\TemplateGridViewInitialized;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\TemplateGroupCacheBuilder;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\GridViewRowLink;
@@ -151,9 +151,8 @@ final class TemplateGridView extends AbstractGridView
             #[\Override]
             public function getFormField(): AbstractFormField
             {
-                return SingleSelectionFormField::create($this->id)
+                return SelectFormField::create($this->id)
                     ->label($this->languageItem)
-                    ->nullable()
                     ->options($this->getSelectOptions(), true);
             }
 

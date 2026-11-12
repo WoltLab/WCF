@@ -18,7 +18,7 @@ use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -253,7 +253,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
                     }
                 })),
 
-            SingleSelectionFormField::create('environment')
+            SelectFormField::create('environment')
                 ->label('wcf.acp.pip.eventListener.environment')
                 ->description('wcf.acp.pip.eventListener.environment.description')
                 ->options([
@@ -261,7 +261,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
                     'user' => 'user',
                     'all' => 'all',
                 ])
-                ->value('user'),
+                ->defaultValue('user'),
 
             BooleanFormField::create('inherit')
                 ->label('wcf.acp.pip.eventListener.inherit')

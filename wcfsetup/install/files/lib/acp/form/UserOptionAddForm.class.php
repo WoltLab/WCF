@@ -18,7 +18,6 @@ use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SelectFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\WCF;
 
@@ -145,7 +144,7 @@ class UserOptionAddForm extends AbstractFormOptionBuilderForm
                         ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
                             $builder->setIsDisabled((bool)$field->getSaveValue());
                         }),
-                    SingleSelectionFormField::create('categoryName')
+                    SelectFormField::create('categoryName')
                         ->label('wcf.global.category')
                         ->required()
                         ->options(function () {
@@ -197,7 +196,7 @@ class UserOptionAddForm extends AbstractFormOptionBuilderForm
             FormContainer::create('access')
                 ->label('wcf.acp.user.option.access')
                 ->appendChildren([
-                    SingleSelectionFormField::create('editable')
+                    SelectFormField::create('editable')
                         ->label('wcf.acp.user.option.editable')
                         ->options([
                             1 => 'wcf.acp.user.option.editable.1',
@@ -205,11 +204,11 @@ class UserOptionAddForm extends AbstractFormOptionBuilderForm
                             3 => 'wcf.acp.user.option.editable.3',
                             6 => 'wcf.acp.user.option.editable.6',
                         ])
-                        ->value(3)
+                        ->defaultValue(3)
                         ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
                             $builder->setEditable((int)$field->getSaveValue());
                         }),
-                    SingleSelectionFormField::create('visible')
+                    SelectFormField::create('visible')
                         ->label('wcf.acp.user.option.visible')
                         ->options([
                             0 => 'wcf.acp.user.option.visible.0',
@@ -219,7 +218,7 @@ class UserOptionAddForm extends AbstractFormOptionBuilderForm
                             7 => 'wcf.acp.user.option.visible.7',
                             15 => 'wcf.acp.user.option.visible.15',
                         ])
-                        ->value(15)
+                        ->defaultValue(15)
                         ->saveValueCallback(static function (UserOptionBuilder $builder, IFormField $field) {
                             $builder->setVisible((int)$field->getSaveValue());
                         }),

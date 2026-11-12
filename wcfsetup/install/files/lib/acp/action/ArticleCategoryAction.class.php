@@ -14,7 +14,7 @@ use wcf\data\article\category\ArticleCategoryNodeTree;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\WCF;
 
@@ -86,7 +86,7 @@ final class ArticleCategoryAction implements RequestHandlerInterface
             WCF::getLanguage()->get('wcf.article.button.setCategory')
         );
         $form->appendChildren([
-            SingleSelectionFormField::create('categoryID')
+            SelectFormField::create('categoryID')
                 ->label('wcf.global.category')
                 ->options($this->getCategoryOptions(), true)
                 ->required()

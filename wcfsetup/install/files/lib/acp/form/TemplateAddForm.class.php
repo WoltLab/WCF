@@ -18,7 +18,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\data\processor\VoidFormDataProcessor;
 use wcf\system\form\builder\field\HiddenFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\SourceCodeFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -78,8 +78,9 @@ class TemplateAddForm extends AbstractFormBuilderForm
         $specialTemplateGroups = $this->getSpecialTemplateGroups();
         $fixedTemplateGroup = $this->getFixedTemplateGroup();
 
-        $templateGroupFormField = SingleSelectionFormField::create('templateGroupID')
-            ->label('wcf.acp.template.group');
+        $templateGroupFormField = SelectFormField::create('templateGroupID')
+            ->label('wcf.acp.template.group')
+            ->required();
 
         $templateNameFormField = TextFormField::create('templateName')
             ->required()

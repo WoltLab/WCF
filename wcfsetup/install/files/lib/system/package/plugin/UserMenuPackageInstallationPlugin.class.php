@@ -8,7 +8,6 @@ use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IconFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
 use wcf\system\form\builder\IFormDocument;

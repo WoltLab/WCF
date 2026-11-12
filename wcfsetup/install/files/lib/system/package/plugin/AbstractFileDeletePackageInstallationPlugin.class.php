@@ -10,7 +10,7 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
@@ -231,12 +231,10 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
                 ->label("wcf.acp.pip.{$this->getPipName()}.{$this->tagName}")
                 ->description($this->getFileFieldDescription())
                 ->required(),
-            SingleSelectionFormField::create('application')
+            SelectFormField::create('application')
                 ->label("wcf.acp.pip.{$this->getPipName()}.application")
                 ->options(static function (): array {
-                    $options = [
-                        '' => 'wcf.global.noSelection',
-                    ];
+                    $options = [];
 
                     $apps = ApplicationHandler::getInstance()->getApplications();
                     \usort($apps, static function (Application $a, Application $b) {
@@ -248,8 +246,7 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
                     }
 
                     return $options;
-                })
-                ->nullable(),
+                }),
         ]);
     }
 

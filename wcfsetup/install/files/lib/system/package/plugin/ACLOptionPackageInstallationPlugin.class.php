@@ -13,7 +13,7 @@ use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -397,7 +397,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
         }
 
         $entryType = $this->entryType;
-        $objectTypeFormField = SingleSelectionFormField::create('objectType')
+        $objectTypeFormField = SelectFormField::create('objectType')
             ->objectProperty('objecttype')
             ->label('wcf.acp.pip.aclOption.objectType')
             ->description('wcf.acp.pip.aclOption.objectType.' . $this->entryType . '.description')
@@ -405,7 +405,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
             ->required()
             ->addValidator(new FormFieldValidator(
                 'nameUniqueness',
-                function (SingleSelectionFormField $formField) use ($entryType) {
+                function (SelectFormField $formField) use ($entryType) {
                     $nameField = $formField->getDocument()->getFormField('name');
 
                     if (
@@ -488,11 +488,11 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
                 );
 
                 if (isset($categories[$objectTypeID])) {
-                    $categoryNameField = SingleSelectionFormField::create('categoryName_' . $objectTypeID)
+                    $categoryNameField = SelectFormField::create('categoryName_' . $objectTypeID)
                         ->objectProperty('categoryname')
                         ->label('wcf.acp.pip.aclOption.options.categoryName')
                         ->description('wcf.acp.pip.aclOption.options.categoryName.description')
-                        ->options(['' => 'wcf.global.noSelection'] + $categories[$objectTypeID])
+                        ->options($categories[$objectTypeID])
                         ->addDependency(
                             ValueFormFieldDependency::create('objectType')
                                 ->field($objectTypeFormField)

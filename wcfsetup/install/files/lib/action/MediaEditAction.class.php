@@ -23,7 +23,7 @@ use wcf\system\form\builder\field\FileProcessorFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\media\MediaCategoryFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -115,7 +115,7 @@ final class MediaEditAction implements RequestHandlerInterface
                             $builder->setCategoryID($field->getCategoryID());
                         })
                         ->loadValueCallback(static function (Media $object, IFormField $field): void {
-                            $field->value($object->categoryID ?? 0);
+                            $field->value($object->categoryID);
                         }),
                     ...$this->getContentFormFields(),
                     ...($this->media->isImage !== 0 ? [$this->getCaptionEnableHtmlFormField()] : []),
@@ -177,11 +177,11 @@ final class MediaEditAction implements RequestHandlerInterface
                 ->loadValueCallback(static function (Media $object, IFormField $field): void {
                     $field->value($object->isMultilingual);
                 });
-            $fields[] = SingleSelectionFormField::create('languageID')
+            $fields[] = SelectFormField::create('languageID')
                 ->label('wcf.media.languageID')
                 ->options($languages, labelLanguageItems: false)
-                ->value(WCF::getLanguage()->languageID)
-                ->saveValueCallback(static function (MediaBuilder $builder, SingleSelectionFormField $field): void {
+                ->defaultValue(WCF::getLanguage()->languageID)
+                ->saveValueCallback(static function (MediaBuilder $builder, SelectFormField $field): void {
                     $builder->setLanguageID((int)$field->getSaveValue());
                 })
                 ->loadValueCallback(static function (Media $object, IFormField $field): void {

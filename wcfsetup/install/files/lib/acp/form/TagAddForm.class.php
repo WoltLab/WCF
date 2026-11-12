@@ -11,7 +11,7 @@ use wcf\data\tag\TagList;
 use wcf\form\AbstractDatabaseObjectBuilderForm;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\IFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\tag\TagFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -119,7 +119,7 @@ class TagAddForm extends AbstractDatabaseObjectBuilderForm
                                 }
                             })
                         ),
-                    SingleSelectionFormField::create('languageID')
+                    SelectFormField::create('languageID')
                         ->label('wcf.acp.tag.languageID')
                         ->available($contentLanguages !== [])
                         ->options($contentLanguages)

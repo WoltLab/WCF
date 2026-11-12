@@ -20,7 +20,7 @@ use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\ObjectFilterFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\trophy\TrophyBadgeFormField;
 use wcf\system\object\filter\builder\TrophyObjectFilterBuilder;
@@ -126,11 +126,11 @@ class TrophyAddForm extends AbstractDatabaseObjectBuilderForm
                         ->loadValueCallback(static function (Trophy $object, IFormField $field): void {
                             $field->value($object->trophyUseHtml);
                         }),
-                    SingleSelectionFormField::create('categoryID')
+                    SelectFormField::create('categoryID')
                         ->label('wcf.global.category')
                         ->options($this->getCategories(), labelLanguageItems: false)
                         ->required()
-                        ->saveValueCallback(static function (TrophyBuilder $builder, SingleSelectionFormField $field): void {
+                        ->saveValueCallback(static function (TrophyBuilder $builder, SelectFormField $field): void {
                             $builder->setCategoryID((int)$field->getSaveValue());
                         })
                         ->loadValueCallback(static function (Trophy $object, IFormField $field): void {

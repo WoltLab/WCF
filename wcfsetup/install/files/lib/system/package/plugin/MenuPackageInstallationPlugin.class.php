@@ -20,7 +20,7 @@ use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\MultipleSelectionFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -370,9 +370,10 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
                 ->label('wcf.acp.pip.menu.createBox')
                 ->description('wcf.acp.pip.menu.createBox.description'),
 
-            SingleSelectionFormField::create('boxPosition')
+            SelectFormField::create('boxPosition')
                 ->label('wcf.acp.pip.menu.boxPosition')
                 ->description('wcf.acp.pip.menu.boxPosition.description')
+                ->required()
                 ->options(\array_combine(Box::$availablePositions, Box::$availablePositions))
                 ->addDependency(
                     ValueFormFieldDependency::create('identifier')

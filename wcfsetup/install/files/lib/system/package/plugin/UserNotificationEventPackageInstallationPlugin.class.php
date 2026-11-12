@@ -14,7 +14,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -227,7 +227,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
                     }
                 })),
 
-            SingleSelectionFormField::create('objectType')
+            SelectFormField::create('objectType')
                 ->objectProperty('objecttype')
                 ->label('wcf.acp.pip.userNotificationEvent.objectType')
                 ->description('wcf.acp.pip.userNotificationEvent.objectType.description')
@@ -243,7 +243,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
                     return $options;
                 })
                 // validate the uniqueness of the `name` field after knowing that the selected object type is valid
-                ->addValidator(new FormFieldValidator('nameUniqueness', function (SingleSelectionFormField $formField) {
+                ->addValidator(new FormFieldValidator('nameUniqueness', function (SelectFormField $formField) {
                     $nameField = $formField->getDocument()->getFormField('eventName');
 
                     if (
@@ -306,13 +306,11 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
                     \array_keys($this->installation->getPackage()->getAllRequiredPackages())
                 )),
 
-            SingleSelectionFormField::create('presetMailNotificationType')
+            SelectFormField::create('presetMailNotificationType')
                 ->objectProperty('presetmailnotificationtype')
                 ->label('wcf.acp.pip.userNotificationEvent.presetMailNotificationType')
                 ->description('wcf.acp.pip.userNotificationEvent.presetMailNotificationType.description')
-                ->nullable()
                 ->options([
-                    '' => 'wcf.user.notification.mailNotificationType.none',
                     'daily' => 'wcf.user.notification.mailNotificationType.daily',
                     'instant' => 'wcf.user.notification.mailNotificationType.instant',
                 ]),

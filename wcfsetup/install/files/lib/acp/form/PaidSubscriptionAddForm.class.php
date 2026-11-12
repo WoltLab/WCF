@@ -19,8 +19,8 @@ use wcf\system\form\builder\field\FloatFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\MultipleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -193,7 +193,7 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
                                     }
 
                                     $currency = $field->getDocument()->getNodeById('currency');
-                                    \assert($currency instanceof SingleSelectionFormField);
+                                    \assert($currency instanceof SelectFormField);
 
                                     $builder->setPrice((float)$field->getSaveValue(), $currency->getSaveValue());
                                 })
@@ -202,7 +202,7 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
                                 })
                         )
                         ->suffixField(
-                            SingleSelectionFormField::create('currency')
+                            SelectFormField::create('currency')
                                 ->required()
                                 ->options(\array_combine($availableCurrencies, $availableCurrencies), labelLanguageItems: false)
                                 ->value(\in_array('USD', $availableCurrencies, true) ? 'USD' : \reset($availableCurrencies))
@@ -229,7 +229,7 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
                                 $length = $document->getNodeById('subscriptionLength');
                                 \assert($length instanceof IntegerFormField);
                                 $unit = $document->getNodeById('subscriptionLengthUnit');
-                                \assert($unit instanceof SingleSelectionFormField);
+                                \assert($unit instanceof SelectFormField);
                                 $isRecurring = $document->getNodeById('isRecurring');
                                 \assert($isRecurring instanceof BooleanFormField);
 
@@ -259,7 +259,7 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
                                     'maximumLength',
                                     static function (IntegerFormField $field): void {
                                         $unit = $field->getDocument()->getNodeById('subscriptionLengthUnit');
-                                        \assert($unit instanceof SingleSelectionFormField);
+                                        \assert($unit instanceof SelectFormField);
 
                                         $maximumLength = self::MAXIMUM_LENGTH[(string)$unit->getValue()] ?? null;
                                         if ($maximumLength !== null && $field->getValue() > $maximumLength) {
@@ -277,7 +277,7 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
                                 })
                         )
                         ->suffixField(
-                            SingleSelectionFormField::create('subscriptionLengthUnit')
+                            SelectFormField::create('subscriptionLengthUnit')
                                 ->required()
                                 ->options([
                                     'D' => 'wcf.acp.paidSubscription.subscriptionLengthUnit.D',

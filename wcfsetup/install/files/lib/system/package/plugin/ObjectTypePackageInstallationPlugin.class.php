@@ -27,7 +27,7 @@ use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -264,7 +264,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         $dataContainer = $form->getNodeById('data');
 
         $dataContainer->appendChildren([
-            SingleSelectionFormField::create('definitionID')
+            SelectFormField::create('definitionID')
                 ->label('wcf.acp.pip.objectType.definitionName')
                 ->description('<!-- will be replaced by JavaScript -->')
                 ->options($this->definitionNames)
@@ -347,18 +347,12 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         // com.woltlab.wcf.adLocation
         $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.adLocation')
             ->appendChildren([
-                SingleSelectionFormField::create('adLocationPage')
+                SelectFormField::create('adLocationPage')
                     ->objectProperty('page')
                     ->label('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.page')
                     ->description('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.page.description')
                     ->options(static function () {
-                        $options = [
-                            [
-                                'depth' => 0,
-                                'label' => 'wcf.global.noSelection',
-                                'value' => '',
-                            ],
-                        ];
+                        $options = [];
 
                         $pageNodeTree = new PageNodeTree();
 
