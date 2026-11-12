@@ -244,7 +244,9 @@ class ItemListFormField extends AbstractFormField implements
     #[\Override]
     public function validate()
     {
-        if (\is_array($this->getValue())) {
+        if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === [])) {
+            $this->addValidationError(new FormFieldValidationError('empty'));
+        } elseif (\is_array($this->getValue())) {
             if ($this->getMinimumMultiples() > 0 && \count($this->getValue()) < $this->getMinimumMultiples()) {
                 $this->addValidationError(new FormFieldValidationError(
                     'minimumMultiples',
@@ -303,7 +305,7 @@ class ItemListFormField extends AbstractFormField implements
 
             if ($invalidItems !== []) {
                 $separator = '';
-                switch ($this->getSaveValue()) {
+                switch ($this->getSaveValueType()) {
                     case self::SAVE_VALUE_TYPE_CSV:
                         $separator = ',';
                         break;
@@ -326,8 +328,6 @@ class ItemListFormField extends AbstractFormField implements
                     ]
                 ));
             }
-        } elseif ($this->isRequired()) {
-            $this->addValidationError(new FormFieldValidationError('empty'));
         }
 
         parent::validate();
