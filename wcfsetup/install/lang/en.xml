@@ -578,8 +578,8 @@
 		<item name="wcf.acp.devtools.project.instruction.script.error.missingFile"><![CDATA[The entered script file could not be found at any of the following locations: {implode from=$checkedFileLocations item=checkedFileLocation}<kbd>{$checkedFileLocation}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.script.error.noPhpFile"><![CDATA[The entered file is no PHP file ending with <kbd>.php</kbd>.]]></item>
 		<item name="wcf.acp.devtools.project.instructions.error.missingInstructions"><![CDATA[No instructions were added.]]></item>
-		<item name="wcf.acp.devtools.project.instructions.edit"><![CDATA[Edit instructions]]></item>
-		<item name="wcf.acp.devtools.project.instruction.edit"><![CDATA[Edit instruction]]></item>
+		<item name="wcf.acp.devtools.project.instructions.edit"><![CDATA[Edit Instructions]]></item>
+		<item name="wcf.acp.devtools.project.instruction.edit"><![CDATA[Edit Instruction]]></item>
 		<item name="wcf.acp.devtools.project.instruction.language.error.missingFiles"><![CDATA[The directory <kbd>{$directory}</kbd> contains no XML files.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.error.noXmlFile"><![CDATA[The entered file is no XML file.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.delete.confirmMessages"><![CDATA[Do you really want to delete this instruction?]]></item>
@@ -1909,7 +1909,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.update.newVersion"><![CDATA[{$currentVersion} → <span class="packageUpdateNewVersion">{$newVersion}</span>]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
-		<item name="wcf.acp.package.upload"><![CDATA[Upload package]]></item>
+		<item name="wcf.acp.package.upload"><![CDATA[Upload Package]]></item>
 		<item name="wcf.acp.package.optionalPackages"><![CDATA[Optional packages]]></item>
 		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[The following optional packages are available for installation:]]></item>
 		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[No packages matched your criteria.]]></item>
@@ -2019,7 +2019,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.package.quickInstallation.code.error.invalid"><![CDATA[The provided StoreCode is invalid.]]></item>
 		<item name="wcf.acp.package.quickInstallation.code.description"><![CDATA[Paste the StoreCode from the official Plugin-Store from your clipboard to start the installation.]]></item>
 		<item name="wcf.acp.package.pluginStore.file"><![CDATA[WoltLab® Plugin-Store]]></item>
-		<item name="wcf.acp.package.pluginStore.file.link"><![CDATA[Show listing in the Plugin-Store]]></item>
+		<item name="wcf.acp.package.pluginStore.file.link"><![CDATA[Show Listing in the Plugin-Store]]></item>
 	</category>
 	<category name="wcf.acp.paidSubscription">
 		<item name="wcf.acp.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>
@@ -2839,7 +2839,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.colors.primaryBackgroundColor"><![CDATA[Background Color (primary)]]></item>
 		<item name="wcf.acp.style.colors.primaryBorderColor"><![CDATA[Border Color (primary)]]></item>
 		<item name="wcf.acp.style.colors.primaryColor"><![CDATA[Font Color (primary)]]></item>
-		<item name="wcf.acp.style.colors.restoreAuthored"><![CDATA[Restore the original color]]></item>
+		<item name="wcf.acp.style.colors.restoreAuthored"><![CDATA[Restore the Original Color]]></item>
 		<item name="wcf.acp.style.colors.selectCategoryByClick"><![CDATA[Category Direct Selection]]></item>
 		<item name="wcf.acp.style.colors.tabular"><![CDATA[Tabular Lists]]></item>
 		<item name="wcf.acp.style.colors.toggleColorPalette"><![CDATA[Toggle View]]></item>
@@ -4231,7 +4231,7 @@ Attachments:
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
 		<item name="wcf.menu.page"><![CDATA[Menu]]></item>
-		<item name="wcf.menu.page.button.toggle"><![CDATA[More {$title} pages]]></item>
+		<item name="wcf.menu.page.button.toggle"><![CDATA[More {$title} Pages]]></item>
 		<item name="wcf.menu.page.location"><![CDATA[Current Location]]></item>
 		<item name="wcf.menu.page.navigation"><![CDATA[Navigation]]></item>
 		<item name="wcf.menu.page.options"><![CDATA[Options]]></item>
@@ -4574,7 +4574,7 @@ Attachments:
 		<item name="wcf.style.colorPicker.button.apply"><![CDATA[Apply]]></item>
 		<item name="wcf.style.colorPicker.hexAlpha"><![CDATA[Hex Value with Alpha Channel]]></item>
 		<item name="wcf.style.colorPicker.color"><![CDATA[Color]]></item>
-		<item name="wcf.style.colorPicker.button.changeColor"><![CDATA[Change color]]></item>
+		<item name="wcf.style.colorPicker.button.changeColor"><![CDATA[Change Color]]></item>
 		<item name="wcf.style.colorPicker.error.invalidColor"><![CDATA[The entered color is invalid.]]></item>
 		<item name="wcf.style.colorPicker.hue"><![CDATA[Hue]]></item>
 		<item name="wcf.style.colorPicker.saturation"><![CDATA[Saturation]]></item>
@@ -4974,7 +4974,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone App]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<small>Generate one time codes with an app on your smartphone.</small>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Manage Smartphone App]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.link"><![CDATA[Begin setup]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.link"><![CDATA[Begin Setup]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[Protect your account by requiring authentication with a second factor for every login.]]></item>
 		<item name="wcf.user.security.multifactor.disable"><![CDATA[Disable]]></item>
 		<item name="wcf.user.security.multifactor.disable.confirm"><![CDATA[{if $remaining|empty}Completely Disable Multi-factor Authentication{else}Disable <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong>{/if}]]></item>
