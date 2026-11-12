@@ -84,7 +84,8 @@
     set type(type: Type) {
       this.setAttribute("type", type);
 
-      if (this.#iconElement === undefined) {
+      // The type is applied once the element is connected.
+      if (this.#contentWrapper === undefined) {
         return;
       }
 
