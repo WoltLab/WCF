@@ -82,32 +82,38 @@ final class FileDownloadAction implements RequestHandlerInterface
             default => ContentDisposition::Attachment,
         };
 
-        [$startByte, $endByte] = $this->parseRangeHeader($request, $file->fileSize);
+        $eTag = \sprintf(
+            '"%d-%s"',
+            $file->fileID,
+            \substr($file->fileHash, 0, 8),
+        );
 
-        // check if the range is valid
-        if (
-            $file->fileSize > 0
-            && (
-                $startByte < 0
-                || $startByte >= $file->fileSize
-                || $endByte < $startByte
-            )
-        ) {
-            return $response
-                ->withStatus(416)
-                ->withHeader('accept-ranges', 'bytes')
-                ->withHeader('content-range', "bytes */{$file->fileSize}");
+        $range = $this->parseRangeHeader($request, $file->fileSize);
+
+        // A failed `If-Range` requests the full file. Dates never match, because
+        // there is no `last-modified` header to compare them with.
+        if ($range !== null && $request->hasHeader('if-range') && $request->getHeaderLine('if-range') !== $eTag) {
+            $range = null;
+        }
+
+        if ($range === false) {
+            return new EmptyResponse(416, [
+                'accept-ranges' => 'bytes',
+                'content-range' => "bytes */{$file->fileSize}",
+                'x-robots-tag' => 'noindex',
+            ]);
         }
 
         // Media players and download managers request the remaining parts of
         // a file through additional range requests, which must not be counted
         // as separate downloads.
-        if ($startByte === 0) {
+        if ($range === null || $range[0] === 0) {
             $processor->trackDownload($file);
             EventHandler::getInstance()->fire(new DownloadStarting($file));
         }
 
-        if ($startByte > 0 || $endByte < $file->fileSize - 1) {
+        if ($range !== null) {
+            [$startByte, $endByte] = $range;
             $response = $response
                 ->withStatus(206)
                 ->withHeader('content-range', \sprintf('bytes %d-%d/%d', $startByte, $endByte, $file->fileSize))
@@ -142,12 +148,6 @@ final class FileDownloadAction implements RequestHandlerInterface
                 ->withHeader('cache-control', $maxAge);
         }
 
-        $eTag = \sprintf(
-            '"%d-%s"',
-            $file->fileID,
-            \substr($file->fileHash, 0, 8),
-        );
-
         $httpIfNoneMatch = \array_map(
             static fn($tag) => \preg_replace('~^W/~', '', $tag),
             Header::splitList($request->getHeaderLine('if-none-match'))
@@ -175,40 +175,46 @@ final class FileDownloadAction implements RequestHandlerInterface
     }
 
     /**
-     * @return array{0: ?int, 1: ?int}
+     * Returns the first and last byte of the requested range, `null` if the full
+     * file is to be sent, or `false` if the range cannot be satisfied.
+     *
+     * Headers that request other units, multiple ranges or are malformed are
+     * ignored, as permitted by RFC 9110, Section 14.2.
+     *
+     * @return array{0: int, 1: int}|false|null
      */
-    private function parseRangeHeader(ServerRequestInterface $request, int $fileSize): array
+    private function parseRangeHeader(ServerRequestInterface $request, int $fileSize): array|false|null
     {
-        $startByte = 0;
-        $endByte = $fileSize - 1;
-
-        if ($request->hasHeader('range')) {
-            $regex = new Regex('^bytes=(?:(\d+)-(\d+)?|-(\d+))$');
-            if ($regex->match($request->getHeaderLine('range')) !== 0) {
-                $matches = $regex->getMatches();
-                $start = (isset($matches[1]) && $matches[1] !== '' ? \intval($matches[1]) : null);
-                $end = (isset($matches[2]) && $matches[2] !== '' ? \intval($matches[2]) : null);
-                $last = (isset($matches[3]) && $matches[3] !== '' ? \intval($matches[3]) : null);
-
-                if ($start !== null) {
-                    $startByte = $start;
-                }
-
-                if ($end !== null) {
-                    if ($end <= ($fileSize - 1)) {
-                        $endByte = $end;
-                    }
-                }
-
-                if ($start === null && $end === null && $last !== null) {
-                    if ($last <= $fileSize) {
-                        // negative value; subtract from filesize
-                        $startByte = $fileSize - $last;
-                    }
-                }
-            }
+        // An empty file has no bytes that a range could address.
+        if (!$request->hasHeader('range') || $fileSize === 0) {
+            return null;
         }
 
-        return [$startByte, $endByte];
+        $regex = new Regex('^bytes=(?:(\d+)-(\d*)|-(\d+))$', Regex::CASE_INSENSITIVE);
+        if ($regex->match($request->getHeaderLine('range')) === 0) {
+            return null;
+        }
+
+        $matches = $regex->getMatches();
+        if (isset($matches[3])) {
+            $suffixLength = (int)$matches[3];
+            if ($suffixLength === 0) {
+                return false;
+            }
+
+            return [\max(0, $fileSize - $suffixLength), $fileSize - 1];
+        }
+
+        $firstByte = (int)$matches[1];
+        $lastByte = $matches[2] === '' ? null : (int)$matches[2];
+        if ($lastByte !== null && $lastByte < $firstByte) {
+            return null;
+        }
+
+        if ($firstByte >= $fileSize) {
+            return false;
+        }
+
+        return [$firstByte, \min($lastByte ?? $fileSize - 1, $fileSize - 1)];
     }
 }
