@@ -40,6 +40,8 @@ export type WoltlabCoreDialogControlOptions = {
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class WoltlabCoreDialogElement extends HTMLElement {
   readonly #content: HTMLElement;
+  readonly #contentMutationObserver: MutationObserver;
+  readonly #contentResizeObserver: ResizeObserver;
   readonly #dialog: HTMLDialogElement;
   #form?: HTMLFormElement;
   readonly #title: HTMLElement;
@@ -50,6 +52,17 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     this.#content = document.createElement("div");
     this.#dialog = document.createElement("dialog");
     this.#title = document.createElement("div");
+
+    this.#contentResizeObserver = new ResizeObserver(() => {
+      this.#updateContentFocusability();
+    });
+    this.#contentMutationObserver = new MutationObserver((records) => {
+      if (records.some((record) => record.type === "childList" && record.target === this.#content)) {
+        this.#observeContentSize();
+      }
+
+      this.#updateContentFocusability();
+    });
   }
 
   show(title: string): void {
@@ -80,6 +93,44 @@ export class WoltlabCoreDialogElement extends HTMLElement {
     if (focusCandidates.length > 0) {
       focusCandidates[0].focus();
     }
+
+    // Elements can become focusable without changing their size.
+    this.#contentMutationObserver.observe(this.#content, {
+      attributeFilter: ["contenteditable", "disabled", "href", "inert", "tabindex"],
+      childList: true,
+      subtree: true,
+    });
+    this.#observeContentSize();
+    this.#updateContentFocusability();
+  }
+
+  /**
+   * Watches the size of the content and of its children, which decides
+   * whether the content scrolls.
+   */
+  #observeContentSize(): void {
+    this.#contentResizeObserver.disconnect();
+    this.#contentResizeObserver.observe(this.#content);
+    for (const child of this.#content.children) {
+      this.#contentResizeObserver.observe(child);
+    }
+  }
+
+  /**
+   * Makes scrolling content without focusable elements reachable with the
+   * keyboard, so that it can be scrolled with the arrow keys. Chrome and
+   * Firefox do this on their own, Safari does not (WebKit bug 277290).
+   */
+  #updateContentFocusability(): void {
+    const isScrollable = this.#content.scrollHeight > this.#content.clientHeight;
+    if (isScrollable && tabbable(this.#content).length === 0) {
+      // Writing an unchanged value would still notify the mutation observer.
+      if (this.#content.getAttribute("tabindex") !== "0") {
+        this.#content.tabIndex = 0;
+      }
+    } else {
+      this.#content.removeAttribute("tabindex");
+    }
   }
 
   close(): void {
@@ -95,6 +146,11 @@ export class WoltlabCoreDialogElement extends HTMLElement {
 
     const event = new CustomEvent("afterClose");
     this.dispatchEvent(event);
+
+    this.#contentMutationObserver.disconnect();
+    this.#contentResizeObserver.disconnect();
+    // `show()` picks the initial focus before it reevaluates the content.
+    this.#content.removeAttribute("tabindex");
 
     releasePageOverlayContainer(this.#dialog);
     scrollEnable();
