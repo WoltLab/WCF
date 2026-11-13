@@ -15,6 +15,7 @@ import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 import type WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-core-dialog";
 import { normalizePastedFilename } from "../Ckeditor/Filename";
 import { editMedia, setupMediaUpload } from "./Upload";
+import { setupDropZone as setupFileDropZone } from "../File/DropZone";
 
 export type MediaManagerMode = "editor" | "select";
 
@@ -337,58 +338,18 @@ function setupPaste(dialog: WoltlabCoreDialogElement, uploadButton: WoltlabCoreF
 
 function setupDropZone(dialog: WoltlabCoreDialogElement, uploadButton: WoltlabCoreFileUploadElement): void {
   const dropZone = document.createElement("div");
-  dropZone.classList.add("mediaManager__dropZone");
+  dropZone.classList.add("fileDropZone", "mediaManager__dropZone");
   dropZone.innerHTML = `
-    <fa-icon name="upload"></fa-icon>
+    <fa-icon name="cloud-arrow-up"></fa-icon>
     <span>
-      ${getPhrase("wcf.media.manager.dropZone")}
-      <button type="button" class="mediaManager__dropZone__select">${getPhrase("wcf.media.manager.dropZone.select")}</button>
+      ${getPhrase("wcf.upload.dropZone")}
+      <button type="button" class="fileDropZone__select">${getPhrase("wcf.upload.dropZone.select")}</button>
     </span>
   `;
-  dropZone.querySelector("button")!.addEventListener("click", () => {
-    uploadButton.click();
-  });
   dialog.content.querySelector(".listView__itemContainer")!.before(dropZone);
 
   // The whole content area accepts the files while dragging them over the dialog.
-  const content = dialog.content;
-  const hasFiles = (event: DragEvent) => event.dataTransfer?.types.includes("Files") === true;
-  let dragCounter = 0;
-
-  content.addEventListener("dragenter", (event) => {
-    if (!hasFiles(event)) {
-      return;
-    }
-
-    event.preventDefault();
-    dragCounter++;
-    content.classList.add("mediaManager--dragOver");
-  });
-  content.addEventListener("dragover", (event) => {
-    if (hasFiles(event)) {
-      event.preventDefault();
-    }
-  });
-  content.addEventListener("dragleave", () => {
-    dragCounter = Math.max(0, dragCounter - 1);
-    if (dragCounter === 0) {
-      content.classList.remove("mediaManager--dragOver");
-    }
-  });
-  content.addEventListener("drop", (event) => {
-    if (!hasFiles(event)) {
-      return;
-    }
-
-    event.preventDefault();
-    dragCounter = 0;
-    content.classList.remove("mediaManager--dragOver");
-
-    const files = Array.from(event.dataTransfer!.files);
-    if (files.length > 0) {
-      uploadButton.uploadFiles(files);
-    }
-  });
+  setupFileDropZone(dropZone, dialog.content, uploadButton);
 }
 
 /**

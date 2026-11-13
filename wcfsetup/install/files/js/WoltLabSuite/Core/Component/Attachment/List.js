@@ -1,4 +1,4 @@
-define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Message/MessageTabMenu", "sortablejs", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Api/PostObject", "WoltLabSuite/Core/Core", "../Ckeditor", "../File/Helper"], function (require, exports, tslib_1, Entry_1, Event_1, MessageTabMenu_1, sortablejs_1, PromiseMutex_1, PostObject_1, Core_1, Ckeditor_1, Helper_1) {
+define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Message/MessageTabMenu", "sortablejs", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Api/PostObject", "WoltLabSuite/Core/Core", "../Ckeditor", "../File/Helper", "../File/DropZone"], function (require, exports, tslib_1, Entry_1, Event_1, MessageTabMenu_1, sortablejs_1, PromiseMutex_1, PostObject_1, Core_1, Ckeditor_1, Helper_1, DropZone_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -24,11 +24,20 @@ define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Messa
                 },
             });
         }
+        const dropZone = container.querySelector(".fileDropZone");
+        if (dropZone !== null) {
+            (0, DropZone_1.setupDropZone)(dropZone, container, uploadButton);
+        }
         let fileList = container.querySelector(".fileList");
         if (fileList === null) {
             fileList = document.createElement("ol");
             fileList.classList.add("fileList");
-            uploadButton.insertAdjacentElement("afterend", fileList);
+            if (dropZone !== null) {
+                dropZone.before(fileList);
+            }
+            else {
+                uploadButton.insertAdjacentElement("afterend", fileList);
+            }
         }
         new sortablejs_1.default(fileList, {
             direction: "vertical",

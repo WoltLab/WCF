@@ -71,40 +71,10 @@
 }
 
 /* Drop zone */
-.mediaManager__dropZone {
-	align-items: center;
-	border: 1.5px dashed var(--wcfContentBorderInner);
-	border-radius: 10px;
-	color: var(--wcfContentDimmedText);
-	display: flex;
-	gap: 8px;
-	justify-content: center;
+.fileDropZone.mediaManager__dropZone {
+	flex-direction: row;
 	margin-bottom: 16px;
 	padding: 14px;
-	text-align: center;
-	transition:
-		background-color 0.12s linear,
-		border-color 0.12s linear;
-}
-
-.mediaManager__dropZone:hover,
-.mediaManager--dragOver .mediaManager__dropZone {
-	background-color: color-mix(in srgb, var(--wcfContentLink) 8%, transparent);
-	border-color: var(--wcfContentLink);
-}
-
-.mediaManager--dragOver {
-	background-color: color-mix(in srgb, var(--wcfContentLink) 4%, transparent);
-}
-
-.mediaManager__dropZone__select {
-	color: var(--wcfContentLink);
-	text-decoration: underline;
-	text-underline-offset: 3px;
-
-	&:hover {
-		color: var(--wcfContentLinkActive);
-	}
 }
 
 /* Grid */

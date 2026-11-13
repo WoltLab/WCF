@@ -17,6 +17,12 @@
 	margin-top: 20px;
 }
 
+/* The file list is placed above the drop zone. */
+.fileList:not(:empty):has(+ .fileDropZone) {
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+
 .fileList__item {
 	border: 1px solid var(--wcfContentBorderInner);
 	border-radius: var(--wcfBorderRadius);
@@ -127,6 +133,54 @@ woltlab-core-file img {
 
 .woltlabCoreFileUpload__input::-webkit-file-upload-button {
 	cursor: pointer;
+}
+
+/* Drop zone */
+.fileDropZone {
+	align-items: center;
+	border: 1.5px dashed var(--wcfContentBorderInner);
+	border-radius: 10px;
+	color: var(--wcfContentDimmedText);
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	justify-content: center;
+	padding: 20px;
+	text-align: center;
+	transition:
+		background-color 0.12s linear,
+		border-color 0.12s linear;
+}
+
+.fileDropZone:hover,
+.fileDropZone--dragOver .fileDropZone {
+	background-color: color-mix(in srgb, var(--wcfContentLink) 8%, transparent);
+	border-color: var(--wcfContentLink);
+}
+
+.fileDropZone--dragOver {
+	background-color: color-mix(in srgb, var(--wcfContentLink) 4%, transparent);
+}
+
+.fileDropZone__select {
+	color: var(--wcfContentLink);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+
+	&:hover {
+		color: var(--wcfContentLinkActive);
+	}
+}
+
+.fileDropZone__limits {
+	@include wcfFontSmall;
+}
+
+/* The drop zone replaces the visible upload button, the element itself is still
+   used to open the file picker and to report upload errors. */
+.fileDropZone + woltlab-core-file-upload {
+	display: none;
 }
 
 @media (hover: hover) {

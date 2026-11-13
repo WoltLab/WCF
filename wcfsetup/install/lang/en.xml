@@ -4162,8 +4162,6 @@ Attachments:
 		<item name="wcf.media.isMultilingual"><![CDATA[Enable Multilingualism]]></item>
 		<item name="wcf.media.languageID"><![CDATA[Language]]></item>
 		<item name="wcf.media.manager"><![CDATA[Manage Media]]></item>
-		<item name="wcf.media.manager.dropZone"><![CDATA[Drag files here or]]></item>
-		<item name="wcf.media.manager.dropZone.select"><![CDATA[select from device]]></item>
 		<item name="wcf.media.manager.selection.multiple"><![CDATA[{#$count} files selected]]></item>
 		<item name="wcf.media.manager.selection.none"><![CDATA[No file selected]]></item>
 		<item name="wcf.media.media"><![CDATA[Media]]></item>
@@ -5515,6 +5513,8 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 	</category>
 	<category name="wcf.smiley"/>
 	<category name="wcf.upload">
+		<item name="wcf.upload.dropZone"><![CDATA[Drag files here or]]></item>
+		<item name="wcf.upload.dropZone.select"><![CDATA[select from device]]></item>
 		<item name="wcf.upload.crop.image"><![CDATA[Crop image]]></item>
 		<item name="wcf.upload.error.noImage"><![CDATA[The uploaded file is not an image.]]></item>
 		<item name="wcf.upload.error.reachedRemainingLimit"><![CDATA[You have selected too many files. You can only upload {#$maxFiles} more file{if $maxFiles != 1}s{/if}.]]></item>

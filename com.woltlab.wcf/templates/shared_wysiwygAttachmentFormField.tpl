@@ -1,17 +1,18 @@
 <div class="messageTabMenuContent" id="attachments_{$field->getPrefixedWysiwygId()}">
+	<div class="fileDropZone">
+		{icon size=32 name='cloud-arrow-up'}
+		<span>
+			{lang}wcf.upload.dropZone{/lang}
+			<button type="button" class="fileDropZone__select">{lang}wcf.upload.dropZone.select{/lang}</button>
+		</span>
+		<div class="fileDropZone__limits">{lang attachmentHandler=$field->getAttachmentHandler()}wcf.attachment.upload.limits{/lang}</div>
+	</div>
 	{unsafe:$field->getAttachmentHandler()->getHtmlElement()}
 
 	<div class="attachment__list__existingFiles">
 		{foreach from=$field->getAttachmentHandler()->getAttachmentList() item=attachment}
 			{unsafe:$attachment->toHtmlElement()}
 		{/foreach}
-	</div>
-
-	<div class="formField wide">
-		<div class="formField__input">
-			<div data-max-size="{$field->getAttachmentHandler()->getMaxSize()}"></div>
-		</div>
-		<div class="formField__description">{lang attachmentHandler=$field->getAttachmentHandler()}wcf.attachment.upload.limits{/lang}</div>
 	</div>
 
 	{foreach from=$field->getAttachmentHandler()->getTmpHashes() item=tmpHash}

@@ -7,7 +7,7 @@
  * @since 6.3
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Api/Media/GetMedia", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/StringUtil", "../Ckeditor/Filename", "./Upload"], function (require, exports, Dialog_1, GetMedia_1, Language_1, StringUtil_1, Filename_1, Upload_1) {
+define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Api/Media/GetMedia", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/StringUtil", "../Ckeditor/Filename", "./Upload", "../File/DropZone"], function (require, exports, Dialog_1, GetMedia_1, Language_1, StringUtil_1, Filename_1, Upload_1, DropZone_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.openMediaManager = openMediaManager;
@@ -263,53 +263,17 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuit
     }
     function setupDropZone(dialog, uploadButton) {
         const dropZone = document.createElement("div");
-        dropZone.classList.add("mediaManager__dropZone");
+        dropZone.classList.add("fileDropZone", "mediaManager__dropZone");
         dropZone.innerHTML = `
-    <fa-icon name="upload"></fa-icon>
+    <fa-icon name="cloud-arrow-up"></fa-icon>
     <span>
-      ${(0, Language_1.getPhrase)("wcf.media.manager.dropZone")}
-      <button type="button" class="mediaManager__dropZone__select">${(0, Language_1.getPhrase)("wcf.media.manager.dropZone.select")}</button>
+      ${(0, Language_1.getPhrase)("wcf.upload.dropZone")}
+      <button type="button" class="fileDropZone__select">${(0, Language_1.getPhrase)("wcf.upload.dropZone.select")}</button>
     </span>
   `;
-        dropZone.querySelector("button").addEventListener("click", () => {
-            uploadButton.click();
-        });
         dialog.content.querySelector(".listView__itemContainer").before(dropZone);
         // The whole content area accepts the files while dragging them over the dialog.
-        const content = dialog.content;
-        const hasFiles = (event) => event.dataTransfer?.types.includes("Files") === true;
-        let dragCounter = 0;
-        content.addEventListener("dragenter", (event) => {
-            if (!hasFiles(event)) {
-                return;
-            }
-            event.preventDefault();
-            dragCounter++;
-            content.classList.add("mediaManager--dragOver");
-        });
-        content.addEventListener("dragover", (event) => {
-            if (hasFiles(event)) {
-                event.preventDefault();
-            }
-        });
-        content.addEventListener("dragleave", () => {
-            dragCounter = Math.max(0, dragCounter - 1);
-            if (dragCounter === 0) {
-                content.classList.remove("mediaManager--dragOver");
-            }
-        });
-        content.addEventListener("drop", (event) => {
-            if (!hasFiles(event)) {
-                return;
-            }
-            event.preventDefault();
-            dragCounter = 0;
-            content.classList.remove("mediaManager--dragOver");
-            const files = Array.from(event.dataTransfer.files);
-            if (files.length > 0) {
-                uploadButton.uploadFiles(files);
-            }
-        });
+        (0, DropZone_1.setupDropZone)(dropZone, dialog.content, uploadButton);
     }
     /**
      * Opens the media manager and resolves with the media files that the user has

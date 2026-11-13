@@ -1,4 +1,12 @@
 <div class="messageTabMenuContent" id="attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
+	<div class="fileDropZone">
+		{icon size=32 name='cloud-arrow-up'}
+		<span>
+			{lang}wcf.upload.dropZone{/lang}
+			<button type="button" class="fileDropZone__select">{lang}wcf.upload.dropZone.select{/lang}</button>
+		</span>
+		<div class="fileDropZone__limits">{lang}wcf.attachment.upload.limits{/lang}</div>
+	</div>
 	{unsafe:$attachmentHandler->getHtmlElement()}
 
 	<div class="attachment__list__existingFiles">
@@ -6,14 +14,6 @@
 			{unsafe:$attachment->toHtmlElement()}
 		{/foreach}
 	</div>
-
-	<dl class="wide">
-		<dt></dt>
-		<dd>
-			<div data-max-size="{$attachmentHandler->getMaxSize()}"></div>
-			<small>{lang}wcf.attachment.upload.limits{/lang}</small>
-		</dd>
-	</dl>
 
 	<input type="hidden" name="tmpHash" value="{$tmpHash}">
 

@@ -10,8 +10,8 @@
 	{jsphrase name='wcf.media.insert.type.gallery'}
 	{jsphrase name='wcf.media.insert.type.separate'}
 	{jsphrase name='wcf.media.manager'}
-	{jsphrase name='wcf.media.manager.dropZone'}
-	{jsphrase name='wcf.media.manager.dropZone.select'}
+	{jsphrase name='wcf.upload.dropZone'}
+	{jsphrase name='wcf.upload.dropZone.select'}
 	{jsphrase name='wcf.media.manager.selection.none'}
 	{jsphrase name='wcf.media.button.select'}
 

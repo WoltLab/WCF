@@ -9,6 +9,7 @@ import { postObject } from "WoltLabSuite/Core/Api/PostObject";
 import { debounce } from "WoltLabSuite/Core/Core";
 import { getCkeditor } from "../Ckeditor";
 import { getUploaderToken } from "../File/Helper";
+import { setupDropZone } from "../File/DropZone";
 
 function fileToAttachment(
   fileList: HTMLElement,
@@ -45,11 +46,20 @@ export function setup(editorId: string): void {
     });
   }
 
+  const dropZone = container.querySelector<HTMLElement>(".fileDropZone");
+  if (dropZone !== null) {
+    setupDropZone(dropZone, container, uploadButton);
+  }
+
   let fileList = container.querySelector<HTMLElement>(".fileList");
   if (fileList === null) {
     fileList = document.createElement("ol");
     fileList.classList.add("fileList");
-    uploadButton.insertAdjacentElement("afterend", fileList);
+    if (dropZone !== null) {
+      dropZone.before(fileList);
+    } else {
+      uploadButton.insertAdjacentElement("afterend", fileList);
+    }
   }
 
   new Sortable(fileList, {
