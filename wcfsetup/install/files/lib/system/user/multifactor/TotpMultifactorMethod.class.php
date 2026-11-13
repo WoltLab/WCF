@@ -131,7 +131,9 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                     $button = ButtonFormField::create('device-delete-' . $row['deviceID'])
                         ->buttonLabel('wcf.global.button.delete')
                         ->objectProperty('delete')
-                        ->value($row['deviceID']);
+                        ->value($row['deviceID'])
+                        ->addFieldClass('jsTotpDeviceDelete')
+                        ->fieldAttribute('data-device-name', $row['deviceName']);
                     $device->appendChild($button);
                     $newDeviceContainer->addDependency(
                         IsNotClickedFormFieldDependency::create('device-delete-' . $row['deviceID'])

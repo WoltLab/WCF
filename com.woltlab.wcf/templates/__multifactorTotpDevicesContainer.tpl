@@ -41,4 +41,8 @@
 	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default'], function(DefaultContainerDependency) {
 		new DefaultContainerDependency('{unsafe:$container->getPrefixedId()|encodeJS}Container');
 	});
+
+	require(['WoltLabSuite/Core/Ui/User/Multifactor/Totp/DeleteDevice'], ({ setup }) => {
+		setup(document.getElementById('{unsafe:$container->getPrefixedId()|encodeJS}Container'));
+	});
 </script>
