@@ -1,7 +1,11 @@
 /**
- * Turns an element into a drop zone for a `<woltlab-core-file-upload>` element.
- * Files dropped anywhere on the `area` are passed to the upload element and
- * clicking the zone opens the file picker.
+ * Turns an element into a drop zone for a drop target, usually a
+ * `<woltlab-core-file-upload>` element. Files dropped anywhere on the `area`
+ * are passed to the target's `uploadFiles()` and clicking the zone calls its
+ * `click()` to open the file picker.
+ *
+ * A caller passes its own target when the files do not go to a single upload
+ * element, e.g. to route them to one of several upload elements.
  *
  * @author Marcel Werk
  * @copyright 2001-2026 WoltLab GmbH
@@ -15,9 +19,9 @@ define(["require", "exports"], function (require, exports) {
     function hasFiles(event) {
         return event.dataTransfer?.types.includes("Files") === true;
     }
-    function setupDropZone(zone, area, uploadButton) {
+    function setupDropZone(zone, area, target) {
         zone.addEventListener("click", () => {
-            uploadButton.click();
+            target.click();
         });
         let dragCounter = 0;
         const reset = () => {
@@ -54,7 +58,7 @@ define(["require", "exports"], function (require, exports) {
             reset();
             const files = Array.from(event.dataTransfer.files);
             if (files.length > 0) {
-                uploadButton.uploadFiles(files);
+                target.uploadFiles(files);
             }
         });
     }
