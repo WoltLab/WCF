@@ -75,6 +75,8 @@ export function setupMediaUpload(uploadButton: HTMLElement, callbacks: MediaUplo
         }
       })
       .catch(() => {
+        // Without an API error, the upload was either aborted or failed due to
+        // a connection error, which the global error handler reports already.
         if (file.apiError !== undefined) {
           showError(getErrorMessageFromFile(file));
         }

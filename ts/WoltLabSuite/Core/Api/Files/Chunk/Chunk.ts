@@ -16,24 +16,56 @@ export type ResponseCompleted = {
 
 export type Response = ResponseIncomplete | ResponseCompleted;
 
+/**
+ * Uploads a single chunk of a file.
+ *
+ * Aborting the request through `signal` rejects the returned promise with an
+ * `AbortError`. The server may still have stored the chunk, and when it was
+ * the last missing one, it may have created the file without the client ever
+ * learning about it. Do not abort the request of the final chunk, wait for it
+ * and delete the resulting file instead.
+ */
 export async function uploadChunk(
   identifier: string,
   sequenceNo: number,
   checksum: string,
   payload: Blob,
+  signal?: AbortSignal,
 ): Promise<ApiResult<Response>> {
   const url = new URL(`${window.WSC_RPC_API_URL}core/files/upload/${identifier}/chunk/${sequenceNo}`);
 
-  let response: Response;
-  try {
-    response = (await prepareRequest(url)
-      .post(payload)
-      .withHeader("chunk-checksum-sha256", checksum)
-      .disableLoadingIndicator()
-      .fetchAsJson()) as Response;
-  } catch (e) {
-    return apiResultFromError(e);
+  const request = prepareRequest(url)
+    .post(payload)
+    .withHeader("chunk-checksum-sha256", checksum)
+    .disableLoadingIndicator();
+
+  let onAbort: (() => void) | undefined;
+  if (signal !== undefined) {
+    const abortController = request.getAbortController();
+    if (signal.aborted) {
+      abortController.abort();
+    } else {
+      onAbort = () => abortController.abort();
+      signal.addEventListener("abort", onAbort, { once: true });
+    }
   }
 
-  return apiResultFromValue(response);
+  let response: Response | undefined;
+  try {
+    response = (await request.fetchAsJson()) as Response | undefined;
+  } catch (e) {
+    return apiResultFromError(e);
+  } finally {
+    // The signal outlives the request, it is shared by all chunks of a file.
+    if (onAbort !== undefined) {
+      signal?.removeEventListener("abort", onAbort);
+    }
+  }
+
+  if (response === undefined) {
+    // `fetchAsJson()` resolves without a value for aborted requests.
+    signal?.throwIfAborted();
+  }
+
+  return apiResultFromValue(response as Response);
 }

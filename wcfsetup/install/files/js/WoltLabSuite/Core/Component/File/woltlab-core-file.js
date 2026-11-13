@@ -27,6 +27,8 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
         #mimeType = undefined;
         #state = 0 /* State.Initial */;
         #apiError = undefined;
+        #sourceFile = undefined;
+        #abortController = new AbortController();
         #thumbnails = [];
         #readyReject;
         #readyResolve;
@@ -103,6 +105,9 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
                     break;
                 case 4 /* State.Failed */:
                     this.#replaceWithIcon("triangle-exclamation");
+                    break;
+                case 5 /* State.Aborted */:
+                    this.#replaceWithIcon("ban");
                     break;
                 default:
                     throw new Error("Unreachable", {
@@ -209,12 +214,27 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
                     return false;
             }
         }
+        /**
+         * The `apiError` is missing for failures without a response from the
+         * server, such as connection errors.
+         */
         uploadFailed(apiError) {
             if (this.#state !== 1 /* State.Uploading */) {
                 return;
             }
             this.#state = 4 /* State.Failed */;
             this.#apiError = apiError;
+            this.#rebuildElement();
+            this.#readyReject();
+        }
+        /**
+         * @internal
+         */
+        uploadAborted() {
+            if (this.#state !== 1 /* State.Uploading */ && this.#state !== 2 /* State.GeneratingThumbnails */) {
+                return;
+            }
+            this.#state = 5 /* State.Aborted */;
             this.#rebuildElement();
             this.#readyReject();
         }
@@ -248,6 +268,19 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
             this.#readyResolve();
         }
         /**
+         * The file exists, but its thumbnails could not be generated.
+         *
+         * @internal
+         */
+        thumbnailGenerationFailed() {
+            if (this.#state !== 2 /* State.GeneratingThumbnails */) {
+                return;
+            }
+            this.#state = 3 /* State.Ready */;
+            this.#rebuildElement();
+            this.#readyResolve();
+        }
+        /**
          * Updates the filename, file size and mime type. These can change for images
          * that are being converted to a different file format,
          *
@@ -259,8 +292,56 @@ define(["require", "exports", "WoltLabSuite/Core/FileUtil"], function (require, 
             this.#mimeType = mimeType;
             this.dispatchEvent(new CustomEvent("file:update-data"));
         }
+        /**
+         * Aborted uploads count as failed, because they did not result in a file.
+         */
         isFailedUpload() {
-            return this.#state === 4 /* State.Failed */;
+            return this.#state === 4 /* State.Failed */ || this.#state === 5 /* State.Aborted */;
+        }
+        /**
+         * @since 6.3
+         */
+        isAborted() {
+            return this.#state === 5 /* State.Aborted */;
+        }
+        /**
+         * Requests to stop the upload and to discard everything that has been
+         * uploaded so far. The `ready` promise is rejected without an `apiError`
+         * once the server has discarded the upload.
+         *
+         * There is no effect once `ready` has settled. An abort that comes too late
+         * to stop the final chunk deletes the file afterwards. If the file cannot
+         * be deleted, the upload completes regularly.
+         *
+         * @since 6.3
+         */
+        abort() {
+            if (this.#state !== 1 /* State.Uploading */ && this.#state !== 2 /* State.GeneratingThumbnails */) {
+                return;
+            }
+            this.#abortController.abort();
+        }
+        /**
+         * @internal
+         */
+        get abortSignal() {
+            return this.#abortController.signal;
+        }
+        /**
+         * The file that was handed over for upload, before any processing on the
+         * client, such as resizing or cropping, changed its name, size or type.
+         * Files that existed at page load have no source file.
+         *
+         * @since 6.3
+         */
+        get sourceFile() {
+            return this.#sourceFile;
+        }
+        /**
+         * @internal
+         */
+        setSourceFile(sourceFile) {
+            this.#sourceFile = sourceFile;
         }
         set thumbnail(thumbnail) {
             if (!this.#thumbnails.includes(thumbnail)) {

@@ -52,6 +52,8 @@ define(["require", "exports", "WoltLabSuite/Core/Component/File/Helper", "WoltLa
                 }
             })
                 .catch(() => {
+                // Without an API error, the upload was either aborted or failed due to
+                // a connection error, which the global error handler reports already.
                 if (file.apiError !== undefined) {
                     showError((0, Helper_1.getErrorMessageFromFile)(file));
                 }

@@ -55,11 +55,9 @@ export function removeUploadProgress(element: HTMLElement): void {
 
 export function getErrorMessageFromFile(file: WoltlabCoreFileElement): string {
   if (file.apiError === undefined) {
-    throw new Error("There is no recorded API error for this file.", {
-      cause: {
-        file,
-      },
-    });
+    // The upload failed without a response from the server, for example, due
+    // to a connection error.
+    return getPhrase("wcf.upload.error.uploadFailed");
   }
 
   let errorMessage: string;
@@ -88,6 +86,11 @@ export function getErrorMessageFromFile(file: WoltlabCoreFileElement): string {
 export function fileInitializationFailed(element: HTMLElement, file: WoltlabCoreFileElement, reason: unknown): void {
   if (reason instanceof Error) {
     throw reason;
+  }
+
+  if (file.isAborted()) {
+    element.remove();
+    return;
   }
 
   markElementAsErroneous(element, getErrorMessageFromFile(file));

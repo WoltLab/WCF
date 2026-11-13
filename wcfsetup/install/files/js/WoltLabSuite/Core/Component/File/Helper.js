@@ -47,11 +47,9 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
     }
     function getErrorMessageFromFile(file) {
         if (file.apiError === undefined) {
-            throw new Error("There is no recorded API error for this file.", {
-                cause: {
-                    file,
-                },
-            });
+            // The upload failed without a response from the server, for example, due
+            // to a connection error.
+            return (0, Language_1.getPhrase)("wcf.upload.error.uploadFailed");
         }
         let errorMessage;
         const validationError = file.apiError.getValidationError();
@@ -76,6 +74,10 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
     function fileInitializationFailed(element, file, reason) {
         if (reason instanceof Error) {
             throw reason;
+        }
+        if (file.isAborted()) {
+            element.remove();
+            return;
         }
         markElementAsErroneous(element, getErrorMessageFromFile(file));
     }

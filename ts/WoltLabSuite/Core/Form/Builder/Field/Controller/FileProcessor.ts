@@ -188,6 +188,11 @@ export class FileProcessor {
   }
 
   #markElementUploadHasFailed(element: WoltlabCoreFileElement, reason: unknown): void {
+    if (element.isAborted()) {
+      element.remove();
+      return;
+    }
+
     let errorMessage: string;
     if (reason instanceof Error) {
       errorMessage = reason.message;
