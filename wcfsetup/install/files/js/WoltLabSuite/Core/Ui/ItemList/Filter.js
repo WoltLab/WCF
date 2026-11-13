@@ -189,6 +189,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "WoltLabS
             }
             this._value = value;
             Util_1.default.innerError(this._container, hasVisibleItems ? false : (0, Language_1.getPhrase)("wcf.global.filter.error.noMatches"));
+            this._element.dispatchEvent(new CustomEvent("itemListFilter:change"));
         }
         /**
          * Toggles the visibility mode for marked items.
@@ -307,6 +308,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "WoltLabS
             else {
                 icon.setIcon("eye-slash");
             }
+            this._element.dispatchEvent(new CustomEvent("itemListFilter:change"));
         }
     }
     return UiItemListFilter;

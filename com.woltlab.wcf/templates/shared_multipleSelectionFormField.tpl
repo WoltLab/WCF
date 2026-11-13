@@ -1,15 +1,33 @@
-{if $field->isFilterable()}
+{if !$field->isImmutable() && $field->getOptions()|count > 1}
+	<div class="scrollableCheckboxList__selectAll">
+		<label>
+			<input type="checkbox" id="{$field->getPrefixedId()}_list_selectAll">
+			{lang}wcf.global.form.selectAll{/lang}
+		</label>
+	</div>
+{/if}
+
+{if $field->isFilterable() || (!$field->isImmutable() && $field->getOptions()|count > 1)}
 	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/ItemList/Filter'], (UiItemListFilter) => {
-			{jsphrase name='wcf.global.filter.button.visibility'}
-			{jsphrase name='wcf.global.filter.button.clear'}
-			{jsphrase name='wcf.global.filter.error.noMatches'}
-			{jsphrase name='wcf.global.filter.placeholder'}
-			{jsphrase name='wcf.global.filter.visibility.activeOnly'}
-			{jsphrase name='wcf.global.filter.visibility.highlightActive'}
-			{jsphrase name='wcf.global.filter.visibility.showAll'}
+		require([
+			'WoltLabSuite/Core/Ui/ItemList/Filter',
+			'WoltLabSuite/Core/Component/ScrollableCheckboxList/SelectAll',
+		], (UiItemListFilter, { setup }) => {
+			{if $field->isFilterable()}
+				{jsphrase name='wcf.global.filter.button.visibility'}
+				{jsphrase name='wcf.global.filter.button.clear'}
+				{jsphrase name='wcf.global.filter.error.noMatches'}
+				{jsphrase name='wcf.global.filter.placeholder'}
+				{jsphrase name='wcf.global.filter.visibility.activeOnly'}
+				{jsphrase name='wcf.global.filter.visibility.highlightActive'}
+				{jsphrase name='wcf.global.filter.visibility.showAll'}
+				
+				new UiItemListFilter('{unsafe:$field->getPrefixedId()|encodeJS}_list');
+			{/if}
 			
-			new UiItemListFilter('{unsafe:$field->getPrefixedId()|encodeJS}_list');
+			{if !$field->isImmutable() && $field->getOptions()|count > 1}
+				setup('{unsafe:$field->getPrefixedId()|encodeJS}_list');
+			{/if}
 		});
 	</script>
 {/if}

@@ -241,6 +241,8 @@ class UiItemListFilter {
     this._value = value;
 
     DomUtil.innerError(this._container, hasVisibleItems ? false : getPhrase("wcf.global.filter.error.noMatches"));
+
+    this._element.dispatchEvent(new CustomEvent("itemListFilter:change"));
   }
 
   /**
@@ -380,6 +382,8 @@ class UiItemListFilter {
     } else {
       icon.setIcon("eye-slash");
     }
+
+    this._element.dispatchEvent(new CustomEvent("itemListFilter:change"));
   }
 }
 
