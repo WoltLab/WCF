@@ -35,7 +35,8 @@ final class ReplaceWithWebpVariant
             $this->file,
             $pathnameWebp,
             $this->getNewFilename(),
-            false,
+            regenerateThumbnails: false,
+            visuallyIdentical: true,
         )();
 
         return $newFile;
