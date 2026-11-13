@@ -4,6 +4,8 @@
     readonly #icon: FaIcon;
     readonly #text: HTMLSpanElement;
     #pendingProcesses = 0;
+    #hasPipeline = false;
+    readonly #queuedFiles: File[][] = [];
 
     constructor() {
       super();
@@ -91,12 +93,40 @@
     }
 
     uploadFiles(files: File[]): void {
-      const event = new CustomEvent<{ files: File[] }>("upload:files", {
-        detail: {
-          files,
-        },
-      });
-      this.dispatchEvent(event);
+      if (this.#hasPipeline) {
+        this.#dispatchUploadFiles(files);
+        return;
+      }
+
+      // The upload pipeline is loaded on demand and starts listening for the
+      // files only after it has seen this element.
+      if (this.#queuedFiles.length === 0) {
+        this.markAsBusy();
+      }
+      this.#queuedFiles.push(files);
+    }
+
+    /**
+     * Invoked by the upload pipeline once it listens for `upload:files`.
+     *
+     * @internal
+     */
+    pipelineAttached(): void {
+      if (this.#hasPipeline) {
+        return;
+      }
+
+      this.#hasPipeline = true;
+
+      if (this.#queuedFiles.length === 0) {
+        return;
+      }
+
+      this.markAsReady();
+
+      for (const files of this.#queuedFiles.splice(0)) {
+        this.#dispatchUploadFiles(files);
+      }
     }
 
     markAsBusy(): void {
@@ -125,6 +155,15 @@
 
     set disabled(disabled: boolean) {
       this.#element.disabled = Boolean(disabled);
+    }
+
+    #dispatchUploadFiles(files: File[]): void {
+      const event = new CustomEvent<{ files: File[] }>("upload:files", {
+        detail: {
+          files,
+        },
+      });
+      this.dispatchEvent(event);
     }
 
     #updateButton(): void {

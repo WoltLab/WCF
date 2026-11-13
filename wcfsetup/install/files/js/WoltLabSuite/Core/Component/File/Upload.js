@@ -82,8 +82,20 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 throw e;
             }
             if (!response.ok) {
+                // The server deletes the temporary upload before it validates the
+                // complete file, a rejection leaves nothing behind to discard.
+                const isRejected = response.error.getValidationError()?.param === "validation";
                 if (signal.aborted) {
-                    await discardUpload(fileElement, identifier);
+                    if (isRejected) {
+                        fileElement.uploadAborted();
+                    }
+                    else {
+                        await discardUpload(fileElement, identifier);
+                    }
+                    return undefined;
+                }
+                if (isRejected) {
+                    fileElement.uploadFailed(response.error);
                     return undefined;
                 }
                 await discardFailedUpload(identifier);
@@ -312,6 +324,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
         }
         (0, Util_1.innerError)(element, message);
     }
+    function getProcessingErrorMessage(file, reason) {
+        if (reason instanceof Error) {
+            return reason.message;
+        }
+        else if (typeof reason === "string") {
+            return reason;
+        }
+        return (0, Language_1.getPhrase)("wcf.upload.error.damagedImageFile", { filename: file.name });
+    }
     async function getExifBytes(file) {
         if (file.type === "image/jpeg") {
             try {
@@ -388,17 +409,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                             validFilesToFiles.push(i);
                         }
                         else if (result.reason !== undefined) {
-                            let message;
-                            if (result.reason instanceof Error) {
-                                message = result.reason.message;
-                            }
-                            else if (typeof result.reason === "string") {
-                                message = result.reason;
-                            }
-                            else {
-                                message = (0, Language_1.getPhrase)("wcf.upload.error.damagedImageFile", { filename: files[i].name });
-                            }
-                            reportError(element, files[i], message);
+                            reportError(element, files[i], getProcessingErrorMessage(files[i], result.reason));
                         }
                     }
                     const checksums = await Promise.allSettled(validFiles.map((file) => getSha256Hash(file)));
@@ -441,8 +452,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                     .then((exif) => {
                     exifData = exif;
                 })
-                    .then(() => resizeImage(element, file))
+                    .then(() => resizeImage(element, file).catch((reason) => {
+                    reportError(element, file, getProcessingErrorMessage(file, reason));
+                    return undefined;
+                }))
                     .then(async (resizeFile) => {
+                    if (resizeFile === undefined) {
+                        promiseReject();
+                        return;
+                    }
                     try {
                         const checksum = await getSha256Hash(resizeFile);
                         const data = await upload(element, resizeFile, checksum, exifData, false, file);
@@ -467,6 +485,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                     throw e;
                 });
             });
+            element.pipelineAttached();
         });
     }
 });

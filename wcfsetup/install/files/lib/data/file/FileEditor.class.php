@@ -54,7 +54,12 @@ class FileEditor extends DatabaseObjectEditor
 
     public static function createFromTemporary(FileTemporary $fileTemporary): File
     {
-        return new CreateFileFromTemporary($fileTemporary)();
+        $file = new CreateFileFromTemporary($fileTemporary)();
+        if ($file === null) {
+            throw new \RuntimeException("The temporary file '{$fileTemporary->identifier}' is a damaged image.");
+        }
+
+        return $file;
     }
 
     /**

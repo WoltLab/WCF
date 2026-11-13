@@ -118,6 +118,10 @@ final class SaveChunk implements IController
             FileTemporaryBuilder::delete($fileTemporary);
             unset($fileTemporary);
 
+            if ($file === null) {
+                throw new UserInputException('validation', 'noImage');
+            }
+
             $processor = $file->getProcessor();
 
             if ($processor !== null) {

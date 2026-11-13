@@ -15,6 +15,9 @@ use wcf\util\ImageUtil;
 /**
  * Promotes a completely uploaded temporary file into a regular file.
  *
+ * Returns `null` for a file that has the MIME type of an image whose dimensions
+ * cannot be read, the temporary file is left untouched in this case.
+ *
  * @author      Alexander Ebert, Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -26,7 +29,7 @@ final class CreateFileFromTemporary
         private readonly FileTemporary $fileTemporary,
     ) {}
 
-    public function __invoke(): File
+    public function __invoke(): ?File
     {
         $pathname = $this->fileTemporary->getPathname();
         $mimeType = FileUtil::getMimeType($pathname);
@@ -34,7 +37,19 @@ final class CreateFileFromTemporary
 
         $width = $height = null;
         if ($isImage) {
-            [$width, $height] = \getimagesize($pathname);
+            try {
+                $imageData = \getimagesize($pathname);
+            } catch (\Throwable) {
+                $imageData = false;
+            }
+
+            // A damaged image must not be accepted as an image with unknown
+            // dimensions, it would be served statically as an image.
+            if ($imageData === false) {
+                return null;
+            }
+
+            [$width, $height] = $imageData;
         }
 
         $exifData = $this->fileTemporary->exifData;

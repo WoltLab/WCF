@@ -165,8 +165,22 @@ async function transferFile(
     }
 
     if (!response.ok) {
+      // The server deletes the temporary upload before it validates the
+      // complete file, a rejection leaves nothing behind to discard.
+      const isRejected = response.error.getValidationError()?.param === "validation";
+
       if (signal.aborted) {
-        await discardUpload(fileElement, identifier);
+        if (isRejected) {
+          fileElement.uploadAborted();
+        } else {
+          await discardUpload(fileElement, identifier);
+        }
+
+        return undefined;
+      }
+
+      if (isRejected) {
+        fileElement.uploadFailed(response.error);
         return undefined;
       }
 
@@ -456,6 +470,16 @@ function reportError(element: WoltlabCoreFileUploadElement, file: File | null, m
   innerError(element, message);
 }
 
+function getProcessingErrorMessage(file: File, reason: unknown): string {
+  if (reason instanceof Error) {
+    return reason.message;
+  } else if (typeof reason === "string") {
+    return reason;
+  }
+
+  return getPhrase("wcf.upload.error.damagedImageFile", { filename: file.name });
+}
+
 async function getExifBytes(file: File): Promise<Exif | null> {
   if (file.type === "image/jpeg") {
     try {
@@ -540,16 +564,7 @@ export function setup(): void {
               validFiles.push(result.value);
               validFilesToFiles.push(i);
             } else if (result.reason !== undefined) {
-              let message: string;
-              if (result.reason instanceof Error) {
-                message = result.reason.message;
-              } else if (typeof result.reason === "string") {
-                message = result.reason;
-              } else {
-                message = getPhrase("wcf.upload.error.damagedImageFile", { filename: files[i].name });
-              }
-
-              reportError(element, files[i], message);
+              reportError(element, files[i], getProcessingErrorMessage(files[i], result.reason));
             }
           }
 
@@ -610,8 +625,20 @@ export function setup(): void {
         .then((exif) => {
           exifData = exif;
         })
-        .then(() => resizeImage(element, file))
+        .then(() =>
+          resizeImage(element, file).catch((reason: unknown) => {
+            reportError(element, file, getProcessingErrorMessage(file, reason));
+
+            return undefined;
+          }),
+        )
         .then(async (resizeFile) => {
+          if (resizeFile === undefined) {
+            promiseReject();
+
+            return;
+          }
+
           try {
             const checksum = await getSha256Hash(resizeFile);
             const data = await upload(element, resizeFile, checksum, exifData, false, file);
@@ -637,5 +664,7 @@ export function setup(): void {
           throw e;
         });
     });
+
+    element.pipelineAttached();
   });
 }
