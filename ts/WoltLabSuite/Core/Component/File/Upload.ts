@@ -7,6 +7,9 @@ import {
   uploadChunk,
 } from "WoltLabSuite/Core/Api/Files/Chunk/Chunk";
 import { generateThumbnails } from "WoltLabSuite/Core/Api/Files/GenerateThumbnails";
+import { abortUpload } from "WoltLabSuite/Core/Api/Files/AbortUpload";
+import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
+import type { ApiResult } from "WoltLabSuite/Core/Api/Result";
 import { getUploaderToken } from "WoltLabSuite/Core/Component/File/Helper";
 import ImageResizer from "WoltLabSuite/Core/Image/Resizer";
 import { AttachmentData } from "../Ckeditor/Attachment";
@@ -53,26 +56,58 @@ async function upload(
   fileHash: string,
   exifData: Exif | null,
   ignoreExifRotation: boolean,
+  sourceFile: File,
 ): Promise<ResponseCompleted | undefined> {
-  const objectType = element.dataset.objectType!;
-
   const fileElement = document.createElement("woltlab-core-file");
   fileElement.dataset.filename = file.name;
   fileElement.dataset.fileSize = file.size.toString();
+  fileElement.setSourceFile(sourceFile);
 
   const event = new CustomEvent<WoltlabCoreFileElement>("uploadStart", { detail: fileElement });
   element.dispatchEvent(event);
 
+  try {
+    return await transferFile(element, fileElement, file, fileHash, exifData, ignoreExifRotation);
+  } catch (e) {
+    // Settles the element for failures without a response from the server,
+    // such as connection errors, which are reported by the global handler.
+    if (fileElement.abortSignal.aborted) {
+      fileElement.uploadAborted();
+    } else {
+      fileElement.uploadFailed();
+    }
+
+    throw e;
+  }
+}
+
+async function transferFile(
+  element: WoltlabCoreFileUploadElement,
+  fileElement: WoltlabCoreFileElement,
+  file: File,
+  fileHash: string,
+  exifData: Exif | null,
+  ignoreExifRotation: boolean,
+): Promise<ResponseCompleted | undefined> {
+  const signal = fileElement.abortSignal;
+
+  // This request is never aborted, the server could create the temporary
+  // upload without the client ever learning about its identifier.
   const response = await filesUpload(
     file.name,
     file.size,
     fileHash,
-    objectType,
+    element.dataset.objectType!,
     element.dataset.context || "",
     exifData,
     ignoreExifRotation,
   );
   if (!response.ok) {
+    if (signal.aborted) {
+      fileElement.uploadAborted();
+      return undefined;
+    }
+
     const validationError = response.error.getValidationError();
     if (validationError === undefined) {
       fileElement.uploadFailed(response.error);
@@ -95,10 +130,47 @@ async function upload(
     const end = start + chunkSize;
     const chunk = file.slice(start, end);
 
-    const checksum = await getSha256Hash(chunk);
+    let checksum: string;
+    try {
+      checksum = await getSha256Hash(chunk);
+    } catch (e) {
+      await discardFailedUpload(identifier);
 
-    const response = await uploadChunk(identifier, i, checksum, chunk);
+      throw e;
+    }
+
+    if (signal.aborted) {
+      await discardUpload(fileElement, identifier);
+      return undefined;
+    }
+
+    // The final chunk completes the upload. Aborting its request could leave
+    // a file behind that the client never learns about.
+    const isFinalChunk = i === numberOfChunks - 1;
+
+    let response: ApiResult<UploadChunkResponse>;
+    try {
+      response = await uploadChunk(identifier, i, checksum, chunk, isFinalChunk ? undefined : signal);
+    } catch (e) {
+      if (signal.aborted) {
+        await discardUpload(fileElement, identifier);
+        return undefined;
+      }
+
+      // If the request of the final chunk reached the server, the upload may
+      // have been completed, which makes this a no-op.
+      await discardFailedUpload(identifier);
+
+      throw e;
+    }
+
     if (!response.ok) {
+      if (signal.aborted) {
+        await discardUpload(fileElement, identifier);
+        return undefined;
+      }
+
+      await discardFailedUpload(identifier);
       fileElement.uploadFailed(response.error);
 
       throw new Error("Unexpected validation error", { cause: response.error });
@@ -106,11 +178,52 @@ async function upload(
 
     notifyChunkProgress(fileElement, i + 1, numberOfChunks);
 
-    await chunkUploadCompleted(fileElement, response.value, getUploaderToken(element));
-
     if (response.value.completed) {
-      return response.value;
+      return completeUpload(fileElement, response.value, getUploaderToken(element));
     }
+  }
+
+  if (signal.aborted) {
+    await discardUpload(fileElement, identifier);
+    return undefined;
+  }
+
+  await discardFailedUpload(identifier);
+
+  throw new Error("The server did not complete the upload after the final chunk.");
+}
+
+async function discardUpload(fileElement: WoltlabCoreFileElement, identifier: string): Promise<void> {
+  try {
+    // An unknown identifier is not an error, there is nothing left to discard.
+    await abortUpload(identifier);
+  } finally {
+    fileElement.uploadAborted();
+  }
+}
+
+/**
+ * Discards the temporary upload after a chunk failed, because the upload
+ * cannot be resumed. This is best effort, a temporary upload that is left
+ * behind is pruned after 24 hours.
+ */
+async function discardFailedUpload(identifier: string): Promise<void> {
+  try {
+    await abortUpload(identifier);
+  } catch {
+    // The caller reports the original error, which is most likely the cause.
+  }
+}
+
+/**
+ * Deletes the file of an upload that has been aborted after the final chunk
+ * was sent. Returns false if the file has to be kept.
+ */
+async function discardFile(fileId: number, uploaderToken: string | undefined): Promise<boolean> {
+  try {
+    return (await deleteFile(fileId, uploaderToken)).ok;
+  } catch {
+    return false;
   }
 }
 
@@ -127,22 +240,54 @@ function notifyChunkProgress(element: WoltlabCoreFileElement, currentChunk: numb
   element.dispatchEvent(event);
 }
 
-async function chunkUploadCompleted(
+async function completeUpload(
   fileElement: WoltlabCoreFileElement,
-  result: UploadChunkResponse,
+  result: ResponseCompleted,
   uploaderToken: string | undefined,
-): Promise<void> {
-  if (!result.completed) {
-    return;
+): Promise<ResponseCompleted | undefined> {
+  const signal = fileElement.abortSignal;
+
+  if (signal.aborted && (await discardFile(result.fileID, uploaderToken))) {
+    fileElement.uploadAborted();
+    return undefined;
   }
 
   fileElement.uploadCompleted(result.fileID, result.mimeType, result.link, result.data, result.generateThumbnails);
 
-  if (result.generateThumbnails) {
-    const { filename, fileSize, mimeType, thumbnails } = (await generateThumbnails(result.fileID, uploaderToken)).unwrap();
-    fileElement.setThumbnails(thumbnails);
-    fileElement.updateFileData(filename, fileSize, mimeType);
+  if (!result.generateThumbnails) {
+    return result;
   }
+
+  // This request is never aborted, because deleting the file while its
+  // thumbnails are being generated would race with it.
+  let response: Awaited<ReturnType<typeof generateThumbnails>>;
+  try {
+    response = await generateThumbnails(result.fileID, uploaderToken);
+  } catch (e) {
+    if (signal.aborted && (await discardFile(result.fileID, uploaderToken))) {
+      fileElement.uploadAborted();
+      return undefined;
+    }
+
+    fileElement.thumbnailGenerationFailed();
+
+    throw e;
+  }
+
+  if (signal.aborted && (await discardFile(result.fileID, uploaderToken))) {
+    fileElement.uploadAborted();
+    return undefined;
+  }
+
+  if (!response.ok) {
+    fileElement.thumbnailGenerationFailed();
+  }
+
+  const { filename, fileSize, mimeType, thumbnails } = response.unwrap();
+  fileElement.setThumbnails(thumbnails);
+  fileElement.updateFileData(filename, fileSize, mimeType);
+
+  return result;
 }
 
 async function getSha256Hash(data: Blob): Promise<string> {
@@ -332,20 +477,17 @@ async function getExifBytes(file: File): Promise<Exif | null> {
 export function setup(): void {
   wheneverFirstSeen("woltlab-core-file-upload", (element: WoltlabCoreFileUploadElement) => {
     element.addEventListener("upload:files", (event: CustomEvent<{ files: File[] }>) => {
-      const { files } = event.detail;
-
       clearPreviousErrors(element);
 
-      if (!validateFileLimit(element, files.length)) {
+      if (!validateFileLimit(element, event.detail.files.length)) {
         return;
       }
 
-      for (const file of files) {
-        if (!validateFileExtension(element, file)) {
-          return;
-        } else if (!validateFileSize(element, file)) {
-          return;
-        }
+      const files = event.detail.files.filter((file) => {
+        return validateFileExtension(element, file) && validateFileSize(element, file);
+      });
+      if (files.length === 0) {
+        return;
       }
 
       element.markAsBusy();
@@ -415,13 +557,22 @@ export function setup(): void {
 
           for (let i = 0, length = checksums.length; i < length; i++) {
             const result = checksums[i];
+            const fileIndex = validFilesToFiles[i];
 
             if (result.status === "fulfilled") {
-              const fileIndex = validFilesToFiles[i];
               const exif = exifData.get(validFiles[i]) || exifData.get(files[fileIndex]) || null;
-              void upload(element, validFiles[i], result.value, exif, ignoreExifRotation.has(files[fileIndex]));
+              void upload(
+                element,
+                validFiles[i],
+                result.value,
+                exif,
+                ignoreExifRotation.has(files[fileIndex]),
+                files[fileIndex],
+              );
             } else {
-              throw new Error(result.reason);
+              reportError(element, files[fileIndex], getPhrase("wcf.upload.error.uploadFailed"));
+
+              console.error(result.reason);
             }
           }
         })
@@ -463,7 +614,7 @@ export function setup(): void {
         .then(async (resizeFile) => {
           try {
             const checksum = await getSha256Hash(resizeFile);
-            const data = await upload(element, resizeFile, checksum, exifData, false);
+            const data = await upload(element, resizeFile, checksum, exifData, false, file);
             if (data === undefined || typeof data.data.attachmentID !== "number") {
               promiseReject();
             } else {

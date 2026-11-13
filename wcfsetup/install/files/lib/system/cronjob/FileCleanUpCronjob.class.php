@@ -4,11 +4,13 @@ namespace wcf\system\cronjob;
 
 use wcf\data\cronjob\Cronjob;
 use wcf\data\file\FileBuilder;
+use wcf\data\file\temporary\FileTemporaryBuilder;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
- * Deletes orphaned files.
+ * Deletes orphaned files and stale uploads.
  *
  * @author Alexander Ebert
  * @copyright 2001-2024 WoltLab GmbH
@@ -17,10 +19,20 @@ use wcf\system\WCF;
  */
 class FileCleanUpCronjob extends AbstractCronjob
 {
+    /**
+     * Uploads that have been started more than 24 hours ago are considered to
+     * be abandoned. Large files on slow connections can legitimately take
+     * hours to upload, but not a full day.
+     */
+    private const TEMPORARY_FILE_LIFETIME = 86_400;
+
     #[\Override]
     public function execute(Cronjob $cronjob)
     {
         parent::execute($cronjob);
+
+        $this->pruneTemporaryFiles();
+        $this->pruneOrphanedChunks();
 
         $sql = "SELECT  fileID
                 FROM    wcf1_file
@@ -58,5 +70,70 @@ class FileCleanUpCronjob extends AbstractCronjob
         ]);
 
         return $statement->fetchAll(\PDO::FETCH_COLUMN);
+    }
+
+    private function pruneTemporaryFiles(): void
+    {
+        $sql = "SELECT  identifier
+                FROM    wcf1_file_temporary
+                WHERE   time < ?";
+        $statement = WCF::getDB()->prepare($sql, 1_000);
+        $statement->execute([
+            \TIME_NOW - self::TEMPORARY_FILE_LIFETIME,
+        ]);
+        $identifiers = $statement->fetchAll(\PDO::FETCH_COLUMN);
+
+        if ($identifiers !== []) {
+            FileTemporaryBuilder::deleteAll($identifiers);
+        }
+    }
+
+    /**
+     * Deletes chunks that no longer belong to an upload. These are left behind
+     * when an upload is discarded while a request writing a chunk is still in
+     * progress.
+     */
+    private function pruneOrphanedChunks(): void
+    {
+        $directory = \WCF_DIR . '_data/private/fileUpload/';
+        if (!\is_dir($directory)) {
+            return;
+        }
+
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($directory, \FilesystemIterator::SKIP_DOTS)
+        );
+
+        $pathnames = [];
+        /** @var \SplFileInfo $file */
+        foreach ($iterator as $file) {
+            if (!$file->isFile() || $file->getExtension() !== 'bin') {
+                continue;
+            }
+
+            // The file disappears if the upload is completed in the meantime.
+            $mtime = @\filemtime($file->getPathname());
+            if ($mtime !== false && $mtime < \TIME_NOW - self::TEMPORARY_FILE_LIFETIME) {
+                $pathnames[$file->getBasename('.bin')] = $file->getPathname();
+            }
+        }
+
+        foreach (\array_chunk($pathnames, 1_000, true) as $batch) {
+            $conditions = new PreparedStatementConditionBuilder();
+            $conditions->add('identifier IN (?)', [\array_keys($batch)]);
+
+            $sql = "SELECT  identifier
+                    FROM    wcf1_file_temporary
+                    {$conditions}";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute($conditions->getParameters());
+            $existingIdentifiers = $statement->fetchAll(\PDO::FETCH_COLUMN);
+
+            foreach ($batch as $identifier => $pathname) {
+                if (!\in_array($identifier, $existingIdentifiers, true)) {
+                    @\unlink($pathname);
+                }
+            }
+        }
     }
 }

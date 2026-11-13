@@ -137,6 +137,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Language", "WoltLabSui
             return replaceButton;
         }
         #markElementUploadHasFailed(element, reason) {
+            if (element.isAborted()) {
+                element.remove();
+                return;
+            }
             let errorMessage;
             if (reason instanceof Error) {
                 errorMessage = reason.message;

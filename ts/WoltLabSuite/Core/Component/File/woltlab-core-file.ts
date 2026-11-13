@@ -7,6 +7,7 @@ const enum State {
   GeneratingThumbnails,
   Ready,
   Failed,
+  Aborted,
 }
 
 export type ThumbnailData = {
@@ -42,6 +43,8 @@ export class WoltlabCoreFileElement extends HTMLElement {
   #mimeType: string | undefined = undefined;
   #state: State = State.Initial;
   #apiError: ApiError | undefined = undefined;
+  #sourceFile: File | undefined = undefined;
+  readonly #abortController = new AbortController();
   readonly #thumbnails: Thumbnail[] = [];
 
   #readyReject!: () => void;
@@ -137,6 +140,10 @@ export class WoltlabCoreFileElement extends HTMLElement {
 
       case State.Failed:
         this.#replaceWithIcon("triangle-exclamation");
+        break;
+
+      case State.Aborted:
+        this.#replaceWithIcon("ban");
         break;
 
       default:
@@ -269,13 +276,31 @@ export class WoltlabCoreFileElement extends HTMLElement {
     }
   }
 
-  uploadFailed(apiError: ApiError): void {
+  /**
+   * The `apiError` is missing for failures without a response from the
+   * server, such as connection errors.
+   */
+  uploadFailed(apiError?: ApiError): void {
     if (this.#state !== State.Uploading) {
       return;
     }
 
     this.#state = State.Failed;
     this.#apiError = apiError;
+    this.#rebuildElement();
+
+    this.#readyReject();
+  }
+
+  /**
+   * @internal
+   */
+  uploadAborted(): void {
+    if (this.#state !== State.Uploading && this.#state !== State.GeneratingThumbnails) {
+      return;
+    }
+
+    this.#state = State.Aborted;
     this.#rebuildElement();
 
     this.#readyReject();
@@ -323,6 +348,22 @@ export class WoltlabCoreFileElement extends HTMLElement {
   }
 
   /**
+   * The file exists, but its thumbnails could not be generated.
+   *
+   * @internal
+   */
+  thumbnailGenerationFailed(): void {
+    if (this.#state !== State.GeneratingThumbnails) {
+      return;
+    }
+
+    this.#state = State.Ready;
+    this.#rebuildElement();
+
+    this.#readyResolve();
+  }
+
+  /**
    * Updates the filename, file size and mime type. These can change for images
    * that are being converted to a different file format,
    *
@@ -336,8 +377,62 @@ export class WoltlabCoreFileElement extends HTMLElement {
     this.dispatchEvent(new CustomEvent<void>("file:update-data"));
   }
 
+  /**
+   * Aborted uploads count as failed, because they did not result in a file.
+   */
   isFailedUpload(): boolean {
-    return this.#state === State.Failed;
+    return this.#state === State.Failed || this.#state === State.Aborted;
+  }
+
+  /**
+   * @since 6.3
+   */
+  isAborted(): boolean {
+    return this.#state === State.Aborted;
+  }
+
+  /**
+   * Requests to stop the upload and to discard everything that has been
+   * uploaded so far. The `ready` promise is rejected without an `apiError`
+   * once the server has discarded the upload.
+   *
+   * There is no effect once `ready` has settled. An abort that comes too late
+   * to stop the final chunk deletes the file afterwards. If the file cannot
+   * be deleted, the upload completes regularly.
+   *
+   * @since 6.3
+   */
+  abort(): void {
+    if (this.#state !== State.Uploading && this.#state !== State.GeneratingThumbnails) {
+      return;
+    }
+
+    this.#abortController.abort();
+  }
+
+  /**
+   * @internal
+   */
+  get abortSignal(): AbortSignal {
+    return this.#abortController.signal;
+  }
+
+  /**
+   * The file that was handed over for upload, before any processing on the
+   * client, such as resizing or cropping, changed its name, size or type.
+   * Files that existed at page load have no source file.
+   *
+   * @since 6.3
+   */
+  get sourceFile(): File | undefined {
+    return this.#sourceFile;
+  }
+
+  /**
+   * @internal
+   */
+  setSourceFile(sourceFile: File): void {
+    this.#sourceFile = sourceFile;
   }
 
   set thumbnail(thumbnail: Thumbnail) {
