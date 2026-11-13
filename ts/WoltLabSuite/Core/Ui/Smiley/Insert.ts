@@ -59,7 +59,7 @@ class UiSmileyInsert {
       }
 
       smilies[index].focus();
-    } else if (event.key === "Enter" || event.key === "Space") {
+    } else if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
 
       const image = activeButton.querySelector("img") as HTMLImageElement;

@@ -256,7 +256,7 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
         if (target.nodeName === "INPUT") {
             return;
         }
-        if (event.key === "Enter" || event.key === "Space") {
+        if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
             if (target.dataset.requiresSynthethicClick) {
                 target.dataset.isKeyboardClick = "true";
@@ -299,7 +299,7 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
                 newActiveItem.focus();
             }
         }
-        else if (event.key === "Enter" || event.key === "Space") {
+        else if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
             let target = activeItem;
             if (target.childElementCount === 1 &&

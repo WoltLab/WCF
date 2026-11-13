@@ -99,10 +99,10 @@ export function Home(event: KeyboardEvent): boolean {
 /**
  * Returns true if the pressed key equals 'Space'.
  *
- * @deprecated 5.4 Use `event.key === "Space"` instead.
+ * @deprecated 5.4 Use `event.key === " "` instead.
  */
 export function Space(event: KeyboardEvent): boolean {
-  return _test(event, "Space", 32);
+  return _test(event, " ", 32);
 }
 
 /**

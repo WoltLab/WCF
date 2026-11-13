@@ -52,7 +52,7 @@ define(["require", "exports", "../../Component/Ckeditor"], function (require, ex
                 }
                 smilies[index].focus();
             }
-            else if (event.key === "Enter" || event.key === "Space") {
+            else if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
                 const image = activeButton.querySelector("img");
                 this.insert(image);

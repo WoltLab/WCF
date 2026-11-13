@@ -298,7 +298,7 @@ function handleKeyDown(event: KeyboardEvent): void {
     return;
   }
 
-  if (event.key === "Enter" || event.key === "Space") {
+  if (event.key === "Enter" || event.key === " ") {
     event.preventDefault();
 
     if (target.dataset.requiresSynthethicClick) {
@@ -348,7 +348,7 @@ function dropdownMenuKeyDown(event: KeyboardEvent): void {
     if (newActiveItem !== null) {
       newActiveItem.focus();
     }
-  } else if (event.key === "Enter" || event.key === "Space") {
+  } else if (event.key === "Enter" || event.key === " ") {
     event.preventDefault();
 
     let target = activeItem;

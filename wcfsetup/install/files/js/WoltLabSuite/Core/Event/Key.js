@@ -101,10 +101,10 @@ define(["require", "exports"], function (require, exports) {
     /**
      * Returns true if the pressed key equals 'Space'.
      *
-     * @deprecated 5.4 Use `event.key === "Space"` instead.
+     * @deprecated 5.4 Use `event.key === " "` instead.
      */
     function Space(event) {
-        return _test(event, "Space", 32);
+        return _test(event, " ", 32);
     }
     /**
      * Returns true if the pressed key equals 'Tab'.
