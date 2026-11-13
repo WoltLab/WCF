@@ -498,7 +498,13 @@ final class FileProcessor extends SingletonFactory
             return $file;
         }
 
-        $newFile = new ReplaceFileSource($file, $fileWithoutExif, $file->filename, false)();
+        $newFile = new ReplaceFileSource(
+            $file,
+            $fileWithoutExif,
+            $file->filename,
+            regenerateThumbnails: false,
+            visuallyIdentical: true,
+        )();
 
         // Stripping the EXIF data changes the checksum and thus the pathname
         // of the file, any denormalized copy of the pathname must be updated.

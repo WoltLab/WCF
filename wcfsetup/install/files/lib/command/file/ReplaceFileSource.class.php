@@ -4,6 +4,7 @@ namespace wcf\command\file;
 
 use wcf\data\file\File;
 use wcf\data\file\FileBuilder;
+use wcf\data\file\thumbnail\FileThumbnailBuilder;
 use wcf\system\file\processor\exception\DamagedImage;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\WCF;
@@ -12,8 +13,20 @@ use wcf\util\FileUtil;
 use function wcf\functions\exception\logThrowable;
 
 /**
- * Replaces the physical file of an entry with a new file. If there are any
- * existing thumbnails, those will be regenerated immediately.
+ * Replaces the physical file of an entry with a new file.
+ *
+ * A new source with a different file hash invalidates the files derived from
+ * the old one: the WebP variant and all thumbnails are deleted. Callers that
+ * only strip metadata or convert the format pass `$visuallyIdentical = true`
+ * to keep the derived files.
+ *
+ * If `$regenerateThumbnails` is true and the file had thumbnails or its WebP
+ * variant was deleted, the derived files are generated again immediately.
+ * Otherwise this is left to the caller, e.g. by running the same steps as the
+ * `GenerateThumbnails` endpoint.
+ *
+ * The processor is not notified, the caller must invoke
+ * `IFileProcessor::sourceFilenameChanged()` when the file hash has changed.
  *
  * @author      Alexander Ebert
  * @copyright   2001-2025 WoltLab GmbH
@@ -27,22 +40,47 @@ final class ReplaceFileSource
         private readonly string $pathname,
         private readonly ?string $filename = null,
         private readonly ?bool $regenerateThumbnails = true,
+        private readonly bool $visuallyIdentical = false,
     ) {}
 
     public function __invoke(): File
     {
         $this->validatePathname($this->pathname);
         $this->validatePathname($this->file->getPathname());
-        $this->validatePathname($this->file->getPathnameWebp());
+
+        // A missing variant is not fatal, `replaceSource()` clears the reference.
+        $pathnameWebp = $this->file->getPathnameWebp();
+        if ($pathnameWebp !== null && \file_exists($pathnameWebp)) {
+            $this->validatePathname($pathnameWebp);
+        }
 
         $file = $this->replaceSource();
         $file = $this->discardWebpVariantOfWebpFile($file);
 
-        if ($this->regenerateThumbnails) {
-            $file = $this->regenerateExistingThumbnails($file);
+        $thumbnailIDs = [];
+        if ($this->regenerateThumbnails === true || $this->invalidatesDerivedFiles($file)) {
+            $thumbnailIDs = $this->getThumbnailIDs($file);
+        }
+
+        $hadDerivedFiles = $thumbnailIDs !== [];
+        if ($this->invalidatesDerivedFiles($file)) {
+            if ($thumbnailIDs !== []) {
+                FileThumbnailBuilder::deleteAll($thumbnailIDs);
+            }
+
+            $hadDerivedFiles = $hadDerivedFiles || $this->file->fileHashWebp !== null;
+        }
+
+        if ($this->regenerateThumbnails === true && $hadDerivedFiles) {
+            $file = $this->regenerateDerivedFiles($file);
         }
 
         return $file;
+    }
+
+    private function invalidatesDerivedFiles(File $updatedFile): bool
+    {
+        return !$this->visuallyIdentical && $updatedFile->fileHash !== $this->file->fileHash;
     }
 
     private function validatePathname(?string $pathname): void
@@ -124,12 +162,13 @@ final class ReplaceFileSource
                 \unlink($this->file->getPathname());
             }
 
-            // Move the WebP thumbnail to the new location.
+            // Move the WebP variant to the new location, unless it no longer
+            // matches the new source.
             $webpVariant = $this->file->getPathnameWebp();
             if ($webpVariant !== null) {
-                if ($updatedFile->mimeType === 'image/webp') {
+                if ($updatedFile->mimeType === 'image/webp' || $this->invalidatesDerivedFiles($updatedFile)) {
                     // The file might be missing if it was used to replace the
-                    // original version with it.
+                    // original version with it or vanished from disk.
                     @\unlink($webpVariant);
 
                     $updatedFile = FileBuilder::forUpdate($updatedFile)
@@ -185,18 +224,22 @@ final class ReplaceFileSource
             ->update();
     }
 
-    private function regenerateExistingThumbnails(File $file): File
+    /**
+     * @return list<int>
+     */
+    private function getThumbnailIDs(File $file): array
     {
-        $sql = "SELECT  COUNT(*)
+        $sql = "SELECT  thumbnailID
                 FROM    wcf1_file_thumbnail
                 WHERE   fileID = ?";
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute([$file->fileID]);
-        $count = $statement->fetchSingleColumn();
-        if ($count === 0) {
-            return $file;
-        }
 
+        return $statement->fetchAll(\PDO::FETCH_COLUMN);
+    }
+
+    private function regenerateDerivedFiles(File $file): File
+    {
         try {
             $file = FileProcessor::getInstance()->stripExif($file);
             $file = FileProcessor::getInstance()->generateWebpVariant($file);
