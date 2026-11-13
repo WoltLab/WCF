@@ -2,13 +2,13 @@
 
 namespace wcf\acp\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\form\AbstractForm;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -95,14 +95,15 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm
             // message in session variables
             WCF::getSession()->register($this->project->projectID . '-' . $this->pip . '-success', 1);
 
-            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(DevtoolsProjectPipEntryEditForm::class, [
-                'entryType' => $this->entryType,
-                'id' => $this->project->projectID,
-                'pip' => $this->pip,
-                'identifier' => $newIdentifier,
-            ]));
-
-            exit;
+            $this->setPsr7Response(new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(DevtoolsProjectPipEntryEditForm::class, [
+                    'entryType' => $this->entryType,
+                    'id' => $this->project->projectID,
+                    'pip' => $this->pip,
+                    'identifier' => $newIdentifier,
+                ]),
+                303
+            ));
         } else {
             WCF::getTPL()->assign('success', true);
         }

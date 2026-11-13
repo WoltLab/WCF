@@ -2,6 +2,8 @@
 
 namespace wcf\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
+use Psr\Http\Message\ResponseInterface;
 use wcf\data\object\type\ObjectType;
 use wcf\data\user\User;
 use wcf\event\user\authentication\UserLoggedIn;
@@ -67,7 +69,9 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
         parent::readParameters();
 
         if (!WCF::getUser()->isGuest()) {
-            $this->performRedirect();
+            $this->setPsr7Response($this->getRedirectResponse());
+
+            return;
         }
 
         $this->user = WCF::getSession()->getPendingUserChange();
@@ -142,19 +146,30 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm
     {
         AbstractForm::saved();
 
-        $this->performRedirect();
+        $this->setPsr7Response($this->getRedirectResponse());
     }
 
     /**
      * Returns to the redirect url if given and to the landing page otherwise.
      *
      * @return void
+     * @deprecated 6.3 Use `getRedirectResponse()` and the PSR-7 layer instead.
      */
     protected function performRedirect()
     {
         HeaderUtil::redirect(LoginRedirect::getUrl());
 
         exit;
+    }
+
+    /**
+     * Returns a response redirecting to the redirect url if given and to the landing page otherwise.
+     *
+     * @since 6.3
+     */
+    protected function getRedirectResponse(): ResponseInterface
+    {
+        return new RedirectResponse(LoginRedirect::getUrl(), 303);
     }
 
     #[\Override]

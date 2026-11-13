@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\style\StyleEditor;
 use wcf\form\AbstractForm;
 use wcf\system\cache\eager\StyleCache;
@@ -11,7 +12,6 @@ use wcf\system\package\PackageArchive;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\HeaderUtil;
 
 /**
  * Shows the style import form.
@@ -110,11 +110,14 @@ class StyleImportForm extends AbstractForm
 
             WCF::getSession()->register('stylePackageImportLocation', $filename);
 
-            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(PackageStartInstallForm::class, [
-                'action' => 'install',
-            ]));
+            $this->setPsr7Response(new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(PackageStartInstallForm::class, [
+                    'action' => 'install',
+                ]),
+                303
+            ));
 
-            exit;
+            return;
         } catch (SystemException $e) {
             // ignore errors
         }

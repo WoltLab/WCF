@@ -22,6 +22,9 @@ class LoginForm extends \wcf\acp\form\LoginForm
     public function readParameters()
     {
         parent::readParameters();
+        if ($this->hasPsr7Response()) {
+            return;
+        }
 
         // Guests with on-demand sessions have none yet, but submitting the form
         // requires the session cookie to tell whether cookies are accepted.
@@ -53,7 +56,7 @@ class LoginForm extends \wcf\acp\form\LoginForm
 
         $this->saved();
 
-        $this->performRedirect($needsMultifactor);
+        $this->setPsr7Response($this->getRedirectResponse($needsMultifactor));
     }
 
     #[\Override]

@@ -2,6 +2,7 @@
 
 namespace wcf\acp\page;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\acp\action\DashboardConfigureAction;
 use wcf\acp\action\FirstTimeSetupAction;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
@@ -9,7 +10,6 @@ use wcf\page\AbstractPage;
 use wcf\system\acp\dashboard\AcpDashboard;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Shows the welcome page in admin control panel.
@@ -60,11 +60,12 @@ class IndexPage extends AbstractPage
         }
 
         if (\FIRST_TIME_SETUP_STATE !== -1) {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
-                FirstTimeSetupAction::class,
+            $this->setPsr7Response(new RedirectResponse(
+                LinkHandler::getInstance()->getControllerLink(FirstTimeSetupAction::class),
+                303
             ));
 
-            exit;
+            return;
         }
 
         // show page

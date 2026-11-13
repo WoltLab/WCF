@@ -2,6 +2,8 @@
 
 namespace wcf\acp\form;
 
+use Laminas\Diactoros\Response\RedirectResponse;
+use Psr\Http\Message\ResponseInterface;
 use wcf\command\user\authentication\failure\LogUserAuthenticationFailure;
 use wcf\data\user\authentication\failure\UserAuthenticationFailure;
 use wcf\data\user\User;
@@ -109,7 +111,9 @@ class LoginForm extends AbstractFormBuilderForm
 
         if (!WCF::getUser()->isGuest()) {
             // User is already logged in
-            $this->performRedirect();
+            $this->setPsr7Response($this->getRedirectResponse());
+
+            return;
         }
 
         // check authentication failures
@@ -290,23 +294,38 @@ class LoginForm extends AbstractFormBuilderForm
         }
         $this->saved();
 
-        $this->performRedirect($needsMultifactor);
+        $this->setPsr7Response($this->getRedirectResponse($needsMultifactor));
     }
 
     /**
      * Performs the redirect after successful authentication.
+     *
+     * @deprecated 6.3 Use `getRedirectResponse()` and the PSR-7 layer instead.
      */
     protected function performRedirect(bool $needsMultifactor = false): void
     {
-        if ($needsMultifactor) {
-            $url = LinkHandler::getInstance()->getLink('MultifactorAuthentication');
-        } else {
-            $url = LoginRedirect::getUrl();
-        }
-
-        HeaderUtil::redirect($url);
+        HeaderUtil::redirect($this->getRedirectUrl($needsMultifactor));
 
         exit;
+    }
+
+    /**
+     * Returns a response performing the redirect after successful authentication.
+     *
+     * @since 6.3
+     */
+    protected function getRedirectResponse(bool $needsMultifactor = false): ResponseInterface
+    {
+        return new RedirectResponse($this->getRedirectUrl($needsMultifactor), 303);
+    }
+
+    private function getRedirectUrl(bool $needsMultifactor): string
+    {
+        if ($needsMultifactor) {
+            return LinkHandler::getInstance()->getLink('MultifactorAuthentication');
+        }
+
+        return LoginRedirect::getUrl();
     }
 
     private function renameSubmitButton(): void
