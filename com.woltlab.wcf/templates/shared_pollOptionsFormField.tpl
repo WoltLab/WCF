@@ -3,19 +3,18 @@
 
 <script data-relocate="true">
 	require([
-		'Dom/Traverse',
 		'Dom/Util',
 		'EventHandler',
 		'WoltLabSuite/Core/Form/Builder/Manager',
 		'WoltLabSuite/Core/Ui/Poll/Editor'
-	], (DomTraverse, DomUtil, EventHandler, FormBuilderManager, UiPollEditor) => {
+	], (DomUtil, EventHandler, FormBuilderManager, UiPollEditor) => {
 		{jsphrase name='wcf.poll.button.addOption'}
 		{jsphrase name='wcf.poll.button.removeOption'}
 		{jsphrase name='wcf.poll.endTime.error.invalid'}
 		{jsphrase name='wcf.poll.maxVotes.error.invalid'}
 		
 		var pollEditor = new UiPollEditor(
-			DomUtil.identify(DomTraverse.childByTag(elById('{unsafe:$field->getPrefixedId()|encodeJS}Container'), 'DD')),
+			DomUtil.identify(elById('{unsafe:$field->getPrefixedId()|encodeJS}Container').querySelector(':scope > .formField__input')),
 			[ {implode from=$field->getValue() item=pollOption}{ optionID: {$pollOption[optionID]}, optionValue: '{unsafe:$pollOption[optionValue]|encodeJS}' }{/implode} ],
 			'{unsafe:$field->getPrefixedWysiwygId()|encodeJS}',
 			{
