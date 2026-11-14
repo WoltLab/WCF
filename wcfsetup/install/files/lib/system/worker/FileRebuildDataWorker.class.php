@@ -2,6 +2,7 @@
 
 namespace wcf\system\worker;
 
+use wcf\command\file\DeleteFiles;
 use wcf\data\file\File;
 use wcf\data\file\FileBuilder;
 use wcf\data\file\FileList;
@@ -49,7 +50,7 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
         $this->fixMimeType();
         $this->fixSvgLocation();
 
-        $damagedFileIDs = [];
+        $damagedFiles = [];
         foreach ($this->objectList->getObjects() as $file) {
             $file = $this->fixFile($file);
 
@@ -61,12 +62,13 @@ final class FileRebuildDataWorker extends AbstractLinearRebuildDataWorker
             } catch (DamagedImage $e) {
                 logThrowable($e);
 
-                $damagedFileIDs[] = $e->fileID;
+                $damagedFiles[] = $file;
             }
         }
 
-        if ($damagedFileIDs !== []) {
-            FileBuilder::deleteAll($damagedFileIDs);
+        // The processors must learn about the deletion to update the objects that reference the files.
+        if ($damagedFiles !== []) {
+            new DeleteFiles($damagedFiles)();
         }
     }
 
