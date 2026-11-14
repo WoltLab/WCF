@@ -13,6 +13,7 @@ use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Allows enabling the package upgrade override.
@@ -110,6 +111,7 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
             $this->checkRequiredPhpExtensions(),
             $this->checkMinimumDatabaseVersion(),
             $this->checkForTls(),
+            $this->checkForDuplicateEmailAddresses(),
             ...$parameters['issues'],
         ];
 
@@ -278,6 +280,54 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
             return [
                 'title' => 'Access using HTTPS',
                 'description' => 'The page is not accessed via HTTPS. Important features that are required for the proper operation of the software are therefore not available.',
+            ];
+        }
+    }
+
+    /**
+     * @return ?array{title: string, description: string}
+     */
+    private function checkForDuplicateEmailAddresses(): ?array
+    {
+        $sql = "SELECT   email, GROUP_CONCAT(userID ORDER BY userID SEPARATOR ', ') AS userIDs
+                FROM     wcf1_user
+                GROUP BY email
+                HAVING   COUNT(*) > 1
+                ORDER BY email";
+        $statement = WCF::getDB()->prepare($sql, 20);
+        $statement->execute();
+        $duplicates = $statement->fetchMap('email', 'userIDs');
+
+        if ($duplicates === []) {
+            return null;
+        }
+
+        $isGerman = WCF::getLanguage()->getFixedLanguageCode() === 'de';
+
+        $list = \implode(
+            '<br>',
+            \array_map(
+                static function (string $email, string $userIDs) use ($isGerman): string {
+                    if ($email === '') {
+                        $email = $isGerman ? '(leer)' : '(empty)';
+                    }
+
+                    return \sprintf('%s: %s', StringUtil::encodeHTML($email), $userIDs);
+                },
+                \array_map('\strval', \array_keys($duplicates)),
+                \array_values($duplicates)
+            )
+        );
+
+        if ($isGerman) {
+            return [
+                'title' => 'Doppelte E-Mail-Adressen',
+                'description' => 'Mehrere Benutzerkonten verwenden dieselbe E-Mail-Adresse. Ab WoltLab Suite 6.3 müssen E-Mail-Adressen eindeutig sein, bitte führen Sie die betroffenen Benutzerkonten zusammen oder ändern Sie deren E-Mail-Adressen. Betroffene E-Mail-Adressen (Benutzer-IDs):<br>' . $list,
+            ];
+        } else {
+            return [
+                'title' => 'Duplicate email addresses',
+                'description' => 'Multiple user accounts share the same email address. Starting with WoltLab Suite 6.3, email addresses must be unique, please merge the affected user accounts or change their email addresses. Affected email addresses (user IDs):<br>' . $list,
             ];
         }
     }
