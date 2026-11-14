@@ -114,6 +114,13 @@ export class State extends EventTarget {
     this.#switchPage(1, StateChangeCause.Change);
   }
 
+  /**
+   * Switches to the given page and reloads the list.
+   */
+  switchPage(pageNo: number): void {
+    this.#switchPage(pageNo, StateChangeCause.Change);
+  }
+
   getSortField(): string {
     return this.#sorting.getSortField();
   }

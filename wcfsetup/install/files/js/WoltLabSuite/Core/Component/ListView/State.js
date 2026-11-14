@@ -74,6 +74,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
         resetPageNo() {
             this.#switchPage(1, 0 /* StateChangeCause.Change */);
         }
+        /**
+         * Switches to the given page and reloads the list.
+         */
+        switchPage(pageNo) {
+            this.#switchPage(pageNo, 0 /* StateChangeCause.Change */);
+        }
         getSortField() {
             return this.#sorting.getSortField();
         }

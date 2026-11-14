@@ -48,6 +48,7 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
                 (0, Scroll_1.element)(this.#viewElement.closest(".listView"));
             }
             (0, Listener_1.trigger)();
+            this.#viewElement.dispatchEvent(new CustomEvent("list-view:items-loaded"));
         }
         async #refreshItem(item) {
             const { template } = await (0, GetItem_1.getItem)(this.#viewClassName, item.dataset.objectId, this.#state.getActiveFilters(), this.#listViewParameters, this.#allowInteractions, this.#allowBulkInteractions);
@@ -112,6 +113,9 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
                     }
                 }
                 this.#state.resetPageNo();
+            });
+            this.#viewElement.addEventListener("interaction:switch-page", (event) => {
+                this.#state.switchPage(event.detail.pageNo);
             });
         }
         #setupState(viewId, pageNo, baseUrl, sortField, sortOrder, defaultSortField, defaultSortOrder) {

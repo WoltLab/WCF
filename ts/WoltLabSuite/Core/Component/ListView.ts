@@ -86,6 +86,8 @@ export class ListView {
     }
 
     triggerDomChange();
+
+    this.#viewElement.dispatchEvent(new CustomEvent("list-view:items-loaded"));
   }
 
   async #refreshItem(item: HTMLElement): Promise<void> {
@@ -171,6 +173,10 @@ export class ListView {
       }
 
       this.#state.resetPageNo();
+    });
+
+    this.#viewElement.addEventListener("interaction:switch-page", (event: CustomEvent<{ pageNo: number }>) => {
+      this.#state.switchPage(event.detail.pageNo);
     });
   }
 
