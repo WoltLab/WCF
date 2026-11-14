@@ -53,6 +53,9 @@ export function removeUploadProgress(element: HTMLElement): void {
   element.querySelector(".fileList__item__progress")?.remove();
 }
 
+/**
+ * Returns the reason for a failed upload as plain text.
+ */
 export function getErrorMessageFromFile(file: WoltlabCoreFileElement): string {
   if (file.apiError === undefined) {
     // The upload failed without a response from the server, for example, due
@@ -66,10 +69,15 @@ export function getErrorMessageFromFile(file: WoltlabCoreFileElement): string {
   if (validationError !== undefined) {
     switch (validationError.param) {
       case "preflight":
-        errorMessage = getPhrase(`wcf.upload.error.${validationError.code}`);
+        errorMessage = getRejectionPhrase(`wcf.upload.error.${validationError.code}`);
         break;
       case "validation":
-        errorMessage = getPhrase(`wcf.upload.validation.error.${validationError.code}`);
+        // The file processor can supply the message, see `UploadRejected`.
+        if (validationError.message !== "") {
+          errorMessage = validationError.message;
+        } else {
+          errorMessage = getRejectionPhrase(`wcf.upload.validation.error.${validationError.code}`);
+        }
         break;
 
       default:
@@ -81,6 +89,16 @@ export function getErrorMessageFromFile(file: WoltlabCoreFileElement): string {
   }
 
   return errorMessage;
+}
+
+function getRejectionPhrase(phraseName: string): string {
+  const phrase = getPhrase(phraseName);
+  if (phrase === phraseName) {
+    // There is no phrase for this code.
+    return getPhrase("wcf.upload.error.rejected");
+  }
+
+  return phrase;
 }
 
 export function fileInitializationFailed(element: HTMLElement, file: WoltlabCoreFileElement, reason: unknown): void {
@@ -115,19 +133,11 @@ export function insertFileInformation(container: HTMLElement, file: WoltlabCoreF
   filename.classList.add("fileList__item__filename");
   filename.textContent = file.filename || file.dataset.filename!;
 
-  const indicatorIcon = document.createElement("fa-icon");
-  indicatorIcon.setIcon("circle-check");
-  const fileIndicator = document.createElement("div");
-  fileIndicator.classList.add("fileList__item__indicator", "green", "jsTooltip");
-  fileIndicator.setAttribute("aria-hidden", "true");
-  fileIndicator.title = getPhrase("wcf.attachment.inserted");
-  fileIndicator.append(indicatorIcon);
-
   const fileSize = document.createElement("div");
   fileSize.classList.add("fileList__item__fileSize");
   fileSize.textContent = formatFilesize(file.fileSize || parseInt(file.dataset.fileSize!));
 
-  container.append(fileWrapper, filename, fileIndicator, fileSize);
+  container.append(fileWrapper, filename, fileSize);
 }
 
 export function updateFileInformation(container: HTMLElement, file: WoltlabCoreFileElement): void {

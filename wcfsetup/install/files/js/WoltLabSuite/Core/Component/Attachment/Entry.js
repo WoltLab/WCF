@@ -127,10 +127,24 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ui/Dropdown/Simple", "
         });
         return button;
     }
+    /**
+     * The indicator is shown while the attachment is embedded in the message.
+     */
+    function getInsertedIndicator() {
+        const icon = document.createElement("fa-icon");
+        icon.setIcon("circle-check");
+        const indicator = document.createElement("div");
+        indicator.classList.add("fileList__item__indicator", "green", "jsTooltip");
+        indicator.setAttribute("aria-hidden", "true");
+        indicator.title = (0, Language_1.getPhrase)("wcf.attachment.inserted");
+        indicator.append(icon);
+        return indicator;
+    }
     function createAttachmentFromFile(file, editor, uploaderToken) {
         const element = document.createElement("li");
         element.classList.add("fileList__item", "attachment__item");
         (0, Helper_1.insertFileInformation)(element, file);
+        element.append(getInsertedIndicator());
         file.addEventListener("file:update-data", () => {
             (0, Helper_1.updateFileInformation)(element, file);
         });

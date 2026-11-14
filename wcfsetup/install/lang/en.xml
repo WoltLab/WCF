@@ -5178,6 +5178,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.avatar.edit"><![CDATA[Edit Avatar]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID}have blocked your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
+		<item name="wcf.user.avatar.error.wrongSize"><![CDATA[The avatar must be either {#$size} × {#$size} or {#$size2x} × {#$size2x} pixels in size, but the image is {#$width} × {#$height} pixels.]]></item>
 		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “gif, jpg, jpeg, png, webp” for your avatar.<br>The minimum dimensions are 128 × 128 pixels.]]></item>
 	</category>
 	<category name="wcf.user.condition">
@@ -5236,6 +5237,7 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.coverPhoto"><![CDATA[Cover Photo]]></item>
 		<item name="wcf.user.coverPhoto.edit"><![CDATA[Edit Cover Photo]]></item>
 		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[The administrators {if $__wcf->user->coverPhotoFileID}have blocked your cover photo and {/if}disallowed you from using a cover photo{if $__wcf->user->disableCoverPhotoReason}: {$__wcf->user->disableCoverPhotoReason}{/if}.]]></item>
+		<item name="wcf.user.coverPhoto.error.wrongSize"><![CDATA[The cover photo must be at least {#$minWidth} × {#$minHeight} and at most {#$maxWidth} × {#$maxHeight} pixels in size, but the image is {#$width} × {#$height} pixels.]]></item>
 	</category>
 	<category name="wcf.user.notification">
 		<item name="wcf.user.notification.button.confirmed"><![CDATA[OK]]></item>
@@ -5530,10 +5532,12 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phras
 		<item name="wcf.upload.error.image.tooSmall"><![CDATA[The image is too small. It must be at least {$width} x {$height} pixels in size.]]></item>
 		<item name="wcf.upload.error.delete.unknownError"><![CDATA[An unknown error occurred while deleting the file.]]></item>
 		<item name="wcf.upload.error.delete.permissionDenied"><![CDATA[The file cannot be deleted, use <strong>Replace</strong> instead to swap out the file.]]></item>
+		<item name="wcf.upload.error.rejected"><![CDATA[The file does not meet the requirements.]]></item>
 		<item name="wcf.upload.validation.error.differentKind"><![CDATA[An image can only be replaced by another image, other files only by files that are not images.]]></item>
 		<item name="wcf.upload.validation.error.noImage"><![CDATA[The file is not an image.]]></item>
 		<item name="wcf.upload.validation.error.notSquare"><![CDATA[The file is not square.]]></item>
 		<item name="wcf.upload.validation.error.tooSmall"><![CDATA[The file is too small.]]></item>
+		<item name="wcf.upload.validation.error.wrongSize"><![CDATA[The image does not have the required dimensions.]]></item>
 		<item name="wcf.upload.single.limits"><![CDATA[Maximum file size: {$maximumSize|filesize}<br>
 Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 		<item name="wcf.upload.multiple.limits"><![CDATA[The maximum number of files: {#$maximumCount}<br>

@@ -45,6 +45,9 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
         element.classList.remove("fileProcessor__item--uploading");
         element.querySelector(".fileList__item__progress")?.remove();
     }
+    /**
+     * Returns the reason for a failed upload as plain text.
+     */
     function getErrorMessageFromFile(file) {
         if (file.apiError === undefined) {
             // The upload failed without a response from the server, for example, due
@@ -56,10 +59,16 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
         if (validationError !== undefined) {
             switch (validationError.param) {
                 case "preflight":
-                    errorMessage = (0, Language_1.getPhrase)(`wcf.upload.error.${validationError.code}`);
+                    errorMessage = getRejectionPhrase(`wcf.upload.error.${validationError.code}`);
                     break;
                 case "validation":
-                    errorMessage = (0, Language_1.getPhrase)(`wcf.upload.validation.error.${validationError.code}`);
+                    // The file processor can supply the message, see `UploadRejected`.
+                    if (validationError.message !== "") {
+                        errorMessage = validationError.message;
+                    }
+                    else {
+                        errorMessage = getRejectionPhrase(`wcf.upload.validation.error.${validationError.code}`);
+                    }
                     break;
                 default:
                     errorMessage = "Unrecognized error type: " + JSON.stringify(validationError);
@@ -70,6 +79,14 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
             errorMessage = `Unexpected server error: [${file.apiError.type}] ${file.apiError.message}`;
         }
         return errorMessage;
+    }
+    function getRejectionPhrase(phraseName) {
+        const phrase = (0, Language_1.getPhrase)(phraseName);
+        if (phrase === phraseName) {
+            // There is no phrase for this code.
+            return (0, Language_1.getPhrase)("wcf.upload.error.rejected");
+        }
+        return phrase;
     }
     function fileInitializationFailed(element, file, reason) {
         if (reason instanceof Error) {
@@ -95,17 +112,10 @@ define(["require", "exports", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/F
         const filename = document.createElement("div");
         filename.classList.add("fileList__item__filename");
         filename.textContent = file.filename || file.dataset.filename;
-        const indicatorIcon = document.createElement("fa-icon");
-        indicatorIcon.setIcon("circle-check");
-        const fileIndicator = document.createElement("div");
-        fileIndicator.classList.add("fileList__item__indicator", "green", "jsTooltip");
-        fileIndicator.setAttribute("aria-hidden", "true");
-        fileIndicator.title = (0, Language_1.getPhrase)("wcf.attachment.inserted");
-        fileIndicator.append(indicatorIcon);
         const fileSize = document.createElement("div");
         fileSize.classList.add("fileList__item__fileSize");
         fileSize.textContent = (0, FileUtil_1.formatFilesize)(file.fileSize || parseInt(file.dataset.fileSize));
-        container.append(fileWrapper, filename, fileIndicator, fileSize);
+        container.append(fileWrapper, filename, fileSize);
     }
     function updateFileInformation(container, file) {
         const filename = container.querySelector(".fileList__item__filename");

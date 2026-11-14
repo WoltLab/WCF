@@ -7,13 +7,13 @@
  * @since 6.3
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "WoltLabSuite/Core/Component/File/Helper", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Language"], function (require, exports, Helper_1, Dialog_1, Snackbar_1, Language_1) {
+define(["require", "exports", "WoltLabSuite/Core/Component/File/Helper", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/StringUtil"], function (require, exports, Helper_1, Dialog_1, Snackbar_1, Language_1, StringUtil_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.editMedia = editMedia;
     exports.setupMediaUpload = setupMediaUpload;
-    function showError(message) {
-        const dialog = (0, Dialog_1.dialogFactory)().fromHtml(`<p>${message}</p>`).asAlert();
+    function showError(html) {
+        const dialog = (0, Dialog_1.dialogFactory)().fromHtml(`<p>${html}</p>`).asAlert();
         dialog.show((0, Language_1.getPhrase)("wcf.global.error.title"));
     }
     /**
@@ -55,7 +55,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/File/Helper", "WoltLa
                 // Without an API error, the upload was either aborted or failed due to
                 // a connection error, which the global error handler reports already.
                 if (file.apiError !== undefined) {
-                    showError((0, Helper_1.getErrorMessageFromFile)(file));
+                    showError((0, StringUtil_1.escapeHTML)((0, Helper_1.getErrorMessageFromFile)(file)));
                 }
             })
                 .finally(() => {

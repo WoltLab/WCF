@@ -13,6 +13,7 @@ import { getErrorMessageFromFile } from "WoltLabSuite/Core/Component/File/Helper
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import { showDefaultSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
 import { getPhrase } from "WoltLabSuite/Core/Language";
+import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 
 export type MediaUploadCallbacks = {
   /**
@@ -26,8 +27,8 @@ export type MediaUploadCallbacks = {
   allUploadsCompleted?: (mediaIds: number[]) => void;
 };
 
-function showError(message: string): void {
-  const dialog = dialogFactory().fromHtml(`<p>${message}</p>`).asAlert();
+function showError(html: string): void {
+  const dialog = dialogFactory().fromHtml(`<p>${html}</p>`).asAlert();
   dialog.show(getPhrase("wcf.global.error.title"));
 }
 
@@ -78,7 +79,7 @@ export function setupMediaUpload(uploadButton: HTMLElement, callbacks: MediaUplo
         // Without an API error, the upload was either aborted or failed due to
         // a connection error, which the global error handler reports already.
         if (file.apiError !== undefined) {
-          showError(getErrorMessageFromFile(file));
+          showError(escapeHTML(getErrorMessageFromFile(file)));
         }
       })
       .finally(() => {

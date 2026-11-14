@@ -181,10 +181,12 @@ final class PreloadPhrasesCollectingListener
         $event->preload('wcf.upload.error.uploadFailed');
         $event->preload('wcf.upload.error.delete.permissionDenied');
         $event->preload('wcf.upload.error.delete.unknownError');
+        $event->preload('wcf.upload.error.rejected');
         $event->preload('wcf.upload.validation.error.differentKind');
         $event->preload('wcf.upload.validation.error.noImage');
         $event->preload('wcf.upload.validation.error.notSquare');
         $event->preload('wcf.upload.validation.error.tooSmall');
+        $event->preload('wcf.upload.validation.error.wrongSize');
 
         $event->preload('wcf.user.activityPoint');
         $event->preload('wcf.user.trophy.trophies');

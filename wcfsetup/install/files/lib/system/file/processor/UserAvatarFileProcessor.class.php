@@ -9,6 +9,7 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\command\user\SetAvatar;
+use wcf\system\file\processor\exception\UploadRejected;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -121,7 +122,12 @@ final class UserAvatarFileProcessor extends AbstractFileProcessor
             $imageData[0] !== UserAvatarFileProcessor::AVATAR_SIZE
             && $imageData[0] !== UserAvatarFileProcessor::AVATAR_SIZE_2X
         ) {
-            throw new UserInputException('file', 'wrongSize');
+            throw UploadRejected::fromPhrase('wrongSize', 'wcf.user.avatar.error.wrongSize', [
+                'size' => self::AVATAR_SIZE,
+                'size2x' => self::AVATAR_SIZE_2X,
+                'width' => $imageData[0],
+                'height' => $imageData[1],
+            ]);
         }
     }
 

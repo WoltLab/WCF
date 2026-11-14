@@ -359,7 +359,18 @@ async function resizeImage(element: WoltlabCoreFileUploadElement, file: File): P
     }
   }
 
-  const canvas = await resizer.resize(image, maxWidth, maxHeight, resizeConfiguration.quality, false, timeout);
+  let canvas: HTMLCanvasElement | undefined;
+  try {
+    canvas = await resizer.resize(image, maxWidth, maxHeight, resizeConfiguration.quality, false, timeout);
+  } catch (e) {
+    // The browser can read the dimensions of some damaged images but fails to decode them.
+    if (e instanceof DOMException) {
+      throw new Error(getPhrase("wcf.upload.error.damagedImageFile", { filename: file.name }), { cause: e });
+    }
+
+    throw e;
+  }
+
   if (canvas === undefined) {
     // The resize operation failed, timed out or there was no need to perform
     // any scaling whatsoever.

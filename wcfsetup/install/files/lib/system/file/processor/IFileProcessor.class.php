@@ -5,6 +5,7 @@ namespace wcf\system\file\processor;
 use wcf\data\file\File;
 use wcf\data\file\thumbnail\FileThumbnail;
 use wcf\system\exception\UserInputException;
+use wcf\system\file\processor\exception\UploadRejected;
 
 /**
  * File processors are responsible to validate and process any file uploads
@@ -35,7 +36,13 @@ interface IFileProcessor
     /**
      * Validates the uploaded file.
      *
+     * Throw `UploadRejected` to tell the user why the file was rejected. Any
+     * other `UserInputException` shows the phrase
+     * `wcf.upload.validation.error.{type}` or a generic message if there is no
+     * such phrase.
+     *
      * @throws UserInputException if the file is invalid.
+     * @see UploadRejected
      */
     public function validateUpload(File $file): void;
 

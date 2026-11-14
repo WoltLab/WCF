@@ -157,29 +157,8 @@ export class FileProcessor {
       clearPreviousErrors(this.#uploadButton);
       setFieldError(this.#fieldId, null);
 
-      const changeEventListener = () => {
-        this.#fileInput.removeEventListener("cancel", cancelEventListener);
-
-        // Wait until the upload starts,
-        // the request to the server is not synchronized with the end of the `change` event.
-        // Otherwise, we would swap the context too soon.
-        void new Promise<void>((resolve) => {
-          this.#uploadResolve = resolve;
-        }).then(() => {
-          this.#uploadResolve = undefined;
-          this.#uploadButton.dataset.context = oldContext;
-        });
-      };
-      const cancelEventListener = () => {
-        this.#uploadButton.dataset.context = oldContext;
-        this.#registerFile(this.#replaceElement!, null, false);
-        this.#replaceElement = undefined;
-        this.#uploadResolve = undefined;
-        this.#fileInput.removeEventListener("change", changeEventListener);
-      };
-
-      this.#fileInput.addEventListener("cancel", cancelEventListener, { once: true });
-      this.#fileInput.addEventListener("change", changeEventListener, { once: true });
+      // The client can reject the selected file synchronously within the `change` event.
+      this.#awaitReplacement(oldContext);
 
       this.#fileInput.click();
     });
@@ -239,21 +218,40 @@ export class FileProcessor {
   #simpleFileReplace(oldFile: WoltlabCoreFileElement) {
     const oldContext = this.#startReplaceFile(oldFile);
 
-    const cropCancelledEvent = () => {
+    this.#awaitReplacement(oldContext);
+  }
+
+  /**
+   * Restores the replaced file unless the upload of the new file starts, which
+   * does not happen if the selection is canceled, the cropper is closed or the
+   * client rejects the new file.
+   */
+  #awaitReplacement(oldContext: string): void {
+    const abortController = new AbortController();
+    const restore = () => {
+      abortController.abort();
+
       this.#uploadResolve = undefined;
       this.#uploadButton.dataset.context = oldContext;
-      this.#registerFile(this.#replaceElement!, null, false);
-      this.#replaceElement = undefined;
+      if (this.#replaceElement !== undefined) {
+        this.#registerFile(this.#replaceElement, null, false);
+        this.#replaceElement = undefined;
+      }
     };
 
-    this.#uploadButton.addEventListener("cancel", cropCancelledEvent, { once: true });
+    this.#fileInput.addEventListener("cancel", restore, { signal: abortController.signal });
+    this.#uploadButton.addEventListener("cancel", restore, { signal: abortController.signal });
+    this.#uploadButton.addEventListener("upload:error", restore, { signal: abortController.signal });
 
+    // The request to the server is not synchronized with the end of the `change`
+    // event, swapping the context before the upload has started is too soon.
     void new Promise<void>((resolve) => {
       this.#uploadResolve = resolve;
     }).then(() => {
+      abortController.abort();
+
       this.#uploadResolve = undefined;
       this.#uploadButton.dataset.context = oldContext;
-      this.#uploadButton.removeEventListener("cancel", cropCancelledEvent);
     });
   }
 

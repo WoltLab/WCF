@@ -238,7 +238,17 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                 maxWidth = Math.min(maxWidth, window.screen.width);
             }
         }
-        const canvas = await resizer.resize(image, maxWidth, maxHeight, resizeConfiguration.quality, false, timeout);
+        let canvas;
+        try {
+            canvas = await resizer.resize(image, maxWidth, maxHeight, resizeConfiguration.quality, false, timeout);
+        }
+        catch (e) {
+            // The browser can read the dimensions of some damaged images but fails to decode them.
+            if (e instanceof DOMException) {
+                throw new Error((0, Language_1.getPhrase)("wcf.upload.error.damagedImageFile", { filename: file.name }), { cause: e });
+            }
+            throw e;
+        }
         if (canvas === undefined) {
             // The resize operation failed, timed out or there was no need to perform
             // any scaling whatsoever.

@@ -9,6 +9,7 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\command\user\SetCoverPhoto;
+use wcf\system\file\processor\exception\UploadRejected;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -151,7 +152,14 @@ final class UserCoverPhotoFileProcessor extends AbstractFileProcessor
             $height < UserCoverPhoto::MIN_HEIGHT ||
             $height > UserCoverPhoto::MAX_HEIGHT
         ) {
-            throw new UserInputException('file', 'wrongSize');
+            throw UploadRejected::fromPhrase('wrongSize', 'wcf.user.coverPhoto.error.wrongSize', [
+                'minWidth' => UserCoverPhoto::MIN_WIDTH,
+                'minHeight' => UserCoverPhoto::MIN_HEIGHT,
+                'maxWidth' => UserCoverPhoto::MAX_WIDTH,
+                'maxHeight' => UserCoverPhoto::MAX_HEIGHT,
+                'width' => $width,
+                'height' => $height,
+            ]);
         }
     }
 

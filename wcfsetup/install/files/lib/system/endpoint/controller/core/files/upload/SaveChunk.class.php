@@ -13,6 +13,7 @@ use wcf\http\Helper;
 use wcf\system\endpoint\IController;
 use wcf\system\endpoint\PostRequest;
 use wcf\system\exception\UserInputException;
+use wcf\system\file\processor\exception\UploadRejected;
 use wcf\system\file\processor\FileProcessor;
 use wcf\system\file\processor\UploaderToken;
 use wcf\system\io\File;
@@ -119,7 +120,7 @@ final class SaveChunk implements IController
             unset($fileTemporary);
 
             if ($file === null) {
-                throw new UserInputException('validation', 'noImage');
+                throw new UploadRejected('noImage');
             }
 
             $processor = $file->getProcessor();
@@ -130,11 +131,21 @@ final class SaveChunk implements IController
                 } catch (UserInputException $exception) {
                     FileBuilder::delete($file);
 
-                    throw new UserInputException('validation', $exception->getType());
+                    throw $this->toUploadRejected($exception);
                 }
 
                 if (FileProcessor::getInstance()->canAdopt($processor, $file, $context)) {
-                    $processor->adopt($file, $context);
+                    try {
+                        $processor->adopt($file, $context);
+                    } catch (UserInputException $exception) {
+                        // A processor can reject the file while adopting it, which
+                        // is reported like a rejection by `validateUpload()`.
+                        if ($exception->getField() === 'validation') {
+                            throw $this->toUploadRejected($exception);
+                        }
+
+                        throw $exception;
+                    }
                 }
             }
 
@@ -174,5 +185,18 @@ final class SaveChunk implements IController
         return new JsonResponse([
             'completed' => false,
         ]);
+    }
+
+    /**
+     * The message of a regular `UserInputException` is meant for developers,
+     * the client must not show it to the user.
+     */
+    private function toUploadRejected(UserInputException $exception): UploadRejected
+    {
+        if ($exception instanceof UploadRejected) {
+            return $exception;
+        }
+
+        return new UploadRejected($exception->getType());
     }
 }

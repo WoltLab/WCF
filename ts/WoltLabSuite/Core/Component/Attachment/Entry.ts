@@ -192,11 +192,28 @@ function getInsertButton(attachmentId: number, url: string, editor: HTMLElement)
   return button;
 }
 
+/**
+ * The indicator is shown while the attachment is embedded in the message.
+ */
+function getInsertedIndicator(): HTMLElement {
+  const icon = document.createElement("fa-icon");
+  icon.setIcon("circle-check");
+
+  const indicator = document.createElement("div");
+  indicator.classList.add("fileList__item__indicator", "green", "jsTooltip");
+  indicator.setAttribute("aria-hidden", "true");
+  indicator.title = getPhrase("wcf.attachment.inserted");
+  indicator.append(icon);
+
+  return indicator;
+}
+
 export function createAttachmentFromFile(file: WoltlabCoreFileElement, editor: HTMLElement, uploaderToken?: string) {
   const element = document.createElement("li");
   element.classList.add("fileList__item", "attachment__item");
 
   insertFileInformation(element, file);
+  element.append(getInsertedIndicator());
 
   file.addEventListener("file:update-data", () => {
     updateFileInformation(element, file);
