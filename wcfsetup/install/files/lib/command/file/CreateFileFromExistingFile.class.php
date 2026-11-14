@@ -4,6 +4,7 @@ namespace wcf\command\file;
 
 use wcf\data\file\File;
 use wcf\data\file\FileBuilder;
+use wcf\data\object\type\ObjectType;
 use wcf\system\file\processor\FileProcessor;
 use wcf\util\ExifUtil;
 use wcf\util\FileUtil;
@@ -42,11 +43,32 @@ final class CreateFileFromExistingFile
             throw new \RuntimeException("The object type '{$this->objectTypeName}' is not valid.");
         }
 
-        $mimeType = FileUtil::getMimeType($this->pathname);
+        if (!$this->copy) {
+            return $this->createFile($this->pathname, $objectType);
+        }
+
+        // Normalizing the rotation rewrites the file, which must not affect the source of a copy.
+        $pathname = FileUtil::getTemporaryFilename();
+        if (!\copy($this->pathname, $pathname)) {
+            throw new \RuntimeException("The file '{$this->pathname}' could not be copied to '{$pathname}'.");
+        }
+
+        try {
+            return $this->createFile($pathname, $objectType);
+        } finally {
+            if (\is_file($pathname)) {
+                \unlink($pathname);
+            }
+        }
+    }
+
+    private function createFile(string $pathname, ObjectType $objectType): ?File
+    {
+        $mimeType = FileUtil::getMimeType($pathname);
         $isImage = ImageUtil::isImageMimeType($mimeType);
 
         if ($this->exifData === null) {
-            $exifData = ExifUtil::getExifData($this->pathname);
+            $exifData = ExifUtil::getExifData($pathname);
 
             // Remove the `FILE` and `COMPUTED` section because those contain
             // garbled data anyway and we do not need them in the first place.
@@ -66,7 +88,7 @@ final class CreateFileFromExistingFile
         $width = $height = null;
         if ($isImage) {
             try {
-                $imageData = \getimagesize($this->pathname);
+                $imageData = \getimagesize($pathname);
             } catch (\Throwable) {
                 $imageData = false;
             }
@@ -83,7 +105,7 @@ final class CreateFileFromExistingFile
             $imageWasModified = false;
             try {
                 $imageWasModified = ExifUtil::normalizeImageRotation(
-                    $this->pathname,
+                    $pathname,
                     $width,
                     $height,
                     $mimeType,
@@ -97,14 +119,14 @@ final class CreateFileFromExistingFile
             }
 
             if ($imageWasModified) {
-                [$width, $height] = \getimagesize($this->pathname);
+                [$width, $height] = \getimagesize($pathname);
             }
         }
 
         $file = FileBuilder::forCreate()
             ->setFilename($this->originalFilename)
-            ->setFileSize(\filesize($this->pathname))
-            ->setFileHash(\hash_file('sha256', $this->pathname))
+            ->setFileSize(\filesize($pathname))
+            ->setFileHash(\hash_file('sha256', $pathname))
             ->setFileExtension(File::getSafeFileExtension(
                 $mimeType,
                 $this->originalFilename,
@@ -122,11 +144,7 @@ final class CreateFileFromExistingFile
             \mkdir($filePath, recursive: true);
         }
 
-        if ($this->copy) {
-            \copy($this->pathname, $filePath . $file->getSourceFilename());
-        } else {
-            \rename($this->pathname, $filePath . $file->getSourceFilename());
-        }
+        \rename($pathname, $filePath . $file->getSourceFilename());
 
         return $file;
     }
