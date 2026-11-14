@@ -43,7 +43,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
      * user merge mode
      * @var int
      */
-    protected $userMergeMode = 2;
+    protected $userMergeMode = UserImporter::MERGE_MODE_EMAIL;
 
     /**
      * import hash

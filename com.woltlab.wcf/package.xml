@@ -56,6 +56,8 @@
 
 	<!--
 	Required order of the following steps for the update to 6.3:
+	The following check must run first, it aborts the update if duplicate email addresses exist:
+	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_checkUserEmail.php</instruction>
 	The following step must run before the `*L10n.php` scripts and before the `language` PIP:
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_authoritativeLanguages.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_likeObject.php</instruction>

@@ -4176,6 +4176,7 @@ return [
                 ->type(DatabaseTableIndex::UNIQUE_TYPE)
                 ->columns(['username']),
             DatabaseTableIndex::create('email')
+                ->type(DatabaseTableIndex::UNIQUE_TYPE)
                 ->columns(['email']),
             DatabaseTableIndex::create('registrationDate')
                 ->columns(['registrationDate']),

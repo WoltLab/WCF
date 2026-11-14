@@ -67,8 +67,10 @@ class UserImporter extends AbstractImporter
         // whether to perform a merge
         $performMerge = false;
 
-        // fetch user with same username
+        // fetch users with same username or email address
         $conflictingUser = User::getUserByUsername($data['username']);
+        $email = $data['email'] ?? '';
+        $userByEmail = $email !== '' ? User::getUserByEmail($email) : null;
         switch (ImportHandler::getInstance()->getUserMergeMode()) {
             case self::MERGE_MODE_USERNAME_OR_EMAIL:
                 // merge target will be the conflicting user
@@ -81,10 +83,9 @@ class UserImporter extends AbstractImporter
                 }
                 // no break
             case self::MERGE_MODE_EMAIL:
-                // fetch merge target
-                $targetUser = User::getUserByEmail($data['email']);
-                // if it exists: perform a merge
-                if (!$targetUser->isGuest()) {
+                // if a user with the same email address exists: perform a merge
+                if ($userByEmail !== null && !$userByEmail->isGuest()) {
+                    $targetUser = $userByEmail;
                     $performMerge = true;
                 }
                 break;
@@ -94,6 +95,12 @@ class UserImporter extends AbstractImporter
         if ($performMerge) {
             ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user', $oldID, $targetUser->userID);
 
+            return 0;
+        }
+
+        // email addresses must be unique, users without an email address
+        // or with an email address that is already in use cannot be imported
+        if ($userByEmail === null || !$userByEmail->isGuest()) {
             return 0;
         }
 

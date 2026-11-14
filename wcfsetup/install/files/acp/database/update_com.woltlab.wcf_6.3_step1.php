@@ -332,6 +332,11 @@ return [
         ->columns([
             CharDatabaseTableColumn::create('lostPasswordKey')
                 ->length(64),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('email')
+                ->type(DatabaseTableIndex::UNIQUE_TYPE)
+                ->columns(['email']),
         ]),
     PartialDatabaseTable::create('wcf1_style')
         ->columns([
