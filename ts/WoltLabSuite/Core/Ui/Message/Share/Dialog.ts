@@ -9,18 +9,16 @@
 import * as DomTraverse from "../../../Dom/Traverse";
 import * as Clipboard from "../../../Clipboard";
 import * as StringUtil from "../../../StringUtil";
-import DomChangeListener from "../../../Dom/Change/Listener";
 import { getShareProviders } from "./Providers";
 import { dialogFactory } from "../../../Component/Dialog";
 import { getPhrase } from "WoltLabSuite/Core/Language";
 import * as EventHandler from "../../../Event/Handler";
 import { showSuccessSnackbar } from "WoltLabSuite/Core/Component/Snackbar";
+import { wheneverFirstSeen } from "../../../Helper/Selector";
 
 type Label = string;
 type Value = string;
 type DialogElement = [Label, Value];
-
-const shareButtons = new WeakSet<HTMLElement>();
 
 const offerNativeSharing = window.navigator.share !== undefined;
 
@@ -181,10 +179,7 @@ async function nativeShare(event: Event): Promise<void> {
 /**
  * Opens the share dialog after clicking on the share button.
  */
-function openDialog(event: MouseEvent): void {
-  event.preventDefault();
-
-  const target = event.currentTarget as HTMLElement;
+function openDialog(target: HTMLElement): void {
   const link = getLink(target);
   const providerButtons = getProviderButtons();
   let providerElement = "";
@@ -235,16 +230,6 @@ function openDialog(event: MouseEvent): void {
   }
 
   dialog.show(getPhrase("wcf.message.share"));
-}
-
-function registerButtons(): void {
-  document.querySelectorAll(".shareButton, .wsShareButton").forEach((shareButton: HTMLElement) => {
-    if (!shareButtons.has(shareButton)) {
-      shareButton.addEventListener("click", (ev) => openDialog(ev));
-
-      shareButtons.add(shareButton);
-    }
-  });
 }
 
 function getLink(button: HTMLElement): string {
@@ -331,6 +316,10 @@ function getPageDescription(): string {
 }
 
 export function setup(): void {
-  registerButtons();
-  DomChangeListener.add("WoltLabSuite/Core/Ui/Message/Share/Dialog", () => registerButtons());
+  wheneverFirstSeen(".shareButton, .wsShareButton", (shareButton) => {
+    shareButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      openDialog(shareButton);
+    });
+  });
 }

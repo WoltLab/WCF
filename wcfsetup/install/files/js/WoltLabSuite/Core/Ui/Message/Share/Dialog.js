@@ -5,16 +5,14 @@
  * @copyright  2001-2021 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipboard", "../../../StringUtil", "../../../Dom/Change/Listener", "./Providers", "../../../Component/Dialog", "WoltLabSuite/Core/Language", "../../../Event/Handler", "WoltLabSuite/Core/Component/Snackbar"], function (require, exports, tslib_1, DomTraverse, Clipboard, StringUtil, Listener_1, Providers_1, Dialog_1, Language_1, EventHandler, Snackbar_1) {
+define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipboard", "../../../StringUtil", "./Providers", "../../../Component/Dialog", "WoltLabSuite/Core/Language", "../../../Event/Handler", "WoltLabSuite/Core/Component/Snackbar", "../../../Helper/Selector"], function (require, exports, tslib_1, DomTraverse, Clipboard, StringUtil, Providers_1, Dialog_1, Language_1, EventHandler, Snackbar_1, Selector_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Clipboard = tslib_1.__importStar(Clipboard);
     StringUtil = tslib_1.__importStar(StringUtil);
-    Listener_1 = tslib_1.__importDefault(Listener_1);
     EventHandler = tslib_1.__importStar(EventHandler);
-    const shareButtons = new WeakSet();
     const offerNativeSharing = window.navigator.share !== undefined;
     /**
      * Copies the contents of one of the share dialog's input elements to the clipboard.
@@ -137,9 +135,7 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
     /**
      * Opens the share dialog after clicking on the share button.
      */
-    function openDialog(event) {
-        event.preventDefault();
-        const target = event.currentTarget;
+    function openDialog(target) {
         const link = getLink(target);
         const providerButtons = getProviderButtons();
         let providerElement = "";
@@ -182,14 +178,6 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
             initProviderButtons(dialog.content, link);
         }
         dialog.show((0, Language_1.getPhrase)("wcf.message.share"));
-    }
-    function registerButtons() {
-        document.querySelectorAll(".shareButton, .wsShareButton").forEach((shareButton) => {
-            if (!shareButtons.has(shareButton)) {
-                shareButton.addEventListener("click", (ev) => openDialog(ev));
-                shareButtons.add(shareButton);
-            }
-        });
     }
     function getLink(button) {
         if (button instanceof HTMLAnchorElement) {
@@ -263,7 +251,11 @@ define(["require", "exports", "tslib", "../../../Dom/Traverse", "../../../Clipbo
         return "";
     }
     function setup() {
-        registerButtons();
-        Listener_1.default.add("WoltLabSuite/Core/Ui/Message/Share/Dialog", () => registerButtons());
+        (0, Selector_1.wheneverFirstSeen)(".shareButton, .wsShareButton", (shareButton) => {
+            shareButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                openDialog(shareButton);
+            });
+        });
     }
 });
