@@ -125,28 +125,62 @@ export function registerContainer(
           return;
         }
 
-        const quote = await saveFullQuote(objectType, objectId, className);
+        await saveAndInsertFullQuote(objectType, objectId, className);
         quoteMessageButton?.classList.add("active");
-
-        if (activeEditor !== undefined) {
-          const content = quote.rawMessage || quote.message;
-          if (content === null) {
-            throw new Error("Expected either the `rawMessage` or `message` to be a string.");
-          }
-
-          dispatchToCkeditor(activeEditor.sourceElement).insertQuote({
-            author: quote.author,
-            content,
-            isText: quote.rawMessage === null,
-            link: quote.link,
-            uuid: quote.uuid,
-          });
-
-          markQuoteAsUsed(activeEditor.sourceElement.id, quote.uuid);
-        }
       }),
     );
   });
+}
+
+/**
+ * Saves the full message as a quote and inserts it into the active editor, if any.
+ *
+ * @returns `true` if the quote was inserted into the active editor.
+ */
+async function saveAndInsertFullQuote(objectType: string, objectId: number, className?: string): Promise<boolean> {
+  const quote = await saveFullQuote(objectType, objectId, className);
+
+  if (activeEditor === undefined) {
+    return false;
+  }
+
+  const content = quote.rawMessage || quote.message;
+  if (content === null) {
+    throw new Error("Expected either the `rawMessage` or `message` to be a string.");
+  }
+
+  dispatchToCkeditor(activeEditor.sourceElement).insertQuote({
+    author: quote.author,
+    content,
+    isText: quote.rawMessage === null,
+    link: quote.link,
+    uuid: quote.uuid,
+  });
+
+  markQuoteAsUsed(activeEditor.sourceElement.id, quote.uuid);
+
+  return true;
+}
+
+/**
+ * Handles buttons with the `[data-quote-message]` attribute that quote the
+ * full message, for example, entries of an interaction context menu. Unlike
+ * the `.jsQuoteMessage` button, these only add the quote and do not toggle it.
+ */
+async function onQuoteMessageClick(button: HTMLElement): Promise<void> {
+  const objectType = button.dataset.quoteMessage!;
+  const objectId = parseInt(button.dataset.objectId!);
+
+  if (getFullQuoteUuid(objectType, objectId) === undefined) {
+    const inserted = await saveAndInsertFullQuote(objectType, objectId);
+    quoteMessageButtons.get(getKey(objectType, objectId))?.classList.add("active");
+
+    if (inserted) {
+      return;
+    }
+  }
+
+  showSuccessSnackbar(getPhrase("wcf.message.quote.quoteSelected.success"));
 }
 
 export function setActiveEditor(editor?: CKEditor, supportDirectInsert: boolean = false) {
@@ -239,6 +273,21 @@ function setup() {
   copyQuote.appendChild(buttonSaveAndInsertQuote);
 
   document.body.appendChild(copyQuote);
+
+  const quoteMessageClick = promiseMutex((button: HTMLElement) => onQuoteMessageClick(button));
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) {
+      return;
+    }
+
+    const button = event.target.closest<HTMLElement>("[data-quote-message]");
+    if (button === null) {
+      return;
+    }
+
+    event.preventDefault();
+    quoteMessageClick(button);
+  });
 
   document.addEventListener("mouseup", (event) => onMouseUp(event));
   document.addEventListener("selectionchange", () => onSelectionchange());

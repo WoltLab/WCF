@@ -70,24 +70,51 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
                     quoteMessageButton?.classList.remove("active");
                     return;
                 }
-                const quote = await (0, Storage_1.saveFullQuote)(objectType, objectId, className);
+                await saveAndInsertFullQuote(objectType, objectId, className);
                 quoteMessageButton?.classList.add("active");
-                if (activeEditor !== undefined) {
-                    const content = quote.rawMessage || quote.message;
-                    if (content === null) {
-                        throw new Error("Expected either the `rawMessage` or `message` to be a string.");
-                    }
-                    (0, Event_1.dispatchToCkeditor)(activeEditor.sourceElement).insertQuote({
-                        author: quote.author,
-                        content,
-                        isText: quote.rawMessage === null,
-                        link: quote.link,
-                        uuid: quote.uuid,
-                    });
-                    (0, Storage_1.markQuoteAsUsed)(activeEditor.sourceElement.id, quote.uuid);
-                }
             }));
         });
+    }
+    /**
+     * Saves the full message as a quote and inserts it into the active editor, if any.
+     *
+     * @returns `true` if the quote was inserted into the active editor.
+     */
+    async function saveAndInsertFullQuote(objectType, objectId, className) {
+        const quote = await (0, Storage_1.saveFullQuote)(objectType, objectId, className);
+        if (activeEditor === undefined) {
+            return false;
+        }
+        const content = quote.rawMessage || quote.message;
+        if (content === null) {
+            throw new Error("Expected either the `rawMessage` or `message` to be a string.");
+        }
+        (0, Event_1.dispatchToCkeditor)(activeEditor.sourceElement).insertQuote({
+            author: quote.author,
+            content,
+            isText: quote.rawMessage === null,
+            link: quote.link,
+            uuid: quote.uuid,
+        });
+        (0, Storage_1.markQuoteAsUsed)(activeEditor.sourceElement.id, quote.uuid);
+        return true;
+    }
+    /**
+     * Handles buttons with the `[data-quote-message]` attribute that quote the
+     * full message, for example, entries of an interaction context menu. Unlike
+     * the `.jsQuoteMessage` button, these only add the quote and do not toggle it.
+     */
+    async function onQuoteMessageClick(button) {
+        const objectType = button.dataset.quoteMessage;
+        const objectId = parseInt(button.dataset.objectId);
+        if ((0, Storage_1.getFullQuoteUuid)(objectType, objectId) === undefined) {
+            const inserted = await saveAndInsertFullQuote(objectType, objectId);
+            quoteMessageButtons.get((0, Storage_1.getKey)(objectType, objectId))?.classList.add("active");
+            if (inserted) {
+                return;
+            }
+        }
+        (0, Snackbar_1.showSuccessSnackbar)((0, Language_1.getPhrase)("wcf.message.quote.quoteSelected.success"));
     }
     function setActiveEditor(editor, supportDirectInsert = false) {
         copyQuote.querySelector(".jsQuoteManagerQuoteAndInsert").hidden = !supportDirectInsert;
@@ -147,6 +174,18 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Dom/Util", "WoltLabSui
         }));
         copyQuote.appendChild(buttonSaveAndInsertQuote);
         document.body.appendChild(copyQuote);
+        const quoteMessageClick = (0, PromiseMutex_1.promiseMutex)((button) => onQuoteMessageClick(button));
+        document.addEventListener("click", (event) => {
+            if (!(event.target instanceof Element)) {
+                return;
+            }
+            const button = event.target.closest("[data-quote-message]");
+            if (button === null) {
+                return;
+            }
+            event.preventDefault();
+            quoteMessageClick(button);
+        });
         document.addEventListener("mouseup", (event) => onMouseUp(event));
         document.addEventListener("selectionchange", () => onSelectionchange());
         // Prevent the tooltip from being selectable while the touch pointer is being moved.
