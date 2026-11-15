@@ -64,6 +64,11 @@
 			> span {
 				cursor: not-allowed !important;
 			}
+
+			> :is(a, button) {
+				color: inherit;
+				cursor: not-allowed;
+			}
 		}
 
 		> :is(a, button, span) {
