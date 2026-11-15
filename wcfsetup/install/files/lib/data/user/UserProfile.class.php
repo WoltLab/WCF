@@ -1274,4 +1274,26 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
 
         return WCF::getSession()->hasPermission('user.profile.coverPhoto.canUploadCoverPhoto');
     }
+
+    /**
+     * Returns the HTML code to display the user title as a badge, styled with the CSS class of the user's rank.
+     * Returns an empty string if the user has no user title.
+     *
+     * @since 6.3
+     */
+    public function renderUserTitle(): string
+    {
+        if ($this->getUserTitle() === '') {
+            return '';
+        }
+
+        $rank = $this->getRank();
+        $cssClassName = $rank !== null && $rank->cssClassName !== '' ? ' ' . StringUtil::encodeHTML($rank->cssClassName) : '';
+
+        return \sprintf(
+            '<span class="badge userTitleBadge%s">%s</span>',
+            $cssClassName,
+            StringUtil::encodeHTML($this->getUserTitle()),
+        );
+    }
 }

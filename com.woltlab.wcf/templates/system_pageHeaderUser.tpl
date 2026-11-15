@@ -142,9 +142,7 @@
 							</div>
 							{if MODULE_USER_RANK}
 							<div class="userMenuItemMeta">
-								{if $__wcf->getUserProfileHandler()->getUserTitle()}
-									<span class="badge userTitleBadge{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->cssClassName} {unsafe:$__wcf->getUserProfileHandler()->getRank()->cssClassName}{/if}">{$__wcf->getUserProfileHandler()->getUserTitle()}</span>
-								{/if}
+								{unsafe:$__wcf->getUserProfileHandler()->getUserProfile()->renderUserTitle()}
 								{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->rankImage}
 									<span class="userRankImage">{unsafe:$__wcf->getUserProfileHandler()->getRank()->getImage()}</span>
 								{/if}
