@@ -59,15 +59,6 @@
 {include file='shared_formError'}
 
 <form method="post" action="{link controller='Option' id=$category->categoryID}{/link}" enctype="multipart/form-data">
-	{*
-		fake fields are a workaround for chrome autofill picking the wrong fields
-		taken from http://stackoverflow.com/a/15917221
-	*}
-	<div style="display: none;">
-		<input type="text" name="fakeusernameremembered">
-		<input type="password" name="fakepasswordremembered">
-	</div>
-	
 	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
 		<nav class="tabMenu">
 			<ul>
