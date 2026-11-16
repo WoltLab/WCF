@@ -10,8 +10,11 @@
 		cursor: text;
 	}
 
-	&:focus-within:focus-visible {
+	/* The embedded input is unstyled, the container marks the focus instead. */
+	&:focus-within {
+		background-color: var(--wcfInputBackgroundActive);
 		border-color: var(--wcfInputBorderActive);
+		box-shadow: 0 0 0 3px rgba(var(--wcfInputBorderActive-rgb) / 0.25);
 	}
 
 	> .item,
@@ -48,6 +51,7 @@
 	> .input > input {
 		background-color: transparent !important;
 		border-width: 0 !important;
+		box-shadow: none !important;
 		min-width: 165px;
 		padding: 0 !important;
 	}

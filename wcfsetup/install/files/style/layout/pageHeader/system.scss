@@ -97,6 +97,7 @@
 
 	/* The border of the field already marks the focus. */
 	&:focus-visible {
+		box-shadow: none;
 		outline: none;
 	}
 }

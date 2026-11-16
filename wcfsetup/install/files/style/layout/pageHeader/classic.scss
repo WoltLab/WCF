@@ -368,6 +368,7 @@
 		&:focus,
 		&:hover {
 			background-color: var(--wcfHeaderSearchBoxBackgroundActive);
+			box-shadow: none;
 			color: var(--wcfHeaderSearchBoxTextActive);
 
 			/* set placeholder color, do not chain these with a comma
