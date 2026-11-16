@@ -35,6 +35,13 @@ abstract class DatabaseObjectBuilder
      */
     public protected(set) array $incrementProperties = [];
 
+    /**
+     * Arbitrary data that is never persisted by the builder.
+     *
+     * @var array<string, mixed>
+     */
+    public protected(set) array $extensionData = [];
+
     private bool $consumed = false;
 
     /**
@@ -353,6 +360,22 @@ abstract class DatabaseObjectBuilder
     final public function incrementCustomProperty(string $name, int|float $value): static
     {
         $this->incrementProperties[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Sets arbitrary data that is not written when the object is persisted,
+     * but is available to the listeners of the events that are fired after
+     * the object has been created or updated. This allows plugins to pass
+     * values, for example from their own form fields, that they store
+     * separately.
+     *
+     * The key should be the identifier of the package to avoid collisions.
+     */
+    final public function setExtensionData(string $key, mixed $value): static
+    {
+        $this->extensionData[$key] = $value;
 
         return $this;
     }
