@@ -4,7 +4,9 @@
  *
  * The form is expected to be the only content of the container element. The
  * controller responds with `{ form }` if the validation failed and with
- * `{ form, result }` on success, the form is re-rendered in both cases.
+ * `{ form, result }` on success, the form is re-rendered in both cases. A
+ * successful response without a form (`{ result }`) destroys the form, which
+ * is used by forms that are only shown temporarily, e.g. to edit a message.
  *
  * @author Marcel Werk
  * @copyright 2001-2026 WoltLab GmbH
@@ -27,11 +29,22 @@ type ResponseSubmitForm =
       form: string;
       formId: string;
       result: unknown;
+    }
+  | {
+      result: unknown;
     };
 
 type SuccessCallback<T> = (result: T) => void | Promise<void>;
 
-class InlineForm<T> {
+export type InlineFormHandle = {
+  /**
+   * Destroys the editors, discards their drafts and removes the form from
+   * the container.
+   */
+  destroy(): Promise<void>;
+};
+
+class InlineForm<T> implements InlineFormHandle {
   readonly #container: HTMLElement;
   readonly #endpoint: string;
   readonly #formId: string;
@@ -77,8 +90,12 @@ class InlineForm<T> {
       const response = (await prepareRequest(this.#endpoint).post(data).fetchAsJson()) as ResponseSubmitForm;
 
       if ("result" in response) {
-        this.#resetEditors();
-        this.#render(response.form);
+        if ("form" in response) {
+          this.#resetEditors();
+          this.#render(response.form);
+        } else {
+          await this.destroy();
+        }
 
         await this.#onSuccess(response.result as T);
       } else {
@@ -111,6 +128,25 @@ class InlineForm<T> {
     });
   }
 
+  async destroy(): Promise<void> {
+    for (const textarea of this.#container.querySelectorAll<HTMLTextAreaElement>("textarea.wysiwygTextarea")) {
+      const ckeditor = getCkeditor(textarea);
+      if (ckeditor === undefined) {
+        continue;
+      }
+
+      await ckeditor.destroy();
+      ckeditor.discardDraft();
+      clearQuotesForEditor(textarea.id);
+    }
+
+    if (FormBuilderManager.hasForm(this.#formId)) {
+      FormBuilderManager.unregisterForm(this.#formId);
+    }
+
+    this.#container.innerHTML = "";
+  }
+
   #render(html: string): void {
     if (FormBuilderManager.hasForm(this.#formId)) {
       FormBuilderManager.unregisterForm(this.#formId);
@@ -130,13 +166,13 @@ class InlineForm<T> {
 /**
  * Sets up the form with the given id that has been rendered into the given
  * container. The callback is invoked with the result of a successful
- * submission after the form has been reset.
+ * submission after the form has been reset or destroyed.
  */
 export function setupInlineForm<T = unknown>(
   container: HTMLElement,
   formId: string,
   endpoint: string,
   onSuccess: SuccessCallback<T>,
-): void {
-  new InlineForm<T>(container, formId, endpoint, onSuccess);
+): InlineFormHandle {
+  return new InlineForm<T>(container, formId, endpoint, onSuccess);
 }

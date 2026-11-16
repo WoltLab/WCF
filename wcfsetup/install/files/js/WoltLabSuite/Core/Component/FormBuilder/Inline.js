@@ -4,7 +4,9 @@
  *
  * The form is expected to be the only content of the container element. The
  * controller responds with `{ form }` if the validation failed and with
- * `{ form, result }` on success, the form is re-rendered in both cases.
+ * `{ form, result }` on success, the form is re-rendered in both cases. A
+ * successful response without a form (`{ result }`) destroys the form, which
+ * is used by forms that are only shown temporarily, e.g. to edit a message.
  *
  * @author Marcel Werk
  * @copyright 2001-2026 WoltLab GmbH
@@ -54,8 +56,13 @@ define(["require", "exports", "tslib", "../../Ajax/Backend", "../../Dom/Util", "
                 const data = await FormBuilderManager.getData(this.#formId);
                 const response = (await (0, Backend_1.prepareRequest)(this.#endpoint).post(data).fetchAsJson());
                 if ("result" in response) {
-                    this.#resetEditors();
-                    this.#render(response.form);
+                    if ("form" in response) {
+                        this.#resetEditors();
+                        this.#render(response.form);
+                    }
+                    else {
+                        await this.destroy();
+                    }
                     await this.#onSuccess(response.result);
                 }
                 else {
@@ -85,6 +92,21 @@ define(["require", "exports", "tslib", "../../Ajax/Backend", "../../Dom/Util", "
                 (0, Storage_1.clearQuotesForEditor)(textarea.id);
             });
         }
+        async destroy() {
+            for (const textarea of this.#container.querySelectorAll("textarea.wysiwygTextarea")) {
+                const ckeditor = (0, Ckeditor_1.getCkeditor)(textarea);
+                if (ckeditor === undefined) {
+                    continue;
+                }
+                await ckeditor.destroy();
+                ckeditor.discardDraft();
+                (0, Storage_1.clearQuotesForEditor)(textarea.id);
+            }
+            if (FormBuilderManager.hasForm(this.#formId)) {
+                FormBuilderManager.unregisterForm(this.#formId);
+            }
+            this.#container.innerHTML = "";
+        }
         #render(html) {
             if (FormBuilderManager.hasForm(this.#formId)) {
                 FormBuilderManager.unregisterForm(this.#formId);
@@ -100,9 +122,9 @@ define(["require", "exports", "tslib", "../../Ajax/Backend", "../../Dom/Util", "
     /**
      * Sets up the form with the given id that has been rendered into the given
      * container. The callback is invoked with the result of a successful
-     * submission after the form has been reset.
+     * submission after the form has been reset or destroyed.
      */
     function setupInlineForm(container, formId, endpoint, onSuccess) {
-        new InlineForm(container, formId, endpoint, onSuccess);
+        return new InlineForm(container, formId, endpoint, onSuccess);
     }
 });
