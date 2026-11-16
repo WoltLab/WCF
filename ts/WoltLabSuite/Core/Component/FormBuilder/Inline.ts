@@ -5,8 +5,12 @@
  * The form is expected to be the only content of the container element. The
  * controller responds with `{ form }` if the validation failed and with
  * `{ form, result }` on success, the form is re-rendered in both cases. A
- * successful response without a form (`{ result }`) destroys the form, which
- * is used by forms that are only shown temporarily, e.g. to edit a message.
+ * successful response without a form (`{ result }`) destroys the form after
+ * the callback has settled, which is used by forms that are only shown
+ * temporarily, e.g. to edit a message. This allows the form to remain visible
+ * until the caller has replaced it. The callback must replace or remove the
+ * container itself and must not render into it, because the container is
+ * emptied afterwards.
  *
  * @author Marcel Werk
  * @copyright 2001-2026 WoltLab GmbH
@@ -93,11 +97,15 @@ class InlineForm<T> implements InlineFormHandle {
         if ("form" in response) {
           this.#resetEditors();
           this.#render(response.form);
-        } else {
-          await this.destroy();
-        }
 
-        await this.#onSuccess(response.result as T);
+          await this.#onSuccess(response.result as T);
+        } else {
+          try {
+            await this.#onSuccess(response.result as T);
+          } finally {
+            await this.destroy();
+          }
+        }
       } else {
         this.#render(response.form);
         this.#scrollToFirstError();
@@ -166,7 +174,8 @@ class InlineForm<T> implements InlineFormHandle {
 /**
  * Sets up the form with the given id that has been rendered into the given
  * container. The callback is invoked with the result of a successful
- * submission after the form has been reset or destroyed.
+ * submission after the form has been reset or before it is destroyed. In the
+ * latter case the callback must not render into the container.
  */
 export function setupInlineForm<T = unknown>(
   container: HTMLElement,
