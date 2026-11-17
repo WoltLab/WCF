@@ -9,7 +9,9 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\DatabaseObjectList;
 use wcf\event\IPsr14Event;
 use wcf\system\event\EventHandler;
+use wcf\system\interaction\bulk\IBulkInteraction;
 use wcf\system\interaction\bulk\IBulkInteractionProvider;
+use wcf\system\interaction\Divider;
 use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
 use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
@@ -686,8 +688,11 @@ abstract class AbstractListView
         }
 
         return \implode("\n", \array_map(
-            fn($interaction) => $interaction->renderInitialization($this->getID() . '_items'),
-            $this->getBulkInteractionProvider()->getInteractions()
+            fn(IBulkInteraction $interaction) => $interaction->renderInitialization($this->getID() . '_items'),
+            \array_filter(
+                $this->getBulkInteractionProvider()->getInteractions(),
+                static fn(IBulkInteraction|Divider $interaction) => $interaction instanceof IBulkInteraction
+            )
         ));
     }
 

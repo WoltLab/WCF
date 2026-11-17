@@ -10,7 +10,9 @@ use wcf\data\DatabaseObjectList;
 use wcf\event\IPsr14Event;
 use wcf\system\event\EventHandler;
 use wcf\system\view\filter\exception\InvalidFilterValue;
+use wcf\system\interaction\bulk\IBulkInteraction;
 use wcf\system\interaction\bulk\IBulkInteractionProvider;
+use wcf\system\interaction\Divider;
 use wcf\system\interaction\IInteraction;
 use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
@@ -510,8 +512,11 @@ abstract class AbstractGridView
         }
 
         return \implode("\n", \array_map(
-            fn($interaction) => $interaction->renderInitialization($this->getID() . '_table'),
-            $this->getBulkInteractionProvider()->getInteractions()
+            fn(IBulkInteraction $interaction) => $interaction->renderInitialization($this->getID() . '_table'),
+            \array_filter(
+                $this->getBulkInteractionProvider()->getInteractions(),
+                static fn(IBulkInteraction|Divider $interaction) => $interaction instanceof IBulkInteraction
+            )
         ));
     }
 
