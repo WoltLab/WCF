@@ -23,6 +23,6 @@ class RowFormContainer extends FormContainer
     // @phpstan-ignore constructor.missingParentCall
     public function __construct()
     {
-        $this->addClasses(['row', 'rowColGap', 'formGrid']);
+        $this->addClasses(['row', 'formRow', 'formGrid']);
     }
 }

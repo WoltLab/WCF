@@ -159,6 +159,11 @@ html[data-color-scheme="dark"] .formField__error {
 	color: var(--color-error, #ff4747);
 }
 
+/* `RowFormContainer` and `RowFormFieldContainer`: wrapped columns are spaced by `row-gap` instead of margins */
+.formRow {
+	row-gap: 20px;
+}
+
 /* fields inside a `RowFormFieldContainer` */
 .formField__gridItem {
 	display: flex;

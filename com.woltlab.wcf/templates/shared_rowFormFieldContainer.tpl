@@ -5,7 +5,7 @@
 *}>
 	<div class="formField__label">{if $container->getLabel() !== null}<span id="{$container->getPrefixedId()}Label">{unsafe:$container->getLabel()}</span>{/if}</div>
 	<div class="formField__input">
-		<div class="row rowColGap formGrid">
+		<div class="row formRow formGrid">
 			{foreach from=$container item='field'}
 				{if $field->isAvailable()}
 					<div id="{$field->getPrefixedId()}Container" class="formField__gridItem{foreach from=$field->getClasses() item='class'} {$class}{/foreach}"{foreach from=$field->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{if !$field->checkDependencies()} style="display: none;"{/if}>
