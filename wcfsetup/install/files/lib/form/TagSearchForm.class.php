@@ -6,18 +6,20 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use wcf\data\language\Language;
 use wcf\data\tag\Tag;
 use wcf\system\exception\UserInputException;
+use wcf\page\SearchPage;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\tagging\TagCloud;
 use wcf\system\tagging\TagEngine;
+use wcf\system\view\component\ContentInteractionTabsComponent;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
 /**
  * Shows the tag search form.
  *
- * @author      Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @author      Alexander Ebert, Marcel Werk
+ * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       5.2
  */
@@ -154,6 +156,23 @@ class TagSearchForm extends AbstractCaptchaForm
             'languageID' => $this->languageID ?: 0,
             'tags' => $this->tagCloud->getTags(),
             'tagNames' => $this->tagNames,
+            'contentInteractionTabsComponent' => $this->getContentInteractionTabsComponent(),
         ]);
+    }
+
+    private function getContentInteractionTabsComponent(): ContentInteractionTabsComponent
+    {
+        $component = new ContentInteractionTabsComponent();
+        $component->addTab(
+            'wcf.search.type.text',
+            LinkHandler::getInstance()->getControllerLink(SearchPage::class)
+        );
+        $component->addTab(
+            'wcf.search.type.tags',
+            LinkHandler::getInstance()->getControllerLink(self::class),
+            true
+        );
+
+        return $component;
     }
 }
