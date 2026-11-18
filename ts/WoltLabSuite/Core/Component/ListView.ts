@@ -155,6 +155,10 @@ export class ListView {
       this.#state.resetSelection();
     });
 
+    this.#viewElement.addEventListener("interaction:refresh-selection", () => {
+      this.#state.refreshSelection();
+    });
+
     this.#viewElement.addEventListener("interaction:bulk-completed", () => {
       this.#checkEmptyList();
     });
