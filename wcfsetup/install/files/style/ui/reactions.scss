@@ -221,19 +221,37 @@ html[data-color-scheme="dark"] .reactionPopover {
 .reactionSummary {
 	display: inline-flex;
 	flex-wrap: wrap;
-	gap: 5px 5px;
+	gap: 4px;
 
 	&:hover .reactionCountButton {
-		color: var(--wcfContentText);
+		border-color: var(--wcfContentDimmedText);
 	}
 
+	/* Each reaction type is a pill holding its icon and count. */
 	.reactionCountButton {
-		color: var(--wcfContentDimmedText);
+		align-items: center;
+		border: 1px solid var(--wcfContentBorderInner);
+		border-radius: 999px;
+		color: var(--wcfContentText);
+		display: inline-flex;
+		font-variant-numeric: tabular-nums;
+		gap: 5px;
+		padding: 2px 8px 2px 3px;
 		white-space: nowrap;
+
+		.reactionType {
+			display: block;
+			height: 18px;
+			width: 18px;
+		}
 	}
 
-	.selected .reactionCount {
-		font-weight: 600;
+	.reactionCount::before {
+		content: none;
+	}
+
+	.reactionCountButton.selected {
+		background-color: var(--wcfButtonBackgroundActive);
 	}
 }
 
