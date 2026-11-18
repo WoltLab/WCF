@@ -126,6 +126,23 @@ ol.nativeList {
 		line-height: 1;
 	}
 
+	/* Make links distinguishable from the surrounding text, excluding components that are visually distinct.
+	   The `:not()` raises the specificity above the `a:hover` rule that removes the underline. */
+	a:not(
+		.button,
+		.embeddedAttachmentLink,
+		.embeddedContentTitleLink,
+		.lineAnchor,
+		.mediaGallery__link,
+		.messageAttachment,
+		.tableOfContents__item,
+		.unfurlUrlTitle,
+		.userMention
+	) {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
 	> :first-child {
 		margin-top: 0 !important;
 
@@ -253,6 +270,8 @@ ol.nativeList {
 a.externalURL::after {
 	// 2197 = NORTH EAST ARROW
 	content: "\00a0\2197";
+	/* prevents the underline of the link from being drawn through the arrow */
+	display: inline-block;
 	font-weight: normal !important;
 	font-style: normal !important;
 }
