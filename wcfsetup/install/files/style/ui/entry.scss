@@ -31,13 +31,6 @@
 	padding-bottom: 20px;
 }
 
-.entry__content .anchorFixedHeader:target::before {
-	content: "";
-	display: block;
-	height: 50px;
-	margin-top: -50px;
-}
-
 .entry__attachments__title {
 	margin-bottom: 10px;
 

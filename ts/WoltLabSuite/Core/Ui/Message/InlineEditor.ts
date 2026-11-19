@@ -380,10 +380,6 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
     const elementData = this._elements.get(activeElement)!;
 
     activeElement.classList.add("jsInvalidQuoteTarget");
-    const parent = activeElement.parentElement!;
-    if (parent.classList.contains("anchorFixedHeader")) {
-      parent.classList.add("disableAnchorFixedHeader");
-    }
 
     const icon = elementData.messageBodyEditor!.querySelector("fa-icon")!;
     icon.remove();
@@ -435,10 +431,6 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
     DomUtil.show(elementData.messageHeader);
 
     activeElement.classList.remove("jsInvalidQuoteTarget");
-    const parent = activeElement.parentElement!;
-    if (parent.classList.contains("anchorFixedHeader")) {
-      parent.classList.remove("disableAnchorFixedHeader");
-    }
 
     this._activeElement = null;
   }

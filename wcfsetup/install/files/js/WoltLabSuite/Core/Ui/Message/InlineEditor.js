@@ -292,10 +292,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
             const activeElement = this._activeElement;
             const elementData = this._elements.get(activeElement);
             activeElement.classList.add("jsInvalidQuoteTarget");
-            const parent = activeElement.parentElement;
-            if (parent.classList.contains("anchorFixedHeader")) {
-                parent.classList.add("disableAnchorFixedHeader");
-            }
             const icon = elementData.messageBodyEditor.querySelector("fa-icon");
             icon.remove();
             const messageBody = elementData.messageBodyEditor;
@@ -333,10 +329,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Component/Ckeditor/Eve
             Util_1.default.show(elementData.messageFooter);
             Util_1.default.show(elementData.messageHeader);
             activeElement.classList.remove("jsInvalidQuoteTarget");
-            const parent = activeElement.parentElement;
-            if (parent.classList.contains("anchorFixedHeader")) {
-                parent.classList.remove("disableAnchorFixedHeader");
-            }
             this._activeElement = null;
         }
         /**
