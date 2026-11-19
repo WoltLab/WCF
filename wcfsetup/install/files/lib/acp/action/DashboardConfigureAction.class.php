@@ -85,7 +85,7 @@ final class DashboardConfigureAction implements RequestHandlerInterface
             $this->getConfigurationFormField()
                 ->id('boxes')
                 ->required()
-                ->options($boxOptions, false, false)
+                ->choices($boxOptions)
                 ->value($selectedBoxNames),
         ]);
 
