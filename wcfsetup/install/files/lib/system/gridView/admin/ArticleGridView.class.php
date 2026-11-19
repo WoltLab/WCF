@@ -23,6 +23,7 @@ use wcf\system\interaction\admin\ArticleInteractions;
 use wcf\system\interaction\bulk\admin\ArticleBulkInteractions;
 use wcf\system\interaction\Divider;
 use wcf\system\interaction\EditInteraction;
+use wcf\system\style\BadgeType;
 use wcf\system\view\filter\BooleanFilter;
 use wcf\system\view\filter\CategoryFilter;
 use wcf\system\view\filter\MultipleSelectFilter;
@@ -111,18 +112,14 @@ final class ArticleGridView extends AbstractGridView
                             }
                             $badges = '';
                             if ($row->isDeleted !== 0) {
-                                $badges .= \sprintf(
-                                    '<span class="badge red">%s</span>',
-                                    WCF::getLanguage()->get('wcf.message.status.deleted')
-                                );
+                                $badges .= BadgeType::Deleted->toHtml();
                             }
                             if ($row->publicationStatus === Article::UNPUBLISHED) {
                                 if ($badges !== '') {
                                     $badges .= ' ';
                                 }
-                                $badges .= \sprintf(
-                                    '<span class="badge">%s</span>',
-                                    WCF::getLanguage()->get('wcf.acp.article.publicationStatus.unpublished')
+                                $badges .= BadgeType::Disabled->toHtml(
+                                    languageItem: 'wcf.acp.article.publicationStatus.unpublished'
                                 );
                             }
                             if ($row->publicationStatus === Article::DELAYED_PUBLICATION) {
@@ -139,8 +136,10 @@ final class ArticleGridView extends AbstractGridView
                                     $badges .= ' ';
                                 }
                                 $badges .= \sprintf(
-                                    '<span class="badge" title="%s">%s</span>',
+                                    '<span class="badge %s" title="%s">%s <span>%s</span></span>',
+                                    BadgeType::Scheduled->getCssClassName(),
                                     $dateTime,
+                                    BadgeType::Scheduled->getIcon()->toHtml(),
                                     WCF::getLanguage()->get('wcf.acp.article.publicationStatus.delayed')
                                 );
                             }
@@ -148,10 +147,7 @@ final class ArticleGridView extends AbstractGridView
                                 if ($badges !== '') {
                                     $badges .= ' ';
                                 }
-                                $badges .= \sprintf(
-                                    '<span class="badge green">%s</span>',
-                                    WCF::getLanguage()->get('wcf.article.featured')
-                                );
+                                $badges .= BadgeType::Featured->toHtml();
                             }
                             if ($row->flagAsUpdated !== 0) {
                                 if ($badges !== '') {

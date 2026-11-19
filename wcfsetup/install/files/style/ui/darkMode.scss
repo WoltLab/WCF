@@ -55,6 +55,36 @@ html[data-color-scheme="dark"] {
 			--background-color: #e10fb0;
 			--color: #1a0414;
 		}
+
+		&.badge--done {
+			--background-color: #1b5e20;
+			--color: #cfdbcf;
+		}
+
+		&.badge--deleted {
+			--background-color: #c1183d;
+			--color: #f9e7ea;
+		}
+
+		&.badge--disabled {
+			--background-color: #52525b;
+			--color: #e4e4e7;
+		}
+
+		&.badge--featured {
+			--background-color: #c9a227;
+			--color: #2b2100;
+		}
+
+		&.badge--official {
+			--background-color: #204f7e;
+			--color: #cfd8e3;
+		}
+
+		&.badge--scheduled {
+			--background-color: #673ab7;
+			--color: #ded4f0;
+		}
 	}
 
 	a.badge:hover {

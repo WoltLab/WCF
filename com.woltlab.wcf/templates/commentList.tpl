@@ -34,7 +34,7 @@
 					</div>
 					<div class="comment__status">
 						{if $comment->isDisabled}
-							<span class="badge green comment__status--disabled">{lang}wcf.message.status.disabled{/lang}</span>
+							{badge type='disabled' class='comment__status--disabled'}
 						{/if}
 						
 						{if $commentManager->isContentAuthor($comment->getDecoratedObject())}
