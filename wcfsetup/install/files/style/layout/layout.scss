@@ -40,6 +40,9 @@ html {
 
 	/* The height of the bar that sticks to the top, sticky elements are offset by it. */
 	--wcfPageHeaderHeight: 50px;
+
+	/* Keeps anchor targets and focused elements clear of the sticky bar. */
+	scroll-padding-top: calc(var(--wcfPageHeaderHeight) + 10px);
 }
 
 body {
