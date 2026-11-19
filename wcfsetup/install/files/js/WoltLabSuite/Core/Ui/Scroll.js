@@ -5,7 +5,6 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
     exports.isCurrentlyScrolling = isCurrentlyScrolling;
     Util_1 = tslib_1.__importDefault(Util_1);
     let _callbacks = [];
-    let _offset = null;
     let _targetElement = undefined;
     let _timeoutScroll = null;
     /**
@@ -24,6 +23,14 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             _targetElement = undefined;
             _timeoutScroll = null;
         }, 100);
+    }
+    /**
+     * Returns the `scroll-padding-top` of the document element that keeps
+     * scroll targets clear of the sticky page header.
+     */
+    function getScrollPaddingTop() {
+        const value = parseFloat(window.getComputedStyle(document.documentElement).scrollPaddingTop);
+        return Number.isNaN(value) ? 0 : value;
     }
     /**
      * Scrolls to target element, optionally invoking the provided callback once scrolling has ended.
@@ -55,29 +62,17 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         _targetElement = element;
         window.addEventListener("scroll", onScroll);
         let y = Util_1.default.offset(element).top;
-        if (_offset === null) {
-            _offset = 50;
-            const pageHeader = document.getElementById("pageHeaderPanel");
-            if (pageHeader !== null) {
-                const position = window.getComputedStyle(pageHeader).position;
-                if (position === "fixed" || position === "static") {
-                    _offset = pageHeader.offsetHeight;
-                }
-                else {
-                    _offset = 0;
-                }
-            }
-        }
-        if (_offset > 0) {
-            if (y <= _offset) {
+        const offset = getScrollPaddingTop();
+        if (offset > 0) {
+            if (y <= offset) {
                 y = 0;
             }
             else {
                 // add an offset to account for a sticky header
-                y -= _offset;
+                y -= offset;
             }
         }
-        const offset = window.pageYOffset;
+        const previousPosition = window.pageYOffset;
         window.scrollTo({
             left: 0,
             top: y,
@@ -85,7 +80,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         });
         window.setTimeout(() => {
             // no scrolling took place
-            if (offset === window.pageYOffset) {
+            if (previousPosition === window.pageYOffset) {
                 onScroll();
             }
         }, 100);

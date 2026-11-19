@@ -1,8 +1,9 @@
 /**
  * Smoothly scrolls to an element while accounting for potential sticky headers.
+ * The offset is taken from the `scroll-padding-top` of the document element.
  *
- * @author  Alexander Ebert
- * @copyright  2001-2019 WoltLab GmbH
+ * @author  Alexander Ebert, Marcel Werk
+ * @copyright  2001-2026 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 import DomUtil from "../Dom/Util";
@@ -10,7 +11,6 @@ import DomUtil from "../Dom/Util";
 type Callback = () => void;
 
 let _callbacks: Callback[] = [];
-let _offset: number | null = null;
 let _targetElement: HTMLElement | undefined = undefined;
 let _timeoutScroll: number | null = null;
 
@@ -32,6 +32,16 @@ function onScroll(): void {
     _targetElement = undefined;
     _timeoutScroll = null;
   }, 100);
+}
+
+/**
+ * Returns the `scroll-padding-top` of the document element that keeps
+ * scroll targets clear of the sticky page header.
+ */
+function getScrollPaddingTop(): number {
+  const value = parseFloat(window.getComputedStyle(document.documentElement).scrollPaddingTop);
+
+  return Number.isNaN(value) ? 0 : value;
 }
 
 /**
@@ -64,29 +74,17 @@ export function element(element: HTMLElement, callback?: Callback, behavior: Scr
   window.addEventListener("scroll", onScroll);
 
   let y = DomUtil.offset(element).top;
-  if (_offset === null) {
-    _offset = 50;
-    const pageHeader = document.getElementById("pageHeaderPanel");
-    if (pageHeader !== null) {
-      const position = window.getComputedStyle(pageHeader).position;
-      if (position === "fixed" || position === "static") {
-        _offset = pageHeader.offsetHeight;
-      } else {
-        _offset = 0;
-      }
-    }
-  }
-
-  if (_offset > 0) {
-    if (y <= _offset) {
+  const offset = getScrollPaddingTop();
+  if (offset > 0) {
+    if (y <= offset) {
       y = 0;
     } else {
       // add an offset to account for a sticky header
-      y -= _offset;
+      y -= offset;
     }
   }
 
-  const offset = window.pageYOffset;
+  const previousPosition = window.pageYOffset;
   window.scrollTo({
     left: 0,
     top: y,
@@ -95,7 +93,7 @@ export function element(element: HTMLElement, callback?: Callback, behavior: Scr
 
   window.setTimeout(() => {
     // no scrolling took place
-    if (offset === window.pageYOffset) {
+    if (previousPosition === window.pageYOffset) {
       onScroll();
     }
   }, 100);
