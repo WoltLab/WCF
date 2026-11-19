@@ -100,6 +100,11 @@ define(["require", "exports", "tslib", "./ListView/State", "../Dom/Change/Listen
             this.#viewElement.addEventListener("interaction:refresh-selection", () => {
                 this.#state.refreshSelection();
             });
+            this.#viewElement.addEventListener("interaction:select-all", () => {
+                // The checkboxes are only visible in the edit mode on small screens.
+                this.#viewElement.closest(".listView").classList.add("listView--editMode");
+                this.#state.selectAll();
+            });
             this.#viewElement.addEventListener("interaction:bulk-completed", () => {
                 this.#checkEmptyList();
             });

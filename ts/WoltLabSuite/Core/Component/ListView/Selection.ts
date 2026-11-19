@@ -275,6 +275,15 @@ export class Selection extends EventTarget {
     this.#updateSelectionBar();
   }
 
+  selectAll(): void {
+    if (this.#markAll !== null) {
+      this.#markAll.checked = true;
+      this.#markAll.indeterminate = false;
+    }
+
+    this.#change(true);
+  }
+
   removeSelection(objectId: number): void {
     const selectedIds = this.getSelectedIds();
     if (selectedIds.indexOf(objectId) !== -1) {

@@ -159,6 +159,12 @@ export class ListView {
       this.#state.refreshSelection();
     });
 
+    this.#viewElement.addEventListener("interaction:select-all", () => {
+      // The checkboxes are only visible in the edit mode on small screens.
+      this.#viewElement.closest(".listView")!.classList.add("listView--editMode");
+      this.#state.selectAll();
+    });
+
     this.#viewElement.addEventListener("interaction:bulk-completed", () => {
       this.#checkEmptyList();
     });

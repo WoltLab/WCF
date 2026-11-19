@@ -53,6 +53,7 @@ abstract class AbstractListView
     protected bool $allowSorting = true;
     protected bool $allowInteractions = true;
     protected bool $allowBulkInteractions = true;
+    private bool $showHeader = true;
     private int $fixedNumberOfItems = 0;
     private string $markAsReadEndpoint = '';
     private ?ListViewPrimaryButton $primaryButton = null;
@@ -634,6 +635,25 @@ abstract class AbstractListView
     public function getAllowBulkInteractions(): bool
     {
         return $this->allowBulkInteractions;
+    }
+
+    /**
+     * Sets whether the header of the list view is shown, which contains the
+     * sorting, filters and the controls to select items.
+     *
+     * @since 6.3
+     */
+    public function setShowHeader(bool $showHeader): void
+    {
+        $this->showHeader = $showHeader;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getShowHeader(): bool
+    {
+        return $this->showHeader;
     }
 
     /**

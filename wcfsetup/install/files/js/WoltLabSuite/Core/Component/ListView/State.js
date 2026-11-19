@@ -181,6 +181,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "./F
         resetSelection() {
             this.#selection.resetSelection();
         }
+        selectAll() {
+            this.#selection.selectAll();
+        }
         removeSelection(objectId) {
             this.#selection.removeSelection(objectId);
         }

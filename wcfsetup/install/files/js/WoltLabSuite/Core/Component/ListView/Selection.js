@@ -223,6 +223,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             window.localStorage.removeItem(this.#getStorageKey());
             this.#updateSelectionBar();
         }
+        selectAll() {
+            if (this.#markAll !== null) {
+                this.#markAll.checked = true;
+                this.#markAll.indeterminate = false;
+            }
+            this.#change(true);
+        }
         removeSelection(objectId) {
             const selectedIds = this.getSelectedIds();
             if (selectedIds.indexOf(objectId) !== -1) {
