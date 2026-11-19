@@ -147,7 +147,7 @@ final class UserEmailAddressExportAction implements RequestHandlerInterface
         $form->appendChildren([
             RadioButtonFormField::create('fileType')
                 ->label('wcf.acp.user.exportEmailAddress.fileType')
-                ->options([
+                ->phraseChoices([
                     'csv' => 'wcf.acp.user.exportEmailAddress.fileType.csv',
                     'xml' => 'wcf.acp.user.exportEmailAddress.fileType.xml',
                 ])

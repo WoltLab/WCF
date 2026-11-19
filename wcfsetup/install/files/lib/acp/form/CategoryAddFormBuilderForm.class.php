@@ -260,7 +260,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         if ($maximumNestingLevel === 0) {
             $positionFormField = ShowOrderFormField::create()
                 ->description($processor->getLanguageVariable('showOrder.description', true))
-                ->options($categoryNodeTree, true)
+                ->choices($categoryNodeTree, true)
                 ->required();
         } else {
             // Provide a simple integer input instead because we cannot
@@ -279,7 +279,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
                 ->description(
                     $processor->getLanguageVariable('parentCategoryID.description', true)
                 )
-                ->options($categoryNodeTree, true)
+                ->choices($categoryNodeTree, true)
                 ->available((bool)$this->getObjectTypeProcessor()->getMaximumNestingLevel())
                 ->value($this->parentCategoryID)
                 ->addValidator(

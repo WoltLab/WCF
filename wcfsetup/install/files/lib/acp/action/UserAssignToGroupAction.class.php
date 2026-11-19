@@ -104,13 +104,11 @@ final class UserAssignToGroupAction implements RequestHandlerInterface
         $form->appendChildren([
             MultipleSelectionFormField::create('groupIDs')
                 ->label('wcf.acp.user.groups')
-                ->options(
+                ->choices(
                     UserGroup::getSortedAccessibleGroups(
                         [],
                         [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]
-                    ),
-                    false,
-                    false
+                    )
                 )
                 ->required(),
         ]);

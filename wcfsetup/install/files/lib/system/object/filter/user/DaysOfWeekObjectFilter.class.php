@@ -49,7 +49,7 @@ final class DaysOfWeekObjectFilter extends AbstractMultipleSelectionObjectFilter
     {
         return MultipleSelectionFormField::create('daysOfWeek')
             ->label('wcf.date.daysOfWeek')
-            ->options($this->getDays())
+            ->phraseChoices($this->getDays())
             ->required();
     }
 

@@ -79,7 +79,7 @@ final class SharedConfigurationFormFields
             'sourceCodeLanguage' => FilterableSelectFormField::create('sourceCodeLanguage')
                 ->label('wcf.form.option.shared.sourceCodeLanguage')
                 ->description('wcf.form.option.shared.sourceCodeLanguage.description')
-                ->options($this->getSourceCodeLanguageOptions(), labelLanguageItems: false),
+                ->choices($this->getSourceCodeLanguageOptions()),
             'unit' => TextFormField::create('unit')
                 ->label('wcf.form.option.shared.unit')
                 ->addFieldClass('short'),

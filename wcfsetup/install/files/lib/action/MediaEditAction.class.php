@@ -179,7 +179,7 @@ final class MediaEditAction implements RequestHandlerInterface
                 });
             $fields[] = SelectFormField::create('languageID')
                 ->label('wcf.media.languageID')
-                ->options($languages, labelLanguageItems: false)
+                ->choices($languages)
                 ->defaultValue(WCF::getLanguage()->languageID)
                 ->saveValueCallback(static function (MediaBuilder $builder, SelectFormField $field): void {
                     $builder->setLanguageID((int)$field->getSaveValue());

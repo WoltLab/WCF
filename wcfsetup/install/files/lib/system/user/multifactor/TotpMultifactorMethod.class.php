@@ -20,7 +20,6 @@ use wcf\system\user\multifactor\totp\NewDeviceContainer;
 use wcf\system\user\multifactor\totp\SecretFormField;
 use wcf\system\user\multifactor\totp\Totp;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Implementation of the Time-based One-time Password Algorithm (RFC 6238).
@@ -267,7 +266,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
             $deviceOptions = [];
             $mostRecentlyUsed = null;
             foreach ($devices as $device) {
-                $deviceOptions[$device['deviceID']] = StringUtil::encodeHTML($device['deviceName']);
+                $deviceOptions[$device['deviceID']] = $device['deviceName'];
 
                 if ($mostRecentlyUsed === null || $mostRecentlyUsed['useTime'] < $device['useTime']) {
                     $mostRecentlyUsed = $device;
@@ -279,7 +278,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                     ->label('wcf.user.security.multifactor.totp.deviceName')
                     ->description('wcf.user.security.multifactor.totp.deviceName.description.auth')
                     ->objectProperty('deviceID')
-                    ->options($deviceOptions)
+                    ->choices($deviceOptions)
                     ->value($mostRecentlyUsed['deviceID'])
                     ->required(),
             ]);

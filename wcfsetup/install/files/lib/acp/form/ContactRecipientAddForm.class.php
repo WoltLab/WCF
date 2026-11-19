@@ -14,7 +14,6 @@ use wcf\system\form\builder\field\EmailFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
 use wcf\system\form\builder\field\TextFormField;
-use wcf\util\StringUtil;
 
 /**
  * Shows the form to create a new contact form recipient.
@@ -112,7 +111,7 @@ class ContactRecipientAddForm extends AbstractDatabaseObjectBuilderForm
                 }),
             $emailFormField,
             ShowOrderFormField::create()
-                ->options($this->getContactRecipient(), labelLanguageItems: false)
+                ->choices($this->getContactRecipient())
                 ->saveValueCallback(static function (ContactRecipientBuilder $builder, ShowOrderFormField $field): void {
                     $showOrder = $field->getSaveValue();
                     if ($showOrder !== null) {
@@ -142,9 +141,8 @@ class ContactRecipientAddForm extends AbstractDatabaseObjectBuilderForm
         $recipientList->sqlOrderBy = 'showOrder ASC';
         $recipientList->readObjects();
 
-        // The labels of selection options are printed as HTML.
         return \array_map(
-            static fn(ContactRecipient $recipient) => StringUtil::encodeHTML($recipient->getName()),
+            static fn(ContactRecipient $recipient) => $recipient->getName(),
             $recipientList->getObjects()
         );
     }

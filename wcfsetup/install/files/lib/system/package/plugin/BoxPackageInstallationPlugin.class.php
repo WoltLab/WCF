@@ -551,7 +551,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
             RadioButtonFormField::create('boxType')
                 ->label('wcf.acp.pip.box.boxType')
                 ->description('wcf.acp.pip.box.boxType.description')
-                ->options(\array_combine(Box::$availableBoxTypes, Box::$availableBoxTypes))
+                ->choices(\array_combine(Box::$availableBoxTypes, Box::$availableBoxTypes))
                 ->value('text')
                 ->required(),
 
@@ -559,7 +559,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
                 ->label('wcf.acp.pip.box.objectType')
                 ->description('wcf.acp.pip.box.objectType.description')
                 ->required()
-                ->options(static function () {
+                ->choices(static function () {
                     $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.boxController');
 
                     $options = [];
@@ -580,7 +580,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
             SelectFormField::create('position')
                 ->label('wcf.acp.pip.box.position')
                 ->required()
-                ->options(\array_combine(Box::$availablePositions, Box::$availablePositions)),
+                ->choices(\array_combine(Box::$availablePositions, Box::$availablePositions)),
 
             BooleanFormField::create('showHeader')
                 ->label('wcf.acp.pip.box.showHeader')
@@ -593,7 +593,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
             MultipleSelectionFormField::create('visibilityExceptions')
                 ->label('wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere')
                 ->filterable()
-                ->options(static function () {
+                ->choices(static function () {
                     $pageNodeList = new PageNodeTree()->getNodeList();
 
                     $nestedOptions = [];

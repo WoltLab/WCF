@@ -52,7 +52,8 @@ final class ContactOptionGridView extends AbstractGridView
                 ->filter(new SelectFilter(
                     FormOptionHandler::getInstance()->getSortedOptionTypes(),
                     'optionType',
-                    'wcf.acp.customOption.optionType'
+                    'wcf.acp.customOption.optionType',
+                    labelLanguageItems: false
                 ))
                 ->sortable(),
             GridViewColumn::for("showOrder")

@@ -110,7 +110,7 @@ class TemplateAddForm extends AbstractFormBuilderForm
 
         if ($fixedTemplateGroup !== null) {
             $templateGroupFormField
-                ->options([$fixedTemplateGroup->templateGroupID => $fixedTemplateGroup->templateGroupName])
+                ->choices([$fixedTemplateGroup->templateGroupID => $fixedTemplateGroup->getTitle()])
                 ->immutable()
                 ->value($fixedTemplateGroup->templateGroupID);
 
@@ -120,7 +120,7 @@ class TemplateAddForm extends AbstractFormBuilderForm
                 $templateNameFormField->value($this->copiedTemplate->templateName);
             }
         } else {
-            $templateGroupFormField->options(
+            $templateGroupFormField->choices(
                 new TemplateGroupNodeTree(0, \array_keys($specialTemplateGroups)),
                 true
             );

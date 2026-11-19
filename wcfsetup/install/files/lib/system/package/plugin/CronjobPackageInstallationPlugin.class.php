@@ -373,7 +373,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
             SelectFormField::create('expressionType')
                 ->label('wcf.acp.cronjob.expressionType')
                 ->required()
-                ->options([
+                ->phraseChoices([
                     'default' => 'wcf.acp.cronjob.expressionType.default',
                     'random' => 'wcf.acp.cronjob.expressionType.random',
                 ])
@@ -381,7 +381,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
             SelectFormField::create('expression')
                 ->label('wcf.acp.cronjob.expressionRandom')
                 ->required()
-                ->options([
+                ->choices([
                     '@hourly' => '@hourly',
                     '@daily' => '@daily',
                     '@weekly' => '@weekly',

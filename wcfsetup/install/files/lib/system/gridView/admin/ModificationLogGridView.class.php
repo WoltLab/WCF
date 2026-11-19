@@ -25,6 +25,7 @@ use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 
 /**
@@ -87,9 +88,11 @@ final class ModificationLogGridView extends AbstractGridView
                         #[\Override]
                         public function getFormField(): AbstractFormField
                         {
+                            // The labels are resolved phrases, indented with `&nbsp;`, that
+                            // `renderValue()` relies on.
                             return SelectFormField::create($this->id)
                                 ->label($this->languageItem)
-                                ->options($this->options, false, false);
+                                ->choices(\array_map(HtmlString::fromSafeHtml(...), $this->options));
                         }
 
                         #[\Override]

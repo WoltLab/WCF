@@ -97,7 +97,7 @@ trait TFormOptionAddForm
         return SelectFormField::create('optionType')
             ->label('wcf.form.option.optionType')
             ->immutable($this->formAction !== 'create')
-            ->options(FormOptionHandler::getInstance()->getSortedOptionTypes($this->getSelectableFormOptions()))
+            ->choices(FormOptionHandler::getInstance()->getSortedOptionTypes($this->getSelectableFormOptions()))
             ->required();
     }
 

@@ -256,7 +256,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
             SelectFormField::create('environment')
                 ->label('wcf.acp.pip.eventListener.environment')
                 ->description('wcf.acp.pip.eventListener.environment.description')
-                ->options([
+                ->choices([
                     'admin' => 'admin',
                     'user' => 'user',
                     'all' => 'all',

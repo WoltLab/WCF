@@ -82,7 +82,7 @@ class UserGroupAssignmentAddForm extends AbstractDatabaseObjectBuilderForm
                         }),
                     SelectFormField::create('groupID')
                         ->label('wcf.user.group')
-                        ->options($this->getAvailableUserGroups())
+                        ->choices($this->getAvailableUserGroups())
                         ->required()
                         ->addValidator($this->getGroupIDValidator())
                         ->saveValueCallback(static function (UserGroupAssignmentBuilder $builder, IFormField $field) {

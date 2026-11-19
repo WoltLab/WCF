@@ -225,7 +225,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
                 ->label('wcf.acp.pip.templateListener.environment')
                 ->description('wcf.acp.pip.templateListener.environment.description')
                 ->required()
-                ->options([
+                ->choices([
                     'admin' => 'admin',
                     'user' => 'user',
                 ])
@@ -285,7 +285,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
                 ->label('wcf.acp.pip.templateListener.templateName')
                 ->description('wcf.acp.pip.templateListener.templateName.description')
                 ->required()
-                ->options(\array_combine(\array_keys($templateEvents), \array_keys($templateEvents)))
+                ->choices(\array_combine(\array_keys($templateEvents), \array_keys($templateEvents)))
                 ->addDependency(
                     ValueFormFieldDependency::create('environment')
                         ->fieldId('environment')
@@ -297,7 +297,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
                 ->label('wcf.acp.pip.templateListener.templateName')
                 ->description('wcf.acp.pip.templateListener.templateName.description')
                 ->required()
-                ->options(\array_combine(\array_keys($acpTemplateEvents), \array_keys($acpTemplateEvents)))
+                ->choices(\array_combine(\array_keys($acpTemplateEvents), \array_keys($acpTemplateEvents)))
                 ->addDependency(
                     ValueFormFieldDependency::create('environment')
                         ->fieldId('environment')
@@ -313,7 +313,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
                     ->label('wcf.acp.pip.templateListener.eventName')
                     ->description('wcf.acp.pip.templateListener.eventName.description')
                     ->required()
-                    ->options(\array_combine($events, $events))
+                    ->choices(\array_combine($events, $events))
                     ->addDependency(
                         ValueFormFieldDependency::create('templateName')
                             ->field($frontendTemplateName)
@@ -330,7 +330,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
                     ->label('wcf.acp.pip.templateListener.eventName')
                     ->description('wcf.acp.pip.templateListener.eventName.description')
                     ->required()
-                    ->options(\array_combine($events, $events))
+                    ->choices(\array_combine($events, $events))
                     ->addDependency(
                         ValueFormFieldDependency::create('acpTemplateName')
                             ->field($acpTemplateName)

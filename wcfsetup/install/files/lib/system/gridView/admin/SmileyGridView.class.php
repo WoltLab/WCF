@@ -95,7 +95,12 @@ final class SmileyGridView extends AbstractGridView
             GridViewColumn::for("categoryID")
                 ->label("wcf.global.category")
                 ->filter(
-                    new class($this->getSmileyCategories(), 'categoryID', 'wcf.global.category') extends SelectFilter {
+                    new class(
+                        $this->getSmileyCategories(),
+                        'categoryID',
+                        'wcf.global.category',
+                        labelLanguageItems: false
+                    ) extends SelectFilter {
                         #[\Override]
                         public function applyFilter(DatabaseObjectList $list, string $value): void
                         {

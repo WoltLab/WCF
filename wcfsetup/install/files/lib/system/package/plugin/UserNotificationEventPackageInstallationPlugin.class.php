@@ -232,7 +232,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
                 ->label('wcf.acp.pip.userNotificationEvent.objectType')
                 ->description('wcf.acp.pip.userNotificationEvent.objectType.description')
                 ->required()
-                ->options(static function () {
+                ->choices(static function () {
                     $options = [];
                     foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.notification.objectType') as $objectType) {
                         $options[$objectType->objectType] = $objectType->objectType;
@@ -310,7 +310,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
                 ->objectProperty('presetmailnotificationtype')
                 ->label('wcf.acp.pip.userNotificationEvent.presetMailNotificationType')
                 ->description('wcf.acp.pip.userNotificationEvent.presetMailNotificationType.description')
-                ->options([
+                ->phraseChoices([
                     'daily' => 'wcf.user.notification.mailNotificationType.daily',
                     'instant' => 'wcf.user.notification.mailNotificationType.instant',
                 ]),

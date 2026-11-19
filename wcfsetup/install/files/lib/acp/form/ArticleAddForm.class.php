@@ -204,7 +204,7 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
 
             $categoryFormField
                 ->required()
-                ->options($this->getCategoryOptions(), true)
+                ->choices($this->getCategoryOptions(), true)
                 ->value($this->categoryID ?: null)
                 ->label('wcf.global.category')
                 ->addValidator(new FormFieldValidator('accessible', static function (IFormField $field) {
@@ -302,7 +302,7 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
                 }),
             RadioButtonFormField::create('publicationStatus')
                 ->label('wcf.acp.article.publicationStatus')
-                ->options([
+                ->phraseChoices([
                     Article::PUBLISHED => 'wcf.acp.article.publicationStatus.published',
                     Article::UNPUBLISHED => 'wcf.acp.article.publicationStatus.unpublished',
                     Article::DELAYED_PUBLICATION => 'wcf.acp.article.publicationStatus.delayed',

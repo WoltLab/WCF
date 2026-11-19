@@ -267,7 +267,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
             SelectFormField::create('definitionID')
                 ->label('wcf.acp.pip.objectType.definitionName')
                 ->description('<!-- will be replaced by JavaScript -->')
-                ->options($this->definitionNames)
+                ->choices($this->definitionNames)
                 ->required(),
 
             TextFormField::create('objectType')
@@ -351,7 +351,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ->objectProperty('page')
                     ->label('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.page')
                     ->description('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.page.description')
-                    ->options(static function () {
+                    ->choices(static function () {
                         $options = [];
 
                         $pageNodeTree = new PageNodeTree();

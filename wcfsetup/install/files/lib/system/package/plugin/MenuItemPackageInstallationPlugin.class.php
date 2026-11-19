@@ -327,7 +327,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 ->label('wcf.acp.pip.menuItem.menu')
                 ->description('wcf.acp.pip.menuItem.menu.description')
                 ->required()
-                ->options(static function () use ($menuList) {
+                ->choices(static function () use ($menuList) {
                     $options = [];
                     foreach ($menuList as $menu) {
                         $options[$menu->identifier] = $menu->identifier;
@@ -341,7 +341,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
             RadioButtonFormField::create('linkType')
                 ->label('wcf.acp.pip.menuItem.linkType')
                 ->required()
-                ->options([
+                ->phraseChoices([
                     'internal' => 'wcf.acp.pip.menuItem.linkType.internal',
                     'external' => 'wcf.acp.pip.menuItem.linkType.external',
                 ])
@@ -352,7 +352,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 ->label('wcf.acp.pip.menuItem.page')
                 ->description('wcf.acp.pip.menuItem.page.description')
                 ->required()
-                ->options(function () {
+                ->choices(function () {
                     $pageNodeList = new PageNodeTree()->getNodeList();
 
                     $packageIDs = \array_merge(
@@ -408,7 +408,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 SelectFormField::create('parentMenuItem' . $menu->menuID)
                     ->objectProperty('parent')
                     ->label('wcf.acp.pip.menuItem.parentMenuItem')
-                    ->options(function () use ($menu) {
+                    ->choices(function () use ($menu) {
                         $options = [];
 
                         $packageIDs = \array_merge(

@@ -34,7 +34,7 @@ final class TimezoneFormOption extends AbstractFormOption
         }
 
         $formField = SelectFormField::create($id)
-            ->options($timezones)
+            ->phraseChoices($timezones)
             ->ignoreInvalidValues();
 
         if (isset($timezones[\TIMEZONE])) {

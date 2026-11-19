@@ -185,7 +185,7 @@ final class ObjectFilterBuilderAction implements RequestHandlerInterface
             static fn(string $a, string $b) => $collator->compare($a, $b)
         );
 
-        $select->options($selectValues);
+        $select->choices($selectValues);
         if ($filterIdentifier !== null && isset($selectValues[$filterIdentifier])) {
             $select->value($filterIdentifier);
         }

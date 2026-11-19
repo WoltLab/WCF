@@ -85,7 +85,7 @@ final class ToggleArticleI18nAction implements RequestHandlerInterface
                 RadioButtonFormField::create('languageID')
                     ->label('wcf.acp.article.i18n.source')
                     ->required()
-                    ->options(LanguageFactory::getInstance()->getLanguages())
+                    ->choices(LanguageFactory::getInstance()->getLanguages())
             );
         }
 

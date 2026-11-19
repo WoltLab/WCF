@@ -18,7 +18,6 @@ use wcf\system\form\builder\NoticeFormNode;
 use wcf\system\form\builder\NoticeFormNodeType;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Merges two or more users into one of these users.
@@ -141,8 +140,8 @@ final class UserMergeAction implements RequestHandlerInterface
             RadioButtonFormField::create('destinationUserID')
                 ->label('wcf.acp.user.merge.destination')
                 ->description('wcf.acp.user.merge.destination.description')
-                ->options(\array_map(
-                    static fn(User $user) => StringUtil::encodeHTML($user->username),
+                ->choices(\array_map(
+                    static fn(User $user) => $user->username,
                     $destinationUsers
                 ))
                 ->required(),

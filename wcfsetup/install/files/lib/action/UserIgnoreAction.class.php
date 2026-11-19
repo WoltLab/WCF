@@ -110,13 +110,10 @@ final class UserIgnoreAction implements RequestHandlerInterface
         $form->appendChildren([
             RadioButtonFormField::create('type')
                 ->required()
-                ->options([
-                    UserIgnore::TYPE_NO_IGNORE => WCF::getLanguage()
-                        ->get('wcf.user.ignore.type.noIgnore'),
-                    UserIgnore::TYPE_BLOCK_DIRECT_CONTACT => WCF::getLanguage()
-                        ->get('wcf.user.ignore.type.blockDirectContact'),
-                    UserIgnore::TYPE_HIDE_MESSAGES => WCF::getLanguage()
-                        ->get('wcf.user.ignore.type.hideMessages'),
+                ->phraseChoices([
+                    UserIgnore::TYPE_NO_IGNORE => 'wcf.user.ignore.type.noIgnore',
+                    UserIgnore::TYPE_BLOCK_DIRECT_CONTACT => 'wcf.user.ignore.type.blockDirectContact',
+                    UserIgnore::TYPE_HIDE_MESSAGES => 'wcf.user.ignore.type.hideMessages',
                 ])
                 ->value($ignore->type ?: 0)
                 ->addValidator(new FormFieldValidator('type', function (RadioButtonFormField $formField) use ($user) {

@@ -334,7 +334,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         $dataContainer->appendChildren([
             RadioButtonFormField::create('languageCategoryIDMode')
                 ->label('wcf.acp.language.item.languageCategoryID.mode')
-                ->options([
+                ->phraseChoices([
                     'automatic' => 'wcf.acp.language.item.languageCategoryID.mode.automatic',
                     'selection' => 'wcf.acp.language.item.languageCategoryID.mode.selection',
                     'new' => 'wcf.acp.language.item.languageCategoryID.mode.new',
@@ -346,7 +346,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 ->label('wcf.acp.language.item.languageCategoryID')
                 ->description('wcf.acp.language.item.languageCategoryID.description')
                 ->required()
-                ->options(static function () {
+                ->choices(static function () {
                     $categories = [];
 
                     foreach (LanguageFactory::getInstance()->getCategories() as $languageCategory) {
@@ -356,7 +356,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                     \asort($categories);
 
                     return $categories;
-                }, false, false)
+                })
                 ->addDependency(
                     ValueFormFieldDependency::create('languageCategoryIDMode')
                         ->fieldId('languageCategoryIDMode')

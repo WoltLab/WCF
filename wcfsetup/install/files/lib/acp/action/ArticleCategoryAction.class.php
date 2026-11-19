@@ -88,7 +88,7 @@ final class ArticleCategoryAction implements RequestHandlerInterface
         $form->appendChildren([
             SelectFormField::create('categoryID')
                 ->label('wcf.global.category')
-                ->options($this->getCategoryOptions(), true)
+                ->choices($this->getCategoryOptions(), true)
                 ->required()
         ]);
 

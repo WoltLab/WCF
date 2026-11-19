@@ -436,7 +436,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                     SelectFormField::create('parentCategoryName')
                         ->objectProperty('parent')
                         ->label('wcf.acp.pip.abstractOption.categories.parentCategoryName')
-                        ->options(function () {
+                        ->choices(function () {
                             $categories = $this->getSortedCategories();
 
                             $getDepth = static function (
@@ -514,7 +514,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                         ->objectProperty('categoryname')
                         ->label('wcf.acp.pip.abstractOption.options.categoryName')
                         ->required()
-                        ->options(function (): array {
+                        ->choices(function (): array {
                             $categories = $this->getSortedCategories();
 
                             $getDepth = static function (
@@ -548,14 +548,14 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                             }
 
                             return $options;
-                        }, true, false),
+                        }, true),
 
                     SelectFormField::create('optionType')
                         ->objectProperty('optiontype')
                         ->label('wcf.acp.pip.abstractOption.options.optionType')
                         ->description('wcf.acp.pip.' . \lcfirst($pipPrefix) . '.options.optionType.description')
                         ->required()
-                        ->options($this->getOptionTypeOptions()),
+                        ->choices($this->getOptionTypeOptions()),
 
                     MultilineTextFormField::create('defaultValue')
                         ->objectProperty('defaultvalue')

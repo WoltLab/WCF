@@ -111,7 +111,7 @@ class NoticeAddForm extends AbstractDatabaseObjectBuilderForm
                     RadioButtonFormField::create('cssClassName')
                         ->label('wcf.acp.notice.cssClassName')
                         ->description('wcf.acp.notice.cssClassName.description')
-                        ->options($this->getAvailableCssClassNames())
+                        ->phraseChoices($this->getAvailableCssClassNames())
                         ->value('info')
                         ->required()
                         ->saveValueCallback(static function (NoticeBuilder $builder, IFormField $field) {

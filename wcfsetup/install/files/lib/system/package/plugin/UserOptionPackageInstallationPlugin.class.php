@@ -509,7 +509,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                     SelectFormField::create('parentCategoryName')
                         ->objectProperty('parent')
                         ->label('wcf.acp.pip.abstractOption.categories.parentCategoryName')
-                        ->options(function () {
+                        ->choices(function () {
                             $options = [];
 
                             // The maximum nesting level is three.
@@ -553,7 +553,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                         ->objectProperty('categoryname')
                         ->label('wcf.acp.pip.abstractOption.options.categoryName')
                         ->required()
-                        ->options(function (): array {
+                        ->choices(function (): array {
                             $options = $this->getCategoryOptions();
 
                             // Options of the `hidden` category are not shown to users.
@@ -564,14 +564,14 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                             ];
 
                             return $options;
-                        }, true, false),
+                        }, true),
 
                     SelectFormField::create('optionType')
                         ->objectProperty('optiontype')
                         ->label('wcf.acp.pip.abstractOption.options.optionType')
                         ->description('wcf.acp.pip.userOption.options.optionType.description')
                         ->required()
-                        ->options($this->getOptionTypeOptions()),
+                        ->choices($this->getOptionTypeOptions()),
 
                     MultilineTextFormField::create('defaultValue')
                         ->objectProperty('defaultvalue')
@@ -618,7 +618,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                     SelectFormField::create('editable')
                         ->label('wcf.acp.pip.userOption.options.editable')
                         ->description('wcf.acp.pip.userOption.options.editable.description')
-                        ->options([
+                        ->phraseChoices([
                             0 => 'wcf.acp.user.option.editable.0',
                             1 => 'wcf.acp.user.option.editable.1',
                             2 => 'wcf.acp.user.option.editable.2',
@@ -630,7 +630,7 @@ class UserOptionPackageInstallationPlugin extends AbstractXMLPackageInstallation
                     SelectFormField::create('visible')
                         ->label('wcf.acp.pip.userOption.options.visible')
                         ->description('wcf.acp.pip.userOption.options.visible.description')
-                        ->options([
+                        ->phraseChoices([
                             0 => 'wcf.acp.user.option.visible.0',
                             1 => 'wcf.acp.user.option.visible.1',
                             2 => 'wcf.acp.user.option.visible.2',

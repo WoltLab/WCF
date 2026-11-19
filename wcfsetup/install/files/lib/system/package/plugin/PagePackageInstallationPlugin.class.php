@@ -475,7 +475,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             RadioButtonFormField::create('pageType')
                 ->label('wcf.acp.pip.page.pageType')
                 ->description('wcf.acp.pip.page.pageType.description')
-                ->options(\array_combine(Page::$availablePageTypes, Page::$availablePageTypes))
+                ->choices(\array_combine(Page::$availablePageTypes, Page::$availablePageTypes))
                 ->required(),
 
             TextFormField::create('name')
@@ -501,7 +501,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
             FilterableSelectFormField::create('parent')
                 ->label('wcf.acp.pip.page.parent')
-                ->options(function () {
+                ->choices(function () {
                     $pageNodeList = new PageNodeTree()->getNodeList();
 
                     $nestedOptions = [];

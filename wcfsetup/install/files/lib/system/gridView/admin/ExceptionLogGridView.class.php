@@ -51,7 +51,12 @@ final class ExceptionLogGridView extends AbstractGridView
         ]);
 
         $this->addAvailableFilters([
-            new SelectFilter($this->getAvailableLogFiles(), 'logFile', 'wcf.acp.exceptionLog.search.logFile'),
+            new SelectFilter(
+                $this->getAvailableLogFiles(),
+                'logFile',
+                'wcf.acp.exceptionLog.search.logFile',
+                labelLanguageItems: false
+            ),
         ]);
         $this->addRowLink(new GridViewRowLink(cssClass: 'jsExceptionLogEntry'));
         $this->setDefaultSortField('date');

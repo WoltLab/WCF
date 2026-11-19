@@ -21,7 +21,6 @@ use wcf\system\form\builder\field\user\UserFormField;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\WCF;
 use wcf\util\HtmlString;
-use wcf\util\StringUtil;
 
 /**
  * User trophy add form.
@@ -115,7 +114,7 @@ class UserTrophyAddForm extends AbstractDatabaseObjectBuilderForm
                 SelectFormField::create('trophyID')
                     ->label('wcf.acp.trophy')
                     ->description('wcf.acp.trophy.userTrophy.description')
-                    ->options($this->getTrophyOptions(), true, false)
+                    ->choices($this->getTrophyOptions(), true)
                     ->required()
                     ->saveValueCallback(static function (UserTrophyBuilder $builder, SelectFormField $field): void {
                         $builder->setTrophyID((int)$field->getSaveValue());
@@ -192,7 +191,7 @@ class UserTrophyAddForm extends AbstractDatabaseObjectBuilderForm
             }
 
             $options[] = [
-                'label' => StringUtil::encodeHTML($category->getTitle()),
+                'label' => $category->getTitle(),
                 'value' => 'category' . $category->categoryID,
                 'depth' => 0,
                 'isSelectable' => false,
@@ -200,7 +199,7 @@ class UserTrophyAddForm extends AbstractDatabaseObjectBuilderForm
 
             foreach ($trophies as $trophy) {
                 $options[] = [
-                    'label' => StringUtil::encodeHTML($trophy->getTitle()),
+                    'label' => $trophy->getTitle(),
                     'value' => $trophy->trophyID,
                     'depth' => 1,
                     'isSelectable' => $trophy->awardAutomatically === 0,

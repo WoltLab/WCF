@@ -147,7 +147,7 @@ class UserOptionAddForm extends AbstractFormOptionBuilderForm
                     SelectFormField::create('categoryName')
                         ->label('wcf.global.category')
                         ->required()
-                        ->options(function () {
+                        ->choices(function () {
                             $options = [];
                             foreach ($this->availableCategories as $category) {
                                 $options[$category->categoryName] = $category->getTitle();
@@ -198,7 +198,7 @@ class UserOptionAddForm extends AbstractFormOptionBuilderForm
                 ->appendChildren([
                     SelectFormField::create('editable')
                         ->label('wcf.acp.user.option.editable')
-                        ->options([
+                        ->phraseChoices([
                             1 => 'wcf.acp.user.option.editable.1',
                             2 => 'wcf.acp.user.option.editable.2',
                             3 => 'wcf.acp.user.option.editable.3',
@@ -210,7 +210,7 @@ class UserOptionAddForm extends AbstractFormOptionBuilderForm
                         }),
                     SelectFormField::create('visible')
                         ->label('wcf.acp.user.option.visible')
-                        ->options([
+                        ->phraseChoices([
                             0 => 'wcf.acp.user.option.visible.0',
                             1 => 'wcf.acp.user.option.visible.1',
                             2 => 'wcf.acp.user.option.visible.2',

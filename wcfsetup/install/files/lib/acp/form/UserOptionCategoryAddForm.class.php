@@ -86,7 +86,7 @@ class UserOptionCategoryAddForm extends AbstractDatabaseObjectBuilderForm
                             $field->value($object->getL10nValues('title'));
                         }),
                     ShowOrderFormField::create()
-                        ->options($this->getCategories(), labelLanguageItems: false)
+                        ->choices($this->getCategories())
                         ->saveValueCallback(static function (UserOptionCategoryBuilder $builder, ShowOrderFormField $field): void {
                             $showOrder = $field->getSaveValue();
                             if ($showOrder !== null) {

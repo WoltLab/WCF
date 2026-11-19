@@ -76,7 +76,7 @@ class LabelAddForm extends AbstractFormBuilderForm
                 ->appendChildren([
                     SelectFormField::create('groupID')
                         ->label('wcf.acp.label.group')
-                        ->options($this->labelGroups, labelLanguageItems: false)
+                        ->choices($this->labelGroups)
                         ->immutable($this->formAction !== 'create')
                         ->description('wcf.acp.label.group.permanentSelection')
                         ->required(),
@@ -122,7 +122,7 @@ class LabelAddForm extends AbstractFormBuilderForm
                 ->label('wcf.form.field.showOrder');
         } else {
             return ShowOrderFormField::create()
-                ->options(function () {
+                ->choices(function () {
                     $labelList = new LabelList();
                     $labelList->getConditionBuilder()->add('groupID = ?', [$this->formObject->groupID]);
                     $labelList->getConditionBuilder()->add('labelID <> ?', [$this->formObject->labelID]);

@@ -374,7 +374,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
                 ->label('wcf.acp.pip.menu.boxPosition')
                 ->description('wcf.acp.pip.menu.boxPosition.description')
                 ->required()
-                ->options(\array_combine(Box::$availablePositions, Box::$availablePositions))
+                ->choices(\array_combine(Box::$availablePositions, Box::$availablePositions))
                 ->addDependency(
                     ValueFormFieldDependency::create('identifier')
                         ->fieldId('identifier')
@@ -391,7 +391,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
             MultipleSelectionFormField::create('boxVisibilityExceptions')
                 ->label('wcf.acp.pip.menu.boxVisibilityExceptions.hiddenEverywhere')
                 ->filterable()
-                ->options(static function () {
+                ->choices(static function () {
                     $pageNodeList = new PageNodeTree()->getNodeList();
 
                     $nestedOptions = [];

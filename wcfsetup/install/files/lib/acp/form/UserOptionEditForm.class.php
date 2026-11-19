@@ -10,6 +10,7 @@ use wcf\system\interaction\admin\UserOptionInteractions;
 use wcf\system\interaction\StandaloneInteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Shows the user option edit form.
@@ -52,8 +53,9 @@ class UserOptionEditForm extends UserOptionAddForm
         if (!isset($optionType->getOptions()[$this->formObject->optionType])) {
             $formOption = $this->getAvailableFormOptions()[$this->formObject->optionType] ?? null;
 
-            $optionType->options([
-                ...$optionType->getOptions(),
+            // The labels of the existing options are already HTML.
+            $optionType->choices([
+                ...\array_map(HtmlString::fromSafeHtml(...), $optionType->getOptions()),
                 $this->formObject->optionType => $formOption?->getTitle() ?? $this->formObject->optionType,
             ]);
         }

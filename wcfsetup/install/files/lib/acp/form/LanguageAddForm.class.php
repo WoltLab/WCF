@@ -119,7 +119,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
                     SelectFormField::create('locale')
                         ->label('wcf.acp.language.locale')
                         ->description('wcf.acp.language.locale.description')
-                        ->options($this->locales)
+                        ->choices($this->locales)
                         ->addValidator(new FormFieldValidator(
                             'locale',
                             static function (SelectFormField $formField) {
@@ -149,7 +149,7 @@ class LanguageAddForm extends AbstractFormBuilderForm
                     SelectFormField::create('sourceLanguageID')
                         ->label('wcf.acp.language.add.source')
                         ->description('wcf.acp.language.add.source.description')
-                        ->options(LanguageFactory::getInstance()->getLanguages())
+                        ->choices(LanguageFactory::getInstance()->getLanguages())
                         ->available($this->form->getFormMode() === IFormDocument::FORM_MODE_CREATE)
                         ->required(),
                 ]),

@@ -30,7 +30,7 @@ final class SortOrderFormField extends AbstractSingleSelectFormField
     public function __construct()
     {
         $this->label('wcf.global.showOrder');
-        $this->options([
+        $this->phraseChoices([
             'ASC' => 'wcf.global.sortOrder.ascending',
             'DESC' => 'wcf.global.sortOrder.descending',
         ]);

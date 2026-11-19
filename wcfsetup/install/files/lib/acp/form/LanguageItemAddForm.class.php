@@ -69,7 +69,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
                 RadioButtonFormField::create('languageCategoryIDMode')
                     ->required()
                     ->label('wcf.acp.language.item.languageCategoryID.mode')
-                    ->options([
+                    ->phraseChoices([
                         'automatic' => 'wcf.acp.language.item.languageCategoryID.mode.automatic',
                         'selection' => 'wcf.acp.language.item.languageCategoryID.mode.selection',
                     ])
@@ -78,12 +78,12 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
                 FilterableSelectFormField::create('languageCategoryID')
                     ->label('wcf.acp.language.item.languageCategoryID')
                     ->description('wcf.acp.language.item.languageCategoryID.description')
-                    ->options(static function () {
+                    ->choices(static function () {
                         $list = new LanguageCategoryList();
                         $list->sqlOrderBy = 'languageCategory ASC';
 
                         return $list;
-                    }, false, false)
+                    })
                     ->required(),
 
                 TextFormField::create('languageItem')

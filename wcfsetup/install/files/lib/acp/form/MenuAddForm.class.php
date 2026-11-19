@@ -82,7 +82,7 @@ class MenuAddForm extends AbstractFormBuilderForm
                             ->languageItemPattern('wcf.menu.(com.woltlab.wcf.genericMenu\d+|[\w\.]+)'),
                         SelectFormField::create('position')
                             ->label('wcf.acp.box.position')
-                            ->options(
+                            ->phraseChoices(
                                 \array_combine(
                                     Box::$availableMenuPositions,
                                     \array_map(function (string $postion): string {

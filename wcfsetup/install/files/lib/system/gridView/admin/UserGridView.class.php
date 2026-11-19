@@ -308,8 +308,9 @@ final class UserGridView extends AbstractGridView
 
         $columns = [];
         foreach (\array_merge(...\array_values($options)) as $option) {
+            // The label of a column is HTML, but the title of an option is plain text.
             $columns[] = GridViewColumn::for($option->getIdentifier())
-                ->label($option->getTitle())
+                ->label(StringUtil::encodeHTML($option->getTitle()))
                 ->renderer($this->getUserOptionRenderer($option))
                 ->unsafeDisableEncoding()
                 ->sortable(sortByDatabaseColumn: 'user_option_value.' . $option->getIdentifier())

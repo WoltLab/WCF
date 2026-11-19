@@ -16,6 +16,7 @@ use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\gridView\AbstractGridView;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Handles the column configuration dialog of grid views.
@@ -123,7 +124,8 @@ final class GridViewColumnConfigurationAction implements RequestHandlerInterface
         $options = [];
         $visibleColumnIDs = [];
         foreach ($gridView->getConfigurableColumns() as $column) {
-            $options[$column->getID()] = $column->getLabel();
+            // The labels of columns are HTML, see `shared_gridViewHeaderColumns.tpl`.
+            $options[$column->getID()] = HtmlString::fromSafeHtml($column->getLabel());
 
             if ($gridView->isColumnVisible($column)) {
                 $visibleColumnIDs[] = $column->getID();
@@ -132,7 +134,7 @@ final class GridViewColumnConfigurationAction implements RequestHandlerInterface
 
         $form->appendChild(
             MultipleSelectionFormField::create('columns')
-                ->options($options, false, false)
+                ->choices($options)
                 ->value($visibleColumnIDs)
         );
 

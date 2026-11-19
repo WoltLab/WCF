@@ -143,7 +143,8 @@ final class PaidSubscriptionTransactionLogGridView extends AbstractGridView
             new SelectFilter(
                 $this->getAvailableSubscriptions(),
                 'subscriptionID',
-                'wcf.acp.paidSubscription.subscription'
+                'wcf.acp.paidSubscription.subscription',
+                labelLanguageItems: false
             )
         ]);
         $this->setInteractionProvider($this->getInteractions());

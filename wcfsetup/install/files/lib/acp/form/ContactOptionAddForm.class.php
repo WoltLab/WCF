@@ -61,7 +61,7 @@ class ContactOptionAddForm extends AbstractFormOptionAddForm
                 ->i18n()
                 ->languageItemPattern('wcf.contact.optionDescription\d+'),
             ShowOrderFormField::create('showOrder')
-                ->options($this->getContactOptions()),
+                ->choices($this->getContactOptions()),
             $this->getOptionTypeFormField(),
             ...$this->getSharedConfigurationFormFields(),
             BooleanFormField::create('isDisabled')
@@ -76,7 +76,7 @@ class ContactOptionAddForm extends AbstractFormOptionAddForm
 
         // Remove the WYSIWYG type because the contact form does not support
         // embedded objects due to the unique behavior of it.
-        $formField->options(
+        $formField->choices(
             \array_filter(
                 FormOptionHandler::getInstance()->getSortedOptionTypes(),
                 static fn($id) => $id !== "wysiwyg",

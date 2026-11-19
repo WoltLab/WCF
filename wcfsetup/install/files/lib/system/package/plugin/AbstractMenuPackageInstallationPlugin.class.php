@@ -21,6 +21,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 use wcf\util\Url;
 
@@ -160,7 +161,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
             FilterableSelectFormField::create('parentMenuItem')
                 ->objectProperty('parent')
                 ->label('wcf.acp.pip.abstractMenu.parentMenuItem')
-                ->options(function () {
+                ->choices(function () {
                     $menuStructure = $this->getMenuStructureData()['structure'];
 
                     $buildOptions = static function ($parent = '', $depth = 0) use ($menuStructure, &$buildOptions) {
@@ -174,7 +175,10 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
                         foreach ($menuStructure[$parent] as $menuItem) {
                             $options[] = [
                                 'depth' => $depth,
-                                'label' => $menuItem->menuItem,
+                                // The name of a menu item is the name of the phrase of its title.
+                                'label' => \preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', $menuItem->menuItem) === 1
+                                    ? HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable($menuItem->menuItem))
+                                    : $menuItem->menuItem,
                                 'value' => $menuItem->menuItem,
                             ];
 

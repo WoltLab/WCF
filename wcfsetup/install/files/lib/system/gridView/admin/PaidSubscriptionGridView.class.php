@@ -106,7 +106,12 @@ final class PaidSubscriptionGridView extends AbstractGridView
                 'description',
                 'wcf.global.description',
             ),
-            new SelectFilter($this->getAvailableCurrencies(), 'currency', 'wcf.acp.paidSubscription.currency'),
+            new SelectFilter(
+                $this->getAvailableCurrencies(),
+                'currency',
+                'wcf.acp.paidSubscription.currency',
+                labelLanguageItems: false
+            ),
         ]);
         $provider = new PaidSubscriptionInteractions();
         $provider->addInteractions([

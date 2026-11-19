@@ -95,21 +95,19 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
         $dataTab->label('wcf.global.form.data');
         $tabMenu->appendChild($dataTab);
 
+        $modes = [
+            'import' => 'wcf.acp.devtools.project.add.mode.import',
+            'setup' => 'wcf.acp.devtools.project.add.mode.setup',
+        ];
+
+        if ($this->formObject !== null) {
+            $modes['edit'] = 'wcf.acp.devtools.project.add.mode.edit';
+        }
+
         $mode = RadioButtonFormField::create('mode')
             ->label('wcf.acp.devtools.project.add.mode')
             ->required()
-            ->options(function () {
-                $options = [
-                    'import' => 'wcf.acp.devtools.project.add.mode.import',
-                    'setup' => 'wcf.acp.devtools.project.add.mode.setup',
-                ];
-
-                if ($this->formObject !== null) {
-                    $options['edit'] = 'wcf.acp.devtools.project.add.mode.edit';
-                }
-
-                return $options;
-            })
+            ->phraseChoices($modes)
             ->immutable($this->formObject !== null)
             ->value($this->formObject !== null ? 'edit' : 'import');
 

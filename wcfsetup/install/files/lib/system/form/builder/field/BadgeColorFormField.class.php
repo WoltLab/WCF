@@ -67,7 +67,7 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
             ->removeClass('floated')
             ->addFieldClass('labelSelection__radio')
             ->defaultLabelText(WCF::getLanguage()->get('wcf.acp.label.defaultValue'))
-            ->options(\array_combine(self::AVAILABLE_CSS_CLASSNAMES, self::AVAILABLE_CSS_CLASSNAMES))
+            ->choices(\array_combine(self::AVAILABLE_CSS_CLASSNAMES, self::AVAILABLE_CSS_CLASSNAMES))
             ->pattern('^-?[_a-zA-Z]+[_a-zA-Z0-9-]+$');
     }
 
@@ -182,7 +182,7 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
         $index = \array_search('none', $options, true);
         \array_splice($options, $index === false ? \count($options) : $index, 0, $classNames);
 
-        return $this->options(\array_combine($options, $options));
+        return $this->choices(\array_combine($options, $options));
     }
 
     /**
@@ -238,7 +238,7 @@ final class BadgeColorFormField extends RadioButtonFormField implements IPattern
         }
 
         return $this
-            ->options(\array_combine($classNames, $classNames));
+            ->choices(\array_combine($classNames, $classNames));
     }
 
     /**

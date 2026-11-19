@@ -162,7 +162,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
                     ->objectProperty('sortField')
                     ->label('wcf.acp.box.controller.sortField')
                     ->description('wcf.acp.box.controller.sortField.description')
-                    ->options(\array_combine($this->validSortFields, $this->validSortFields))
+                    ->choices(\array_combine($this->validSortFields, $this->validSortFields))
                     ->addDependency(
                         ValueFormFieldDependency::create('boxType')
                             ->field($objectTypeField)

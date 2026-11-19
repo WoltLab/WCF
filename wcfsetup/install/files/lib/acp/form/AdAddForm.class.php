@@ -22,6 +22,7 @@ use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\IFormChildNode;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\object\filter\builder\AdObjectFilterBuilder;
+use wcf\util\HtmlString;
 
 /**
  * Shows the form to create a new ad.
@@ -79,7 +80,7 @@ class AdAddForm extends AbstractDatabaseObjectBuilderForm
     {
         $location = SelectFormField::create('objectTypeID')
             ->label('wcf.acp.ad.location')
-            ->options($this->getLocationOptions(), true, false)
+            ->choices($this->getLocationOptions(), true)
             ->ignoreInvalidValues()
             ->required()
             ->saveValueCallback(static function (AdBuilder $builder, IFormField $field) {
@@ -140,14 +141,15 @@ class AdAddForm extends AbstractDatabaseObjectBuilderForm
     /**
      * Returns the available locations grouped by their category.
      *
-     * @return list<array{label: string, value: int|string, depth: int, isSelectable?: bool}>
+     * @return list<array{label: HtmlString, value: int|string, depth: int, isSelectable?: bool}>
      */
     private function getLocationOptions(): array
     {
+        // The labels are resolved phrases.
         $options = [];
         foreach (AdHandler::getInstance()->getLocationSelection() as $categoryLabel => $locations) {
             $options[] = [
-                'label' => $categoryLabel,
+                'label' => HtmlString::fromSafeHtml($categoryLabel),
                 'value' => 'category' . \count($options),
                 'depth' => 0,
                 'isSelectable' => false,
@@ -155,7 +157,7 @@ class AdAddForm extends AbstractDatabaseObjectBuilderForm
 
             foreach ($locations as $objectTypeID => $locationLabel) {
                 $options[] = [
-                    'label' => $locationLabel,
+                    'label' => HtmlString::fromSafeHtml($locationLabel),
                     'value' => $objectTypeID,
                     'depth' => 1,
                 ];

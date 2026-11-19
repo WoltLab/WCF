@@ -27,6 +27,7 @@ use wcf\system\menu\user\UserMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 
 /**
@@ -166,8 +167,8 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
                 ->appendChild(
                     SelectFormField::create('languageID')
                         ->label('wcf.user.language.description')
-                        ->options(\array_map(
-                            static fn(Language $language) => StringUtil::encodeHTML($language->languageName),
+                        ->choices(\array_map(
+                            static fn(Language $language) => $language->languageName,
                             $this->availableLanguages
                         ))
                         ->required()
@@ -183,8 +184,8 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
                     MultipleSelectionFormField::create('contentLanguageIDs')
                         ->label('wcf.user.visibleLanguages')
                         ->description('wcf.user.visibleLanguages.description')
-                        ->options(\array_map(
-                            static fn(Language $language) => StringUtil::encodeHTML($language->languageName),
+                        ->choices(\array_map(
+                            static fn(Language $language) => $language->languageName,
                             $this->availableContentLanguages
                         ))
                         ->ignoreInvalidValues()
@@ -211,16 +212,16 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
         $styleContainer = FormContainer::create('styleSection')
             ->label('wcf.user.styles');
         if (\count($this->availableStyles) > 1) {
-            $styles = [0 => 'wcf.global.defaultValue'];
+            $styles = [0 => HtmlString::fromSafeHtml(WCF::getLanguage()->get('wcf.global.defaultValue'))];
             foreach ($this->availableStyles as $style) {
-                $styles[$style->styleID] = StringUtil::encodeHTML($style->styleName);
+                $styles[$style->styleID] = $style->styleName;
             }
 
             $styleContainer->appendChild(
                 SelectFormField::create('styleID')
                     ->label('wcf.user.style')
                     ->description('wcf.user.style.description')
-                    ->options($styles)
+                    ->choices($styles)
                     ->required()
                     ->ignoreInvalidValues()
                     ->defaultValue(0)
@@ -233,7 +234,7 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
             SelectFormField::create('colorScheme')
                 ->label('wcf.user.style.colorScheme')
                 ->description('wcf.user.style.colorScheme.description')
-                ->options([
+                ->phraseChoices([
                     'system' => 'wcf.style.setColorScheme.system',
                     'light' => 'wcf.style.setColorScheme.light',
                     'dark' => 'wcf.style.setColorScheme.dark',
@@ -257,7 +258,9 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
         if (\MODULE_TROPHY !== 0 && $maxSpecialTrophies !== 0 && $this->availableTrophies !== []) {
             $trophies = [];
             foreach ($this->availableTrophies as $trophy) {
-                $trophies[$trophy->trophyID] = $trophy->renderTrophy(32) . ' ' . StringUtil::encodeHTML($trophy->getTitle());
+                $trophies[$trophy->trophyID] = HtmlString::fromSafeHtml(
+                    $trophy->renderTrophy(32) . ' ' . StringUtil::encodeHTML($trophy->getTitle())
+                );
             }
 
             $containers[] = FormContainer::create('trophySection')
@@ -266,7 +269,7 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
                     MultipleSelectionFormField::create('specialTrophies')
                         ->label('wcf.user.trophy.specialTrophies')
                         ->description('wcf.user.trophy.specialTrophies.description')
-                        ->options($trophies)
+                        ->choices($trophies)
                         ->addValidator(new FormFieldValidator(
                             'maximumMultiples',
                             static function (MultipleSelectionFormField $formField) use ($maxSpecialTrophies) {

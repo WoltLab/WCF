@@ -22,6 +22,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\option\OptionHandler;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 
 /**
@@ -252,13 +253,21 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
                 // add `hidden` pseudo-category
                 $categoryName = $form->getNodeById('categoryName');
                 \assert($categoryName instanceof FilterableSelectFormField);
-                $options = $categoryName->getNestedOptions();
+                // The labels of the existing options are already HTML.
+                $options = \array_map(
+                    static function (array $option): array {
+                        $option['label'] = HtmlString::fromSafeHtml($option['label']);
+
+                        return $option;
+                    },
+                    $categoryName->getNestedOptions()
+                );
                 $options[] = [
                     'depth' => 0,
                     'label' => 'hidden',
                     'value' => 'hidden',
                 ];
-                $categoryName->options($options, true);
+                $categoryName->choices($options, true);
 
                 $selectOptions = MultilineTextFormField::create('selectOptions')
                     ->objectProperty('selectoptions')

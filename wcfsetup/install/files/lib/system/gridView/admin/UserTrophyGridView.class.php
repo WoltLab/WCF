@@ -144,7 +144,7 @@ final class UserTrophyGridView extends AbstractGridView
             {
                 return SelectFormField::create($this->id)
                     ->label($this->languageItem)
-                    ->options($this->options, true, false);
+                    ->choices($this->options, true);
             }
 
             #[\Override]

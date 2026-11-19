@@ -16,7 +16,7 @@ trait TSelectOptionLabelFormatter
 {
     /**
      * Returns the label of the select option, resolving it if it is the name
-     * of a language item, see `TSelectionFormField::options()`.
+     * of a language item, see `TSelectOptionsFormOption::setSelectOptions()`.
      */
     private function resolveLabel(string $label, int $languageID): string
     {

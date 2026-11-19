@@ -147,7 +147,7 @@ class UserRankAddForm extends AbstractDatabaseObjectBuilderForm
                     SelectFormField::create('groupID')
                         ->label('wcf.user.group')
                         ->description('wcf.acp.user.rank.userGroup.description')
-                        ->options(UserGroup::getSortedGroupsByType([], [UserGroup::GUESTS, UserGroup::EVERYONE]))
+                        ->choices(UserGroup::getSortedGroupsByType([], [UserGroup::GUESTS, UserGroup::EVERYONE]))
                         ->required()
                         ->saveValueCallback(static function (UserRankBuilder $builder, SelectFormField $field): void {
                             $builder->setGroupID((int)$field->getSaveValue());
@@ -158,7 +158,7 @@ class UserRankAddForm extends AbstractDatabaseObjectBuilderForm
                     SelectFormField::create('requiredGender')
                         ->label('wcf.user.option.gender')
                         ->description('wcf.acp.user.rank.requiredGender.description')
-                        ->options([
+                        ->phraseChoices([
                             1 => 'wcf.user.gender.male',
                             2 => 'wcf.user.gender.female',
                             3 => 'wcf.user.gender.other'

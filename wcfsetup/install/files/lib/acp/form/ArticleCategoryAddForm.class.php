@@ -47,7 +47,7 @@ class ArticleCategoryAddForm extends CategoryAddFormBuilderForm
             ...$formFields,
             SelectFormField::create('sortField')
                 ->label('wcf.acp.article.category.sortField')
-                ->options([
+                ->phraseChoices([
                     'time' => 'wcf.global.date',
                     'title' => 'wcf.global.title',
                     'views' => 'wcf.article.sortField.views',

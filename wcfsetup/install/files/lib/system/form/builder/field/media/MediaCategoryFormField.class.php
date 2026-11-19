@@ -32,7 +32,7 @@ final class MediaCategoryFormField extends AbstractSingleSelectFormField
     public function __construct()
     {
         $this->label('wcf.global.category');
-        $this->options($this->getCategoryOptions(), true);
+        $this->choices($this->getCategoryOptions(), true);
     }
 
     /**

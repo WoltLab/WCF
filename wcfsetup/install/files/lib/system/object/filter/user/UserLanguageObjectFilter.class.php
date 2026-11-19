@@ -58,7 +58,7 @@ final class UserLanguageObjectFilter extends AbstractMultipleSelectionObjectFilt
     {
         return MultipleSelectionFormField::create('userLanguage')
             ->label('wcf.user.condition.languages')
-            ->options(LanguageFactory::getInstance()->getLanguages())
+            ->choices(LanguageFactory::getInstance()->getLanguages())
             ->required();
     }
 

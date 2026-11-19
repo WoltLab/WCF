@@ -15,7 +15,6 @@ use wcf\system\form\builder\field\FileProcessorFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
 use wcf\system\form\builder\field\TitleFormField;
-use wcf\util\StringUtil;
 
 /**
  * Represents the reaction type add form.
@@ -89,7 +88,7 @@ class ReactionTypeAddForm extends AbstractDatabaseObjectBuilderForm
                     }),
                 ShowOrderFormField::create()
                     ->required()
-                    ->options($this->getReactionTypes(), labelLanguageItems: false)
+                    ->choices($this->getReactionTypes())
                     ->saveValueCallback(static function (ReactionTypeBuilder $builder, ShowOrderFormField $field) {
                         $builder->setShowOrder($field->getSaveValue());
                     })
@@ -141,6 +140,6 @@ class ReactionTypeAddForm extends AbstractDatabaseObjectBuilderForm
         $list = new ReactionTypeList();
         $list->readObjects();
 
-        return \array_map(static fn($option) => StringUtil::encodeHTML($option->getTitle()), $list->getObjects());
+        return \array_map(static fn($option) => $option->getTitle(), $list->getObjects());
     }
 }

@@ -19,6 +19,7 @@ use wcf\system\form\builder\NoticeFormNode;
 use wcf\system\form\builder\NoticeFormNodeType;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Selects the content of one or more users that will be removed. The removal
@@ -110,9 +111,9 @@ final class UserContentRemoveAction implements RequestHandlerInterface
 
         $options = [];
         foreach ($contentProviders as $objectType) {
-            $options[$objectType->objectType] = WCF::getLanguage()->get(
+            $options[$objectType->objectType] = HtmlString::fromSafeHtml(WCF::getLanguage()->get(
                 'wcf.acp.content.provider.' . $objectType->objectType
-            );
+            ));
         }
 
         $form = new Psr15DialogForm(
@@ -129,7 +130,7 @@ final class UserContentRemoveAction implements RequestHandlerInterface
                     'users' => $users,
                     'user' => \reset($users),
                 ])
-                ->options($options, false, false)
+                ->choices($options)
                 ->value(\array_keys($options))
                 ->required(),
         ]);

@@ -122,7 +122,7 @@ class TagAddForm extends AbstractDatabaseObjectBuilderForm
                     SelectFormField::create('languageID')
                         ->label('wcf.acp.tag.languageID')
                         ->available($contentLanguages !== [])
-                        ->options($contentLanguages)
+                        ->choices($contentLanguages)
                         ->value($preselectedLanguageID)
                         ->immutable($this->formAction !== 'create')
                         ->required()

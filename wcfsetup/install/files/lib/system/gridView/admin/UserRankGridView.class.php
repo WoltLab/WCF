@@ -96,7 +96,8 @@ final class UserRankGridView extends AbstractGridView
                 ->filter(new SelectFilter(
                     $this->getAvailableUserGroups(),
                     'groupID',
-                    'wcf.user.group'
+                    'wcf.user.group',
+                    labelLanguageItems: false
                 ))
                 ->renderer([
                     new class extends DefaultColumnRenderer {

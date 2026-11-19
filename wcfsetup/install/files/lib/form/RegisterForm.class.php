@@ -316,8 +316,8 @@ final class RegisterForm extends AbstractDatabaseObjectBuilderForm
                 SelectFormField::create('languageID')
                     ->label('wcf.user.language')
                     ->description('wcf.user.language.description')
-                    ->options(\array_map(
-                        static fn(Language $language) => StringUtil::encodeHTML($language->languageName),
+                    ->choices(\array_map(
+                        static fn(Language $language) => $language->languageName,
                         $availableLanguages
                     ))
                     ->required()
@@ -334,8 +334,8 @@ final class RegisterForm extends AbstractDatabaseObjectBuilderForm
                     MultipleSelectionFormField::create('visibleLanguages')
                         ->label('wcf.user.visibleLanguages')
                         ->description('wcf.user.visibleLanguages.description')
-                        ->options(\array_map(
-                            static fn(Language $language) => StringUtil::encodeHTML($language->languageName),
+                        ->choices(\array_map(
+                            static fn(Language $language) => $language->languageName,
                             $availableContentLanguages
                         ))
                         ->ignoreInvalidValues()

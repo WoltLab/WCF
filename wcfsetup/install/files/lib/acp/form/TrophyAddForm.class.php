@@ -128,7 +128,7 @@ class TrophyAddForm extends AbstractDatabaseObjectBuilderForm
                         }),
                     SelectFormField::create('categoryID')
                         ->label('wcf.global.category')
-                        ->options($this->getCategories(), labelLanguageItems: false)
+                        ->choices($this->getCategories())
                         ->required()
                         ->saveValueCallback(static function (TrophyBuilder $builder, SelectFormField $field): void {
                             $builder->setCategoryID((int)$field->getSaveValue());
@@ -185,7 +185,7 @@ class TrophyAddForm extends AbstractDatabaseObjectBuilderForm
                         ),
                     RadioButtonFormField::create('type')
                         ->label('wcf.acp.trophy.type')
-                        ->options([
+                        ->phraseChoices([
                             Trophy::TYPE_BADGE => 'wcf.acp.trophy.type.badge',
                             Trophy::TYPE_IMAGE => 'wcf.acp.trophy.type.imageUpload',
                         ])

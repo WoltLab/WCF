@@ -156,7 +156,12 @@ final class PageGridView extends AbstractGridView
             return $application->domainName . $application->domainPath;
         }, ApplicationHandler::getInstance()->getApplications());
 
-        return new class($applications, 'applicationPackageID', 'wcf.acp.page.application') extends SelectFilter {
+        return new class(
+            $applications,
+            'applicationPackageID',
+            'wcf.acp.page.application',
+            labelLanguageItems: false
+        ) extends SelectFilter {
             #[\Override]
             public function applyFilter(DatabaseObjectList $list, string $value): void
             {

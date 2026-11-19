@@ -12,6 +12,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\HtmlString;
 
 /**
  * Shows the form for adding new template groups.
@@ -49,6 +50,7 @@ class TemplateGroupAddForm extends AbstractFormBuilderForm
     {
         parent::createForm();
 
+        // The labels are HTML, with encoded names that are indented with `&nbsp;`.
         $availableTemplateGroups = TemplateGroup::getSelectList([-1], 1);
 
         $this->form->appendChildren([
@@ -56,7 +58,7 @@ class TemplateGroupAddForm extends AbstractFormBuilderForm
                 ->appendChildren([
                     SelectFormField::create('parentTemplateGroupID')
                         ->label('wcf.acp.template.group.parentTemplateGroup')
-                        ->options($availableTemplateGroups)
+                        ->choices(\array_map(HtmlString::fromSafeHtml(...), $availableTemplateGroups))
                         ->available(\count($availableTemplateGroups) > 0),
                     TextFormField::create('templateGroupName')
                         ->label('wcf.global.name')

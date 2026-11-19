@@ -54,7 +54,8 @@ final class PaidSubscriptionUserGridView extends AbstractGridView
                     $this->getAvailableSubscriptions(),
                     'title',
                     'wcf.acp.paidSubscription.subscription',
-                    'paid_subscription_user.subscriptionID'
+                    'paid_subscription_user.subscriptionID',
+                    labelLanguageItems: false
                 ))
                 ->sortable(sortByDatabaseColumn: 'title'),
             GridViewColumn::for('endDate')

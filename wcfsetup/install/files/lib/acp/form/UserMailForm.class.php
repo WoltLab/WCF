@@ -106,11 +106,7 @@ class UserMailForm extends AbstractFormBuilderForm
         return MultipleSelectionFormField::create('groupIDs')
             ->label('wcf.acp.user.sendMail.groups')
             ->required()
-            ->options(
-                UserGroup::getSortedAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE]),
-                false,
-                false
-            );
+            ->choices(UserGroup::getSortedAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE]));
     }
 
     private function getUserFormField(): UserFormField

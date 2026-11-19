@@ -233,7 +233,7 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
                 ->required(),
             SelectFormField::create('application')
                 ->label("wcf.acp.pip.{$this->getPipName()}.application")
-                ->options(static function (): array {
+                ->choices(static function (): array {
                     $options = [];
 
                     $apps = ApplicationHandler::getInstance()->getApplications();

@@ -455,7 +455,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 
             RadioButtonFormField::create('iconType')
                 ->label('wcf.acp.pip.bbcode.iconType')
-                ->options([
+                ->phraseChoices([
                     'filePath' => 'wcf.acp.pip.bbcode.iconType.filePath',
                     'fontAwesome' => 'wcf.acp.pip.bbcode.iconType.fontAwesome',
                 ])

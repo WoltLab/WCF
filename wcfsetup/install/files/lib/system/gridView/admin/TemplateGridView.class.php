@@ -33,6 +33,7 @@ use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\view\filter\TimeFilter;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Grid view for the list of templates.
@@ -153,7 +154,7 @@ final class TemplateGridView extends AbstractGridView
             {
                 return SelectFormField::create($this->id)
                     ->label($this->languageItem)
-                    ->options($this->getSelectOptions(), true);
+                    ->choices($this->getSelectOptions(), true);
             }
 
             #[\Override]
@@ -182,7 +183,7 @@ final class TemplateGridView extends AbstractGridView
             }
 
             /**
-             * @return list<array{depth: int, value: int, label: string}>
+             * @return list<array{depth: int, value: int, label: HtmlString|string}>
              */
             private function getSelectOptions(): array
             {
@@ -190,7 +191,7 @@ final class TemplateGridView extends AbstractGridView
                     [
                         'depth' => 0,
                         'value' => TemplateGridView::DEFAULT_TEMPLATE_GROUP_ID,
-                        'label' => 'wcf.acp.template.group.default'
+                        'label' => HtmlString::fromSafeHtml(WCF::getLanguage()->get('wcf.acp.template.group.default')),
                     ]
                 ];
 

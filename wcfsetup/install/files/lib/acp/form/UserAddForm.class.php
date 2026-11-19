@@ -34,6 +34,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 
 /**
@@ -295,16 +296,18 @@ class UserAddForm extends AbstractDatabaseObjectBuilderForm
         $ownerGroupID = UserGroup::getOwnerGroupID();
         $options = [];
         foreach ($availableGroups as $group) {
-            $options[$group->groupID] = StringUtil::encodeHTML($group->getName());
+            $options[$group->groupID] = $group->getName();
 
             if ($group->groupID === $ownerGroupID) {
-                $options[$group->groupID] .= ' ' . FontAwesomeIcon::fromValues('shield-halved')->toHtml(16);
+                $options[$group->groupID] = HtmlString::fromSafeHtml(
+                    StringUtil::encodeHTML($group->getName()) . ' ' . FontAwesomeIcon::fromValues('shield-halved')->toHtml(16)
+                );
             }
         }
 
         return MultipleSelectionFormField::create('groupIDs')
             ->label('wcf.acp.user.groups')
-            ->options($options, false, false)
+            ->choices($options)
             ->ignoreInvalidValues()
             ->loadValueCallback(static function (User $user, MultipleSelectionFormField $field) {
                 $field->value($user->getGroupIDs(true));
@@ -362,8 +365,8 @@ class UserAddForm extends AbstractDatabaseObjectBuilderForm
             SelectFormField::create('languageID')
                 ->label('wcf.user.language')
                 ->description('wcf.user.language.description')
-                ->options(\array_map(
-                    static fn(Language $language) => StringUtil::encodeHTML($language->languageName),
+                ->choices(\array_map(
+                    static fn(Language $language) => $language->languageName,
                     $availableLanguages
                 ))
                 ->required()
@@ -380,8 +383,8 @@ class UserAddForm extends AbstractDatabaseObjectBuilderForm
             $fields[] = MultipleSelectionFormField::create('visibleLanguages')
                 ->label('wcf.user.visibleLanguages')
                 ->description('wcf.user.visibleLanguages.description')
-                ->options(\array_map(
-                    static fn(Language $language) => StringUtil::encodeHTML($language->languageName),
+                ->choices(\array_map(
+                    static fn(Language $language) => $language->languageName,
                     $availableContentLanguages
                 ))
                 ->ignoreInvalidValues()
@@ -423,15 +426,15 @@ class UserAddForm extends AbstractDatabaseObjectBuilderForm
                 || $userProfile->hasPermission('admin.style.canUseDisabledStyle')
         );
         if (\count($availableStyles) > 1) {
-            $styles = [0 => 'wcf.global.defaultValue'];
+            $styles = [0 => HtmlString::fromSafeHtml(WCF::getLanguage()->get('wcf.global.defaultValue'))];
             foreach ($availableStyles as $style) {
-                $styles[$style->styleID] = StringUtil::encodeHTML($style->styleName);
+                $styles[$style->styleID] = $style->styleName;
             }
 
             $fields[] = SelectFormField::create('styleID')
                 ->label('wcf.user.style')
                 ->description('wcf.user.style.description')
-                ->options($styles)
+                ->choices($styles)
                 ->required()
                 ->ignoreInvalidValues()
                 ->defaultValue(0)
@@ -443,7 +446,7 @@ class UserAddForm extends AbstractDatabaseObjectBuilderForm
         $fields[] = SelectFormField::create('colorScheme')
             ->label('wcf.user.style.colorScheme')
             ->description('wcf.user.style.colorScheme.description')
-            ->options([
+            ->phraseChoices([
                 'system' => 'wcf.style.setColorScheme.system',
                 'light' => 'wcf.style.setColorScheme.light',
                 'dark' => 'wcf.style.setColorScheme.dark',

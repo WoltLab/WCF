@@ -29,7 +29,6 @@ use wcf\system\payment\method\PaymentMethodHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\HtmlString;
-use wcf\util\StringUtil;
 
 /**
  * Shows the paid subscription add form.
@@ -139,7 +138,7 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
                         }),
                     ShowOrderFormField::create()
                         ->description('wcf.acp.paidSubscription.showOrder.description')
-                        ->options($this->getSubscriptionsByShowOrder(), labelLanguageItems: false)
+                        ->choices($this->getSubscriptionsByShowOrder())
                         ->saveValueCallback(static function (PaidSubscriptionBuilder $builder, ShowOrderFormField $field): void {
                             $showOrder = $field->getSaveValue();
                             if ($showOrder !== null) {
@@ -162,7 +161,7 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
                         ->label('wcf.acp.paidSubscription.excludedSubscriptions')
                         ->description('wcf.acp.paidSubscription.excludedSubscriptions.description')
                         ->available($availableSubscriptions !== [])
-                        ->options($availableSubscriptions, labelLanguageItems: false)
+                        ->choices($availableSubscriptions)
                         ->saveValueCallback(static function (PaidSubscriptionBuilder $builder, MultipleSelectionFormField $field): void {
                             $builder->setExcludedSubscriptionIDs(\array_values(ArrayUtil::toIntegerArray($field->getValue() ?? [])));
                         })
@@ -204,7 +203,7 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
                         ->suffixField(
                             SelectFormField::create('currency')
                                 ->required()
-                                ->options(\array_combine($availableCurrencies, $availableCurrencies), labelLanguageItems: false)
+                                ->choices(\array_combine($availableCurrencies, $availableCurrencies))
                                 ->value(\in_array('USD', $availableCurrencies, true) ? 'USD' : \reset($availableCurrencies))
                                 ->immutable(!$canChangePaymentOptions)
                                 ->loadValueCallback(static function (PaidSubscription $object, IFormField $field) use ($availableCurrencies): void {
@@ -279,7 +278,7 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
                         ->suffixField(
                             SelectFormField::create('subscriptionLengthUnit')
                                 ->required()
-                                ->options([
+                                ->phraseChoices([
                                     'D' => 'wcf.acp.paidSubscription.subscriptionLengthUnit.D',
                                     'M' => 'wcf.acp.paidSubscription.subscriptionLengthUnit.M',
                                     'Y' => 'wcf.acp.paidSubscription.subscriptionLengthUnit.Y',
@@ -307,7 +306,7 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
                         ->label('wcf.acp.paidSubscription.userGroups')
                         ->description('wcf.acp.paidSubscription.userGroups.description')
                         ->required()
-                        ->options($availableUserGroups, labelLanguageItems: false)
+                        ->choices($availableUserGroups)
                         ->saveValueCallback(static function (PaidSubscriptionBuilder $builder, MultipleSelectionFormField $field): void {
                             $builder->setGroupIDs(\array_values(ArrayUtil::toIntegerArray($field->getValue() ?? [])));
                         })
@@ -340,9 +339,8 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
         $subscriptionList->sqlOrderBy = 'title';
         $subscriptionList->readObjects();
 
-        // The labels of selection options are printed as HTML.
         return \array_map(
-            static fn(PaidSubscription $subscription) => StringUtil::encodeHTML($subscription->getTitle()),
+            static fn(PaidSubscription $subscription) => $subscription->getTitle(),
             $subscriptionList->getObjects()
         );
     }
@@ -359,7 +357,7 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
         $subscriptionList->readObjects();
 
         return \array_map(
-            static fn(PaidSubscription $subscription) => StringUtil::encodeHTML($subscription->getTitle()),
+            static fn(PaidSubscription $subscription) => $subscription->getTitle(),
             $subscriptionList->getObjects()
         );
     }
@@ -375,7 +373,7 @@ class PaidSubscriptionAddForm extends AbstractDatabaseObjectBuilderForm
         );
 
         return \array_map(
-            static fn(UserGroup $userGroup) => StringUtil::encodeHTML($userGroup->getTitle()),
+            static fn(UserGroup $userGroup) => $userGroup->getTitle(),
             $userGroups
         );
     }

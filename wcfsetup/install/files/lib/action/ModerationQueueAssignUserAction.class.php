@@ -13,6 +13,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\Psr15DialogForm;
 use wcf\command\moderation\queue\AssignUser;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Assigns a user to a moderation queue entry.
@@ -51,10 +52,10 @@ final class ModerationQueueAssignUserAction extends AbstractModerationAction
         $form->appendChildren([
             RadioButtonFormField::create('assignee')
                 ->required()
-                ->options([
-                    'none' => WCF::getLanguage()->get('wcf.moderation.assignedUser.nobody'),
+                ->choices([
+                    'none' => HtmlString::fromSafeHtml(WCF::getLanguage()->get('wcf.moderation.assignedUser.nobody')),
                     'me' => WCF::getUser()->username,
-                    'other' => WCF::getLanguage()->get('wcf.moderation.assignedUser.other'),
+                    'other' => HtmlString::fromSafeHtml(WCF::getLanguage()->get('wcf.moderation.assignedUser.other')),
                 ])
                 ->value(
                     match ($moderationQueue?->assignedUserID) {

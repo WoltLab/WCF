@@ -177,7 +177,8 @@ final class AttachmentGridView extends AbstractGridView
                 $this->getAvailableFileTypes(),
                 'fileType',
                 'wcf.attachment.fileType',
-                'file_table.mimeType'
+                'file_table.mimeType',
+                labelLanguageItems: false
             )
         ]);
         $interaction = new AttachmentInteractions();

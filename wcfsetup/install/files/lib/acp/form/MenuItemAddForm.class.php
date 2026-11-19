@@ -129,7 +129,7 @@ class MenuItemAddForm extends AbstractFormBuilderForm
                 ->appendChildren([
                     SelectFormField::create('parentItemID')
                         ->label('wcf.acp.menu.item.parentItem')
-                        ->options(function () {
+                        ->choices(function () {
                             $result = [];
                             foreach ($this->menuItemNodeList as $menuItem) {
                                 \assert($menuItem instanceof MenuItemNode);
@@ -160,7 +160,7 @@ class MenuItemAddForm extends AbstractFormBuilderForm
                 ->label('wcf.acp.menu.item.link')
                 ->appendChildren([
                     RadioButtonFormField::create('isInternalLink')
-                        ->options([
+                        ->phraseChoices([
                             0 => 'wcf.acp.menu.item.link.external',
                             1 => 'wcf.acp.menu.item.link.internal',
                         ])
@@ -168,7 +168,7 @@ class MenuItemAddForm extends AbstractFormBuilderForm
                         ->required(),
                     SelectFormField::create('pageID')
                         ->label('wcf.acp.page.page')
-                        ->options($pageOptions, true)
+                        ->choices($pageOptions, true)
                         ->ignoreInvalidValues()
                         ->required()
                         ->addDependency(

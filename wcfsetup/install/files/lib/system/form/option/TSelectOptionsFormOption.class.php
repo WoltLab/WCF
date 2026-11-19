@@ -34,9 +34,23 @@ trait TSelectOptionsFormOption
                 $value = reset($selectOption['value']);
             }
 
-            $selectOptions[$selectOption['key']] = $value;
+            $selectOptions[$selectOption['key']] = $this->resolveSelectOptionLabel((string)$value);
         }
 
-        $formField->options($selectOptions);
+        $formField->choices($selectOptions);
+    }
+
+    /**
+     * Returns the label of the select option as plain text, resolving it if it
+     * is the name of a phrase, like `TSelectOptionLabelFormatter` does for the
+     * output of the stored value.
+     */
+    private function resolveSelectOptionLabel(string $label): string
+    {
+        if (\preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', $label) !== 1) {
+            return $label;
+        }
+
+        return WCF::getLanguage()->getDynamicVariable($label);
     }
 }

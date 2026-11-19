@@ -209,13 +209,10 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction
             $this->form->appendChildren([
                 RadioButtonFormField::create('type')
                     ->label(WCF::getLanguage()->get('wcf.user.ignore.type'))
-                    ->options([
-                        UserIgnore::TYPE_NO_IGNORE => WCF::getLanguage()
-                            ->get('wcf.user.ignore.type.noIgnore'),
-                        UserIgnore::TYPE_BLOCK_DIRECT_CONTACT => WCF::getLanguage()
-                            ->get('wcf.user.ignore.type.blockDirectContact'),
-                        UserIgnore::TYPE_HIDE_MESSAGES => WCF::getLanguage()
-                            ->get('wcf.user.ignore.type.hideMessages'),
+                    ->phraseChoices([
+                        UserIgnore::TYPE_NO_IGNORE => 'wcf.user.ignore.type.noIgnore',
+                        UserIgnore::TYPE_BLOCK_DIRECT_CONTACT => 'wcf.user.ignore.type.blockDirectContact',
+                        UserIgnore::TYPE_HIDE_MESSAGES => 'wcf.user.ignore.type.hideMessages',
                     ])
                     ->value($ignore->type ?: 0)
                     ->required()
