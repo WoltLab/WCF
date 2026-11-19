@@ -582,13 +582,25 @@ html[data-color-scheme="dark"] {
 /* Quotes */
 .ck.ck-content blockquote {
 	background-color: var(--wcfContentBackground);
-	border: 1px solid var(--wcfContentBorderInner);
-	border-left-width: 5px;
-	border-radius: 0 var(--wcfBorderRadius) var(--wcfBorderRadius) 0;
-	margin: 2em 0 1em 0;
+	border: 0;
+	border-left: 3px solid var(--wcfContentLink);
+	border-radius: var(--wcfBorderRadius);
+	margin: 1em 0;
+	padding: 12px 14px;
 
 	&::before {
 		color: var(--wcfContentDimmedText);
+		margin: 0 0 8px;
+
+		@include wcfFontSmall;
+	}
+
+	> :first-child {
+		margin-top: 0;
+	}
+
+	> :last-child {
+		margin-bottom: 0;
 	}
 }
 

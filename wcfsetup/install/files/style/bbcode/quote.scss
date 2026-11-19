@@ -1,20 +1,20 @@
 .quoteBox {
 	background-color: var(--wcfContentBackground);
-	border: 1px solid var(--wcfContentBorderInner);
-	border-left-width: 5px;
-	border-radius: 0 var(--wcfBorderRadius) var(--wcfBorderRadius) 0;
+	border: 0;
+	border-left: 3px solid var(--wcfContentLink);
+	border-radius: var(--wcfBorderRadius);
 	clear: both;
-	column-gap: 5px;
+	column-gap: 8px;
 	display: grid;
 	font-style: normal;
 	grid-template-areas:
 		"icon    title"
 		"content content";
-	grid-template-columns: 24px auto;
-	margin: 2em 0 1em 0;
+	grid-template-columns: 18px auto;
+	margin: 1em 0;
 	overflow: hidden;
-	padding: 15px 10px;
-	row-gap: 10px;
+	padding: 12px 14px;
+	row-gap: 8px;
 }
 
 .quoteBox.collapsed {
@@ -51,27 +51,49 @@
 	align-self: center;
 	color: var(--wcfContentDimmedText);
 	display: flex;
-	gap: 5px;
+	gap: 8px;
 	grid-area: title;
 
+	@include wcfFontSmall;
+
 	a {
-		color: inherit;
+		color: var(--wcfContentLink);
+		font-weight: 500;
 	}
 
 	a:hover {
-		color: inherit;
-		text-decoration: underline;
+		color: var(--wcfContentLinkActive);
+		text-decoration: none;
 	}
 }
 
 .quoteBoxIcon {
+	align-self: center;
 	color: var(--wcfContentDimmedText);
 	display: flex;
 	grid-area: icon;
+
+	img {
+		height: 18px;
+		width: 18px;
+	}
+
+	fa-icon[size] {
+		--font-size: 15px;
+		--icon-size: 18px;
+	}
 }
 
 .quoteBoxContent {
 	grid-area: content;
+
+	> :first-child {
+		margin-top: 0 !important;
+	}
+
+	> :last-child {
+		margin-bottom: 0 !important;
+	}
 }
 
 .quoteBox.collapsed .quoteBoxContent {
@@ -87,7 +109,7 @@
 	grid-template-areas:
 		"icon    title   buttons"
 		"content content content";
-	grid-template-columns: 24px auto minmax(0, min-content);
+	grid-template-columns: 18px auto minmax(0, min-content);
 	margin: 0;
 }
 
