@@ -37,7 +37,8 @@ abstract class AbstractSelectionObjectFilter implements IObjectFilter
 
     /**
      * Returns the labels of the selectable objects, indexed by their id and
-     * sorted in the order they are offered.
+     * sorted in the order they are offered. The labels are plain text, they are
+     * encoded by this filter and must not be encoded by the implementation.
      *
      * @return array<int, string>
      */
@@ -54,7 +55,7 @@ abstract class AbstractSelectionObjectFilter implements IObjectFilter
     {
         return SelectFormField::create(\str_replace('.', '_', $this->getIdentifier()))
             ->label($this->getLanguageItem())
-            ->options($this->getOptions(), labelLanguageItems: false)
+            ->choices($this->getOptions())
             ->required();
     }
 

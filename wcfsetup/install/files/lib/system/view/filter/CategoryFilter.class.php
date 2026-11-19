@@ -42,7 +42,7 @@ class CategoryFilter extends AbstractFilter
     {
         return SelectFormField::create($this->id)
             ->label($this->languageItem)
-            ->options($this->options, true);
+            ->choices($this->options, true);
     }
 
     #[\Override]
