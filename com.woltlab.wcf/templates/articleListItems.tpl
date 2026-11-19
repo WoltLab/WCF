@@ -30,10 +30,10 @@
 			{hascontent}
 				<div class="entryCardList__item__badges">
 					{content}
-						{if $article->isFeatured}<span class="badge green">{lang}wcf.article.featured{/lang}</span>{/if}
-						{if $article->flagAsUpdated}<span class="badge">{lang}wcf.article.updated{/lang}</span>{/if}
-						{if $article->isDeleted}<span class="badge red">{lang}wcf.message.status.deleted{/lang}</span>{/if}
-						{if !$article->isPublished()}<span class="badge green">{lang}wcf.message.status.disabled{/lang}</span>{/if}
+						{if $article->isFeatured}{badge type='featured'}{/if}
+						{if $article->flagAsUpdated}<span class="badge">{icon name='arrows-rotate'} <span>{lang}wcf.article.updated{/lang}</span></span>{/if}
+						{if $article->isDeleted}{badge type='deleted'}{/if}
+						{if !$article->isPublished()}{badge type='disabled'}{/if}
 						
 						{event name='contentItemBadges'}{* deprecated: use badges instead *}
 						{event name='badges'}

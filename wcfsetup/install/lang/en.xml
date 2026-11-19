@@ -4216,6 +4216,10 @@ Attachments:
 		<item name="wcf.message.error.tooLong"><![CDATA[The message is too long, must be under {#$maxTextLength} characters.]]></item>
 		<item name="wcf.message.status.deleted"><![CDATA[Deleted]]></item>
 		<item name="wcf.message.status.disabled"><![CDATA[Disabled]]></item>
+		<item name="wcf.message.status.done"><![CDATA[Done]]></item>
+		<item name="wcf.message.status.featured"><![CDATA[Featured]]></item>
+		<item name="wcf.message.status.official"><![CDATA[Official]]></item>
+		<item name="wcf.message.status.scheduled"><![CDATA[Scheduled Publication]]></item>
 		<item name="wcf.message.toc"><![CDATA[Table of Contents]]></item>
 		<item name="wcf.message.toc.hide"><![CDATA[Hide]]></item>
 		<item name="wcf.message.toc.show"><![CDATA[Show]]></item>

@@ -182,7 +182,14 @@ class UiMessageManager implements AjaxCallbackObject {
           element.classList.remove("messageDeleted");
         }
 
-        this._toggleMessageStatus(element, "jsIconDeleted", "wcf.message.status.deleted", "red", propertyValueBoolean);
+        this._toggleMessageStatus(
+          element,
+          "jsIconDeleted",
+          "wcf.message.status.deleted",
+          "badge--deleted",
+          propertyValueBoolean,
+          "trash-can",
+        );
 
         break;
 
@@ -197,8 +204,9 @@ class UiMessageManager implements AjaxCallbackObject {
           element,
           "jsIconDisabled",
           "wcf.message.status.disabled",
-          "green",
+          "badge--disabled",
           propertyValueBoolean,
+          "eye-slash",
         );
 
         break;
@@ -212,8 +220,9 @@ class UiMessageManager implements AjaxCallbackObject {
     element: HTMLElement,
     className: string,
     phrase: string,
-    badgeColor: string,
+    badgeClassName: string,
     addBadge: boolean,
+    iconName = "",
   ): void {
     let messageStatus = element.querySelector(".messageStatus");
     if (messageStatus === null) {
@@ -236,8 +245,17 @@ class UiMessageManager implements AjaxCallbackObject {
       }
 
       badge = document.createElement("span");
-      badge.className = `badge ${badgeColor} ${className}`;
-      badge.textContent = getPhrase(phrase);
+      badge.className = `badge ${badgeClassName} ${className}`;
+
+      if (iconName !== "") {
+        const icon = document.createElement("fa-icon");
+        icon.setIcon(iconName);
+        badge.append(icon, " ");
+      }
+
+      const label = document.createElement("span");
+      label.textContent = getPhrase(phrase);
+      badge.append(label);
 
       const listItem = document.createElement("li");
       listItem.appendChild(badge);

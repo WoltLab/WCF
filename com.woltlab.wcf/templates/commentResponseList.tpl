@@ -30,7 +30,7 @@
 					</div>
 					<div class="commentResponse__status">
 						{if $response->isDisabled}
-							<span class="badge green commentResponse__status--disabled">{lang}wcf.message.status.disabled{/lang}</span>
+							{badge type='disabled' class='commentResponse__status--disabled'}
 						{/if}
 						
 						{if $commentManager->isContentAuthor($response->getDecoratedObject())}

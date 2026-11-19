@@ -137,7 +137,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                     else {
                         element.classList.remove("messageDeleted");
                     }
-                    this._toggleMessageStatus(element, "jsIconDeleted", "wcf.message.status.deleted", "red", propertyValueBoolean);
+                    this._toggleMessageStatus(element, "jsIconDeleted", "wcf.message.status.deleted", "badge--deleted", propertyValueBoolean, "trash-can");
                     break;
                 case "isDisabled":
                     if (propertyValueBoolean) {
@@ -146,14 +146,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                     else {
                         element.classList.remove("messageDisabled");
                     }
-                    this._toggleMessageStatus(element, "jsIconDisabled", "wcf.message.status.disabled", "green", propertyValueBoolean);
+                    this._toggleMessageStatus(element, "jsIconDisabled", "wcf.message.status.disabled", "badge--disabled", propertyValueBoolean, "eye-slash");
                     break;
             }
         }
         /**
          * Toggles the message status bade for provided element.
          */
-        _toggleMessageStatus(element, className, phrase, badgeColor, addBadge) {
+        _toggleMessageStatus(element, className, phrase, badgeClassName, addBadge, iconName = "") {
             let messageStatus = element.querySelector(".messageStatus");
             if (messageStatus === null) {
                 const messageHeaderMetaData = element.querySelector(".messageHeaderMetaData");
@@ -172,8 +172,15 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                     return;
                 }
                 badge = document.createElement("span");
-                badge.className = `badge ${badgeColor} ${className}`;
-                badge.textContent = (0, Language_1.getPhrase)(phrase);
+                badge.className = `badge ${badgeClassName} ${className}`;
+                if (iconName !== "") {
+                    const icon = document.createElement("fa-icon");
+                    icon.setIcon(iconName);
+                    badge.append(icon, " ");
+                }
+                const label = document.createElement("span");
+                label.textContent = (0, Language_1.getPhrase)(phrase);
+                badge.append(label);
                 const listItem = document.createElement("li");
                 listItem.appendChild(badge);
                 messageStatus.appendChild(listItem);

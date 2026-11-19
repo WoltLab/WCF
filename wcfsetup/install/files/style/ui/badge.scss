@@ -13,6 +13,7 @@ a.badge {
 	padding: 2px 6px;
 	position: relative;
 	text-overflow: ellipsis;
+	user-select: none;
 	vertical-align: middle;
 	white-space: nowrap;
 	word-wrap: normal;
@@ -70,6 +71,50 @@ a.badge {
 	&.pink {
 		--background-color: #f0c;
 		--color: #000;
+	}
+
+	/* semantic status badges, see `wcf\system\style\BadgeType` */
+	&.badge--done {
+		--background-color: rgba(0, 133, 0, 1);
+		--color: rgba(238, 255, 238, 1);
+	}
+
+	&.badge--deleted {
+		--background-color: rgba(204, 0, 0, 1);
+		--color: rgba(255, 238, 238, 1);
+	}
+
+	&.badge--disabled {
+		--background-color: #e4e4e7;
+		--color: #3f3f46;
+	}
+
+	&.badge--featured {
+		--background-color: #f5b800;
+		--color: #332600;
+	}
+
+	&.badge--official {
+		--background-color: #369;
+		--color: #fff;
+	}
+
+	&.badge--scheduled {
+		--background-color: #6f42c1;
+		--color: #fff;
+	}
+
+	&:has(> fa-icon) {
+		align-items: center;
+		display: inline-flex;
+		gap: 4px;
+
+		> fa-icon {
+			--font-size: 12px;
+			--icon-size: 14px;
+
+			color: var(--color);
+		}
 	}
 }
 

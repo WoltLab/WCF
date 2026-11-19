@@ -67,16 +67,16 @@
 				{icon name='flag'}
 				{content}
 					{if $article->isFeatured}
-						<span class="badge green">{lang}wcf.article.featured{/lang}</span>
+						{badge type='featured'}
 					{/if}
 					{if $article->flagAsUpdated}
-						<span class="badge">{lang}wcf.article.updated{/lang}</span>
+						<span class="badge">{icon name='arrows-rotate'} <span>{lang}wcf.article.updated{/lang}</span></span>
 					{/if}
 					{if $article->isDeleted}
-						<span class="badge red">{lang}wcf.message.status.deleted{/lang}</span>
+						{badge type='deleted'}
 					{/if}
 					{if !$article->isPublished()}
-						<span class="badge green">{lang}wcf.message.status.disabled{/lang}</span>
+						{badge type='disabled'}
 					{/if}
 					{event name='contentHeaderMetaDataFlag'}
 				{/content}
