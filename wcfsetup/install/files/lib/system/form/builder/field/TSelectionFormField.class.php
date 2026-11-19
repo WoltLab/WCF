@@ -7,6 +7,7 @@ use wcf\data\IObjectTreeNode;
 use wcf\data\ITitledObject;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
+use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 
 /**
@@ -34,6 +35,8 @@ trait TSelectionFormField
     /**
      * Returns a structured array that can be used to generate the form field output.
      *
+     * The labels are HTML and must be output as is, without further encoding.
+     *
      * @return array<string|int, array{label: string, value: mixed, depth: int, isSelectable: bool}>
      * @throws \BadMethodCallException if nested options are not supported
      */
@@ -48,6 +51,9 @@ trait TSelectionFormField
 
     /**
      * Returns the selectable options of this field.
+     *
+     * The array maps the values to their labels. The labels are HTML and must
+     * be output as is, without further encoding.
      *
      * @return mixed[]
      *
@@ -78,6 +84,81 @@ trait TSelectionFormField
     }
 
     /**
+     * Sets the possible choices of this field and returns this field.
+     *
+     * Labels are plain text and HTML-encoded by this method: strings, integers,
+     * floats and objects implementing `__toString()` or `ITitledObject` (also
+     * decorated ones). The only exception are `HtmlString` labels, which are
+     * output as is. Thus, no label ends up as unencoded markup unless the caller
+     * explicitly wrapped it in `HtmlString::fromSafeHtml()`. Labels are never
+     * resolved as phrases, even if they look like a phrase name; see
+     * `phraseChoices()` for that.
+     *
+     * `$choices` is either an array mapping the values to their labels, a
+     * `\Traversable`, or a `\Closure` returning one of both. An array is always
+     * data and never invoked, even if PHP considers it callable. A
+     * `DatabaseObjectList` whose objects have not been read yet is read
+     * automatically.
+     *
+     * If `$nested` is `true`, `$choices` is either a traversable of `IObjectTreeNode`
+     * objects, or a list of arrays with the entries `depth` (non-negative `int`),
+     * `label`, `value` and, optionally, `isSelectable` (defaults to `true`).
+     *
+     * Note: If PHP considers the key of the first selectable choice to be empty
+     * and this field is nullable, then the save value of that key is `null`
+     * instead of the given empty value.
+     *
+     * @param array<string|int, mixed>|\Closure|\Traversable<mixed> $choices
+     * @throws \InvalidArgumentException if the choices are invalid
+     * @throws \UnexpectedValueException if the closure does not return an array or a `\Traversable`
+     * @since 6.3
+     */
+    public function choices(array|\Closure|\Traversable $choices, bool $nested = false): static
+    {
+        if ($choices instanceof \Closure) {
+            $choices = $this->invokeOptionsCallable($choices, $nested);
+        }
+
+        $this->applyOptions($choices, $nested, $this->encodeChoiceLabel(...));
+
+        return $this;
+    }
+
+    /**
+     * Sets the possible choices of this field to the given phrases and returns
+     * this field.
+     *
+     * `$choices` maps the values to phrase names. Each phrase is resolved with
+     * the active language and output as HTML, like `{lang}` in templates. A label
+     * that is no phrase name is rejected, so that no arbitrary string ends up as
+     * unencoded markup; a missing phrase is shown as its name.
+     *
+     * Use `choices()` with `HtmlString::fromSafeHtml(WCF::getLanguage()->get('…'))`
+     * for lists mixing phrases with other labels.
+     *
+     * @param array<string|int, string> $choices
+     * @throws \InvalidArgumentException if a label is no phrase name
+     * @since 6.3
+     */
+    public function phraseChoices(array $choices): static
+    {
+        $labels = [];
+        foreach ($choices as $value => $phrase) {
+            if (\preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', $phrase) !== 1) {
+                throw new \InvalidArgumentException(
+                    "The label of the option with value '{$value}' is no phrase name for field '{$this->getId()}'."
+                );
+            }
+
+            $labels[$value] = HtmlString::fromSafeHtml(WCF::getLanguage()->getDynamicVariable($phrase));
+        }
+
+        $this->applyOptions($labels, false, $this->encodeChoiceLabel(...));
+
+        return $this;
+    }
+
+    /**
      * Sets the possible options of this field and returns this field.
      *
      * Note: If PHP considers the key of the first selectable option to be empty
@@ -97,7 +178,7 @@ trait TSelectionFormField
      *
      * String labels are output as HTML and have to be encoded by the caller. Labels
      * derived from objects via `__toString()` or `ITitledObject::getTitle()` are
-     * encoded automatically.
+     * encoded automatically, `HtmlString` labels are output as is.
      *
      * @param array<string|int, mixed>|callable|\Traversable<mixed>|DatabaseObjectList $options selectable options or callable returning the options
      * @param bool $nestedOptions is `true` if the passed options are nested options
@@ -105,26 +186,37 @@ trait TSelectionFormField
      * @return static this field
      *
      * @throws \UnexpectedValueException if callable does not return an array
+     * @deprecated 6.3 Use `choices()` or `phraseChoices()` instead.
      */
     public function options(array|callable|\Traversable|DatabaseObjectList $options, bool $nestedOptions = false, bool $labelLanguageItems = true)
     {
-        if (\is_callable($options)) {
-            $options = $options();
+        // Not `if`, because an array returned by the callable may itself be callable.
+        while (\is_callable($options)) {
+            $options = $this->invokeOptionsCallable($options, $nestedOptions);
+        }
 
-            if ($nestedOptions) {
-                if (!\is_array($options) && !($options instanceof \Traversable)) {
-                    throw new \UnexpectedValueException(
-                        "The nested options callable is expected to return an iterable value, " . \gettype($options) . " returned for field '{$this->getId()}'."
-                    );
-                }
-            } elseif (!\is_array($options) && !($options instanceof \Traversable)) {
-                throw new \UnexpectedValueException(
-                    "The options callable is expected to return an iterable value, " . \gettype($options) . " returned for field '{$this->getId()}'."
-                );
-            }
+        $this->applyOptions(
+            $options,
+            $nestedOptions,
+            fn(mixed $label) => $this->normalizeLegacyLabel($label, $labelLanguageItems)
+        );
 
-            return $this->options($options, $nestedOptions, $labelLanguageItems);
-        } elseif ($options instanceof \Traversable) {
+        return $this;
+    }
+
+    /**
+     * Validates and stores the given options, using `$normalizeLabel` to turn
+     * each label into HTML. It is invoked exactly once by each call of
+     * `choices()`, `phraseChoices()` and `options()`.
+     *
+     * @param array<string|int, mixed>|\Traversable<mixed> $options
+     * @param \Closure(mixed): (string|int|float|null) $normalizeLabel returns `null` for invalid labels
+     * @throws \InvalidArgumentException if the options are invalid
+     * @since 6.3
+     */
+    protected function applyOptions(array|\Traversable $options, bool $nestedOptions, \Closure $normalizeLabel): void
+    {
+        if ($options instanceof \Traversable) {
             // automatically read objects
             if ($options instanceof DatabaseObjectList && $options->objectIDs === null) {
                 $options->readObjects();
@@ -167,33 +259,13 @@ trait TSelectionFormField
                     }
                 }
 
-                // validate label
-                if (\is_object($option['label'])) {
-                    if (\method_exists($option['label'], '__toString')) {
-                        $option['label'] = StringUtil::encodeHTML((string)$option['label']);
-                    } elseif (
-                        $option['label'] instanceof ITitledObject
-                        || ClassUtil::isDecoratedInstanceOf($option['label'], ITitledObject::class)
-                    ) {
-                        $option['label'] = StringUtil::encodeHTML($option['label']->getTitle());
-                    } else {
-                        throw new \InvalidArgumentException(
-                            "Nested option with key '{$key}' has invalid label of type " . \gettype($option['label']) . " for field '{$this->getId()}'."
-                        );
-                    }
-                } elseif (!\is_string($option['label']) && !\is_numeric($option['label'])) {
+                $label = $normalizeLabel($option['label']);
+                if ($label === null) {
                     throw new \InvalidArgumentException(
                         "Nested option with key '{$key}' has invalid label of type " . \gettype($option['label']) . " for field '{$this->getId()}'."
                     );
                 }
-
-                // resolve language item for label
-                if (
-                    $labelLanguageItems
-                    && \preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string)$option['label'])
-                ) {
-                    $option['label'] = WCF::getLanguage()->getDynamicVariable($option['label']);
-                }
+                $option['label'] = $label;
 
                 // validate value
                 if (!\is_string($option['value']) && !\is_numeric($option['value'])) {
@@ -237,20 +309,8 @@ trait TSelectionFormField
                     );
                 }
 
-                if (\is_object($label)) {
-                    if (\method_exists($label, '__toString')) {
-                        $label = StringUtil::encodeHTML((string)$label);
-                    } elseif (
-                        $label instanceof ITitledObject
-                        || ClassUtil::isDecoratedInstanceOf($label, ITitledObject::class)
-                    ) {
-                        $label = StringUtil::encodeHTML($label->getTitle());
-                    } else {
-                        throw new \InvalidArgumentException(
-                            "Options contain invalid label of type " . \gettype($label) . " for field '{$this->getId()}'."
-                        );
-                    }
-                } elseif (!\is_string($label) && !\is_numeric($label)) {
+                $normalizedLabel = $normalizeLabel($label);
+                if ($normalizedLabel === null) {
                     throw new \InvalidArgumentException(
                         "Options contain invalid label of type " . \gettype($label) . " for field '{$this->getId()}'."
                     );
@@ -262,12 +322,7 @@ trait TSelectionFormField
                     );
                 }
 
-                // resolve language item for label
-                if ($labelLanguageItems && \preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string)$label)) {
-                    $label = WCF::getLanguage()->getDynamicVariable($label);
-                }
-
-                $this->options[$value] = $label;
+                $this->options[$value] = $normalizedLabel;
             }
 
             // ensure that `$this->nestedOptions` is always populated
@@ -289,8 +344,87 @@ trait TSelectionFormField
         if ($this->nestedOptions === null) {
             $this->nestedOptions = [];
         }
+    }
 
-        return $this;
+    /**
+     * @return array<string|int, mixed>|\Traversable<mixed>
+     * @throws \UnexpectedValueException if the callable does not return an array or a `\Traversable`
+     */
+    private function invokeOptionsCallable(callable $callable, bool $nestedOptions): array|\Traversable
+    {
+        $options = $callable();
+
+        if ($nestedOptions) {
+            if (!\is_array($options) && !($options instanceof \Traversable)) {
+                throw new \UnexpectedValueException(
+                    "The nested options callable is expected to return an iterable value, " . \gettype($options) . " returned for field '{$this->getId()}'."
+                );
+            }
+        } elseif (!\is_array($options) && !($options instanceof \Traversable)) {
+            throw new \UnexpectedValueException(
+                "The options callable is expected to return an iterable value, " . \gettype($options) . " returned for field '{$this->getId()}'."
+            );
+        }
+
+        return $options;
+    }
+
+    private function encodeChoiceLabel(mixed $label): ?string
+    {
+        if ($label instanceof HtmlString) {
+            return (string)$label;
+        }
+
+        if (\is_string($label) || \is_int($label) || \is_float($label)) {
+            return StringUtil::encodeHTML((string)$label);
+        }
+
+        if (\is_object($label)) {
+            $text = $this->getObjectLabelText($label);
+            if ($text !== null) {
+                return StringUtil::encodeHTML($text);
+            }
+        }
+
+        return null;
+    }
+
+    private function normalizeLegacyLabel(mixed $label, bool $labelLanguageItems): string|int|float|null
+    {
+        if ($label instanceof HtmlString) {
+            return (string)$label;
+        }
+
+        if (\is_object($label)) {
+            $text = $this->getObjectLabelText($label);
+            if ($text === null) {
+                return null;
+            }
+
+            $label = StringUtil::encodeHTML($text);
+        } elseif (!\is_string($label) && !\is_numeric($label)) {
+            return null;
+        }
+
+        // resolve language item for label
+        if ($labelLanguageItems && \preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string)$label)) {
+            $label = WCF::getLanguage()->getDynamicVariable((string)$label);
+        }
+
+        return $label;
+    }
+
+    private function getObjectLabelText(object $label): ?string
+    {
+        if (\method_exists($label, '__toString')) {
+            return (string)$label;
+        }
+
+        if ($label instanceof ITitledObject || ClassUtil::isDecoratedInstanceOf($label, ITitledObject::class)) {
+            return $label->getTitle();
+        }
+
+        return null;
     }
 
     /**

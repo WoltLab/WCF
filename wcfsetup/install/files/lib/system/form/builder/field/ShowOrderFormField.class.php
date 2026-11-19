@@ -2,7 +2,6 @@
 
 namespace wcf\system\form\builder\field;
 
-use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
 
@@ -11,8 +10,9 @@ use wcf\system\WCF;
  * the order in which the objects are shown.
  *
  * The show order field provides a list of siblings and the object will be positioned
- * *after* the selected sibling. To insert objects at the very beginning, the `options()`
- * method prepends an additional option for that case.
+ * *after* the selected sibling. To insert objects at the very beginning, an additional
+ * option for that case is prepended to the options set by `choices()`, `phraseChoices()`
+ * or `options()`.
  *
  * This field uses the `wcf.form.field.showOrder` language item as the default form
  * field label uses `showOrder` as the default node id.
@@ -44,11 +44,6 @@ final class ShowOrderFormField extends AbstractSingleSelectFormField
      */
     protected $templateName = 'shared_selectFormField';
 
-    /**
-     * is `true` if `(first position)` option was added
-     */
-    protected bool $addedFirstPositionOption = false;
-
     public function __construct()
     {
         $this->label('wcf.form.field.showOrder');
@@ -76,24 +71,19 @@ final class ShowOrderFormField extends AbstractSingleSelectFormField
      * as value to mark adding it at the first position.
      */
     #[\Override]
-    public function options(array|callable|\Traversable|DatabaseObjectList $options, bool $nestedOptions = false, bool $labelLanguageItems = true): static
+    protected function applyOptions(array|\Traversable $options, bool $nestedOptions, \Closure $normalizeLabel): void
     {
-        parent::options($options, $nestedOptions, $labelLanguageItems);
+        parent::applyOptions($options, $nestedOptions, $normalizeLabel);
 
-        if (!$this->addedFirstPositionOption) {
-            $this->options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->options;
-            \array_unshift($this->nestedOptions, [
-                'depth' => 0,
-                'label' => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition'),
-                'isSelectable' => true,
-                'value' => 0,
-            ]);
+        $this->options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->options;
+        \array_unshift($this->nestedOptions, [
+            'depth' => 0,
+            'label' => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition'),
+            'isSelectable' => true,
+            'value' => 0,
+        ]);
 
-            $this->addedFirstPositionOption = true;
-            $this->defaultValue(0);
-        }
-
-        return $this;
+        $this->defaultValue(0);
     }
 
     #[\Override]
