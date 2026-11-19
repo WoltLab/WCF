@@ -77,31 +77,6 @@
 
 			> :first-child {
 				padding-top: 0;
-
-				// 30px added to account for `padding-top: 0` above
-				&.anchorFixedHeader:target:not(.disableAnchorFixedHeader) {
-					margin-top: -79px;
-
-					&::after {
-						height: 80px;
-					}
-
-					> .message {
-						transform: translateY(79px);
-					}
-
-					@include screen-xs {
-						margin-top: -60px;
-
-						&::after {
-							height: 50px;
-						}
-
-						> .message {
-							transform: translateY(49px);
-						}
-					}
-				}
 			}
 
 			> :last-child {

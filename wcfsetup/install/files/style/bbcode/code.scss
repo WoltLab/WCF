@@ -140,10 +140,6 @@
 	top: 0;
 }
 
-.anchorFixedHeader:not(.disableAnchorFixedHeader):target .codeBoxHeader {
-	top: -30px; /* see wsc31.scss */
-}
-
 .dialogContent .codeBox .codeBoxHeader,
 .dialog__content .codeBox .codeBoxHeader {
 	/* Prevent the header being sticky inside dialogs, which doesn't really work.  */
