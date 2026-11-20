@@ -37,6 +37,9 @@
 		{if !$isReply || !$userProfile->isGuest()}
 			<div class="messageListView__item__username">
 				{user object=$userProfile}
+				{if !$isReply && $userProfile->banned}
+					<span class="messageListView__item__banned jsTooltip" role="img" title="{lang user=$userProfile}wcf.user.banned{/lang}" aria-label="{lang user=$userProfile}wcf.user.banned{/lang}">{icon name='lock'}</span>
+				{/if}
 			</div>
 		{/if}
 

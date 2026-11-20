@@ -90,6 +90,11 @@
 	@include wcfFontBold;
 }
 
+.messageListView__item__banned {
+	color: var(--wcfContentDimmedText);
+	margin-left: 4px;
+}
+
 .messageListView__item__userBadges {
 	display: flex;
 	flex-wrap: wrap;
