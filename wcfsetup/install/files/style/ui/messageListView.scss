@@ -1,0 +1,502 @@
+.content > .messageListView__container {
+	margin-top: 40px;
+}
+
+.content .contentInteraction + .messageListView__container,
+.content woltlab-core-notice + .messageListView__container {
+	margin-top: 20px;
+}
+
+/* Shared dimensions, also declared on the item for single items outside of a list, e.g. a quick reply form. */
+.messageListView,
+.messageListView__item {
+	--messageListView-padding: 20px;
+	--messageListView-radius: 8px;
+	--messageListView-sidebarWidth: 220px;
+}
+
+.messageListView {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.messageListView__item {
+	background-color: var(--wcfContentBackground);
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: var(--messageListView-radius);
+	display: grid;
+}
+
+.messageListView__item__sidebar {
+	background-color: var(--wcfContentBackground);
+	padding: var(--messageListView-padding);
+}
+
+.messageListView__item__author {
+	align-items: center;
+	display: flex;
+}
+
+.messageListView__item__avatar {
+	position: relative;
+}
+
+.messageListView__item__avatar img {
+	border-radius: 50%;
+	display: block;
+}
+
+.messageListView__item__onlineIndicator {
+	background-color: rgba(0, 153, 0, 1);
+	border: 3px solid var(--wcfContentBackground);
+	border-radius: 50%;
+	bottom: 4px;
+	height: 18px;
+	position: absolute;
+	right: 4px;
+	width: 18px;
+}
+
+/* Messages by the author of the content get a ring around the avatar and an icon opposite the online indicator. */
+.messageListView__item--contentAuthor .messageListView__item__avatar img {
+	box-shadow:
+		0 0 0 3px var(--wcfContentBackground),
+		0 0 0 6px var(--wcfButtonPrimaryBackground);
+}
+
+.messageListView__item__contentAuthorIcon {
+	align-items: center;
+	background-color: var(--wcfButtonPrimaryBackground);
+	border: 3px solid var(--wcfContentBackground);
+	border-radius: 50%;
+	bottom: 0;
+	color: var(--wcfButtonPrimaryText);
+	display: flex;
+	height: 32px;
+	justify-content: center;
+	left: 0;
+	position: absolute;
+	width: 32px;
+}
+
+/* Replaces the icon on the avatar on small screens, where the avatar is too small to hold it. */
+.messageListView__item__contentAuthorInline {
+	color: var(--wcfButtonPrimaryBackground);
+	display: none;
+}
+
+.messageListView__item__username {
+	@include wcfFontBold;
+}
+
+.messageListView__item__userBadges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.messageListView__item__userStats {
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	flex-direction: column;
+	font-variant-numeric: tabular-nums;
+
+	@include wcfFontSmall;
+
+	a {
+		color: inherit;
+
+		&:hover {
+			color: var(--wcfContentLinkActive);
+		}
+	}
+}
+
+.messageListView__item__main {
+	background-color: var(--wcfContentContainerBackground);
+	display: flex;
+	flex-direction: column;
+	gap: var(--messageListView-padding);
+	min-width: 0;
+	padding: var(--messageListView-padding);
+}
+
+/* The main column spaces its children, notices bring their own margins. */
+.messageListView__item__main > woltlab-core-notice {
+	margin-top: 0;
+}
+
+.messageListView__item__title {
+	overflow-wrap: anywhere;
+
+	@include wcfFontHeadline;
+	@include wcfFontBold;
+
+	a {
+		color: var(--wcfContentHeadlineLink);
+
+		&:hover {
+			color: var(--wcfContentHeadlineLinkActive);
+		}
+	}
+}
+
+/* Keeps the header close to the title it belongs to: half of the regular spacing. */
+.messageListView__item__title + .messageListView__item__header {
+	margin-top: calc(var(--messageListView-padding) / -2);
+}
+
+.messageListView__item__header {
+	align-items: center;
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 10px;
+
+	@include wcfFontSmall;
+
+	a {
+		color: inherit;
+
+		&:hover {
+			color: var(--wcfContentLinkActive);
+		}
+	}
+}
+
+.messageListView__item__badges {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.messageListView__item__statusIcons {
+	align-items: center;
+	display: flex;
+	gap: 6px;
+}
+
+.messageListView__item__checkbox {
+	display: flex;
+	padding: 0;
+
+	.listView__selectItem {
+		margin: 0;
+	}
+}
+
+/* Holds the trailing items of the header and pushes them to its end. */
+.messageListView__item__toolbar {
+	align-items: center;
+	display: flex;
+	gap: 6px 10px;
+	margin-left: auto;
+}
+
+/* The divider is centered between the message and the signature. */
+.messageListView__item__signature {
+	border-top: 1px solid var(--wcfContentBorderInner);
+	color: var(--wcfContentDimmedText);
+	padding-top: var(--messageListView-padding);
+
+	@include wcfFontSmall;
+}
+
+/* Status messages of a message: scheduled publication and approval above the message, delete and edit notes below it. */
+.messageListView__item__notices {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.messageListView__item__notice {
+	background-color: rgb(var(--wcfContentText-rgb) / 0.04);
+	border-left: 5px solid var(--messageListView-noticeColor);
+	border-radius: var(--wcfBorderRadius);
+	color: var(--wcfContentText);
+	overflow-wrap: anywhere;
+	padding: 8px 12px;
+
+	@include wcfFontSmall;
+}
+
+/* Colors match `.badge--scheduled`, `.badge--disabled` and `.badge--deleted`. */
+.messageListView__item__notice--scheduled {
+	--messageListView-noticeColor: #6f42c1;
+}
+
+.messageListView__item__notice--disabled {
+	--messageListView-noticeColor: #e4e4e7;
+}
+
+.messageListView__item__notice--deleted {
+	--messageListView-noticeColor: rgba(204, 0, 0, 1);
+}
+
+.messageListView__item__notice--edited {
+	--messageListView-noticeColor: rgb(var(--wcfContentText-rgb) / 0.35);
+}
+
+/* Delete and edit notes are metadata: dimmed, with links in the text color. */
+.messageListView__item__notice--deleted,
+.messageListView__item__notice--edited {
+	color: var(--wcfContentDimmedText);
+
+	a {
+		color: inherit;
+
+		@include wcfFontBold;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.messageListView__item__footer {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin-top: auto;
+}
+
+/* Stretch all buttons to the height of the tallest one. */
+.messageListView__item__footer__buttons {
+	align-items: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin-left: auto;
+
+	> .dropdown {
+		display: flex;
+	}
+}
+
+/* Deleted messages and messages of ignored users are collapsed into a single row that can be expanded with a button. */
+.messageListView__item--collapsed {
+	background-color: var(--wcfContentContainerBackground);
+	color: var(--wcfContentDimmedText);
+}
+
+.messageListView__item__collapsed {
+	align-items: center;
+	display: flex;
+	gap: 10px;
+	min-width: 0;
+	padding: 10px var(--messageListView-padding);
+}
+
+.messageListView__item__collapsedContent {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.messageListView__item__collapsedTitle {
+	align-items: baseline;
+	color: var(--wcfContentText);
+	column-gap: 10px;
+	display: flex;
+	overflow-wrap: anywhere;
+}
+
+.messageListView__item__collapsedTime {
+	color: var(--wcfContentDimmedText);
+	white-space: nowrap;
+
+	@include wcfFontSmall;
+}
+
+.messageListView__item__collapsedDescription {
+	overflow-wrap: anywhere;
+
+	@include wcfFontSmall;
+}
+
+/* The message and its related content are hidden while the inline editor is shown. */
+.messageListView__item--editing > .messageListView__item__main > *:not(.messageListView__item__editor) {
+	display: none;
+}
+
+.messageListView__separator {
+	align-items: center;
+	color: var(--wcfContentLink);
+	display: flex;
+	gap: 10px;
+
+	&::before,
+	&::after {
+		border-top: 1px solid currentColor;
+		content: "";
+		flex: 1 1 auto;
+	}
+}
+
+.messageListView__separator__label {
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.messageListView__modificationLog {
+	align-items: center;
+	color: var(--wcfContentDimmedText);
+	display: flex;
+	gap: 10px;
+	/* Aligns the icon with the start of the message text: card border + main padding. */
+	padding: 0 calc(1px + var(--messageListView-padding));
+}
+
+.messageListView__modificationLog__icon {
+	background-color: var(--wcfContentContainerBackground);
+	border: 1px solid var(--wcfContentBorderInner);
+	border-radius: 50%;
+	display: grid;
+	flex: 0 0 auto;
+	height: 32px;
+	place-items: center;
+	width: 32px;
+}
+
+.messageListView__modificationLog__content {
+	align-items: baseline;
+	display: flex;
+	flex: 1 1 auto;
+	flex-wrap: wrap;
+	gap: 0 10px;
+	min-width: 0;
+}
+
+.messageListView__modificationLog__text {
+	color: var(--wcfContentText);
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.messageListView__modificationLog__time {
+	white-space: nowrap;
+
+	@include wcfFontSmall;
+}
+
+.messageListView__modificationLog__hide {
+	color: inherit;
+	flex: 0 0 auto;
+
+	&:hover {
+		color: var(--wcfContentLinkActive);
+	}
+}
+
+@include screen-md-up {
+	.messageListView__item {
+		grid-template-columns: var(--messageListView-sidebarWidth) minmax(0, 1fr);
+	}
+
+	.messageListView__item__sidebar {
+		border-bottom-left-radius: calc(var(--messageListView-radius) - 1px);
+		border-right: 1px solid var(--wcfContentBorderInner);
+		border-top-left-radius: calc(var(--messageListView-radius) - 1px);
+	}
+
+	.messageListView__item__author {
+		flex-direction: column;
+		gap: 10px;
+		position: sticky;
+		/* Keeps the author visible below the sticky page header. */
+		top: calc(var(--wcfPageHeaderHeight) + var(--messageListView-padding));
+		text-align: center;
+	}
+
+	.messageListView__item__userBadges {
+		justify-content: center;
+	}
+
+	.messageListView__item__main {
+		border-bottom-right-radius: calc(var(--messageListView-radius) - 1px);
+		border-top-right-radius: calc(var(--messageListView-radius) - 1px);
+	}
+
+	.messageListView__item--collapsed {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	/* Aligns the icon with the start of the message text: card border + sidebar + main padding. */
+	.messageListView__modificationLog {
+		padding-left: calc(1px + var(--messageListView-sidebarWidth) + var(--messageListView-padding));
+	}
+}
+
+@include screen-sm-down {
+	.messageListView,
+	.messageListView__item {
+		--messageListView-padding: 10px;
+	}
+
+	.messageListView__item {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.messageListView__item__sidebar {
+		border-bottom: 1px solid var(--wcfContentBorderInner);
+		border-top-left-radius: calc(var(--messageListView-radius) - 1px);
+		border-top-right-radius: calc(var(--messageListView-radius) - 1px);
+	}
+
+	.messageListView__item__author {
+		flex-wrap: wrap;
+		gap: 6px 10px;
+	}
+
+	.messageListView__item__avatar img {
+		height: 32px;
+		width: 32px;
+	}
+
+	.messageListView__item__onlineIndicator {
+		border-width: 2px;
+		bottom: -2px;
+		height: 12px;
+		right: -2px;
+		width: 12px;
+	}
+
+	.messageListView__item--contentAuthor .messageListView__item__avatar img {
+		box-shadow:
+			0 0 0 2px var(--wcfContentBackground),
+			0 0 0 4px var(--wcfButtonPrimaryBackground);
+	}
+
+	.messageListView__item__contentAuthorIcon {
+		display: none;
+	}
+
+	/* Keeps the icon close to the username it belongs to. */
+	.messageListView__item__contentAuthorInline {
+		display: inline-flex;
+		margin-left: -6px;
+	}
+
+	.messageListView__item__main {
+		border-bottom-left-radius: calc(var(--messageListView-radius) - 1px);
+		border-bottom-right-radius: calc(var(--messageListView-radius) - 1px);
+	}
+}
+
+html[data-color-scheme="dark"] {
+	.messageListView__item__notice--scheduled {
+		--messageListView-noticeColor: #673ab7;
+	}
+
+	.messageListView__item__notice--disabled {
+		--messageListView-noticeColor: #52525b;
+	}
+
+	.messageListView__item__notice--deleted {
+		--messageListView-noticeColor: #c1183d;
+	}
+}
