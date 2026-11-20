@@ -510,7 +510,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
             $dataContainer->appendChild(
                 SourceCodeFormField::create($language->languageCode)
-                    ->label($language->languageName)
+                    ->label(StringUtil::encodeHTML($language->languageName))
                     ->description($description)
                     ->language('smartymixed')
             );
