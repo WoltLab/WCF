@@ -942,8 +942,6 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.admin.trophy.canAwardTrophy"><![CDATA[Kann Trophäen verleihen]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.group.option.user.profile.trophy.canSeeTrophies"><![CDATA[Kann Trophäen sehen]]></item>
-		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies"><![CDATA[Maximale Anzahl an besonderen Trophäen]]></item>
-		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies.description"><![CDATA[Besondere Trophäen können vom Benutzer individuell ausgewählt werden und werden in der Message-Sidebar und im Benutzerprofil angezeigt.]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.payment"><![CDATA[Zahlungsoptionen]]></item>
 		<item name="wcf.acp.group.option.user.profile.payment.canBuyPaidSubscription"><![CDATA[Kann bezahlte Mitgliedschaften kaufen]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.coverPhoto"><![CDATA[Titelbilder]]></item>
@@ -1683,6 +1681,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.user_cover_photo_default_type.description"><![CDATA[Generierte Titelbilder werden für jeden Benutzer individuell auf Basis der Farben des aktiven Stils erstellt und haben Vorrang vor dem Titelbild des Stils.]]></item>
 		<item name="wcf.acp.option.user_cover_photo_default_type.style"><![CDATA[Titelbild des Stils]]></item>
 		<item name="wcf.acp.option.user_cover_photo_default_type.generated"><![CDATA[Generiertes Titelbild je Benutzer]]></item>
+		<item name="wcf.acp.option.profile_max_special_trophies"><![CDATA[Maximale Anzahl an besonderen Trophäen]]></item>
+		<item name="wcf.acp.option.profile_max_special_trophies.description"><![CDATA[Besondere Trophäen können vom Benutzer individuell ausgewählt werden und werden in der Nachrichten-Seitenleiste und im Benutzerprofil angezeigt.]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation"><![CDATA[Werbung abwechselnd anzeigen]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[Sollte einer Position mehr als eine Werbung zugewiesen sein, so wird bei jedem Aufruf eine zufällige Werbung angezeigt. Bei Deaktivierung dieser Option werden alle Werbungen parallel angezeigt.]]></item>
 		<item name="wcf.acp.option.visitor_use_tiny_build"><![CDATA[Seitenbeschleunigung für Gäste aktivieren]]></item>
@@ -5072,8 +5072,8 @@ Sobald {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto freige
 		<item name="wcf.user.trophy.noTrophies"><![CDATA[Der Benutzer hat noch keine Trophäen]]></item>
 		<item name="wcf.user.trophy.trophies"><![CDATA[Trophäen]]></item>
 		<item name="wcf.user.trophy.specialTrophies"><![CDATA[Besondere Trophäen]]></item>
-		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} {if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1}besonderen Trophäen{else}besondere Trophäe{/if} aus, welche im Profil und in der Nachrichten-Seitenleiste angezeigt {if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1}werden. Es können maximal {#$__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies')} Trophäen ausgewählt werden.{else}wird.{/if}]]></item>
-		<item name="wcf.user.trophy.specialTrophies.error.tooMany"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} maximal {#$__wcf->session->getPermission('user.profile.trophy.maxUserSpecialTrophies')} Trophäen auswählen.]]></item>
+		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} {if PROFILE_MAX_SPECIAL_TROPHIES > 1}besonderen Trophäen{else}besondere Trophäe{/if} aus, welche im Profil und in der Nachrichten-Seitenleiste angezeigt {if PROFILE_MAX_SPECIAL_TROPHIES > 1}werden. Es können maximal {#PROFILE_MAX_SPECIAL_TROPHIES} Trophäen ausgewählt werden.{else}wird.{/if}]]></item>
+		<item name="wcf.user.trophy.specialTrophies.error.tooMany"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} maximal {#PROFILE_MAX_SPECIAL_TROPHIES} Trophäen auswählen.]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.invalid"><![CDATA[Die angegebenen Trophäen sind ungültig.]]></item>
 		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[<strong>{$author}</strong> hat die Trophäe <strong>{$userTrophy->getTrophy()->getTitle()}</strong> erhalten.]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophies"><![CDATA[Ausgeschlossene Trophäen]]></item>
@@ -5559,6 +5559,8 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.email.log.statusMessage.title"/>
 	<item name="wcf.acp.group.copy.confirmMessage"/>
 	<item name="wcf.acp.group.option.admin.configuration.package.canUninstallPackage"/>
+	<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies"/>
+	<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies.description"/>
 	<item name="wcf.acp.label.sortAfterGroupFiltering"/>
 	<item name="wcf.acp.menu.link.article.category.add"/>
 	<item name="wcf.acp.menu.link.article.category.list"/>

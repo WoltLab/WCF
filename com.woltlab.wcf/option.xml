@@ -1209,6 +1209,13 @@ silhouette:wcf.acp.option.avatar_default_type.silhouette</selectoptions>
 				<selectoptions>generated:wcf.acp.option.user_cover_photo_default_type.generated
 style:wcf.acp.option.user_cover_photo_default_type.style</selectoptions>
 			</option>
+			<option name="profile_max_special_trophies">
+				<categoryname>user.profile</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>5</defaultvalue>
+				<minvalue>0</minvalue>
+				<options>module_trophy</options>
+			</option>
 			<!-- /user.profile -->
 			<!-- user.list.members -->
 			<option name="members_list_users_per_page">

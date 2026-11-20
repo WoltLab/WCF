@@ -8,7 +8,6 @@ use wcf\data\user\User;
 use wcf\data\user\UserBuilder;
 use wcf\event\trophy\TrophyDisabled;
 use wcf\system\event\EventHandler;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -33,7 +32,6 @@ final class DisableTrophy
 
         $this->deleteSpecialTrophies($this->trophy->trophyID);
         $this->updateTrophyPoints($this->trophy->trophyID);
-        $this->resetUserStorage();
 
         $event = new TrophyDisabled($this->trophy);
         EventHandler::getInstance()->fire($event);
@@ -63,10 +61,5 @@ final class DisableTrophy
         $statement->execute([
             $trophyID,
         ]);
-    }
-
-    private function resetUserStorage(): void
-    {
-        UserStorageHandler::getInstance()->resetAll('specialTrophies');
     }
 }

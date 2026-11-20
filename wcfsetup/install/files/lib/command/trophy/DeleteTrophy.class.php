@@ -10,7 +10,6 @@ use wcf\data\user\trophy\UserTrophyList;
 use wcf\event\trophy\TrophyDeleted;
 use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\event\EventHandler;
-use wcf\system\user\storage\UserStorageHandler;
 
 /**
  * Deletes a trophy, including the trophies awarded to users.
@@ -41,7 +40,6 @@ final class DeleteTrophy
         }
 
         TrophyBuilder::resetCache();
-        UserStorageHandler::getInstance()->resetAll('specialTrophies');
 
         EventHandler::getInstance()->fire(new TrophyDeleted($this->trophy));
     }

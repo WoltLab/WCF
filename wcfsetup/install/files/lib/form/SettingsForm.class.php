@@ -254,7 +254,7 @@ final class SettingsForm extends AbstractDatabaseObjectBuilderForm
         );
         $containers[] = $styleContainer;
 
-        $maxSpecialTrophies = (int)WCF::getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies');
+        $maxSpecialTrophies = \PROFILE_MAX_SPECIAL_TROPHIES;
         if (\MODULE_TROPHY !== 0 && $maxSpecialTrophies !== 0 && $this->availableTrophies !== []) {
             $trophies = [];
             foreach ($this->availableTrophies as $trophy) {

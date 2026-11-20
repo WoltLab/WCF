@@ -181,6 +181,7 @@
 \define('HEAD_CODE', '');
 \define('AVATAR_DEFAULT_TYPE', 'initials');
 \define('USER_COVER_PHOTO_DEFAULT_TYPE', 'generated');
+\define('PROFILE_MAX_SPECIAL_TROPHIES', 5);
 \define('ARTICLE_ENABLE_VISIT_TRACKING', 1);
 \define('ENABLE_AD_ROTATION', 1);
 \define('ENABLE_POLLING', 1);

@@ -3,6 +3,8 @@
 namespace wcf\data\user;
 
 use wcf\data\DatabaseObjectCollection;
+use wcf\data\trophy\Trophy;
+use wcf\data\trophy\TrophyCache;
 use wcf\data\user\avatar\AvatarDecorator;
 use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\avatar\StaticAvatar;
@@ -41,6 +43,11 @@ class UserCollection extends DatabaseObjectCollection
      * @var array<int, array<int, int>>
      */
     private array $followerUserIDs = [];
+
+    /**
+     * @var array<int, Trophy[]>
+     */
+    private array $specialTrophies;
 
     public function getAvatar(User $user): AvatarDecorator
     {
@@ -129,6 +136,19 @@ class UserCollection extends DatabaseObjectCollection
         return isset($this->followerUserIDs[$followUserID][$user->userID]);
     }
 
+    /**
+     * Returns the special trophies of the given user, limited to the maximum
+     * number of special trophies.
+     *
+     * @return Trophy[]
+     */
+    public function getSpecialTrophies(User $user): array
+    {
+        $this->loadSpecialTrophies();
+
+        return $this->specialTrophies[$user->userID] ?? [];
+    }
+
     private function loadSessionLastActivityTimes(): void
     {
         if (isset($this->sessionLastActivityTimes)) {
@@ -178,6 +198,41 @@ class UserCollection extends DatabaseObjectCollection
         $statement->execute($conditionBuilder->getParameters());
         foreach ($statement->fetchAll(\PDO::FETCH_COLUMN) as $userID) {
             $this->followerUserIDs[$followUserID][$userID] = $userID;
+        }
+    }
+
+    private function loadSpecialTrophies(): void
+    {
+        if (isset($this->specialTrophies)) {
+            return;
+        }
+
+        $this->specialTrophies = [];
+
+        $userIDs = $this->getRegisteredUserIDs();
+        if ($userIDs === []) {
+            return;
+        }
+
+        $conditionBuilder = new PreparedStatementConditionBuilder();
+        $conditionBuilder->add('userID IN (?)', [$userIDs]);
+
+        $sql = "SELECT  userID, trophyID
+                FROM    wcf1_user_special_trophy
+                {$conditionBuilder}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditionBuilder->getParameters());
+
+        $trophyIDs = [];
+        while ($row = $statement->fetchArray()) {
+            $trophyIDs[$row['userID']][] = $row['trophyID'];
+        }
+
+        foreach ($trophyIDs as $userID => $userTrophyIDs) {
+            $trophies = \array_filter(TrophyCache::getInstance()->getTrophiesByID($userTrophyIDs));
+            Trophy::sort($trophies, 'showOrder');
+
+            $this->specialTrophies[$userID] = \array_slice($trophies, 0, \PROFILE_MAX_SPECIAL_TROPHIES);
         }
     }
 

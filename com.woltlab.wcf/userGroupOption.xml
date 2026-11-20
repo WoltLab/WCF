@@ -843,14 +843,6 @@ bmp</defaultvalue>
 				<defaultvalue>1</defaultvalue>
 				<options>module_trophy</options>
 			</option>
-			<option name="user.profile.trophy.maxUserSpecialTrophies">
-				<categoryname>user.profile.trophy</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>5</defaultvalue>
-				<options>module_trophy</options>
-				<minvalue>0</minvalue>
-				<usersonly>1</usersonly>
-			</option>
 			<option name="user.profile.payment.canBuyPaidSubscription">
 				<categoryname>user.profile.payment</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1113,5 +1105,6 @@ bmp</defaultvalue>
 		<option name="user.profile.avatar.maxSize"/>
 		<option name="admin.configuration.package.canUninstallPackage"/>
 		<option name="user.profile.avatar.allowedFileExtensions"/>
+		<option name="user.profile.trophy.maxUserSpecialTrophies"/>
 	</delete>
 </data>
