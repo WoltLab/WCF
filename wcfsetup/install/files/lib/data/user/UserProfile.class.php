@@ -1226,9 +1226,27 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function showTrophyPoints(): bool
     {
+        return $this->trophyPoints !== 0 && $this->canViewTrophies();
+    }
+
+    /**
+     * Returns true if the special trophies of this user are visible to the active user
+     * and the user has selected at least one.
+     *
+     * @since 6.3
+     */
+    public function showSpecialTrophies(): bool
+    {
+        return $this->canViewTrophies() && \count($this->getSpecialTrophies()) !== 0;
+    }
+
+    /**
+     * Returns true if the active user may see the trophies of this user.
+     */
+    private function canViewTrophies(): bool
+    {
         return \MODULE_TROPHY !== 0
             && WCF::getSession()->hasPermission('user.profile.trophy.canSeeTrophies')
-            && $this->trophyPoints !== 0
             && ($this->isAccessible('canViewTrophies') || $this->userID === WCF::getSession()->userID);
     }
 

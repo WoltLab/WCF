@@ -110,21 +110,85 @@
 	}
 }
 
-.messageListView__item__userStats {
-	color: var(--wcfContentDimmedText);
+.messageListView__item__specialTrophies {
 	display: flex;
-	flex-direction: column;
-	font-variant-numeric: tabular-nums;
-
-	@include wcfFontSmall;
+	flex-wrap: wrap;
+	gap: 4px;
+	justify-content: center;
 
 	a {
-		color: inherit;
-
-		&:hover {
-			color: var(--wcfContentLinkActive);
-		}
+		display: flex;
 	}
+}
+
+/* Counters are shown as tiles in two columns, an only-child tile spans both columns. */
+.messageListView__item__userStats {
+	align-self: stretch;
+	display: grid;
+	gap: 4px;
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.messageListView__item__stat {
+	background-color: rgb(var(--wcfContentText-rgb) / 0.05);
+	border: 0;
+	border-radius: var(--wcfBorderRadius);
+	display: flex;
+	flex-direction: column;
+	padding: 6px 4px 5px;
+	text-align: center;
+	line-height: 1;
+	gap: 3px;
+
+	&:hover {
+		background-color: rgb(var(--wcfContentText-rgb) / 0.09);
+		color: inherit;
+	}
+
+	/* A lone tile covers the full width of the sidebar. */
+	&:only-child {
+		grid-column: 1 / -1;
+	}
+}
+
+.messageListView__item__stat__key {
+	color: var(--wcfContentDimmedText);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	@include wcfFontSmall;
+}
+
+/* The value is shown above the key, the markup keeps the key first for screen readers. */
+.messageListView__item__stat__value {
+	color: var(--wcfContentText);
+	font-variant-numeric: tabular-nums;
+	order: -1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	@include wcfFontBold;
+}
+
+.messageListView__item__userOptions {
+	align-self: stretch;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	overflow-wrap: anywhere;
+
+	@include wcfFontSmall;
+}
+
+.messageListView__item__userOption {
+	display: flex;
+	flex-direction: column;
+}
+
+.messageListView__item__userOption__key {
+	color: var(--wcfContentDimmedText);
 }
 
 .messageListView__item__main {
@@ -428,6 +492,7 @@
 
 	.messageListView__item__userBadges {
 		justify-content: center;
+		margin-top: -5px;
 	}
 
 	.messageListView__item__main {
@@ -493,6 +558,13 @@
 	.messageListView__item__contentAuthorInline {
 		display: inline-flex;
 		margin-left: -6px;
+	}
+
+	/* The row above the message only identifies the author. */
+	.messageListView__item__specialTrophies,
+	.messageListView__item__userStats,
+	.messageListView__item__userOptions {
+		display: none;
 	}
 
 	.messageListView__item__main {

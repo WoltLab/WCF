@@ -66,13 +66,65 @@
 				<div class="messageListView__item__rankImage">{unsafe:$userProfile->getRank()->getImage()}</div>
 			{/if}
 
-			{hascontent}
-				<div class="messageListView__item__userStats">
-					{content}
-						{event name='userStats'}
-					{/content}
-				</div>
-			{/hascontent}
+			{if !$userProfile->isGuest()}
+				{if $userProfile->showSpecialTrophies()}
+					<ul class="messageListView__item__specialTrophies">
+						{foreach from=$userProfile->getSpecialTrophies() item=trophy}
+							<li><a href="{$trophy->getLink()}">{unsafe:$trophy->renderTrophy(24, true)}</a></li>
+						{/foreach}
+					</ul>
+				{/if}
+
+				{hascontent}
+					<div class="messageListView__item__userStats">
+						{content}
+							{if MODULE_LIKE && MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && $userProfile->likesReceived}
+								<a href="{$userProfile->getLink()}#likes" class="messageListView__item__stat">
+									<span class="messageListView__item__stat__key">{lang}wcf.user.reactionsReceived{/lang}</span>
+									<span class="messageListView__item__stat__value">{#$userProfile->likesReceived}</span>
+								</a>
+							{/if}
+
+							{if MESSAGE_SIDEBAR_ENABLE_ACTIVITY_POINTS && $userProfile->activityPoints}
+								<button type="button" class="messageListView__item__stat activityPointsDisplay" data-user-id="{$userProfile->userID}">
+									<span class="messageListView__item__stat__key">{lang}wcf.user.activityPoint{/lang}</span>
+									<span class="messageListView__item__stat__value">{#$userProfile->activityPoints}</span>
+								</button>
+							{/if}
+
+							{if MODULE_TROPHY && MESSAGE_SIDEBAR_ENABLE_TROPHY_POINTS && $userProfile->showTrophyPoints()}
+								<button type="button" class="messageListView__item__stat userTrophyOverlayList" data-user-id="{$userProfile->userID}">
+									<span class="messageListView__item__stat__key">{lang}wcf.user.trophy.trophyPoints{/lang}</span>
+									<span class="messageListView__item__stat__value">{#$userProfile->trophyPoints}</span>
+								</button>
+							{/if}
+
+							{event name='userStats'}
+						{/content}
+					</div>
+				{/hascontent}
+
+				{if MESSAGE_SIDEBAR_USER_OPTIONS && $userProfile->isAccessible('canViewProfile')}
+					{hascontent}
+						<div class="messageListView__item__userOptions">
+							{content}
+								{assign var='__sidebarUserOptions' value=','|explode:MESSAGE_SIDEBAR_USER_OPTIONS}
+								{foreach from=$__sidebarUserOptions item='__sidebarUserOption'}
+									{if $userProfile->getUserOption($__sidebarUserOption)}
+										{assign var='__formattedUserOption' value=$userProfile->getFormattedUserOption($__sidebarUserOption)}
+										{if $__formattedUserOption}
+											<div class="messageListView__item__userOption">
+												<span class="messageListView__item__userOption__key">{$userProfile->getUserOptionTitle($__sidebarUserOption)}</span>
+												<span class="messageListView__item__userOption__value">{unsafe:$__formattedUserOption}</span>
+											</div>
+										{/if}
+									{/if}
+								{/foreach}
+							{/content}
+						</div>
+					{/hascontent}
+				{/if}
+			{/if}
 
 			{event name='sidebar'}
 		{/if}
