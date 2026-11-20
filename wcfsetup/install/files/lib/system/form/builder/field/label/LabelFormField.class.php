@@ -12,6 +12,7 @@ use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IObjectTypeFormNode;
 use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\label\LabelHandler;
+use wcf\util\StringUtil;
 
 /**
  * Implementation of a form field to select labels.
@@ -176,7 +177,8 @@ final class LabelFormField extends AbstractFormField implements IObjectTypeFormN
         $this->labelGroup = $labelGroup;
 
         if ($this->label === null) {
-            $this->label($this->getLabelGroup()->getTitle());
+            // `label()` expects a phrase name and yields HTML, the title is plain text.
+            $this->label = StringUtil::encodeHTML($this->getLabelGroup()->getTitle());
         }
 
         return $this;

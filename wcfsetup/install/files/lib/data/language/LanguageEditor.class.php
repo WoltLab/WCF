@@ -161,7 +161,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $conditions->add("language_item.packageID = ?", [$packageID]);
 
         // header
-        echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/6.0/language.xsd\" languagecode=\"" . $this->languageCode . "\" languagename=\"" . $this->languageName . "\" countrycode=\"" . $this->countryCode . "\">\n";
+        echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/6.0/language.xsd\" languagecode=\"" . StringUtil::encodeHTML($this->languageCode) . "\" languagename=\"" . StringUtil::encodeHTML($this->languageName) . "\" countrycode=\"" . StringUtil::encodeHTML($this->countryCode) . "\">\n";
 
         // get items
         $sql = "SELECT      languageItem,
@@ -186,11 +186,11 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             \ksort($categoryItems);
 
             // category header
-            echo "\t<category name=\"" . $category . "\">\n";
+            echo "\t<category name=\"" . StringUtil::encodeHTML($category) . "\">\n";
 
             // items
             foreach ($categoryItems as $item => $value) {
-                echo "\t\t<item name=\"" . $item . "\"><![CDATA[" . StringUtil::escapeCDATA($value) . "]]></item>\n";
+                echo "\t\t<item name=\"" . StringUtil::encodeHTML($item) . "\"><![CDATA[" . StringUtil::escapeCDATA($value) . "]]></item>\n";
             }
 
             // category footer
@@ -220,10 +220,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 
             foreach ($pages as $page) {
                 if ($page['title'] !== null && $page['title'] !== '') {
-                    echo "\t\t<item name=\"shadow.invalid.page." . $page['identifier'] . ".title\"><![CDATA[" . StringUtil::escapeCDATA($page['title']) . "]]></item>\n";
+                    echo "\t\t<item name=\"shadow.invalid.page." . StringUtil::encodeHTML($page['identifier']) . ".title\"><![CDATA[" . StringUtil::escapeCDATA($page['title']) . "]]></item>\n";
                 }
                 if ($page['content'] !== null && $page['content'] !== '') {
-                    echo "\t\t<item name=\"shadow.invalid.page." . $page['identifier'] . ".content\"><![CDATA[" . StringUtil::escapeCDATA($page['content']) . "]]></item>\n";
+                    echo "\t\t<item name=\"shadow.invalid.page." . StringUtil::encodeHTML($page['identifier']) . ".content\"><![CDATA[" . StringUtil::escapeCDATA($page['content']) . "]]></item>\n";
                 }
             }
 
@@ -253,10 +253,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 
             foreach ($boxes as $box) {
                 if ($box['title'] !== null && $box['title'] !== '') {
-                    echo "\t\t<item name=\"shadow.invalid.box." . $box['identifier'] . ".title\"><![CDATA[" . StringUtil::escapeCDATA($box['title']) . "]]></item>\n";
+                    echo "\t\t<item name=\"shadow.invalid.box." . StringUtil::encodeHTML($box['identifier']) . ".title\"><![CDATA[" . StringUtil::escapeCDATA($box['title']) . "]]></item>\n";
                 }
                 if ($box['content'] !== null && $box['content'] !== '') {
-                    echo "\t\t<item name=\"shadow.invalid.box." . $box['identifier'] . ".content\"><![CDATA[" . StringUtil::escapeCDATA($box['content']) . "]]></item>\n";
+                    echo "\t\t<item name=\"shadow.invalid.box." . StringUtil::encodeHTML($box['identifier']) . ".content\"><![CDATA[" . StringUtil::escapeCDATA($box['content']) . "]]></item>\n";
                 }
             }
 

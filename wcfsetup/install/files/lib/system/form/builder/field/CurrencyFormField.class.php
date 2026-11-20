@@ -2,6 +2,8 @@
 
 namespace wcf\system\form\builder\field;
 
+use wcf\util\StringUtil;
+
 /**
  * Implementation of a form field for currencies.
  *
@@ -41,9 +43,13 @@ class CurrencyFormField extends AbstractNumericFormField
         return $this;
     }
 
+    /**
+     * Sets the currency that is shown as the suffix of this field, e.g. `EUR`.
+     * The currency is plain text and will be encoded.
+     */
     public function currency(string $currency): static
     {
-        $this->suffix = $currency;
+        $this->suffix = StringUtil::encodeHTML($currency);
 
         return $this;
     }

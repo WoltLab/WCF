@@ -25,6 +25,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\HtmlString;
+use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 
 /**
@@ -260,8 +261,9 @@ class ContactForm extends AbstractFormBuilderForm
                 'option' . $option->optionID,
                 $option->getConfiguration()
             );
-            $formField->label($option->optionTitle);
-            $formField->description($option->optionDescription);
+            // `label()` and `description()` expect a phrase name and yield HTML, the title and description are plain text.
+            $formField->label(StringUtil::encodeHTML($option->getTitle()));
+            $formField->description(StringUtil::encodeHTML($option->getDescription()));
 
             if ((bool)($option->getConfiguration()['required'] ?? false)) {
                 $formField->required();
