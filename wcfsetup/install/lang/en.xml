@@ -920,8 +920,6 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.admin.trophy.canAwardTrophy"><![CDATA[Can award trophies]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.trophy"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.group.option.user.profile.trophy.canSeeTrophies"><![CDATA[Can see trophies]]></item>
-		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies"><![CDATA[Maximum number of special trophies]]></item>
-		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies.description"><![CDATA[Special trophies can be individually selected by the user and displayed in the message sidebar and the user profile.]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.payment"><![CDATA[Payment]]></item>
 		<item name="wcf.acp.group.option.user.profile.payment.canBuyPaidSubscription"><![CDATA[Can buy paid subscriptions]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.coverPhoto"><![CDATA[Cover Photos]]></item>
@@ -1666,6 +1664,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.user_cover_photo_default_type.description"><![CDATA[Generated cover photos are created individually for each user based on the colors of the active style and take precedence over the cover photo of the style.]]></item>
 		<item name="wcf.acp.option.user_cover_photo_default_type.style"><![CDATA[Cover photo of the style]]></item>
 		<item name="wcf.acp.option.user_cover_photo_default_type.generated"><![CDATA[Generated cover photo per user]]></item>
+		<item name="wcf.acp.option.profile_max_special_trophies"><![CDATA[Maximum number of special trophies]]></item>
+		<item name="wcf.acp.option.profile_max_special_trophies.description"><![CDATA[Special trophies can be individually selected by the user and displayed in the message sidebar and the user profile.]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation"><![CDATA[Enable ad rotation]]></item>
 		<item name="wcf.acp.option.enable_ad_rotation.description"><![CDATA[If there is more than one ad per placeholder, a random ad will be displayed every time. Disabling this option will display all ads simultaneously.]]></item>
 		<item name="wcf.acp.option.visitor_use_tiny_build"><![CDATA[Enable accelerated guest view]]></item>
@@ -5065,8 +5065,8 @@ You also received a list of backup codes to use when your second factor becomes 
 		<item name="wcf.user.trophy.noTrophies"><![CDATA[The user has no trophies]]></item>
 		<item name="wcf.user.trophy.trophies"><![CDATA[Trophies]]></item>
 		<item name="wcf.user.trophy.specialTrophies"><![CDATA[Special Trophies]]></item>
-		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[Choose the special {if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1}trophies{else}trophy{/if} that you want to be shown in your profile and in the message sidebar.{if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1} You can select a maximum of {#$__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies')} trophies.{/if}]]></item>
-		<item name="wcf.user.trophy.specialTrophies.error.tooMany"><![CDATA[You can choose a maximum of {#$__wcf->session->getPermission('user.profile.trophy.maxUserSpecialTrophies')} trophies.]]></item>
+		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[Choose the special {if PROFILE_MAX_SPECIAL_TROPHIES > 1}trophies{else}trophy{/if} that you want to be shown in your profile and in the message sidebar.{if PROFILE_MAX_SPECIAL_TROPHIES > 1} You can select a maximum of {#PROFILE_MAX_SPECIAL_TROPHIES} trophies.{/if}]]></item>
+		<item name="wcf.user.trophy.specialTrophies.error.tooMany"><![CDATA[You can choose a maximum of {#PROFILE_MAX_SPECIAL_TROPHIES} trophies.]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.invalid"><![CDATA[The selected trophies are invalid.]]></item>
 		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[<strong>{$author}</strong> has received the trophy <strong>{$userTrophy->getTrophy()->getTitle()}</strong>.]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophies"><![CDATA[Excluded Trophies]]></item>
@@ -5554,6 +5554,8 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.email.log.statusMessage.title"/>
 	<item name="wcf.acp.group.copy.confirmMessage"/>
 	<item name="wcf.acp.group.option.admin.configuration.package.canUninstallPackage"/>
+	<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies"/>
+	<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies.description"/>
 	<item name="wcf.acp.label.sortAfterGroupFiltering"/>
 	<item name="wcf.acp.menu.link.article.category.add"/>
 	<item name="wcf.acp.menu.link.article.category.list"/>

@@ -3,7 +3,6 @@
 namespace wcf\command\user;
 
 use wcf\data\user\User;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -45,7 +44,5 @@ final class SetSpecialTrophies
         }
 
         WCF::getDB()->commitTransaction();
-
-        UserStorageHandler::getInstance()->reset([$this->user->userID], 'specialTrophies');
     }
 }

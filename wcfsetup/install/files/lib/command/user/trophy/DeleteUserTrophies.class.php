@@ -11,7 +11,6 @@ use wcf\data\user\UserBuilder;
 use wcf\event\user\trophy\UserTrophiesDeleted;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -86,7 +85,5 @@ final class DeleteUserTrophies
             $statement = WCF::getDB()->prepare($sql);
             $statement->execute($conditionBuilder->getParameters());
         }
-
-        UserStorageHandler::getInstance()->reset($userIDs, 'specialTrophies');
     }
 }

@@ -71,9 +71,13 @@
 						<span class="userProfileHeader__statTitle">{unsafe:$statItem->title}</span>
 						<span class="userProfileHeader__statValue">{unsafe:$statItem->value}</span>
 					</a>
+				{elseif $statItem->isButton}
+					<button type="button" class="userProfileHeader__statItem {$statItem->cssClassName}" {unsafe:$statItem->attributes}>
+						<span class="userProfileHeader__statTitle">{unsafe:$statItem->title}</span>
+						<span class="userProfileHeader__statValue">{unsafe:$statItem->value}</span>
+					</button>
 				{else}
-					{* Buttons rely on frontend-only JavaScript and are therefore shown as plain text. *}
-					<div class="userProfileHeader__statItem">
+					<div class="userProfileHeader__statItem {$statItem->cssClassName}">
 						<span class="userProfileHeader__statTitle">{unsafe:$statItem->title}</span>
 						<span class="userProfileHeader__statValue">{unsafe:$statItem->value}</span>
 					</div>

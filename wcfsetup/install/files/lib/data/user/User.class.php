@@ -7,6 +7,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\IPopoverObject;
 use wcf\data\IUserContent;
 use wcf\data\language\Language;
+use wcf\data\trophy\Trophy;
 use wcf\data\user\avatar\AvatarDecorator;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\option\UserOption;
@@ -317,6 +318,17 @@ final class User extends CollectionDatabaseObject implements IPopoverObject, IRo
     public function isOnline(): bool
     {
         return $this->getCollection()->isOnline($this);
+    }
+
+    /**
+     * Returns the special trophies of this user.
+     *
+     * @return Trophy[]
+     * @since 6.3
+     */
+    public function getSpecialTrophies(): array
+    {
+        return $this->getCollection()->getSpecialTrophies($this);
     }
 
     /**

@@ -75,7 +75,7 @@ final class CreateUserTrophy
     {
         $userProfile = $userTrophy->getUserProfile();
         $specialTrophies = $userProfile->getSpecialTrophies();
-        if (\count($specialTrophies) >= $userProfile->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+        if (\count($specialTrophies) >= \PROFILE_MAX_SPECIAL_TROPHIES) {
             return;
         }
 

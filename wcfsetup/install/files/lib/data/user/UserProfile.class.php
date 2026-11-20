@@ -6,7 +6,6 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\file\File;
 use wcf\data\ITitledLinkObject;
 use wcf\data\trophy\Trophy;
-use wcf\data\trophy\TrophyCache;
 use wcf\data\user\avatar\AvatarDecorator;
 use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
 use wcf\data\user\cover\photo\GeneratedUserCoverPhoto;
@@ -18,15 +17,18 @@ use wcf\data\user\online\UserOnline;
 use wcf\data\user\option\UserOption;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\data\user\rank\UserRank;
+use wcf\event\user\profile\UserProfileStatItemCollecting;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\cache\builder\UserRankCacheBuilder;
 use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\email\Mailbox;
+use wcf\system\event\EventHandler;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\user\UserProfileHandler;
+use wcf\system\view\user\profile\UserProfileStatItem;
+use wcf\system\view\user\profile\UserStatContext;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
@@ -110,6 +112,12 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      * @var ?IUserCoverPhoto
      */
     protected $coverPhoto;
+
+    /**
+     * statistic items grouped by the value of their `UserStatContext`
+     * @var array<string, UserProfileStatItem[]>
+     */
+    private array $statItems = [];
 
     const GENDER_MALE = 1;
 
@@ -484,56 +492,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function getSpecialTrophies()
     {
-        $specialTrophies = UserStorageHandler::getInstance()->getField('specialTrophies', $this->userID);
-
-        if ($specialTrophies === null) {
-            // load special trophies for the user
-            $sql = "SELECT  trophyID
-                    FROM    wcf1_user_special_trophy
-                    WHERE   userID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$this->userID]);
-            $specialTrophies = $statement->fetchAll(\PDO::FETCH_COLUMN);
-
-            UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', \serialize($specialTrophies));
-        } else {
-            $specialTrophies = \unserialize($specialTrophies);
-        }
-
-        // check if the user has the permission to store these number of trophies,
-        // otherwise, delete the last trophies
-        if (\count($specialTrophies) > $this->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
-            $trophyDeleteIDs = [];
-            while (\count($specialTrophies) > $this->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
-                $trophyDeleteIDs[] = \array_pop($specialTrophies);
-            }
-
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('userID = ?', [$this->userID]);
-            $conditionBuilder->add('trophyID IN (?)', [$trophyDeleteIDs]);
-
-            // reset the user special trophies
-            $sql = "DELETE FROM wcf1_user_special_trophy
-                    " . $conditionBuilder;
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditionBuilder->getParameters());
-
-            UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', \serialize($specialTrophies));
-        }
-        $trophies = TrophyCache::getInstance()->getTrophiesByID($specialTrophies);
-
-        $filteredTrophies = \array_filter($trophies);
-        if ($filteredTrophies !== $trophies) {
-            // One or more trophies no longer exists, remove them from the return
-            // value and force a cache reset.
-            $trophies = $filteredTrophies;
-
-            UserStorageHandler::getInstance()->reset([$this->userID], 'specialTrophies');
-        }
-
-        Trophy::sort($trophies, 'showOrder');
-
-        return $trophies;
+        return $this->getDecoratedObject()->getSpecialTrophies();
     }
 
     /**
@@ -542,64 +501,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      * @param int[] $userIDs
      * @return void
      * @since       5.2
+     * @deprecated  6.3 Special trophies are loaded for all users of a `UserCollection` at once.
      */
     public static function prepareSpecialTrophies(array $userIDs)
     {
         UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
-        UserStorageHandler::getInstance()->loadStorage($userIDs);
-        $storageData = UserStorageHandler::getInstance()->getStorage($userIDs, 'specialTrophies');
-
-        $rebuildUserIDs = $deleteSpecialTrophyIDs = [];
-        foreach ($storageData as $userID => $datum) {
-            if ($datum === null) {
-                $rebuildUserIDs[] = $userID;
-            } else {
-                $specialTrophies = \unserialize($datum);
-
-                // check if the user has the permission to store these number of trophies,
-                // otherwise, delete the last trophies
-                if (\count($specialTrophies) > UserProfileRuntimeCache::getInstance()->getObject($userID)->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
-                    $deleteSpecialTrophyIDs[$userID] = [];
-                    while (\count($specialTrophies) > UserProfileRuntimeCache::getInstance()->getObject($userID)->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
-                        $deleteSpecialTrophyIDs[$userID] = \array_pop($specialTrophies);
-                    }
-
-                    UserStorageHandler::getInstance()->update($userID, 'specialTrophies', \serialize($specialTrophies));
-                }
-            }
-        }
-
-        if ($rebuildUserIDs !== []) {
-            $conditionBuilder = new PreparedStatementConditionBuilder();
-            $conditionBuilder->add('userID IN (?)', [$rebuildUserIDs]);
-
-            $sql = "SELECT  userID, trophyID
-                    FROM    wcf1_user_special_trophy
-                    " . $conditionBuilder;
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditionBuilder->getParameters());
-
-            $data = \array_combine($rebuildUserIDs, \array_fill(0, \count($rebuildUserIDs), []));
-            while ($row = $statement->fetchArray()) {
-                $data[$row['userID']][] = $row['trophyID'];
-            }
-
-            foreach ($data as $userID => $trophyIDs) {
-                UserStorageHandler::getInstance()->update($userID, 'specialTrophies', \serialize($trophyIDs));
-            }
-        }
-
-        if ($deleteSpecialTrophyIDs !== []) {
-            $conditionBuilder = new PreparedStatementConditionBuilder(true, 'OR');
-            foreach ($deleteSpecialTrophyIDs as $userID => $trophyIDs) {
-                $conditionBuilder->add('(userID = ? AND trophyID IN (?))', [$userID, $trophyIDs]);
-            }
-
-            $sql = "DELETE FROM wcf1_user_special_trophy
-                    " . $conditionBuilder;
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditionBuilder->getParameters());
-        }
     }
 
     /**
@@ -1226,9 +1132,27 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      */
     public function showTrophyPoints(): bool
     {
+        return $this->trophyPoints !== 0 && $this->canViewTrophies();
+    }
+
+    /**
+     * Returns true if the special trophies of this user are visible to the active user
+     * and the user has selected at least one.
+     *
+     * @since 6.3
+     */
+    public function showSpecialTrophies(): bool
+    {
+        return $this->canViewTrophies() && \count($this->getSpecialTrophies()) !== 0;
+    }
+
+    /**
+     * Returns true if the active user may see the trophies of this user.
+     */
+    private function canViewTrophies(): bool
+    {
         return \MODULE_TROPHY !== 0
             && WCF::getSession()->hasPermission('user.profile.trophy.canSeeTrophies')
-            && $this->trophyPoints !== 0
             && ($this->isAccessible('canViewTrophies') || $this->userID === WCF::getSession()->userID);
     }
 
@@ -1273,6 +1197,28 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         }
 
         return WCF::getSession()->hasPermission('user.profile.coverPhoto.canUploadCoverPhoto');
+    }
+
+    /**
+     * Returns the statistic items of this user for the given context.
+     *
+     * @return UserProfileStatItem[]
+     * @since 6.3
+     */
+    public function getStatItems(UserStatContext|string $context): array
+    {
+        if (\is_string($context)) {
+            $context = UserStatContext::from($context);
+        }
+
+        if (!isset($this->statItems[$context->value])) {
+            $event = new UserProfileStatItemCollecting($this, $context);
+            EventHandler::getInstance()->fire($event);
+
+            $this->statItems[$context->value] = $event->getItems();
+        }
+
+        return $this->statItems[$context->value];
     }
 
     /**
