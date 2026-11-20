@@ -90,11 +90,14 @@ abstract class AbstractListViewPage extends AbstractPage
             throw new PermissionDeniedException();
         }
 
-        if ($this->sortField !== '') {
-            $this->listView->setSortField($this->sortField);
-        }
-        if ($this->sortOrder !== '') {
-            $this->listView->setSortOrder($this->sortOrder);
+        // A list view that disables sorting keeps its own order.
+        if ($this->listView->isSortable()) {
+            if ($this->sortField !== '') {
+                $this->listView->setSortField($this->sortField);
+            }
+            if ($this->sortOrder !== '') {
+                $this->listView->setSortOrder($this->sortOrder);
+            }
         }
         if ($this->filters !== []) {
             $this->listView->setActiveFilters($this->filters);

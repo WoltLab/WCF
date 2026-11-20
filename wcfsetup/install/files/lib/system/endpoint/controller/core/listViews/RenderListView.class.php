@@ -47,11 +47,14 @@ final class RenderListView implements IController
         }
 
         $view->setPageNo($parameters->pageNo);
-        if ($parameters->sortField !== '') {
-            $view->setSortField($parameters->sortField);
-        }
-        if ($parameters->sortOrder !== '') {
-            $view->setSortOrder($parameters->sortOrder);
+        // A list view that disables sorting keeps its own order.
+        if ($view->isSortable()) {
+            if ($parameters->sortField !== '') {
+                $view->setSortField($parameters->sortField);
+            }
+            if ($parameters->sortOrder !== '') {
+                $view->setSortOrder($parameters->sortOrder);
+            }
         }
 
         if ($parameters->filters !== []) {

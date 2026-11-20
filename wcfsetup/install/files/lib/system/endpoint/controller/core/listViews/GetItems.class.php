@@ -46,18 +46,25 @@ final class GetItems implements IController
             throw new PermissionDeniedException();
         }
 
+        // Evaluated before the client's `allowSorting` is applied: A list view that disables
+        // sorting by itself keeps its order, while one whose sorting was disabled from the
+        // outside (e.g. in a box) is still given the order it was rendered with.
+        if ($view->isSortable()) {
+            if ($parameters->sortField !== '') {
+                $view->setSortField($parameters->sortField);
+            }
+            if ($parameters->sortOrder !== '') {
+                $view->setSortOrder($parameters->sortOrder);
+            }
+        }
+
         $view->setAllowFiltering($parameters->allowFiltering);
-        $view->setAllowSorting($parameters->allowSorting);
+        // The client can only restrict the sorting, never enable it.
+        $view->setAllowSorting($view->getAllowSorting() && $parameters->allowSorting);
         $view->setAllowInteractions($parameters->allowInteractions);
         $view->setAllowBulkInteractions($parameters->allowBulkInteractions);
 
         $view->setPageNo($parameters->pageNo);
-        if ($parameters->sortField !== '') {
-            $view->setSortField($parameters->sortField);
-        }
-        if ($parameters->sortOrder !== '') {
-            $view->setSortOrder($parameters->sortOrder);
-        }
 
         if ($parameters->filters !== []) {
             $view->setActiveFilters($parameters->filters);
