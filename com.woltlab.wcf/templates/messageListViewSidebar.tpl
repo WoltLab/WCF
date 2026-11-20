@@ -59,6 +59,10 @@
 				</div>
 			{/hascontent}
 
+			{if MODULE_USER_RANK && $userProfile->getRank() && $userProfile->getRank()->rankImageFileID !== null}
+				<div class="messageListView__item__rankImage">{unsafe:$userProfile->getRank()->getImage()}</div>
+			{/if}
+
 			{hascontent}
 				<div class="messageListView__item__userStats">
 					{content}

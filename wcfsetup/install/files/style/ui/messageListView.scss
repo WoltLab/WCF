@@ -96,6 +96,15 @@
 	gap: 4px;
 }
 
+/* Repeated rank images line up without gaps, large ones shrink to the sidebar width. */
+.messageListView__item__rankImage {
+	line-height: 0;
+
+	img {
+		max-width: 100%;
+	}
+}
+
 .messageListView__item__userStats {
 	color: var(--wcfContentDimmedText);
 	display: flex;
