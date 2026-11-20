@@ -37,8 +37,12 @@
 		{if !$isReply || !$userProfile->isGuest()}
 			<div class="messageListView__item__username">
 				{user object=$userProfile}
-				{if !$isReply && $userProfile->banned}
-					<span class="messageListView__item__banned jsTooltip" role="img" title="{lang user=$userProfile}wcf.user.banned{/lang}" aria-label="{lang user=$userProfile}wcf.user.banned{/lang}">{icon name='lock'}</span>
+				{if !$isReply}
+					{if $userProfile->banned}
+						<span class="messageListView__item__banned jsTooltip" role="img" title="{lang user=$userProfile}wcf.user.banned{/lang}" aria-label="{lang user=$userProfile}wcf.user.banned{/lang}">{icon name='lock'}</span>
+					{/if}
+
+					{event name='icons'}
 				{/if}
 			</div>
 		{/if}
@@ -57,7 +61,7 @@
 							{unsafe:$userProfile->renderUserTitle()}
 						{/if}
 
-						{event name='badges'}
+						{event name='afterUserTitle'}
 					{/content}
 				</div>
 			{/hascontent}
@@ -75,34 +79,12 @@
 					</ul>
 				{/if}
 
-				{hascontent}
+				{assign var='__sidebarStatItems' value=$userProfile->getStatItems('messageSidebar')}
+				{if $__sidebarStatItems}
 					<div class="messageListView__item__userStats">
-						{content}
-							{if MODULE_LIKE && MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && $userProfile->likesReceived}
-								<a href="{$userProfile->getLink()}#likes" class="messageListView__item__stat">
-									<span class="messageListView__item__stat__key">{lang}wcf.user.reactionsReceived{/lang}</span>
-									<span class="messageListView__item__stat__value">{#$userProfile->likesReceived}</span>
-								</a>
-							{/if}
-
-							{if MESSAGE_SIDEBAR_ENABLE_ACTIVITY_POINTS && $userProfile->activityPoints}
-								<button type="button" class="messageListView__item__stat activityPointsDisplay" data-user-id="{$userProfile->userID}">
-									<span class="messageListView__item__stat__key">{lang}wcf.user.activityPoint{/lang}</span>
-									<span class="messageListView__item__stat__value">{#$userProfile->activityPoints}</span>
-								</button>
-							{/if}
-
-							{if MODULE_TROPHY && MESSAGE_SIDEBAR_ENABLE_TROPHY_POINTS && $userProfile->showTrophyPoints()}
-								<button type="button" class="messageListView__item__stat userTrophyOverlayList" data-user-id="{$userProfile->userID}">
-									<span class="messageListView__item__stat__key">{lang}wcf.user.trophy.trophyPoints{/lang}</span>
-									<span class="messageListView__item__stat__value">{#$userProfile->trophyPoints}</span>
-								</button>
-							{/if}
-
-							{event name='userStats'}
-						{/content}
+						{include file='__userStatItems' statItems=$__sidebarStatItems className='messageListView__item__stat'}
 					</div>
-				{/hascontent}
+				{/if}
 
 				{if MESSAGE_SIDEBAR_USER_OPTIONS && $userProfile->isAccessible('canViewProfile')}
 					{hascontent}

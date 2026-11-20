@@ -8,7 +8,6 @@ use wcf\data\user\avatar\StaticAvatar;
 use wcf\data\user\cover\photo\IUserCoverPhoto;
 use wcf\data\user\UserProfile;
 use wcf\event\user\profile\UserProfileHeaderSearchContentLinkCollecting;
-use wcf\event\user\profile\UserProfileStatItemCollecting;
 use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\event\EventHandler;
 use wcf\system\interaction\admin\UserInteractions;
@@ -130,9 +129,7 @@ final class AdminUserProfileHeaderView implements \Stringable
 
     private function initStatItems(): void
     {
-        $event = new UserProfileStatItemCollecting($this->user);
-        EventHandler::getInstance()->fire($event);
-        $this->statItems = $event->getItems();
+        $this->statItems = $this->user->getStatItems(UserStatContext::ProfileHeader);
     }
 
     private function initSearchContentLinks(): void

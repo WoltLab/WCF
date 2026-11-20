@@ -8,7 +8,6 @@ use wcf\data\user\cover\photo\IUserCoverPhoto;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
 use wcf\event\user\profile\UserProfileHeaderSearchContentLinkCollecting;
-use wcf\event\user\profile\UserProfileStatItemCollecting;
 use wcf\page\MembersListPage;
 use wcf\page\UserArticleListPage;
 use wcf\system\event\EventHandler;
@@ -151,11 +150,7 @@ final class UserProfileHeaderView implements \Stringable
 
     private function initStatItems(): void
     {
-        $event = new UserProfileStatItemCollecting($this->user);
-        EventHandler::getInstance()->fire($event);
-        if ($event->getItems() !== []) {
-            $this->statItems = \array_merge($this->statItems, $event->getItems());
-        }
+        $this->statItems = $this->user->getStatItems(UserStatContext::ProfileHeader);
     }
 
     private function initSearchContentLinks(): void

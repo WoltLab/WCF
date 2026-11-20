@@ -117,30 +117,11 @@
 		<div class="userCard__footer">
 			<div class="userCard__footer__stats">
 				{content}
-					{event name='beforeStats'}
-					
-					{if MODULE_LIKE && $user->likesReceived}
-						<a class="userCard__footer__statsItem" href="{$user->getLink()}#likes">
-							<span class="userCard__footer__statsItem__key">{lang}wcf.user.reactionsReceived{/lang}</span>
-							<span class="userCard__footer__statsItem__value">{#$user->likesReceived}</span>
-						</a>
-					{/if}
+					{* @deprecated 6.3: Use `UserProfileStatItemCollecting` instead. *}{event name='beforeStats'}
 
-					{if $user->activityPoints}
-						<button type="button" class="userCard__footer__statsItem activityPointsDisplay" data-user-id="{$user->userID}">
-							<span class="userCard__footer__statsItem__key">{lang}wcf.user.activityPoint{/lang}</span>
-							<span class="userCard__footer__statsItem__value">{#$user->activityPoints}</span>
-						</button>
-					{/if}
+					{include file='__userStatItems' statItems=$user->getStatItems('userCard') className='userCard__footer__statsItem'}
 
-					{if $user->showTrophyPoints()}
-						<button type="button" class="userCard__footer__statsItem userTrophyOverlayList" data-user-id="{$user->userID}">
-							<span class="userCard__footer__statsItem__key">{lang}wcf.user.trophy.trophyPoints{/lang}</span>
-							<span class="userCard__footer__statsItem__value">{#$user->trophyPoints}</span>
-						</button>
-					{/if}
-
-					{event name='afterStats'}
+					{* @deprecated 6.3: Use `UserProfileStatItemCollecting` instead. *}{event name='afterStats'}
 				{/content}
 			</div>
 		</div>

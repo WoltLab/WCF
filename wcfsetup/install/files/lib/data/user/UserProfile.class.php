@@ -17,14 +17,18 @@ use wcf\data\user\online\UserOnline;
 use wcf\data\user\option\UserOption;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\data\user\rank\UserRank;
+use wcf\event\user\profile\UserProfileStatItemCollecting;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\cache\builder\UserRankCacheBuilder;
 use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\email\Mailbox;
+use wcf\system\event\EventHandler;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\user\UserProfileHandler;
+use wcf\system\view\user\profile\UserProfileStatItem;
+use wcf\system\view\user\profile\UserStatContext;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\StringUtil;
@@ -108,6 +112,12 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
      * @var ?IUserCoverPhoto
      */
     protected $coverPhoto;
+
+    /**
+     * statistic items grouped by the value of their `UserStatContext`
+     * @var array<string, UserProfileStatItem[]>
+     */
+    private array $statItems = [];
 
     const GENDER_MALE = 1;
 
@@ -1187,6 +1197,28 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject, 
         }
 
         return WCF::getSession()->hasPermission('user.profile.coverPhoto.canUploadCoverPhoto');
+    }
+
+    /**
+     * Returns the statistic items of this user for the given context.
+     *
+     * @return UserProfileStatItem[]
+     * @since 6.3
+     */
+    public function getStatItems(UserStatContext|string $context): array
+    {
+        if (\is_string($context)) {
+            $context = UserStatContext::from($context);
+        }
+
+        if (!isset($this->statItems[$context->value])) {
+            $event = new UserProfileStatItemCollecting($this, $context);
+            EventHandler::getInstance()->fire($event);
+
+            $this->statItems[$context->value] = $event->getItems();
+        }
+
+        return $this->statItems[$context->value];
     }
 
     /**
