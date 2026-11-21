@@ -7,6 +7,7 @@ use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\DateRangeFormField;
 use wcf\system\view\filter\exception\InvalidFilterValue;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Filter for columns that contain unix timestamps.
@@ -22,7 +23,7 @@ class DateFilter extends AbstractFilter
     public function getFormField(): AbstractFormField
     {
         return DateRangeFormField::create($this->id)
-            ->label($this->languageItem)
+            ->label(HtmlString::fromText($this->getLabel()))
             ->nullable();
     }
 

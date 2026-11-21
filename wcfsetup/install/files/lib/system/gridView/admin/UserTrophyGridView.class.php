@@ -27,6 +27,7 @@ use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TimeFilter;
 use wcf\system\view\filter\UserFilter;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 
 /**
@@ -143,7 +144,7 @@ final class UserTrophyGridView extends AbstractGridView
             public function getFormField(): SelectFormField
             {
                 return SelectFormField::create($this->id)
-                    ->label($this->languageItem)
+                    ->label(HtmlString::fromText($this->getLabel()))
                     ->choices($this->options, true);
             }
 

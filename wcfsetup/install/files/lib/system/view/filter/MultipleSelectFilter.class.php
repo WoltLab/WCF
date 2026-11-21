@@ -45,7 +45,7 @@ class MultipleSelectFilter extends AbstractFilter
     public function getFormField(): AbstractFormField
     {
         return MultipleSelectionFormField::create($this->id)
-            ->label($this->languageItem)
+            ->label(HtmlString::fromText($this->getLabel()))
             ->choices(\array_map($this->getChoiceLabel(...), $this->options));
     }
 

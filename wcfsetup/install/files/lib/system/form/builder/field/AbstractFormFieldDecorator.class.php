@@ -8,6 +8,7 @@ use wcf\system\form\builder\field\dependency\IFormFieldDependency;
 use wcf\system\form\builder\field\validation\IFormFieldValidationError;
 use wcf\system\form\builder\field\validation\IFormFieldValidator;
 use wcf\system\form\builder\IFormParentNode;
+use wcf\util\HtmlString;
 
 /**
  * Default implementation of a decorator for an `IFormField` that forwards all methods defined
@@ -433,7 +434,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     #[\Override]
-    public function description(?string $languageItem = null, array $variables = [])
+    public function description(HtmlString|string|null $languageItem = null, array $variables = [])
     {
         $this->field->description($languageItem, $variables);
 
@@ -453,7 +454,7 @@ abstract class AbstractFormFieldDecorator implements IFormField
     }
 
     #[\Override]
-    public function label(?string $languageItem = null, array $variables = [])
+    public function label(HtmlString|string|null $languageItem = null, array $variables = [])
     {
         $this->field->label($languageItem, $variables);
 

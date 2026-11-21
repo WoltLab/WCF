@@ -5,6 +5,7 @@ namespace wcf\system\view\filter;
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\IntegerFormField;
+use wcf\util\HtmlString;
 
 /**
  * Filter for columns that contain object ids.
@@ -20,7 +21,7 @@ class ObjectIdFilter extends AbstractFilter
     public function getFormField(): AbstractFormField
     {
         return IntegerFormField::create($this->id)
-            ->label($this->languageItem)
+            ->label(HtmlString::fromText($this->getLabel()))
             ->minimum(1)
             ->nullable();
     }

@@ -3,6 +3,7 @@
 namespace wcf\system\form\builder;
 
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Provides default implementations of `IFormElement` methods.
@@ -29,17 +30,20 @@ trait TFormElement
     protected $label;
 
     /**
-     * Sets the description of this element using the given language item
-     * and returns this element. If `null` is passed, the element description
-     * is removed.
+     * Sets the description of this element and returns this element. If `null`
+     * is passed, the element description is removed.
      *
-     * @param ?string $languageItem language item containing the element description or `null` to unset description
-     * @param array<string, mixed> $variables additional variables used when resolving the language item
+     * The description is HTML. A string is a phrase name, resolved with
+     * `$variables`, and the resolved phrase is trusted HTML; a string that is
+     * no phrase name is used as is. An `HtmlString` is used as is and never
+     * resolved as a phrase. Plain text must be wrapped with `HtmlString::fromText()`.
+     *
+     * @param array<string, mixed> $variables additional variables used when resolving the phrase
      * @return static this element
      *
-     * @throws \InvalidArgumentException if the given description is no string or otherwise is invalid
+     * @throws \InvalidArgumentException if variables are given together with an `HtmlString` or `null`
      */
-    public function description(?string $languageItem = null, array $variables = [])
+    public function description(HtmlString|string|null $languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
             if ($variables !== []) {
@@ -49,6 +53,14 @@ trait TFormElement
             }
 
             $this->description = null;
+        } elseif ($languageItem instanceof HtmlString) {
+            if ($variables !== []) {
+                throw new \InvalidArgumentException(
+                    "Cannot use variables with an HTML string as description of element '{$this->getId()}'."
+                );
+            }
+
+            $this->description = (string)$languageItem;
         } else {
             $this->description = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
         }
@@ -77,17 +89,20 @@ trait TFormElement
     }
 
     /**
-     * Sets the label of this element using the given language item and
-     * returns this element. If `null` is passed, the element label is
-     * removed.
+     * Sets the label of this element and returns this element. If `null` is
+     * passed, the element label is removed.
      *
-     * @param ?string $languageItem language item containing the element label or `null` to unset label
-     * @param array<string, mixed> $variables additional variables used when resolving the language item
+     * The label is HTML. A string is a phrase name, resolved with `$variables`,
+     * and the resolved phrase is trusted HTML; a string that is no phrase name
+     * is used as is. An `HtmlString` is used as is and never resolved as a
+     * phrase. Plain text must be wrapped with `HtmlString::fromText()`.
+     *
+     * @param array<string, mixed> $variables additional variables used when resolving the phrase
      * @return static this element
      *
-     * @throws \InvalidArgumentException if the given label is no string or otherwise is invalid
+     * @throws \InvalidArgumentException if variables are given together with an `HtmlString` or `null`
      */
-    public function label(?string $languageItem = null, array $variables = [])
+    public function label(HtmlString|string|null $languageItem = null, array $variables = [])
     {
         if ($languageItem === null) {
             if ($variables !== []) {
@@ -97,6 +112,14 @@ trait TFormElement
             }
 
             $this->label = null;
+        } elseif ($languageItem instanceof HtmlString) {
+            if ($variables !== []) {
+                throw new \InvalidArgumentException(
+                    "Cannot use variables with an HTML string as label of element '{$this->getId()}'."
+                );
+            }
+
+            $this->label = (string)$languageItem;
         } else {
             $this->label = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
         }

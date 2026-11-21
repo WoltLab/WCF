@@ -8,6 +8,7 @@ use wcf\system\category\CategoryHandler;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\SelectFormField;
 use wcf\system\view\filter\exception\InvalidFilterValue;
+use wcf\util\HtmlString;
 
 /**
  * Allows a column to be filtered on the basis of a select category.
@@ -41,7 +42,7 @@ class CategoryFilter extends AbstractFilter
     public function getFormField(): AbstractFormField
     {
         return SelectFormField::create($this->id)
-            ->label($this->languageItem)
+            ->label(HtmlString::fromText($this->getLabel()))
             ->choices($this->options, true);
     }
 

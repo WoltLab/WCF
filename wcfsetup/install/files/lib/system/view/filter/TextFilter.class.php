@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Filter for text columns.
@@ -21,7 +22,7 @@ class TextFilter extends AbstractFilter
     public function getFormField(): AbstractFormField
     {
         return TextFormField::create($this->id)
-            ->label($this->languageItem);
+            ->label(HtmlString::fromText($this->getLabel()));
     }
 
     #[\Override]

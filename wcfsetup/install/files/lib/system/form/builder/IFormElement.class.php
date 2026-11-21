@@ -2,6 +2,8 @@
 
 namespace wcf\system\form\builder;
 
+use wcf\util\HtmlString;
+
 /**
  * Represents an element of a form that can have a description, a label and dependencies.
  *
@@ -13,17 +15,20 @@ namespace wcf\system\form\builder;
 interface IFormElement extends IFormNode
 {
     /**
-     * Sets the description of this element using the given language item
-     * and returns this element. If `null` is passed, the element description
-     * is removed.
+     * Sets the description of this element and returns this element. If `null`
+     * is passed, the element description is removed.
      *
-     * @param ?string $languageItem language item containing the element description or `null` to unset description
-     * @param array<string, mixed> $variables additional variables used when resolving the language item
+     * The description is HTML. A string is a phrase name, resolved with
+     * `$variables`, and the resolved phrase is trusted HTML; a string that is
+     * no phrase name is used as is. An `HtmlString` is used as is and never
+     * resolved as a phrase. Plain text must be wrapped with `HtmlString::fromText()`.
+     *
+     * @param array<string, mixed> $variables additional variables used when resolving the phrase
      * @return static this element
      *
-     * @throws \InvalidArgumentException if the given description is invalid
+     * @throws \InvalidArgumentException if variables are given together with an `HtmlString` or `null`
      */
-    public function description(?string $languageItem = null, array $variables = []);
+    public function description(HtmlString|string|null $languageItem = null, array $variables = []);
 
     /**
      * Returns the description of this element or `null` if no description has been set.
@@ -40,17 +45,20 @@ interface IFormElement extends IFormNode
     public function getLabel();
 
     /**
-     * Sets the label of this element using the given language item and
-     * returns this element. If `null` is passed, the element label is
-     * removed.
+     * Sets the label of this element and returns this element. If `null` is
+     * passed, the element label is removed.
      *
-     * @param ?string $languageItem language item containing the element label or `null` to unset label
-     * @param array<string, mixed> $variables additional variables used when resolving the language item
+     * The label is HTML. A string is a phrase name, resolved with `$variables`,
+     * and the resolved phrase is trusted HTML; a string that is no phrase name
+     * is used as is. An `HtmlString` is used as is and never resolved as a
+     * phrase. Plain text must be wrapped with `HtmlString::fromText()`.
+     *
+     * @param array<string, mixed> $variables additional variables used when resolving the phrase
      * @return static this element
      *
-     * @throws  \InvalidArgumentException   if the given label is invalid
+     * @throws \InvalidArgumentException if variables are given together with an `HtmlString` or `null`
      */
-    public function label(?string $languageItem = null, array $variables = []);
+    public function label(HtmlString|string|null $languageItem = null, array $variables = []);
 
     /**
      * Returns `true` if this element requires a label to be set.

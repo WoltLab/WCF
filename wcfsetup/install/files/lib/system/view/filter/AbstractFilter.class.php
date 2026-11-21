@@ -16,6 +16,11 @@ use wcf\system\WCF;
  */
 abstract class AbstractFilter implements IViewFilter
 {
+    /**
+     * `$languageItem` is the label of this filter, either a phrase name or plain
+     * text. It is treated as text, both as the label of the form field in the
+     * filter dialog and in the label of an active filter.
+     */
     public function __construct(
         protected readonly string $id,
         protected readonly string $languageItem,
@@ -34,6 +39,11 @@ abstract class AbstractFilter implements IViewFilter
         return $this->id;
     }
 
+    /**
+     * Returns the label of this filter as plain text, which is the resolved phrase
+     * if the label is the name of an existing phrase. Implementations of `getFormField()`
+     * set it as the label of the form field with `label(HtmlString::fromText($this->getLabel()))`.
+     */
     #[\Override]
     public function getLabel(): string
     {

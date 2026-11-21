@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\data\user\option\UserOption;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\option\user\TJoinUserOptionValues;
+use wcf\util\HtmlString;
 
 /**
  * Filter for the values of a user option, requires a list of users.
@@ -34,7 +35,7 @@ final class UserOptionFilter extends AbstractFilter
     {
         return $this->option->getFormOption()
             ->getFilterFormField($this->id, $this->option->getConfiguration())
-            ->label($this->languageItem);
+            ->label(HtmlString::fromText($this->getLabel()));
     }
 
     #[\Override]

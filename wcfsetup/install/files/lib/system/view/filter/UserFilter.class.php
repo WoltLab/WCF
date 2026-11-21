@@ -7,6 +7,7 @@ use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\user\UserFormField;
 use wcf\system\view\filter\exception\InvalidFilterValue;
+use wcf\util\HtmlString;
 
 /**
  * Filter for columns that contain user ids.
@@ -22,7 +23,7 @@ class UserFilter extends AbstractFilter
     public function getFormField(): AbstractFormField
     {
         return UserFormField::create($this->id)
-            ->label($this->languageItem)
+            ->label(HtmlString::fromText($this->getLabel()))
             ->nullable();
     }
 

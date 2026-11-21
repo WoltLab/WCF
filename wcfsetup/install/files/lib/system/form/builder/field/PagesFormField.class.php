@@ -4,6 +4,7 @@ namespace wcf\system\form\builder\field;
 
 use wcf\data\page\PageNodeTree;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Implementation of a form field for selecting multiple pages.
@@ -58,11 +59,30 @@ final class PagesFormField extends MultipleSelectionFormField
     }
 
     /**
-     * @param array<string, mixed> $variables
-    */
-    public function invertedLabel(string $languageItem, array $variables = []): self
+     * Sets the label that replaces the regular label while the field set with
+     * `visibleEverywhereFieldId()` is enabled, and returns this field.
+     *
+     * The label is HTML. A string is a phrase name, resolved with `$variables`,
+     * and the resolved phrase is trusted HTML; a string that is no phrase name
+     * is used as is. An `HtmlString` is used as is and never resolved as a
+     * phrase. Plain text must be wrapped with `HtmlString::fromText()`.
+     *
+     * @param array<string, mixed> $variables additional variables used when resolving the phrase
+     * @throws \InvalidArgumentException if variables are given together with an `HtmlString`
+     */
+    public function invertedLabel(HtmlString|string $languageItem, array $variables = []): self
     {
-        $this->invertedLabel = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
+        if ($languageItem instanceof HtmlString) {
+            if ($variables !== []) {
+                throw new \InvalidArgumentException(
+                    "Cannot use variables with an HTML string as inverted label of field '{$this->getId()}'."
+                );
+            }
+
+            $this->invertedLabel = (string)$languageItem;
+        } else {
+            $this->invertedLabel = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
+        }
 
         return $this;
     }

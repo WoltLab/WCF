@@ -45,7 +45,7 @@ class SelectFilter extends AbstractFilter
     public function getFormField(): AbstractFormField
     {
         return SelectFormField::create($this->id)
-            ->label($this->languageItem)
+            ->label(HtmlString::fromText($this->getLabel()))
             ->choices(\array_map($this->getChoiceLabel(...), $this->options));
     }
 

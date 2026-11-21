@@ -91,7 +91,7 @@ final class ModificationLogGridView extends AbstractGridView
                             // The labels are resolved phrases, indented with `&nbsp;`, that
                             // `renderValue()` relies on.
                             return SelectFormField::create($this->id)
-                                ->label($this->languageItem)
+                                ->label(HtmlString::fromText($this->getLabel()))
                                 ->choices(\array_map(HtmlString::fromSafeHtml(...), $this->options));
                         }
 

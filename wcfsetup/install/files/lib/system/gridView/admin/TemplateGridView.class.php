@@ -153,7 +153,7 @@ final class TemplateGridView extends AbstractGridView
             public function getFormField(): AbstractFormField
             {
                 return SelectFormField::create($this->id)
-                    ->label($this->languageItem)
+                    ->label(HtmlString::fromText($this->getLabel()))
                     ->choices($this->getSelectOptions(), true);
             }
 

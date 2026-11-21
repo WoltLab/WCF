@@ -5,6 +5,7 @@ namespace wcf\system\view\filter;
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\util\HtmlString;
 
 /**
  * Filter for boolean columns.
@@ -29,7 +30,7 @@ class BooleanFilter extends AbstractFilter
     public function getFormField(): AbstractFormField
     {
         return BooleanFormField::create($this->id)
-            ->label($this->languageItem);
+            ->label(HtmlString::fromText($this->getLabel()));
     }
 
     #[\Override]

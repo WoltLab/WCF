@@ -9,6 +9,7 @@ use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\label\LabelFormField;
 use wcf\system\view\filter\exception\InvalidFilterValue;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Filter that allows to filter a list view by labels.
@@ -33,6 +34,7 @@ class LabelFilter extends AbstractFilter
     public function getFormField(): AbstractFormField
     {
         return LabelFormField::create($this->id)
+            ->label(HtmlString::fromText($this->getLabel()))
             ->objectProperty('labelIDs')
             ->labelGroup($this->labelGroup)
             ->invertible();

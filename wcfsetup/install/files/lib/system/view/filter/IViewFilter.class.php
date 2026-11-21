@@ -39,7 +39,7 @@ interface IViewFilter
     public function getId(): string;
 
     /**
-     * Returns the label of this filter.
+     * Returns the label of this filter as plain text.
      */
     public function getLabel(): string;
 

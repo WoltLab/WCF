@@ -2,6 +2,8 @@
 
 namespace wcf\system\form\builder\field;
 
+use wcf\util\HtmlString;
+
 /**
  * Represents a form field that supports displaying a suffix.
  *
@@ -20,14 +22,18 @@ interface ISuffixedFormField extends IFormField
     public function getSuffix();
 
     /**
-     * Sets the suffix of this field using the given language item and returns
-     * this element. If `null` is passed, the suffix is removed.
+     * Sets the suffix of this field and returns this field. If `null` is
+     * passed, the suffix is removed.
      *
-     * @param ?string $languageItem language item containing the suffix or `null` to unset suffix
-     * @param array<string, mixed> $variables additional variables used when resolving the language item
+     * The suffix is HTML. A string is a phrase name, resolved with `$variables`,
+     * and the resolved phrase is trusted HTML; a string that is no phrase name
+     * is used as is. An `HtmlString` is used as is and never resolved as a
+     * phrase. Plain text must be wrapped with `HtmlString::fromText()`.
+     *
+     * @param array<string, mixed> $variables additional variables used when resolving the phrase
      * @return static this field
      *
-     * @throws \InvalidArgumentException if the given language item is invalid
+     * @throws \InvalidArgumentException if variables are given together with an `HtmlString` or `null`
      */
-    public function suffix(?string $languageItem = null, array $variables = []);
+    public function suffix(HtmlString|string|null $languageItem = null, array $variables = []);
 }

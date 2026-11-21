@@ -4,6 +4,7 @@ namespace wcf\system\view\filter;
 
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\NumericRangeFormField;
+use wcf\util\HtmlString;
 
 /**
  * Filter for columns containing integers.
@@ -29,7 +30,7 @@ class IntegerFilter extends NumericFilter
     public function getFormField(): AbstractFormField
     {
         return NumericRangeFormField::create($this->id)
-            ->label($this->languageItem)
+            ->label(HtmlString::fromText($this->getLabel()))
             ->nullable()
             ->integerValues()
             ->minimum($this->minimum)

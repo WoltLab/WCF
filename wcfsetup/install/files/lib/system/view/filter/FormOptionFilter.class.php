@@ -5,7 +5,7 @@ namespace wcf\system\view\filter;
 use wcf\data\DatabaseObjectList;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\option\IFormOption;
-use wcf\util\StringUtil;
+use wcf\util\HtmlString;
 
 /**
  * Filter for columns that contain form option values.
@@ -33,10 +33,8 @@ final class FormOptionFilter extends AbstractFilter
     #[\Override]
     public function getFormField(): AbstractFormField
     {
-        // `label()` expects a phrase name and yields HTML, the option title is plain text and
-        // `getLabel()` must stay unencoded because the active filter label is escaped on output.
         return $this->option->getFilterFormField($this->id, $this->configuration)
-            ->label(StringUtil::encodeHTML($this->getLabel()));
+            ->label(HtmlString::fromText($this->getLabel()));
     }
 
     #[\Override]
