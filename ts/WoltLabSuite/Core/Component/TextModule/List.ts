@@ -1,7 +1,7 @@
 /**
  * Lists the text modules in a tab below the editor. The list is loaded when
- * the tab is opened for the first time, clicking a text module inserts it
- * into the editor.
+ * the tab is opened for the first time, the insert button of a text module
+ * inserts it into the editor.
  *
  * @author Marcel Werk
  * @copyright 2001-2026 WoltLab GmbH

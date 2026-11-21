@@ -11,6 +11,8 @@ use wcf\system\gridView\GridViewColumn;
 use wcf\system\gridView\renderer\AbstractColumnRenderer;
 use wcf\system\gridView\renderer\TruncatedTextColumnRenderer;
 use wcf\system\gridView\renderer\UserLinkColumnRenderer;
+use wcf\system\interaction\AbstractInteraction;
+use wcf\system\interaction\IInteraction;
 use wcf\system\interaction\user\TextModuleInteractions;
 use wcf\system\language\LanguageFactory;
 use wcf\system\style\FontAwesomeIcon;
@@ -101,7 +103,7 @@ final class TextModuleGridView extends AbstractGridView
         );
 
         $this->setInteractionProvider(new TextModuleInteractions());
-        $this->addRowLink(new TextModuleInsertRowLink());
+        $this->addQuickInteraction($this->getInsertInteraction());
         $this->setDefaultSortField('title');
         $this->setRowsPerPage(10);
         $this->setPrimaryButton(ViewPrimaryButton::forButton(
@@ -127,5 +129,28 @@ final class TextModuleGridView extends AbstractGridView
     protected function getInitializedEvent(): TextModuleGridViewInitialized
     {
         return new TextModuleGridViewInitialized($this);
+    }
+
+    /**
+     * The click is handled by the editor's text module tab, which knows the
+     * target editor.
+     */
+    private function getInsertInteraction(): IInteraction
+    {
+        return new class('insert') extends AbstractInteraction {
+            #[\Override]
+            public function render(DatabaseObject $object): string
+            {
+                \assert($object instanceof TextModule);
+
+                $title = StringUtil::encodeHTML(WCF::getLanguage()->get('wcf.global.button.insert'));
+
+                return <<<HTML
+                    <button type="button" class="button buttonPrimary small jsTooltip" title="{$title}" data-text-module-insert="{$object->textModuleID}">
+                        <fa-icon name="paste"></fa-icon>
+                    </button>
+                    HTML;
+            }
+        };
     }
 }
