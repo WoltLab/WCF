@@ -17,6 +17,7 @@ use wcf\system\form\option\IFormOption;
 use wcf\system\object\filter\IObjectListFilter;
 use wcf\system\option\user\TJoinUserOptionValues;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Filters users by the value of a user option. The comparison depends on the
@@ -62,7 +63,7 @@ final class UserOptionObjectFilter implements IObjectListFilter
                 'userOption_' . \str_replace('.', '_', $this->option->optionName),
                 $this->option->getConfiguration()
             )
-            ->label($this->getTitle());
+            ->label(HtmlString::fromText($this->getTitle()));
 
         if ($formField instanceof DateRangeFormField || $formField instanceof NumericRangeFormField) {
             // At least one of the bounds is required.

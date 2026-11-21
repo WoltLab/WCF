@@ -34,6 +34,7 @@ use wcf\system\form\builder\IFormChildNode;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Abstract implementation of a form for creating categories based on the form builder.
@@ -187,7 +188,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
             FormContainer::create('general')
                 ->appendChildren($this->getGeneralFormFields()),
             FormContainer::create('position')
-                ->label($processor->getLanguageVariable('position'))
+                ->label(HtmlString::fromSafeHtml($processor->getLanguageVariable('position')))
                 ->appendChildren($this->getPositionFormFields()),
             FormContainer::create('permissions')
                 ->label('wcf.acl.permissions')
@@ -204,8 +205,8 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
 
         $formFields = [
             TitleFormField::create()
-                ->label($processor->getLanguageVariable('title'))
-                ->description($processor->getLanguageVariable('title.description', true))
+                ->label(HtmlString::fromSafeHtml($processor->getLanguageVariable('title')))
+                ->description(HtmlString::fromSafeHtml($processor->getLanguageVariable('title.description', true)))
                 ->maximumLength(255)
                 ->i18n()
                 ->languageItemPattern($processor->getI18nLangVarPrefix() . '.title.category\d+')
@@ -214,8 +215,8 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
 
         if ($processor->hasDescription()) {
             $formFields[] = MultilineTextFormField::create('description')
-                ->label($processor->getLanguageVariable('description'))
-                ->description($processor->getLanguageVariable('description.description', true))
+                ->label(HtmlString::fromSafeHtml($processor->getLanguageVariable('description')))
+                ->description(HtmlString::fromSafeHtml($processor->getLanguageVariable('description.description', true)))
                 ->maximumLength(5000)
                 ->rows(10)
                 ->i18n()
@@ -226,13 +227,13 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         }
 
         $formFields[] = BooleanFormField::create('descriptionUseHtml')
-            ->label($processor->getLanguageVariable('descriptionUseHtml'))
+            ->label(HtmlString::fromSafeHtml($processor->getLanguageVariable('descriptionUseHtml')))
             ->available(
                 $processor->hasDescription() && $processor->supportsHtmlDescription()
             );
         $formFields[] = BooleanFormField::create('isDisabled')
-            ->label($processor->getLanguageVariable('isDisabled'))
-            ->description($processor->getLanguageVariable('isDisabled.description', true));
+            ->label(HtmlString::fromSafeHtml($processor->getLanguageVariable('isDisabled')))
+            ->description(HtmlString::fromSafeHtml($processor->getLanguageVariable('isDisabled.description', true)));
 
         return $formFields;
     }
@@ -259,7 +260,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         $positionFormField = null;
         if ($maximumNestingLevel === 0) {
             $positionFormField = ShowOrderFormField::create()
-                ->description($processor->getLanguageVariable('showOrder.description', true))
+                ->description(HtmlString::fromSafeHtml($processor->getLanguageVariable('showOrder.description', true)))
                 ->choices($categoryNodeTree, true)
                 ->required();
         } else {
@@ -267,7 +268,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
             // dynamically filter the list of categories in the position field.
             $positionFormField = IntegerFormField::create('showOrder')
                 ->label('wcf.form.field.showOrder')
-                ->description($processor->getLanguageVariable('showOrder.description', true))
+                ->description(HtmlString::fromSafeHtml($processor->getLanguageVariable('showOrder.description', true)))
                 ->minimum(0)
                 ->value(0)
                 ->required();
@@ -275,9 +276,9 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
 
         return [
             SelectFormField::create('parentCategoryID')
-                ->label($processor->getLanguageVariable('parentCategoryID'))
+                ->label(HtmlString::fromSafeHtml($processor->getLanguageVariable('parentCategoryID')))
                 ->description(
-                    $processor->getLanguageVariable('parentCategoryID.description', true)
+                    HtmlString::fromSafeHtml($processor->getLanguageVariable('parentCategoryID.description', true))
                 )
                 ->choices($categoryNodeTree, true)
                 ->available((bool)$this->getObjectTypeProcessor()->getMaximumNestingLevel())

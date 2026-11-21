@@ -2,7 +2,7 @@
 
 namespace wcf\system\form\builder\field;
 
-use wcf\util\StringUtil;
+use wcf\util\HtmlString;
 
 /**
  * Implementation of a form field for currencies.
@@ -49,7 +49,7 @@ class CurrencyFormField extends AbstractNumericFormField
      */
     public function currency(string $currency): static
     {
-        $this->suffix = StringUtil::encodeHTML($currency);
+        $this->suffix(HtmlString::fromText($currency));
 
         return $this;
     }

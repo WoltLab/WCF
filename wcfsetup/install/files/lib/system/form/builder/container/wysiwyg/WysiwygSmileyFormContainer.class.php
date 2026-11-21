@@ -9,7 +9,7 @@ use wcf\system\form\builder\container\TabTabMenuFormContainer;
 use wcf\system\form\builder\TWysiwygFormNode;
 use wcf\system\form\builder\wysiwyg\WysiwygSmileyFormNode;
 use wcf\system\style\FontAwesomeIcon;
-use wcf\util\StringUtil;
+use wcf\util\HtmlString;
 
 /**
  * Represents the tab for the smiley-related fields below a WYSIWYG editor.
@@ -47,7 +47,7 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer implements IWys
 
             $this->appendChild(
                 TabFormContainer::create($this->getId() . '_smileyCategoryTab' . $smileyCategory->categoryID)
-                    ->label(StringUtil::encodeHTML($smileyCategory->getTitle()))
+                    ->label(HtmlString::fromText($smileyCategory->getTitle()))
                     ->removeClass('tabMenuContent')
                     ->addClass('messageTabMenuContent')
                     ->appendChild(

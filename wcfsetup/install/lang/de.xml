@@ -5492,7 +5492,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|phra
 		<item name="wcf.user.option.category.profile.personal"><![CDATA[Persönliche Informationen]]></item>
 		<item name="wcf.user.option.category.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.user.option.category.settings.general"><![CDATA[Allgemein]]></item>
-		<item name="wcf.user.option.category.settings.general.date"><![CDATA[Datum &amp; Zeit]]></item>
+		<item name="wcf.user.option.category.settings.general.date"><![CDATA[Datum & Zeit]]></item>
 		<item name="wcf.user.option.category.settings.general.appearance"><![CDATA[Anzeige]]></item>
 		<item name="wcf.user.option.category.settings.general.interface"><![CDATA[Bedienung]]></item>
 		<item name="wcf.user.option.category.settings.privacy"><![CDATA[Privatsphäre]]></item>

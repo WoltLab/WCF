@@ -61,11 +61,11 @@ class LoginForm extends AbstractFormBuilderForm
                 ->label('wcf.user.password')
                 ->description(
                     UserAuthenticationConfigurationFactory::getInstance()->getConfigration()->canChangePassword
-                        ? \sprintf(
+                        ? HtmlString::fromSafeHtml(\sprintf(
                             '<a href="%s">%s</a>',
                             StringUtil::encodeHTML(LinkHandler::getInstance()->getControllerLink(LostPasswordForm::class)),
                             WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword')
-                        ) : null
+                        )) : null
                 )
                 ->required()
                 ->passwordStrengthMeter(false)

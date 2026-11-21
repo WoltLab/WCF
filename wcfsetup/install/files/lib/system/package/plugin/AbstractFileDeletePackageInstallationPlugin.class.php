@@ -214,7 +214,7 @@ abstract class AbstractFileDeletePackageInstallationPlugin extends AbstractXMLPa
     {
         $languageItem = "wcf.acp.pip.{$this->getPipName()}.{$this->tagName}.description";
 
-        return WCF::getLanguage()->get($languageItem, true) ?: null;
+        return WCF::getLanguage()->get($languageItem, true) !== '' ? $languageItem : null;
     }
 
     /**

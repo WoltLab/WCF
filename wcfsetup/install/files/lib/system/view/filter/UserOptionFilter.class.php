@@ -25,7 +25,7 @@ final class UserOptionFilter extends AbstractFilter
     ) {
         parent::__construct(
             $option->getIdentifier(),
-            $option->getTitle(),
+            '',
             'user_option_value.' . $option->getIdentifier()
         );
     }
@@ -36,6 +36,12 @@ final class UserOptionFilter extends AbstractFilter
         return $this->option->getFormOption()
             ->getFilterFormField($this->id, $this->option->getConfiguration())
             ->label(HtmlString::fromText($this->getLabel()));
+    }
+
+    #[\Override]
+    public function getLabel(): string
+    {
+        return $this->option->getTitle();
     }
 
     #[\Override]

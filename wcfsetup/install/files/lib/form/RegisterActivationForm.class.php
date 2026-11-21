@@ -14,6 +14,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
+use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 
 /**
@@ -48,7 +49,7 @@ final class RegisterActivationForm extends AbstractFormBuilderForm
                         )),
                     TextFormField::create('activationCode')
                         ->label('wcf.user.activationCode')
-                        ->description('<a href="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getControllerLink(RegisterNewActivationCodeForm::class)) . '">' . WCF::getLanguage()->get('wcf.user.newActivationCode') . '</a>')
+                        ->description(HtmlString::fromSafeHtml('<a href="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getControllerLink(RegisterNewActivationCodeForm::class)) . '">' . WCF::getLanguage()->get('wcf.user.newActivationCode') . '</a>'))
                         ->required()
                         ->maximumLength(40)
                         ->addValidator(new FormFieldValidator(

@@ -438,7 +438,7 @@ class ArticleAddForm extends AbstractDatabaseObjectBuilderForm
 
             $tabContainer->appendChild(
                 TabFormContainer::create("language_{$lc}")
-                    ->label($language->languageName)
+                    ->label(HtmlString::fromText($language->languageName))
                     ->appendChildren([
                         FormContainer::create("contentSection_{$lc}")
                             ->appendChildren($this->getContentFormFields($language)),

@@ -22,6 +22,7 @@ use wcf\system\form\builder\field\TextFormField;
 use wcf\system\label\object\type\ILabelObjectTypeHandler;
 use wcf\system\label\object\type\LabelObjectTypeContainer;
 use wcf\system\WCF;
+use wcf\util\HtmlString;
 
 /**
  * Shows the label group add form.
@@ -215,7 +216,7 @@ class LabelGroupAddForm extends AbstractDatabaseObjectBuilderForm
             }
 
             $fields[] = MultipleSelectionFormField::create('objectTypes' . $objectTypeID)
-                ->label($container->getTitle())
+                ->label(HtmlString::fromText($container->getTitle()))
                 ->choices($options, true)
                 ->filterable()
                 ->ignoreInvalidValues()

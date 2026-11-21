@@ -127,7 +127,7 @@ class UserAddForm extends AbstractDatabaseObjectBuilderForm
 
             $tabMenu->appendChild(
                 TabFormContainer::create($categoryName . 'Tab')
-                    ->label($this->getUserOptionCategoryTitle($categoryName))
+                    ->label(HtmlString::fromText($this->getUserOptionCategoryTitle($categoryName)))
                     ->appendChildren($this->getUserOptionFormContainers($options))
             );
         }

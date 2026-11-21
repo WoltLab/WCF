@@ -31,6 +31,7 @@ use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
 use wcf\util\DOMUtil;
 use wcf\util\FileUtil;
+use wcf\util\HtmlString;
 use wcf\util\StringUtil;
 use wcf\util\XML;
 
@@ -494,7 +495,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
             $dataContainer->appendChild(
                 SourceCodeFormField::create($language->languageCode)
-                    ->label(StringUtil::encodeHTML($language->languageName))
+                    ->label(HtmlString::fromText($language->languageName))
                     ->description($description)
                     ->language('smartymixed')
             );

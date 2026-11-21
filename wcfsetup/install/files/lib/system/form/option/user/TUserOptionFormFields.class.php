@@ -16,6 +16,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\option\WysiwygFormOption;
 use wcf\system\option\user\TUserOptionsByCategory;
 use wcf\system\Regex;
+use wcf\util\HtmlString;
 
 /**
  * Provides methods to edit user options with form builder forms that save
@@ -43,7 +44,7 @@ trait TUserOptionFormFields
         $containers = [];
         foreach ($optionsByCategory as $categoryName => $options) {
             $containers[] = FormContainer::create('optionCategory' . $categories[$categoryName]->categoryID)
-                ->label($categories[$categoryName]->getTitle())
+                ->label(HtmlString::fromText($categories[$categoryName]->getTitle()))
                 ->appendChildren(\array_map($this->getUserOptionFormField(...), $options));
         }
 
@@ -62,11 +63,11 @@ trait TUserOptionFormFields
         $configuration = $option->getConfiguration();
 
         $formField = $formOption->getFormField($option->getIdentifier(), $configuration)
-            ->label($option->getTitle());
+            ->label(HtmlString::fromText($option->getTitle()));
 
         $description = $option->getDescription();
         if ($description !== '') {
-            $formField->description($description);
+            $formField->description(HtmlString::fromText($description));
         }
 
         if ((bool)($configuration['required'] ?? false)) {

@@ -51,7 +51,7 @@ final class EmailActivationForm extends AbstractFormBuilderForm
                         )),
                     IntegerFormField::create('activationCode')
                         ->label('wcf.user.activationCode')
-                        ->description('<a href="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getControllerLink(EmailNewActivationCodeForm::class)) . '">' . WCF::getLanguage()->get('wcf.user.newActivationCode') . '</a>')
+                        ->description(HtmlString::fromSafeHtml('<a href="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getControllerLink(EmailNewActivationCodeForm::class)) . '">' . WCF::getLanguage()->get('wcf.user.newActivationCode') . '</a>'))
                         ->required()
                         ->removeFieldClass('short')
                         ->addFieldClass('long')
