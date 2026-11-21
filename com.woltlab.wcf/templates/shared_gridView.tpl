@@ -1,5 +1,5 @@
 <div class="gridView">
-	{if $view->isFilterable() || $view->isColumnConfigurable()}
+	{if $view->isFilterable() || $view->isColumnConfigurable() || $view->getPrimaryButton()}
 		<div class="gridView__filterBar">
 			<div class="gridView__filters" id="{$view->getID()}_filters">
 				{foreach from=$view->getActiveFilters() item='value' key='key'}
@@ -27,6 +27,9 @@
 						{icon name='sliders'}
 						{lang}wcf.global.filter{/lang}
 					</button>
+				{/if}
+				{if $view->getPrimaryButton()}
+					{unsafe:$view->getPrimaryButton()->render()}
 				{/if}
 			</div>
 		</div>

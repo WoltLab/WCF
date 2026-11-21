@@ -1,20 +1,20 @@
 <?php
 
-namespace wcf\system\listView;
+namespace wcf\system\view;
 
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * Represents a primary button shown in a list view header.
+ * Represents a primary button shown in a list or grid view header.
  *
  * @author      Marcel Werk
  * @copyright   2001-2026 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since       6.3
  */
-final class ListViewPrimaryButton
+final class ViewPrimaryButton
 {
     private function __construct(
         public readonly string $languageItem,

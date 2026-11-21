@@ -14,11 +14,11 @@ use wcf\system\interaction\admin\MediaInteractions;
 use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\listView\AbstractListView;
-use wcf\system\listView\ListViewPrimaryButton;
 use wcf\system\listView\ListViewSortField;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
 use wcf\system\view\filter\CategoryFilter;
+use wcf\system\view\ViewPrimaryButton;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -77,7 +77,7 @@ class MediaManagerListView extends AbstractListView
             \assert($processor instanceof MediaFileProcessor);
 
             // The upload element is hidden and triggered by the primary button.
-            $this->setPrimaryButton(ListViewPrimaryButton::forButton(
+            $this->setPrimaryButton(ViewPrimaryButton::forButton(
                 'wcf.global.button.upload',
                 FontAwesomeIcon::fromValues('upload'),
                 'mediaManager__uploadButton'

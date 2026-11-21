@@ -18,6 +18,7 @@ use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
 use wcf\system\view\filter\IViewFilter;
 use wcf\system\view\filter\exception\InvalidFilterValue;
 use wcf\system\request\LinkHandler;
+use wcf\system\view\ViewPrimaryButton;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -56,7 +57,7 @@ abstract class AbstractListView
     private bool $showHeader = true;
     private int $fixedNumberOfItems = 0;
     private string $markAsReadEndpoint = '';
-    private ?ListViewPrimaryButton $primaryButton = null;
+    private ?ViewPrimaryButton $primaryButton = null;
     private string $additionalHeaderContent = '';
 
     /**
@@ -862,7 +863,7 @@ abstract class AbstractListView
     /**
      * @since 6.3
      */
-    public function setPrimaryButton(ListViewPrimaryButton $button): void
+    public function setPrimaryButton(ViewPrimaryButton $button): void
     {
         $this->primaryButton = $button;
     }
@@ -870,7 +871,7 @@ abstract class AbstractListView
     /**
      * @since 6.3
      */
-    public function getPrimaryButton(): ?ListViewPrimaryButton
+    public function getPrimaryButton(): ?ViewPrimaryButton
     {
         return $this->primaryButton;
     }
