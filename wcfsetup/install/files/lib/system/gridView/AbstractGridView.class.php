@@ -18,6 +18,7 @@ use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
 use wcf\system\request\LinkHandler;
 use wcf\system\view\filter\IViewFilter;
+use wcf\system\view\ViewPrimaryButton;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -70,6 +71,7 @@ abstract class AbstractGridView
     private InteractionContextMenuComponent $interactionContextMenuComponent;
     private string $markAsReadEndpoint = '';
     private bool $columnConfigurable = false;
+    private ?ViewPrimaryButton $primaryButton = null;
 
     /**
      * @var ?list<string>
@@ -1171,6 +1173,22 @@ abstract class AbstractGridView
     public function rowIsNew(DatabaseObject $row): bool
     {
         return false;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function setPrimaryButton(ViewPrimaryButton $button): void
+    {
+        $this->primaryButton = $button;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getPrimaryButton(): ?ViewPrimaryButton
+    {
+        return $this->primaryButton;
     }
 
     private function init(): void

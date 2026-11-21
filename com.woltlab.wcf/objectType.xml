@@ -1072,6 +1072,12 @@
 			<classname>wcf\system\user\activity\event\TrophyReceivedUserActivityEvent</classname>
 		</type>
 		<!-- /trophy -->
+		<!-- text module -->
+		<type>
+			<name>com.woltlab.wcf.textModule</name>
+			<definitionname>com.woltlab.wcf.message</definitionname>
+		</type>
+		<!-- /text module -->
 		<!-- user content provider -->
 		<type>
 			<name>com.woltlab.wcf.comment</name>

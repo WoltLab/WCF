@@ -146,12 +146,23 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
     protected $supportSmilies = \MODULE_SMILEY !== 0;
 
     /**
+     * is `true` if the text modules tab is shown for this container, otherwise `false`
+     * @since 6.3
+     */
+    protected bool $supportTextModules = true;
+
+    /**
      * actual wysiwyg form field
      * @var ?WysiwygFormField
      */
     protected $wysiwygField;
 
     protected WysiwygQuoteFormContainer $quoteContainer;
+
+    /**
+     * @since 6.3
+     */
+    protected WysiwygTextModuleFormContainer $textModuleContainer;
 
     /**
      * callback transferring this field's save value into a `DatabaseObjectBuilder`
@@ -578,6 +589,10 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
             ->wysiwygId($this->getWysiwygId())
             ->available($this->supportQuotes);
 
+        $this->textModuleContainer = WysiwygTextModuleFormContainer::create($this->wysiwygId . 'TextModuleContainer')
+            ->wysiwygId($this->getWysiwygId())
+            ->available($this->supportTextModules);
+
         $this->appendChildren([
             $this->wysiwygField,
             WysiwygTabMenuFormContainer::create($this->wysiwygId . 'Tabs')
@@ -611,6 +626,8 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
                         ->name('poll')
                         ->wysiwygId($this->getWysiwygId())
                         ->appendChild($this->pollContainer),
+
+                    $this->textModuleContainer,
 
                     $this->quoteContainer,
                 ]),
@@ -734,6 +751,25 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
         }
 
         $this->wysiwygField?->supportQuotes($supportQuotes);
+
+        return $this;
+    }
+
+    /**
+     * Sets if the text modules tab is shown for this form container and returns this form container.
+     *
+     * By default, the text modules tab is shown to users with the permission to use text modules,
+     * it is never shown in the ACP.
+     *
+     * @since 6.3
+     */
+    public function supportTextModules(bool $supportTextModules = true): static
+    {
+        $this->supportTextModules = $supportTextModules;
+
+        if (isset($this->textModuleContainer)) {
+            $this->textModuleContainer->available($supportTextModules);
+        }
 
         return $this;
     }

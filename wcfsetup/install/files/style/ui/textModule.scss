@@ -1,0 +1,6 @@
+@include screen-xs {
+	.messageTabMenu:not(.messageTabMenuContent) > .messageTabMenuContent.messageTabMenuContent--textModules.active {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}

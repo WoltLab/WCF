@@ -10,10 +10,10 @@ use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
 use wcf\system\interaction\user\PollInteractions;
 use wcf\system\l10n\L10nStorage;
 use wcf\system\listView\AbstractListView;
-use wcf\system\listView\ListViewPrimaryButton;
 use wcf\system\listView\ListViewSortField;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\FontAwesomeIcon;
+use wcf\system\view\ViewPrimaryButton;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -55,7 +55,7 @@ class PollManagerListView extends AbstractListView
         ));
 
         if (WCF::getSession()->hasPermission('user.poll.canCreatePoll')) {
-            $this->setPrimaryButton(ListViewPrimaryButton::forButton(
+            $this->setPrimaryButton(ViewPrimaryButton::forButton(
                 'wcf.poll.add',
                 FontAwesomeIcon::fromValues('plus'),
                 'pollManager__addButton'

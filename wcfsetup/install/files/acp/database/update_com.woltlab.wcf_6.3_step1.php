@@ -17,6 +17,7 @@ use wcf\system\database\table\column\MediumintDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
+use wcf\system\database\table\column\ObjectIdDatabaseTableColumn;
 use wcf\system\database\table\column\SmallintDatabaseTableColumn;
 use wcf\system\database\table\column\TextDatabaseTableColumn;
 use wcf\system\database\table\column\TinyintDatabaseTableColumn;
@@ -664,5 +665,34 @@ return [
         ->indices([
             DatabaseTableIndex::create('objectTypeID')
                 ->columns(['objectTypeID', 'mimeType']),
+        ]),
+    DatabaseTable::create('wcf1_text_module')
+        ->columns([
+            ObjectIdDatabaseTableColumn::create('textModuleID'),
+            IntDatabaseTableColumn::create('languageID'),
+            IntDatabaseTableColumn::create('userID'),
+            NotNullVarchar255DatabaseTableColumn::create('username')
+                ->defaultValue(''),
+            NotNullVarchar255DatabaseTableColumn::create('title'),
+            MediumtextDatabaseTableColumn::create('message')
+                ->notNull(),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['textModuleID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['userID'])
+                ->referencedTable('wcf1_user')
+                ->referencedColumns(['userID'])
+                ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
         ]),
 ];

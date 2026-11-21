@@ -123,6 +123,7 @@ final class UpdateUser
             new UsernameColumn('wcf1_media'),
             new UsernameColumn('wcf1_modification_log'),
             new UsernameColumn('wcf1_poll'),
+            new UsernameColumn('wcf1_text_module'),
         ];
     }
 }

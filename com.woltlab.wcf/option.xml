@@ -350,6 +350,11 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="module_text_module">
+				<categoryname>module.community</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<option name="module_wcf_ad">
 				<categoryname>module.customization</categoryname>
 				<optiontype>boolean</optiontype>

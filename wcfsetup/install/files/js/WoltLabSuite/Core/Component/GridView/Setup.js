@@ -37,35 +37,13 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend"], function (require, exports, Backend_1) {
+define(["require", "exports", "WoltLabSuite/Core/Api/GridViews/RenderGridView"], function (require, exports, RenderGridView_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.GridViewSetup = void 0;
     class GridViewSetup {
         async fromPreset(title, gridViewClass, pageNo = 1, sortField = "", sortOrder = "ASC", filters, gridViewParameters) {
-            const url = new URL(`${window.WSC_RPC_API_URL}core/grid-views/render`);
-            url.searchParams.set("gridView", gridViewClass);
-            url.searchParams.set("pageNo", pageNo.toString());
-            url.searchParams.set("sortField", sortField);
-            url.searchParams.set("sortOrder", sortOrder);
-            if (filters) {
-                filters.forEach((value, key) => {
-                    url.searchParams.set(`filters[${key}]`, value);
-                });
-            }
-            if (gridViewParameters) {
-                gridViewParameters.forEach((value, key) => {
-                    if (Array.isArray(value)) {
-                        value.forEach((innerValue, innerKey) => {
-                            url.searchParams.set(`gridViewParameters[${key}][${innerKey}]`, innerValue);
-                        });
-                    }
-                    else {
-                        url.searchParams.set(`gridViewParameters[${key}]`, value);
-                    }
-                });
-            }
-            const json = (await (0, Backend_1.prepareRequest)(url).get().fetchAsJson());
+            const json = await (0, RenderGridView_1.renderGridView)(gridViewClass, pageNo, sortField, sortOrder, filters, gridViewParameters);
             // Prevents a circular dependency.
             const { dialogFactory } = await new Promise((resolve_1, reject_1) => { require(["../Dialog"], resolve_1, reject_1); }).then(__importStar);
             const dialog = dialogFactory().fromHtml(json.gridView).withoutControls();

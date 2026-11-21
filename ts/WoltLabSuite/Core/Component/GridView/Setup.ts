@@ -5,12 +5,8 @@
  * @since 6.2
  */
 
-import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
+import { renderGridView } from "WoltLabSuite/Core/Api/GridViews/RenderGridView";
 import WoltlabCoreDialog from "WoltLabSuite/Core/Element/woltlab-core-dialog";
-
-interface ResponseGridView {
-  gridView: string;
-}
 
 export class GridViewSetup {
   async fromPreset(
@@ -22,28 +18,7 @@ export class GridViewSetup {
     filters?: Map<string, string>,
     gridViewParameters?: Map<string, string | string[]>,
   ): Promise<WoltlabCoreDialog> {
-    const url = new URL(`${window.WSC_RPC_API_URL}core/grid-views/render`);
-    url.searchParams.set("gridView", gridViewClass);
-    url.searchParams.set("pageNo", pageNo.toString());
-    url.searchParams.set("sortField", sortField);
-    url.searchParams.set("sortOrder", sortOrder);
-    if (filters) {
-      filters.forEach((value, key) => {
-        url.searchParams.set(`filters[${key}]`, value);
-      });
-    }
-    if (gridViewParameters) {
-      gridViewParameters.forEach((value, key) => {
-        if (Array.isArray(value)) {
-          value.forEach((innerValue, innerKey) => {
-            url.searchParams.set(`gridViewParameters[${key}][${innerKey}]`, innerValue);
-          });
-        } else {
-          url.searchParams.set(`gridViewParameters[${key}]`, value);
-        }
-      });
-    }
-    const json = (await prepareRequest(url).get().fetchAsJson()) as ResponseGridView;
+    const json = await renderGridView(gridViewClass, pageNo, sortField, sortOrder, filters, gridViewParameters);
 
     // Prevents a circular dependency.
     const { dialogFactory } = await import("../Dialog");

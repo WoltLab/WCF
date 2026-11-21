@@ -1,5 +1,5 @@
 <div class="listView">
-	{if $view->getShowHeader() && ($view->isSortable() || $view->isFilterable() || $view->hasBulkInteractions() || $view->getAdditionalHeaderContent())}
+	{if $view->getShowHeader() && ($view->isSortable() || $view->isFilterable() || $view->hasBulkInteractions() || $view->getAdditionalHeaderContent() || $view->getPrimaryButton())}
 		<div class="listView__header">
 			{if $view->getAdditionalHeaderContent()}
 				<div class="listView__header__additionalContent">
