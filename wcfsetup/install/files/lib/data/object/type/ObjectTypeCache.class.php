@@ -12,6 +12,8 @@ use wcf\system\SingletonFactory;
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ *
+ * @phpstan-import-type ObjectTypeRows from ObjectTypeRowCache
  */
 final class ObjectTypeCache extends SingletonFactory
 {
@@ -66,8 +68,36 @@ final class ObjectTypeCache extends SingletonFactory
     #[\Override]
     protected function init()
     {
-        $data = new ObjectTypeRowCache()->getCache();
+        $this->setRows(new ObjectTypeRowCache()->getCache());
+    }
 
+    /**
+     * Reads the object types from the database and replaces the data used by
+     * the running request.
+     *
+     * By design, the cache does not change within a request: changes to object
+     * types become visible with the next request. This method is meant for
+     * imports, CLI scripts and tests that create or delete object types and
+     * read them again within the same request. Objects that have been returned
+     * before and classes that keep their own copy of the object types are not
+     * updated.
+     *
+     * @since 6.3
+     */
+    public function reload(): void
+    {
+        $this->setRows(new ObjectTypeRowCache()->readRows());
+
+        $this->definitions = [];
+        $this->objectTypes = [];
+        $this->groupedObjectTypes = [];
+    }
+
+    /**
+     * @param ObjectTypeRows $data
+     */
+    private function setRows(array $data): void
+    {
         $this->definitionsByCategory = $data['categories'];
         $this->definitionRows = $data['definitions'];
         $this->definitionIDs = $data['definitionIDs'];

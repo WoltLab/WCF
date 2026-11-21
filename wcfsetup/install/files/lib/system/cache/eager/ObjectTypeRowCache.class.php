@@ -14,16 +14,28 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  *
- * @extends AbstractEagerCache<array{
+ * @phpstan-type ObjectTypeRows array{
  *     categories: array<string, list<int>>,
  *     definitions: array<int, array<string, mixed>>,
  *     definitionIDs: array<string, int>,
  *     objectTypes: array<int, array<string, mixed>>,
  *     objectTypeIDs: array<string, array<string, int>>,
- * }>
+ * }
+ * @extends AbstractEagerCache<ObjectTypeRows>
  */
 final class ObjectTypeRowCache extends AbstractEagerCache
 {
+    /**
+     * Reads the rows from the database. Neither the stored cache nor the copy
+     * used by the running request is changed, see `ObjectTypeCache::reload()`.
+     *
+     * @return ObjectTypeRows
+     */
+    public function readRows(): array
+    {
+        return $this->getCacheData();
+    }
+
     #[\Override]
     protected function getCacheData(): array
     {
