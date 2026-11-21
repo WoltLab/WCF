@@ -17,12 +17,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GridViews/RenderGr
     const gridViewClass = "wcf\\system\\gridView\\user\\TextModuleGridView";
     const initializedContainers = new WeakSet();
     class TextModuleList {
-        #container;
         #editor;
         #gridViewContainer;
         #loadPromise = undefined;
         constructor(editor, container) {
-            this.#container = container;
             this.#editor = editor;
             this.#gridViewContainer = container.querySelector(".textModuleList__gridView");
             container.addEventListener("messageTabMenu:activate", () => {
@@ -33,13 +31,17 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GridViews/RenderGr
                 void this.#load();
             }
             this.#gridViewContainer.addEventListener("click", (event) => {
-                const button = event.target.closest("[data-text-module-insert]");
-                if (button !== null) {
+                const target = event.target;
+                const insertButton = target.closest("[data-text-module-insert]");
+                if (insertButton !== null) {
                     event.preventDefault();
-                    void this.#insert(parseInt(button.dataset.textModuleInsert));
+                    void this.#insert(parseInt(insertButton.dataset.textModuleInsert));
+                    return;
+                }
+                if (target.closest(".textModuleList__addButton") !== null) {
+                    void this.#add();
                 }
             });
-            this.#setupAddButton();
         }
         #load() {
             this.#loadPromise ??= (0, RenderGridView_1.renderGridView)(gridViewClass, 1, "title", "ASC").then(({ gridView }) => {
@@ -59,25 +61,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/GridViews/RenderGr
             const { message } = await (0, GetTextModule_1.getTextModule)(textModuleId);
             ckeditor.insertHtml(message);
         }
-        #setupAddButton() {
-            const button = this.#container.querySelector(".textModuleList__addButton");
-            if (button === null) {
+        async #add() {
+            const { ok } = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(this.#gridViewContainer.dataset.addEndpoint);
+            if (!ok) {
                 return;
             }
-            button.addEventListener("click", async () => {
-                const { ok } = await (0, Dialog_1.dialogFactory)().usingFormBuilder().fromEndpoint(button.dataset.endpoint);
-                if (!ok) {
-                    return;
-                }
-                (0, Snackbar_1.showDefaultSuccessSnackbar)();
-                const table = this.#gridViewContainer.querySelector(".gridView__table");
-                if (table === null) {
-                    await this.#load();
-                }
-                else {
-                    table.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
-                }
-            });
+            (0, Snackbar_1.showDefaultSuccessSnackbar)();
+            this.#gridViewContainer
+                .querySelector(".gridView__table")
+                ?.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
         }
     }
     function setup(editorId, containerId) {

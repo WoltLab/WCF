@@ -21,13 +21,11 @@ const gridViewClass = "wcf\\system\\gridView\\user\\TextModuleGridView";
 const initializedContainers = new WeakSet<HTMLElement>();
 
 class TextModuleList {
-  readonly #container: HTMLElement;
   readonly #editor: HTMLElement;
   readonly #gridViewContainer: HTMLElement;
   #loadPromise: Promise<void> | undefined = undefined;
 
   constructor(editor: HTMLElement, container: HTMLElement) {
-    this.#container = container;
     this.#editor = editor;
     this.#gridViewContainer = container.querySelector<HTMLElement>(".textModuleList__gridView")!;
 
@@ -41,14 +39,20 @@ class TextModuleList {
     }
 
     this.#gridViewContainer.addEventListener("click", (event) => {
-      const button = (event.target as HTMLElement).closest<HTMLElement>("[data-text-module-insert]");
-      if (button !== null) {
+      const target = event.target as HTMLElement;
+
+      const insertButton = target.closest<HTMLElement>("[data-text-module-insert]");
+      if (insertButton !== null) {
         event.preventDefault();
-        void this.#insert(parseInt(button.dataset.textModuleInsert!));
+        void this.#insert(parseInt(insertButton.dataset.textModuleInsert!));
+
+        return;
+      }
+
+      if (target.closest(".textModuleList__addButton") !== null) {
+        void this.#add();
       }
     });
-
-    this.#setupAddButton();
   }
 
   #load(): Promise<void> {
@@ -77,27 +81,17 @@ class TextModuleList {
     ckeditor.insertHtml(message);
   }
 
-  #setupAddButton(): void {
-    const button = this.#container.querySelector<HTMLButtonElement>(".textModuleList__addButton");
-    if (button === null) {
+  async #add(): Promise<void> {
+    const { ok } = await dialogFactory().usingFormBuilder().fromEndpoint(this.#gridViewContainer.dataset.addEndpoint!);
+    if (!ok) {
       return;
     }
 
-    button.addEventListener("click", async () => {
-      const { ok } = await dialogFactory().usingFormBuilder().fromEndpoint(button.dataset.endpoint!);
-      if (!ok) {
-        return;
-      }
+    showDefaultSuccessSnackbar();
 
-      showDefaultSuccessSnackbar();
-
-      const table = this.#gridViewContainer.querySelector<HTMLElement>(".gridView__table");
-      if (table === null) {
-        await this.#load();
-      } else {
-        table.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
-      }
-    });
+    this.#gridViewContainer
+      .querySelector(".gridView__table")
+      ?.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
   }
 }
 

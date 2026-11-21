@@ -13,9 +13,11 @@ use wcf\system\gridView\renderer\TruncatedTextColumnRenderer;
 use wcf\system\gridView\renderer\UserLinkColumnRenderer;
 use wcf\system\interaction\user\TextModuleInteractions;
 use wcf\system\language\LanguageFactory;
+use wcf\system\style\FontAwesomeIcon;
 use wcf\system\view\filter\SelectFilter;
 use wcf\system\view\filter\TextFilter;
 use wcf\system\view\filter\UserFilter;
+use wcf\system\view\ViewPrimaryButton;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -102,6 +104,11 @@ final class TextModuleGridView extends AbstractGridView
         $this->addRowLink(new TextModuleInsertRowLink());
         $this->setDefaultSortField('title');
         $this->setRowsPerPage(10);
+        $this->setPrimaryButton(ViewPrimaryButton::forButton(
+            'wcf.textModule.add',
+            FontAwesomeIcon::fromValues('plus'),
+            'textModuleList__addButton',
+        ));
     }
 
     #[\Override]
