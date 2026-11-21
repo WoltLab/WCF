@@ -2,9 +2,10 @@
 
 namespace wcf\system\importer;
 
+use wcf\data\comment\Comment;
+use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseEditor;
-use wcf\system\WCF;
 
 /**
  * Imports comment responses.
@@ -38,27 +39,12 @@ class AbstractCommentResponseImporter extends AbstractImporter
 
         $response = CommentResponseEditor::create($data);
 
-        $sql = "SELECT      responseID
-                FROM        wcf1_comment_response
-                WHERE       commentID = ?
-                ORDER BY    time ASC, responseID ASC";
-        $statement = WCF::getDB()->prepare($sql, 5);
-        $statement->execute([$response->commentID]);
-        $responseIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-
-        // update parent comment
-        $sql = "UPDATE  wcf1_comment
-                SET     responseIDs = ?,
-                        responses = responses + 1,
-                        unfilteredResponseIDs = ?,
-                        unfilteredResponses = unfilteredResponses + 1
-                WHERE   commentID = ?";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute([
-            \serialize($responseIDs),
-            \serialize($responseIDs),
-            $response->commentID,
-        ]);
+        CommentBuilder::forUpdate(new Comment($response->commentID))
+            ->recalculateResponseIDs()
+            ->recalculateResponses()
+            ->recalculateUnfilteredResponseIDs()
+            ->recalculateUnfilteredResponses()
+            ->update();
 
         return $response->responseID;
     }
