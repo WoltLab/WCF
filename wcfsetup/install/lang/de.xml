@@ -844,6 +844,8 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Zeitraum nach dem Mitglieder dieser Benutzergruppe ihren Benutzernamen ändern können. [0, um Zeitraum zu deaktivieren]]]></item>
 		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Kann nicht blockiert werden]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Kann Moderation benutzen]]></item>
+		<item name="wcf.acp.group.option.mod.general.canUseTextModule"><![CDATA[Kann Textbausteine verwenden]]></item>
+		<item name="wcf.acp.group.option.mod.general.canUseTextModule.description"><![CDATA[Textbausteine werden von allen Benutzern mit dieser Berechtigung gemeinsam genutzt, die sie einfügen, erstellen, bearbeiten und löschen können.]]></item>
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Reaktions-System]]></item>
 		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Kann vergebene Reaktionen sehen]]></item>
 		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Kann auf Inhalte reagieren]]></item>
@@ -1558,6 +1560,8 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.option.search_max_combined_tags"><![CDATA[Maximale Anzahl Tags pro Suche]]></item>
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Umfragen]]></item>
+		<item name="wcf.acp.option.module_text_module"><![CDATA[Textbausteine]]></item>
+		<item name="wcf.acp.option.module_text_module.description"><![CDATA[Aktiviert Textbausteine, wiederverwendbare Texte, die Moderatoren in Nachrichten einfügen können.]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximale Anzahl an Antworten]]></item>
 		<item name="wcf.acp.option.poll_full_width"><![CDATA[Umfrage über die gesamte Breite darstellen]]></item>
 		<item name="wcf.acp.option.error.validationFailed"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Inhalt eingegeben.]]></item>
@@ -4604,6 +4608,13 @@ Dateianhänge:
 		<item name="wcf.tagging.objectType.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.tagging.taggedObjects.com.woltlab.wcf.article"><![CDATA[Artikel mit dem Tag „{$tag->name}“]]></item>
 		<item name="wcf.tagging.tags.error.unknownTags"><![CDATA[Die folgenden Tags existieren nicht: {implode from=$unknownTags item=unknownTag}{$unknownTag}{/implode}.]]></item>
+	</category>
+	<category name="wcf.textModule">
+		<item name="wcf.textModule.add"><![CDATA[Textbaustein hinzufügen]]></item>
+		<item name="wcf.textModule.edit"><![CDATA[Textbaustein bearbeiten]]></item>
+		<item name="wcf.textModule.language.all"><![CDATA[Alle Sprachen]]></item>
+		<item name="wcf.textModule.message"><![CDATA[Text]]></item>
+		<item name="wcf.textModule.messageTab"><![CDATA[Textbausteine]]></item>
 	</category>
 	<category name="wcf.user">
 		<item name="wcf.user.controlPanel"><![CDATA[Kontrollzentrum]]></item>

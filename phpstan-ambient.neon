@@ -39,6 +39,7 @@ parameters:
         - MODULE_USER_PROFILE_WALL
         - MODULE_TAGGING
         - MODULE_POLL
+        - MODULE_TEXT_MODULE
         - MODULE_WCF_AD
         - PAGE_TITLE
         - PAGE_DESCRIPTION

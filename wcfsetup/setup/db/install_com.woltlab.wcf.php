@@ -3882,6 +3882,35 @@ return [
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
+    DatabaseTable::create('wcf1_text_module')
+        ->columns([
+            ObjectIdDatabaseTableColumn::create('textModuleID'),
+            IntDatabaseTableColumn::create('languageID'),
+            IntDatabaseTableColumn::create('userID'),
+            NotNullVarchar255DatabaseTableColumn::create('username')
+                ->defaultValue(''),
+            NotNullVarchar255DatabaseTableColumn::create('title'),
+            MediumtextDatabaseTableColumn::create('message')
+                ->notNull(),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['textModuleID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['userID'])
+                ->referencedTable('wcf1_user')
+                ->referencedColumns(['userID'])
+                ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
+        ]),
     DatabaseTable::create('wcf1_tracked_visit')
         ->columns([
             NotNullInt10DatabaseTableColumn::create('objectTypeID'),

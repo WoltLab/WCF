@@ -1,0 +1,12 @@
+.textModuleList__header {
+	display: flex;
+	justify-content: end;
+	margin-bottom: 10px;
+}
+
+@include screen-xs {
+	.messageTabMenu:not(.messageTabMenuContent) > .messageTabMenuContent.messageTabMenuContent--textModules.active {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}

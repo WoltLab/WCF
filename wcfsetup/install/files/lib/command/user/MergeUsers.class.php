@@ -90,6 +90,7 @@ final class MergeUsers
             new UserColumn('wcf1_article', usernameColumn: 'username'),
             new UserColumn('wcf1_moderation_queue'),
             new UserColumn('wcf1_edit_history_entry', usernameColumn: 'username'),
+            new UserColumn('wcf1_text_module', usernameColumn: 'username'),
         ];
     }
 

@@ -37,6 +37,7 @@
 \define('MODULE_USER_PROFILE_WALL', 1);
 \define('MODULE_TAGGING', 1);
 \define('MODULE_POLL', 1);
+\define('MODULE_TEXT_MODULE', 1);
 \define('MODULE_WCF_AD', 0);
 \define('PAGE_TITLE', 'WoltLab Suite');
 \define('PAGE_DESCRIPTION', '');

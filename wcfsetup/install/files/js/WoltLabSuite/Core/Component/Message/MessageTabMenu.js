@@ -52,6 +52,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
             this.#tabContainers[tabIndex].hidden = false;
             this.#tabContainers[tabIndex].classList.add("active");
             this.#activeTabName = tabName;
+            this.#tabContainers[tabIndex].dispatchEvent(new CustomEvent("messageTabMenu:activate"));
         }
         showTab(tabName) {
             const tab = this.#tabs.find((element) => element.dataset.name === tabName);
