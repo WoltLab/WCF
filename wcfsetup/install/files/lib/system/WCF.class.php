@@ -25,6 +25,7 @@ use wcf\system\exception\IPrintableException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\page\notice\PageNoticeHandler;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\request\Request;
 use wcf\system\request\RequestHandler;
@@ -1104,6 +1105,16 @@ class WCF
     public function getBackgroundQueueHandler(): BackgroundQueueHandler
     {
         return BackgroundQueueHandler::getInstance();
+    }
+
+    /**
+     * Returns the page notice handler.
+     *
+     * @since 6.3
+     */
+    public function getPageNoticeHandler(): PageNoticeHandler
+    {
+        return PageNoticeHandler::getInstance();
     }
 
     /**

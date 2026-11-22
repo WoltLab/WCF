@@ -58,6 +58,22 @@
 		</script>
 	{/hascontent}
 	
+	{if $__wcf->getPageNoticeHandler()->getPageID()}
+		{capture assign='__pageNotices'}{unsafe:$__wcf->getPageNoticeHandler()->render()}{/capture}
+		{if $__pageNotices|trim || $__wcf->getPageNoticeHandler()->canAddNotice()}
+			<div class="pageNoticeList" id="pageNoticeList" data-page-id="{$__wcf->getPageNoticeHandler()->getPageID()}" data-page-object-id="{$__wcf->getPageNoticeHandler()->getPageObjectID()}">
+				{unsafe:$__pageNotices}
+			</div>
+		{/if}
+		{if $__wcf->getPageNoticeHandler()->canAddNotice()}
+			<script data-relocate="true">
+				require(['WoltLabSuite/Core/Component/PageNotice/Setup'], ({ setup }) => {
+					setup(document.getElementById('pageNoticeList'));
+				});
+			</script>
+		{/if}
+	{/if}
+
 	{event name='userNotice'}
 {/capture}
 

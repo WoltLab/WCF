@@ -844,6 +844,8 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Zeitraum nach dem Mitglieder dieser Benutzergruppe ihren Benutzernamen ändern können. [0, um Zeitraum zu deaktivieren]]]></item>
 		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Kann nicht blockiert werden]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Kann Moderation benutzen]]></item>
+		<item name="wcf.acp.group.option.mod.general.canManagePageNotice"><![CDATA[Kann Seitenhinweise verwalten]]></item>
+		<item name="wcf.acp.group.option.mod.general.canManagePageNotice.description"><![CDATA[Kann Hinweise zu allen zugänglichen Seiten hinzufügen, bearbeiten und löschen und sieht interne Hinweise.]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseTextModule"><![CDATA[Kann Textbausteine verwenden]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseTextModule.description"><![CDATA[Textbausteine werden von allen Benutzern mit dieser Berechtigung gemeinsam genutzt, die sie einfügen, erstellen, bearbeiten und löschen können.]]></item>
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Reaktions-System]]></item>
@@ -4457,6 +4459,19 @@ Dateianhänge:
 		<item name="wcf.page.guestTokenDialog.title"><![CDATA[Verifizierung erforderlich]]></item>
 		<item name="wcf.page.readingTime"><![CDATA[Lesezeit: {#$minutes} Min.]]></item>
 		<item name="wcf.page.removeFilterTooltip"><![CDATA[Filter „{$filterLabel}“ entfernen]]></item>
+	</category>
+	<category name="wcf.pageNotice">
+		<item name="wcf.pageNotice.add"><![CDATA[Hinweis hinzufügen]]></item>
+		<item name="wcf.pageNotice.edit"><![CDATA[Hinweis bearbeiten]]></item>
+		<item name="wcf.pageNotice.internal"><![CDATA[Intern]]></item>
+		<item name="wcf.pageNotice.isInternal"><![CDATA[Interner Hinweis]]></item>
+		<item name="wcf.pageNotice.isInternal.description"><![CDATA[Nur für Benutzer sichtbar, die Seitenhinweise verwalten dürfen.]]></item>
+		<item name="wcf.pageNotice.message"><![CDATA[Nachricht]]></item>
+		<item name="wcf.pageNotice.type"><![CDATA[Typ]]></item>
+		<item name="wcf.pageNotice.type.error"><![CDATA[Fehler]]></item>
+		<item name="wcf.pageNotice.type.info"><![CDATA[Information]]></item>
+		<item name="wcf.pageNotice.type.success"><![CDATA[Erfolg]]></item>
+		<item name="wcf.pageNotice.type.warning"><![CDATA[Warnung]]></item>
 	</category>
 	<category name="wcf.paidSubscription">
 		<item name="wcf.paidSubscription.availableSubscriptions"><![CDATA[Verfügbare Mitgliedschaften]]></item>

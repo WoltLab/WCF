@@ -11,6 +11,7 @@
 use wcf\system\database\table\column\BinaryDatabaseTableColumn;
 use wcf\system\database\table\column\CharDatabaseTableColumn;
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\DefaultTrueBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\JsonDatabaseTableColumn;
 use wcf\system\database\table\column\MediumintDatabaseTableColumn;
@@ -693,6 +694,65 @@ return [
                 ->referencedTable('wcf1_user')
                 ->referencedColumns(['userID'])
                 ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_page_notice')
+        ->columns([
+            ObjectIdDatabaseTableColumn::create('pageNoticeID'),
+            NotNullInt10DatabaseTableColumn::create('pageID'),
+            IntDatabaseTableColumn::create('pageObjectID'),
+            IntDatabaseTableColumn::create('userID'),
+            NotNullVarchar255DatabaseTableColumn::create('username')
+                ->defaultValue(''),
+            NotNullInt10DatabaseTableColumn::create('time')
+                ->defaultValue(0),
+            NotNullVarchar255DatabaseTableColumn::create('type')
+                ->defaultValue('info'),
+            DefaultFalseBooleanDatabaseTableColumn::create('isInternal'),
+            DefaultFalseBooleanDatabaseTableColumn::create('hasEmbeddedObjects'),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['pageNoticeID']),
+            DatabaseTableIndex::create('pageID')
+                ->columns(['pageID', 'pageObjectID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['pageID'])
+                ->referencedTable('wcf1_page')
+                ->referencedColumns(['pageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['userID'])
+                ->referencedTable('wcf1_user')
+                ->referencedColumns(['userID'])
+                ->onDelete('SET NULL')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_page_notice_l10n')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('pageNoticeID'),
+            IntDatabaseTableColumn::create('languageID'),
+            MediumtextDatabaseTableColumn::create('message'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('pageNoticeID')
+                ->columns(['pageNoticeID', 'languageID']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['pageNoticeID'])
+                ->referencedTable('wcf1_page_notice')
+                ->referencedColumns(['pageNoticeID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+            DatabaseTableForeignKey::create()
+                ->columns(['languageID'])
+                ->referencedTable('wcf1_language')
+                ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),
 ];
