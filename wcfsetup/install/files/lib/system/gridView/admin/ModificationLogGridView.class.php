@@ -5,6 +5,7 @@ namespace wcf\system\gridView\admin;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\DatabaseObjectList;
+use wcf\data\modification\log\IDeletedObjectAwareModificationLog;
 use wcf\data\modification\log\IViewableModificationLog;
 use wcf\data\modification\log\ModificationLog;
 use wcf\data\modification\log\ModificationLogList;
@@ -139,6 +140,16 @@ final class ModificationLogGridView extends AbstractGridView
                         {
                             \assert($row instanceof IViewableModificationLog);
                             if ($row->getAffectedObject() === null) {
+                                if ($row instanceof IDeletedObjectAwareModificationLog) {
+                                    $title = $row->getDeletedObjectTitle();
+                                    if ($title !== null) {
+                                        return WCF::getLanguage()->getDynamicVariable(
+                                            'wcf.acp.modificationLog.affectedObject.deleted',
+                                            ['title' => $title]
+                                        );
+                                    }
+                                }
+
                                 return WCF::getLanguage()->get('wcf.acp.modificationLog.affectedObject.unknown');
                             }
 

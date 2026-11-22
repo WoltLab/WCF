@@ -1250,6 +1250,7 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Global Modification Log]]></item>
 		<item name="wcf.acp.modificationLog.action"><![CDATA[Action]]></item>
 		<item name="wcf.acp.modificationLog.affectedObject"><![CDATA[Affected Object]]></item>
+		<item name="wcf.acp.modificationLog.affectedObject.deleted"><![CDATA[{$title} (does not exist anymore)]]></item>
 		<item name="wcf.acp.modificationLog.affectedObject.unknown"><![CDATA[(Does not exist anymore)]]></item>
 		<item name="wcf.acp.modificationLog.action.allPackageActions"><![CDATA[All Actions from “{$package->getName()}”]]></item>
 	</category>

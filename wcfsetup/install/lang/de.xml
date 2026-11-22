@@ -1272,6 +1272,7 @@ Sie erreichen das Fehlerprotokoll unter: {link controller='ExceptionLogView' isE
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Änderungsprotokoll]]></item>
 		<item name="wcf.acp.modificationLog.action"><![CDATA[Aktion]]></item>
 		<item name="wcf.acp.modificationLog.affectedObject"><![CDATA[Betroffenes Objekt]]></item>
+		<item name="wcf.acp.modificationLog.affectedObject.deleted"><![CDATA[{$title} (existiert nicht mehr)]]></item>
 		<item name="wcf.acp.modificationLog.affectedObject.unknown"><![CDATA[(Existiert nicht mehr)]]></item>
 		<item name="wcf.acp.modificationLog.action.allPackageActions"><![CDATA[Alle Aktionen aus „{$package->getName()}“]]></item>
 	</category>
