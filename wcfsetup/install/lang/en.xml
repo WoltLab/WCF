@@ -822,6 +822,8 @@ You can access the error log at: {link controller='ExceptionLogView' isEmail=tru
 		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Users can change their username after the following days. Use 0 to disable.]]></item>
 		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Cannot be blocked]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Can access moderation]]></item>
+		<item name="wcf.acp.group.option.mod.general.canManagePageNotice"><![CDATA[Can manage page notices]]></item>
+		<item name="wcf.acp.group.option.mod.general.canManagePageNotice.description"><![CDATA[Can add notices to any page they can access, edit and delete them, and see internal notices.]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseTextModule"><![CDATA[Can use text modules]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseTextModule.description"><![CDATA[Text modules are shared between all users with this permission, who can insert, create, edit and delete them.]]></item>
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Reaction System]]></item>
@@ -4456,6 +4458,19 @@ Attachments:
 		<item name="wcf.acp.page.enableShareButtons"><![CDATA[Enable the share buttons for this page]]></item>
 		<item name="wcf.acp.page.copy"><![CDATA[Copy Page]]></item>
 		<item name="wcf.acp.page.copy.description"><![CDATA[The values entered for this page will be used as a preset to create a new page. Only values editable in this form are included.<br><br>You’ll need to submit the form to save the new page. You can make changes to the new page by editing the values in that form, please bear in mind that new pages are disabled by default.]]></item>
+	</category>
+	<category name="wcf.pageNotice">
+		<item name="wcf.pageNotice.add"><![CDATA[Add Notice]]></item>
+		<item name="wcf.pageNotice.edit"><![CDATA[Edit Notice]]></item>
+		<item name="wcf.pageNotice.internal"><![CDATA[Internal]]></item>
+		<item name="wcf.pageNotice.isInternal"><![CDATA[Internal Notice]]></item>
+		<item name="wcf.pageNotice.isInternal.description"><![CDATA[Only visible to users who can manage page notices.]]></item>
+		<item name="wcf.pageNotice.message"><![CDATA[Message]]></item>
+		<item name="wcf.pageNotice.type"><![CDATA[Type]]></item>
+		<item name="wcf.pageNotice.type.error"><![CDATA[Error]]></item>
+		<item name="wcf.pageNotice.type.info"><![CDATA[Information]]></item>
+		<item name="wcf.pageNotice.type.success"><![CDATA[Success]]></item>
+		<item name="wcf.pageNotice.type.warning"><![CDATA[Warning]]></item>
 	</category>
 	<category name="wcf.paidSubscription">
 		<item name="wcf.paidSubscription.availableSubscriptions"><![CDATA[Available Subscriptions]]></item>

@@ -32,9 +32,13 @@ use wcf\util\StringUtil;
  * Implementation of a form field for wysiwyg editors.
  *
  * The l10n mode processes the value of every language separately and exposes
- * the processed HTML via `getL10nValues()`. It does not register embedded
- * objects, because they are tracked per object rather than per language, thus
- * it cannot be combined with autosave, attachments, mentions or quotes.
+ * the processed HTML via `getL10nValues()`. The input processors of every
+ * language are exposed via `getL10nHtmlInputProcessors()`. Once the object id
+ * is known, the embedded objects of every language can be registered by
+ * removing the existing objects once and then calling
+ * `MessageEmbeddedObjectManager::registerObjects()` with
+ * `removeExistingObjects: false` for each language. The l10n mode cannot be
+ * combined with autosave, attachments, mentions or quotes.
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2019 WoltLab GmbH
@@ -233,6 +237,21 @@ final class WysiwygFormField extends AbstractFormField implements
     #[\Override]
     public function getL10nValues(): array
     {
+        return \array_map(
+            static fn(HtmlInputProcessor $htmlInputProcessor) => $htmlInputProcessor->getHtml(),
+            $this->getL10nHtmlInputProcessors()
+        );
+    }
+
+    /**
+     * Returns the input processors of every language in l10n mode, using the
+     * same keys as `getL10nValues()`.
+     *
+     * @return array<int, HtmlInputProcessor>
+     * @since 6.3
+     */
+    public function getL10nHtmlInputProcessors(): array
+    {
         if (!$this->isL10n()) {
             throw new \BadMethodCallException("l10n is not enabled for field '{$this->getId()}'.");
         }
@@ -243,10 +262,7 @@ final class WysiwygFormField extends AbstractFormField implements
             );
         }
 
-        return \array_map(
-            static fn(HtmlInputProcessor $htmlInputProcessor) => $htmlInputProcessor->getHtml(),
-            $this->htmlInputProcessors
-        );
+        return $this->htmlInputProcessors;
     }
 
     /**

@@ -17,6 +17,9 @@
 {capture assign='__contentInteractionDropdownItems'}
 	{event name='beforeDropdownItems'}
 	{if $contentInteractionDropdownItems|isset}{unsafe:$contentInteractionDropdownItems}{/if}
+	{if $__wcf->getPageNoticeHandler()->canAddNotice()}
+		<li><a href="#" class="jsPageNoticeAdd" data-endpoint="{$__wcf->getPageNoticeHandler()->getAddLink()}">{lang}wcf.pageNotice.add{/lang}</a></li>
+	{/if}
 	{event name='afterDropdownItems'}
 {/capture}
 {assign var='__contentInteractionDropdownItems' value=$__contentInteractionDropdownItems|trim}
