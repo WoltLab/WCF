@@ -7,6 +7,7 @@ use wcf\data\comment\CommentBuilder;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\object\type\ObjectType;
 use wcf\event\comment\CommentsDeleted;
+use wcf\event\comment\CommentsDeleting;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\command\comment\response\DeleteResponses;
@@ -51,6 +52,8 @@ final class DeleteComments
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new CommentsDeleting($this->comments));
+
         $this->deleteActivityEvents();
         $this->deleteNotifications();
         $this->deleteReactions();

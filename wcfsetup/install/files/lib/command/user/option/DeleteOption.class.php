@@ -5,6 +5,7 @@ namespace wcf\command\user\option;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionBuilder;
 use wcf\event\user\option\UserOptionDeleted;
+use wcf\event\user\option\UserOptionDeleting;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\event\EventHandler;
 
@@ -24,6 +25,8 @@ final class DeleteOption
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new UserOptionDeleting($this->option));
+
         UserOptionBuilder::delete($this->option);
 
         UserOptionCacheBuilder::getInstance()->reset();

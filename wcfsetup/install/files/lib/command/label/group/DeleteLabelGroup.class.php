@@ -6,6 +6,7 @@ use wcf\data\label\group\LabelGroup;
 use wcf\data\label\group\LabelGroupBuilder;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\event\label\group\LabelGroupDeleted;
+use wcf\event\label\group\LabelGroupDeleting;
 use wcf\system\cache\builder\LabelCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\label\object\type\ILabelObjectTypeHandler;
@@ -27,6 +28,8 @@ final class DeleteLabelGroup
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new LabelGroupDeleting($this->group));
+
         // The builder removes the labels and the ACL values outside of its own
         // transaction, which must not persist if the deletion fails.
         WCF::getDB()->beginTransaction();

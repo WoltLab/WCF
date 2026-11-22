@@ -5,6 +5,7 @@ namespace wcf\command\contact\recipient;
 use wcf\data\contact\recipient\ContactRecipient;
 use wcf\data\contact\recipient\ContactRecipientBuilder;
 use wcf\event\contact\recipient\ContactRecipientDeleted;
+use wcf\event\contact\recipient\ContactRecipientDeleting;
 use wcf\system\event\EventHandler;
 
 /**
@@ -23,6 +24,8 @@ final class DeleteContactRecipient
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new ContactRecipientDeleting($this->recipient));
+
         ContactRecipientBuilder::delete($this->recipient);
 
         EventHandler::getInstance()->fire(new ContactRecipientDeleted($this->recipient));

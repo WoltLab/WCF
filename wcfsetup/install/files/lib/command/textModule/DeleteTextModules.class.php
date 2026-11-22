@@ -5,6 +5,7 @@ namespace wcf\command\textModule;
 use wcf\data\text\module\TextModule;
 use wcf\data\text\module\TextModuleBuilder;
 use wcf\event\textModule\TextModulesDeleted;
+use wcf\event\textModule\TextModulesDeleting;
 use wcf\system\event\EventHandler;
 
 /**
@@ -29,6 +30,8 @@ final class DeleteTextModules
         if ($this->textModules === []) {
             return;
         }
+
+        EventHandler::getInstance()->fire(new TextModulesDeleting($this->textModules));
 
         TextModuleBuilder::deleteAll(\array_values(\array_map(
             static fn(TextModule $textModule) => $textModule->textModuleID,

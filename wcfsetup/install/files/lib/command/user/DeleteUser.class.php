@@ -7,6 +7,7 @@ use wcf\data\file\File;
 use wcf\data\user\User;
 use wcf\data\user\UserBuilder;
 use wcf\event\user\UserDeleted;
+use wcf\event\user\UserDeleting;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\event\EventHandler;
@@ -28,6 +29,8 @@ final class DeleteUser
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new UserDeleting($this->user));
+
         $this->cleanup($this->user);
 
         UserBuilder::delete($this->user);

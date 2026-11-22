@@ -6,6 +6,7 @@ use wcf\command\file\DeleteFiles;
 use wcf\data\user\rank\UserRank;
 use wcf\data\user\rank\UserRankBuilder;
 use wcf\event\user\rank\UserRankDeleted;
+use wcf\event\user\rank\UserRankDeleting;
 use wcf\system\cache\builder\UserRankCacheBuilder;
 use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\event\EventHandler;
@@ -26,6 +27,8 @@ final class DeleteUserRank
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new UserRankDeleting($this->rank));
+
         UserRankBuilder::delete($this->rank);
 
         // The image is deleted only after the rank, because deleting a file

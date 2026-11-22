@@ -5,6 +5,7 @@ namespace wcf\command\ad;
 use wcf\data\ad\Ad;
 use wcf\data\ad\AdBuilder;
 use wcf\event\ad\AdDeleted;
+use wcf\event\ad\AdDeleting;
 use wcf\system\event\EventHandler;
 
 /**
@@ -23,6 +24,8 @@ final class DeleteAd
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new AdDeleting($this->ad));
+
         AdBuilder::delete($this->ad);
 
         AdBuilder::resetCache();

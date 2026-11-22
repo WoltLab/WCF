@@ -5,6 +5,7 @@ namespace wcf\command\article\content;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentBuilder;
 use wcf\event\article\content\ArticleContentDeleted;
+use wcf\event\article\content\ArticleContentDeleting;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\event\EventHandler;
@@ -28,6 +29,8 @@ final class DeleteArticleContent
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new ArticleContentDeleting($this->content));
+
         ArticleContentBuilder::delete($this->content);
 
         $this->cleanupData($this->content);

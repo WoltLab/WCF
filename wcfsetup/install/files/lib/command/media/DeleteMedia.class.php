@@ -6,6 +6,7 @@ use wcf\command\file\DeleteFiles;
 use wcf\data\media\Media;
 use wcf\data\media\MediaBuilder;
 use wcf\event\media\MediaDeleted;
+use wcf\event\media\MediaDeleting;
 use wcf\system\event\EventHandler;
 
 /**
@@ -30,6 +31,8 @@ final class DeleteMedia
         if ($this->media === []) {
             return;
         }
+
+        EventHandler::getInstance()->fire(new MediaDeleting($this->media));
 
         $mediaIDs = $files = [];
         foreach ($this->media as $media) {

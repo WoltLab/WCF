@@ -5,6 +5,7 @@ namespace wcf\command\pageNotice;
 use wcf\data\page\notice\PageNotice;
 use wcf\data\page\notice\PageNoticeBuilder;
 use wcf\event\pageNotice\PageNoticesDeleted;
+use wcf\event\pageNotice\PageNoticesDeleting;
 use wcf\system\cache\eager\PageNoticeLocationCache;
 use wcf\system\event\EventHandler;
 
@@ -30,6 +31,8 @@ final class DeletePageNotices
         if ($this->pageNotices === []) {
             return;
         }
+
+        EventHandler::getInstance()->fire(new PageNoticesDeleting($this->pageNotices));
 
         PageNoticeBuilder::deleteAll(\array_values(\array_map(
             static fn(PageNotice $pageNotice) => $pageNotice->pageNoticeID,

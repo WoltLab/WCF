@@ -8,6 +8,7 @@ use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyBuilder;
 use wcf\data\user\trophy\UserTrophyList;
 use wcf\event\trophy\TrophyDeleted;
+use wcf\event\trophy\TrophyDeleting;
 use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\event\EventHandler;
 
@@ -27,6 +28,8 @@ final class DeleteTrophy
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new TrophyDeleting($this->trophy));
+
         $this->deleteUserTrophies();
 
         TrophyBuilder::delete($this->trophy);

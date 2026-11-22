@@ -5,6 +5,7 @@ namespace wcf\command\paid\subscription\user;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserBuilder;
 use wcf\event\paid\subscription\user\PaidSubscriptionUserDeleted;
+use wcf\event\paid\subscription\user\PaidSubscriptionUserDeleting;
 use wcf\system\event\EventHandler;
 
 /**
@@ -23,6 +24,8 @@ final class DeletePaidSubscriptionUser
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new PaidSubscriptionUserDeleting($this->subscriptionUser));
+
         if ($this->subscriptionUser->isActive !== 0) {
             new RevokePaidSubscriptionUser($this->subscriptionUser)();
         }

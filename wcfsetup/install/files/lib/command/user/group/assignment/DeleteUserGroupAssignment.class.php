@@ -5,6 +5,7 @@ namespace wcf\command\user\group\assignment;
 use wcf\data\user\group\assignment\UserGroupAssignment;
 use wcf\data\user\group\assignment\UserGroupAssignmentBuilder;
 use wcf\event\user\group\assignment\UserGroupAssignmentDeleted;
+use wcf\event\user\group\assignment\UserGroupAssignmentDeleting;
 use wcf\system\event\EventHandler;
 
 /**
@@ -23,6 +24,8 @@ final class DeleteUserGroupAssignment
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new UserGroupAssignmentDeleting($this->assignment));
+
         UserGroupAssignmentBuilder::delete($this->assignment);
 
         UserGroupAssignmentBuilder::resetCache();

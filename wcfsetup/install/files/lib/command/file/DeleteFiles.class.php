@@ -5,6 +5,7 @@ namespace wcf\command\file;
 use wcf\data\file\File;
 use wcf\data\file\FileBuilder;
 use wcf\event\file\FileDeleted;
+use wcf\event\file\FileDeleting;
 use wcf\system\event\EventHandler;
 use wcf\system\file\processor\FileProcessor;
 
@@ -27,6 +28,12 @@ final class DeleteFiles
 
     public function __invoke(): void
     {
+        foreach ($this->files as $file) {
+            EventHandler::getInstance()->fire(
+                new FileDeleting($file)
+            );
+        }
+
         FileProcessor::getInstance()->delete(
             $this->files
         );

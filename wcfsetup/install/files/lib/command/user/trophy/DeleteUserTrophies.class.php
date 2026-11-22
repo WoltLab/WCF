@@ -9,6 +9,7 @@ use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\user\User;
 use wcf\data\user\UserBuilder;
 use wcf\event\user\trophy\UserTrophiesDeleted;
+use wcf\event\user\trophy\UserTrophiesDeleting;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\WCF;
@@ -38,6 +39,8 @@ final class DeleteUserTrophies
         if ($this->userTrophies === []) {
             return;
         }
+
+        EventHandler::getInstance()->fire(new UserTrophiesDeleting($this->userTrophies));
 
         $userTrophyIDs = $userIDs = $trophyPointChanges = [];
         foreach ($this->userTrophies as $userTrophy) {

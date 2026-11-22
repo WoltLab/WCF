@@ -5,6 +5,7 @@ namespace wcf\command\poll;
 use wcf\data\poll\Poll;
 use wcf\data\poll\PollBuilder;
 use wcf\event\poll\PollsDeleted;
+use wcf\event\poll\PollsDeleting;
 use wcf\system\event\EventHandler;
 
 /**
@@ -29,6 +30,8 @@ final class DeletePolls
         if ($this->polls === []) {
             return;
         }
+
+        EventHandler::getInstance()->fire(new PollsDeleting($this->polls));
 
         PollBuilder::deleteAll(\array_values(\array_map(
             static fn(Poll $poll) => $poll->pollID,

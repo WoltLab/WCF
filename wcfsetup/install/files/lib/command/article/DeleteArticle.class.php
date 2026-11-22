@@ -6,6 +6,7 @@ use wcf\command\reaction\DeleteObjectReactions;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleBuilder;
 use wcf\event\article\ArticleDeleted;
+use wcf\event\article\ArticleDeleting;
 use wcf\system\attachment\AttachmentHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\event\EventHandler;
@@ -30,6 +31,8 @@ final class DeleteArticle
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new ArticleDeleting($this->article));
+
         $articleContentIDs = $attachmentArticleContentIDs = [];
         foreach ($this->article->getArticleContents() as $articleContent) {
             $articleContentIDs[] = $articleContent->articleContentID;

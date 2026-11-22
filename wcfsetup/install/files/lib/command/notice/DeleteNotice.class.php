@@ -5,6 +5,7 @@ namespace wcf\command\notice;
 use wcf\data\notice\Notice;
 use wcf\data\notice\NoticeBuilder;
 use wcf\event\notice\NoticeDeleted;
+use wcf\event\notice\NoticeDeleting;
 use wcf\system\event\EventHandler;
 
 /**
@@ -23,6 +24,8 @@ final class DeleteNotice
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new NoticeDeleting($this->notice));
+
         NoticeBuilder::delete($this->notice);
 
         NoticeBuilder::resetCache();

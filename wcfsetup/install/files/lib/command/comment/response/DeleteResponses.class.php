@@ -9,6 +9,7 @@ use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseBuilder;
 use wcf\data\object\type\ObjectType;
 use wcf\event\comment\response\ResponsesDeleted;
+use wcf\event\comment\response\ResponsesDeleting;
 use wcf\system\comment\CommentHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\event\EventHandler;
@@ -52,6 +53,8 @@ final class DeleteResponses
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new ResponsesDeleting($this->responses));
+
         $this->deleteActivityEvents();
         $this->deleteNotifications();
         $this->deleteReactions();

@@ -5,6 +5,7 @@ namespace wcf\command\cronjob;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobBuilder;
 use wcf\event\cronjob\CronjobDeleted;
+use wcf\event\cronjob\CronjobDeleting;
 use wcf\system\cache\builder\CronjobCacheBuilder;
 use wcf\system\event\EventHandler;
 
@@ -24,6 +25,8 @@ final class DeleteCronjob
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new CronjobDeleting($this->cronjob));
+
         CronjobBuilder::delete($this->cronjob);
 
         CronjobCacheBuilder::getInstance()->reset();

@@ -5,6 +5,7 @@ namespace wcf\command\paid\subscription;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\paid\subscription\PaidSubscriptionBuilder;
 use wcf\event\paid\subscription\PaidSubscriptionDeleted;
+use wcf\event\paid\subscription\PaidSubscriptionDeleting;
 use wcf\system\cache\builder\PaidSubscriptionCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\WCF;
@@ -25,6 +26,8 @@ final class DeletePaidSubscription
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new PaidSubscriptionDeleting($this->subscription));
+
         // The given object may predate the deletion of another subscription,
         // which moved this one to a lower position.
         $showOrder = new PaidSubscription($this->subscription->subscriptionID)->showOrder;

@@ -6,6 +6,7 @@ use wcf\command\file\DeleteFiles;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeBuilder;
 use wcf\event\reaction\type\ReactionTypeDeleted;
+use wcf\event\reaction\type\ReactionTypeDeleting;
 use wcf\system\cache\builder\ReactionTypeCacheBuilder;
 use wcf\system\cache\runtime\FileRuntimeCache;
 use wcf\system\event\EventHandler;
@@ -27,6 +28,8 @@ final class DeleteReactionType
 
     public function __invoke(): void
     {
+        EventHandler::getInstance()->fire(new ReactionTypeDeleting($this->reactionType));
+
         ReactionTypeBuilder::delete($this->reactionType);
 
         $sql = "UPDATE  wcf1_reaction_type
