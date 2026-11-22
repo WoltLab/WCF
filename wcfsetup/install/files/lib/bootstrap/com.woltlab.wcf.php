@@ -30,6 +30,8 @@ return new class {
                 'executeCronjobs',
                 $cronjobNextExec < \TIME_NOW && \defined('OFFLINE') && OFFLINE === 0
             );
+        } else {
+            WCF::getTPL()->assign('executeCronjobs', false);
         }
 
         $eventHandler->register(
