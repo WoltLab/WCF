@@ -1,7 +1,7 @@
 import WoltlabCoreFileElement from "../File/woltlab-core-file";
 import { CkeditorDropEvent } from "../File/Upload";
 import { createAttachmentFromFile, FileProcessorData } from "./Entry";
-import { listenToCkeditor } from "../Ckeditor/Event";
+import { dispatchToCkeditor, listenToCkeditor } from "../Ckeditor/Event";
 import { getTabMenu } from "../Message/MessageTabMenu";
 import Sortable from "sortablejs";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
@@ -10,6 +10,7 @@ import { debounce } from "WoltLabSuite/Core/Core";
 import { getCkeditor } from "../Ckeditor";
 import { getUploaderToken } from "../File/Helper";
 import { setupDropZone } from "../File/DropZone";
+import { deleteFile } from "WoltLabSuite/Core/Api/Files/DeleteFile";
 
 function fileToAttachment(
   fileList: HTMLElement,
@@ -178,6 +179,53 @@ export function setup(editorId: string): void {
     .ready(() => {
       observeInsertedAttachments(editor, files);
     });
+}
+
+/**
+ * Deletes the attachments of the editor that have been uploaded but not yet
+ * been assigned to an object. The attachments must be deleted explicitly
+ * when a message is discarded, because the temporary hash of the attachments
+ * is stable and they would otherwise reappear in the form.
+ *
+ * Resetting the editor is not sufficient, because a reset only removes the
+ * attachments from the list.
+ *
+ * @since 6.3
+ */
+export async function deleteUnsavedAttachments(editorId: string): Promise<void> {
+  const container = document.getElementById(`attachments_${editorId}`);
+  if (container === null) {
+    return;
+  }
+
+  const uploadButton = container.querySelector("woltlab-core-file-upload");
+  if (uploadButton === null) {
+    return;
+  }
+
+  const uploaderToken = getUploaderToken(uploadButton);
+  const editor = document.getElementById(editorId)!;
+
+  for (const file of container.querySelectorAll<WoltlabCoreFileElement>(".fileList woltlab-core-file")) {
+    const fileId = file.fileId;
+    if (fileId === undefined || file.isFailedUpload()) {
+      continue;
+    }
+
+    const { attachmentID, messageObjectID } = file.data as FileProcessorData;
+    if (messageObjectID) {
+      // The attachment belongs to an existing message.
+      continue;
+    }
+
+    (await deleteFile(fileId, uploaderToken)).unwrap();
+
+    dispatchToCkeditor(editor).removeAttachment({
+      attachmentId: attachmentID,
+    });
+
+    file.closest(".fileList__item")?.remove();
+  }
 }
 
 function observeInsertedAttachments(element: HTMLElement, files: HTMLCollectionOf<WoltlabCoreFileElement>): void {

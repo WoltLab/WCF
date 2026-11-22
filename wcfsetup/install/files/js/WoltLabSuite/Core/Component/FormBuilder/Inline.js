@@ -17,7 +17,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-define(["require", "exports", "tslib", "../../Ajax/Backend", "../../Dom/Util", "../../Form/Builder/Manager", "../Ckeditor", "../Quote/Storage"], function (require, exports, tslib_1, Backend_1, DomUtil, FormBuilderManager, Ckeditor_1, Storage_1) {
+define(["require", "exports", "tslib", "../../Ajax/Backend", "../../Dom/Util", "../../Form/Builder/Manager", "../Ckeditor", "../Quote/Storage", "../Attachment/List"], function (require, exports, tslib_1, Backend_1, DomUtil, FormBuilderManager, Ckeditor_1, Storage_1, List_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setupInlineForm = setupInlineForm;
@@ -100,6 +100,12 @@ define(["require", "exports", "tslib", "../../Ajax/Backend", "../../Dom/Util", "
                 ckeditor.reset();
                 (0, Storage_1.clearQuotesForEditor)(textarea.id);
             });
+        }
+        async discard() {
+            for (const textarea of this.#container.querySelectorAll("textarea.wysiwygTextarea")) {
+                await (0, List_1.deleteUnsavedAttachments)(textarea.id);
+            }
+            this.#resetEditors();
         }
         async destroy() {
             for (const textarea of this.#container.querySelectorAll("textarea.wysiwygTextarea")) {

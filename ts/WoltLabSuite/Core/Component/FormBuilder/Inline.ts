@@ -23,6 +23,7 @@ import * as DomUtil from "../../Dom/Util";
 import * as FormBuilderManager from "../../Form/Builder/Manager";
 import { getCkeditor } from "../Ckeditor";
 import { clearQuotesForEditor } from "../Quote/Storage";
+import { deleteUnsavedAttachments } from "../Attachment/List";
 
 type ResponseSubmitForm =
   | {
@@ -46,6 +47,15 @@ export type InlineFormHandle = {
    * the container.
    */
   destroy(): Promise<void>;
+
+  /**
+   * Discards the input of the editors by deleting the uploaded attachments
+   * and resetting the editors, which also removes their drafts. The form
+   * remains usable afterwards.
+   *
+   * Attachments that already belong to an existing message are preserved.
+   */
+  discard(): Promise<void>;
 };
 
 class InlineForm<T> implements InlineFormHandle {
@@ -134,6 +144,14 @@ class InlineForm<T> implements InlineFormHandle {
       ckeditor.reset();
       clearQuotesForEditor(textarea.id);
     });
+  }
+
+  async discard(): Promise<void> {
+    for (const textarea of this.#container.querySelectorAll<HTMLTextAreaElement>("textarea.wysiwygTextarea")) {
+      await deleteUnsavedAttachments(textarea.id);
+    }
+
+    this.#resetEditors();
   }
 
   async destroy(): Promise<void> {

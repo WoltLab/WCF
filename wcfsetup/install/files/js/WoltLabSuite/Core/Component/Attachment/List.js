@@ -1,7 +1,8 @@
-define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Message/MessageTabMenu", "sortablejs", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Api/PostObject", "WoltLabSuite/Core/Core", "../Ckeditor", "../File/Helper", "../File/DropZone"], function (require, exports, tslib_1, Entry_1, Event_1, MessageTabMenu_1, sortablejs_1, PromiseMutex_1, PostObject_1, Core_1, Ckeditor_1, Helper_1, DropZone_1) {
+define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Message/MessageTabMenu", "sortablejs", "WoltLabSuite/Core/Helper/PromiseMutex", "WoltLabSuite/Core/Api/PostObject", "WoltLabSuite/Core/Core", "../Ckeditor", "../File/Helper", "../File/DropZone", "WoltLabSuite/Core/Api/Files/DeleteFile"], function (require, exports, tslib_1, Entry_1, Event_1, MessageTabMenu_1, sortablejs_1, PromiseMutex_1, PostObject_1, Core_1, Ckeditor_1, Helper_1, DropZone_1, DeleteFile_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
+    exports.deleteUnsavedAttachments = deleteUnsavedAttachments;
     sortablejs_1 = tslib_1.__importDefault(sortablejs_1);
     function fileToAttachment(fileList, file, editor, uploaderToken) {
         fileList.append((0, Entry_1.createAttachmentFromFile)(file, editor, uploaderToken));
@@ -141,6 +142,45 @@ define(["require", "exports", "tslib", "./Entry", "../Ckeditor/Event", "../Messa
             .ready(() => {
             observeInsertedAttachments(editor, files);
         });
+    }
+    /**
+     * Deletes the attachments of the editor that have been uploaded but not yet
+     * been assigned to an object. The attachments must be deleted explicitly
+     * when a message is discarded, because the temporary hash of the attachments
+     * is stable and they would otherwise reappear in the form.
+     *
+     * Resetting the editor is not sufficient, because a reset only removes the
+     * attachments from the list.
+     *
+     * @since 6.3
+     */
+    async function deleteUnsavedAttachments(editorId) {
+        const container = document.getElementById(`attachments_${editorId}`);
+        if (container === null) {
+            return;
+        }
+        const uploadButton = container.querySelector("woltlab-core-file-upload");
+        if (uploadButton === null) {
+            return;
+        }
+        const uploaderToken = (0, Helper_1.getUploaderToken)(uploadButton);
+        const editor = document.getElementById(editorId);
+        for (const file of container.querySelectorAll(".fileList woltlab-core-file")) {
+            const fileId = file.fileId;
+            if (fileId === undefined || file.isFailedUpload()) {
+                continue;
+            }
+            const { attachmentID, messageObjectID } = file.data;
+            if (messageObjectID) {
+                // The attachment belongs to an existing message.
+                continue;
+            }
+            (await (0, DeleteFile_1.deleteFile)(fileId, uploaderToken)).unwrap();
+            (0, Event_1.dispatchToCkeditor)(editor).removeAttachment({
+                attachmentId: attachmentID,
+            });
+            file.closest(".fileList__item")?.remove();
+        }
     }
     function observeInsertedAttachments(element, files) {
         const editor = (0, Ckeditor_1.getCkeditor)(element);
