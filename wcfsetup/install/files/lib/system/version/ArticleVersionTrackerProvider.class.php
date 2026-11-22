@@ -2,8 +2,9 @@
 
 namespace wcf\system\version;
 
+use wcf\command\article\UpdateArticle;
 use wcf\data\article\Article;
-use wcf\data\article\ArticleAction;
+use wcf\data\article\ArticleBuilder;
 use wcf\data\article\ArticleList;
 use wcf\data\article\ArticleVersionTracker;
 use wcf\data\IVersionTrackerObject;
@@ -114,23 +115,21 @@ class ArticleVersionTrackerProvider extends AbstractVersionTrackerProvider
     #[\Override]
     public function revert(IVersionTrackerObject $object, VersionTrackerEntry $entry)
     {
-        /** @var ArticleVersionTracker $object */
+        \assert($object instanceof ArticleVersionTracker);
 
-        // build the content data
-        $properties = $this->getTrackedProperties();
-        $content = [];
+        $builder = ArticleBuilder::forUpdate($object->getDecoratedObject());
         foreach ($object->getArticleContents() as $articleContent) {
-            $content[$articleContent->languageID ?: 0] = $entry->getPayloadForProperties(
-                $properties,
+            $payload = $entry->getPayloadForProperties(
+                ['title', 'teaser', 'content'],
                 $articleContent->languageID ?: 0
             );
+
+            $builder->getArticleContentBuilder($articleContent->languageID)
+                ->setTitle($payload['title'])
+                ->setTeaser($payload['teaser'])
+                ->setContent($payload['content']);
         }
 
-        $action = new ArticleAction(
-            [$object->getDecoratedObject()],
-            'update',
-            ['content' => $content, 'isRevert' => true]
-        );
-        $action->executeAction();
+        new UpdateArticle($builder)();
     }
 }
