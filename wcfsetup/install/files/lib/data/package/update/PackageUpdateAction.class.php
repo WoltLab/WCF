@@ -8,7 +8,6 @@ use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\version\PackageUpdateVersion;
-use wcf\data\search\Search;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
@@ -48,13 +47,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
     /**
      * @inheritDoc
      */
-    protected $requireACP = ['getResultList', 'prepareInstallation', 'prepareUpdate', 'search'];
-
-    /**
-     * search object
-     * @var ?Search
-     */
-    protected $search;
+    protected $requireACP = ['prepareInstallation', 'prepareUpdate', 'search'];
 
     /**
      * Validates parameters to search for installable packages.
@@ -82,7 +75,6 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             return [
                 'count' => 0,
                 'pageCount' => 0,
-                'searchID' => 0,
                 'template' => WCF::getTPL()->render('wcf', 'packageSearchResultList', [
                     'officialPackages' => [],
                     'thirdPartySources' => [],
@@ -119,7 +111,6 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             return [
                 'count' => 0,
                 'pageCount' => 0,
-                'searchID' => 0,
                 'template' => WCF::getTPL()->render('wcf', 'packageSearchResultList', [
                     'officialPackages' => [],
                     'thirdPartySources' => [],
@@ -174,7 +165,6 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             return [
                 'count' => 0,
                 'pageCount' => 0,
-                'searchID' => 0,
                 'template' => WCF::getTPL()->render('wcf', 'packageSearchResultList', [
                     'officialPackages' => [],
                     'thirdPartySources' => [],
