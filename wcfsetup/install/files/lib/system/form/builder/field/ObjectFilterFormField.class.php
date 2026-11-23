@@ -3,11 +3,13 @@
 namespace wcf\system\form\builder\field;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use CuyZ\Valinor\Mapper\Source\Exception\InvalidSource;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\MapperBuilder;
 use wcf\action\ObjectFilterBuilderAction;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\object\filter\builder\IObjectFilterBuilder;
+use wcf\system\object\filter\IObjectFilter;
 use wcf\system\request\LinkHandler;
 
 /**
@@ -31,6 +33,11 @@ final class ObjectFilterFormField extends AbstractFormField
     private IObjectFilterBuilder $builder;
 
     /**
+     * @var ?array<string, IObjectFilter<*, mixed>>
+     */
+    private ?array $filtersByIdentifier = null;
+
+    /**
      * Sets the builder that provides the available filters.
      *
      * @param IObjectFilterBuilder<*> $builder
@@ -38,6 +45,7 @@ final class ObjectFilterFormField extends AbstractFormField
     public function builder(IObjectFilterBuilder $builder): static
     {
         $this->builder = $builder;
+        $this->filtersByIdentifier = null;
 
         return $this;
     }
@@ -60,11 +68,34 @@ final class ObjectFilterFormField extends AbstractFormField
     #[\Override]
     public function readValue(): ObjectFilterFormField
     {
-        if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
+        if (
+            $this->getDocument()->hasRequestData($this->getPrefixedId())
+            && \is_string($this->getDocument()->getRequestData($this->getPrefixedId()))
+        ) {
             $this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
         }
 
         return $this;
+    }
+
+    /**
+     * Returns the configured filters as a JSON-encoded list of
+     * `[filterIdentifier, serializedValue]` pairs. Values of unknown filters
+     * are removed.
+     *
+     * @throws InvalidSource|MappingError if the value of this field is malformed
+     */
+    #[\Override]
+    public function getSaveValue(): ?string
+    {
+        if ($this->getValue() === null) {
+            return null;
+        }
+
+        return \json_encode(
+            $this->decodeKnownFilters($this->getValue()),
+            \JSON_THROW_ON_ERROR,
+        );
     }
 
     #[\Override]
@@ -72,7 +103,7 @@ final class ObjectFilterFormField extends AbstractFormField
     {
         try {
             $values = $this->unserializeFilters($this->getValue());
-        } catch (MappingError) {
+        } catch (InvalidSource|MappingError) {
             $this->addValidationError(
                 new FormFieldValidationError('malformedJson')
             );
@@ -86,10 +117,7 @@ final class ObjectFilterFormField extends AbstractFormField
             );
         }
 
-        $filters = [];
-        foreach ($this->getBuilder()->getFilters() as $filter) {
-            $filters[$filter->getIdentifier()] = $filter;
-        }
+        $filters = $this->getFiltersByIdentifier();
 
         $counts = \array_count_values(\array_column($values, 'identifier'));
         foreach ($counts as $identifier => $count) {
@@ -109,16 +137,18 @@ final class ObjectFilterFormField extends AbstractFormField
     /**
      * Returns the configured filters as JSON for the client-side filter builder.
      * Each filter consists of its identifier, a human-readable summary and the
-     * serialized value.
-     *
-     * @throws MappingError if the value of this field is malformed
+     * serialized value. A malformed value results in an empty list, the
+     * corresponding validation error is reported by `validate()`.
      */
     public function toJson(): string
     {
-        return \json_encode(
-            $this->unserializeFilters($this->getValue()),
-            \JSON_THROW_ON_ERROR,
-        );
+        try {
+            $filters = $this->unserializeFilters($this->getValue());
+        } catch (InvalidSource|MappingError) {
+            $filters = [];
+        }
+
+        return \json_encode($filters, \JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -143,9 +173,37 @@ final class ObjectFilterFormField extends AbstractFormField
      *  summary: string,
      *  value: string,
      * }>
-     * @throws MappingError if the given value is malformed
+     * @throws InvalidSource|MappingError if the given value is malformed
      */
     private function unserializeFilters(?string $json): array
+    {
+        $filters = $this->getFiltersByIdentifier();
+
+        return \array_map(
+            static function (array $value) use ($filters): array {
+                [$identifier, $serializedValue] = $value;
+                $filter = $filters[$identifier];
+
+                return [
+                    'identifier' => $identifier,
+                    'summary' => $filter->summarizeValue(
+                        $filter->unserializeValue($serializedValue),
+                    ),
+                    'value' => $serializedValue,
+                ];
+            },
+            $this->decodeKnownFilters($json),
+        );
+    }
+
+    /**
+     * Decodes the given value into a list of `[filterIdentifier, serializedValue]`
+     * pairs. Values of unknown filters are removed.
+     *
+     * @return list<array{0: string, 1: string}>
+     * @throws InvalidSource|MappingError if the given value is malformed
+     */
+    private function decodeKnownFilters(?string $json): array
     {
         if ($json === null) {
             return [];
@@ -163,29 +221,29 @@ final class ObjectFilterFormField extends AbstractFormField
             return $values;
         }
 
-        $filters = [];
-        foreach ($this->getBuilder()->getFilters() as $filter) {
-            $filters[$filter->getIdentifier()] = $filter;
+        $filters = $this->getFiltersByIdentifier();
+
+        return \array_values(\array_filter(
+            $values,
+            static fn($value) => isset($filters[$value[0]]),
+        ));
+    }
+
+    /**
+     * Returns the filters of the builder indexed by their identifier.
+     *
+     * @return array<string, IObjectFilter<*, mixed>>
+     */
+    private function getFiltersByIdentifier(): array
+    {
+        if ($this->filtersByIdentifier === null) {
+            $this->filtersByIdentifier = [];
+            foreach ($this->getBuilder()->getFilters() as $filter) {
+                $this->filtersByIdentifier[$filter->getIdentifier()] = $filter;
+            }
         }
 
-        return \array_map(
-            function (array $value) use ($filters): array {
-                [$identifier, $serializedValue] = $value;
-                $filter = $filters[$identifier];
-
-                return [
-                    'identifier' => $identifier,
-                    'summary' => $filter->summarizeValue(
-                        $filter->unserializeValue($serializedValue),
-                    ),
-                    'value' => $serializedValue,
-                ];
-            },
-            \array_values(\array_filter(
-                $values,
-                static fn($value) => isset($filters[$value[0]]),
-            )),
-        );
+        return $this->filtersByIdentifier;
     }
 
     #[\Override]
