@@ -3902,6 +3902,7 @@ Attachments:
 		<item name="wcf.global.reason"><![CDATA[Reason]]></item>
 		<item name="wcf.global.reason.optional"><![CDATA[Reason (optional)]]></item>
 		<item name="wcf.global.settings"><![CDATA[Settings]]></item>
+		<item name="wcf.global.skipToContent"><![CDATA[Skip to Content]]></item>
 		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Warning! The bulk processing will be processed <strong>without further confirmation</strong> for all items matching your criteria.]]></item>
 		<item name="wcf.global.search"><![CDATA[Search]]></item>
 		<item name="wcf.global.select"><![CDATA[Select]]></item>

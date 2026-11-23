@@ -3956,6 +3956,7 @@ Dateianhänge:
 		<item name="wcf.global.reason"><![CDATA[Begründung]]></item>
 		<item name="wcf.global.reason.optional"><![CDATA[Begründung (optional)]]></item>
 		<item name="wcf.global.settings"><![CDATA[Einstellungen]]></item>
+		<item name="wcf.global.skipToContent"><![CDATA[Zum Inhalt springen]]></item>
 		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung führt die unten ausgewählte Aktion <strong>ohne zusätzliche Sicherheitsabfrage</strong> aus!]]></item>
 		<item name="wcf.global.search"><![CDATA[Suche]]></item>
 		<item name="wcf.global.select"><![CDATA[Auswählen]]></item>

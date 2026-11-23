@@ -284,6 +284,27 @@ a.externalURL::after {
 	width: 1px !important;
 }
 
+/* Lets keyboard users bypass the header and navigation, only visible while focused. */
+.skipLink {
+	background-color: var(--wcfButtonPrimaryBackground);
+	border-radius: var(--wcfBorderRadius);
+	color: var(--wcfButtonPrimaryText);
+	left: 10px;
+	padding: 10px 20px;
+	position: fixed;
+	top: 10px;
+	transform: translateY(calc(-100% - 20px));
+	z-index: 1000;
+
+	&:hover {
+		color: var(--wcfButtonPrimaryText);
+	}
+
+	&:focus {
+		transform: none;
+	}
+}
+
 /* Hide the focus ring for mouse interactions, but support them for keyboard navigation.
    See https://github.com/WICG/focus-visible and https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible */
 :focus:not(:focus-visible) {

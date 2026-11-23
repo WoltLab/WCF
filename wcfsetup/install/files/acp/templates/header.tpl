@@ -147,7 +147,9 @@
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="wcfAcp{if !$__isLogin|empty} acpAuthFlow{/if}">
 	<span id="top"></span>
-	
+
+	<a href="#content" class="skipLink">{lang}wcf.global.skipToContent{/lang}</a>
+
 	{assign var=_acpPageSubMenuActive value=false}
 	{if PACKAGE_ID}
 		{assign var=_activeMenuItems value=$__wcf->getACPMenu()->getActiveMenuItems()}

@@ -30,6 +30,8 @@
 
 <span id="top"></span>
 
+<a href="#content" class="skipLink">{lang}wcf.global.skipToContent{/lang}</a>
+
 <div id="pageContainer" class="pageContainer">
 	{event name='beforePageHeader'}
 	
