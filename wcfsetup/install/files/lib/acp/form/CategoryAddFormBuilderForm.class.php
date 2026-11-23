@@ -65,6 +65,7 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
 
     /**
      * name of the controller used to list the categories
+     * @deprecated 6.3 No longer used.
      */
     public string $listController = '';
 
@@ -133,9 +134,6 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         }
         if ($this->editController === '') {
             $this->editController = \str_replace(['AddForm', 'EditForm'], 'Edit', $className);
-        }
-        if ($this->listController === '') {
-            $this->listController = \str_replace(['AddForm', 'EditForm'], 'List', $className);
         }
     }
 
@@ -413,7 +411,6 @@ abstract class CategoryAddFormBuilderForm extends AbstractFormBuilderForm
         WCF::getTPL()->assign([
             'addController' => $this->addController,
             'editController' => $this->editController,
-            'listController' => $this->listController,
             'objectType' => $this->objectType,
             'categoryNodeList' => $categoryNodeTree->getIterator(),
         ]);

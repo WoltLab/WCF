@@ -18,7 +18,6 @@
 				<li><a href="{link controller='DevtoolsProjectPipList' id=$object->getObjectID()}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.devtools.project.pips{/lang}</span></a></li>
 			{/if}
 			<li><a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}" class="button">{icon name='pencil'} <span>{lang}wcf.acp.devtools.project.edit{/lang}</span></a></li>
-			<li><a href="{link controller='DevtoolsProjectList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.devtools.project.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
 		</ul>

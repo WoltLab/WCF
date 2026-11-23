@@ -32,12 +32,6 @@
 						</li>
 					{/if}
 
-					{if $objectType->getProcessor()->canDeleteCategory() || $objectType->getProcessor()->canEditCategory()}
-						<li>
-							<a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" class="button">{icon name='list'} <span>{unsafe:$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a>
-						</li>
-					{/if}
-
 					{event name='contentHeaderNavigation'}
 				{/content}
 			</ul>

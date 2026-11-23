@@ -5,13 +5,15 @@
 		<h1 class="contentTitle">{lang}wcf.acp.language.export{/lang}</h1>
 	</div>
 	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			<li><a href="{link controller='LanguageList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
-			
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='shared_formError'}

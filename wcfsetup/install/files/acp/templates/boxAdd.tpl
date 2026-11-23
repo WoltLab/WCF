@@ -70,16 +70,18 @@
 		<h1 class="contentTitle">{lang}wcf.acp.box.{$action}{/lang}{if $action == 'edit'}: {$box->name}{/if}</h1>
 	</div>
 
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $action === 'edit'}
-				<li><a href="#" class="button jsButtonCopyBox">{icon name='copy'} {lang}wcf.acp.box.button.copyBox{/lang}</a></li>
-			{/if}
-			<li><a href="{link controller='BoxList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.cms.box.list{/lang}</span></a></li>
-
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if $action === 'edit'}
+						<li><a href="#" class="button jsButtonCopyBox">{icon name='copy'} {lang}wcf.acp.box.button.copyBox{/lang}</a></li>
+					{/if}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='shared_formNotice'}

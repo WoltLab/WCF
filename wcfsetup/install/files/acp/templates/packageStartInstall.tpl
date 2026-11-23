@@ -31,16 +31,18 @@
 		<h1 class="contentTitle">{lang}{$pageTitle}{/lang}</h1>
 	</div>
 	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
-				<li><a href="#" class="button jsButtonUploadPackage jsStaticDialog" data-dialog-id="packageUploadDialog">{icon name='upload'} <span>{lang}wcf.acp.package.upload{/lang}</span></a></li>
-			{/if}
-			<li><a href="{link controller='PackageList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
-			
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
+						<li><a href="#" class="button jsButtonUploadPackage jsStaticDialog" data-dialog-id="packageUploadDialog">{icon name='upload'} <span>{lang}wcf.acp.package.upload{/lang}</span></a></li>
+					{/if}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {if $errorField && $installingImportedStyle}

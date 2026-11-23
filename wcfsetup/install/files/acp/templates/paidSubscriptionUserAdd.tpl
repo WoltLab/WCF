@@ -6,17 +6,15 @@
 		<p class="contentHeaderDescription">{$subscription->getTitle()}</p>
 	</div>
 
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $action == 'add'}
-				<li><a href="{link controller='PaidSubscriptionList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.paidSubscription.list{/lang}</span></a></li>
-			{else}
-				<li><a href="{link controller='PaidSubscriptionUserList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.paidSubscription.user.list{/lang}</span></a></li>
-			{/if}
-
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {unsafe:$form->getHtml()}

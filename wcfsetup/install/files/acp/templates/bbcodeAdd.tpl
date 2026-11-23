@@ -90,13 +90,15 @@
 		<h1 class="contentTitle">{lang}wcf.acp.bbcode.{$action}{/lang}{if $action == 'edit'}: {$bbcode->bbcodeTag}{/if}</h1>
 	</div>
 	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			<li><a href="{link controller='BBCodeList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.bbcode.list{/lang}</span></a></li>
-			
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {if $action == 'add'}

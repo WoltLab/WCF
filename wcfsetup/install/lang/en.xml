@@ -3319,7 +3319,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.category.addChildNode"><![CDATA[Add Child Category]]></item>
-		<item name="wcf.category.button.list"><![CDATA[Categories]]></item>
 		<item name="wcf.category.delete.sure"><![CDATA[Do you really want to delete this category?]]></item>
 		<item name="wcf.category.edit"><![CDATA[Edit Category]]></item>
 		<item name="wcf.category.isDisabled"><![CDATA[Disable Category]]></item>
@@ -5970,5 +5969,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.language.add.package"/>
 	<item name="wcf.acp.language.add.package.description"/>
 	<item name="wcf.article.articleComments"/>
+	<item name="wcf.category.button.list"/>
 </delete>
 </language>

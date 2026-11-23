@@ -6,13 +6,15 @@
 		<p class="contentHeaderDescription">{lang}wcf.acp.style.globalValues.description{/lang}</p>
 	</div>
 	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			<li><a href="{link controller='StyleList'}{/link}" class="button">{icon name='list'} <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
-			
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='shared_formError'}

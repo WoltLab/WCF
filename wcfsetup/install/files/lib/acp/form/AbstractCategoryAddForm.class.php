@@ -73,6 +73,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm
     /**
      * name of the controller used to list the categories
      * @var string
+     * @deprecated 6.3 No longer used.
      */
     public $listController = '';
 
@@ -133,9 +134,6 @@ abstract class AbstractCategoryAddForm extends AbstractForm
         if (empty($this->editController)) {
             $this->editController = \str_replace(['AddForm', 'EditForm'], 'Edit', $className);
         }
-        if (empty($this->listController)) {
-            $this->listController = \str_replace(['AddForm', 'EditForm'], 'List', $className);
-        }
 
         return parent::__run();
     }
@@ -159,7 +157,6 @@ abstract class AbstractCategoryAddForm extends AbstractForm
             'descriptionUseHtml' => $this->descriptionUseHtml,
             'editController' => $this->editController,
             'isDisabled' => $this->isDisabled,
-            'listController' => $this->listController,
             'objectType' => $this->objectType,
             'parentCategoryID' => $this->parentCategoryID,
             'showOrder' => $this->showOrder,
