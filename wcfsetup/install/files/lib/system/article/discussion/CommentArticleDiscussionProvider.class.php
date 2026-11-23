@@ -29,9 +29,8 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
     #[\Override]
     public function getDiscussionCountPhrase()
     {
-        return WCF::getLanguage()->getDynamicVariable('wcf.article.articleComments', [
-            'articleContent' => $this->articleContent ?: $this->article->getArticleContent(),
-            'article' => $this->article, // kept line for backward compatibility in 3rd party translations
+        return WCF::getLanguage()->getDynamicVariable('wcf.comment.comments.count', [
+            'comments' => $this->getDiscussionCount(),
         ]);
     }
 

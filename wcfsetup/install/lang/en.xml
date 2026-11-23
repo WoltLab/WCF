@@ -3215,7 +3215,6 @@ Your account on {@PAGE_TITLE|phrase} [URL:{link isEmail=true}{/link}] has been a
 		<item name="wcf.article.relatedArticles"><![CDATA[Related Articles]]></item>
 		<item name="wcf.article.moreArticles"><![CDATA[More Articles]]></item>
 		<item name="wcf.article.aboutAuthor"><![CDATA[About the Author]]></item>
-		<item name="wcf.article.articleComments"><![CDATA[{plural value=$articleContent->comments one='# Comment' other='# Comments'}]]></item>
 		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} View{if $article->views != 1}s{/if}]]></item>
 		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[<strong>{$author}</strong> reacted with <span title="{$reactionType->getTitle()}" class="jsTooltip">{unsafe:$reactionType->renderIcon()}</span> to the article <strong>{$article->getTitle()}</strong>.]]></item>
 		<item name="wcf.article.recentActivity.articleComment"><![CDATA[<strong>{$author}</strong> commented on article <strong>{$article->getTitle()}</strong>.]]></item>
@@ -3372,6 +3371,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	<category name="wcf.comment">
 		<item name="wcf.comment.add"><![CDATA[Write a comment …]]></item>
 		<item name="wcf.comment.approve"><![CDATA[Approve]]></item>
+		<item name="wcf.comment.comments.count"><![CDATA[{plural value=$comments one='# Comment' other='# Comments'}]]></item>
 		<item name="wcf.comment.error.floodControl"><![CDATA[You have already written a comment within the last {if $__wcf->getSession()->getPermission('user.comment.floodControlTime') > 1}{#$__wcf->getSession()->getPermission('user.comment.floodControlTime')} seconds{else}second{/if}. You must wait at least {#$lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW} second{if ($lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW) != 1}s{/if} before attempting to write a new comment.]]></item>
 		<item name="wcf.comment.moderation.info"><![CDATA[Newly created comments need to be manually approved before publication, other users cannot see this comment until it has been approved.]]></item>
 		<item name="wcf.comment.moderation.disabledComment"><![CDATA[Your comment requires approval by a moderator, until then it will remain invisible for others.]]></item>
@@ -5968,5 +5968,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.article.publicationDate.error.invalid"/>
 	<item name="wcf.acp.language.add.package"/>
 	<item name="wcf.acp.language.add.package.description"/>
+	<item name="wcf.article.articleComments"/>
 </delete>
 </language>

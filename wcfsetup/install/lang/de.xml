@@ -3290,7 +3290,6 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.relatedArticles"><![CDATA[Verwandte Artikel]]></item>
 		<item name="wcf.article.moreArticles"><![CDATA[Weitere Artikel]]></item>
 		<item name="wcf.article.aboutAuthor"><![CDATA[Über den Autor]]></item>
-		<item name="wcf.article.articleComments"><![CDATA[{plural value=$articleContent->comments one='# Kommentar' other='# Kommentare'}]]></item>
 		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} Mal gelesen]]></item>
 		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[<strong>{$author}</strong> hat mit <span title="{$reactionType->getTitle()}" class="jsTooltip">{unsafe:$reactionType->renderIcon()}</span> auf den Artikel <strong>{$article->getTitle()}</strong> reagiert.]]></item>
 		<item name="wcf.article.recentActivity.articleComment"><![CDATA[<strong>{$author}</strong> hat einen Kommentar zum Artikel <strong>{$article->getTitle()}</strong> geschrieben.]]></item>
@@ -3447,6 +3446,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 	<category name="wcf.comment">
 		<item name="wcf.comment.add"><![CDATA[Kommentar schreiben …]]></item>
 		<item name="wcf.comment.approve"><![CDATA[Freischalten]]></item>
+		<item name="wcf.comment.comments.count"><![CDATA[{plural value=$comments one='# Kommentar' other='# Kommentare'}]]></item>
 		<item name="wcf.comment.error.floodControl"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} bereits einen Kommentar innerhalb der letzten {if $__wcf->getSession()->getPermission('user.comment.floodControlTime') > 1}{#$__wcf->getSession()->getPermission('user.comment.floodControlTime')} Sekunden{else}Sekunde{/if} geschrieben. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} erst in {#$lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW} Sekunde{if ($lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW) != 1}n{/if} einen neuen Kommentar erstellen.]]></item>
 		<item name="wcf.comment.more"><![CDATA[Weitere Kommentare]]></item>
 		<item name="wcf.comment.moderation.info"><![CDATA[Neu erstellte Kommentare unterliegen der Moderation und werden erst sichtbar, wenn sie durch einen Moderator geprüft und freigeschaltet wurden.]]></item>
@@ -5966,5 +5966,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.article.publicationDate.error.invalid"/>
 	<item name="wcf.acp.language.add.package"/>
 	<item name="wcf.acp.language.add.package.description"/>
+	<item name="wcf.article.articleComments"/>
 </delete>
 </language>
