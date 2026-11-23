@@ -3,6 +3,7 @@
 namespace wcf\system\page\handler;
 
 use wcf\data\menu\item\MenuItem;
+use wcf\data\page\Page;
 
 /**
  * Default implementation for pages supporting visibility and outstanding items.
@@ -20,6 +21,11 @@ abstract class AbstractMenuPageHandler implements IMenuPageHandler
      * @since 6.1
      */
     private MenuItem $menuItem;
+
+    /**
+     * @since 6.3
+     */
+    private Page $page;
 
     #[\Override]
     public function getOutstandingItemCount(?int $objectID = null)
@@ -46,5 +52,25 @@ abstract class AbstractMenuPageHandler implements IMenuPageHandler
     public function getMenuItem(): ?MenuItem
     {
         return $this->menuItem ?? null;
+    }
+
+    /**
+     * Sets the page this handler belongs to. This allows a handler that is
+     * shared by multiple pages to identify the page it is used for, even when
+     * it is not invoked from a menu item.
+     *
+     * @since 6.3
+     */
+    public function setPage(Page $page): void
+    {
+        $this->page = $page;
+    }
+
+    /**
+     * @since 6.3
+     */
+    public function getPage(): ?Page
+    {
+        return $this->page ?? null;
     }
 }

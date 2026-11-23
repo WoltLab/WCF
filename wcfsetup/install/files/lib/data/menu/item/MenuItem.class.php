@@ -8,6 +8,7 @@ use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\ImplementationException;
+use wcf\system\page\handler\AbstractMenuPageHandler;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\page\handler\IMenuPageHandler;
 use wcf\system\WCF;
@@ -197,6 +198,9 @@ class MenuItem extends DatabaseObject implements ITitledObject
                 }
 
                 $this->handler->setMenuItem($this);
+                if ($this->handler instanceof AbstractMenuPageHandler) {
+                    $this->handler->setPage($page);
+                }
             }
         }
 

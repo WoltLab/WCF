@@ -17,6 +17,7 @@ use wcf\system\cache\eager\ApplicationCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\page\handler\AbstractMenuPageHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -228,6 +229,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject, \St
     {
         if ($this->pageHandler === null && $this->handler !== '') {
             $this->pageHandler = new $this->handler();
+            if ($this->pageHandler instanceof AbstractMenuPageHandler) {
+                $this->pageHandler->setPage($this);
+            }
         }
 
         return $this->pageHandler;
