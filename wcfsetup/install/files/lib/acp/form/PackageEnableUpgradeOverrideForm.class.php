@@ -2,6 +2,7 @@
 
 namespace wcf\acp\form;
 
+use wcf\acp\page\PackageListPage;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
@@ -11,8 +12,10 @@ use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\RejectEverythingFormField;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\registry\RegistryHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -346,8 +349,8 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
         );
 
         $formData = $this->form->getData();
-        if ($formData['data']['enable']) {
-            $this->isEnabled = true;
+        $enable = (bool)$formData['data']['enable'];
+        if ($enable) {
             RegistryHandler::getInstance()->set('com.woltlab.wcf', $overrideKey, (string)\TIME_NOW);
         } else {
             $this->isEnabled = false;
@@ -359,6 +362,18 @@ final class PackageEnableUpgradeOverrideForm extends AbstractFormBuilderForm
         RegistryHandler::getInstance()->delete('com.woltlab.wcf', PackageUpdateServer::class . "\0upgradeOverride_6.0");
 
         PackageUpdateServer::resetAll();
+
+        if ($enable) {
+            $this->saved();
+
+            \http_response_code(303);
+            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(
+                PackageListPage::class,
+                ['searchForUpdates' => 1],
+            ));
+
+            exit;
+        }
 
         $this->form->cleanup();
         $this->buildForm();
