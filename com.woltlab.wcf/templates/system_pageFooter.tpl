@@ -67,10 +67,28 @@
 	{/if}
 
 	{if $__wcf->getStyleHandler()->showStyleChanger()}
-		<button type="button" class="pageFooterPreferences__button jsButtonStyleChanger jsOnly">
-			{icon name='palette'}
-			<span>{lang}wcf.style.changeStyle{/lang}</span>
-		</button>
+		<div class="pageFooterStyle dropdown jsOnly">
+			<button type="button" class="pageFooterPreferences__button dropdownToggle jsButtonStyleChanger">
+				{icon name='palette'}
+				<span>{lang}wcf.style.changeStyle{/lang}</span>
+				{icon name='chevron-up'}
+			</button>
+			<div class="dropdownMenu pageFooterStyleMenu" data-dropdown-alignment-vertical="top" data-dropdown-alignment-horizontal="right">
+				<ul class="scrollableDropdownMenu">
+					{foreach from=$__wcf->getStyleHandler()->getAvailableStyles() item=_style}
+						<li{if $_style->styleID === $__wcf->getStyleHandler()->getStyle()->styleID} class="active"{/if}>
+							<button
+								type="button"
+								data-change-style="{$_style->styleID}"
+								{if $_style->styleID === $__wcf->getStyleHandler()->getStyle()->styleID} aria-current="true"{/if}
+							>
+								<span>{$_style->styleName}</span>
+							</button>
+						</li>
+					{/foreach}
+				</ul>
+			</div>
+		</div>
 	{/if}
 
 	{* Members only switch the language through the developer tools. *}

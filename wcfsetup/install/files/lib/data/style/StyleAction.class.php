@@ -34,7 +34,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * @inheritDoc
      */
-    protected $allowGuestAccess = ['changeStyle', 'getStyleChooser'];
+    protected $allowGuestAccess = ['changeStyle'];
 
     /**
      * @inheritDoc
@@ -547,42 +547,6 @@ BROWSERCONFIG;
     public function changeStyle()
     {
         new ChangeStyle($this->style)();
-    }
-
-    /**
-     * Validates the 'getStyleChooser' action.
-     *
-     * @return void
-     *
-     * @deprecated 6.3
-     */
-    public function validateGetStyleChooser()
-    {
-        // does nothing
-    }
-
-    /**
-     * Returns the style chooser dialog.
-     *
-     * @return array{actionName: string, template: string}
-     *
-     * @deprecated 6.3 Use the `\wcf\system\endpoint\controller\core\styles\GetStyleChooser` API-Endpoint instead.
-     */
-    public function getStyleChooser()
-    {
-        $styleList = new StyleList();
-        if (!WCF::getSession()->hasPermission('admin.style.canUseDisabledStyle')) {
-            $styleList->getConditionBuilder()->add("style.isDisabled = ?", [0]);
-        }
-        $styleList->sqlOrderBy = "style.styleName ASC";
-        $styleList->readObjects();
-
-        return [
-            'actionName' => 'getStyleChooser',
-            'template' => WCF::getTPL()->render('wcf', 'styleChooser', [
-                'styleList' => $styleList,
-            ]),
-        ];
     }
 
     /**

@@ -87,9 +87,10 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Ui
         if (hasSystemPageHeader || hasSystemPageFooter) {
             (0, LanguageSwitcher_1.setup)();
         }
-        if (options.styleChanger) {
+        if (options.styleChanger !== undefined) {
+            const styles = options.styleChanger;
             void new Promise((resolve_5, reject_5) => { require(["./Controller/Style/Changer"], resolve_5, reject_5); }).then(tslib_1.__importStar).then((ControllerStyleChanger) => {
-                ControllerStyleChanger.setup();
+                ControllerStyleChanger.setup(styles);
             });
         }
         setupUserPopover();

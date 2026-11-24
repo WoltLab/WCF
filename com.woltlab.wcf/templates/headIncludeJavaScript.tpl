@@ -110,7 +110,11 @@ window.addEventListener('pageshow', function(event) {
 					{event name='javascriptShareButtonProviders'}
 				],
 			{/if}
-			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if},
+			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}[
+				{foreach from=$__wcf->getStyleHandler()->getAvailableStyles() item=_style}
+					{ styleId: {$_style->styleID}, name: '{unsafe:$_style->styleName|encodeJS}', active: {if $_style->styleID === $__wcf->getStyleHandler()->getStyle()->styleID}true{else}false{/if} },
+				{/foreach}
+			]{else}undefined{/if},
 			{if !$__wcf->user->isGuest() && !$__wcf->getMessageQuoteManager()->getRemoveQuoteIDs()|empty}removeQuotes: [{implode from=$__wcf->getMessageQuoteManager()->getRemoveQuoteIDs() item=uuid}'{unsafe:$uuid|encodeJS}'{/implode}],{/if}
 			{if !$__wcf->user->isGuest() && !$__wcf->getMessageQuoteManager()->getUsedQuotes()|empty}usedQuotes: new Map([
 				{foreach from=$__wcf->getMessageQuoteManager()->getUsedQuotes() key=editorID item=uuids}['{unsafe:$editorID|encodeJS}', [{implode from=$uuids item=uuid}'{unsafe:$uuid|encodeJS}'{/implode}]]{/foreach}

@@ -4594,7 +4594,6 @@ Attachments:
 		<item name="wcf.style.colorPicker"><![CDATA[Color Picker]]></item>
 		<item name="wcf.style.colorPicker.new"><![CDATA[new]]></item>
 		<item name="wcf.style.colorPicker.current"><![CDATA[current]]></item>
-		<item name="wcf.style.currentStyle"><![CDATA[Current Style]]></item>
 		<item name="wcf.style.colorPicker.button.apply"><![CDATA[Apply]]></item>
 		<item name="wcf.style.colorPicker.hexAlpha"><![CDATA[Hex Value with Alpha Channel]]></item>
 		<item name="wcf.style.colorPicker.color"><![CDATA[Color]]></item>
@@ -5970,5 +5969,6 @@ Allowed extensions: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.language.add.package.description"/>
 	<item name="wcf.article.articleComments"/>
 	<item name="wcf.category.button.list"/>
+	<item name="wcf.style.currentStyle"/>
 </delete>
 </language>

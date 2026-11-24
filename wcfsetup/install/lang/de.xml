@@ -4595,7 +4595,6 @@ Dateianhänge:
 		<item name="wcf.style.colorPicker"><![CDATA[Farbwähler]]></item>
 		<item name="wcf.style.colorPicker.new"><![CDATA[neu]]></item>
 		<item name="wcf.style.colorPicker.current"><![CDATA[aktuell]]></item>
-		<item name="wcf.style.currentStyle"><![CDATA[Aktiver Stil]]></item>
 		<item name="wcf.style.colorPicker.button.apply"><![CDATA[Übernehmen]]></item>
 		<item name="wcf.style.colorPicker.hexAlpha"><![CDATA[Hex-Wert mit Alpha-Kanal]]></item>
 		<item name="wcf.style.colorPicker.color"><![CDATA[Farbe]]></item>
@@ -5968,5 +5967,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.language.add.package.description"/>
 	<item name="wcf.article.articleComments"/>
 	<item name="wcf.category.button.list"/>
+	<item name="wcf.style.currentStyle"/>
 </delete>
 </language>
