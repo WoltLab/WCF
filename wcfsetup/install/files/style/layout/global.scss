@@ -201,6 +201,27 @@ ol.nativeList {
 	ul,
 	ol {
 		@include nativeList;
+
+		/* Establish a BFC so floats (attachments, side images) cannot intrude into
+		   the list box; the indent must be padding, a margin would be overlapped. */
+		display: flow-root;
+		margin-left: 0;
+		padding-left: 40px;
+
+		/* The BFC prevents the margins of the list items from collapsing through the
+		   list, drop them at the edges to retain the previous spacing. */
+		> li:first-child {
+			margin-top: 0;
+		}
+
+		> li:last-child {
+			margin-bottom: 0;
+		}
+
+		ul,
+		ol {
+			margin-top: 5px;
+		}
 	}
 
 	ul {
