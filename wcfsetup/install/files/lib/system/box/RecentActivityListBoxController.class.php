@@ -172,7 +172,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
             $this->objectList->sqlLimit = $this->box->limit;
         }
 
-        if ($this->sortOrder !== '' && $this->sortField !== '') {
+        if ($this->sortOrder !== null && $this->sortField !== null) {
             $alias = $this->objectList->getDatabaseTableAlias();
             $this->objectList->sqlOrderBy = $this->sortField . ' ' . $this->sortOrder . ", " . ($alias !== '' ? $alias . "." : "") . $this->objectList->getDatabaseTableIndexName() . " " . $this->sortOrder;
         }
