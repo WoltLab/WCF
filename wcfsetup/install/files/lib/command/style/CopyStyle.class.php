@@ -120,15 +120,6 @@ final class CopyStyle
 
     private function copyAssets(Style $source, Style $destination): void
     {
-        foreach (['image', 'image2x'] as $imageType) {
-            $image = $source->{$imageType};
-            if ($image !== '') {
-                new StyleEditor($destination)->update([
-                    $imageType => \preg_replace('/^style-\d+/', 'style-' . $destination->styleID, $image),
-                ]);
-            }
-        }
-
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(
                 $source->getAssetPath(),

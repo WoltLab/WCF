@@ -107,4 +107,14 @@ return [
             MediumtextDatabaseTableColumn::create('additionalData')
                 ->drop(),
         ]),
+    // The preview images are removed by `update_com.woltlab.wcf_6.3_stylePreviewImage.php`.
+    PartialDatabaseTable::create('wcf1_style')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('image')
+                ->defaultValue('')
+                ->drop(),
+            NotNullVarchar255DatabaseTableColumn::create('image2x')
+                ->defaultValue('')
+                ->drop(),
+        ]),
 ];

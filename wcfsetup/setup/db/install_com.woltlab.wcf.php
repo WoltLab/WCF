@@ -3696,10 +3696,6 @@ return [
                 ->notNull()
                 ->length(10)
                 ->defaultValue('0000-00-00'),
-            NotNullVarchar255DatabaseTableColumn::create('image')
-                ->defaultValue(''),
-            NotNullVarchar255DatabaseTableColumn::create('image2x')
-                ->defaultValue(''),
             NotNullVarchar255DatabaseTableColumn::create('copyright')
                 ->defaultValue(''),
             NotNullVarchar255DatabaseTableColumn::create('license')

@@ -28,8 +28,6 @@ use wcf\util\ImageUtil;
  * @property-read   string  $styleDescription   description of the style or name of the language item which contains the description
  * @property-read   string  $styleVersion       version number of the style
  * @property-read   string  $styleDate          date when the used version of the style has been published
- * @property-read   string  $image              link or path (relative to `WCF_DIR`) to the preview image of the style
- * @property-read   string  $image2x            link or path (relative to `WCF_DIR`) to the preview image of the style (2x version)
  * @property-read   string  $copyright          copyright text of the style
  * @property-read   string  $license            name of the style's license
  * @property-read   string  $authorName         name(s) of the style's author(s)
@@ -75,10 +73,6 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
 
     /** @deprecated 6.0 This property is no longer supported. */
     const API_VERSION = '5.5';
-
-    const PREVIEW_IMAGE_MAX_HEIGHT = 64;
-
-    const PREVIEW_IMAGE_MAX_WIDTH = 102;
 
     const FAVICON_IMAGE_HEIGHT = 512;
 
@@ -439,34 +433,6 @@ class Style extends DatabaseObject implements ITitledObject, \Stringable
         $this->coverPhotoWidth = $data['coverPhotoWidth'];
         $this->pageLogoSmallHeight = $data['pageLogoSmallHeight'];
         $this->pageLogoSmallWidth = $data['pageLogoSmallWidth'];
-    }
-
-    /**
-     * Returns the style preview image path.
-     *
-     * @return  string
-     */
-    public function getPreviewImage()
-    {
-        if ($this->image !== '' && \file_exists(\WCF_DIR . 'images/' . $this->image)) {
-            return WCF::getPath() . 'images/' . $this->image;
-        }
-
-        return WCF::getPath() . 'images/stylePreview.png';
-    }
-
-    /**
-     * Returns the style preview image path (2x version).
-     *
-     * @return  string
-     */
-    public function getPreviewImage2x()
-    {
-        if ($this->image2x !== '' && \file_exists(\WCF_DIR . 'images/' . $this->image2x)) {
-            return WCF::getPath() . 'images/' . $this->image2x;
-        }
-
-        return WCF::getPath() . 'images/stylePreview@2x.png';
     }
 
     /**

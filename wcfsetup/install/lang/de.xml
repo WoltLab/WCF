@@ -2959,10 +2959,6 @@ Abschnitte dürfen nicht leer sein und nur folgende Zeichen enthalten: <kbd>[a-z
 		<item name="wcf.acp.style.globalValues.description"><![CDATA[Das unten stehende CSS und SCSS wird auf alle Stile angewandt, die individuellen Anpassungen in den Stilen sind jedoch höherwertig.]]></item>
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individuelles CSS und SCSS]]></item>
 		<item name="wcf.acp.style.globalValues.input.error"><![CDATA[Der SCSS-Code enthält einen Fehler: {$errorType.message}.]]></item>
-		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
-		<item name="wcf.acp.style.image.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG, PNG und WebP zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102 × 64 Pixel anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
-		<item name="wcf.acp.style.image2x"><![CDATA[Vorschaubild (HD)]]></item>
-		<item name="wcf.acp.style.image2x.description"><![CDATA[Diese Grafik wird für hochauflösende Bildschirme (z. B. Apple Retina-Display oder 4K/UHD-Monitore) verwendet und muss doppelt so groß sein wie das normale Vorschaubild.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Bilder-Pfad]]></item>
 		<item name="wcf.acp.style.imagePath.description"><![CDATA[Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Stil eigene Grafiken benötigt, {if LANGUAGE_USE_INFORMAL_VARIANT}solltest du{else}sollten Sie{/if} diese in einem Unterordner des Ordners „images“ ablegen. {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier den Pfad zu diesem Ordner an.]]></item>
 		<item name="wcf.acp.style.importStyle"><![CDATA[Stil importieren]]></item>
@@ -5968,5 +5964,9 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.article.articleComments"/>
 	<item name="wcf.category.button.list"/>
 	<item name="wcf.style.currentStyle"/>
+	<item name="wcf.acp.style.image"/>
+	<item name="wcf.acp.style.image.description"/>
+	<item name="wcf.acp.style.image2x"/>
+	<item name="wcf.acp.style.image2x.description"/>
 </delete>
 </language>

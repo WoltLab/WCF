@@ -246,20 +246,6 @@ class StyleAddForm extends AbstractForm
     protected function getUploadFields()
     {
         return [
-            'image' => [
-                'size' => [
-                    'maxWidth' => Style::PREVIEW_IMAGE_MAX_WIDTH,
-                    'maxHeight' => Style::PREVIEW_IMAGE_MAX_WIDTH,
-                    'preserveAspectRatio' => false,
-                ],
-            ],
-            'image2x' => [
-                'size' => [
-                    'maxWidth' => 2 * Style::PREVIEW_IMAGE_MAX_WIDTH,
-                    'maxHeight' => 2 * Style::PREVIEW_IMAGE_MAX_WIDTH,
-                    'preserveAspectRatio' => false,
-                ],
-            ],
             'pageLogo' => [
                 'allowSvgImage' => true,
             ],

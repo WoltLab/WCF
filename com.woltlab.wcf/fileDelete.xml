@@ -626,5 +626,7 @@
 		<file>icon/font-awesome/v6/brands/yoast.svg</file>
 		<file>icon/font-awesome/v6/brands/youtube.svg</file>
 		<file>icon/font-awesome/v6/brands/zhihu.svg</file>
+		<file>images/stylePreview.png</file>
+		<file>images/stylePreview@2x.png</file>
 	</delete>
 </data>

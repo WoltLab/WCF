@@ -76,9 +76,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
         // add variables
         $this->setStyleVariables($style, false);
 
-        // handle style preview image
-        $this->updateStylePreviewImage($style);
-
         // create favicon data
         $this->updateFavicons($style);
 
@@ -99,9 +96,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
         foreach ($this->getObjects() as $style) {
             // update variables
             $this->setStyleVariables($style->getDecoratedObject(), $this->parameters['isDarkMode'] ?? false);
-
-            // handle style preview image
-            $this->updateStylePreviewImage($style->getDecoratedObject());
 
             // create favicon data
             $this->updateFavicons($style->getDecoratedObject());
@@ -265,49 +259,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
                 ]);
             }
             WCF::getDB()->commitTransaction();
-        }
-    }
-
-    /**
-     * Updates style preview image.
-     *
-     * @return void
-     */
-    protected function updateStylePreviewImage(Style $style)
-    {
-        foreach (['image', 'image2x'] as $type) {
-            if (\array_key_exists($type, $this->parameters['uploads'])) {
-                /** @var ?\wcf\system\file\upload\UploadFile $file */
-                $file = $this->parameters['uploads'][$type];
-
-                if ($style->{$type} !== '' && \file_exists($style->getAssetPath() . \basename($style->{$type}))) {
-                    if ($file === null || $style->getAssetPath() . \basename($style->{$type}) !== $file->getLocation()) {
-                        \unlink($style->getAssetPath() . \basename($style->{$type}));
-                    }
-                }
-                if ($file !== null) {
-                    $fileLocation = $file->getLocation();
-                    if (($imageData = \getimagesize($fileLocation)) === false) {
-                        throw new \InvalidArgumentException('The given ' . $type . ' is not an image');
-                    }
-                    $extension = ImageUtil::getExtensionByMimeType($imageData['mime']);
-                    $newName = match ($type) {
-                        'image' => $newName = 'stylePreview.' . $extension,
-                        'image2x' => $newName = 'stylePreview@2x.' . $extension,
-                    };
-                    $newLocation = $style->getAssetPath() . $newName;
-                    \rename($fileLocation, $newLocation);
-                    new StyleEditor($style)->update([
-                        $type => FileUtil::getRelativePath(\WCF_DIR . 'images/', $style->getAssetPath()) . $newName,
-                    ]);
-
-                    $file->setProcessed($newLocation);
-                } else {
-                    new StyleEditor($style)->update([
-                        $type => '',
-                    ]);
-                }
-            }
         }
     }
 
