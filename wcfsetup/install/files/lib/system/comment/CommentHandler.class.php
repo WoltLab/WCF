@@ -2,11 +2,9 @@
 
 namespace wcf\system\comment;
 
-use wcf\command\reaction\DeleteObjectReactions;
-use wcf\data\comment\CommentBuilder;
+use wcf\command\comment\DeleteComments;
 use wcf\data\comment\CommentList;
 use wcf\data\comment\response\CommentResponse;
-use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\response\StructuredCommentResponse;
 use wcf\data\comment\StructuredComment;
 use wcf\data\comment\StructuredCommentList;
@@ -20,7 +18,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\flood\FloodControl;
 use wcf\system\message\censorship\Censorship;
 use wcf\system\SingletonFactory;
-use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\HtmlString;
@@ -34,6 +31,11 @@ use wcf\util\HtmlString;
  */
 class CommentHandler extends SingletonFactory
 {
+    /**
+     * Limits the comments that `deleteObjects()` loads at once, together with their responses.
+     */
+    private const DELETE_OBJECTS_BATCH_SIZE = 500;
+
     /**
      * @var array{
      *  objectTypes: array<int, ObjectType>,
@@ -138,76 +140,27 @@ class CommentHandler extends SingletonFactory
     public function deleteObjects(string $objectType, array $objectIDs)
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
-        $objectTypeObj = $this->getObjectType($objectTypeID);
 
-        // get comment ids
-        $commentList = new CommentList();
-        $commentList->getConditionBuilder()->add('comment.objectTypeID = ?', [$objectTypeID]);
-        $commentList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
-        $commentList->readObjectIDs();
-        $commentIDs = $commentList->getObjectIDs();
+        $lastCommentID = 0;
+        do {
+            $commentList = new CommentList();
+            $commentList->getConditionBuilder()->add('comment.objectTypeID = ?', [$objectTypeID]);
+            $commentList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
+            $commentList->getConditionBuilder()->add('comment.commentID > ?', [$lastCommentID]);
+            $commentList->sqlOrderBy = 'comment.commentID ASC';
+            $commentList->sqlLimit = self::DELETE_OBJECTS_BATCH_SIZE;
+            $commentList->readObjects();
+            $comments = $commentList->getObjects();
 
-        // no comments -> skip
-        if ($commentIDs === []) {
-            return;
-        }
-
-        // get response ids
-        $responseList = new CommentResponseList();
-        $responseList->getConditionBuilder()->add('comment_response.commentID IN (?)', [$commentIDs]);
-        $responseList->readObjectIDs();
-        $responseIDs = $responseList->getObjectIDs();
-
-        // delete likes
-        $notificationObjectTypes = [];
-        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.like.notification') !== 0) {
-            $notificationObjectTypes[] = $objectTypeObj->objectType . '.like.notification';
-        }
-
-        new DeleteObjectReactions(
-            'com.woltlab.wcf.comment',
-            $commentIDs,
-            $notificationObjectTypes
-        )();
-
-        // delete activity events
-        if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.recentActivityEvent') !== null) {
-            UserActivityEventHandler::getInstance()
-                ->removeEvents($objectTypeObj->objectType . '.recentActivityEvent', $commentIDs);
-        }
-        // delete notifications
-        if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.notification') !== 0) {
-            UserNotificationHandler::getInstance()
-                ->removeNotifications($objectTypeObj->objectType . '.notification', $commentIDs);
-        }
-
-        if ($responseIDs !== []) {
-            // delete likes (for responses)
-            $notificationObjectTypes = [];
-            if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.like.notification') !== 0) {
-                $notificationObjectTypes[] = $objectTypeObj->objectType . '.response.like.notification';
+            if ($comments === []) {
+                return;
             }
 
-            new DeleteObjectReactions(
-                'com.woltlab.wcf.comment.response',
-                $responseIDs,
-                $notificationObjectTypes
-            )();
+            // The parent objects are being deleted and may already be gone, their counters must not be touched.
+            new DeleteComments($comments, false)();
 
-            // delete activity events (for responses)
-            if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.recentActivityEvent') !== null) {
-                UserActivityEventHandler::getInstance()
-                    ->removeEvents($objectTypeObj->objectType . '.response.recentActivityEvent', $responseIDs);
-            }
-            // delete notifications (for responses)
-            if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.notification') !== 0) {
-                UserNotificationHandler::getInstance()
-                    ->removeNotifications($objectTypeObj->objectType . '.response.notification', $responseIDs);
-            }
-        }
-
-        // delete comments / responses
-        CommentBuilder::deleteAll($commentIDs);
+            $lastCommentID = \array_key_last($comments);
+        } while (\count($comments) === self::DELETE_OBJECTS_BATCH_SIZE);
     }
 
     /**
