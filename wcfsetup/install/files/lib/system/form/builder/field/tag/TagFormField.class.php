@@ -8,6 +8,8 @@ use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\exception\InvalidFormFieldValue;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\IAttributeFormField;
+use wcf\system\form\builder\field\ICensorshipFormField;
+use wcf\system\form\builder\field\TCensorshipFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\field\TInputAttributeFormField;
 use wcf\system\form\builder\IFormDocument;
@@ -28,8 +30,12 @@ use wcf\util\ArrayUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since   5.2
  */
-final class TagFormField extends AbstractFormField implements IAttributeFormField, IObjectTypeFormNode
+final class TagFormField extends AbstractFormField implements
+    IAttributeFormField,
+    ICensorshipFormField,
+    IObjectTypeFormNode
 {
+    use TCensorshipFormField;
     use TInputAttributeFormField;
     use TDefaultIdFormField;
     use TObjectTypeFormNode;
@@ -48,6 +54,7 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
     {
         $this->description('wcf.tagging.tags.description');
         $this->label('wcf.tagging.tags');
+        $this->censorship();
     }
 
     #[\Override]
@@ -132,6 +139,17 @@ final class TagFormField extends AbstractFormField implements IAttributeFormFiel
         }
 
         return $this;
+    }
+
+    #[\Override]
+    public function validate()
+    {
+        $value = $this->getValue();
+        if (\is_array($value) && $value !== []) {
+            $this->validateCensorship(\implode(', ', $value));
+        }
+
+        parent::validate();
     }
 
     #[\Override]

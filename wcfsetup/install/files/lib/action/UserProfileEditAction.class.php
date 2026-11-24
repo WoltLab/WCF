@@ -132,6 +132,7 @@ final class UserProfileEditAction implements RequestHandlerInterface
             ->label('wcf.user.userTitle')
             ->description('wcf.user.userTitle.description')
             ->maximumLength(\USER_TITLE_MAX_LENGTH)
+            ->censorship()
             ->addValidator(new FormFieldValidator(
                 'forbidden',
                 static function (TextFormField $formField) {
