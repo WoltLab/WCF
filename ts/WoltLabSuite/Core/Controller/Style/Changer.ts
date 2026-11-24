@@ -35,12 +35,14 @@ class ControllerStyleChanger {
     const { template } = await getStyleChooser();
     const dialog = dialogFactory().fromHtml(template).withoutControls();
 
+    const selectStyle = promiseMutex((style: HTMLLIElement) => this.#changeStyle(style));
+
     dialog.content.querySelectorAll(".styleList > li").forEach((style: HTMLLIElement) => {
       style.classList.add("pointer");
       style.addEventListener("click", (event) => {
         event.preventDefault();
 
-        promiseMutex(() => this.#changeStyle(style));
+        selectStyle(style);
       });
     });
 

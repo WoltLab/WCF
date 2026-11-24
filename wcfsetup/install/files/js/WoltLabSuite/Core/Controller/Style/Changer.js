@@ -27,11 +27,12 @@ define(["require", "exports", "../../Language", "WoltLabSuite/Core/Api/Styles/Ch
             event.preventDefault();
             const { template } = await (0, GetStyleChooser_1.getStyleChooser)();
             const dialog = (0, Dialog_1.dialogFactory)().fromHtml(template).withoutControls();
+            const selectStyle = (0, PromiseMutex_1.promiseMutex)((style) => this.#changeStyle(style));
             dialog.content.querySelectorAll(".styleList > li").forEach((style) => {
                 style.classList.add("pointer");
                 style.addEventListener("click", (event) => {
                     event.preventDefault();
-                    (0, PromiseMutex_1.promiseMutex)(() => this.#changeStyle(style));
+                    selectStyle(style);
                 });
             });
             dialog.show((0, Language_1.getPhrase)("wcf.style.changeStyle"));
