@@ -367,7 +367,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 reactions.set(parseInt(key), value);
             });
             const component = document.querySelector(`woltlab-core-reaction-summary[object-type="${this._objectType}"][object-id="${objectId}"]`);
-            component?.setData(reactions, data.returnValues.reactionTypeID);
+            component?.setData(reactions);
             this._updateReactButton(objectId, data.returnValues.reactionTypeID);
         }
         _ajaxSetup() {

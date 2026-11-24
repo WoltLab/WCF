@@ -187,13 +187,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
             }
         }
     }
-    function updateReactionSummary(objectType, objectId, cachedReactions, selectedReaction) {
+    function updateReactionSummary(objectType, objectId, cachedReactions) {
         const reactions = new Map();
         Object.entries(cachedReactions).forEach(([key, value]) => {
             reactions.set(parseInt(key), value);
         });
         const component = document.querySelector(`woltlab-core-reaction-summary[object-type="${objectType}"][object-id="${objectId}"]`);
-        component?.setData(reactions, selectedReaction);
+        component?.setData(reactions);
     }
     function updateButton(button, reactionTypeId) {
         button.dataset.reactionTypeId = reactionTypeId.toString();
@@ -229,7 +229,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
             reactions = (await (0, SetReaction_1.setReaction)(objectType, objectId, reactionTypeId)).reactions;
         }
         updateButton(button, reactionTypeId);
-        updateReactionSummary(objectType, objectId, reactions, reactionTypeId);
+        updateReactionSummary(objectType, objectId, reactions);
     }
     function setupPopoverButton() {
         const reactionPopover = new ReactionPopover();
@@ -266,7 +266,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
                         reactions = (await (0, SetReaction_1.setReaction)(objectType, objectId, reactionTypeId)).reactions;
                     }
                     updateButton(button, reactionTypeId);
-                    updateReactionSummary(objectType, objectId, reactions, reactionTypeId);
+                    updateReactionSummary(objectType, objectId, reactions);
                 });
             });
         });

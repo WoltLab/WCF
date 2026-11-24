@@ -249,10 +249,6 @@ html[data-color-scheme="dark"] .reactionPopover {
 	.reactionCount::before {
 		content: none;
 	}
-
-	.reactionCountButton.selected {
-		background-color: var(--wcfButtonBackgroundActive);
-	}
 }
 
 .topReactionsSummary {

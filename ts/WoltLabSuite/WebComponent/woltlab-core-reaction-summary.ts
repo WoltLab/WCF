@@ -16,11 +16,11 @@
 
   class WoltlabCoreReactionSummaryElement extends HTMLElement {
     connectedCallback() {
-      this.setData(this.#getData(), this.#getSelectedReaction());
+      this.setData(this.#getData());
     }
 
-    setData(data: Data, selectedReaction?: number): void {
-      this.#render(data, selectedReaction);
+    setData(data: Data): void {
+      this.#render(data);
     }
 
     get objectId(): number {
@@ -31,7 +31,7 @@
       return this.getAttribute("object-type")!;
     }
 
-    #render(data: Data, selectedReaction?: number): void {
+    #render(data: Data): void {
       this.innerHTML = "";
 
       if (!data.size) return;
@@ -48,9 +48,6 @@
       data.forEach((value, key) => {
         const countButton = document.createElement("span");
         countButton.classList.add("reactionCountButton");
-        if (key === selectedReaction) {
-          countButton.classList.add("selected");
-        }
 
         const icon = document.createElement("span");
         icon.innerHTML = window.REACTION_TYPES[key].renderedIcon;
@@ -69,10 +66,6 @@
       const data = JSON.parse(this.getAttribute("data")!) as ReactionData[];
       this.removeAttribute("data");
       return new Map(data);
-    }
-
-    #getSelectedReaction(): number {
-      return parseInt(this.getAttribute("selected-reaction")!);
     }
   }
 

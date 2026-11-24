@@ -254,7 +254,6 @@ function updateReactionSummary(
   objectType: string,
   objectId: number,
   cachedReactions: Record<number, number>,
-  selectedReaction?: number,
 ): void {
   const reactions = new Map<number, number>();
   Object.entries(cachedReactions).forEach(([key, value]) => {
@@ -264,7 +263,7 @@ function updateReactionSummary(
   const component = document.querySelector(
     `woltlab-core-reaction-summary[object-type="${objectType}"][object-id="${objectId}"]`,
   ) as WoltlabCoreReactionSummaryElement;
-  component?.setData(reactions, selectedReaction);
+  component?.setData(reactions);
 }
 
 function updateButton(button: HTMLButtonElement, reactionTypeId: number): void {
@@ -308,7 +307,7 @@ async function toggleButton(button: HTMLButtonElement): Promise<void> {
   }
 
   updateButton(button, reactionTypeId);
-  updateReactionSummary(objectType, objectId, reactions, reactionTypeId);
+  updateReactionSummary(objectType, objectId, reactions);
 }
 
 function setupPopoverButton(): void {
@@ -353,7 +352,7 @@ function setupPopoverButton(): void {
         }
 
         updateButton(button, reactionTypeId);
-        updateReactionSummary(objectType, objectId, reactions, reactionTypeId);
+        updateReactionSummary(objectType, objectId, reactions);
       });
     });
   });
