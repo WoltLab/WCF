@@ -31,43 +31,47 @@
 		<h1 class="contentTitle">{lang}wcf.acp.style.{$action}{/lang}{if $action == 'edit'}: {$style->styleName}{/if}</h1>
 	</div>
 	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $action == 'edit'}
-				{if $style->hasDarkMode}
-					<li>
-						{if $isDarkMode}
-							<a href="{link controller='StyleEdit' id=$style->styleID}{/link}" class="button">
-								{icon name='palette'}
-								<span>{lang}wcf.acp.style.editLightMode{/lang}</span>
-							</a>
-						{else}
-							<a href="{link controller='StyleEdit' id=$style->styleID isDarkMode=1}{/link}" class="button">
-								{icon name='palette'}
-								<span>{lang}wcf.acp.style.editDarkMode{/lang}</span>
-							</a>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if $action == 'edit'}
+						{if $style->hasDarkMode}
+							<li>
+								{if $isDarkMode}
+									<a href="{link controller='StyleEdit' id=$style->styleID}{/link}" class="button">
+										{icon name='palette'}
+										<span>{lang}wcf.acp.style.editLightMode{/lang}</span>
+									</a>
+								{else}
+									<a href="{link controller='StyleEdit' id=$style->styleID isDarkMode=1}{/link}" class="button">
+										{icon name='palette'}
+										<span>{lang}wcf.acp.style.editDarkMode{/lang}</span>
+									</a>
+								{/if}
+							</li>
 						{/if}
-					</li>
-				{/if}
-				<li>
-					{unsafe:$interactionContextMenu->render()}
-					<script data-relocate="true">
-						{
-							const container = document.getElementById('{unsafe:$interactionContextMenu->getContainerID()|encodeJS}');
-							container.addEventListener('interaction:invalidate', (event) => {
-								if (event.detail.interaction === 'add-dark-mode') {
-									setTimeout(() => {
-										window.location.reload();
-									}, 2000);
+						<li>
+							{unsafe:$interactionContextMenu->render()}
+							<script data-relocate="true">
+								{
+									const container = document.getElementById('{unsafe:$interactionContextMenu->getContainerID()|encodeJS}');
+									container.addEventListener('interaction:invalidate', (event) => {
+										if (event.detail.interaction === 'add-dark-mode') {
+											setTimeout(() => {
+												window.location.reload();
+											}, 2000);
+										}
+									});
 								}
-							});
-						}
-					</script>
-				</li>
-			{/if}
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+							</script>
+						</li>
+					{/if}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {if !$isTainted}

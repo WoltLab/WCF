@@ -6,16 +6,20 @@
 		{if $action == 'edit'}<p class="contentHeaderDescription">{$formObject->getUserProfile()->getUsername()}</p>{/if}
 	</div>
 
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $action === 'edit'}
-				<li>
-					{unsafe:$interactionContextMenu->render()}
-				</li>
-			{/if}
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if $action === 'edit'}
+						<li>
+							{unsafe:$interactionContextMenu->render()}
+						</li>
+					{/if}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {unsafe:$form->getHTML()}

@@ -13,18 +13,21 @@
 		<h1 class="contentTitle">{lang}wcf.acp.template.group.{$action}{/lang}{if $action == 'edit'}: {$formObject->getTitle()}{/if}</h1>
 	</div>
 	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $action === 'edit'}
-				<li><button type="button" class="jsButtonCopy button" data-endpoint="{link controller="TemplateGroupCopy" id=$formObject->templateGroupID}{/link}">{icon name='copy'} <span>{lang}wcf.acp.template.group.copy{/lang}</span></button></li>
-				<li>
-					{unsafe:$interactionContextMenu->render()}
-				</li>
-			{/if}
-			
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if $action === 'edit'}
+						<li><button type="button" class="jsButtonCopy button" data-endpoint="{link controller="TemplateGroupCopy" id=$formObject->templateGroupID}{/link}">{icon name='copy'} <span>{lang}wcf.acp.template.group.copy{/lang}</span></button></li>
+						<li>
+							{unsafe:$interactionContextMenu->render()}
+						</li>
+					{/if}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {unsafe:$form->getHtml()}

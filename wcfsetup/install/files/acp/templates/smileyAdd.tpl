@@ -5,16 +5,20 @@
 		<h1 class="contentTitle">{lang}wcf.acp.smiley.{$action}{/lang}{if $action == 'edit'}: {$smiley->getTitle()}{/if}</h1>
 	</div>
 	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $action == 'edit'}
-				<li>
-					{unsafe:$interactionContextMenu->render()}
-				</li>
-			{/if}
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if $action == 'edit'}
+						<li>
+							{unsafe:$interactionContextMenu->render()}
+						</li>
+					{/if}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {include file='shared_formNotice'}

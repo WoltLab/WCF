@@ -19,42 +19,44 @@
 		<h1 class="contentTitle">{lang}wcf.acp.group.{$action}{/lang}{if $action == 'edit'}: {$group->getName()}{/if}</h1>
 	</div>
 	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $action == 'edit'}
-				{if $availableUserGroups|count > 1}
-					<li class="dropdown">
-						<a class="button dropdownToggle">{icon name='sort'} <span>{lang}wcf.acp.group.button.choose{/lang}</span></a>
-						<div class="dropdownMenu">
-							<ul class="scrollableDropdownMenu">
-								{foreach from=$availableUserGroups item='availableUserGroup'}
-									<li{if $availableUserGroup->groupID == $groupID} class="active"{/if}><a href="{link controller='UserGroupEdit' id=$availableUserGroup->groupID}{/link}">{$availableUserGroup->getName()}</a></li>
-								{/foreach}
-							</ul>
-						</div>
-					</li>
-				{/if}
-				
-				<li>
-					{unsafe:$interactionContextMenu->render()}
-					<script data-relocate="true">
-						{
-							const container = document.getElementById('{unsafe:$interactionContextMenu->getContainerID()|encodeJS}');
-							container.addEventListener('interaction:invalidate-all', (event) => {
-								if (event.detail.interaction === 'copy') {
-									setTimeout(() => {
-										window.location.href = event.detail.redirectURL;
-									}, 2000);
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if $action == 'edit'}
+						{if $availableUserGroups|count > 1}
+							<li class="dropdown">
+								<a class="button dropdownToggle">{icon name='sort'} <span>{lang}wcf.acp.group.button.choose{/lang}</span></a>
+								<div class="dropdownMenu">
+									<ul class="scrollableDropdownMenu">
+										{foreach from=$availableUserGroups item='availableUserGroup'}
+											<li{if $availableUserGroup->groupID == $groupID} class="active"{/if}><a href="{link controller='UserGroupEdit' id=$availableUserGroup->groupID}{/link}">{$availableUserGroup->getName()}</a></li>
+										{/foreach}
+									</ul>
+								</div>
+							</li>
+						{/if}
+						<li>
+							{unsafe:$interactionContextMenu->render()}
+							<script data-relocate="true">
+								{
+									const container = document.getElementById('{unsafe:$interactionContextMenu->getContainerID()|encodeJS}');
+									container.addEventListener('interaction:invalidate-all', (event) => {
+										if (event.detail.interaction === 'copy') {
+											setTimeout(() => {
+												window.location.href = event.detail.redirectURL;
+											}, 2000);
+										}
+									});
 								}
-							});
-						}
-					</script>
-				</li>
-			{/if}
-			
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+							</script>
+						</li>
+					{/if}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {if VISITOR_USE_TINY_BUILD && $groupIsGuest}

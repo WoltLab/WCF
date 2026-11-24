@@ -45,21 +45,23 @@
 		<h1 class="contentTitle">{lang}wcf.acp.page.{$action}{/lang}{if $action == 'edit'}: {$page->name}{/if}</h1>
 	</div>
 
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $action == 'edit'}
-				{if $page->pageType !== 'system'}
-					<li><a href="#" class="button jsButtonCopyPage">{icon name='copy'} {lang}wcf.acp.page.button.copyPage{/lang}</a></li>
-				{/if}
-
-				<li>
-					{unsafe:$interactionContextMenu->render()}
-				</li>
-			{/if}
-			
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if $action == 'edit'}
+						{if $page->pageType !== 'system'}
+							<li><a href="#" class="button jsButtonCopyPage">{icon name='copy'} {lang}wcf.acp.page.button.copyPage{/lang}</a></li>
+						{/if}
+						<li>
+							{unsafe:$interactionContextMenu->render()}
+						</li>
+					{/if}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {if $action == 'edit' && !$lastVersion|empty}

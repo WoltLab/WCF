@@ -5,11 +5,15 @@
 		<h1 class="contentTitle">{lang}wcf.acp.devtools.notificationTest{/lang}</h1>
 	</div>
 	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 <woltlab-core-notice type="warning">{lang}wcf.acp.devtools.notificationTest.contentCreationWarning{/lang}</woltlab-core-notice>

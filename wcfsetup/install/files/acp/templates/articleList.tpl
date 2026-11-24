@@ -5,19 +5,22 @@
 		<h1 class="contentTitle">{lang}wcf.acp.article.list{/lang}</h1>
 	</div>
 	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $canAddArticle}
-				{if $availableLanguages|count > 1}
-					<li><a href="#" class="button buttonPrimary jsButtonArticleAdd">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
-				{else}
-					<li><a href="{link controller='ArticleAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
-				{/if}
-			{/if}
-			
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if $canAddArticle}
+						{if $availableLanguages|count > 1}
+							<li><a href="#" class="button buttonPrimary jsButtonArticleAdd">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+						{else}
+							<li><a href="{link controller='ArticleAdd'}{/link}" class="button buttonPrimary">{icon name='plus'} <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+						{/if}
+					{/if}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 <div class="section">

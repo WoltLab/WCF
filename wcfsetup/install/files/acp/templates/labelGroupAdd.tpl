@@ -5,20 +5,23 @@
 		<h1 class="contentTitle">{lang}wcf.acp.label.group.{$action}{/lang}{if $action == 'edit'}: {$formObject->getTitle()}{/if}</h1>
 	</div>
 
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $action == 'edit'}
-				{if !$formObject->sortAlphabetically}
-					<li><button type="button" class="button jsChangeShowOrder">{icon name='up-down'} <span>{lang}wcf.global.changeShowOrder{/lang}</span></button></li>
-				{/if}
-				<li>
-					{unsafe:$interactionContextMenu->render()}
-				</li>
-			{/if}
-
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
+	{hascontent}
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{content}
+					{if $action == 'edit'}
+						{if !$formObject->sortAlphabetically}
+							<li><button type="button" class="button jsChangeShowOrder">{icon name='up-down'} <span>{lang}wcf.global.changeShowOrder{/lang}</span></button></li>
+						{/if}
+						<li>
+							{unsafe:$interactionContextMenu->render()}
+						</li>
+					{/if}
+					{event name='contentHeaderNavigation'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </header>
 
 {unsafe:$form->getHtml()}
