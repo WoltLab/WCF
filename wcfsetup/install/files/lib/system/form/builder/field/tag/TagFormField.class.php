@@ -134,7 +134,7 @@ final class TagFormField extends AbstractFormField implements
             $value = $this->getDocument()->getRequestData($this->getPrefixedId());
 
             if (\is_array($value)) {
-                $this->value = ArrayUtil::trim($value);
+                $this->value = ArrayUtil::trim(\array_filter($value, \is_string(...)));
             }
         }
 
