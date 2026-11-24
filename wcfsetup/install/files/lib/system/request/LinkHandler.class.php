@@ -255,14 +255,15 @@ final class LinkHandler extends SingletonFactory
     /**
      * Returns the full URL to a CMS page. The `$languageID` parameter is optional and if not
      * present (or the integer value `-1` is given) will cause the handler to pick the correct
-     * language version based upon the user's language.
+     * language version based upon the user's language. Passing `null` refers to the content
+     * of a non-multilingual page.
      *
      * Passing in an illegal page id will cause this method to fail silently, returning an
      * empty string.
      *
      * @return  string      full URL of empty string if `$pageID` is invalid
      */
-    public function getCmsLink(int $pageID, int $languageID = -1): string
+    public function getCmsLink(int $pageID, ?int $languageID = -1): string
     {
         $data = null;
 
