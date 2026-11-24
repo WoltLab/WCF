@@ -1,78 +1,114 @@
 /**
- * Dialog based style changer.
+ * Dropdown based style changer.
  *
- * @author  Alexander Ebert
- * @copyright  2001-2019 WoltLab GmbH
+ * The compact page footer renders the dropdown itself, other templates only provide
+ * a `.jsButtonStyleChanger` button that is turned into a dropdown.
+ *
+ * @author  Alexander Ebert, Marcel Werk
+ * @copyright  2001-2026 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @woltlabExcludeBundle all
  */
 
-import { getPhrase } from "../../Language";
 import { changeStyle } from "WoltLabSuite/Core/Api/Styles/ChangeStyle";
-import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import { promiseMutex } from "WoltLabSuite/Core/Helper/PromiseMutex";
-import { getStyleChooser } from "WoltLabSuite/Core/Api/Styles/GetStyleChooser";
+import UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 
-class ControllerStyleChanger {
-  /**
-   * Adds the style changer to the bottom navigation.
-   */
-  constructor() {
-    document.querySelectorAll(".jsButtonStyleChanger").forEach((link: HTMLAnchorElement) => {
-      link.addEventListener(
-        "click",
-        promiseMutex((ev) => this.showDialog(ev)),
-      );
-    });
+export type StyleChangerStyle = {
+  styleId: number;
+  name: string;
+  active: boolean;
+};
+
+let initialized = false;
+
+const selectStyle = promiseMutex(async (styleId: number): Promise<void> => {
+  await changeStyle(styleId);
+
+  window.location.reload();
+});
+
+function createMenu(styles: StyleChangerStyle[]): HTMLElement {
+  const list = document.createElement("ul");
+  list.classList.add("scrollableDropdownMenu");
+
+  for (const style of styles) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.changeStyle = style.styleId.toString();
+    button.textContent = style.name;
+
+    const listItem = document.createElement("li");
+    if (style.active) {
+      listItem.classList.add("active");
+      button.setAttribute("aria-current", "true");
+    }
+    listItem.append(button);
+    list.append(listItem);
   }
 
-  /**
-   * Loads and displays the style change dialog.
-   */
-  async showDialog(event: MouseEvent): Promise<void> {
+  const menu = document.createElement("div");
+  menu.classList.add("dropdownMenu");
+  menu.dataset.dropdownAlignmentVertical = "top";
+  menu.dataset.dropdownAlignmentHorizontal = "right";
+  menu.append(list);
+
+  return menu;
+}
+
+function initDropdown(button: HTMLElement, styles: StyleChangerStyle[]): void {
+  const dropdown = document.createElement("div");
+  dropdown.classList.add("dropdown");
+  button.before(dropdown);
+  dropdown.append(button, createMenu(styles));
+
+  button.classList.add("dropdownToggle");
+
+  UiDropdownSimple.init(button);
+}
+
+/**
+ * Adds the style changer to the page footer.
+ */
+export function setup(styles: StyleChangerStyle[]): void {
+  if (initialized) {
+    return;
+  }
+  initialized = true;
+
+  document.querySelectorAll<HTMLElement>(".jsButtonStyleChanger:not(.dropdownToggle)").forEach((button) => {
+    initDropdown(button, styles);
+  });
+
+  // The dropdown moves its menu into `.dropdownMenuContainer` when it opens.
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) {
+      return;
+    }
+
+    const element = event.target.closest<HTMLElement>("[data-change-style]");
+    if (element === null) {
+      return;
+    }
+
     event.preventDefault();
 
-    const { template } = await getStyleChooser();
-    const dialog = dialogFactory().fromHtml(template).withoutControls();
+    if (element.getAttribute("aria-current") === "true") {
+      return;
+    }
 
-    dialog.content.querySelectorAll(".styleList > li").forEach((style: HTMLLIElement) => {
-      style.classList.add("pointer");
-      style.addEventListener("click", (event) => {
-        event.preventDefault();
-
-        promiseMutex(() => this.#changeStyle(style));
-      });
-    });
-
-    dialog.show(getPhrase("wcf.style.changeStyle"));
-  }
-
-  /**
-   * Changes the style and reloads current page.
-   */
-  async #changeStyle(style: HTMLLIElement): Promise<void> {
-    const styleId = parseInt(style.dataset.styleId!, 10);
-
-    await changeStyle(styleId);
-
-    window.location.reload();
-  }
-}
-
-let controllerStyleChanger: ControllerStyleChanger;
-
-/**
- * Adds the style changer to the bottom navigation.
- */
-export function setup(): void {
-  if (!controllerStyleChanger) {
-    controllerStyleChanger = new ControllerStyleChanger();
-  }
+    selectStyle(parseInt(element.dataset.changeStyle!, 10));
+  });
 }
 
 /**
- * Loads and displays the style change dialog.
+ * Opens the style changer dropdown.
+ *
+ * @deprecated 6.3 The style changer is a dropdown that opens through its toggle button.
  */
 export function showDialog(event: MouseEvent): void {
-  void controllerStyleChanger.showDialog(event);
+  event.preventDefault();
+  event.stopPropagation();
+
+  document.querySelector<HTMLElement>(".jsButtonStyleChanger")?.click();
 }

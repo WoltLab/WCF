@@ -135,5 +135,6 @@
 		<template>shared_mediaManager</template>
 		<template>shared_mediaSetCategoryDialog</template>
 		<template>mediaJavaScript</template>
+		<template>styleChooser</template>
 	</delete>
 </data>

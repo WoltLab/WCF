@@ -275,30 +275,6 @@ class StyleEditForm extends StyleAddForm
             $this->styleName = $this->style->styleName;
             $this->styleVersion = $this->style->styleVersion;
             $this->templateGroupID = $this->style->templateGroupID ?? 0;
-            if ($this->style->image !== '' && \file_exists(\WCF_DIR . 'images/' . $this->style->image)) {
-                $file = new UploadFile(
-                    \WCF_DIR . 'images/' . $this->style->image,
-                    $this->style->image,
-                    true,
-                    true,
-                    false
-                );
-                UploadHandler::getInstance()->registerFilesByField('image', [
-                    $file,
-                ]);
-            }
-            if ($this->style->image2x !== '' && \file_exists(\WCF_DIR . 'images/' . $this->style->image2x)) {
-                $file = new UploadFile(
-                    \WCF_DIR . 'images/' . $this->style->image2x,
-                    $this->style->image2x,
-                    true,
-                    true,
-                    false
-                );
-                UploadHandler::getInstance()->registerFilesByField('image2x', [
-                    $file,
-                ]);
-            }
             if ($this->style->coverPhotoExtension !== '' && \file_exists($this->style->getCoverPhotoLocation(false))) {
                 $file = new UploadFile(
                     $this->style->getCoverPhotoLocation(false),
@@ -417,7 +393,7 @@ class StyleEditForm extends StyleAddForm
         // call saved event
         $this->saved();
 
-        // reload style object to update preview image
+        // reload style object to update the cover photo and favicons
         $this->style = new Style($this->style->styleID);
 
         if ($this->style->isTainted === 0) {

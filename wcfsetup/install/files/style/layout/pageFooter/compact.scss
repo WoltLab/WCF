@@ -439,8 +439,9 @@
 	width: 20px;
 }
 
-/* The menu is moved into `.dropdownMenuContainer`, it is styled through its own class. */
-.dropdownMenu.pageFooterLanguageMenu li > button {
+/* The menus are moved into `.dropdownMenuContainer`, they are styled through their own class. */
+.dropdownMenu.pageFooterLanguageMenu li > button,
+.dropdownMenu.pageFooterStyleMenu li > button {
 	align-items: center;
 	display: flex;
 	gap: 10px;

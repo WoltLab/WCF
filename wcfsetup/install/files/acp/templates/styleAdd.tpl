@@ -279,42 +279,6 @@
 			<section class="section">
 				<h2 class="sectionTitle">{lang}wcf.acp.style.general.files{/lang}</h2>
 				
-				<dl{if $errorField == 'image'} class="formError"{/if}>
-					<dt><label for="image">{lang}wcf.acp.style.image{/lang}</label></dt>
-					<dd>
-						{unsafe:$__wcf->getUploadHandler()->renderField('image')}
-						{if $errorField == 'image'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{elseif $errorType == 'invalid'}
-									{lang}wcf.upload.error.noImage{/lang}
-								{else}
-									{lang}wcf.acp.style.image.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-						<small>{lang}wcf.acp.style.image.description{/lang}</small>
-					</dd>
-				</dl>
-				<dl{if $errorField == 'image2x'} class="formError"{/if}>
-					<dt><label for="image2x">{lang}wcf.acp.style.image2x{/lang}</label></dt>
-					<dd>
-						{unsafe:$__wcf->getUploadHandler()->renderField('image2x')}
-						{if $errorField == 'image2x'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{elseif $errorType == 'invalid'}
-									{lang}wcf.upload.error.noImage{/lang}
-								{else}
-									{lang}wcf.acp.style.image2x.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-						<small>{lang}wcf.acp.style.image2x.description{/lang}</small>
-					</dd>
-				</dl>
 				{if $availableTemplateGroups|count}
 					<dl{if $errorField == 'templateGroupID'} class="formError"{/if}>
 						<dt><label for="templateGroupID">{lang}wcf.acp.style.templateGroupID{/lang}</label></dt>

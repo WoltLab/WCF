@@ -108,11 +108,6 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             $this->removeDirectory($this->imagePath);
         }
 
-        // delete preview image
-        if ($this->image !== '') {
-            @\unlink(\WCF_DIR . 'images/' . $this->image);
-        }
-
         // delete language items
         $sql = "DELETE FROM wcf1_language_item
                 WHERE       languageItem = ?";
@@ -261,8 +256,6 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             'name' => '',
             'description' => [],
             'version' => '',
-            'image' => '',
-            'image2x' => '',
             'copyright' => '',
             'default' => false,
             'license' => '',
@@ -351,8 +344,6 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                                 break;
 
                             case 'copyright':
-                            case 'image':
-                            case 'image2x':
                             case 'license':
                             case 'coverPhoto':
                                 $data[$element->tagName] = $element->nodeValue;
@@ -421,16 +412,6 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
         // get style data
         $data = self::readStyleData($tar);
-
-        // export preview image to temporary location
-        if (!empty($data['image'])) {
-            $i = $tar->getIndexByFilename($data['image']);
-            if ($i !== false) {
-                $path = FileUtil::getTemporaryFilename('stylePreview_', $data['image'], \WCF_DIR . 'tmp/');
-                $data['image'] = \basename($path);
-                $tar->extract($i, $path);
-            }
-        }
 
         $tar->close();
 
@@ -796,38 +777,6 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
             }
         }
 
-        // import preview image
-        foreach (['image', 'image2x'] as $type) {
-            if (!empty($data[$type])) {
-                $fileExtension = \pathinfo($data[$type], \PATHINFO_EXTENSION);
-                if (!\in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS, true)) {
-                    continue;
-                }
-
-                $index = $tar->getIndexByFilename($data[$type]);
-                if ($index !== false) {
-                    $filename = $style->getAssetPath() . 'stylePreview' . ($type === 'image2x' ? '@2x' : '') . '.' . $fileExtension;
-                    $tar->extract($index, $filename);
-                    FileUtil::makeWritable($filename);
-
-                    if (\file_exists($filename)) {
-                        try {
-                            if (($imageData = \getimagesize($filename)) !== false) {
-                                switch ($imageData[2]) {
-                                    case \IMAGETYPE_PNG:
-                                    case \IMAGETYPE_JPEG:
-                                    case \IMAGETYPE_WEBP:
-                                        $style->update([$type => 'style-' . $style->styleID . '/stylePreview' . ($type === 'image2x' ? '@2x' : '') . '.' . $fileExtension]);
-                                }
-                            }
-                        } catch (SystemException $e) {
-                            // broken image
-                        }
-                    }
-                }
-            }
-        }
-
         // import cover photo
         if (!empty($data['coverPhoto'])) {
             $fileExtension = \pathinfo($data['coverPhoto'], \PATHINFO_EXTENSION);
@@ -953,22 +902,6 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
         $styleTarName = FileUtil::getTemporaryFilename('style_', '.tgz');
         $styleTar = new TarWriter($styleTarName, true);
 
-        // append style preview image
-        if ($this->image !== '' && @\file_exists(\WCF_DIR . 'images/' . $this->image)) {
-            $styleTar->add(
-                \WCF_DIR . 'images/' . $this->image,
-                '',
-                FileUtil::addTrailingSlash(\dirname(\WCF_DIR . 'images/' . $this->image))
-            );
-        }
-        if ($this->image2x !== '' && @\file_exists(\WCF_DIR . 'images/' . $this->image2x)) {
-            $styleTar->add(
-                \WCF_DIR . 'images/' . $this->image2x,
-                '',
-                FileUtil::addTrailingSlash(\dirname(\WCF_DIR . 'images/' . $this->image2x))
-            );
-        }
-
         // append cover photo
         $coverPhoto = $this->coverPhotoExtension !== '' ? $this->getCoverPhotoLocation(false) : '';
         if ($coverPhoto !== '' && @\file_exists($coverPhoto)) {
@@ -1005,12 +938,6 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
 
         $xml->writeElement('date', $this->styleDate);
         $xml->writeElement('version', $this->styleVersion);
-        if ($this->image !== '') {
-            $xml->writeElement('image', \basename($this->image));
-        }
-        if ($this->image2x !== '') {
-            $xml->writeElement('image2x', \basename($this->image2x));
-        }
         if ($coverPhoto !== '') {
             $xml->writeElement('coverPhoto', \basename(FileUtil::unifyDirSeparator($coverPhoto)));
         }
@@ -1163,19 +1090,7 @@ final class StyleEditor extends DatabaseObjectEditor implements IEditableCachedO
                     continue;
                 }
 
-                // Skip preview images and cover photos.
-                if (
-                    $this->image !== ''
-                    && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator(\WCF_DIR . 'images/' . $this->image)
-                ) {
-                    continue;
-                }
-                if (
-                    $this->image2x !== ''
-                    && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator(\WCF_DIR . 'images/' . $this->image2x)
-                ) {
-                    continue;
-                }
+                // Skip the cover photo.
                 if (
                     $coverPhoto !== ''
                     && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator($coverPhoto)

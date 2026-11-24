@@ -29,6 +29,7 @@ import { setup as setupPageHeaderSearch } from "./Component/PageHeaderSearch";
 import { setup as setupPageHeaderShadow } from "./Component/PageHeaderShadow";
 import { setup as setupColorSchemeSwitch } from "./Component/PageFooter/ColorSchemeSwitch";
 import { getStoredColorScheme } from "./Controller/Style/ColorScheme";
+import type { StyleChangerStyle } from "./Controller/Style/Changer";
 
 interface BootstrapOptions {
   backgroundQueue: {
@@ -44,7 +45,7 @@ interface BootstrapOptions {
   dynamicColorScheme: boolean;
   executeCronjobs: string | undefined;
   shareButtonProviders?: ShareProvider[];
-  styleChanger: boolean;
+  styleChanger?: StyleChangerStyle[];
   removeQuotes?: string[];
   usedQuotes?: Map<string, string[]>;
   reportEndpoint: string;
@@ -130,9 +131,10 @@ export function setup(options: BootstrapOptions): void {
     setupLanguageSwitcher();
   }
 
-  if (options.styleChanger) {
+  if (options.styleChanger !== undefined) {
+    const styles = options.styleChanger;
     void import("./Controller/Style/Changer").then((ControllerStyleChanger) => {
-      ControllerStyleChanger.setup();
+      ControllerStyleChanger.setup(styles);
     });
   }
 
