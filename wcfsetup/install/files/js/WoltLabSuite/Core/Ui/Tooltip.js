@@ -20,8 +20,12 @@ define(["require", "exports", "tslib", "../Environment", "../Helper/PageOverlay"
         const element = event.currentTarget;
         let title = element.title.trim();
         if (title !== "") {
+            // Only update labels that were previously derived from the tooltip.
+            const label = element.getAttribute("aria-label");
+            if (label === null || label === element.dataset.tooltip) {
+                element.setAttribute("aria-label", title);
+            }
             element.dataset.tooltip = title;
-            element.setAttribute("aria-label", title);
             element.removeAttribute("title");
         }
         title = element.dataset.tooltip || "";
@@ -78,7 +82,9 @@ define(["require", "exports", "tslib", "../Environment", "../Helper/PageOverlay"
             if (title.length) {
                 element.dataset.tooltip = title;
                 element.removeAttribute("title");
-                element.setAttribute("aria-label", title);
+                if (!element.hasAttribute("aria-label")) {
+                    element.setAttribute("aria-label", title);
+                }
                 element.addEventListener("mouseenter", mouseEnter);
                 element.addEventListener("mouseleave", mouseLeave);
                 element.addEventListener("click", mouseLeave);

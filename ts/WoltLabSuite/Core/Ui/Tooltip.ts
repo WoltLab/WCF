@@ -22,8 +22,12 @@ function mouseEnter(event: MouseEvent): void {
 
   let title = element.title.trim();
   if (title !== "") {
+    // Only update labels that were previously derived from the tooltip.
+    const label = element.getAttribute("aria-label");
+    if (label === null || label === element.dataset.tooltip) {
+      element.setAttribute("aria-label", title);
+    }
     element.dataset.tooltip = title;
-    element.setAttribute("aria-label", title);
     element.removeAttribute("title");
   }
 
@@ -90,7 +94,9 @@ export function setup(): void {
     if (title.length) {
       element.dataset.tooltip = title;
       element.removeAttribute("title");
-      element.setAttribute("aria-label", title);
+      if (!element.hasAttribute("aria-label")) {
+        element.setAttribute("aria-label", title);
+      }
 
       element.addEventListener("mouseenter", mouseEnter);
       element.addEventListener("mouseleave", mouseLeave);

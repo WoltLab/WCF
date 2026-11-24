@@ -38,8 +38,16 @@
 
       const button = document.createElement("button");
       button.type = "button";
+
+      const title = window.WoltLabLanguage.getPhrase("wcf.reactions.summary.listReactions");
+
+      // The accessible name must contain the visible counters, it must be set
+      // before `jsTooltip` is added, otherwise the title would take its place.
+      const label = Array.from(data, ([key, value]) => `${window.REACTION_TYPES[key].title} ${value}`);
+      label.push(title);
+      button.setAttribute("aria-label", label.join(", "));
+      button.title = title;
       button.classList.add("reactionSummary", "jsTooltip");
-      button.title = window.WoltLabLanguage.getPhrase("wcf.reactions.summary.listReactions");
       button.addEventListener("click", () => {
         this.dispatchEvent(new Event("showDetails"));
       });

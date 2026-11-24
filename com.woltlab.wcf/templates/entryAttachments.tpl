@@ -11,7 +11,7 @@
 					{foreach from=$attachments item=attachment}
 						{if $attachment->showAsImage() && !$attachment->isEmbedded()}
 							<li class="attachmentThumbnail" data-attachment-id="{$attachment->attachmentID}">
-								<a href="{$attachment->getLink()}"{if $attachment->canDownload()} data-type="image" data-fancybox="{$attachment->getFancyboxTag()}" data-caption="{$attachment->filename}" aria-label="{lang}wcf.attachment.image.title{/lang}"{/if}>
+								<a href="{$attachment->getLink()}"{if $attachment->canDownload()} data-type="image" data-fancybox="{$attachment->getFancyboxTag()}" data-caption="{$attachment->filename}"{/if}>
 									<div class="attachmentThumbnailContainer">
 										<span class="attachmentThumbnailImage">
 											{if $attachment->hasThumbnail()}

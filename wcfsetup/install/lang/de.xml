@@ -3334,7 +3334,6 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>
 		<item name="wcf.attachment.file.title"><![CDATA[Datei „{$attachment->filename}“ herunterladen]]></item>
-		<item name="wcf.attachment.image.title"><![CDATA[Bild „{$attachment->filename}“ anzeigen]]></item>
 		<item name="wcf.attachment.files"><![CDATA[Dateien]]></item>
 		<item name="wcf.attachment.images"><![CDATA[Bilder]]></item>
 		<item name="wcf.attachment.attachments"><![CDATA[Dateianhänge]]></item>
@@ -5970,5 +5969,6 @@ Erlaubte Dateiendungen: {', '|implode:$allowedFileExtensions}]]></item>
 	<item name="wcf.acp.style.image.description"/>
 	<item name="wcf.acp.style.image2x"/>
 	<item name="wcf.acp.style.image2x.description"/>
+	<item name="wcf.attachment.image.title"/>
 </delete>
 </language>
