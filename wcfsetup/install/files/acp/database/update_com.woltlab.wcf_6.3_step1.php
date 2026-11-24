@@ -40,6 +40,8 @@ return [
             DefaultFalseBooleanDatabaseTableColumn::create('flagAsUpdated'),
             NotNullInt10DatabaseTableColumn::create('lastUpdateTime')
                 ->defaultValue(0),
+            NotNullInt10DatabaseTableColumn::create('deleteTime')
+                ->defaultValue(0),
         ])
         ->indices([
             DatabaseTableIndex::create('lastUpdateTime')

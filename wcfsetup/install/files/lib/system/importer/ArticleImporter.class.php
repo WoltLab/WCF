@@ -104,6 +104,11 @@ class ArticleImporter extends AbstractImporter
             $data['lastUpdateTime'] = $data['time'] ?? \TIME_NOW;
         }
 
+        // Trashed articles without a delete time would be pruned immediately.
+        if ((int)($data['isDeleted'] ?? 0) !== 0 && (int)($data['deleteTime'] ?? 0) === 0) {
+            $data['deleteTime'] = \TIME_NOW;
+        }
+
         // save article
         $article = ArticleEditor::create($data);
 

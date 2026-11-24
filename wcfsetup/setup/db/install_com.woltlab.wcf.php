@@ -434,6 +434,8 @@ return [
                 ->notNull()
                 ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('isDeleted'),
+            NotNullInt10DatabaseTableColumn::create('deleteTime')
+                ->defaultValue(0),
             DefaultFalseBooleanDatabaseTableColumn::create('hasLabels'),
             DefaultFalseBooleanDatabaseTableColumn::create('isFeatured'),
             DefaultFalseBooleanDatabaseTableColumn::create('flagAsUpdated'),

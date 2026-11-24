@@ -63,6 +63,7 @@
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_likeObject.php</instruction>
 	<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_6.3_step1.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_articleLastUpdateTime.php</instruction>
+	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_articleDeleteTime.php</instruction>
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_conditions.php</instruction>
 	The `objectType` PIP must run after `update_com.woltlab.wcf_6.3_conditions.php`,
 	because deleting the legacy condition object types cascades to `wcf1_condition`.
@@ -98,6 +99,11 @@
 	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_cronjobL10n.php</instruction>
 
 	`acp/database/update_com.woltlab.wcf_6.3_step3.php` must run after all of the scripts above, including `acp/update_com.woltlab.wcf_6.3_cronjobL10n.php`.
+
+	The following step must run after the `option` PIP, because it writes the value of the
+	newly added option `message_empty_recycle_bin_cycle`:
+	<instruction type="option" />
+	<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_6.3_emptyRecycleBinCycle.php</instruction>
 
 	The `userOption` PIP must run after `update_com.woltlab.wcf_6.3_userOptionConfiguration.php`,
 	because the script rebuilds the configuration of all user options and would discard the

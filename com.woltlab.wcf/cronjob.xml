@@ -141,6 +141,13 @@
 			<expression>15 * * * *</expression>
 			<canbedisabled>0</canbedisabled>
 		</cronjob>
+		<cronjob name="com.woltlab.wcf.emptyRecycleBin">
+			<classname>wcf\system\cronjob\EmptyRecycleBinCronjob</classname>
+			<description>Removes content from the trash bin</description>
+			<description language="de">Entfernt Inhalte aus dem Papierkorb</description>
+			<expression>30 * * * *</expression>
+			<canbedisabled>0</canbedisabled>
+		</cronjob>
 	</import>
 	<delete>
 		<cronjob name="com.woltlab.wcf.refreshSearchRobots">

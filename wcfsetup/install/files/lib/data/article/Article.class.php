@@ -41,6 +41,7 @@ use wcf\system\WCF;
  * @property-read   int     $views              number of times the article has been viewed
  * @property-read   int     $cumulativeLikes    cumulative result of likes for the article
  * @property-read   0|1     $isDeleted          is 1 if the article is in trash bin, otherwise 0
+ * @property-read   int     $deleteTime         timestamp at which the article has been moved to the trash bin or `0` if it is not trashed
  * @property-read   0|1     $hasLabels          is `1` if labels are assigned to the article
  * @property-read   0|1     $isFeatured         is `1` if the article is featured which pins it at the top, otherwise `0`
  * @property-read   0|1     $flagAsUpdated      is `1` if the article is flagged as updated, otherwise `0`

@@ -151,6 +151,13 @@ return new class {
                 $event->register(new \wcf\system\acp\dashboard\box\CreditsAcpDashboardBox());
             }
         );
+
+        $eventHandler->register(
+            \wcf\event\moderation\TrashedContentPrunersCollecting::class,
+            static function (\wcf\event\moderation\TrashedContentPrunersCollecting $event) {
+                $event->register(new \wcf\system\moderation\ArticleTrashedContentPruner());
+            }
+        );
     }
 
     private function initSitemapObjects(): void

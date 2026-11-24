@@ -142,6 +142,16 @@ final class ArticleBuilder extends DatabaseObjectBuilder
     public function setIsDeleted(bool $isDeleted): static
     {
         $this->properties['isDeleted'] = $isDeleted ? 1 : 0;
+        if (!isset($this->properties['deleteTime'])) {
+            $this->properties['deleteTime'] = $isDeleted ? \TIME_NOW : 0;
+        }
+
+        return $this;
+    }
+
+    public function setDeleteTime(int $time): static
+    {
+        $this->properties['deleteTime'] = $time;
 
         return $this;
     }

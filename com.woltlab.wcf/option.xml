@@ -1404,6 +1404,13 @@ yaml</defaultvalue>
 				<maxvalue>365</maxvalue>
 				<suffix>days</suffix>
 			</option>
+			<option name="message_empty_recycle_bin_cycle">
+				<categoryname>message.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>30</defaultvalue>
+				<minvalue>0</minvalue>
+				<suffix>days</suffix>
+			</option>
 			<!-- /message.general -->
 			<option name="search_results_per_page">
 				<categoryname>message.search</categoryname>
