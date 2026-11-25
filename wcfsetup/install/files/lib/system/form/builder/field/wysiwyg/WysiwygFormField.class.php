@@ -102,6 +102,18 @@ final class WysiwygFormField extends AbstractFormField implements
     protected bool $supportMentions = false;
 
     /**
+     * object type of the context used for mention suggestions
+     * @since 6.3
+     */
+    protected string $mentionContextObjectType = '';
+
+    /**
+     * id of the context object used for mention suggestions
+     * @since 6.3
+     */
+    protected int $mentionContextObjectID = 0;
+
+    /**
      * is `true` if this form field supports quotes, otherwise `false`
      */
     protected bool $supportQuotes = false;
@@ -383,6 +395,41 @@ final class WysiwygFormField extends AbstractFormField implements
     }
 
     /**
+     * Sets the context object that is used to prioritize relevant users in
+     * mention suggestions and returns this field.
+     *
+     * @since 6.3
+     */
+    public function mentionContext(string $objectType, int $objectID): static
+    {
+        $this->mentionContextObjectType = $objectType;
+        $this->mentionContextObjectID = $objectID;
+
+        return $this;
+    }
+
+    /**
+     * Returns the object type of the context used for mention suggestions or
+     * an empty string if no context is set.
+     *
+     * @since 6.3
+     */
+    public function getMentionContextObjectType(): string
+    {
+        return $this->mentionContextObjectType;
+    }
+
+    /**
+     * Returns the id of the context object used for mention suggestions.
+     *
+     * @since 6.3
+     */
+    public function getMentionContextObjectID(): int
+    {
+        return $this->mentionContextObjectID;
+    }
+
+    /**
      * Sets if the form field supports quotes and returns this field.
      */
     public function supportQuotes(bool $supportQuotes = true): static
@@ -526,6 +573,8 @@ final class WysiwygFormField extends AbstractFormField implements
                 'data-autosave-last-edit-time',
                 'data-disable-attachments',
                 'data-support-mention',
+                'data-mention-context-object-type',
+                'data-mention-context-object-id',
             ]
         );
     }

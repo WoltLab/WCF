@@ -25,9 +25,18 @@ type Item =
     };
 type Response = Item[];
 
-export function mentionSuggestions(query: string): Promise<Response> {
+export type MentionContext = {
+  objectType: string;
+  objectID: number;
+};
+
+export function mentionSuggestions(query: string, context?: MentionContext): Promise<Response> {
   const url = new URL(window.WSC_RPC_API_URL + "core/messages/mention-suggestions");
   url.searchParams.set("query", query);
+  if (context !== undefined) {
+    url.searchParams.set("objectType", context.objectType);
+    url.searchParams.set("objectID", context.objectID.toString());
+  }
 
   return fromInfallibleApiRequest(() => {
     return prepareRequest(url).get().allowCaching().disableLoadingIndicator().fetchAsJson();

@@ -11,12 +11,12 @@ define(["require", "exports", "../../Dom/Util", "./Event", "WoltLabSuite/Core/Ap
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
-    async function getPossibleMentions(query) {
+    async function getPossibleMentions(query, context) {
         // Prevent excessive attempts to resolve mentions.
         if (query.length > 24) {
             return [];
         }
-        return (await (0, MentionSuggestions_1.mentionSuggestions)(query)).map((item) => {
+        return (await (0, MentionSuggestions_1.mentionSuggestions)(query, context)).map((item) => {
             if (item.type === "user") {
                 return {
                     id: `@${item.username}`,
@@ -37,18 +37,27 @@ define(["require", "exports", "../../Dom/Util", "./Event", "WoltLabSuite/Core/Ap
             }
         });
     }
-    function getMentionConfiguration() {
+    function getMentionContext(element) {
+        const objectType = element.dataset.mentionContextObjectType || "";
+        const objectID = parseInt(element.dataset.mentionContextObjectId || "0", 10);
+        if (objectType === "" || !objectID) {
+            return undefined;
+        }
+        return { objectType, objectID };
+    }
+    function getMentionConfiguration(context) {
         return {
             feeds: [
                 {
-                    feed: (query) => getPossibleMentions(query),
+                    feed: (query) => getPossibleMentions(query, context),
                     itemRenderer: (item) => {
                         return (0, Util_1.createFragmentFromHtml)(`
             <span class="ckeditor5__mention">${item.icon} ${(0, StringUtil_1.escapeHTML)(item.text)}</span>
           `).firstElementChild;
                     },
                     marker: "@",
-                    minimumCharacters: 3,
+                    // Users relevant to the context are suggested immediately.
+                    minimumCharacters: context === undefined ? 3 : 0,
                 },
             ],
         };
@@ -58,7 +67,7 @@ define(["require", "exports", "../../Dom/Util", "./Event", "WoltLabSuite/Core/Ap
             if (!features.mention) {
                 return;
             }
-            configuration.mention = getMentionConfiguration();
+            configuration.mention = getMentionConfiguration(getMentionContext(element));
         });
     }
 });

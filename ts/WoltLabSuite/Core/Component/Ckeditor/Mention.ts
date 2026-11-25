@@ -11,7 +11,7 @@
 import type { CKEditor5 } from "@woltlab/editor";
 import { createFragmentFromHtml } from "../../Dom/Util";
 import { listenToCkeditor } from "./Event";
-import { mentionSuggestions } from "WoltLabSuite/Core/Api/Messages/MentionSuggestions";
+import { mentionSuggestions, type MentionContext } from "WoltLabSuite/Core/Api/Messages/MentionSuggestions";
 import { escapeHTML } from "WoltLabSuite/Core/StringUtil";
 
 type Mention = {
@@ -20,13 +20,13 @@ type Mention = {
   icon: string;
 };
 
-async function getPossibleMentions(query: string): Promise<Mention[]> {
+async function getPossibleMentions(query: string, context: MentionContext | undefined): Promise<Mention[]> {
   // Prevent excessive attempts to resolve mentions.
   if (query.length > 24) {
     return [];
   }
 
-  return (await mentionSuggestions(query)).map((item) => {
+  return (await mentionSuggestions(query, context)).map((item) => {
     if (item.type === "user") {
       return {
         id: `@${item.username}`,
@@ -47,18 +47,29 @@ async function getPossibleMentions(query: string): Promise<Mention[]> {
   });
 }
 
-function getMentionConfiguration(): CKEditor5.MentionConfig {
+function getMentionContext(element: HTMLElement): MentionContext | undefined {
+  const objectType = element.dataset.mentionContextObjectType || "";
+  const objectID = parseInt(element.dataset.mentionContextObjectId || "0", 10);
+  if (objectType === "" || !objectID) {
+    return undefined;
+  }
+
+  return { objectType, objectID };
+}
+
+function getMentionConfiguration(context: MentionContext | undefined): CKEditor5.MentionConfig {
   return {
     feeds: [
       {
-        feed: (query: string) => getPossibleMentions(query),
+        feed: (query: string) => getPossibleMentions(query, context),
         itemRenderer: (item: Awaited<ReturnType<typeof getPossibleMentions>>[0]) => {
           return createFragmentFromHtml(`
             <span class="ckeditor5__mention">${item.icon} ${escapeHTML(item.text)}</span>
           `).firstElementChild as HTMLElement;
         },
         marker: "@",
-        minimumCharacters: 3,
+        // Users relevant to the context are suggested immediately.
+        minimumCharacters: context === undefined ? 3 : 0,
       },
     ],
   };
@@ -70,6 +81,6 @@ export function setup(element: HTMLElement): void {
       return;
     }
 
-    configuration.mention = getMentionConfiguration();
+    configuration.mention = getMentionConfiguration(getMentionContext(element));
   });
 }

@@ -736,6 +736,19 @@ class WysiwygFormContainer extends FormContainer implements IBuilderNode
     }
 
     /**
+     * Sets the context object that is used to prioritize relevant users in
+     * mention suggestions and returns this form container.
+     *
+     * @since 6.3
+     */
+    public function mentionContext(string $objectType, int $objectID): static
+    {
+        $this->getWysiwygField()->mentionContext($objectType, $objectID);
+
+        return $this;
+    }
+
+    /**
      * Sets if quotes are supported by the editor field and returns this form container.
      *
      * By default, quotes are not supported.

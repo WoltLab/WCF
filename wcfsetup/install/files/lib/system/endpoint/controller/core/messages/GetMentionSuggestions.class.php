@@ -8,10 +8,14 @@ use Psr\Http\Message\ServerRequestInterface;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
+use wcf\event\message\mention\MentionSuggestionProviderCollecting;
 use wcf\http\Helper;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\endpoint\GetRequest;
 use wcf\system\endpoint\IController;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
+use wcf\system\message\mention\IMentionSuggestionProvider;
 use wcf\system\WCF;
 
 /**
@@ -25,32 +29,50 @@ use wcf\system\WCF;
 #[GetRequest('/core/messages/mention-suggestions')]
 final class GetMentionSuggestions implements IController
 {
+    private const MAX_USERS = 10;
+
     #[\Override]
     public function __invoke(ServerRequestInterface $request, array $variables): ResponseInterface
     {
         $parameters = Helper::mapApiParameters($request, GetMentionSuggestionsParameters::class);
-        if (\mb_strlen($parameters->query) < 3) {
+        $provider = $this->getProvider($parameters->objectType);
+        if (\mb_strlen($parameters->query) < 3 && $provider === null) {
             throw new UserInputException('query', 'tooShort');
         }
 
         $query = \mb_strtolower($parameters->query);
         $matches = [];
 
-        foreach ($this->getGroups($query) as $userGroup) {
-            $matches[] = [
-                'name' => $userGroup->getName(),
-                'groupID' => $userGroup->groupID,
-                'type' => 'group',
-            ];
+        $contextUsers = [];
+        if ($provider !== null && $parameters->objectID > 0) {
+            $contextUsers = $this->getContextUsers($provider, $parameters->objectID, $query);
         }
 
-        foreach ($this->getUsers($query) as $userProfile) {
-            $matches[] = [
-                'avatarTag' => $userProfile->getAvatar()->getImageTag(16),
-                'username' => $userProfile->getUsername(),
-                'userID' => $userProfile->getObjectID(),
-                'type' => 'user',
-            ];
+        foreach ($contextUsers as $userProfile) {
+            $matches[] = $this->getUserMatch($userProfile);
+        }
+
+        // Short queries are only supported for suggestions based on the context.
+        if (\mb_strlen($query) >= 3) {
+            foreach ($this->getGroups($query) as $userGroup) {
+                $matches[] = [
+                    'name' => $userGroup->getName(),
+                    'groupID' => $userGroup->groupID,
+                    'type' => 'group',
+                ];
+            }
+
+            $limit = self::MAX_USERS - \count($contextUsers);
+            if ($limit > 0) {
+                $excludedUserIDs = \array_map(
+                    static fn(UserProfile $userProfile) => $userProfile->userID,
+                    $contextUsers
+                );
+
+                foreach ($this->getUsers($query, $limit, $excludedUserIDs) as $userProfile) {
+                    $matches[] = $this->getUserMatch($userProfile);
+                }
+            }
         }
 
         return new JsonResponse(
@@ -64,15 +86,60 @@ final class GetMentionSuggestions implements IController
         );
     }
 
+    private function getProvider(string $objectType): ?IMentionSuggestionProvider
+    {
+        if ($objectType === '') {
+            return null;
+        }
+
+        $event = new MentionSuggestionProviderCollecting();
+        EventHandler::getInstance()->fire($event);
+
+        return $event->getProviders()[$objectType] ?? null;
+    }
+
     /**
      * @return list<UserProfile>
      */
-    private function getUsers(string $query): array
+    private function getContextUsers(IMentionSuggestionProvider $provider, int $objectID, string $query): array
+    {
+        $userIDs = $provider->getUserIDs($objectID, $query, self::MAX_USERS);
+        if ($userIDs === []) {
+            return [];
+        }
+
+        return \array_values(\array_filter(
+            UserProfileRuntimeCache::getInstance()->getObjects($userIDs),
+            static fn(?UserProfile $userProfile) => $userProfile !== null
+        ));
+    }
+
+    /**
+     * @return array{avatarTag: string, username: string, userID: int, type: 'user'}
+     */
+    private function getUserMatch(UserProfile $userProfile): array
+    {
+        return [
+            'avatarTag' => $userProfile->getAvatar()->getImageTag(16),
+            'username' => $userProfile->getUsername(),
+            'userID' => $userProfile->getObjectID(),
+            'type' => 'user',
+        ];
+    }
+
+    /**
+     * @param list<int> $excludedUserIDs
+     * @return list<UserProfile>
+     */
+    private function getUsers(string $query, int $limit, array $excludedUserIDs): array
     {
         $userProfileList = new UserProfileList();
         $userProfileList->getConditionBuilder()->add("username LIKE ?", [WCF::getDB()->escapeLikeValue($query) . '%']);
+        if ($excludedUserIDs !== []) {
+            $userProfileList->getConditionBuilder()->add("user_table.userID NOT IN (?)", [$excludedUserIDs]);
+        }
 
-        $userProfileList->sqlLimit = 10;
+        $userProfileList->sqlLimit = $limit;
         $userProfileList->readObjects();
 
         return \array_values($userProfileList->getObjects());
@@ -106,7 +173,13 @@ final class GetMentionSuggestions implements IController
 final class GetMentionSuggestionsParameters
 {
     public function __construct(
-        /** @var non-empty-string */
-        public readonly string $query,
+        public readonly string $query = '',
+
+        /**
+         * Object type of the context used to prioritize relevant users.
+         */
+        public readonly string $objectType = '',
+
+        public readonly int $objectID = 0,
     ) {}
 }
