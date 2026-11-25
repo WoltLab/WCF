@@ -312,6 +312,17 @@ a.ck.ck-button-bold {
 	}
 }
 
+/* Balloons are absolutely positioned, inside a `<dialog>` they would be clipped
+   by its `overflow: hidden`. A zero-size fixed wrapper anchors them to the
+   viewport instead, matching the behavior of the other overlays. */
+.dialog > #pageOverlayContainer > .ck-body-wrapper {
+	height: 0;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 0;
+}
+
 @media (hover: hover) {
 	.ck-body-wrapper .ck.ck-list__item .ck-button:not(.ck-disabled, .ck-on):hover {
 		background-color: var(--wcfDropdownBackgroundActive);

@@ -33,7 +33,7 @@ function verifyHorizontalPosition(balloon: HTMLElement): void {
   if (position.left < 0) {
     balloon.style.setProperty("left", "0");
   } else if (position.right > window.innerWidth) {
-    const leftMostPosition = Math.min(window.innerWidth - position.width, 0);
+    const leftMostPosition = Math.max(window.innerWidth - position.width, 0);
     balloon.style.setProperty("left", `${leftMostPosition}px`);
   }
 }
