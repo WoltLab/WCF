@@ -46,25 +46,6 @@
 	}
 }
 
-.articleContent {
-	.articleTagList {
-		margin-top: 20px;
-	}
-
-	.articleLikeSection {
-		align-items: center;
-	}
-
-	.articleButtons {
-		justify-content: flex-end;
-	}
-
-	.articleLikesSummary:not(:empty),
-	.articleButtons:not(:empty) {
-		margin-top: 20px;
-	}
-}
-
 .articleAboutAuthor {
 	.articleAboutAuthorText {
 		font-style: italic;
