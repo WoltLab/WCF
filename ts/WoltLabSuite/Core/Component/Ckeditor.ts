@@ -28,6 +28,7 @@ import { element as scrollToElement } from "../Ui/Scroll";
 import Devtools from "../Devtools";
 import { setupSubmitShortcut } from "./Ckeditor/Keyboard";
 import { setup as setupBalloonPanel } from "./Ckeditor/BalloonPanel";
+import { setup as setupDropdownPanel } from "./Ckeditor/DropdownPanel";
 import { browser, touch } from "../Environment";
 import type { WoltlabSmileyItem } from "@woltlab/editor/plugins/ckeditor5-woltlab-smiley";
 import { getPageOverlayContainer } from "../Helper/PageOverlay";
@@ -329,6 +330,8 @@ export async function setupCkeditor(
 
   const cke = await createEditor(element, configuration);
   const ckeditor = new Ckeditor(cke, features);
+
+  setupDropdownPanel(cke, CKEditor5);
 
   if (features.autosave) {
     setupRestoreDraft(cke, features.autosave);

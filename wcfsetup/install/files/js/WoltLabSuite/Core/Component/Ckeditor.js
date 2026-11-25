@@ -12,7 +12,7 @@
  * @since 6.0
  * @woltlabExcludeBundle tiny
  */
-define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Poll", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "./Ckeditor/Normalizer", "../Ui/Scroll", "../Devtools", "./Ckeditor/Keyboard", "./Ckeditor/BalloonPanel", "../Environment", "../Helper/PageOverlay"], function (require, exports, tslib_1, Attachment_1, Media_1, Poll_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Normalizer_1, Scroll_1, Devtools_1, Keyboard_1, BalloonPanel_1, Environment_1, PageOverlay_1) {
+define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Media", "./Ckeditor/Poll", "./Ckeditor/Mention", "./Ckeditor/Quote", "./Ckeditor/Autosave", "./Ckeditor/Configuration", "./Ckeditor/Event", "./Ckeditor/SubmitOnEnter", "./Ckeditor/Normalizer", "../Ui/Scroll", "../Devtools", "./Ckeditor/Keyboard", "./Ckeditor/BalloonPanel", "./Ckeditor/DropdownPanel", "../Environment", "../Helper/PageOverlay"], function (require, exports, tslib_1, Attachment_1, Media_1, Poll_1, Mention_1, Quote_1, Autosave_1, Configuration_1, Event_1, SubmitOnEnter_1, Normalizer_1, Scroll_1, Devtools_1, Keyboard_1, BalloonPanel_1, DropdownPanel_1, Environment_1, PageOverlay_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setupCkeditor = setupCkeditor;
@@ -237,6 +237,7 @@ define(["require", "exports", "tslib", "./Ckeditor/Attachment", "./Ckeditor/Medi
         (0, Normalizer_1.normalizeLegacyMessage)(element);
         const cke = await createEditor(element, configuration);
         const ckeditor = new Ckeditor(cke, features);
+        (0, DropdownPanel_1.setup)(cke, CKEditor5);
         if (features.autosave) {
             (0, Autosave_1.setupRestoreDraft)(cke, features.autosave);
         }
