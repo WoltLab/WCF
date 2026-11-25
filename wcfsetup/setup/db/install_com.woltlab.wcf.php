@@ -2875,6 +2875,24 @@ return [
             DatabaseTablePrimaryIndex::create()
                 ->columns(['packageUpdateServerID']),
         ]),
+    DatabaseTable::create('wcf1_package_update_suggestion')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('packageUpdateVersionID'),
+            NotNullVarchar191DatabaseTableColumn::create('package'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('packageUpdateVersionID')
+                ->type(DatabaseTableIndex::UNIQUE_TYPE)
+                ->columns(['packageUpdateVersionID', 'package']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['packageUpdateVersionID'])
+                ->referencedTable('wcf1_package_update_version')
+                ->referencedColumns(['packageUpdateVersionID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
     DatabaseTable::create('wcf1_package_update_version')
         ->columns([
             ObjectIdDatabaseTableColumn::create('packageUpdateVersionID'),

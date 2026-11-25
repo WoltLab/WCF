@@ -42,9 +42,9 @@ use wcf\util\XML;
  *    file?: string,
  *    fromversions?: list<string>,
  *    license?: array{license: string, licenseURL: string},
- *    optionalPackages?: list<string>,
  *    packageDate: string,
  *    requiredPackages?: array<string, array{minversion?: string}>,
+ *    suggestedPackages?: list<string>,
  *  }>,
  * }
  */
@@ -421,6 +421,8 @@ final class PackageUpdateDispatcher extends SingletonFactory
             }
         }
 
+        $packageName = $package->getAttribute('name');
+
         // parse versions
         $elements = $xpath->query('./ns:versions/ns:version', $package);
         /** @var \DOMElement $element */
@@ -429,7 +431,6 @@ final class PackageUpdateDispatcher extends SingletonFactory
 
             $isAccessible = ($element->getAttribute('accessible') === 'true') ? 1 : 0;
             if ($key !== '' && $element->getAttribute('requireAuth') === 'true') {
-                $packageName = $package->getAttribute('name');
                 if (isset($this->purchasedVersions[$key][$packageName])) {
                     if ($this->purchasedVersions[$key][$packageName] === '*') {
                         $isAccessible = 1;
@@ -485,13 +486,26 @@ final class PackageUpdateDispatcher extends SingletonFactory
                         }
                         break;
 
-                    case 'optionalpackages':
-                        $packageInfo['versions'][$versionNo]['optionalPackages'] = [];
+                    case 'suggestedpackages':
+                        $suggestedPackages = [];
 
-                        $optionalPackages = $xpath->query('child::*', $child);
-                        foreach ($optionalPackages as $optionalPackage) {
-                            $packageInfo['versions'][$versionNo]['optionalPackages'][] = $optionalPackage->textContent;
+                        // The list is never validated against an XSD, and a duplicate would violate the
+                        // unique key of the multi-row insert, which compares case-insensitively.
+                        foreach ($xpath->query('child::*', $child) as $suggestedPackage) {
+                            $suggestion = $suggestedPackage->textContent;
+                            $normalizedSuggestion = \strtolower($suggestion);
+                            if (
+                                !Package::isValidPackageName($suggestion)
+                                || $normalizedSuggestion === \strtolower($packageName)
+                                || isset($suggestedPackages[$normalizedSuggestion])
+                            ) {
+                                continue;
+                            }
+
+                            $suggestedPackages[$normalizedSuggestion] = $suggestion;
                         }
+
+                        $packageInfo['versions'][$versionNo]['suggestedPackages'] = \array_values($suggestedPackages);
                         break;
 
                     case 'excludedpackages':
@@ -554,7 +568,7 @@ final class PackageUpdateDispatcher extends SingletonFactory
      */
     private function savePackageUpdates(array $allNewPackages, int $packageUpdateServerID): void
     {
-        $excludedPackagesParameters = $requirementInserts = $fromversionInserts = $packageInserts = $versionInserts = [];
+        $excludedPackagesParameters = $requirementInserts = $fromversionInserts = $suggestionInserts = $packageInserts = $versionInserts = [];
         foreach ($allNewPackages as $identifier => $packageData) {
             $packageInserts[] = [
                 $packageUpdateServerID,
@@ -658,6 +672,15 @@ final class PackageUpdateDispatcher extends SingletonFactory
                         ];
                     }
                 }
+
+                if (isset($versionData['suggestedPackages'])) {
+                    foreach ($versionData['suggestedPackages'] as $suggestedIdentifier) {
+                        $suggestionInserts[] = [
+                            $packageUpdateVersionID,
+                            $suggestedIdentifier,
+                        ];
+                    }
+                }
             }
         }
 
@@ -675,6 +698,11 @@ final class PackageUpdateDispatcher extends SingletonFactory
             'wcf1_package_update_fromversion',
             ['packageUpdateVersionID', 'fromversion'],
             $fromversionInserts
+        );
+        $this->insertRows(
+            'wcf1_package_update_suggestion',
+            ['packageUpdateVersionID', 'package'],
+            $suggestionInserts
         );
     }
 
