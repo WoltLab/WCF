@@ -14,6 +14,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\interaction\AbstractInteractionProvider;
 use wcf\system\interaction\DeleteInteraction;
 use wcf\system\interaction\Divider;
+use wcf\system\interaction\DownloadLinkInteraction;
 use wcf\system\interaction\FormBuilderDialogInteraction;
 use wcf\system\interaction\InteractionConfirmationType;
 use wcf\system\interaction\InteractionEffect;
@@ -169,7 +170,7 @@ final class UserInteractions extends AbstractInteractionProvider
                 ),
                 static fn(User $user) => $user->canDisableMultifactor()
             ),
-            new LinkInteraction(
+            new DownloadLinkInteraction(
                 'export-gdpr',
                 UserExportGdprAction::class,
                 'wcf.acp.user.exportGdpr',

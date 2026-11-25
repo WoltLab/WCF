@@ -2,7 +2,7 @@
 	<audio src="{$attachment->getLink()}" style="display: none;" id="attachmentAudio_{$attachmentIdentifier}" controls></audio>
 	
 	<span class="mediaBBCodeCaption">
-		<a href="{$attachment->getLink()}">{$attachment->filename}</a>
+		<a href="{$attachment->getLink()}" download>{$attachment->filename}</a>
 	</span>
 </span>
 

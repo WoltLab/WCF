@@ -2,7 +2,7 @@
 	<video src="{$attachment->getLink()}" style="display: none;" id="attachmentVideo_{$attachmentIdentifier}" controls></video>
 	
 	<span class="mediaBBCodeCaption">
-		<a href="{$attachment->getLink()}">{$attachment->filename}</a>
+		<a href="{$attachment->getLink()}" download>{$attachment->filename}</a>
 	</span>
 </span>
 
