@@ -12,6 +12,7 @@
 				<xs:element name="authorinformation" type="authorInformation" minOccurs="1" maxOccurs="1" />
 				<xs:element name="requiredpackages" type="requiredPackages" minOccurs="0" maxOccurs="1" />
 				<xs:element name="optionalpackages" type="optionalPackages" minOccurs="0" maxOccurs="1" />
+				<xs:element name="suggestedpackages" type="suggestedPackages" minOccurs="0" maxOccurs="1" />
 				<xs:element name="excludedpackages" type="excludedPackages" minOccurs="0" maxOccurs="1" />
 			</xs:choice>
 			<xs:attribute name="name" type="woltlab_varchar" use="required" />
@@ -123,6 +124,13 @@
 	<xs:complexType name="optionalPackages">
 		<xs:sequence>
 			<xs:element name="optionalpackage" type="optionalPackage" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- suggested packages element -->
+	<xs:complexType name="suggestedPackages">
+		<xs:sequence>
+			<xs:element name="suggestedpackage" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 
