@@ -297,6 +297,13 @@
 	position: fixed;
 }
 
+/* The width of the dialog is derived from its content, but the toolbar of the
+   editor leaves the document flow while being sticky. The dialog would shrink
+   and the toolbar would group its items, permanently reducing the width. */
+.dialog:has(.ck-editor) {
+	width: min(var(--dialog-max-width), 800px);
+}
+
 .dialog:not([open]) {
 	display: none;
 }
