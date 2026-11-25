@@ -167,9 +167,12 @@ select {
 	> .inputPrefix,
 	> .inputSuffix {
 		align-items: center;
-		color: var(--wcfContentDimmedText);
 		display: flex;
 		flex: 0 0 auto;
+
+		&:not(.button) {
+			color: var(--wcfContentDimmedText);
+		}
 	}
 
 	input {
@@ -286,12 +289,6 @@ html[data-color-scheme="dark"] .formError {
 
 /* password strength estimator */
 .inputAddonPasswordStrength {
-	align-items: flex-start;
-
-	input.medium {
-		align-self: stretch;
-	}
-
 	@include screen-xs {
 		flex-wrap: wrap;
 
@@ -302,6 +299,7 @@ html[data-color-scheme="dark"] .formError {
 }
 
 .passwordStrengthRating {
+	align-self: flex-start;
 	flex: 0 0 auto;
 
 	@include screen-sm-up {
