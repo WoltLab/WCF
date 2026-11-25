@@ -531,9 +531,12 @@
 		<item name="wcf.acp.devtools.project.optionalPackage.packageIdentifier.description"><![CDATA[Der Pfad zur Paketdatei muss <kbd>optionals/{literal}{$packageIdentifier}{/literal}.tar</kbd> lauten.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages"><![CDATA[Optionale Pakete]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.description"><![CDATA[Nach der Installation dieses Pakets werden folgende Pakete als optionale Pakete angeboten.]]></item>
+		<item name="wcf.acp.devtools.project.suggestedPackages"><![CDATA[Empfohlene Pakete]]></item>
+		<item name="wcf.acp.devtools.project.suggestedPackages.description"><![CDATA[Die folgenden Pakete werden für die Verwendung zusammen mit diesem Paket empfohlen. Sie werden nicht mit diesem Paket mitgeliefert.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackages.shortTitle"><![CDATA[Voraussetzungen]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages.shortTitle"><![CDATA[Inkompatibilität]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.shortTitle"><![CDATA[Optionales]]></item>
+		<item name="wcf.acp.devtools.project.suggestedPackages.shortTitle"><![CDATA[Empfehlungen]]></item>
 		<item name="wcf.acp.devtools.project.instructions"><![CDATA[Anweisungen]]></item>
 		<item name="wcf.acp.devtools.project.instructions.type"><![CDATA[Anweisungstyp]]></item>
 		<item name="wcf.acp.devtools.project.instructions.type.install"><![CDATA[Installation]]></item>
@@ -572,6 +575,8 @@
 		<item name="wcf.acp.devtools.project.optionalPackage.error.exclusionOptional"><![CDATA[Optionale Pakete können nicht gleichzeitig inkompatible sein. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.error.requirementOptional"><![CDATA[Optional Pakete können nicht gleichzeitig benötigt werden. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.error.selfOptional"><![CDATA[Ein Paket kann kein optionales Paket für sich selbst sein.]]></item>
+		<item name="wcf.acp.devtools.project.suggestedPackage.error.requirementSuggestion"><![CDATA[Benötigte Pakete können nicht gleichzeitig empfohlen werden. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
+		<item name="wcf.acp.devtools.project.suggestedPackage.error.selfSuggestion"><![CDATA[Ein Paket kann sich nicht selbst empfehlen.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.value"><![CDATA[Datei(en)]]></item>
 		<item name="wcf.acp.devtools.project.instruction.value.description"><![CDATA[Die angegebene Datei wird während der Installation/des Updates verarbeitet werden.]]></item>
 		<item name="wcf.acp.devtools.project.instructions.description"><![CDATA[Die Anweisungen erklären der Installations- und Updateroutine, was gemacht werden muss, damit das Paket erfolgreich installiert/aktualisiert werden kann.]]></item>
