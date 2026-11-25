@@ -813,6 +813,7 @@ class PackageInstallationDispatcher
      *
      * @param mixed[] $nodeData
      * @return PackageInstallationStep
+     * @deprecated 6.3 Optional packages are superseded by suggested packages.
      */
     protected function selectOptionalPackages(string $currentNode, array $nodeData): PackageInstallationStep
     {
@@ -1049,6 +1050,7 @@ class PackageInstallationDispatcher
      *
      * @param list<array{archive: string, isInstallable: bool, package: string, packageName: string, packageDescription: string, selected: int}> $packages
      * @return  mixed
+     * @deprecated 6.3 Optional packages are superseded by suggested packages.
      */
     protected function promptOptionalPackages(array $packages)
     {

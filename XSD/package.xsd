@@ -11,7 +11,9 @@
 				<xs:element name="packageinformation" type="packageInformation" minOccurs="1" maxOccurs="1" />
 				<xs:element name="authorinformation" type="authorInformation" minOccurs="1" maxOccurs="1" />
 				<xs:element name="requiredpackages" type="requiredPackages" minOccurs="0" maxOccurs="1" />
+				<!-- deprecated since 6.3, use suggestedpackages instead -->
 				<xs:element name="optionalpackages" type="optionalPackages" minOccurs="0" maxOccurs="1" />
+				<!-- /deprecated since 6.3 -->
 				<xs:element name="suggestedpackages" type="suggestedPackages" minOccurs="0" maxOccurs="1" />
 				<xs:element name="excludedpackages" type="excludedPackages" minOccurs="0" maxOccurs="1" />
 			</xs:choice>

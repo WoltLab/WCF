@@ -69,6 +69,7 @@ class PackageArchive
     /**
      * list of optional packages
      * @var list<array{file?: string, name: string}&array<string, string>>
+     * @deprecated 6.3 Optional packages are superseded by suggested packages.
      */
     protected $optionals = [];
 
@@ -689,6 +690,7 @@ class PackageArchive
      * Returns a list of all delivered optional packages of this package.
      *
      * @return list<array{file?: string, name: string}&array<string, string>>
+     * @deprecated 6.3 Optional packages are superseded by suggested packages, use `getSuggestions()` instead.
      */
     public function getOptionals()
     {

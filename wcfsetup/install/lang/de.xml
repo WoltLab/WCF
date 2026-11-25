@@ -530,7 +530,7 @@
 		<item name="wcf.acp.devtools.project.optionalPackage.optionalPackage"><![CDATA[{$packageIdentifier}]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.packageIdentifier.description"><![CDATA[Der Pfad zur Paketdatei muss <kbd>optionals/{literal}{$packageIdentifier}{/literal}.tar</kbd> lauten.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages"><![CDATA[Optionale Pakete]]></item>
-		<item name="wcf.acp.devtools.project.optionalPackages.description"><![CDATA[Nach der Installation dieses Pakets werden folgende Pakete als optionale Pakete angeboten.]]></item>
+		<item name="wcf.acp.devtools.project.optionalPackages.description"><![CDATA[Optionale Pakete sind veraltet und werden durch empfohlene Pakete abgelöst. Nach der Installation dieses Pakets werden folgende Pakete als optionale Pakete angeboten.]]></item>
 		<item name="wcf.acp.devtools.project.suggestedPackages"><![CDATA[Empfohlene Pakete]]></item>
 		<item name="wcf.acp.devtools.project.suggestedPackages.description"><![CDATA[Die folgenden Pakete werden für die Verwendung zusammen mit diesem Paket empfohlen. Sie werden nicht mit diesem Paket mitgeliefert.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackages.shortTitle"><![CDATA[Voraussetzungen]]></item>

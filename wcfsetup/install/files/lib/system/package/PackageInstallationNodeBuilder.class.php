@@ -750,6 +750,7 @@ class PackageInstallationNodeBuilder
      * not really matter at this point).
      *
      * @return void
+     * @deprecated 6.3 Optional packages are superseded by suggested packages.
      */
     protected function buildOptionalNodes()
     {
