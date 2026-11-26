@@ -101,7 +101,7 @@ class SystemCheckPage extends AbstractPage
      * }
      */
     public $phpVersions = [
-        'minimum' => '8.4.23',
+        'minimum' => '8.4.28',
         'deprecated' => [],
         'sufficient' => ['8.4'],
         'recommended' => ['8.5', '8.6'],

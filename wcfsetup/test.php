@@ -26,7 +26,7 @@ $requiredExtensions = [
     'pdo_mysql',
     'zlib',
 ];
-$phpVersionLowerBound = '8.4.23';
+$phpVersionLowerBound = '8.4.28';
 $phpVersionUpperBound = '8.6.x';
 $phrases = [
     'php_requirements' => [
