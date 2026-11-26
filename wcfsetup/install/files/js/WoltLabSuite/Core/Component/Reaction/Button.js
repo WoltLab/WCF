@@ -197,7 +197,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
     }
     function updateButton(button, reactionTypeId) {
         button.dataset.reactionTypeId = reactionTypeId.toString();
-        button.classList.toggle("active", reactionTypeId !== 0);
         button.setAttribute("aria-pressed", reactionTypeId !== 0 ? "true" : "false");
         // Animates the new icon, the server-rendered initial icon is not affected.
         button.classList.add("reactionButton--animated");
@@ -221,7 +220,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Api/Reactions/RevertRe
         const objectType = button.dataset.reactionObjectType;
         let reactionTypeId = 0;
         let reactions;
-        if (button.classList.contains("active")) {
+        if (parseInt(button.dataset.reactionTypeId) !== 0) {
             reactions = (await (0, RevertReaction_1.revertReaction)(objectType, objectId)).reactions;
         }
         else {
