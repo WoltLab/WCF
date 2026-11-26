@@ -136,7 +136,12 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
       this.#cancelButton = document.createElement("button");
       this.#cancelButton.type = "button";
       this.#cancelButton.value = "cancel";
-      this.#cancelButton.classList.add("button", "dialog__control__button", "dialog__control__button--cancel");
+      this.#cancelButton.classList.add(
+        "button",
+        "button--ghost",
+        "dialog__control__button",
+        "dialog__control__button--cancel",
+      );
       this.#cancelButton.textContent = this.cancel;
       this.#cancelButton.addEventListener("click", () => {
         const event = new CustomEvent("cancel");
