@@ -104,7 +104,7 @@ class SystemCheckPage extends AbstractPage
         'minimum' => '8.4.23',
         'deprecated' => [],
         'sufficient' => ['8.4'],
-        'recommended' => ['8.5'],
+        'recommended' => ['8.5', '8.6'],
     ];
 
     /**
