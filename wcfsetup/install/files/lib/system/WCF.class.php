@@ -76,9 +76,6 @@ while (\ob_get_level()) {
 
 // Ensure a correct mbstring configuration
 \mb_internal_encoding('UTF-8');
-if (\function_exists('mb_regex_encoding')) {
-    \mb_regex_encoding('UTF-8');
-}
 \mb_language('uni');
 
 // define current woltlab suite version
