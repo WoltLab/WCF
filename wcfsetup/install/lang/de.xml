@@ -1891,6 +1891,10 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} eine Paketdatei von {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} lokalen Rechner an.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Paket „{@$package->getName()}“ aktualisieren]]></item>
+		<item name="wcf.acp.package.suggestedPackages"><![CDATA[Empfohlene Pakete]]></item>
+		<item name="wcf.acp.package.suggestedPackages.button.install"><![CDATA[Ausgewählte Pakete installieren]]></item>
+		<item name="wcf.acp.package.suggestedPackages.button.skip"><![CDATA[Überspringen]]></item>
+		<item name="wcf.acp.package.suggestedPackages.description"><![CDATA[Die folgenden, optionalen Pakete sind für das soeben installierte Produkt verfügbar.]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[App]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Erweiterung]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Paket <span class="confirmationObject">{@$package->getName()}</span> wirklich deinstallieren?]]></item>

@@ -57,6 +57,18 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
         return $package;
     }
 
+    /**
+     * @since   6.3
+     */
+    #[\Override]
+    protected function collectSuggestedPackages(): array
+    {
+        return [
+            'packageIDs' => [],
+            'suggestions' => [],
+        ];
+    }
+
     #[\Override]
     public function getArchive()
     {

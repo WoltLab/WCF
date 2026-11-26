@@ -93,6 +93,14 @@ class PackageInstallationDispatcher
      */
     protected $previousPackageData;
 
+    /**
+     * @var array{packageIDs: list<int>, suggestions: list<string>}
+     */
+    private array $suggestedPackages = [
+        'packageIDs' => [],
+        'suggestions' => [],
+    ];
+
     public function __construct(PackageInstallationQueue $queue)
     {
         $this->queue = $queue;
@@ -216,6 +224,13 @@ class PackageInstallationDispatcher
 
             EventHandler::getInstance()->fireAction($this, 'postInstall');
 
+            // The queue, the archives and the package update tables are purged below.
+            try {
+                $this->suggestedPackages = $this->collectSuggestedPackages();
+            } catch (\Throwable $e) {
+                \wcf\functions\exception\logThrowable($e);
+            }
+
             // remove archives
             $sql = "SELECT  archive
                     FROM    wcf1_package_installation_queue
@@ -248,6 +263,81 @@ class PackageInstallationDispatcher
         WCF::resetZendOpcache();
 
         return $step;
+    }
+
+    /**
+     * Returns the IDs of the packages installed by this process and the packages they
+     * suggest, as collected at the end of the process. Suggested packages may already
+     * be installed.
+     *
+     * @return array{packageIDs: list<int>, suggestions: list<string>}
+     * @since 6.3
+     */
+    public function getSuggestedPackages(): array
+    {
+        return $this->suggestedPackages;
+    }
+
+    /**
+     * Collects the packages installed by this process and the packages suggested by
+     * their archives or by the package update servers for their installed version.
+     *
+     * @return array{packageIDs: list<int>, suggestions: list<string>}
+     * @since 6.3
+     */
+    protected function collectSuggestedPackages(): array
+    {
+        if (\PACKAGE_ID === 0) {
+            return [
+                'packageIDs' => [],
+                'suggestions' => [],
+            ];
+        }
+
+        $sql = "SELECT  packageID, archive
+                FROM    wcf1_package_installation_queue
+                WHERE   processNo = ?
+                    AND action = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $this->queue->processNo,
+            'install',
+        ]);
+        $packageIDs = $suggestions = [];
+        while ($row = $statement->fetchArray()) {
+            if ($row['packageID'] === null) {
+                continue;
+            }
+
+            $packageIDs[] = $row['packageID'];
+
+            if ($row['archive'] === '' || !\file_exists($row['archive'])) {
+                continue;
+            }
+
+            if (!\str_starts_with(FileUtil::unifyDirSeparator(\realpath($row['archive'])), \TMP_DIR)) {
+                continue;
+            }
+
+            try {
+                $archive = new PackageArchive($row['archive']);
+                $archive->openArchive();
+            } catch (\Throwable $e) {
+                \wcf\functions\exception\logThrowable($e);
+
+                continue;
+            }
+
+            $suggestions[] = $archive->getSuggestions();
+        }
+
+        $resolver = new SuggestedPackageResolver();
+        $suggestions[] = $resolver->getStoredSuggestions($packageIDs);
+
+        return [
+            'packageIDs' => $packageIDs,
+            'suggestions' => $resolver->merge(...$suggestions),
+        ];
     }
 
     /**

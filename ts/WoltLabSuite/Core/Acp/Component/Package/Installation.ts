@@ -8,6 +8,7 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
+import { resolveSuggestedPackages } from "WoltLabSuite/Core/Api/Packages/Suggestions/ResolveSuggestedPackages";
 import { confirmationFactory } from "WoltLabSuite/Core/Component/Confirmation";
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import type WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-core-dialog";
@@ -25,7 +26,13 @@ type Response = {
   queueID?: number | null;
   redirectLocation?: string;
   step: "install" | "rollback" | "success" | "uninstall";
+  suggestedPackages?: SuggestedPackages;
   template?: string;
+};
+
+type SuggestedPackages = {
+  packageIDs: number[];
+  suggestions: string[];
 };
 
 type Parameters = Record<string, number | string>;
@@ -146,6 +153,10 @@ class PackageInstallation {
       this.#showInnerContent();
       button.focus();
 
+      if (data.suggestedPackages !== undefined) {
+        void this.#offerSuggestedPackages(data.suggestedPackages, data.redirectLocation!, button);
+      }
+
       return undefined;
     }
 
@@ -204,6 +215,93 @@ class PackageInstallation {
 
     const button = this.#appendButton(getPhrase("wcf.global.button.next"), () => submit());
     this.#showInnerContent();
+  }
+
+  /**
+   * Replaces the success message with the suggested packages that can be
+   * installed. Failures are ignored, the success message stays in place.
+   */
+  async #offerSuggestedPackages(
+    suggestedPackages: SuggestedPackages,
+    redirectLocation: string,
+    nextButton: HTMLButtonElement,
+  ): Promise<void> {
+    let template: string;
+    try {
+      const result = await resolveSuggestedPackages(suggestedPackages.packageIDs, suggestedPackages.suggestions);
+      if (!result.ok) {
+        return;
+      }
+
+      template = result.value.template;
+    } catch {
+      return;
+    }
+
+    // The "Next" button is disabled once it has been clicked.
+    if (template === "" || nextButton.disabled) {
+      return;
+    }
+
+    this.#showSuggestedPackages(template, redirectLocation);
+  }
+
+  #showSuggestedPackages(template: string, redirectLocation: string): void {
+    const content = this.#getInnerContent();
+    content.innerHTML = template;
+
+    const checkboxes = Array.from(content.querySelectorAll<HTMLInputElement>('input[type="checkbox"]'));
+    const submitButton = content.querySelector<HTMLButtonElement>('.formSubmit button[data-type="submit"]')!;
+    const skipButton = content.querySelector<HTMLButtonElement>('.formSubmit button[data-type="skip"]')!;
+
+    const updateControls = (pending: boolean) => {
+      checkboxes.forEach((checkbox) => {
+        checkbox.disabled = pending;
+      });
+      skipButton.disabled = pending;
+      submitButton.disabled = pending || !checkboxes.some((checkbox) => checkbox.checked);
+    };
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", () => updateControls(false));
+    });
+
+    skipButton.addEventListener("click", () => {
+      updateControls(true);
+
+      window.location.href = redirectLocation;
+    });
+
+    submitButton.addEventListener("click", () => {
+      const packages: Record<string, string> = {};
+      checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+          packages[checkbox.value] = checkbox.dataset.packageVersion!;
+        }
+      });
+
+      updateControls(true);
+
+      void this.#installSuggestedPackages(packages, () => updateControls(false));
+    });
+
+    skipButton.focus();
+  }
+
+  async #installSuggestedPackages(packages: Record<string, string>, restore: () => void): Promise<void> {
+    let started = false;
+    try {
+      const { default: PrepareInstallation } = await import("WoltLabSuite/Core/Acp/Ui/Package/PrepareInstallation");
+      const redirectLocation = this.#additionalParameters.redirectLocation === "license" ? "license" : undefined;
+
+      started = await new PrepareInstallation().startMultiple(packages, redirectLocation);
+    } finally {
+      if (started) {
+        this.#dialog!.close();
+      } else {
+        restore();
+      }
+    }
   }
 
   #getFormData(content: HTMLElement): FormData {

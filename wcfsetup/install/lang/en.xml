@@ -510,7 +510,7 @@
 		<item name="wcf.acp.devtools.project.optionalPackages"><![CDATA[Optional Packages]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.description"><![CDATA[Optional packages are deprecated and superseded by suggested packages. The following packages will be offered to be installed optionally after this package has been installed.]]></item>
 		<item name="wcf.acp.devtools.project.suggestedPackages"><![CDATA[Suggested Packages]]></item>
-		<item name="wcf.acp.devtools.project.suggestedPackages.description"><![CDATA[The following packages are recommended to be used alongside this package. They are not shipped with this package.]]></item>
+		<item name="wcf.acp.devtools.project.suggestedPackages.description"><![CDATA[The following optional packages are available for the product you just installed.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackages.shortTitle"><![CDATA[Requirements]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages.shortTitle"><![CDATA[Conflicts]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.shortTitle"><![CDATA[Optional]]></item>
@@ -1874,6 +1874,10 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[Upload package archive from your local machine.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Install Package]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Update Package “{@$package->getName()}”]]></item>
+		<item name="wcf.acp.package.suggestedPackages"><![CDATA[Suggested Packages]]></item>
+		<item name="wcf.acp.package.suggestedPackages.button.install"><![CDATA[Install Selected Packages]]></item>
+		<item name="wcf.acp.package.suggestedPackages.button.skip"><![CDATA[Skip]]></item>
+		<item name="wcf.acp.package.suggestedPackages.description"><![CDATA[The packages that were just installed suggest the following packages. They are not required.]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[App]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Plugin]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package <span class="confirmationObject">{@$package->getName()}</span>?]]></item>
