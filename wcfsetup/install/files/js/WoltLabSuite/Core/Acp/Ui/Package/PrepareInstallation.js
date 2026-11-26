@@ -12,12 +12,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
     class AcpUiPackagePrepareInstallation {
         #pending = false;
         async start(identifier, version, redirectLocation) {
-            await this.#install({ [identifier]: version }, redirectLocation);
+            await this.startMultiple({ [identifier]: version }, redirectLocation);
         }
         /**
-         * Resolves with `true` once the installation has been started.
+         * Prepares the installation of several packages in a single run and starts
+         * it. `packages` maps the package identifier to the version, an empty string
+         * selects the newest version. Resolves with `true` once the installation has
+         * been started, or with `false` if it was aborted, rejected due to a conflict
+         * or there was nothing to install.
          */
-        async #install(packages, redirectLocation) {
+        async startMultiple(packages, redirectLocation) {
             if (this.#pending) {
                 throw new Error("There is already a pending installation.");
             }

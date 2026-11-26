@@ -35,3 +35,22 @@
 		</ul>
 	</section>
 {/hascontent}
+
+{hascontent}
+	<section class="section">
+		<header class="sectionHeader">
+			<h2 class="sectionTitle">{lang}wcf.acp.package.update.excludedPackages.together{/lang}</h2>
+			<p class="sectionDescription">{lang}wcf.acp.package.update.excludedPackages.together.description{/lang}</p>
+		</header>
+		
+		<ul class="nativeList">
+			{content}
+				{foreach from=$excludedPackages item=excludedPackage}
+					{if $excludedPackage[conflict] === 'newPackageExcludesNewPackage'}
+						<li>{lang}wcf.acp.package.update.excludedPackages.together.package{/lang}</li>
+					{/if}
+				{/foreach}
+			{/content}
+		</ul>
+	</section>
+{/hascontent}

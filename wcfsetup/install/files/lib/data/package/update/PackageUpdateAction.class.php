@@ -268,8 +268,14 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
     {
         WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
 
-        if (!isset($this->parameters['packages']) || !\is_array($this->parameters['packages']) || \count($this->parameters['packages']) !== 1) {
+        if (!isset($this->parameters['packages']) || !\is_array($this->parameters['packages']) || $this->parameters['packages'] === []) {
             throw new UserInputException('packages');
+        }
+
+        foreach ($this->parameters['packages'] as $package => $version) {
+            if (!\is_string($package) || !Package::isValidPackageName($package) || !\is_string($version)) {
+                throw new UserInputException('packages');
+            }
         }
 
         if (isset($this->parameters['authData'])) {
