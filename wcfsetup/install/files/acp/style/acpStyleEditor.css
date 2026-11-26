@@ -475,13 +475,10 @@ html[dir="ltr"] #spTable th {
 	background-color: var(--wcfButtonBackground);
 	color: var(--wcfButtonText);
 }
+#spButton .button.active,
 #spButton .button:hover {
 	background-color: var(--wcfButtonBackgroundActive);
 	color: var(--wcfButtonTextActive);
-}
-#spButton .button.active {
-	background-color: var(--wcfButtonBackgroundSelected);
-	color: var(--wcfButtonTextSelected);
 }
 #spButtonGhost .button {
 	background-color: transparent;

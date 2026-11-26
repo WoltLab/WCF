@@ -31,8 +31,8 @@
 }
 
 .pagination__link[aria-current="page"] {
-	background-color: var(--wcfButtonBackgroundSelected);
-	color: var(--wcfButtonTextSelected);
+	background-color: var(--wcfButtonBackgroundActive);
+	color: var(--wcfButtonTextActive);
 }
 
 @media (hover: hover) {

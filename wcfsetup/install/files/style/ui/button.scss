@@ -31,10 +31,8 @@ input[type="submit"],
 a.button {
 	--button-background: var(--wcfButtonBackground);
 	--button-text: var(--wcfButtonText);
-	--button-background-hover: var(--wcfButtonBackgroundActive);
-	--button-text-hover: var(--wcfButtonTextActive);
-	--button-background-selected: var(--wcfButtonBackgroundSelected);
-	--button-text-selected: var(--wcfButtonTextSelected);
+	--button-background-active: var(--wcfButtonBackgroundActive);
+	--button-text-active: var(--wcfButtonTextActive);
 	--button-background-disabled: var(--wcfButtonDisabledBackground);
 
 	// a.button is required to override link formatting, such as drop-down buttons
@@ -94,38 +92,32 @@ a.button {
 	}
 }
 
-/* variants, the selected state of a variant is its hover state */
+/* variants */
 input[type="button"].buttonPrimary,
 input[type="submit"],
 .button.buttonPrimary {
 	--button-background: var(--wcfButtonPrimaryBackground);
 	--button-text: var(--wcfButtonPrimaryText);
-	--button-background-hover: var(--wcfButtonPrimaryBackgroundActive);
-	--button-text-hover: var(--wcfButtonPrimaryTextActive);
-	--button-background-selected: var(--wcfButtonPrimaryBackgroundActive);
-	--button-text-selected: var(--wcfButtonPrimaryTextActive);
+	--button-background-active: var(--wcfButtonPrimaryBackgroundActive);
+	--button-text-active: var(--wcfButtonPrimaryTextActive);
 }
 
 .button.buttonGhost {
 	--button-background: transparent;
 	--button-text: var(--wcfButtonText);
-	--button-background-hover: var(--wcfButtonGhostBackgroundActive);
-	--button-text-hover: var(--wcfButtonText);
-	--button-background-selected: var(--wcfButtonGhostBackgroundActive);
-	--button-text-selected: var(--wcfButtonText);
+	--button-background-active: var(--wcfButtonGhostBackgroundActive);
+	--button-text-active: var(--wcfButtonText);
 	--button-background-disabled: transparent;
 }
 
 .button.buttonDanger {
 	--button-background: var(--wcfButtonDangerBackground);
 	--button-text: var(--wcfButtonDangerText);
-	--button-background-hover: var(--wcfButtonDangerBackgroundActive);
-	--button-text-hover: var(--wcfButtonDangerTextActive);
-	--button-background-selected: var(--wcfButtonDangerBackgroundActive);
-	--button-text-selected: var(--wcfButtonDangerTextActive);
+	--button-background-active: var(--wcfButtonDangerBackgroundActive);
+	--button-text-active: var(--wcfButtonDangerTextActive);
 }
 
-/* selected state, `.dropdownOpen` marks the toggle of an open dropdown */
+/* active state, `.dropdownOpen` marks the toggle of an open dropdown */
 input[type="button"],
 input[type="reset"],
 input[type="submit"],
@@ -133,8 +125,8 @@ input[type="submit"],
 a.button {
 	&.active,
 	.dropdownOpen > & {
-		background-color: var(--button-background-selected);
-		color: var(--button-text-selected);
+		background-color: var(--button-background-active);
+		color: var(--button-text-active);
 		text-decoration: none;
 	}
 }
@@ -147,15 +139,9 @@ a.button {
 	.button,
 	a.button {
 		&:hover {
-			background-color: var(--button-background-hover);
-			color: var(--button-text-hover);
+			background-color: var(--button-background-active);
+			color: var(--button-text-active);
 			text-decoration: none;
-		}
-
-		// The selected state persists while hovering.
-		&.active:hover {
-			background-color: var(--button-background-selected);
-			color: var(--button-text-selected);
 		}
 	}
 }

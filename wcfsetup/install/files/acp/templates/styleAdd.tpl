@@ -748,7 +748,7 @@
 										<div class="spInlineWrapper" data-region="wcfButton">
 											<ol class="inlineList">
 												<li><a class="button">Button</a></li>
-												<li><a class="button active">Button (Selected)</a></li>
+												<li><a class="button active">Button (Active)</a></li>
 											</ol>
 										</div>
 										<div class="spInlineWrapper" data-region="wcfButtonDisabled">

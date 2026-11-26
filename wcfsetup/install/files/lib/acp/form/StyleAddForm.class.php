@@ -787,7 +787,7 @@ class StyleAddForm extends AbstractForm
                 'textActive',
             ],
             'wcfInputDisabled' => ['background', 'border', 'text'],
-            'wcfButton' => ['background', 'text', 'backgroundActive', 'textActive', 'backgroundSelected', 'textSelected'],
+            'wcfButton' => ['background', 'text', 'backgroundActive', 'textActive'],
             'wcfButtonGhost' => ['backgroundActive'],
             'wcfButtonPrimary' => ['background', 'text', 'backgroundActive', 'textActive'],
             'wcfButtonDanger' => ['background', 'text', 'backgroundActive', 'textActive'],
