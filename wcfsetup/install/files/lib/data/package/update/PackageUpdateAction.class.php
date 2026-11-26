@@ -7,11 +7,11 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\update\server\PackageUpdateServer;
-use wcf\data\package\update\version\PackageUpdateVersion;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\package\InstallablePackageResolver;
 use wcf\system\package\PackageInstallationScheduler;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\package\PackageUpdateUnauthorizedException;
@@ -70,94 +70,32 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
     {
         $availableUpdateServers = PackageUpdateServer::getActiveUpdateServers();
 
-        // there are no available package update servers
-        if ($availableUpdateServers === []) {
-            return [
-                'count' => 0,
-                'pageCount' => 0,
-                'template' => WCF::getTPL()->render('wcf', 'packageSearchResultList', [
-                    'officialPackages' => [],
-                    'thirdPartySources' => [],
-                    'trustedSources' => [],
-                ]),
-            ];
-        }
-
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("package_update.packageUpdateServerID IN (?)", [\array_keys($availableUpdateServers)]);
-        $searchString = '%' . WCF::getDB()->escapeLikeValue($this->parameters['searchString']) . '%';
-        $conditions->add(
-            "(package_update.package LIKE ? OR package_update.packageDescription LIKE ? OR package_update.packageName LIKE ?)",
-            [$searchString, $searchString, $searchString]
-        );
-        $conditions->add("package.packageID IS NULL");
-
-        // find matching packages
-        $sql = "SELECT      package_update.packageUpdateID
-                FROM        wcf1_package_update package_update
-                LEFT JOIN   wcf1_package package
-                ON          package.package = package_update.package
-                " . $conditions . "
-                ORDER BY    package_update.packageName ASC";
-        $statement = WCF::getDB()->prepare($sql, 1000);
-        $statement->execute($conditions->getParameters());
-        $packageUpdateIDs = [];
-        while ($row = $statement->fetchArray()) {
-            $packageUpdateIDs[] = $row['packageUpdateID'];
-        }
-
-        // no matches found
-        if ($packageUpdateIDs === []) {
-            return [
-                'count' => 0,
-                'pageCount' => 0,
-                'template' => WCF::getTPL()->render('wcf', 'packageSearchResultList', [
-                    'officialPackages' => [],
-                    'thirdPartySources' => [],
-                    'trustedSources' => [],
-                ]),
-            ];
-        }
-
-        // get installed packages
-        $sql = "SELECT  package, packageVersion
-                FROM    wcf1_package";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute();
-        $installedPackages = $statement->fetchMap('package', 'packageVersion');
-
-        // get excluded packages (of installed packages)
-        $excludedPackagesOfInstalledPackages = [];
-        $sql = "SELECT  excludedPackage, excludedPackageVersion
-                FROM    wcf1_package_exclusion";
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute();
-        while ($row = $statement->fetchArray()) {
-            if (!isset($excludedPackagesOfInstalledPackages[$row['excludedPackage']])) {
-                $excludedPackagesOfInstalledPackages[$row['excludedPackage']] = $row['excludedPackageVersion'];
-            } elseif (
-                $row['excludedPackageVersion'] === '*'
-                || Package::compareVersion(
-                    $excludedPackagesOfInstalledPackages[$row['excludedPackage']],
-                    $row['excludedPackageVersion'],
-                    '>'
-                )
-            ) {
-                $excludedPackagesOfInstalledPackages[$row['excludedPackage']] = $row['excludedPackageVersion'];
-            }
-        }
-
         $packageUpdates = [];
-        foreach ($packageUpdateIDs as $packageUpdateID) {
-            $result = $this->canInstall(
-                $packageUpdateID,
-                null,
-                $installedPackages,
-                $excludedPackagesOfInstalledPackages
+        if ($availableUpdateServers !== []) {
+            $conditions = new PreparedStatementConditionBuilder();
+            $conditions->add("package_update.packageUpdateServerID IN (?)", [\array_keys($availableUpdateServers)]);
+            $searchString = '%' . WCF::getDB()->escapeLikeValue($this->parameters['searchString']) . '%';
+            $conditions->add(
+                "(package_update.package LIKE ? OR package_update.packageDescription LIKE ? OR package_update.packageName LIKE ?)",
+                [$searchString, $searchString, $searchString]
             );
-            if (isset($result[$packageUpdateID])) {
-                $packageUpdates[$packageUpdateID] = $result[$packageUpdateID];
+            $conditions->add("package.packageID IS NULL");
+
+            // find matching packages
+            $sql = "SELECT      package_update.packageUpdateID
+                    FROM        wcf1_package_update package_update
+                    LEFT JOIN   wcf1_package package
+                    ON          package.package = package_update.package
+                    " . $conditions . "
+                    ORDER BY    package_update.packageName ASC";
+            $statement = WCF::getDB()->prepare($sql, 1000);
+            $statement->execute($conditions->getParameters());
+            $packageUpdateIDs = [];
+            while ($row = $statement->fetchArray()) {
+                $packageUpdateIDs[] = $row['packageUpdateID'];
             }
+
+            $packageUpdates = new InstallablePackageResolver()->resolve($packageUpdateIDs);
         }
 
         // no matches found
@@ -173,93 +111,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             ];
         }
 
-        // remove duplicates by picking either the lowest available version of a package
-        // or the version exposed by trusted package servers
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("packageUpdateID IN (?)", [\array_keys($packageUpdates)]);
-        $sql = "SELECT  packageUpdateID, packageUpdateServerID, package
-                FROM    wcf1_package_update
-                " . $conditions;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-        $possiblePackages = [];
-        while ($row = $statement->fetchArray()) {
-            $possiblePackages[$row['package']][$row['packageUpdateID']] = $row['packageUpdateServerID'];
-        }
-
-        $trustedServerIDs = [];
-        foreach (PackageUpdateServer::getActiveUpdateServers() as $packageUpdateServer) {
-            if ($packageUpdateServer->isTrustedServer() || $packageUpdateServer->isWoltLabStoreServer()) {
-                $trustedServerIDs[] = $packageUpdateServer->packageUpdateServerID;
-            }
-        }
-
-        // remove duplicates when there are both versions from trusted and untrusted servers
-        foreach ($possiblePackages as $identifier => $packageSources) {
-            $hasTrustedSource = false;
-            foreach ($packageSources as $packageUpdateServerID) {
-                if (\in_array($packageUpdateServerID, $trustedServerIDs)) {
-                    $hasTrustedSource = true;
-                    break;
-                }
-            }
-
-            if ($hasTrustedSource) {
-                $possiblePackages[$identifier] = \array_filter(
-                    $packageSources,
-                    static function ($packageUpdateServerID) use ($trustedServerIDs) {
-                        return \in_array($packageUpdateServerID, $trustedServerIDs);
-                    }
-                );
-            }
-        }
-
-        // Sort by the highest version and return all other sources for the same package.
-        $validPackageUpdateIDs = [];
-        foreach ($possiblePackages as $packageSources) {
-            if (\count($packageSources) > 1) {
-                $packageUpdateVersionIDs = [];
-                foreach (\array_keys($packageSources) as $packageUpdateID) {
-                    $packageUpdateVersionIDs[] = $packageUpdates[$packageUpdateID]['accessible'];
-                }
-
-                $conditions = new PreparedStatementConditionBuilder();
-                $conditions->add("packageUpdateVersionID IN (?)", [$packageUpdateVersionIDs]);
-
-                $sql = "SELECT  packageUpdateVersionID, packageUpdateID, packageVersion
-                        FROM    wcf1_package_update_version
-                        " . $conditions;
-                $statement = WCF::getDB()->prepare($sql);
-                $statement->execute($conditions->getParameters());
-                $packageVersions = [];
-                while ($row = $statement->fetchArray()) {
-                    $packageVersions[$row['packageUpdateVersionID']] = [
-                        'packageUpdateID' => $row['packageUpdateID'],
-                        'packageVersion' => $row['packageVersion'],
-                    ];
-                }
-
-                // Sort packages with the highest version ending up on top.
-                \uasort($packageVersions, static function ($a, $b) {
-                    return Package::compareVersion($b['packageVersion'], $a['packageVersion']);
-                });
-
-                \reset($packageVersions);
-                $validPackageUpdateIDs[] = \current($packageVersions)['packageUpdateID'];
-            } else {
-                \reset($packageSources);
-                $validPackageUpdateIDs[] = \key($packageSources);
-            }
-        }
-
-        // filter by package update version ids
-        foreach ($packageUpdates as $packageUpdateID => $packageData) {
-            if (!\in_array($packageUpdateID, $validPackageUpdateIDs)) {
-                unset($packageUpdates[$packageUpdateID]);
-            }
-        }
-
-        return $this->getResultList($availableUpdateServers, $packageUpdates);
+        return $this->renderResultList($packageUpdates);
     }
 
     /**
@@ -268,7 +120,8 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
      *
      * @param string[] $installedPackages
      * @param string[] $excludedPackagesOfInstalledPackages
-     * @return string[][]
+     * @return array<int, array{accessible: int, existing: int}>
+     * @deprecated 6.3 Use `InstallablePackageResolver::resolve()` instead.
      */
     protected function canInstall(
         int $packageUpdateID,
@@ -276,218 +129,22 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         array &$installedPackages,
         array &$excludedPackagesOfInstalledPackages
     ) {
-        // get excluded packages
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add(
-            "packageUpdateVersionID IN (
-                SELECT  packageUpdateVersionID
-                FROM    wcf1_package_update_version
-                WHERE   packageUpdateID = ?
-            )",
-            [$packageUpdateID]
-        );
-        $sql = "SELECT  *
-                FROM    wcf1_package_update_exclusion
-                " . $conditions;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-        $excludedPackages = [];
-        while ($row = $statement->fetchArray()) {
-            $package = $row['excludedPackage'];
-            $packageVersion = $row['excludedPackageVersion'];
-            $packageUpdateVersionID = $row['packageUpdateVersionID'];
-
-            if (!isset($excludedPackages[$packageUpdateVersionID][$package])) {
-                $excludedPackages[$packageUpdateVersionID][$package] = $packageVersion;
-            } elseif (
-                Package::compareVersion(
-                    $excludedPackages[$packageUpdateVersionID][$package],
-                    $packageVersion
-                ) === 1
-            ) {
-                $excludedPackages[$packageUpdateVersionID][$package] = $packageVersion;
-            }
-        }
-
-        // filter by version
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("puv.packageUpdateID IN (?)", [$packageUpdateID]);
-        $sql = "SELECT      pu.package, puv.packageUpdateVersionID, puv.packageUpdateID, puv.packageVersion, puv.isAccessible
-                FROM        wcf1_package_update_version puv
-                LEFT JOIN   wcf1_package_update pu
-                ON          pu.packageUpdateID = puv.packageUpdateID
-                " . $conditions;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-        $packageVersions = [];
-        while ($row = $statement->fetchArray()) {
-            $package = $row['package'];
-            $packageVersion = $row['packageVersion'];
-            $packageUpdateVersionID = $row['packageUpdateVersionID'];
-
-            if ($minVersion !== null && Package::compareVersion($packageVersion, $minVersion) === -1) {
-                continue;
-            }
-
-            // check excluded packages
-            if (isset($excludedPackages[$packageUpdateVersionID])) {
-                $isExcluded = false;
-                foreach ($excludedPackages[$packageUpdateVersionID] as $excludedPackage => $excludedPackageVersion) {
-                    if (
-                        isset($installedPackages[$excludedPackage]) && Package::compareVersion(
-                            $excludedPackageVersion,
-                            $installedPackages[$excludedPackage]
-                        ) <= 0
-                    ) {
-                        // excluded, ignore
-                        $isExcluded = true;
-                        break;
-                    }
-                }
-
-                if ($isExcluded) {
-                    continue;
-                }
-            }
-            // check excluded packages of installed packages
-            if (isset($excludedPackagesOfInstalledPackages[$row['package']])) {
-                if (
-                    Package::compareVersion(
-                        $packageVersion,
-                        $excludedPackagesOfInstalledPackages[$row['package']],
-                        '>='
-                    )
-                ) {
-                    continue;
-                }
-            }
-
-            if (!isset($packageVersions[$package])) {
-                $packageVersions[$package] = [];
-            }
-
-            $packageUpdateID = $row['packageUpdateID'];
-            if (!isset($packageVersions[$package][$packageUpdateID])) {
-                $packageVersions[$package][$packageUpdateID] = [
-                    'accessible' => [],
-                    'existing' => [],
-                ];
-            }
-
-            if ($row['isAccessible'] !== 0) {
-                $packageVersions[$package][$packageUpdateID]['accessible'][$row['packageUpdateVersionID']] = $packageVersion;
-            }
-            $packageVersions[$package][$packageUpdateID]['existing'][$row['packageUpdateVersionID']] = $packageVersion;
-        }
-
-        // all found versions are excluded
-        if ($packageVersions === []) {
+        $packageUpdate = new InstallablePackageResolver()->resolve([$packageUpdateID])[$packageUpdateID] ?? null;
+        if ($packageUpdate === null) {
             return [];
         }
 
-        // determine highest versions
-        $packageUpdates = [];
-        foreach ($packageVersions as $versionData) {
-            $accessible = $existing = $versions = [];
-
-            foreach ($versionData as $packageUpdateID => $versionTypes) {
-                // ignore inaccessible packages
-                if ($versionTypes['accessible'] === []) {
-                    continue;
-                }
-
-                \uasort($versionTypes['accessible'], [Package::class, 'compareVersion']);
-                \uasort($versionTypes['existing'], [Package::class, 'compareVersion']);
-
-                $accessibleVersion = \array_slice($versionTypes['accessible'], -1, 1, true);
-                $existingVersion = \array_slice($versionTypes['existing'], -1, 1, true);
-
-                $ak = \key($accessibleVersion);
-                $av = \current($accessibleVersion);
-                $ek = \key($existingVersion);
-                $ev = \current($existingVersion);
-
-                $accessible[$av] = $ak;
-                $existing[$ev] = $ek;
-                $versions[$ak] = $packageUpdateID;
-                $versions[$ek] = $packageUpdateID;
-            }
-
-            // ignore packages without accessible versions
-            if ($accessible === []) {
-                continue;
-            }
-
-            \uksort($accessible, [Package::class, 'compareVersion']);
-            \uksort($existing, [Package::class, 'compareVersion']);
-
-            $accessible = \array_pop($accessible);
-            $existing = \array_pop($existing);
-            $packageUpdates[$versions[$accessible]] = [
-                'accessible' => $accessible,
-                'existing' => $existing,
-            ];
+        $accessibleVersion = $packageUpdate->getAccessibleVersion();
+        if ($minVersion !== null && Package::compareVersion($accessibleVersion->packageVersion, $minVersion) === -1) {
+            return [];
         }
 
-        // validate dependencies
-        foreach ($packageUpdates as $packageUpdateData) {
-            $sql = "SELECT  package, minversion
-                    FROM    wcf1_package_update_requirement
-                    WHERE   packageUpdateVersionID = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute([$packageUpdateData['accessible']]);
-            $requirements = [];
-            while ($row = $statement->fetchArray()) {
-                $package = $row['package'];
-                $minVersion = $row['minversion'];
-
-                if (
-                    !isset($installedPackages[$package]) || Package::compareVersion(
-                        $installedPackages[$package],
-                        $minVersion
-                    ) === -1
-                ) {
-                    $requirements[$package] = $minVersion;
-                }
-            }
-
-            if ($requirements === []) {
-                continue;
-            }
-
-            $openRequirements = \array_keys($requirements);
-
-            $conditions = new PreparedStatementConditionBuilder();
-            $conditions->add("package IN (?)", [\array_keys($requirements)]);
-            $sql = "SELECT  packageUpdateID, package
-                    FROM    wcf1_package_update
-                    " . $conditions;
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute($conditions->getParameters());
-            while ($row = $statement->fetchArray()) {
-                if (!\in_array($row['package'], $openRequirements)) {
-                    // The dependency has already been satisfied by another update server.
-                    continue;
-                }
-
-                $result = $this->canInstall(
-                    $row['packageUpdateID'],
-                    $requirements[$row['package']],
-                    $installedPackages,
-                    $excludedPackagesOfInstalledPackages
-                );
-                if ($result !== []) {
-                    $index = \array_search($row['package'], $openRequirements);
-                    unset($openRequirements[$index]);
-                }
-            }
-
-            if ($openRequirements !== []) {
-                return [];
-            }
-        }
-
-        return $packageUpdates;
+        return [
+            $packageUpdateID => [
+                'accessible' => $accessibleVersion->packageUpdateVersionID,
+                'existing' => $packageUpdate->getLatestVersion()->packageUpdateVersionID,
+            ],
+        ];
     }
 
     /**
@@ -496,41 +153,19 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
      * @param PackageUpdateServer[] $updateServers
      * @param mixed[] $updateData
      * @return array{count: int, template: string}
+     * @deprecated 6.3 Use `InstallablePackageResolver::resolve()` instead.
      */
     protected function getResultList(array $updateServers, array $updateData)
     {
-        // get package updates
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("packageUpdateID IN (?)", [\array_keys($updateData)]);
+        return $this->renderResultList(new InstallablePackageResolver()->resolve(\array_keys($updateData)));
+    }
 
-        $sql = "SELECT  *
-                FROM    wcf1_package_update
-                " . $conditions;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-        $packageUpdates = $packageVersionIDs = [];
-        while ($packageUpdate = $statement->fetchObject(PackageUpdate::class)) {
-            $packageUpdates[$packageUpdate->packageUpdateID] = new ViewablePackageUpdate($packageUpdate);
-
-            // collect package version ids
-            $versionIDs = $updateData[$packageUpdate->packageUpdateID];
-            $packageVersionIDs[] = $versionIDs['accessible'];
-            $packageVersionIDs[] = $versionIDs['existing'];
-        }
-
-        // read update versions
-        $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("packageUpdateVersionID IN (?)", [$packageVersionIDs]);
-
-        $sql = "SELECT  packageUpdateVersionID, packageVersion, packageDate, license, licenseURL
-                FROM    wcf1_package_update_version
-                " . $conditions;
-        $statement = WCF::getDB()->prepare($sql);
-        $statement->execute($conditions->getParameters());
-
-        /** @var PackageUpdateVersion[] $updateVersions */
-        $updateVersions = $statement->fetchObjects(PackageUpdateVersion::class, 'packageUpdateVersionID');
-
+    /**
+     * @param array<int, ViewablePackageUpdate> $packageUpdates
+     * @return array{count: int, template: string}
+     */
+    private function renderResultList(array $packageUpdates): array
+    {
         /** @var ViewablePackageUpdate[] $officialPackages */
         $officialPackages = [];
         /** @var ViewablePackageUpdate[] $thirdPartySources */
@@ -538,13 +173,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         /** @var ViewablePackageUpdate[] $trustedSources */
         $trustedSources = [];
 
-        /** @var ViewablePackageUpdate $packageUpdate */
         foreach ($packageUpdates as $packageUpdate) {
-            $versionIDs = $updateData[$packageUpdate->packageUpdateID];
-            $packageUpdate->setAccessibleVersion($updateVersions[$versionIDs['accessible']]);
-            $packageUpdate->setLatestVersion($updateVersions[$versionIDs['existing']]);
-            $packageUpdate->setUpdateServer($updateServers[$packageUpdate->packageUpdateServerID]);
-
             if ($packageUpdate->getUpdateServer()->isWoltLabUpdateServer()) {
                 $officialPackages[] = $packageUpdate;
             } elseif ($packageUpdate->getUpdateServer()->isTrustedServer() || $packageUpdate->getUpdateServer()->isWoltLabStoreServer()) {
