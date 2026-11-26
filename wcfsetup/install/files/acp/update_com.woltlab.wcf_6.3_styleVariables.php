@@ -24,7 +24,7 @@ $styleVariables = [
     ['wcfFooterText', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)'],
     ['wcfInputLabel', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)'],
     ['wcfButtonBackground', 'rgba(215, 230, 242, 1)', 'rgba(47, 57, 76, 1)'],
-    ['wcfButtonBackgroundActive', 'rgba(193, 217, 236, 1)', 'rgba(62, 71, 89, 1)'],
+    ['wcfButtonBackgroundActive', 'rgba(193, 217, 236, 1)', 'rgba(37, 45, 60, 1)'],
     ['wcfButtonTextActive', 'rgba(33, 33, 33, 1)', 'rgba(230, 231, 234, 1)'],
     ['wcfButtonDangerBackground', 'rgba(169, 68, 66, 1)', 'rgba(139, 46, 36, 1)'],
     ['wcfButtonDangerBackgroundActive', 'rgba(132, 53, 52, 1)', 'rgba(116, 38, 30, 1)'],

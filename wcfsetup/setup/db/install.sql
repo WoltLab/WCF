@@ -36,7 +36,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMod
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('pageLogoMobile', '', NULL);
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('useFluidLayout', '1', NULL);
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfButtonBackground', 'rgba(215, 230, 242, 1)', 'rgba(47, 57, 76, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfButtonBackgroundActive', 'rgba(193, 217, 236, 1)', 'rgba(62, 71, 89, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfButtonBackgroundActive', 'rgba(193, 217, 236, 1)', 'rgba(37, 45, 60, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfButtonDangerBackground', 'rgba(169, 68, 66, 1)', 'rgba(139, 46, 36, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfButtonDangerBackgroundActive', 'rgba(132, 53, 52, 1)', 'rgba(116, 38, 30, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue, defaultValueDarkMode) VALUES('wcfButtonDangerText', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)');
