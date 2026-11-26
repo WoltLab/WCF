@@ -42,7 +42,7 @@
 
 					{hascontent}
 						<div class="commentResponse__menu dropdown" id="commentResponseOptions{$response->responseID}">
-							<button type="button" class="dropdownToggle" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis'}</button>
+							<button type="button" class="dropdownToggle button buttonGhost small" aria-label="{lang}wcf.global.button.more{/lang}">{icon name='ellipsis'}</button>
 
 							<ul class="dropdownMenu">
 								{content}
@@ -106,7 +106,7 @@
 
 					<div class="commentResponse__buttons">
 						{if $response->canReact()}
-							{include file="reactionButton" reactionData=$response->getReactionData()}
+							{include file="reactionButton" reactionData=$response->getReactionData() buttonClass='buttonGhost'}
 						{/if}
 
 						{event name='commentResponseButtons'}
