@@ -475,7 +475,7 @@ abstract class AbstractGridView
         if (!isset($this->interactionContextMenuComponent)) {
             $this->interactionContextMenuComponent = new InteractionContextMenuComponent(
                 $this->interactionProvider,
-                new InteractionContextMenuComponentConfiguration(buttonCssClassName: 'button small button--ghost'),
+                InteractionContextMenuComponentConfiguration::forGhost(),
             );
         }
 
