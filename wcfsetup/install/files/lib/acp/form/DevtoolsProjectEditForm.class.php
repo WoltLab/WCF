@@ -12,6 +12,7 @@ use wcf\system\form\builder\field\devtools\project\DevtoolsProjectExcludedPackag
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectInstructionsFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectOptionalPackagesFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectRequiredPackagesFormField;
+use wcf\system\form\builder\field\devtools\project\DevtoolsProjectSuggestedPackagesFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
@@ -286,6 +287,20 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm
             /** @var DevtoolsProjectOptionalPackagesFormField $optionalPackages */
             $optionalPackages = $this->form->getNodeById('optionalPackages');
             $optionalPackages->value($exclusionData);
+        }
+
+        $suggestions = $packageArchive->getSuggestions();
+        if ($suggestions !== []) {
+            $suggestionData = [];
+            foreach ($suggestions as $packageIdentifier) {
+                $suggestionData[] = [
+                    'packageIdentifier' => $packageIdentifier,
+                ];
+            }
+
+            /** @var DevtoolsProjectSuggestedPackagesFormField $suggestedPackages */
+            $suggestedPackages = $this->form->getNodeById('suggestedPackages');
+            $suggestedPackages->value($suggestionData);
         }
 
         $installationInstructions = [];

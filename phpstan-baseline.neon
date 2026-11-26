@@ -451,18 +451,6 @@ parameters:
 			path: wcfsetup/install/files/lib/data/package/installation/plugin/PackageInstallationPluginAction.class.php
 
 		-
-			message: '#^Call to function array_search\(\) requires parameter \#3 to be set\.$#'
-			identifier: function.strict
-			count: 1
-			path: wcfsetup/install/files/lib/data/package/update/PackageUpdateAction.class.php
-
-		-
-			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
-			identifier: function.strict
-			count: 4
-			path: wcfsetup/install/files/lib/data/package/update/PackageUpdateAction.class.php
-
-		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 2

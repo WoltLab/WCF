@@ -75,6 +75,7 @@ class DevtoolsPackageXmlWriter
         $this->writeAuthorInformation();
         $this->writeRequiredPackages();
         $this->writeOptionalPackages();
+        $this->writeSuggestedPackages();
         $this->writeExcludedPackages();
         $this->writeInstructions();
 
@@ -197,6 +198,32 @@ class DevtoolsPackageXmlWriter
 
             $this->xmlWriter->endElement();
         }
+    }
+
+    /**
+     * Writes the `suggestedpackages` element.
+     *
+     * @since 6.3
+     */
+    protected function writeSuggestedPackages(): void
+    {
+        $suggestedPackages = $this->packageXmlData['suggestedPackages'] ?? [];
+        if ($suggestedPackages === []) {
+            return;
+        }
+
+        $this->xmlWriter->startElement('suggestedpackages');
+
+        foreach ($suggestedPackages as $suggestedPackage) {
+            $this->xmlWriter->writeElement(
+                'suggestedpackage',
+                $suggestedPackage['packageIdentifier'],
+                [],
+                false
+            );
+        }
+
+        $this->xmlWriter->endElement();
     }
 
     /**

@@ -6,7 +6,40 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.3
  */
-define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Component/Confirmation", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Language"], function (require, exports, Backend_1, Confirmation_1, Dialog_1, Selector_1, Language_1) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
+define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Core/Api/Packages/Suggestions/ResolveSuggestedPackages", "WoltLabSuite/Core/Component/Confirmation", "WoltLabSuite/Core/Component/Dialog", "WoltLabSuite/Core/Helper/Selector", "WoltLabSuite/Core/Language"], function (require, exports, Backend_1, ResolveSuggestedPackages_1, Confirmation_1, Dialog_1, Selector_1, Language_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.startInstallation = startInstallation;
@@ -62,7 +95,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
                 throw error;
             }
         }
-        #handleResponse(data) {
+        #handleResponse(data, suggestedPackagesTemplate = "") {
             if (typeof window._trackPackageStep === "function") {
                 window._trackPackageStep(this.#actionName, data);
             }
@@ -85,14 +118,13 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             if (data.currentAction) {
                 dialog.content.querySelector("#packageInstallationAction").innerHTML = data.currentAction;
             }
-            if (data.step === "success") {
-                this.#setIcon("check");
+            if (data.step === "suggestedPackages") {
                 this.#clearInnerContent();
-                const button = this.#appendButton((0, Language_1.getPhrase)("wcf.global.button.next"), () => {
-                    window.location.href = data.redirectLocation;
-                });
-                this.#showInnerContent();
-                button.focus();
+                void this.#resolveSuggestedPackages(data.suggestedPackages, data.success);
+                return undefined;
+            }
+            if (data.step === "success") {
+                this.#showSuccess(data, suggestedPackagesTemplate);
                 return undefined;
             }
             if (data.innerTemplate !== undefined) {
@@ -136,6 +168,84 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             this.#setIcon("question");
             const button = this.#appendButton((0, Language_1.getPhrase)("wcf.global.button.next"), () => submit());
             this.#showInnerContent();
+        }
+        #showSuccess(data, suggestedPackagesTemplate) {
+            this.#setIcon("check");
+            if (suggestedPackagesTemplate !== "") {
+                this.#showSuggestedPackages(suggestedPackagesTemplate, data.redirectLocation);
+                return;
+            }
+            this.#clearInnerContent();
+            const button = this.#appendButton((0, Language_1.getPhrase)("wcf.global.button.next"), () => {
+                window.location.href = data.redirectLocation;
+            });
+            this.#showInnerContent();
+            button.focus();
+        }
+        /**
+         * Looks up the suggested packages that can be installed and completes the
+         * process afterwards. Failures are tolerated on purpose, the installation
+         * has finished and the dialog then shows the "Next" button instead.
+         */
+        async #resolveSuggestedPackages(suggestedPackages, success) {
+            let template;
+            try {
+                const result = await (0, ResolveSuggestedPackages_1.resolveSuggestedPackages)(suggestedPackages.packageIDs, suggestedPackages.suggestions);
+                template = result.ok ? result.value.template : "";
+            }
+            catch {
+                template = "";
+            }
+            this.#handleResponse(success, template);
+        }
+        #showSuggestedPackages(template, redirectLocation) {
+            const content = this.#getInnerContent();
+            content.innerHTML = template;
+            const checkboxes = Array.from(content.querySelectorAll('input[type="checkbox"]'));
+            const submitButton = content.querySelector('.formSubmit button[data-type="submit"]');
+            const skipButton = content.querySelector('.formSubmit button[data-type="skip"]');
+            const updateControls = (pending) => {
+                checkboxes.forEach((checkbox) => {
+                    checkbox.disabled = pending;
+                });
+                skipButton.disabled = pending;
+                submitButton.disabled = pending || !checkboxes.some((checkbox) => checkbox.checked);
+            };
+            checkboxes.forEach((checkbox) => {
+                checkbox.addEventListener("change", () => updateControls(false));
+            });
+            skipButton.addEventListener("click", () => {
+                updateControls(true);
+                window.location.href = redirectLocation;
+            });
+            submitButton.addEventListener("click", () => {
+                const packages = {};
+                checkboxes.forEach((checkbox) => {
+                    if (checkbox.checked) {
+                        packages[checkbox.value] = checkbox.dataset.packageVersion;
+                    }
+                });
+                updateControls(true);
+                void this.#installSuggestedPackages(packages, () => updateControls(false));
+            });
+            this.#showInnerContent();
+            skipButton.focus();
+        }
+        async #installSuggestedPackages(packages, restore) {
+            let started = false;
+            try {
+                const { default: PrepareInstallation } = await new Promise((resolve_1, reject_1) => { require(["WoltLabSuite/Core/Acp/Ui/Package/PrepareInstallation"], resolve_1, reject_1); }).then(__importStar);
+                const redirectLocation = this.#additionalParameters.redirectLocation === "license" ? "license" : undefined;
+                started = await new PrepareInstallation().startMultiple(packages, redirectLocation);
+            }
+            finally {
+                if (started) {
+                    this.#dialog.close();
+                }
+                else {
+                    restore();
+                }
+            }
         }
         #getFormData(content) {
             const formData = new FormData();

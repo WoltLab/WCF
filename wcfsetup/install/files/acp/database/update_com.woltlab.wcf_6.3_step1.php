@@ -11,12 +11,12 @@
 use wcf\system\database\table\column\BinaryDatabaseTableColumn;
 use wcf\system\database\table\column\CharDatabaseTableColumn;
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
-use wcf\system\database\table\column\DefaultTrueBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\JsonDatabaseTableColumn;
 use wcf\system\database\table\column\MediumintDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
+use wcf\system\database\table\column\NotNullVarchar191DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\ObjectIdDatabaseTableColumn;
 use wcf\system\database\table\column\SmallintDatabaseTableColumn;
@@ -754,6 +754,24 @@ return [
                 ->columns(['languageID'])
                 ->referencedTable('wcf1_language')
                 ->referencedColumns(['languageID'])
+                ->onDelete('CASCADE')
+                ->onUpdate('NO ACTION'),
+        ]),
+    DatabaseTable::create('wcf1_package_update_suggestion')
+        ->columns([
+            NotNullInt10DatabaseTableColumn::create('packageUpdateVersionID'),
+            NotNullVarchar191DatabaseTableColumn::create('package'),
+        ])
+        ->indices([
+            DatabaseTableIndex::create('packageUpdateVersionID')
+                ->type(DatabaseTableIndex::UNIQUE_TYPE)
+                ->columns(['packageUpdateVersionID', 'package']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['packageUpdateVersionID'])
+                ->referencedTable('wcf1_package_update_version')
+                ->referencedColumns(['packageUpdateVersionID'])
                 ->onDelete('CASCADE')
                 ->onUpdate('NO ACTION'),
         ]),

@@ -22,6 +22,7 @@ use wcf\system\form\builder\field\devtools\project\DevtoolsProjectExcludedPackag
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectInstructionsFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectOptionalPackagesFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectRequiredPackagesFormField;
+use wcf\system\form\builder\field\devtools\project\DevtoolsProjectSuggestedPackagesFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\UrlFormField;
@@ -536,6 +537,72 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                     ValueFormFieldDependency::create('mode')
                         ->field($mode)
                         ->values(['edit'])
+                )
+        );
+
+        $suggestedPackages = FormContainer::create('suggestedPackagesContainer')
+            ->label('wcf.acp.devtools.project.suggestedPackages')
+            ->description('wcf.acp.devtools.project.suggestedPackages.description')
+            ->appendChild(
+                DevtoolsProjectSuggestedPackagesFormField::create()
+                    ->addValidator(new FormFieldValidator(
+                        'selfSuggestion',
+                        static function (DevtoolsProjectSuggestedPackagesFormField $formField) {
+                            /** @var TextFormField $packageIdentifier */
+                            $packageIdentifier = $formField->getDocument()->getNodeById('packageIdentifier');
+                            $normalizedPackageIdentifier = \strtolower($packageIdentifier->getSaveValue());
+
+                            foreach ($formField->getSaveValue() as $suggestion) {
+                                if (\strtolower($suggestion['packageIdentifier']) === $normalizedPackageIdentifier) {
+                                    $formField->addValidationError(
+                                        new FormFieldValidationError(
+                                            'selfSuggestion',
+                                            'wcf.acp.devtools.project.suggestedPackage.error.selfSuggestion'
+                                        )
+                                    );
+
+                                    return;
+                                }
+                            }
+                        }
+                    ))
+                    ->addValidator(new FormFieldValidator(
+                        'requirementSuggestion',
+                        static function (DevtoolsProjectSuggestedPackagesFormField $formField) {
+                            /** @var DevtoolsProjectRequiredPackagesFormField $requiredPackagesField */
+                            $requiredPackagesField = $formField->getDocument()->getNodeById('requiredPackages');
+                            $requiredPackages = \array_map(
+                                \strtolower(...),
+                                \array_column($requiredPackagesField->getSaveValue(), 'packageIdentifier')
+                            );
+
+                            $affectedPackages = [];
+                            foreach ($formField->getSaveValue() as $suggestion) {
+                                if (\in_array(\strtolower($suggestion['packageIdentifier']), $requiredPackages, true)) {
+                                    $affectedPackages[] = $suggestion['packageIdentifier'];
+                                }
+                            }
+
+                            if ($affectedPackages !== []) {
+                                $formField->addValidationError(
+                                    new FormFieldValidationError(
+                                        'requirementSuggestion',
+                                        'wcf.acp.devtools.project.suggestedPackage.error.requirementSuggestion',
+                                        ['affectedPackages' => $affectedPackages]
+                                    )
+                                );
+                            }
+                        }
+                    ))
+            );
+        $tabMenu->appendChild(
+            TabFormContainer::create('suggestedPackagesTab')
+                ->label('wcf.acp.devtools.project.suggestedPackages.shortTitle')
+                ->appendChild($suggestedPackages)
+                ->addDependency(
+                    ValueFormFieldDependency::create('mode')
+                        ->field($mode)
+                        ->values(['edit', 'setup'])
                 )
         );
 

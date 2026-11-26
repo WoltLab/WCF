@@ -83,6 +83,7 @@
 			<xs:sequence>
 				<xs:element minOccurs="0" ref="fromversions" />
 				<xs:element minOccurs="0" ref="requiredpackages" />
+				<xs:element minOccurs="0" ref="suggestedpackages" />
 				<xs:element ref="timestamp" />
 				<xs:element name="versiontype" type="woltlab_varchar" />
 				<xs:element ref="license" />
@@ -122,6 +123,18 @@
 			</xs:simpleContent>
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- suggested packages element -->
+	<xs:element name="suggestedpackages">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" ref="suggestedpackage" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- suggested package element -->
+	<xs:element name="suggestedpackage" type="xs:NCName" />
 	
 	<!-- timestamp element -->
 	<xs:element name="timestamp" type="xs:integer" />

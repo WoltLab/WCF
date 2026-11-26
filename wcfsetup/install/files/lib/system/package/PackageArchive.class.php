@@ -69,8 +69,15 @@ class PackageArchive
     /**
      * list of optional packages
      * @var list<array{file?: string, name: string}&array<string, string>>
+     * @deprecated 6.3 Optional packages are superseded by suggested packages.
      */
     protected $optionals = [];
+
+    /**
+     * list of identifiers of suggested packages
+     * @var list<string>
+     */
+    protected array $suggestions = [];
 
     /**
      * list of excluded packages
@@ -451,6 +458,30 @@ class PackageArchive
             $this->optionals[] = $data;
         }
 
+        // Duplicates and self-suggestions are dropped like in the update server list,
+        // so both sources agree on what a valid list of suggestions is.
+        $suggestions = [];
+        $elements = $xpath->query('child::ns:suggestedpackages/ns:suggestedpackage', $package);
+        foreach ($elements as $element) {
+            if (!Package::isValidPackageName($element->textContent)) {
+                throw new PackageValidationException(
+                    PackageValidationException::INVALID_PACKAGE_NAME,
+                    ['packageName' => $element->textContent]
+                );
+            }
+
+            $normalizedSuggestion = \strtolower($element->textContent);
+            if (
+                $normalizedSuggestion === \strtolower($this->packageInfo['name'])
+                || isset($suggestions[$normalizedSuggestion])
+            ) {
+                continue;
+            }
+
+            $suggestions[$normalizedSuggestion] = $element->textContent;
+        }
+        $this->suggestions = \array_values($suggestions);
+
         // get excluded packages
         $elements = $xpath->query('child::ns:excludedpackages/ns:excludedpackage', $package);
         foreach ($elements as $element) {
@@ -659,10 +690,22 @@ class PackageArchive
      * Returns a list of all delivered optional packages of this package.
      *
      * @return list<array{file?: string, name: string}&array<string, string>>
+     * @deprecated 6.3 Optional packages are superseded by suggested packages, use `getSuggestions()` instead.
      */
     public function getOptionals()
     {
         return $this->optionals;
+    }
+
+    /**
+     * Returns the identifiers of the suggested packages.
+     *
+     * @return list<string>
+     * @since 6.3
+     */
+    public function getSuggestions(): array
+    {
+        return $this->suggestions;
     }
 
     /**

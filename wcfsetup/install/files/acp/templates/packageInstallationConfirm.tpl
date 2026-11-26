@@ -5,7 +5,9 @@
 	{jsphrase name='wcf.acp.package.install.title'}
 	{jsphrase name='wcf.acp.package.installation.rollback'}
 	{jsphrase name='wcf.acp.package.uninstallation.title'}
+	{jsphrase name='wcf.acp.package.update.excludedPackages'}
 	{jsphrase name='wcf.acp.package.update.title'}
+	{jsphrase name='wcf.acp.package.update.unauthorized'}
 
 	require(['WoltLabSuite/Core/Acp/Component/Package/Installation'], ({ setupConfirmation }) => {
 		setupConfirmation(

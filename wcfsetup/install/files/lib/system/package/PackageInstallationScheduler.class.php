@@ -40,6 +40,26 @@ use wcf\util\FileUtil;
  *  archive: string,
  *  action: 'update',
  * }
+ * @phpstan-type ExcludedPackage array{
+ *  package: string,
+ *  packageName: string,
+ *  packageVersion: string,
+ *  action: 'install'|'update',
+ *  conflict: 'newPackageExcludesExistingPackage'|'existingPackageExcludesNewPackage',
+ *  existingPackage: string,
+ *  existingPackageName: string,
+ *  existingPackageVersion: string,
+ * }|array{
+ *  package: string,
+ *  packageName: string,
+ *  packageVersion: string,
+ *  action: 'install'|'update',
+ *  conflict: 'newPackageExcludesNewPackage',
+ *  excludedPackage: string,
+ *  excludedPackageName: string,
+ *  excludedPackageVersion: string,
+ *  excludedPackageAction: 'install'|'update',
+ * }
  */
 final class PackageInstallationScheduler
 {
@@ -65,6 +85,8 @@ final class PackageInstallationScheduler
      */
     private array $virtualPackageVersions = [];
 
+    private bool $validateInstallInstructions = false;
+
     /**
      * @param string[] $selectedPackages
      */
@@ -79,6 +101,8 @@ final class PackageInstallationScheduler
      */
     public function buildPackageInstallationStack(bool $validateInstallInstructions = false): void
     {
+        $this->validateInstallInstructions = $validateInstallInstructions;
+
         foreach ($this->selectedPackages as $package => $version) {
             $this->tryToInstallPackage($package, $version, true, $validateInstallInstructions);
         }
@@ -238,11 +262,37 @@ final class PackageInstallationScheduler
 
                     // package version too low -> update necessary
                     $this->updatePackage($packageID, $row['minversion']);
+                } elseif ($this->isSelectedInSatisfyingVersion($row['package'], $row['minversion'])) {
+                    // Selected packages keep their selected version regardless of the order they are processed in.
+                    $this->tryToInstallPackage(
+                        $row['package'],
+                        $this->selectedPackages[$row['package']],
+                        true,
+                        $this->validateInstallInstructions
+                    );
                 } else {
                     $this->tryToInstallPackage($row['package'], $row['minversion']);
                 }
             }
         }
+    }
+
+    /**
+     * Returns true if the package is selected in a version that satisfies the minimum version. An empty
+     * selected version stands for the newest version.
+     */
+    private function isSelectedInSatisfyingVersion(string $package, string $minversion): bool
+    {
+        if (!isset($this->selectedPackages[$package])) {
+            return false;
+        }
+
+        $selectedVersion = $this->selectedPackages[$package];
+        if ($selectedVersion === '' || $minversion === '') {
+            return true;
+        }
+
+        return Package::compareVersion($selectedVersion, $minversion, '>=');
     }
 
     /**
@@ -366,16 +416,7 @@ final class PackageInstallationScheduler
     /**
      * Returns a list of excluded packages.
      *
-     * @return list<array{
-     *  package: string,
-     *  packageName: string,
-     *  packageVersion: string,
-     *  action: string,
-     *  conflict: string,
-     *  existingPackage: string,
-     *  existingPackageName: string,
-     *  existingPackageVersion: string,
-     * }>
+     * @return list<ExcludedPackage>
      */
     public function getExcludedPackages(): array
     {
@@ -532,9 +573,108 @@ final class PackageInstallationScheduler
                     }
                 }
             }
+
+            $excludedPackages = \array_merge($excludedPackages, $this->getExclusionsWithinStack($excludedPackages));
         }
 
         return $excludedPackages;
+    }
+
+    /**
+     * Returns the entries of the stack that exclude another entry of the stack, based on the version
+     * each package has after the run. Pairs already reported in `$excludedPackages` are skipped.
+     *
+     * @param list<ExcludedPackage> $excludedPackages
+     * @return list<ExcludedPackage>
+     */
+    private function getExclusionsWithinStack(array $excludedPackages): array
+    {
+        // An update can span several entries, the last one holds the version after the run.
+        $finalEntries = [];
+        foreach ($this->packageInstallationStack as $packageInstallation) {
+            $finalEntries[$packageInstallation['package']] = $packageInstallation;
+        }
+
+        $reportedPairs = [];
+        foreach ($excludedPackages as $conflict) {
+            if ($conflict['conflict'] === 'newPackageExcludesExistingPackage') {
+                $reportedPairs[$conflict['package']][$conflict['existingPackage']] = true;
+            } elseif ($conflict['conflict'] === 'existingPackageExcludesNewPackage') {
+                $reportedPairs[$conflict['existingPackage']][$conflict['package']] = true;
+            }
+        }
+
+        $packageIdentifiers = \array_keys($finalEntries);
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("package_update.package IN (?)", [$packageIdentifiers]);
+        $conditions->add("package_update.packageUpdateServerID IN (?)", [\array_keys($this->packageUpdateServers)]);
+        $conditions->add("package_update_exclusion.excludedPackage IN (?)", [$packageIdentifiers]);
+
+        $sql = "SELECT      package_update.package,
+                            package_update_version.packageVersion,
+                            package_update_exclusion.excludedPackage,
+                            package_update_exclusion.excludedPackageVersion
+                FROM        wcf1_package_update_exclusion package_update_exclusion
+                INNER JOIN  wcf1_package_update_version package_update_version
+                ON          package_update_version.packageUpdateVersionID = package_update_exclusion.packageUpdateVersionID
+                INNER JOIN  wcf1_package_update package_update
+                ON          package_update.packageUpdateID = package_update_version.packageUpdateID
+                {$conditions}";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute($conditions->getParameters());
+
+        $exclusions = [];
+        while ($row = $statement->fetchArray()) {
+            $package = $row['package'];
+            $excludedPackage = $row['excludedPackage'];
+            if (
+                $package === $excludedPackage
+                || !isset($finalEntries[$package], $finalEntries[$excludedPackage])
+                || isset($reportedPairs[$package][$excludedPackage])
+            ) {
+                continue;
+            }
+
+            $entry = $finalEntries[$package];
+            $newVersion = $this->getNewVersion($entry);
+            if ($row['packageVersion'] !== $newVersion) {
+                continue;
+            }
+
+            $excludedEntry = $finalEntries[$excludedPackage];
+            $excludedNewVersion = $this->getNewVersion($excludedEntry);
+            if (
+                $row['excludedPackageVersion'] !== '*'
+                && Package::compareVersion($excludedNewVersion, $row['excludedPackageVersion'], '<')
+            ) {
+                continue;
+            }
+
+            // The same version can be offered by several servers.
+            $reportedPairs[$package][$excludedPackage] = true;
+
+            $exclusions[] = [
+                'package' => $package,
+                'packageName' => $entry['packageName'],
+                'packageVersion' => $newVersion,
+                'action' => $entry['action'],
+                'conflict' => 'newPackageExcludesNewPackage',
+                'excludedPackage' => $excludedPackage,
+                'excludedPackageName' => $excludedEntry['packageName'],
+                'excludedPackageVersion' => $excludedNewVersion,
+                'excludedPackageAction' => $excludedEntry['action'],
+            ];
+        }
+
+        return $exclusions;
+    }
+
+    /**
+     * @param StackEntry $packageInstallation
+     */
+    private function getNewVersion(array $packageInstallation): string
+    {
+        return $packageInstallation['action'] === 'update' ? $packageInstallation['toVersion'] : $packageInstallation['packageVersion'];
     }
 
     /**

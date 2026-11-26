@@ -621,6 +621,13 @@ html[data-color-scheme="dark"] {
 	}
 }
 
+/* Package (Un)Installation */
+/* The buttons are swapped per step, which the dialog's own controls do not allow. */
+#packageInstallationInnerContent > .formSubmit {
+	justify-content: flex-start;
+	margin-top: 30px;
+}
+
 /* Search for Packages */
 .packageSearchResultRow {
 	.columnText {

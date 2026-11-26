@@ -530,10 +530,13 @@
 		<item name="wcf.acp.devtools.project.optionalPackage.optionalPackage"><![CDATA[{$packageIdentifier}]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.packageIdentifier.description"><![CDATA[Der Pfad zur Paketdatei muss <kbd>optionals/{literal}{$packageIdentifier}{/literal}.tar</kbd> lauten.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages"><![CDATA[Optionale Pakete]]></item>
-		<item name="wcf.acp.devtools.project.optionalPackages.description"><![CDATA[Nach der Installation dieses Pakets werden folgende Pakete als optionale Pakete angeboten.]]></item>
+		<item name="wcf.acp.devtools.project.optionalPackages.description"><![CDATA[Optionale Pakete sind veraltet und werden durch empfohlene Pakete abgelöst. Nach der Installation dieses Pakets werden folgende Pakete als optionale Pakete angeboten.]]></item>
+		<item name="wcf.acp.devtools.project.suggestedPackages"><![CDATA[Empfohlene Pakete]]></item>
+		<item name="wcf.acp.devtools.project.suggestedPackages.description"><![CDATA[Die folgenden Pakete werden für die Verwendung zusammen mit diesem Paket empfohlen. Sie werden nicht mit diesem Paket mitgeliefert.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackages.shortTitle"><![CDATA[Voraussetzungen]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages.shortTitle"><![CDATA[Inkompatibilität]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.shortTitle"><![CDATA[Optionales]]></item>
+		<item name="wcf.acp.devtools.project.suggestedPackages.shortTitle"><![CDATA[Empfehlungen]]></item>
 		<item name="wcf.acp.devtools.project.instructions"><![CDATA[Anweisungen]]></item>
 		<item name="wcf.acp.devtools.project.instructions.type"><![CDATA[Anweisungstyp]]></item>
 		<item name="wcf.acp.devtools.project.instructions.type.install"><![CDATA[Installation]]></item>
@@ -572,6 +575,8 @@
 		<item name="wcf.acp.devtools.project.optionalPackage.error.exclusionOptional"><![CDATA[Optionale Pakete können nicht gleichzeitig inkompatible sein. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.error.requirementOptional"><![CDATA[Optional Pakete können nicht gleichzeitig benötigt werden. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.error.selfOptional"><![CDATA[Ein Paket kann kein optionales Paket für sich selbst sein.]]></item>
+		<item name="wcf.acp.devtools.project.suggestedPackage.error.requirementSuggestion"><![CDATA[Benötigte Pakete können nicht gleichzeitig empfohlen werden. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
+		<item name="wcf.acp.devtools.project.suggestedPackage.error.selfSuggestion"><![CDATA[Ein Paket kann sich nicht selbst empfehlen.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.value"><![CDATA[Datei(en)]]></item>
 		<item name="wcf.acp.devtools.project.instruction.value.description"><![CDATA[Die angegebene Datei wird während der Installation/des Updates verarbeitet werden.]]></item>
 		<item name="wcf.acp.devtools.project.instructions.description"><![CDATA[Die Anweisungen erklären der Installations- und Updateroutine, was gemacht werden muss, damit das Paket erfolgreich installiert/aktualisiert werden kann.]]></item>
@@ -1852,6 +1857,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.installation.rollback"><![CDATA[Installation rückgängig machen]]></item>
 		<item name="wcf.acp.package.installation.step.install"><![CDATA[„{$packageName}“ wird installiert …]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation abgeschlossen]]></item>
+		<item name="wcf.acp.package.installation.step.suggestedPackages"><![CDATA[Empfohlene Pakete werden gesucht …]]></item>
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[„{$packageName}“ wird aktualisiert …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Aktualisierung abgeschlossen]]></item>
 		<item name="wcf.acp.package.installedVersion"><![CDATA[Installierte Version]]></item>
@@ -1886,6 +1892,10 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} eine Paketdatei von {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} lokalen Rechner an.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Paket „{@$package->getName()}“ aktualisieren]]></item>
+		<item name="wcf.acp.package.suggestedPackages"><![CDATA[Empfohlene Pakete]]></item>
+		<item name="wcf.acp.package.suggestedPackages.button.install"><![CDATA[Ausgewählte Pakete installieren]]></item>
+		<item name="wcf.acp.package.suggestedPackages.button.skip"><![CDATA[Überspringen]]></item>
+		<item name="wcf.acp.package.suggestedPackages.description"><![CDATA[Die folgenden, optionalen Pakete sind für das soeben installierte Produkt verfügbar.]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[App]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Erweiterung]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Paket <span class="confirmationObject">{@$package->getName()}</span> wirklich deinstallieren?]]></item>
@@ -1923,6 +1933,9 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.update.excludedPackages.excluding"><![CDATA[Zu installierende Pakete]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluding.description"><![CDATA[Die folgenden zu installierenden Pakete sind mit installierten Paketen nicht kompatibel]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluding.package"><![CDATA[„{$excludedPackage[packageName]}“ in Version „{$excludedPackage[packageVersion]}“ ist mit dem bereits installieren Paket „{$excludedPackage[existingPackageName]}“ nicht kompatibel]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.together"><![CDATA[Gemeinsam zu installierende Pakete]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.together.description"><![CDATA[Die folgenden zu installierenden Pakete sind untereinander nicht kompatibel]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.together.package"><![CDATA[„{$excludedPackage[packageName]}“ kann nicht {if $excludedPackage[action] === 'update'}auf{else}in{/if} Version „{$excludedPackage[packageVersion]}“ {if $excludedPackage[action] === 'update'}aktualisiert{else}installiert{/if} werden, da es mit „{$excludedPackage[excludedPackageName]}“ in Version „{$excludedPackage[excludedPackageVersion]}“ nicht kompatibel ist, das gleichzeitig {if $excludedPackage[excludedPackageAction] === 'update'}aktualisiert{else}installiert{/if} wird]]></item>
 		<item name="wcf.acp.package.update.path.incoherent"><![CDATA[Das Update erfordert eine Aktualisierung des Paketes „{$packageName}“ (installierte Version: {$currentVersion}) auf Version {$newVersion}, es wurden aber keine passenden Updates gefunden.]]></item>
 		<item name="wcf.acp.package.update.path.unknown"><![CDATA[Das Update erfordert eine Aktualisierung des Paketes „{$packageName}“ (installierte Version: {$currentVersion}) auf Version {$newVersion}, es wurden aber keine verfügbaren Updates gefunden. Möglicherweise fehlt der passende Paket-Server?]]></item>
 		<item name="wcf.acp.package.update.purchaseRequired"><![CDATA[Kostenpflichtiges Paket]]></item>

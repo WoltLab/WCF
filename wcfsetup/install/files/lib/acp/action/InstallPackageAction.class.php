@@ -10,10 +10,12 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use wcf\data\application\Application;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\http\Helper;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\package\SuggestedPackageResolver;
 use wcf\system\WCF;
 
 /**
@@ -167,11 +169,24 @@ class InstallPackageAction implements RequestHandlerInterface
 
         if ($step->getNode() === '') {
             // show success
-            return new JsonResponse([
+            $success = [
                 'currentAction' => $this->getCurrentAction(null),
                 'progress' => 100,
                 'redirectLocation' => $this->getRedirectLink($redirectLocation),
                 'step' => 'success',
+            ];
+
+            $suggestedPackages = $this->getSuggestedPackages();
+            if ($suggestedPackages === null) {
+                return new JsonResponse($success);
+            }
+
+            return new JsonResponse([
+                'currentAction' => WCF::getLanguage()->get('wcf.acp.package.installation.step.suggestedPackages'),
+                'progress' => 99,
+                'step' => 'suggestedPackages',
+                'suggestedPackages' => $suggestedPackages,
+                'success' => $success,
             ]);
         }
 
@@ -183,6 +198,46 @@ class InstallPackageAction implements RequestHandlerInterface
             'progress' => $this->installation->nodeBuilder->calculateProgress($node),
             'queueID' => $queueID,
         ]);
+    }
+
+    /**
+     * Returns the packages and the suggestions not installed yet that the client
+     * offers for installation after the process has finished.
+     *
+     * @return ?array{packageIDs: list<int>, suggestions: list<string>}
+     * @since 6.3
+     */
+    private function getSuggestedPackages(): ?array
+    {
+        try {
+            $suggestedPackages = $this->installation->getSuggestedPackages();
+            if ($suggestedPackages['suggestions'] === []) {
+                return null;
+            }
+
+            // The last queue of the process can be an update that pulled in an installation.
+            if (!WCF::getSession()->hasPermission('admin.configuration.package.canInstallPackage')) {
+                return null;
+            }
+
+            if (PackageUpdateServer::isUpgradeOverrideEnabled()) {
+                return null;
+            }
+
+            $suggestions = new SuggestedPackageResolver()->removeInstalled($suggestedPackages['suggestions']);
+            if ($suggestions === []) {
+                return null;
+            }
+
+            return [
+                'packageIDs' => $suggestedPackages['packageIDs'],
+                'suggestions' => $suggestions,
+            ];
+        } catch (\Throwable $e) {
+            \wcf\functions\exception\logThrowable($e);
+
+            return null;
+        }
     }
 
     /**

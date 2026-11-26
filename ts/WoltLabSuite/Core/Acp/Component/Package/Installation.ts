@@ -8,6 +8,7 @@
  */
 
 import { prepareRequest } from "WoltLabSuite/Core/Ajax/Backend";
+import { resolveSuggestedPackages } from "WoltLabSuite/Core/Api/Packages/Suggestions/ResolveSuggestedPackages";
 import { confirmationFactory } from "WoltLabSuite/Core/Component/Confirmation";
 import { dialogFactory } from "WoltLabSuite/Core/Component/Dialog";
 import type WoltlabCoreDialogElement from "WoltLabSuite/Core/Element/woltlab-core-dialog";
@@ -24,8 +25,15 @@ type Response = {
   progress?: number;
   queueID?: number | null;
   redirectLocation?: string;
-  step: "install" | "rollback" | "success" | "uninstall";
+  step: "install" | "rollback" | "success" | "suggestedPackages" | "uninstall";
+  success?: Response;
+  suggestedPackages?: SuggestedPackages;
   template?: string;
+};
+
+type SuggestedPackages = {
+  packageIDs: number[];
+  suggestions: string[];
 };
 
 type Parameters = Record<string, number | string>;
@@ -105,7 +113,7 @@ class PackageInstallation {
     }
   }
 
-  #handleResponse(data: Response): Parameters | undefined {
+  #handleResponse(data: Response, suggestedPackagesTemplate = ""): Parameters | undefined {
     if (typeof window._trackPackageStep === "function") {
       window._trackPackageStep(this.#actionName, data);
     }
@@ -136,15 +144,16 @@ class PackageInstallation {
       dialog.content.querySelector("#packageInstallationAction")!.innerHTML = data.currentAction;
     }
 
-    if (data.step === "success") {
-      this.#setIcon("check");
-
+    if (data.step === "suggestedPackages") {
       this.#clearInnerContent();
-      const button = this.#appendButton(getPhrase("wcf.global.button.next"), () => {
-        window.location.href = data.redirectLocation!;
-      });
-      this.#showInnerContent();
-      button.focus();
+
+      void this.#resolveSuggestedPackages(data.suggestedPackages!, data.success!);
+
+      return undefined;
+    }
+
+    if (data.step === "success") {
+      this.#showSuccess(data, suggestedPackagesTemplate);
 
       return undefined;
     }
@@ -204,6 +213,99 @@ class PackageInstallation {
 
     const button = this.#appendButton(getPhrase("wcf.global.button.next"), () => submit());
     this.#showInnerContent();
+  }
+
+  #showSuccess(data: Response, suggestedPackagesTemplate: string): void {
+    this.#setIcon("check");
+
+    if (suggestedPackagesTemplate !== "") {
+      this.#showSuggestedPackages(suggestedPackagesTemplate, data.redirectLocation!);
+
+      return;
+    }
+
+    this.#clearInnerContent();
+    const button = this.#appendButton(getPhrase("wcf.global.button.next"), () => {
+      window.location.href = data.redirectLocation!;
+    });
+    this.#showInnerContent();
+    button.focus();
+  }
+
+  /**
+   * Looks up the suggested packages that can be installed and completes the
+   * process afterwards. Failures are tolerated on purpose, the installation
+   * has finished and the dialog then shows the "Next" button instead.
+   */
+  async #resolveSuggestedPackages(suggestedPackages: SuggestedPackages, success: Response): Promise<void> {
+    let template: string;
+    try {
+      const result = await resolveSuggestedPackages(suggestedPackages.packageIDs, suggestedPackages.suggestions);
+      template = result.ok ? result.value.template : "";
+    } catch {
+      template = "";
+    }
+
+    this.#handleResponse(success, template);
+  }
+
+  #showSuggestedPackages(template: string, redirectLocation: string): void {
+    const content = this.#getInnerContent();
+    content.innerHTML = template;
+
+    const checkboxes = Array.from(content.querySelectorAll<HTMLInputElement>('input[type="checkbox"]'));
+    const submitButton = content.querySelector<HTMLButtonElement>('.formSubmit button[data-type="submit"]')!;
+    const skipButton = content.querySelector<HTMLButtonElement>('.formSubmit button[data-type="skip"]')!;
+
+    const updateControls = (pending: boolean) => {
+      checkboxes.forEach((checkbox) => {
+        checkbox.disabled = pending;
+      });
+      skipButton.disabled = pending;
+      submitButton.disabled = pending || !checkboxes.some((checkbox) => checkbox.checked);
+    };
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", () => updateControls(false));
+    });
+
+    skipButton.addEventListener("click", () => {
+      updateControls(true);
+
+      window.location.href = redirectLocation;
+    });
+
+    submitButton.addEventListener("click", () => {
+      const packages: Record<string, string> = {};
+      checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+          packages[checkbox.value] = checkbox.dataset.packageVersion!;
+        }
+      });
+
+      updateControls(true);
+
+      void this.#installSuggestedPackages(packages, () => updateControls(false));
+    });
+
+    this.#showInnerContent();
+    skipButton.focus();
+  }
+
+  async #installSuggestedPackages(packages: Record<string, string>, restore: () => void): Promise<void> {
+    let started = false;
+    try {
+      const { default: PrepareInstallation } = await import("WoltLabSuite/Core/Acp/Ui/Package/PrepareInstallation");
+      const redirectLocation = this.#additionalParameters.redirectLocation === "license" ? "license" : undefined;
+
+      started = await new PrepareInstallation().startMultiple(packages, redirectLocation);
+    } finally {
+      if (started) {
+        this.#dialog!.close();
+      } else {
+        restore();
+      }
+    }
   }
 
   #getFormData(content: HTMLElement): FormData {

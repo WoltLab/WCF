@@ -345,7 +345,8 @@ class PackageInstallationNodeBuilder
         } else {
             $total = $progress['done'] + $progress['outstanding'];
 
-            return (int)\round(($progress['done'] / $total) * 100);
+            // With 200+ nodes, rounding reports 100 while nodes are outstanding; 100 must mean finished.
+            return \min(99, (int)\round(($progress['done'] / $total) * 100));
         }
     }
 
@@ -750,6 +751,7 @@ class PackageInstallationNodeBuilder
      * not really matter at this point).
      *
      * @return void
+     * @deprecated 6.3 Optional packages are superseded by suggested packages.
      */
     protected function buildOptionalNodes()
     {
