@@ -31,6 +31,48 @@ final class InstallablePackageResolver
      */
     public function resolve(array $packageUpdateIDs): array
     {
+        return $this->resolvePackageUpdates($packageUpdateIDs, null);
+    }
+
+    /**
+     * Returns the installable packages among the given package identifiers, see `resolve()`.
+     *
+     * @param list<string> $identifiers
+     * @return array<int, ViewablePackageUpdate>
+     */
+    public function resolveByIdentifiers(array $identifiers): array
+    {
+        return $this->resolve($this->getPackageUpdateIDs($identifiers));
+    }
+
+    /**
+     * Returns the installable packages among the given package identifiers like
+     * `resolveByIdentifiers()`, but treats every version offered by the WoltLab update
+     * server as accessible, regardless of the license. This is meant for listing the
+     * products the license does not cover, together with the offer to extend it.
+     *
+     * @param list<string> $identifiers
+     * @return array<int, ViewablePackageUpdate>
+     */
+    public function resolveByIdentifiersRegardlessOfLicense(array $identifiers): array
+    {
+        $woltlabUpdateServer = \array_find(
+            PackageUpdateServer::getActiveUpdateServers(),
+            static fn(PackageUpdateServer $packageUpdateServer) => $packageUpdateServer->isWoltLabUpdateServer()
+        );
+
+        return $this->resolvePackageUpdates(
+            $this->getPackageUpdateIDs($identifiers),
+            $woltlabUpdateServer?->packageUpdateServerID
+        );
+    }
+
+    /**
+     * @param list<int> $packageUpdateIDs
+     * @return array<int, ViewablePackageUpdate>
+     */
+    private function resolvePackageUpdates(array $packageUpdateIDs, ?int $alwaysAccessibleServerID): array
+    {
         if ($packageUpdateIDs === []) {
             return [];
         }
@@ -95,6 +137,7 @@ final class InstallablePackageResolver
                 $installedPackages,
                 $excludedPackagesOfInstalledPackages,
                 $updateServerIDs,
+                $alwaysAccessibleServerID,
                 []
             );
             if (isset($result[$packageUpdateID])) {
@@ -196,12 +239,10 @@ final class InstallablePackageResolver
     }
 
     /**
-     * Returns the installable packages among the given package identifiers, see `resolve()`.
-     *
      * @param list<string> $identifiers
-     * @return array<int, ViewablePackageUpdate>
+     * @return list<int>
      */
-    public function resolveByIdentifiers(array $identifiers): array
+    private function getPackageUpdateIDs(array $identifiers): array
     {
         if ($identifiers === []) {
             return [];
@@ -216,7 +257,7 @@ final class InstallablePackageResolver
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditions->getParameters());
 
-        return $this->resolve($statement->fetchAll(\PDO::FETCH_COLUMN));
+        return $statement->fetchAll(\PDO::FETCH_COLUMN);
     }
 
     /**
@@ -235,6 +276,7 @@ final class InstallablePackageResolver
         array $installedPackages,
         array $excludedPackagesOfInstalledPackages,
         array $updateServerIDs,
+        ?int $alwaysAccessibleServerID,
         array $visiting
     ): array {
         if (isset($visiting[$packageUpdateID])) {
@@ -278,7 +320,8 @@ final class InstallablePackageResolver
         // filter by version
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("puv.packageUpdateID IN (?)", [$packageUpdateID]);
-        $sql = "SELECT      pu.package, puv.packageUpdateVersionID, puv.packageUpdateID, puv.packageVersion, puv.isAccessible
+        $sql = "SELECT      pu.package, pu.packageUpdateServerID, puv.packageUpdateVersionID, puv.packageUpdateID,
+                            puv.packageVersion, puv.isAccessible
                 FROM        wcf1_package_update_version puv
                 LEFT JOIN   wcf1_package_update pu
                 ON          pu.packageUpdateID = puv.packageUpdateID
@@ -340,7 +383,7 @@ final class InstallablePackageResolver
                 ];
             }
 
-            if ($row['isAccessible'] !== 0) {
+            if ($row['packageUpdateServerID'] === $alwaysAccessibleServerID || $row['isAccessible'] !== 0) {
                 $packageVersions[$package][$packageUpdateID]['accessible'][$row['packageUpdateVersionID']] = $packageVersion;
             }
             $packageVersions[$package][$packageUpdateID]['existing'][$row['packageUpdateVersionID']] = $packageVersion;
@@ -443,6 +486,7 @@ final class InstallablePackageResolver
                     $installedPackages,
                     $excludedPackagesOfInstalledPackages,
                     $updateServerIDs,
+                    $alwaysAccessibleServerID,
                     $visiting
                 );
                 if ($result !== []) {
