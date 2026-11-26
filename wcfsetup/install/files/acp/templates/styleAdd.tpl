@@ -748,12 +748,12 @@
 										<div class="spInlineWrapper" data-region="wcfButton">
 											<ol class="inlineList">
 												<li><a class="button">Button</a></li>
-												<li><a class="button button--selected">Button (Selected)</a></li>
+												<li><a class="button active">Button (Selected)</a></li>
 											</ol>
 										</div>
 										<div class="spInlineWrapper" data-region="wcfButtonDisabled">
 											<ol class="inlineList">
-												<li><a class="button button--disabled">Button (Disabled)</a></li>
+												<li><a class="button disabled">Button (Disabled)</a></li>
 											</ol>
 										</div>
 									</div>
@@ -761,9 +761,9 @@
 									<div id="spButtonPrimary">
 										<div class="spInlineWrapper" data-region="wcfButtonPrimary">
 											<ol class="inlineList">
-												<li><a class="button button--primary">Primary Button</a></li>
-												<li><a class="button button--primary spButtonHover">Primary Button (Hover)</a></li>
-												<li><a class="button button--primary button--disabled">Primary Button (Disabled)</a></li>
+												<li><a class="button buttonPrimary">Primary Button</a></li>
+												<li><a class="button buttonPrimary spButtonHover">Primary Button (Hover)</a></li>
+												<li><a class="button buttonPrimary disabled">Primary Button (Disabled)</a></li>
 											</ol>
 										</div>
 									</div>
@@ -771,7 +771,7 @@
 									<div id="spButtonGhost">
 										<div class="spInlineWrapper" data-region="wcfButtonGhost">
 											<ol class="inlineList">
-												<li><a class="button button--ghost">Ghost Button</a></li>
+												<li><a class="button buttonGhost">Ghost Button</a></li>
 											</ol>
 										</div>
 									</div>
@@ -779,7 +779,7 @@
 									<div id="spButtonDanger">
 										<div class="spInlineWrapper" data-region="wcfButtonDanger">
 											<ol class="inlineList">
-												<li><a class="button button--danger">Danger Button</a></li>
+												<li><a class="button buttonDanger">Danger Button</a></li>
 											</ol>
 										</div>
 									</div>

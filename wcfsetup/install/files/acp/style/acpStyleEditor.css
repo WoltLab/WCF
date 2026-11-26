@@ -462,8 +462,8 @@ html[dir="ltr"] #spTable th {
 #spButtonDanger .inlineList {
 	row-gap: 5px;
 }
-#spButton .button.button--disabled,
-#spButtonPrimary .button.button--disabled {
+#spButton .button.disabled,
+#spButtonPrimary .button.disabled {
 	cursor: default;
 }
 #spButtonPrimary,
@@ -479,7 +479,7 @@ html[dir="ltr"] #spTable th {
 	background-color: var(--wcfButtonBackgroundActive);
 	color: var(--wcfButtonTextActive);
 }
-#spButton .button.button--selected {
+#spButton .button.active {
 	background-color: var(--wcfButtonBackgroundSelected);
 	color: var(--wcfButtonTextSelected);
 }
@@ -508,8 +508,8 @@ html[dir="ltr"] #spTable th {
 	background-color: var(--wcfButtonPrimaryBackgroundActive);
 	color: var(--wcfButtonPrimaryTextActive);
 }
-#spButton .button.button--disabled,
-#spButtonPrimary .button.button--disabled {
+#spButton .button.disabled,
+#spButtonPrimary .button.disabled {
 	background-color: var(--wcfButtonDisabledBackground);
 	color: var(--wcfButtonDisabledText);
 }

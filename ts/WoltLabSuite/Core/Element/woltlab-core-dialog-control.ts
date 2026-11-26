@@ -112,7 +112,7 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
       this.#primaryButton.autofocus = true;
       this.#primaryButton.classList.add(
         "button",
-        this.danger ? "button--danger" : "buttonPrimary",
+        this.danger ? "buttonDanger" : "buttonPrimary",
         "dialog__control__button",
         "dialog__control__button--primary",
       );
@@ -138,7 +138,7 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
       this.#cancelButton.value = "cancel";
       this.#cancelButton.classList.add(
         "button",
-        "button--ghost",
+        "buttonGhost",
         "dialog__control__button",
         "dialog__control__button--cancel",
       );
