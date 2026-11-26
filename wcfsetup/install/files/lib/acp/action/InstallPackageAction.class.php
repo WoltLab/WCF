@@ -169,7 +169,7 @@ class InstallPackageAction implements RequestHandlerInterface
 
         if ($step->getNode() === '') {
             // show success
-            $response = [
+            $success = [
                 'currentAction' => $this->getCurrentAction(null),
                 'progress' => 100,
                 'redirectLocation' => $this->getRedirectLink($redirectLocation),
@@ -177,11 +177,17 @@ class InstallPackageAction implements RequestHandlerInterface
             ];
 
             $suggestedPackages = $this->getSuggestedPackages();
-            if ($suggestedPackages !== null) {
-                $response['suggestedPackages'] = $suggestedPackages;
+            if ($suggestedPackages === null) {
+                return new JsonResponse($success);
             }
 
-            return new JsonResponse($response);
+            return new JsonResponse([
+                'currentAction' => WCF::getLanguage()->get('wcf.acp.package.installation.step.suggestedPackages'),
+                'progress' => 99,
+                'step' => 'suggestedPackages',
+                'suggestedPackages' => $suggestedPackages,
+                'success' => $success,
+            ]);
         }
 
         // continue with next node

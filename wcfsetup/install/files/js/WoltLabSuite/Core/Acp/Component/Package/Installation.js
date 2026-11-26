@@ -95,7 +95,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
                 throw error;
             }
         }
-        #handleResponse(data) {
+        #handleResponse(data, suggestedPackagesTemplate = "") {
             if (typeof window._trackPackageStep === "function") {
                 window._trackPackageStep(this.#actionName, data);
             }
@@ -118,17 +118,13 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             if (data.currentAction) {
                 dialog.content.querySelector("#packageInstallationAction").innerHTML = data.currentAction;
             }
-            if (data.step === "success") {
-                this.#setIcon("check");
+            if (data.step === "suggestedPackages") {
                 this.#clearInnerContent();
-                const button = this.#appendButton((0, Language_1.getPhrase)("wcf.global.button.next"), () => {
-                    window.location.href = data.redirectLocation;
-                });
-                this.#showInnerContent();
-                button.focus();
-                if (data.suggestedPackages !== undefined) {
-                    void this.#offerSuggestedPackages(data.suggestedPackages, data.redirectLocation, button);
-                }
+                void this.#resolveSuggestedPackages(data.suggestedPackages, data.success);
+                return undefined;
+            }
+            if (data.step === "success") {
+                this.#showSuccess(data, suggestedPackagesTemplate);
                 return undefined;
             }
             if (data.innerTemplate !== undefined) {
@@ -173,27 +169,34 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
             const button = this.#appendButton((0, Language_1.getPhrase)("wcf.global.button.next"), () => submit());
             this.#showInnerContent();
         }
+        #showSuccess(data, suggestedPackagesTemplate) {
+            this.#setIcon("check");
+            if (suggestedPackagesTemplate !== "") {
+                this.#showSuggestedPackages(suggestedPackagesTemplate, data.redirectLocation);
+                return;
+            }
+            this.#clearInnerContent();
+            const button = this.#appendButton((0, Language_1.getPhrase)("wcf.global.button.next"), () => {
+                window.location.href = data.redirectLocation;
+            });
+            this.#showInnerContent();
+            button.focus();
+        }
         /**
-         * Replaces the success message with the suggested packages that can be
-         * installed. Failures are ignored, the success message stays in place.
+         * Looks up the suggested packages that can be installed and completes the
+         * process afterwards. Failures are tolerated on purpose, the installation
+         * has finished and the dialog then shows the "Next" button instead.
          */
-        async #offerSuggestedPackages(suggestedPackages, redirectLocation, nextButton) {
+        async #resolveSuggestedPackages(suggestedPackages, success) {
             let template;
             try {
                 const result = await (0, ResolveSuggestedPackages_1.resolveSuggestedPackages)(suggestedPackages.packageIDs, suggestedPackages.suggestions);
-                if (!result.ok) {
-                    return;
-                }
-                template = result.value.template;
+                template = result.ok ? result.value.template : "";
             }
             catch {
-                return;
+                template = "";
             }
-            // The "Next" button is disabled once it has been clicked.
-            if (template === "" || nextButton.disabled) {
-                return;
-            }
-            this.#showSuggestedPackages(template, redirectLocation);
+            this.#handleResponse(success, template);
         }
         #showSuggestedPackages(template, redirectLocation) {
             const content = this.#getInnerContent();
@@ -225,6 +228,7 @@ define(["require", "exports", "WoltLabSuite/Core/Ajax/Backend", "WoltLabSuite/Co
                 updateControls(true);
                 void this.#installSuggestedPackages(packages, () => updateControls(false));
             });
+            this.#showInnerContent();
             skipButton.focus();
         }
         async #installSuggestedPackages(packages, restore) {

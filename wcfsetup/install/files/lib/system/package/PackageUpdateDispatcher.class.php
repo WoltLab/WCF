@@ -4,6 +4,7 @@ namespace wcf\system\package;
 
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -173,7 +174,12 @@ final class PackageUpdateDispatcher extends SingletonFactory
     private function fetchPackageUpdateXML(PackageUpdateServer $updateServer): void
     {
         $authData = $updateServer->getAuthData();
-        $options = [];
+        $options = [
+            // The lists arrive within a fraction of a second, while the default
+            // timeout lets a hanging server stall every refresh, including the
+            // suggested packages after an installation, for a minute.
+            RequestOptions::TIMEOUT => 5,
+        ];
         if ($authData !== []) {
             $options[RequestOptions::AUTH] = [
                 $authData['username'],
@@ -228,6 +234,11 @@ final class PackageUpdateDispatcher extends SingletonFactory
         } catch (ServerException $e) {
             throw new SystemException(
                 WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' (' . $e->getResponse()->getStatusCode() . ')'
+            );
+        } catch (TransferException $e) {
+            // Timeouts and connection failures must not abort the refresh of the remaining servers.
+            throw new SystemException(
+                WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' (' . $e->getMessage() . ')'
             );
         }
 

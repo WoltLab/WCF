@@ -25,7 +25,8 @@ type Response = {
   progress?: number;
   queueID?: number | null;
   redirectLocation?: string;
-  step: "install" | "rollback" | "success" | "uninstall";
+  step: "install" | "rollback" | "success" | "suggestedPackages" | "uninstall";
+  success?: Response;
   suggestedPackages?: SuggestedPackages;
   template?: string;
 };
@@ -112,7 +113,7 @@ class PackageInstallation {
     }
   }
 
-  #handleResponse(data: Response): Parameters | undefined {
+  #handleResponse(data: Response, suggestedPackagesTemplate = ""): Parameters | undefined {
     if (typeof window._trackPackageStep === "function") {
       window._trackPackageStep(this.#actionName, data);
     }
@@ -143,19 +144,16 @@ class PackageInstallation {
       dialog.content.querySelector("#packageInstallationAction")!.innerHTML = data.currentAction;
     }
 
-    if (data.step === "success") {
-      this.#setIcon("check");
-
+    if (data.step === "suggestedPackages") {
       this.#clearInnerContent();
-      const button = this.#appendButton(getPhrase("wcf.global.button.next"), () => {
-        window.location.href = data.redirectLocation!;
-      });
-      this.#showInnerContent();
-      button.focus();
 
-      if (data.suggestedPackages !== undefined) {
-        void this.#offerSuggestedPackages(data.suggestedPackages, data.redirectLocation!, button);
-      }
+      void this.#resolveSuggestedPackages(data.suggestedPackages!, data.success!);
+
+      return undefined;
+    }
+
+    if (data.step === "success") {
+      this.#showSuccess(data, suggestedPackagesTemplate);
 
       return undefined;
     }
@@ -217,33 +215,38 @@ class PackageInstallation {
     this.#showInnerContent();
   }
 
+  #showSuccess(data: Response, suggestedPackagesTemplate: string): void {
+    this.#setIcon("check");
+
+    if (suggestedPackagesTemplate !== "") {
+      this.#showSuggestedPackages(suggestedPackagesTemplate, data.redirectLocation!);
+
+      return;
+    }
+
+    this.#clearInnerContent();
+    const button = this.#appendButton(getPhrase("wcf.global.button.next"), () => {
+      window.location.href = data.redirectLocation!;
+    });
+    this.#showInnerContent();
+    button.focus();
+  }
+
   /**
-   * Replaces the success message with the suggested packages that can be
-   * installed. Failures are ignored, the success message stays in place.
+   * Looks up the suggested packages that can be installed and completes the
+   * process afterwards. Failures are tolerated on purpose, the installation
+   * has finished and the dialog then shows the "Next" button instead.
    */
-  async #offerSuggestedPackages(
-    suggestedPackages: SuggestedPackages,
-    redirectLocation: string,
-    nextButton: HTMLButtonElement,
-  ): Promise<void> {
+  async #resolveSuggestedPackages(suggestedPackages: SuggestedPackages, success: Response): Promise<void> {
     let template: string;
     try {
       const result = await resolveSuggestedPackages(suggestedPackages.packageIDs, suggestedPackages.suggestions);
-      if (!result.ok) {
-        return;
-      }
-
-      template = result.value.template;
+      template = result.ok ? result.value.template : "";
     } catch {
-      return;
+      template = "";
     }
 
-    // The "Next" button is disabled once it has been clicked.
-    if (template === "" || nextButton.disabled) {
-      return;
-    }
-
-    this.#showSuggestedPackages(template, redirectLocation);
+    this.#handleResponse(success, template);
   }
 
   #showSuggestedPackages(template: string, redirectLocation: string): void {
@@ -285,6 +288,7 @@ class PackageInstallation {
       void this.#installSuggestedPackages(packages, () => updateControls(false));
     });
 
+    this.#showInnerContent();
     skipButton.focus();
   }
 

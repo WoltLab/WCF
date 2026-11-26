@@ -1840,6 +1840,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.installation.rollback"><![CDATA[Rollback Installation]]></item>
 		<item name="wcf.acp.package.installation.step.install"><![CDATA[Installing “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation completed]]></item>
+		<item name="wcf.acp.package.installation.step.suggestedPackages"><![CDATA[Looking for suggested packages …]]></item>
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[Updating “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Update completed]]></item>
 		<item name="wcf.acp.package.installedVersion"><![CDATA[Installed Version]]></item>
