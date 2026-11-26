@@ -47,9 +47,14 @@ a.button {
 
 	@include userSelectNone;
 
+	&:focus-visible {
+		outline: 2px solid var(--wcfInputBorderActive);
+		outline-offset: 2px;
+	}
+
 	&.active {
-		background-color: var(--wcfButtonBackgroundActive);
-		color: var(--wcfButtonTextActive);
+		background-color: var(--wcfButtonBackgroundSelected);
+		color: var(--wcfButtonTextSelected);
 		text-decoration: none;
 	}
 
@@ -78,6 +83,18 @@ a.button {
 	}
 }
 
+.button.buttonGhost,
+a.button.buttonGhost {
+	background-color: transparent;
+	color: var(--wcfButtonText);
+}
+
+.button.buttonDanger,
+a.button.buttonDanger {
+	background-color: var(--wcfButtonDangerBackground);
+	color: var(--wcfButtonDangerText);
+}
+
 input[type="button"].buttonPrimary,
 input[type="submit"],
 .button.buttonPrimary,
@@ -104,6 +121,12 @@ html:not(.touch) {
 			color: var(--wcfButtonTextActive);
 			text-decoration: none;
 		}
+
+		// The selected state of default buttons persists while hovering.
+		&.active:not(.buttonPrimary, .buttonDanger, .buttonGhost, [type="submit"]):hover {
+			background-color: var(--wcfButtonBackgroundSelected);
+			color: var(--wcfButtonTextSelected);
+		}
 	}
 
 	input[type="button"].buttonPrimary,
@@ -114,6 +137,22 @@ html:not(.touch) {
 		&:hover {
 			background-color: var(--wcfButtonPrimaryBackgroundActive);
 			color: var(--wcfButtonPrimaryTextActive);
+		}
+	}
+
+	.button.buttonGhost,
+	a.button.buttonGhost {
+		&:hover {
+			background-color: var(--wcfButtonGhostBackgroundActive);
+			color: var(--wcfButtonText);
+		}
+	}
+
+	.button.buttonDanger,
+	a.button.buttonDanger {
+		&:hover {
+			background-color: var(--wcfButtonDangerBackgroundActive);
+			color: var(--wcfButtonDangerTextActive);
 		}
 	}
 }
@@ -133,6 +172,14 @@ a.button {
 	}
 }
 
+.button.buttonGhost,
+a.button.buttonGhost {
+	&:disabled,
+	&.disabled {
+		background-color: transparent !important;
+	}
+}
+
 /* force active state for buttons toggling a dropdown */
 .dropdownOpen {
 	> input[type="button"],
@@ -140,8 +187,8 @@ a.button {
 	> input[type="submit"],
 	> .button,
 	> a.button {
-		background-color: var(--wcfButtonBackgroundActive);
-		color: var(--wcfButtonTextActive);
+		background-color: var(--wcfButtonBackgroundSelected);
+		color: var(--wcfButtonTextSelected);
 	}
 
 	> input[type="button"].buttonPrimary,
@@ -150,6 +197,18 @@ a.button {
 	> a.button.buttonPrimary {
 		background-color: var(--wcfButtonPrimaryBackgroundActive);
 		color: var(--wcfButtonPrimaryTextActive);
+	}
+
+	> .button.buttonGhost,
+	> a.button.buttonGhost {
+		background-color: var(--wcfButtonGhostBackgroundActive);
+		color: var(--wcfButtonText);
+	}
+
+	> .button.buttonDanger,
+	> a.button.buttonDanger {
+		background-color: var(--wcfButtonDangerBackgroundActive);
+		color: var(--wcfButtonDangerTextActive);
 	}
 }
 

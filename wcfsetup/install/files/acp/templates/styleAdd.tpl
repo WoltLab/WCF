@@ -748,7 +748,7 @@
 										<div class="spInlineWrapper" data-region="wcfButton">
 											<ol class="inlineList">
 												<li><a class="button">Button</a></li>
-												<li><a class="button active">Button (Active)</a></li>
+												<li><a class="button active">Button (Selected)</a></li>
 											</ol>
 										</div>
 										<div class="spInlineWrapper" data-region="wcfButtonDisabled">
@@ -764,6 +764,22 @@
 												<li><a class="button buttonPrimary">Primary Button</a></li>
 												<li><a class="button buttonPrimary active">Primary Button (Active)</a></li>
 												<li><a class="button disabled">Primary Button (Disabled)</a></li>
+											</ol>
+										</div>
+									</div>
+
+									<div id="spButtonGhost">
+										<div class="spInlineWrapper" data-region="wcfButtonGhost">
+											<ol class="inlineList">
+												<li><a class="button buttonGhost">Ghost Button</a></li>
+											</ol>
+										</div>
+									</div>
+
+									<div id="spButtonDanger">
+										<div class="spInlineWrapper" data-region="wcfButtonDanger">
+											<ol class="inlineList">
+												<li><a class="button buttonDanger">Danger Button</a></li>
 											</ol>
 										</div>
 									</div>

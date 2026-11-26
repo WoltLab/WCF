@@ -23,11 +23,24 @@ $styleVariables = [
     ['wcfFooterLinkActive', 'rgba(22, 81, 124, 1)', 'rgba(64, 179, 228, 1)'],
     ['wcfFooterText', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)'],
     ['wcfInputLabel', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)'],
+    ['wcfButtonBackground', 'rgba(215, 230, 242, 1)', 'rgba(47, 57, 76, 1)'],
+    ['wcfButtonBackgroundActive', 'rgba(193, 217, 236, 1)', 'rgba(62, 71, 89, 1)'],
+    ['wcfButtonBackgroundSelected', 'rgba(162, 199, 229, 1)', 'rgba(84, 92, 108, 1)'],
+    ['wcfButtonTextActive', 'rgba(33, 33, 33, 1)', 'rgba(230, 231, 234, 1)'],
+    ['wcfButtonTextSelected', 'rgba(33, 33, 33, 1)', 'rgba(230, 231, 234, 1)'],
+    ['wcfButtonDangerBackground', 'rgba(169, 68, 66, 1)', 'rgba(139, 46, 36, 1)'],
+    ['wcfButtonDangerBackgroundActive', 'rgba(132, 53, 52, 1)', 'rgba(116, 38, 30, 1)'],
+    ['wcfButtonDangerText', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)'],
+    ['wcfButtonDangerTextActive', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)'],
+    ['wcfButtonGhostBackgroundActive', 'rgba(233, 233, 233, 1)', 'rgba(42, 45, 49, 1)'],
 ];
 
-// Existing styles keep the footer colors of earlier versions, the new defaults
-// only apply to new styles. This must run before the defaults are updated.
-$footerColors = [
+// Existing styles keep the footer and button colors of earlier versions, the new
+// defaults only apply to new styles. This must run before the defaults are updated.
+$preservedColors = [
+    'wcfButtonBackground',
+    'wcfButtonBackgroundActive',
+    'wcfButtonTextActive',
     'wcfFooterBackground',
     'wcfFooterCopyrightBackground',
     'wcfFooterCopyrightLink',
@@ -41,7 +54,7 @@ $footerColors = [
     'wcfFooterText',
 ];
 $conditions = new PreparedStatementConditionBuilder();
-$conditions->add('variable.variableName IN (?)', [$footerColors]);
+$conditions->add('variable.variableName IN (?)', [$preservedColors]);
 $sql = "INSERT INTO             wcf1_style_variable_value
                                 (styleID, variableID, variableValue, variableValueDarkMode)
         SELECT                  style.styleID, variable.variableID, variable.defaultValue, variable.defaultValueDarkMode
@@ -67,6 +80,33 @@ foreach ($styleVariables as $data) {
         $variableName,
         $defaultValue,
         $defaultValueDarkMode,
+    ]);
+}
+
+// The selected state of default buttons used the hover colors before, existing
+// styles keep that look. This must run after the defaults are updated, which
+// creates the new variables, and after the hover colors have been preserved.
+$sql = "INSERT INTO             wcf1_style_variable_value
+                                (styleID, variableID, variableValue, variableValueDarkMode)
+        SELECT                  source_value.styleID, target.variableID, source_value.variableValue, source_value.variableValueDarkMode
+        FROM                    wcf1_style_variable_value source_value
+        INNER JOIN              wcf1_style_variable source
+        ON                      source.variableID = source_value.variableID
+        CROSS JOIN              wcf1_style_variable target
+        WHERE                   source.variableName = ?
+                            AND target.variableName = ?
+        ON DUPLICATE KEY UPDATE wcf1_style_variable_value.variableValue = IFNULL(wcf1_style_variable_value.variableValue, VALUES(variableValue)),
+                                wcf1_style_variable_value.variableValueDarkMode = IFNULL(wcf1_style_variable_value.variableValueDarkMode, VALUES(variableValueDarkMode))";
+$statement = WCF::getDB()->prepare($sql);
+foreach (
+    [
+        'wcfButtonBackgroundActive' => 'wcfButtonBackgroundSelected',
+        'wcfButtonTextActive' => 'wcfButtonTextSelected',
+    ] as $source => $target
+) {
+    $statement->execute([
+        $source,
+        $target,
     ]);
 }
 
