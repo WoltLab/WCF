@@ -16,6 +16,7 @@ use wcf\system\interaction\Divider;
 use wcf\system\interaction\IInteraction;
 use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
+use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
 use wcf\system\request\LinkHandler;
 use wcf\system\view\filter\IViewFilter;
 use wcf\system\view\ViewPrimaryButton;
@@ -472,7 +473,10 @@ abstract class AbstractGridView
         }
 
         if (!isset($this->interactionContextMenuComponent)) {
-            $this->interactionContextMenuComponent = new InteractionContextMenuComponent($this->interactionProvider);
+            $this->interactionContextMenuComponent = new InteractionContextMenuComponent(
+                $this->interactionProvider,
+                new InteractionContextMenuComponentConfiguration(buttonCssClassName: 'button small button--ghost'),
+            );
         }
 
         return $this->interactionContextMenuComponent;
