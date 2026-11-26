@@ -15,17 +15,32 @@ button {
 	}
 }
 
+/*
+ * Buttons use `.button` with the variants `.buttonPrimary` (and every
+ * `input[type="submit"]`), `.buttonGhost` and `.buttonDanger`, the size `.small`
+ * (or `.buttonList.smallButtons`) and the states `.active` and `.disabled`.
+ *
+ * Variants only set the `--button-*` properties, the states below consume them.
+ */
+
+/* base */
 input[type="button"],
 input[type="reset"],
 input[type="submit"],
 .button,
 a.button {
+	--button-background: var(--wcfButtonBackground);
+	--button-text: var(--wcfButtonText);
+	--button-background-active: var(--wcfButtonBackgroundActive);
+	--button-text-active: var(--wcfButtonTextActive);
+	--button-background-disabled: var(--wcfButtonDisabledBackground);
+
 	// a.button is required to override link formatting, such as drop-down buttons
 	align-items: center;
-	background-color: var(--wcfButtonBackground);
+	background-color: var(--button-background);
 	border-radius: var(--wcfBorderRadius);
 	border-width: 0;
-	color: var(--wcfButtonText);
+	color: var(--button-text);
 	// `0.25em` is the average width of a space that previously separated elements.
 	column-gap: 0.25em;
 	cursor: pointer;
@@ -47,10 +62,9 @@ a.button {
 
 	@include userSelectNone;
 
-	&.active {
-		background-color: var(--wcfButtonBackgroundActive);
-		color: var(--wcfButtonTextActive);
-		text-decoration: none;
+	&:focus-visible {
+		outline: 2px solid var(--wcfInputBorderActive);
+		outline-offset: 2px;
 	}
 
 	&.small {
@@ -78,42 +92,56 @@ a.button {
 	}
 }
 
+/* variants */
 input[type="button"].buttonPrimary,
 input[type="submit"],
-.button.buttonPrimary,
-a.button.buttonPrimary {
-	// a.button is required to override link formatting, such as dropdown buttons
-	background-color: var(--wcfButtonPrimaryBackground);
-	color: var(--wcfButtonPrimaryText);
+.button.buttonPrimary {
+	--button-background: var(--wcfButtonPrimaryBackground);
+	--button-text: var(--wcfButtonPrimaryText);
+	--button-background-active: var(--wcfButtonPrimaryBackgroundActive);
+	--button-text-active: var(--wcfButtonPrimaryTextActive);
+}
 
-	&.active {
-		background-color: var(--wcfButtonPrimaryBackgroundActive);
-		color: var(--wcfButtonPrimaryTextActive);
+.button.buttonGhost {
+	--button-background: transparent;
+	--button-text: var(--wcfButtonText);
+	--button-background-active: var(--wcfButtonGhostBackgroundActive);
+	--button-text-active: var(--wcfButtonText);
+	--button-background-disabled: transparent;
+}
+
+.button.buttonDanger {
+	--button-background: var(--wcfButtonDangerBackground);
+	--button-text: var(--wcfButtonDangerText);
+	--button-background-active: var(--wcfButtonDangerBackgroundActive);
+	--button-text-active: var(--wcfButtonDangerTextActive);
+}
+
+/* active state, `.dropdownOpen` marks the toggle of an open dropdown */
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.button,
+a.button {
+	&.active,
+	.dropdownOpen > & {
+		background-color: var(--button-background-active);
+		color: var(--button-text-active);
+		text-decoration: none;
 	}
 }
 
-/* hover states are only applied to non-touch devices to avoid "leftover" hover states after taps */
-html:not(.touch) {
+/* hover states only for devices whose primary input can hover, avoids "leftover" hover states after taps */
+@media (hover: hover) {
 	input[type="button"],
 	input[type="reset"],
 	input[type="submit"],
 	.button,
 	a.button {
 		&:hover {
-			background-color: var(--wcfButtonBackgroundActive);
-			color: var(--wcfButtonTextActive);
+			background-color: var(--button-background-active);
+			color: var(--button-text-active);
 			text-decoration: none;
-		}
-	}
-
-	input[type="button"].buttonPrimary,
-	input[type="submit"],
-	.button.buttonPrimary,
-	a.button.buttonPrimary {
-		// a.button is required to override link formatting, such as dropdown buttons
-		&:hover {
-			background-color: var(--wcfButtonPrimaryBackgroundActive);
-			color: var(--wcfButtonPrimaryTextActive);
 		}
 	}
 }
@@ -126,30 +154,10 @@ input[type="submit"],
 a.button {
 	&:disabled,
 	&.disabled {
-		background-color: var(--wcfButtonDisabledBackground) !important;
+		background-color: var(--button-background-disabled) !important;
 		color: var(--wcfButtonDisabledText) !important;
 		cursor: not-allowed !important;
 		pointer-events: none;
-	}
-}
-
-/* force active state for buttons toggling a dropdown */
-.dropdownOpen {
-	> input[type="button"],
-	> input[type="reset"],
-	> input[type="submit"],
-	> .button,
-	> a.button {
-		background-color: var(--wcfButtonBackgroundActive);
-		color: var(--wcfButtonTextActive);
-	}
-
-	> input[type="button"].buttonPrimary,
-	> input[type="submit"],
-	> .button.buttonPrimary,
-	> a.button.buttonPrimary {
-		background-color: var(--wcfButtonPrimaryBackgroundActive);
-		color: var(--wcfButtonPrimaryTextActive);
 	}
 }
 
@@ -177,8 +185,6 @@ a.button {
 
 			> a {
 				display: block;
-				min-width: -moz-min-content;
-				min-width: -webkit-min-content;
 				min-width: min-content;
 				text-align: center;
 			}
@@ -219,7 +225,6 @@ a.button {
 
 		.button {
 			border-radius: 0;
-			border-width: 0;
 		}
 	}
 }

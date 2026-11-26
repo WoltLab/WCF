@@ -7,6 +7,7 @@ use wcf\data\user\option\UserOption;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileList;
 use wcf\event\listView\user\MembersListViewInitialized;
+use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
 use wcf\system\interaction\user\UserProfileInteractions;
 use wcf\system\listView\AbstractListView;
 use wcf\system\option\user\TUserOptionsByCategory;
@@ -52,6 +53,9 @@ class MembersListView extends AbstractListView
         ]);
 
         $this->setInteractionProvider(new UserProfileInteractions());
+        $this->setInteractionContextMenuComponentConfiguration(
+            InteractionContextMenuComponentConfiguration::forDefault()
+        );
         $this->setDefaultSortField(\MEMBERS_LIST_DEFAULT_SORT_FIELD);
         $this->setDefaultSortOrder(\MEMBERS_LIST_DEFAULT_SORT_ORDER);
         $this->setItemsPerPage(\MEMBERS_LIST_USERS_PER_PAGE);

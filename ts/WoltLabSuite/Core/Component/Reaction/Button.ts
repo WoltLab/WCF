@@ -268,7 +268,6 @@ function updateReactionSummary(
 
 function updateButton(button: HTMLButtonElement, reactionTypeId: number): void {
   button.dataset.reactionTypeId = reactionTypeId.toString();
-  button.classList.toggle("active", reactionTypeId !== 0);
   button.setAttribute("aria-pressed", reactionTypeId !== 0 ? "true" : "false");
 
   // Animates the new icon, the server-rendered initial icon is not affected.
@@ -299,7 +298,7 @@ async function toggleButton(button: HTMLButtonElement): Promise<void> {
   let reactionTypeId: number = 0;
   let reactions: Record<number, number>;
 
-  if (button.classList.contains("active")) {
+  if (parseInt(button.dataset.reactionTypeId!) !== 0) {
     reactions = (await revertReaction(objectType, objectId)).reactions;
   } else {
     reactionTypeId = availableReactions[0].reactionTypeID;

@@ -30,10 +30,16 @@
 	text-align: center;
 }
 
-.pagination__link[aria-current="page"],
-body:not(.touch) .pagination__link:hover {
+.pagination__link[aria-current="page"] {
 	background-color: var(--wcfButtonBackgroundActive);
 	color: var(--wcfButtonTextActive);
+}
+
+@media (hover: hover) {
+	.pagination__link:not([aria-current="page"]):hover {
+		background-color: var(--wcfButtonBackgroundActive);
+		color: var(--wcfButtonTextActive);
+	}
 }
 
 @include screen-xs {

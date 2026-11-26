@@ -16,6 +16,7 @@ type AlertOptions = {
 };
 
 type ConfirmationOptions = {
+  isDanger: boolean;
   primary: string;
 };
 
@@ -36,6 +37,7 @@ export class DialogControls {
       cancel: undefined,
       extra: undefined,
       isAlert: true,
+      isDanger: false,
       primary: options?.primary || getPhrase("wcf.dialog.button.primary"),
     };
 
@@ -49,6 +51,7 @@ export class DialogControls {
       cancel: "",
       extra: undefined,
       isAlert: true,
+      isDanger: options?.isDanger ?? false,
       primary: options?.primary || getPhrase("wcf.dialog.button.primary.confirm"),
     };
 
@@ -62,6 +65,7 @@ export class DialogControls {
       cancel: "",
       extra: options?.extra,
       isAlert: false,
+      isDanger: false,
       primary: options?.primary || getPhrase("wcf.dialog.button.primary.submit"),
     };
 

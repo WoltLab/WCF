@@ -38,4 +38,12 @@ final class InteractionContextMenuComponentConfiguration
     {
         return new static(buttonCssClassName: 'button small');
     }
+
+    /**
+     * @since 6.3
+     */
+    public static function forGhost(): static
+    {
+        return new static(buttonCssClassName: 'button small buttonGhost');
+    }
 }

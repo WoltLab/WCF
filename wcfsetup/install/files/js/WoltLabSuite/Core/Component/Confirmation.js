@@ -42,6 +42,7 @@ define(["require", "exports", "tslib", "./Dialog", "../Language", "../Dom/Util",
                 .fromHtml(html)
                 .asConfirmation({
                 primary: (0, Language_1.getPhrase)("wcf.dialog.button.primary.delete"),
+                isDanger: true,
             });
             let question;
             if (title === undefined) {

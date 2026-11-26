@@ -457,14 +457,18 @@ html[dir="ltr"] #spTable th {
 	gap: 5px;
 }
 #spButton .inlineList,
-#spButtonPrimary .inlineList {
+#spButtonPrimary .inlineList,
+#spButtonGhost .inlineList,
+#spButtonDanger .inlineList {
 	row-gap: 5px;
 }
 #spButton .button.disabled,
 #spButtonPrimary .button.disabled {
 	cursor: default;
 }
-#spButtonPrimary {
+#spButtonPrimary,
+#spButtonGhost,
+#spButtonDanger {
 	margin-top: 20px;
 }
 #spButton .button {
@@ -476,11 +480,27 @@ html[dir="ltr"] #spTable th {
 	background-color: var(--wcfButtonBackgroundActive);
 	color: var(--wcfButtonTextActive);
 }
+#spButtonGhost .button {
+	background-color: transparent;
+	color: var(--wcfButtonText);
+}
+#spButtonGhost .button:hover {
+	background-color: var(--wcfButtonGhostBackgroundActive);
+	color: var(--wcfButtonText);
+}
+#spButtonDanger .button {
+	background-color: var(--wcfButtonDangerBackground);
+	color: var(--wcfButtonDangerText);
+}
+#spButtonDanger .button:hover {
+	background-color: var(--wcfButtonDangerBackgroundActive);
+	color: var(--wcfButtonDangerTextActive);
+}
 #spButtonPrimary .button {
 	background-color: var(--wcfButtonPrimaryBackground);
 	color: var(--wcfButtonPrimaryText);
 }
-#spButtonPrimary .button.active,
+#spButtonPrimary .button.spButtonHover,
 #spButtonPrimary .button:hover {
 	background-color: var(--wcfButtonPrimaryBackgroundActive);
 	color: var(--wcfButtonPrimaryTextActive);

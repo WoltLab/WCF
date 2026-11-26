@@ -762,8 +762,24 @@
 										<div class="spInlineWrapper" data-region="wcfButtonPrimary">
 											<ol class="inlineList">
 												<li><a class="button buttonPrimary">Primary Button</a></li>
-												<li><a class="button buttonPrimary active">Primary Button (Active)</a></li>
-												<li><a class="button disabled">Primary Button (Disabled)</a></li>
+												<li><a class="button buttonPrimary spButtonHover">Primary Button (Hover)</a></li>
+												<li><a class="button buttonPrimary disabled">Primary Button (Disabled)</a></li>
+											</ol>
+										</div>
+									</div>
+
+									<div id="spButtonGhost">
+										<div class="spInlineWrapper" data-region="wcfButtonGhost">
+											<ol class="inlineList">
+												<li><a class="button buttonGhost">Ghost Button</a></li>
+											</ol>
+										</div>
+									</div>
+
+									<div id="spButtonDanger">
+										<div class="spInlineWrapper" data-region="wcfButtonDanger">
+											<ol class="inlineList">
+												<li><a class="button buttonDanger">Danger Button</a></li>
 											</ol>
 										</div>
 									</div>

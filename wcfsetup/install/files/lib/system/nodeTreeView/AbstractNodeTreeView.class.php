@@ -8,6 +8,7 @@ use wcf\data\IObjectTreeNode;
 use wcf\system\interaction\IInteraction;
 use wcf\system\interaction\IInteractionProvider;
 use wcf\system\interaction\InteractionContextMenuComponent;
+use wcf\system\interaction\InteractionContextMenuComponentConfiguration;
 use wcf\system\WCF;
 
 /**
@@ -230,7 +231,10 @@ abstract class AbstractNodeTreeView
         }
 
         if (!isset($this->interactionContextMenuComponent)) {
-            $this->interactionContextMenuComponent = new InteractionContextMenuComponent($this->interactionProvider);
+            $this->interactionContextMenuComponent = new InteractionContextMenuComponent(
+                $this->interactionProvider,
+                InteractionContextMenuComponentConfiguration::forGhost(),
+            );
         }
 
         return $this->interactionContextMenuComponent;

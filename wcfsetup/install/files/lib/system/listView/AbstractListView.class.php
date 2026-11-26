@@ -719,7 +719,7 @@ abstract class AbstractListView
 
     /**
      * Allows to define a custom configuration for the interaction context menu.
-     * If no configuration is set, the default configuration will be used.
+     * If no configuration is set, a small ghost button will be used.
      */
     public function setInteractionContextMenuComponentConfiguration(InteractionContextMenuComponentConfiguration $configuration): void
     {
@@ -739,6 +739,7 @@ abstract class AbstractListView
             $this->interactionContextMenuComponent = new InteractionContextMenuComponent(
                 $this->interactionProvider,
                 $this->interactionContextMenuComponentConfiguration
+                    ?? InteractionContextMenuComponentConfiguration::forGhost(),
             );
         }
 

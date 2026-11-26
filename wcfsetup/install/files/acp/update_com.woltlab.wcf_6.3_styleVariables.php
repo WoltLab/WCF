@@ -23,11 +23,22 @@ $styleVariables = [
     ['wcfFooterLinkActive', 'rgba(22, 81, 124, 1)', 'rgba(64, 179, 228, 1)'],
     ['wcfFooterText', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)'],
     ['wcfInputLabel', 'rgba(58, 58, 61, 1)', 'rgba(209, 210, 211, 1)'],
+    ['wcfButtonBackground', 'rgba(215, 230, 242, 1)', 'rgba(47, 57, 76, 1)'],
+    ['wcfButtonBackgroundActive', 'rgba(193, 217, 236, 1)', 'rgba(37, 45, 60, 1)'],
+    ['wcfButtonTextActive', 'rgba(33, 33, 33, 1)', 'rgba(230, 231, 234, 1)'],
+    ['wcfButtonDangerBackground', 'rgba(169, 68, 66, 1)', 'rgba(139, 46, 36, 1)'],
+    ['wcfButtonDangerBackgroundActive', 'rgba(132, 53, 52, 1)', 'rgba(116, 38, 30, 1)'],
+    ['wcfButtonDangerText', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)'],
+    ['wcfButtonDangerTextActive', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)'],
+    ['wcfButtonGhostBackgroundActive', 'rgba(233, 233, 233, 1)', 'rgba(42, 45, 49, 1)'],
 ];
 
-// Existing styles keep the footer colors of earlier versions, the new defaults
-// only apply to new styles. This must run before the defaults are updated.
-$footerColors = [
+// Existing styles keep the footer and button colors of earlier versions, the new
+// defaults only apply to new styles. This must run before the defaults are updated.
+$preservedColors = [
+    'wcfButtonBackground',
+    'wcfButtonBackgroundActive',
+    'wcfButtonTextActive',
     'wcfFooterBackground',
     'wcfFooterCopyrightBackground',
     'wcfFooterCopyrightLink',
@@ -41,7 +52,7 @@ $footerColors = [
     'wcfFooterText',
 ];
 $conditions = new PreparedStatementConditionBuilder();
-$conditions->add('variable.variableName IN (?)', [$footerColors]);
+$conditions->add('variable.variableName IN (?)', [$preservedColors]);
 $sql = "INSERT INTO             wcf1_style_variable_value
                                 (styleID, variableID, variableValue, variableValueDarkMode)
         SELECT                  style.styleID, variable.variableID, variable.defaultValue, variable.defaultValueDarkMode
