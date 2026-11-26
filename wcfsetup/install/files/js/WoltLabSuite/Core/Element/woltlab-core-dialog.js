@@ -148,6 +148,7 @@ define(["require", "exports", "tslib", "tabbable", "../Dom/Util", "../Helper/Pag
             }
             const formControl = document.createElement("woltlab-core-dialog-control");
             formControl.primary = options.primary;
+            formControl.danger = options.isDanger;
             if (options.cancel !== undefined) {
                 formControl.cancel = options.cancel;
             }

@@ -21,6 +21,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language"], function (require, 
                 cancel: undefined,
                 extra: undefined,
                 isAlert: true,
+                isDanger: false,
                 primary: options?.primary || (0, Language_1.getPhrase)("wcf.dialog.button.primary"),
             };
             this.#dialog.attachControls(formControlOptions);
@@ -31,6 +32,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language"], function (require, 
                 cancel: "",
                 extra: undefined,
                 isAlert: true,
+                isDanger: options?.isDanger ?? false,
                 primary: options?.primary || (0, Language_1.getPhrase)("wcf.dialog.button.primary.confirm"),
             };
             this.#dialog.attachControls(formControlOptions);
@@ -41,6 +43,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language"], function (require, 
                 cancel: "",
                 extra: options?.extra,
                 isAlert: false,
+                isDanger: false,
                 primary: options?.primary || (0, Language_1.getPhrase)("wcf.dialog.button.primary.submit"),
             };
             this.#dialog.attachControls(formControlOptions);

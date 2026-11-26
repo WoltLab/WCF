@@ -54,6 +54,7 @@ class ConfirmationPrefab {
       .fromHtml(html)
       .asConfirmation({
         primary: getPhrase("wcf.dialog.button.primary.delete"),
+        isDanger: true,
       });
 
     let question: string;

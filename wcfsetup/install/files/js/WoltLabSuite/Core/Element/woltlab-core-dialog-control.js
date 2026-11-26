@@ -69,6 +69,17 @@ define(["require", "exports", "WoltLabSuite/Core/Language"], function (require, 
             }
             return label;
         }
+        set danger(danger) {
+            if (danger) {
+                this.setAttribute("danger", "");
+            }
+            else {
+                this.removeAttribute("danger");
+            }
+        }
+        get danger() {
+            return this.hasAttribute("danger");
+        }
         connectedCallback() {
             const dialog = this.closest("woltlab-core-dialog");
             this.classList.add("dialog__control");
@@ -80,7 +91,7 @@ define(["require", "exports", "WoltLabSuite/Core/Language"], function (require, 
                 this.#primaryButton.type = "submit";
                 this.#primaryButton.value = "primary";
                 this.#primaryButton.autofocus = true;
-                this.#primaryButton.classList.add("button", "buttonPrimary", "dialog__control__button", "dialog__control__button--primary");
+                this.#primaryButton.classList.add("button", this.danger ? "button--danger" : "buttonPrimary", "dialog__control__button", "dialog__control__button--primary");
                 this.#primaryButton.textContent = this.primary;
                 this.append(this.#primaryButton);
                 const observer = new MutationObserver(() => {

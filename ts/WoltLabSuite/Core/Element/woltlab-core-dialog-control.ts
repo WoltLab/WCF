@@ -84,6 +84,18 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
     return label;
   }
 
+  set danger(danger: boolean) {
+    if (danger) {
+      this.setAttribute("danger", "");
+    } else {
+      this.removeAttribute("danger");
+    }
+  }
+
+  get danger(): boolean {
+    return this.hasAttribute("danger");
+  }
+
   connectedCallback() {
     const dialog = this.closest("woltlab-core-dialog")!;
 
@@ -100,7 +112,7 @@ export class WoltlabCoreDialogControlElement extends HTMLElement {
       this.#primaryButton.autofocus = true;
       this.#primaryButton.classList.add(
         "button",
-        "buttonPrimary",
+        this.danger ? "button--danger" : "buttonPrimary",
         "dialog__control__button",
         "dialog__control__button--primary",
       );
