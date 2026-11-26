@@ -58,7 +58,9 @@ final class Utils
                     $promise->resolve($task());
                 }
             } catch (\Throwable $e) {
-                $promise->reject($e);
+                if (State::isPending($promise)) {
+                    $promise->reject($e);
+                }
             }
         });
 
@@ -106,20 +108,13 @@ final class Utils
                 return $settled;
             }
 
-            if (State::isSettled($promise)) {
-                try {
-                    self::queue()->run();
-                } catch (\Throwable $queueError) {
-                    return ['state' => PromiseInterface::REJECTED, 'reason' => $queueError];
-                }
-
-                $settled = $getResult();
-                if (null !== $settled) {
-                    return $settled;
-                }
+            try {
+                self::queue()->run();
+            } catch (\Throwable $queueError) {
+                return ['state' => PromiseInterface::REJECTED, 'reason' => $queueError];
             }
 
-            return ['state' => PromiseInterface::REJECTED, 'reason' => $e];
+            return $getResult() ?? ['state' => PromiseInterface::REJECTED, 'reason' => $e];
         }
 
         return $getResult() ?? ['state' => $promise->getState()];

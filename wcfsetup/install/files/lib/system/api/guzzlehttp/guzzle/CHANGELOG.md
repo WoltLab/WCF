@@ -3,6 +3,126 @@
 Please refer to [UPGRADING](UPGRADING.md) guide for upgrading to a major version.
 
 
+## 8.6.0 - 2026-11-22
+
+### Changed
+
+- Adjusted `guzzlehttp/promises` version constraint to `^3.2`
+- Adjusted `guzzlehttp/psr7` version constraint to `^3.6`
+- Remove every case variant when the cURL handlers remove a request header
+- Reject third-party URIs whose string form is malformed or names another origin
+- Reject request header names that are not HTTP tokens in the built-in handlers
+- Reject request methods that are not HTTP tokens in the built-in handlers
+- Redact proxy credentials that libcurl cuts off in cURL errors
+- Redact proxy credentials that libcurl names as the proxy host in cURL errors
+- Decode percent-encoded proxy credentials in the stream handler
+- Allow the raw cURL `CURLOPT_SSL_OPTIONS` option on libcurl 7.83.1 or newer
+- Convert internationalized hosts while parsing URI strings
+
+### Deprecated
+
+- Deprecated request URIs and `base_uri` values that start with a host and port
+- Deprecated `proxy` URLs whose host has non-ASCII data
+
+### Fixed
+
+- Reject cURL multi handler waits with `HandlerClosedException` after its destructor has run
+
+
+## 8.5.6 - 2026-11-21
+
+### Fixed
+
+- Wrap redirect URIs that `guzzlehttp/psr7` rejects in `BadResponseException`
+
+
+## 8.5.5 - 2026-11-21
+
+### Security
+
+- Reject hosts that `idn_conversion` converts to an invalid host (GHSA-2g6w-c7gx-fxj8)
+- Reject invalid hosts before parsing a URI string again (GHSA-2g6w-c7gx-fxj8)
+
+
+## 8.5.4 - 2026-11-20
+
+### Security
+
+- Reject proxy credentials with percent-encoded control characters in the cURL handlers (GHSA-q8h8-pjjq-cq2h)
+- Reject malformed proxy URLs that older libcurl silently skips or misreads (GHSA-q8h8-pjjq-cq2h)
+
+
+## 8.5.3 - 2026-11-20
+
+### Fixed
+
+- Reject hosts longer than 4096 bytes when `idn_conversion` is enabled
+- Fix `idn_conversion` failures escaping as `IntlException` or a PSR-7 exception
+- Stop servers from raising the `guzzlehttp/psr7` host deprecation
+
+### Changed
+
+- Adjusted `guzzlehttp/promises` version constraint to `^3.1.1`
+- Adjusted `guzzlehttp/psr7` version constraint to `^3.5.1`
+
+
+## 8.5.2 - 2026-11-17
+
+### Security
+
+- Exclude URI fragments from stream handler request targets (GHSA-gqx6-m769-3x35)
+
+
+## 8.5.1 - 2026-11-17
+
+### Fixed
+
+- Cancel cURL multi transfers whose synchronous wait throws instead of leaving them running
+- Reject CR, LF, and NUL in request header fields in the built-in handlers
+- Reject CR, LF, and NUL in request methods in the built-in handlers
+
+
+## 8.5.0 - 2026-11-13
+
+### Added
+
+- Add `Utils::setDefaultHandlerFactory()` to replace the default handler
+
+### Changed
+
+- Adjusted `guzzlehttp/psr7` version constraint to `^3.4`
+
+### Deprecated
+
+- Deprecated `Utils::defaultUserAgent()` in favor of `ClientInterface::MAJOR_VERSION`
+- Deprecated `Utils::headersFromLines()`, `Utils::normalizeHeaderKeys()`, `Utils::debugResource()`, and `Utils::normalizeProtocols()`
+
+
+## 8.4.0 - 2026-11-12
+
+### Added
+
+- Add `max_idle_handles` client and cURL handler option to limit idle handles
+
+### Changed
+
+- Adjusted `guzzlehttp/psr7` version constraint to `^3.3`
+- Send longer-path cookies first in the `Cookie` header, like browsers and libcurl
+- Replace stored cookies in place so a refreshed cookie keeps its position in the `Cookie` header
+
+### Fixed
+
+- Fix overlapping stream handler transfers swallowing and mixing up PHP errors
+- Fix the stream handler sending an empty `From` header with no `from` ini set
+
+
+## 8.3.2 - 2026-11-12
+
+### Fixed
+
+- Fix overlapping stream handler transfers leaving the `from` ini setting blank
+
+
 ## 8.3.1 - 2026-10-25
 
 ### Fixed

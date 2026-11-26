@@ -116,6 +116,13 @@ $client->request('GET', 'https://example.com');
 The convenience methods such as `$client->get()`, `$client->post()`, and their
 async variants continue to use uppercase standard methods.
 
+#### Request Method Validation
+
+The built-in cURL and stream handlers reject a request whose method is not an
+HTTP token, whichever PSR-7 implementation created the request. Guzzle 7
+handlers reject only a method that contains a carriage return, line feed, or NUL
+byte.
+
 #### Auth Request Option Changes
 
 Digest authentication is no longer implemented with cURL `CURLOPT_HTTPAUTH` and
@@ -378,10 +385,12 @@ and is used when an explicitly closed `CurlMultiHandler` rejects transfers that
 are still pending, including delayed transfers. Existing Guzzle 7.x code should
 not normally see this exception just by upgrading. Guzzle 7.x did not have this
 exception or a public cURL handler `close()` method, and destructor cleanup did
-not reject pending promises. If you add deterministic cleanup with
-`CurlMultiHandler::close()`, wait for or cancel outstanding transfers first, or
-handle `HandlerClosedException` or `TransferException` for pending promises you
-may still observe.
+not reject pending promises. Waiting on such a promise afterwards rejects it
+with `RequestException` in Guzzle 7.x and with `HandlerClosedException` in
+Guzzle 8. If you add deterministic cleanup with `CurlMultiHandler::close()`,
+wait for or cancel outstanding transfers first, or handle
+`HandlerClosedException` or `TransferException` for pending promises you may
+still observe.
 
 When updating catch blocks for Guzzle 8.0, catch the more specific no-response
 and response-aware failures before `RequestException`:
@@ -1006,6 +1015,10 @@ credentials, progress/debug callbacks, sink handling, cookies, protocols,
 connection coalescing, or cURL share handles. Use first-class Guzzle request
 options for those settings. Allowed raw cURL header-list options, such as
 `CURLOPT_PROXYHEADER`, now accept only strings or stringable objects as entries.
+
+From Guzzle 8.6, raw `CURLOPT_SSL_OPTIONS` is accepted on libcurl 7.83.1 or
+newer and rejected with a `RequestException` on older libcurl. Guzzle 7 passes
+it through on every libcurl version.
 
 The cURL handlers also reject stream-only `stream_context` options, but accept
 `read_timeout` without effect. The stream handler rejects cURL-only options it

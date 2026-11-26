@@ -25,7 +25,6 @@ use GuzzleHttp\Psr7\Exception\TimeoutException;
 use GuzzleHttp\RequestOptions;
 use GuzzleHttp\TransferStats;
 use GuzzleHttp\TransportSharing;
-use GuzzleHttp\Utils;
 use Openssl\Session;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -104,6 +103,16 @@ final class StreamHandler
      * handler never consults.
      */
     private const DEFAULT_IDLE_TIMEOUT_MS = 60000;
+
+    /**
+     * Number of transfers currently opening, which share the from ini setting.
+     */
+    private static int $fromBlankDepth = 0;
+
+    /**
+     * @var string|false
+     */
+    private static $fromToRestore = false;
 
     private ?\Throwable $onStatsException = null;
 
@@ -192,6 +201,10 @@ final class StreamHandler
 
         if (\in_array($multiplex, [Multiplexing::REQUIRE_EAGER, Multiplexing::REQUIRE_WAIT], true)) {
             throw new RequestException('The stream handler cannot guarantee a multiplexed protocol; required multiplexing needs a cURL handler.', $request);
+        }
+
+        if (1 !== \preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', $request->getMethod())) {
+            throw new RequestException('HTTP method must be a valid HTTP token.', $request);
         }
 
         $protocolVersion = $request->getProtocolVersion();
@@ -689,7 +702,7 @@ final class StreamHandler
 
         // Automatically decode responses when instructed.
         if (isset($options['decode_content']) && $options['decode_content'] !== false) {
-            $normalizedKeys = Utils::normalizeHeaderKeys($headers);
+            $normalizedKeys = HeaderProcessor::normalizeHeaderKeys($headers);
             if (isset($normalizedKeys['content-encoding'])) {
                 $encoding = $headers[$normalizedKeys['content-encoding']];
                 if ($encoding[0] === 'gzip' || $encoding[0] === 'deflate') {
@@ -885,26 +898,12 @@ final class StreamHandler
         #[\SensitiveParameter]
         ?UriInterface $diagnosticUri = null
     ) {
-        $errors = [];
-        \set_error_handler(static function (int $_, string $msg, string $file, int $line) use (&$errors): bool {
-            $errors[] = [
-                'message' => $msg,
-                'file' => $file,
-                'line' => $line,
-            ];
-
-            return true;
-        });
-
-        try {
-            $resource = $callback();
-        } finally {
-            \restore_error_handler();
-        }
+        $scope = new Psr7\ErrorScope();
+        $resource = $scope->run($callback);
 
         if (!$resource) {
             $details = [];
-            foreach ($errors as $err) {
+            foreach ($scope->getErrors() as $err) {
                 foreach ($err as $key => $value) {
                     $rendered = $key === 'message' && $diagnosticUri !== null
                         ? UriDiagnostic::redactInMessage((string) $value, $diagnosticUri)
@@ -1025,12 +1024,21 @@ final class StreamHandler
                 // Blank the from ini setting for the transfer so ambient
                 // configuration cannot leak into a From header; the wrapper
                 // cannot omit the header, so a configured ini sends it empty.
-                $iniFrom = \function_exists('ini_set') ? \ini_set('from', '') : false;
+                // An empty setting is left alone, as blanking an unset one adds
+                // the header. Overlapping transfers share the setting, so only
+                // the first one saves it and only the last one restores it.
+                $blankFrom = \function_exists('ini_set');
+                if ($blankFrom) {
+                    $iniFrom = \ini_get('from') !== '' ? \ini_set('from', '') : false;
+                    if (self::$fromBlankDepth++ === 0) {
+                        self::$fromToRestore = $iniFrom;
+                    }
+                }
                 try {
-                    $resource = @\fopen((string) $uri, 'r', false, $contextResource);
+                    $resource = @\fopen((string) $uri->withFragment(''), 'r', false, $contextResource);
                 } finally {
-                    if ($iniFrom !== false) {
-                        \ini_set('from', $iniFrom);
+                    if ($blankFrom && --self::$fromBlankDepth === 0 && self::$fromToRestore !== false) {
+                        \ini_set('from', self::$fromToRestore);
                     }
                 }
 
@@ -1133,7 +1141,7 @@ final class StreamHandler
             throw new RequestException(\sprintf("The scheme '%s' is not supported.", Psr7\DiagnosticValue::escape($scheme)), $request);
         }
 
-        $protocols = Utils::normalizeProtocols($options['protocols'] ?? ['http', 'https']);
+        $protocols = Protocols::normalize($options['protocols'] ?? ['http', 'https']);
         if (!\in_array($scheme, $protocols, true)) {
             throw new RequestException(\sprintf('The scheme "%s" is not allowed by the protocols request option.', Psr7\DiagnosticValue::escape($scheme)), $request);
         }
@@ -1426,6 +1434,15 @@ final class StreamHandler
             }
 
             foreach ($value as $val) {
+                $val = (string) $val;
+                if (\strpbrk("$name$val", "\r\n\0") !== false) {
+                    throw new RequestException('Request header fields must not contain a carriage return, line feed or NUL byte.', $request);
+                }
+
+                if (1 !== \preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', (string) $name)) {
+                    throw new RequestException('Request header names must be valid HTTP tokens.', $request);
+                }
+
                 $headers .= "$name: $val\r\n";
             }
         }
@@ -1830,8 +1847,9 @@ final class StreamHandler
         $parsed = \parse_url(\strpos($url, '://') === false ? 'http://'.$url : $url);
         if (\is_array($parsed) && isset($parsed['host'])) {
             $port = $parsed['port'] ?? 1080;
-            $user = $parsed['user'] ?? '';
-            $pass = $parsed['pass'] ?? '';
+            // Each part is percent-decoded on its own, to match libcurl.
+            $user = \rawurldecode($parsed['user'] ?? '');
+            $pass = \rawurldecode($parsed['pass'] ?? '');
             $auth = ($user !== '' || $pass !== '') ? 'Basic '.\base64_encode("{$user}:{$pass}") : null;
 
             return [
@@ -2022,7 +2040,7 @@ final class StreamHandler
         ];
         static $args = ['severity', 'message', 'message_code', 'bytes_transferred', 'bytes_max'];
 
-        $value = Utils::debugResource($value);
+        $value = DebugResource::from($value);
         $ident = $request->getMethod().' '.$request->getUri()->withFragment('');
         self::addNotification(
             $params,
