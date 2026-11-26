@@ -156,7 +156,7 @@ abstract class CustomOption extends Option implements ITitledObject
                 );
 
             case 'float':
-                return StringUtil::formatDouble(\doubleval($this->optionValue));
+                return StringUtil::formatDouble(\floatval($this->optionValue));
 
             case 'integer':
                 return StringUtil::formatNumeric(\intval($this->optionValue));

@@ -5,7 +5,7 @@
     "optimize-autoloader": true,
     "sort-packages": true,
     "platform": {
-      "php": "8.4.23",
+      "php": "8.4.28",
       "ext-gd": "0"
     },
     "allow-plugins": {

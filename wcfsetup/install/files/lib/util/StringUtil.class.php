@@ -724,7 +724,7 @@ final class StringUtil
      */
     public static function splitIntoChunks(string $string, int $length = 75, string $break = "\r\n"): string
     {
-        return \mb_ereg_replace('.{' . $length . '}', "\\0" . $break, $string);
+        return \preg_replace('/.{' . $length . '}/us', '$0' . \addcslashes($break, '\\$'), $string);
     }
 
     /**

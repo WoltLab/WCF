@@ -93,7 +93,7 @@ class TemplateScriptingCompiler
         'reset',
         'round',
         'sha1',
-        'spl_object_hash',
+        'spl_object_id',
         'strip_tags',
         'strlen',
         'str_contains',

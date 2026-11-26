@@ -247,8 +247,8 @@ final class ReplaceFileSource
             FileProcessor::getInstance()->generateThumbnails($file);
         } catch (DamagedImage $e) {
             logThrowable($e);
-        } finally {
-            return $file;
         }
+
+        return $file;
     }
 }
