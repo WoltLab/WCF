@@ -828,8 +828,10 @@
 	}
 }
 
-html:not(.touch) .boxWithEditButton:hover .boxEditButton {
-	opacity: 1;
+@media (hover: hover) {
+	.boxWithEditButton:hover .boxEditButton {
+		opacity: 1;
+	}
 }
 
 .boxMenuResetFilter {

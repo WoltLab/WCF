@@ -85,12 +85,14 @@ html[data-color-scheme="dark"] .entryCardList__item__buttons {
 	width: 100%;
 }
 
-html:not(.touch) .entryCardList__item__image__element {
-	transition: transform 0.24s linear;
-}
+@media (hover: hover) {
+	.entryCardList__item__image__element {
+		transition: transform 0.24s linear;
+	}
 
-html:not(.touch) .entryCardList__item:hover .entryCardList__item__image__element {
-	transform: scale(1.05);
+	.entryCardList__item:hover .entryCardList__item__image__element {
+		transform: scale(1.05);
+	}
 }
 
 .entryCardList__item__badges {

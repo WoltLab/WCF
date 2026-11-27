@@ -159,8 +159,10 @@
 	grid-area: icon;
 }
 
-body:not(.touch) .entry__navigation__item:hover .entry__navigation__item__icon {
-	color: var(--wcfContentLinkActive);
+@media (hover: hover) {
+	.entry__navigation__item:hover .entry__navigation__item__icon {
+		color: var(--wcfContentLinkActive);
+	}
 }
 
 .entry__navigation__item__image {

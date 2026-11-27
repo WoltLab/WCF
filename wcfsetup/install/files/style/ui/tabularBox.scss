@@ -14,8 +14,10 @@
 	}
 }
 
-html:not(.touch) .tabularListRow:not(.tabularListRowHead):hover {
-	background-color: var(--wcfTabularBoxBackgroundActive);
+@media (hover: hover) {
+	.tabularListRow:not(.tabularListRowHead):hover {
+		background-color: var(--wcfTabularBoxBackgroundActive);
+	}
 }
 
 .tabularListRowHead {

@@ -117,8 +117,10 @@
 	grid-area: icon;
 }
 
-body:not(.touch) .articleNavigationArticle:hover .articleNavigationArticleIcon {
-	color: var(--wcfContentLinkActive);
+@media (hover: hover) {
+	.articleNavigationArticle:hover .articleNavigationArticleIcon {
+		color: var(--wcfContentLinkActive);
+	}
 }
 
 .articleNavigationArticleImage {

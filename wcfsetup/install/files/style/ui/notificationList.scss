@@ -81,15 +81,17 @@
 	}
 }
 
-html:not(.touch) .notificationListItem__unread::before {
-	transition:
-		left 0.12s ease-in-out,
-		opacity 0.12s ease-in-out;
-}
+@media (hover: hover) {
+	.notificationListItem__unread::before {
+		transition:
+			left 0.12s ease-in-out,
+			opacity 0.12s ease-in-out;
+	}
 
-html:not(.touch) .notificationListItem:hover .notificationListItem__unread::before {
-	opacity: 0;
-	left: 0;
+	.notificationListItem:hover .notificationListItem__unread::before {
+		opacity: 0;
+		left: 0;
+	}
 }
 
 .notificationListItem__markAsRead {
@@ -100,25 +102,29 @@ html:not(.touch) .notificationListItem:hover .notificationListItem__unread::befo
 	width: 100%;
 }
 
-html:not(.touch) .notificationListItem__markAsRead {
-	transform: scale(1);
-	transition:
-		opacity 0.12s ease-in-out,
-		left 0.12s ease-in-out,
-		transform 0.24s ease-in-out;
+@media (hover: hover) {
+	.notificationListItem__markAsRead {
+		transform: scale(1);
+		transition:
+			opacity 0.12s ease-in-out,
+			left 0.12s ease-in-out,
+			transform 0.24s ease-in-out;
 
-	&:hover {
-		transform: scale(1.5);
+		&:hover {
+			transform: scale(1.5);
+		}
 	}
 }
 
 /* Tapping the indicator on touch devices triggers the action
    to mark the item as read. Positioning the button over the
    indicator masks this behavior. */
-html.touch .notificationListItem__markAsRead {
-	opacity: 0;
-	left: 0;
-	width: 24px;
+@media (hover: none) {
+	.notificationListItem__markAsRead {
+		opacity: 0;
+		left: 0;
+		width: 24px;
+	}
 }
 
 .notificationListItem:not(:hover) .notificationListItem__markAsRead {

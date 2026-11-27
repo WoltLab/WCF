@@ -1010,8 +1010,10 @@ html[dir="ltr"] #spContentSidebar {
 		position: absolute;
 	}
 }
-html:not(.touch) .spColorBox {
-	cursor: pointer;
+@media (hover: hover) {
+	.spColorBox {
+		cursor: pointer;
+	}
 }
 .spColorBox > span {
 	display: block;
