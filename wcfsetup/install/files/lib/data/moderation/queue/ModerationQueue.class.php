@@ -41,6 +41,14 @@ class ModerationQueue extends DatabaseObject
 
     const STATUS_CONFIRMED = 4;
 
+    /**
+     * Key in `additionalData` that holds the spam detections of an entry that was filed
+     * because the content is suspected spam, format: `packageIdentifier => data`.
+     *
+     * @since 6.3
+     */
+    public const SPAM_DETECTIONS_KEY = 'com.woltlab.wcf.spamDetections';
+
     #[\Override]
     public function __get(string $name)
     {
@@ -146,6 +154,41 @@ class ModerationQueue extends DatabaseObject
         }
 
         return '';
+    }
+
+    /**
+     * Returns true if this entry was filed because the content is suspected spam. This
+     * includes entries without any recorded detection.
+     *
+     * @since 6.3
+     */
+    public function isSuspectedSpam(): bool
+    {
+        return \array_key_exists(self::SPAM_DETECTIONS_KEY, $this->data['additionalData']);
+    }
+
+    /**
+     * Returns the spam detections recorded for this entry, keyed by the package identifier
+     * of the detecting package.
+     *
+     * @return array<string, array<array-key, mixed>>
+     * @since 6.3
+     */
+    public function getSpamDetections(): array
+    {
+        $detections = $this->data['additionalData'][self::SPAM_DETECTIONS_KEY] ?? null;
+        if (!\is_array($detections)) {
+            return [];
+        }
+
+        $validDetections = [];
+        foreach ($detections as $identifier => $data) {
+            if (\is_string($identifier) && \is_array($data)) {
+                $validDetections[$identifier] = $data;
+            }
+        }
+
+        return $validDetections;
     }
 
     /**

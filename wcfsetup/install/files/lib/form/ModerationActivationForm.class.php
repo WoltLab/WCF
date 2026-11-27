@@ -6,6 +6,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\moderation\queue\activation\IModerationQueueActivationHandler;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\view\moderation\SuspectedSpamView;
 use wcf\system\WCF;
 
 /**
@@ -36,6 +37,7 @@ class ModerationActivationForm extends AbstractModerationForm
         WCF::getTPL()->assign([
             'disabledContent' => ModerationQueueActivationManager::getInstance()->getDisabledContent($this->queue),
             'queueManager' => ModerationQueueActivationManager::getInstance(),
+            'suspectedSpamView' => $this->queue->isSuspectedSpam() ? new SuspectedSpamView($this->queue) : null,
         ]);
     }
 }

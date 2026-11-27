@@ -27,6 +27,10 @@
 
 {include file='shared_formError'}
 
+{if $suspectedSpamView !== null}
+	{unsafe:$suspectedSpamView->render()}
+{/if}
+
 <section class="section sectionContainerList">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.moderation.activation.content{/lang}</h2>

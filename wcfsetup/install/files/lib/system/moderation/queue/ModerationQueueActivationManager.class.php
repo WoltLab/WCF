@@ -72,6 +72,20 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager
         );
     }
 
+    /**
+     * Adds an entry for content that was disabled because it is suspected spam.
+     *
+     * @param array<string, array<array-key, mixed>> $detections see `MessageSpamChecking::getDetections()`
+     * @throws InvalidObjectTypeException
+     * @since 6.3
+     */
+    public function addSuspectedSpamContent(string $objectType, int $objectID, array $detections): void
+    {
+        $this->addModeratedContent($objectType, $objectID, [
+            ModerationQueue::SPAM_DETECTIONS_KEY => $detections,
+        ]);
+    }
+
     #[\Override]
     protected function addEntry(int $objectTypeID, int $objectID, int $containerID = 0, array $additionalData = [])
     {

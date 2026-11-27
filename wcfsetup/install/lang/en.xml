@@ -4288,6 +4288,7 @@ Attachments:
 		<item name="wcf.moderation.type"><![CDATA[Type]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation"><![CDATA[Approval]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation.delayed"><![CDATA[Delayed]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation.suspectedSpam"><![CDATA[Suspected Spam]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report"><![CDATA[Report]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.comment"><![CDATA[Comment]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
@@ -4301,6 +4302,9 @@ Attachments:
 		<item name="wcf.moderation.username"><![CDATA[Author]]></item>
 		<item name="wcf.moderation.objectType"><![CDATA[Content]]></item>
 		<item name="wcf.moderation.edit.button"><![CDATA[Edit {$queue->getLabel()}]]></item>
+		<item name="wcf.moderation.suspectedSpam"><![CDATA[Suspected Spam]]></item>
+		<item name="wcf.moderation.suspectedSpam.notice"><![CDATA[This content has been automatically flagged as suspected spam.]]></item>
+		<item name="wcf.moderation.suspectedSpam.blacklistMatches"><![CDATA[Matches in the “Stop Forum Spam” database: {implode glue=', ' from=$matchLabels item=matchLabel}{$matchLabel}{/implode}]]></item>
 	</category>
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Approval]]></item>

@@ -33,12 +33,16 @@ final class MessageSpamCheckingSfsListener
             }
         }
 
-        if (BlacklistEntry::getMatches(
+        $matches = BlacklistEntry::getMatches(
             $event->user !== null ? $event->user->username : '',
             $event->user !== null ? $event->user->email : '',
             $event->ipAddress,
-        ) !== []) {
-            $event->preventDefault();
+        );
+        if ($matches !== []) {
+            $event->markAsSpam('com.woltlab.wcf', [
+                // An IPv6 address can match up to three entries.
+                'matches' => \array_values(\array_unique($matches)),
+            ]);
         }
     }
 

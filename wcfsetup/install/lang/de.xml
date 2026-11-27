@@ -4342,6 +4342,7 @@ Dateianhänge:
 		<item name="wcf.moderation.type"><![CDATA[Typ]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation"><![CDATA[Freischaltung]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation.delayed"><![CDATA[Zeitgesteuerte Freischaltung]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation.suspectedSpam"><![CDATA[Spamverdacht]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report"><![CDATA[Meldung]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.comment"><![CDATA[Kommentar]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.response"><![CDATA[Antwort auf Kommentar]]></item>
@@ -4355,6 +4356,9 @@ Dateianhänge:
 		<item name="wcf.moderation.username"><![CDATA[Autor]]></item>
 		<item name="wcf.moderation.objectType"><![CDATA[Inhalt]]></item>
 		<item name="wcf.moderation.edit.button"><![CDATA[{$queue->getLabel()} bearbeiten]]></item>
+		<item name="wcf.moderation.suspectedSpam"><![CDATA[Spamverdacht]]></item>
+		<item name="wcf.moderation.suspectedSpam.notice"><![CDATA[Dieser Inhalt wurde automatisch als möglicher Spam erkannt.]]></item>
+		<item name="wcf.moderation.suspectedSpam.blacklistMatches"><![CDATA[Übereinstimmungen in der Datenbank von „Stop Forum Spam“: {implode glue=', ' from=$matchLabels item=matchLabel}{$matchLabel}{/implode}]]></item>
 	</category>
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Freischaltung]]></item>

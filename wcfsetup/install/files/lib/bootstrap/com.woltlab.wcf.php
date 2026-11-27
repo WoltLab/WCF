@@ -71,6 +71,10 @@ return new class {
             \wcf\event\message\MessageSpamChecking::class,
             \wcf\system\event\listener\MessageSpamCheckingSfsListener::class
         );
+        $eventHandler->register(
+            \wcf\event\moderation\queue\SpamDetectionRendering::class,
+            \wcf\system\event\listener\SpamDetectionRenderingSfsListener::class
+        );
 
         $eventHandler->register(
             \wcf\event\package\PackageListChanged::class,
