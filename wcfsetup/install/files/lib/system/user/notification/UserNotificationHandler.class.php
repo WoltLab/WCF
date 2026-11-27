@@ -551,7 +551,7 @@ class UserNotificationHandler extends SingletonFactory
             $class->setObject(
                 $notification,
                 $object,
-                ($authors[$notification->authorID] ?? $unknownAuthor),
+                ($notification->authorID !== null ? ($authors[$notification->authorID] ?? $unknownAuthor) : $unknownAuthor),
                 $notification->additionalData
             );
 

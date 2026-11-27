@@ -4345,6 +4345,7 @@ Dateianhänge:
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation.delayed"><![CDATA[Zeitgesteuerte Freischaltung]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation.suspectedSpam"><![CDATA[Spamverdacht]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report"><![CDATA[Meldung]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report.suspectedSpam"><![CDATA[Spam-Meldung]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.comment"><![CDATA[Kommentar]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.response"><![CDATA[Antwort auf Kommentar]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.user"><![CDATA[Benutzerprofil]]></item>
@@ -4405,6 +4406,8 @@ Dateianhänge:
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Inhalt melden]]></item>
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Gemeldet von]]></item>
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Gemeldeter Inhalt]]></item>
+		<item name="wcf.moderation.report.system"><![CDATA[System]]></item>
+		<item name="wcf.moderation.report.system.message"><![CDATA[Dieser Benutzer wurde automatisch gemeldet, weil eine Nachricht dieses Benutzers als möglicher Spam abgewiesen wurde.]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus"><![CDATA[„Berechtigt“-Status ändern]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.markAsJustified"><![CDATA[Meldung als „Berechtigt“ markieren]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den „Berechtigt“-Status dieser Meldung wirklich ändern?]]></item>
@@ -4412,6 +4415,9 @@ Dateianhänge:
 		<item name="wcf.moderation.report.notification.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat <strong>{$title}</strong> ({$typeName}) gemeldet.]]></item>
 		<item name="wcf.moderation.report.notification.mail.plaintext"><![CDATA[{if $author->userID}{$author}{else}Ein Gast{/if} hat {$title} ({$typeName}) gemeldet [URL:{$objectLink}].]]></item>
 		<item name="wcf.moderation.report.notification.mail.html"><![CDATA[<p>{if $author->userID}{$author}{else}Ein Gast{/if} hat <a href="{$objectLink}">{$title}</a> ({$typeName}) gemeldet.</p>]]></item>
+		<item name="wcf.moderation.report.notification.message.system"><![CDATA[<strong>{$title}</strong> ({$typeName}) wurde automatisch wegen Spamverdachts gemeldet.]]></item>
+		<item name="wcf.moderation.report.notification.mail.plaintext.system"><![CDATA[{$title} ({$typeName}) wurde automatisch wegen Spamverdachts gemeldet [URL:{$objectLink}].]]></item>
+		<item name="wcf.moderation.report.notification.mail.html.system"><![CDATA[<p><a href="{$objectLink}">{$title}</a> ({$typeName}) wurde automatisch wegen Spamverdachts gemeldet:</p>]]></item>
 	</category>
 	<category name="wcf.notice">
 		<item name="wcf.notice.button.dismiss"><![CDATA[Hinweis dauerhaft ausblenden]]></item>

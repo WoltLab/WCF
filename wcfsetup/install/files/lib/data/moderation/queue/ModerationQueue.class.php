@@ -192,6 +192,29 @@ class ModerationQueue extends DatabaseObject
     }
 
     /**
+     * Returns true if this entry is a spam report that was filed by the system without a
+     * reporting user. Such reports have no `userID` and no report message of their own,
+     * unlike a report by a guest that has been merged with a spam report.
+     *
+     * @since 6.3
+     */
+    public function isSystemReport(): bool
+    {
+        if ($this->userID !== null || !$this->isSuspectedSpam()) {
+            return false;
+        }
+
+        if (($this->data['additionalData']['message'] ?? '') !== '') {
+            return false;
+        }
+
+        $objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
+
+        return $objectType !== null
+            && $objectType->getDefinition()->definitionName === 'com.woltlab.wcf.moderation.report';
+    }
+
+    /**
      * Returns `true` if the `justified` status can be changed.
      *
      * @since   5.4

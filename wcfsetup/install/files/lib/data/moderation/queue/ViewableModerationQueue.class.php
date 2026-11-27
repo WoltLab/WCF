@@ -236,6 +236,13 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
         }
 
         if (
+            $definition->definitionName === 'com.woltlab.wcf.moderation.report'
+            && $this->isSuspectedSpam()
+        ) {
+            return WCF::getLanguage()->get('wcf.moderation.type.com.woltlab.wcf.moderation.report.suspectedSpam');
+        }
+
+        if (
             $definition->definitionName === 'com.woltlab.wcf.moderation.activation'
             // @phpstan-ignore property.notFound, property.notFound
             && ($this->getAffectedObject()->enableTime || $this->getAffectedObject()->publicationDate)
@@ -264,6 +271,10 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
             } else {
                 return FontAwesomeIcon::fromValues('square-check');
             }
+        }
+
+        if ($this->isSuspectedSpam()) {
+            return FontAwesomeIcon::fromValues('shield-virus');
         }
 
         return FontAwesomeIcon::fromValues('triangle-exclamation');

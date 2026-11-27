@@ -42,7 +42,9 @@ final class MessageSpamChecking implements IInterruptableEvent
      *
      * `$data` must consist of scalar values and arrays only: it is stored serialized in
      * the moderation queue entry and read back with `unserialize()`, which would revive
-     * objects as whatever their class looks like at that time, if it still exists.
+     * objects as whatever their class looks like at that time, if it still exists. It must
+     * not contain the message or parts of it, because it is shown to the moderators and
+     * messages can be private.
      *
      * @param array<array-key, mixed> $data
      * @since 6.3

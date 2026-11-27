@@ -86,7 +86,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
      */
     protected function addEntry(int $objectTypeID, int $objectID, int $containerID = 0, array $additionalData = [])
     {
-        $sql = "SELECT  queueID
+        $sql = "SELECT  queueID, status, userID, additionalData
                 FROM    wcf1_moderation_queue
                 WHERE   objectTypeID = ?
                     AND objectID = ?";
@@ -95,9 +95,9 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
             $objectTypeID,
             $objectID,
         ]);
-        $row = $statement->fetchArray();
+        $existingQueue = $statement->fetchObject(ModerationQueue::class);
 
-        if ($row === false) {
+        if ($existingQueue === null) {
             $objectAction = new ModerationQueueAction([], 'create', [
                 'data' => [
                     'objectTypeID' => $objectTypeID,
@@ -111,17 +111,19 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
             $objectAction->executeAction();
             $queue = $objectAction->getReturnValues()['returnValues'];
         } else {
-            $objectAction = new ModerationQueueAction([$row['queueID']], 'update', [
+            $preservedData = $this->getSpamMarkerPreservingData($existingQueue, $additionalData);
+
+            $objectAction = new ModerationQueueAction([$existingQueue->queueID], 'update', [
                 'data' => [
                     'status' => ModerationQueue::STATUS_OUTSTANDING,
                     'containerID' => $containerID,
-                    'userID' => WCF::getUser()->userID ?: null,
+                    'userID' => $preservedData !== null ? $existingQueue->userID : (WCF::getUser()->userID ?: null),
                     'time' => \TIME_NOW,
-                    'additionalData' => \serialize($additionalData),
+                    'additionalData' => \serialize($preservedData ?? $additionalData),
                 ],
             ]);
             $objectAction->executeAction();
-            $queue = new ModerationQueue($row['queueID']);
+            $queue = new ModerationQueue($existingQueue->queueID);
         }
 
         ModerationQueueManager::getInstance()->resetModerationCount();
@@ -223,12 +225,24 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
         $conditionBuilder->add('objectTypeID = ?', [$objectTypeID]);
         $conditionBuilder->add('objectID IN (?)', [$objectIDs]);
 
-        $sql = "SELECT  queueID, objectID
+        $sql = "SELECT  queueID, objectID, status, userID, additionalData
                 FROM    wcf1_moderation_queue
                 " . $conditionBuilder;
         $statement = WCF::getDB()->prepare($sql);
         $statement->execute($conditionBuilder->getParameters());
-        $existingQueueIDs = $statement->fetchMap('objectID', 'queueID');
+        $existingQueueIDs = [];
+        $preservedData = [];
+        foreach ($statement->fetchObjects(ModerationQueue::class) as $existingQueue) {
+            $existingQueueIDs[$existingQueue->objectID] = $existingQueue->queueID;
+
+            $data = $this->getSpamMarkerPreservingData($existingQueue, $additionalData);
+            if ($data !== null) {
+                $preservedData[$existingQueue->queueID] = [
+                    'userID' => $existingQueue->userID,
+                    'additionalData' => $data,
+                ];
+            }
+        }
 
         // create new moderation queue entries for new objects
         $newObjectIDs = \array_diff($objectIDs, \array_keys($existingQueueIDs));
@@ -271,6 +285,11 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
         // group queue ids by container id
         $groupedQueueIDs = [];
         foreach ($existingQueueIDs as $objectID => $queueID) {
+            // Entries that keep their spam marker cannot share the serialized data.
+            if (isset($preservedData[$queueID])) {
+                continue;
+            }
+
             $containerID = $containerIDs[$objectID] ?? 0;
 
             if (!isset($groupedQueueIDs[$containerID])) {
@@ -311,9 +330,66 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
                 ));
             }
         }
+
+        if ($preservedData !== []) {
+            $sql = "UPDATE  wcf1_moderation_queue
+                    SET     status = ?,
+                            containerID = ?,
+                            userID = ?,
+                            time = ?,
+                            lastChangeTime = ?,
+                            additionalData = ?
+                    WHERE   queueID = ?";
+            $statement = WCF::getDB()->prepare($sql);
+            $objectIDsByQueueID = \array_flip($existingQueueIDs);
+            foreach ($preservedData as $queueID => $data) {
+                $statement->execute([
+                    ModerationQueue::STATUS_OUTSTANDING,
+                    $containerIDs[$objectIDsByQueueID[$queueID]] ?? 0,
+                    $data['userID'],
+                    \TIME_NOW,
+                    \TIME_NOW,
+                    \serialize($data['additionalData']),
+                    $queueID,
+                ]);
+            }
+        }
         WCF::getDB()->commitTransaction();
 
         ModerationQueueManager::getInstance()->resetModerationCount();
+    }
+
+    /**
+     * Returns the `additionalData` that the existing entry keeps when it is filed again with
+     * `$additionalData`, or `null` if the filing replaces it as usual.
+     *
+     * An open entry that is suspected spam keeps its spam marker when it is filed again
+     * without a marker, e.g. when the content is disabled again for another reason. A regular
+     * filing would otherwise lift the block of the author without a decision of the
+     * moderators, see `PendingSpamDecision`. A filing with a marker of its own replaces the
+     * previous one.
+     *
+     * Activation entries keep their `userID` as well, because the block of the author is
+     * keyed on it. Reports store the new reporter, their block is keyed on the reported
+     * object instead.
+     *
+     * @param mixed[] $additionalData
+     * @return ?mixed[]
+     * @since 6.3
+     */
+    final protected function getSpamMarkerPreservingData(ModerationQueue $queue, array $additionalData): ?array
+    {
+        if (
+            $queue->isDone()
+            || !$queue->isSuspectedSpam()
+            || \array_key_exists(ModerationQueue::SPAM_DETECTIONS_KEY, $additionalData)
+        ) {
+            return null;
+        }
+
+        return \array_merge($additionalData, [
+            ModerationQueue::SPAM_DETECTIONS_KEY => $queue->additionalData[ModerationQueue::SPAM_DETECTIONS_KEY],
+        ]);
     }
 
     /**

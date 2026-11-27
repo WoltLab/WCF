@@ -30,6 +30,22 @@
 <section class="section">
 	<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedBy{/lang}</h2>
 	
+	{if $queue->isSystemReport()}
+	<div class="box32">
+		{icon name='robot' size=32}
+		
+		<div>
+			<div class="containerHeadline">
+				<h3>
+					{lang}wcf.moderation.report.system{/lang}
+					<small class="separatorLeft">{time time=$queue->time}</small>
+				</h3>
+			</div>
+			
+			<div class="containerContent">{lang}wcf.moderation.report.system.message{/lang}</div>
+		</div>
+	</div>
+	{else}
 	<div class="box32">
 		{user object=$reportUser type='avatar32' ariaHidden='true' tabindex='-1'}
 		
@@ -48,7 +64,12 @@
 			<div class="containerContent">{unsafe:$queue->getFormattedMessage()}</div>
 		</div>
 	</div>
+	{/if}
 </section>
+
+{if $suspectedSpamView !== null}
+	{unsafe:$suspectedSpamView->render()}
+{/if}
 
 <section class="section">
 	<header class="sectionHeader">

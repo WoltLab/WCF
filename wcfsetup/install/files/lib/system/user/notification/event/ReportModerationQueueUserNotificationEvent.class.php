@@ -39,11 +39,39 @@ final class ReportModerationQueueUserNotificationEvent extends AbstractUserNotif
         return $this->getLanguage()->get('wcf.moderation.report.notification.title');
     }
 
+    /**
+     * System reports have no author, they would otherwise be presented as reported by
+     * a guest, e.g. through the avatar and the name of the author.
+     */
+    #[\Override]
+    public function getAuthor()
+    {
+        if ($this->getViewableModerationQueue()?->isSystemReport() === true) {
+            return UserProfile::getGuestUserProfile($this->getLanguage()->get('wcf.moderation.report.system'));
+        }
+
+        return parent::getAuthor();
+    }
+
+    #[\Override]
+    public function getAuthors()
+    {
+        if ($this->getViewableModerationQueue()?->isSystemReport() === true) {
+            return [0 => $this->getAuthor()];
+        }
+
+        return parent::getAuthors();
+    }
+
     #[\Override]
     public function getMessage()
     {
+        $phrase = $this->getViewableModerationQueue()->isSystemReport()
+            ? 'wcf.moderation.report.notification.message.system'
+            : 'wcf.moderation.report.notification.message';
+
         return $this->getLanguage()->getDynamicVariable(
-            'wcf.moderation.report.notification.message',
+            $phrase,
             [
                 'author' => $this->author,
                 'notification' => $this->notification,

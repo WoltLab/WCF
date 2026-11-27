@@ -4291,6 +4291,7 @@ Attachments:
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation.delayed"><![CDATA[Delayed]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation.suspectedSpam"><![CDATA[Suspected Spam]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report"><![CDATA[Report]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report.suspectedSpam"><![CDATA[Spam Report]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.comment"><![CDATA[Comment]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.user"><![CDATA[User Profile]]></item>
@@ -4351,6 +4352,8 @@ Attachments:
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Report Content]]></item>
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Reported by]]></item>
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Reported Content]]></item>
+		<item name="wcf.moderation.report.system"><![CDATA[System]]></item>
+		<item name="wcf.moderation.report.system.message"><![CDATA[This user has been reported automatically because a message by this user was rejected as suspected spam.]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus"><![CDATA[Change “Justified” status]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.markAsJustified"><![CDATA[Mark report as “Justified”]]></item>
 		<item name="wcf.moderation.report.changeJustifiedStatus.confirmMessage"><![CDATA[Do you really want to change the “Justified” status of this report?]]></item>
@@ -4358,6 +4361,9 @@ Attachments:
 		<item name="wcf.moderation.report.notification.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} has reported <strong>{$title}</strong> ({$typeName}).]]></item>
 		<item name="wcf.moderation.report.notification.mail.plaintext"><![CDATA[{if $author->userID}{$author}{else}A guest{/if} has reported {$title} ({$typeName}) [URL:{$objectLink}].]]></item>
 		<item name="wcf.moderation.report.notification.mail.html"><![CDATA[<p>{if $author->userID}{$author}{else}A guest{/if} has reported <a href="{$objectLink}">{$title}</a> ({$typeName}):</p>]]></item>
+		<item name="wcf.moderation.report.notification.message.system"><![CDATA[<strong>{$title}</strong> ({$typeName}) has been reported automatically as suspected spam.]]></item>
+		<item name="wcf.moderation.report.notification.mail.plaintext.system"><![CDATA[{$title} ({$typeName}) has been reported automatically as suspected spam [URL:{$objectLink}].]]></item>
+		<item name="wcf.moderation.report.notification.mail.html.system"><![CDATA[<p><a href="{$objectLink}">{$title}</a> ({$typeName}) has been reported automatically as suspected spam:</p>]]></item>
 	</category>
 	<category name="wcf.notice">
 		<item name="wcf.notice.button.dismiss"><![CDATA[Permanently dismiss this notice]]></item>

@@ -8,6 +8,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\moderation\queue\ModerationQueueReportManager;
 use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
+use wcf\system\view\moderation\SuspectedSpamView;
 use wcf\system\WCF;
 
 /**
@@ -44,6 +45,7 @@ class ModerationReportForm extends AbstractModerationForm
             'reportedContent' => ModerationQueueReportManager::getInstance()->getReportedContent($this->queue),
             'queueManager' => ModerationQueueReportManager::getInstance(),
             'reportUser' => $reportUser,
+            'suspectedSpamView' => $this->queue->isSuspectedSpam() ? new SuspectedSpamView($this->queue) : null,
         ]);
     }
 }
