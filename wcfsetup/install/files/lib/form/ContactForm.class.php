@@ -172,8 +172,12 @@ class ContactForm extends AbstractFormBuilderForm
     /**
      * @param array<int, mixed> $optionValues
      */
-    private function handleSpamCheck(string $email, array $optionValues): void
-    {
+    private function handleSpamCheck(
+        #[\SensitiveParameter]
+        string $email,
+        #[\SensitiveParameter]
+        array $optionValues
+    ): void {
         $messages = [];
         foreach ($this->getAvailableOptions() as $option) {
             $value = $optionValues[$option->optionID] ?? null;

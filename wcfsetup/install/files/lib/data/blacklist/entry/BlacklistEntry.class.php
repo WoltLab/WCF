@@ -65,8 +65,14 @@ class BlacklistEntry extends DatabaseObject
     /**
      * @return string[]
      */
-    public static function getMatches(string $username, string $email, string $ipAddress)
-    {
+    public static function getMatches(
+        #[\SensitiveParameter]
+        string $username,
+        #[\SensitiveParameter]
+        string $email,
+        #[\SensitiveParameter]
+        string $ipAddress
+    ) {
         if (\BLACKLIST_SFS_USERNAME === 'skip' && \BLACKLIST_SFS_EMAIL_ADDRESS === 'skip' && \BLACKLIST_SFS_IP_ADDRESS === 'skip') {
             return [];
         }
