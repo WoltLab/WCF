@@ -334,11 +334,13 @@
 	}
 }
 
+/* The ghost buttons bring their own padding, the bottom margin halves the spacing below them. */
 .messageListView__item__footer {
 	align-items: center;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 4px;
+	margin-bottom: calc(var(--messageListView-padding) / -2);
 	margin-top: auto;
 }
 
