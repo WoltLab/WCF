@@ -16,7 +16,7 @@ define(["require", "exports", "WoltLabSuite/Core/Component/Snackbar", "WoltLabSu
         if (listView !== undefined) {
             listView.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
         }
-        document.querySelectorAll(".boxMenu .active .badgeUpdate").forEach((el) => el.remove());
+        document.querySelectorAll(".boxMenu .active > .boxMenuLink .badgeUpdate").forEach((el) => el.remove());
         button.remove();
         (0, Snackbar_1.showDefaultSuccessSnackbar)();
     }

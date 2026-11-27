@@ -19,7 +19,7 @@ async function markAllAsRead(button: HTMLElement, listView?: HTMLElement): Promi
     listView.dispatchEvent(new CustomEvent("interaction:invalidate-all"));
   }
 
-  document.querySelectorAll(".boxMenu .active .badgeUpdate").forEach((el: HTMLElement) => el.remove());
+  document.querySelectorAll(".boxMenu .active > .boxMenuLink .badgeUpdate").forEach((el: HTMLElement) => el.remove());
 
   button.remove();
 
