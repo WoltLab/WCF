@@ -4284,6 +4284,7 @@ Dateianhänge:
 		<item name="wcf.message.error.censoredWordsFound"><![CDATA[Der Text verwendet nicht gestattete Begriffe: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}]]></item>
 		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht enthält die folgenden BBCodes, die {if LANGUAGE_USE_INFORMAL_VARIANT}du nicht verwenden darfst{else}Sie nicht verwenden dürfen{/if}: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
 		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[Der Editor ist bereits aktiv, {if LANGUAGE_USE_INFORMAL_VARIANT}beende die Bearbeitung bevor du fortfährst{else}beenden Sie die Bearbeitung bevor Sie fortfahren{/if}.]]></item>
+		<item name="wcf.message.error.pendingSpamDecision"><![CDATA[Eine {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} früheren Nachrichten wird derzeit von den Moderatoren geprüft. Bis dahin {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} keine neuen Nachrichten verfassen.]]></item>
 		<item name="wcf.message.error.tooLong"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht ist zu lang. Es stehen maximal {#$maxTextLength} Zeichen zur Verfügung.]]></item>
 		<item name="wcf.message.status.deleted"><![CDATA[Gelöscht]]></item>
 		<item name="wcf.message.status.disabled"><![CDATA[Deaktiviert]]></item>
