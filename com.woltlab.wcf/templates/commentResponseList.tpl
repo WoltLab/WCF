@@ -10,7 +10,7 @@
 			data-can-edit="{if $response->isEditable()}true{else}false{/if}"
 			data-can-delete="{if $response->isDeletable()}true{else}false{/if}"
 		>
-			<woltlab-core-comment-response class="commentResponse" response-id="{$response->responseID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
+			<woltlab-core-comment-response class="commentResponse" response-id="{$response->responseID}" data-object-id="{$response->responseID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 				<div class="commentResponse__header">
 					<div class="commentResponse__avatar">
 						{user object=$response->getUserProfile() type='avatar32' ariaHidden='true' tabindex='-1'}

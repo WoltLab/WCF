@@ -175,6 +175,16 @@
 			<disallowedBBCodesPermission>user.comment.disallowedBBCodes</disallowedBBCodesPermission>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.comment</name>
+			<definitionname>com.woltlab.wcf.message.quote</definitionname>
+			<classname>wcf\system\message\quote\CommentMessageQuoteHandler</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.comment.response</name>
+			<definitionname>com.woltlab.wcf.message.quote</definitionname>
+			<classname>wcf\system\message\quote\CommentResponseMessageQuoteHandler</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.paidSubscription</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
 		</type>

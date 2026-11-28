@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll", "WoltLabSuite/Core/Api/Comments/RenderComment", "WoltLabSuite/Core/Api/Comments/RenderComments", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponse", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponses"], function (require, exports, tslib_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll, RenderComment_1, RenderComments_1, RenderResponse_1, RenderResponses_1) {
+define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/Util", "../../Helper/Selector", "../../Language", "./Add", "./Response/Add", "../../Ui/Scroll", "WoltLabSuite/Core/Api/Comments/RenderComment", "WoltLabSuite/Core/Api/Comments/RenderComments", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponse", "WoltLabSuite/Core/Api/Comments/Responses/RenderResponses", "WoltLabSuite/Core/Component/Quote/Message"], function (require, exports, tslib_1, Listener_1, Util_1, Selector_1, Language_1, Add_1, Add_2, UiScroll, RenderComment_1, RenderComments_1, RenderResponse_1, RenderResponses_1, Message_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = setup;
@@ -290,12 +290,22 @@ define(["require", "exports", "tslib", "../../Dom/Change/Listener", "../../Dom/U
             return parseInt(this.#container.dataset.comments);
         }
     }
+    let quoteContainersRegistered = false;
+    function registerQuoteContainers() {
+        if (quoteContainersRegistered) {
+            return;
+        }
+        quoteContainersRegistered = true;
+        (0, Message_1.registerContainer)("woltlab-core-comment", ".comment__message > .htmlContent", "com.woltlab.wcf.comment");
+        (0, Message_1.registerContainer)("woltlab-core-comment-response", ".commentResponse__message > .htmlContent", "com.woltlab.wcf.comment.response");
+    }
     function setup(elementId) {
         const element = document.getElementById(elementId);
         if (!element) {
             console.debug(`Unable to find the container identified by '${elementId}'`);
             return;
         }
+        registerQuoteContainers();
         new CommentList(element);
     }
 });

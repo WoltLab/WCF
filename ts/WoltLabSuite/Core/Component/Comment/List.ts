@@ -21,6 +21,7 @@ import { renderComment } from "WoltLabSuite/Core/Api/Comments/RenderComment";
 import { renderComments } from "WoltLabSuite/Core/Api/Comments/RenderComments";
 import { renderResponse } from "WoltLabSuite/Core/Api/Comments/Responses/RenderResponse";
 import { renderResponses } from "WoltLabSuite/Core/Api/Comments/Responses/RenderResponses";
+import { registerContainer } from "WoltLabSuite/Core/Component/Quote/Message";
 
 class CommentList {
   readonly #container: HTMLElement;
@@ -397,12 +398,31 @@ class CommentList {
   }
 }
 
+let quoteContainersRegistered = false;
+
+function registerQuoteContainers(): void {
+  if (quoteContainersRegistered) {
+    return;
+  }
+
+  quoteContainersRegistered = true;
+
+  registerContainer("woltlab-core-comment", ".comment__message > .htmlContent", "com.woltlab.wcf.comment");
+  registerContainer(
+    "woltlab-core-comment-response",
+    ".commentResponse__message > .htmlContent",
+    "com.woltlab.wcf.comment.response",
+  );
+}
+
 export function setup(elementId: string): void {
   const element = document.getElementById(elementId);
   if (!element) {
     console.debug(`Unable to find the container identified by '${elementId}'`);
     return;
   }
+
+  registerQuoteContainers();
 
   new CommentList(element);
 }

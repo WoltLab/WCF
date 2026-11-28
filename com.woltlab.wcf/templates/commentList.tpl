@@ -14,7 +14,7 @@
 			data-responses="{if $commentCanModerate}{$comment->unfilteredResponses}{else}{$comment->responses}{/if}" data-last-response-time="{if $ignoreLastResponseTime|empty}{$comment->getLastResponseTime()}{else}1{/if}" data-is-disabled="{$comment->isDisabled}"
 			data-last-response-id="{if $ignoreLastResponseTime|empty}{$comment->getLastResponseID()}{else}0{/if}"
 		>
-			<woltlab-core-comment class="comment" comment-id="{$comment->commentID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
+			<woltlab-core-comment class="comment" comment-id="{$comment->commentID}" data-object-id="{$comment->commentID}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 				<div class="comment__header">
 					<div class="comment__avatar">
 						{user object=$comment->getUserProfile() type='avatar32' ariaHidden='true' tabindex='-1'}
